@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type</fullName>
+    <inlineHelpText>Intervallo: prezzi pianificazione che usano solo il livello valido per la quantità di utilizzo. Fetta: l&apos;utilizzo entro un determinato limite riceve prezzi uguali al valore del suo livello.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

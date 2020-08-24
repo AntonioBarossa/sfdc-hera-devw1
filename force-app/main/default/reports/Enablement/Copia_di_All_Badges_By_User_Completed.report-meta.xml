@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__First_Attempted_Date__c</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__Finished_Date__c</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__Badge_Icon__c</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__Status__c</field>
+    </columns>
+    <description>Report on all badges earned by user</description>
+    <filter>
+        <criteriaItems>
+            <column>trailheadapp__User_Badge__c.trailheadapp__Finished_Date__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value/>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_ID</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>,a002o00000uUUNo,a002o00000uUUMj,a002o00000uUUOx,a002o00000uUUKO,a002o00000uUUHz,a002o00000uUUKU,a002o00000uUUHy,a002o00000uUUL4,a002o00000uUUGP,a002o00000uUUM9,a002o00000uUUGI,a002o00000uUUGO,a002o00000uUUJl,a002o00000uUUOq,a002o00000uUUJL,a002o00000uUUGZ,a002o00000uV8zc,a002o00000uUUGf,a002o00000uUUGe,a002o00000uUUP0,a002o00000uUUNU,a002o00000uUUMd,a002o00000uUUNn,a002o00000uUULj,a002o00000uUUJJ,a002o00000uUULr,a002o00000uUUO1,a002o00000uUUO0,a002o00000uUUON,a002o00000uUUNx,a002o00000uUUJ9,a002o00000uUUHo,a002o00000uUUMm,a002o00000uUUKL,a002o00000uUUIz,a002o00000uUUGj,a002o00000uUUHV,a002o00000uUUHX,a002o00000uUUM5,a002o00000uUUHP,a002o00000uUUJo,a002o00000uUUNQ,a002o00000uUUNl,a002o00000uUUI3,a002o00000uUULm,a002o00000uUUGG,a002o00000uUULJ,a002o00000uUUHN,a002o00000uUUND,a002o00000uUUJR,a002o00000uUUJW,a002o00000uUULT,a002o00000uUUJZ</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>trailheadapp__User_Badge__c.trailheadapp__User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Enablement tutti i badge completati</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$trailheadapp__Badge__c$trailheadapp__User_Badge__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>
