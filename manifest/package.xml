@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <types>    
+        <members>*</members>
+        <name>CustomObject</name>
+    </types>
+    <types>    
+        <members>*</members>
+        <name>CustomField</name>
+    </types>
+    <types>    
+        <members>*</members>
+        <name>RecordType</name>
+    </types>
+    <types>    
+        <members>*</members>
+        <name>ListView</name>
+    </types>
+    <types>    
+        <members>*</members>
+        <name>ApprovalProcess</name>
+    </types>
+     <types>    
+        <members>*</members>
+        <name>AssignmentRule</name>
+    </types>
+    <types>  
+        <members>*</members>
+        <name>AutoResponseRules</name>
+  </types>
+  <types>    
+    <members>*</members>
+    <name>BusinessProcess</name>
+  </types>
+<types>    
+    <members>*</members>
+    <name>CustomMetadata</name>
+  </types>
+<types>    
+    <members>*</members>
+    <name>CustomPermission</name>
+  </types>
+ <types>    
+    <members>*</members>
+    <name>EmailTemplate</name>
+  </types>
+  <types>
+    <members>Case</members>
+    <name>EscalationRules</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>FlexiPage</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>GlobalValueSet</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>Group</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>CustomLabel</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>Layout</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>Letterhead</name>
+  </types>
+<types>
+    <members>*</members>   
+    <name>CustomObjectTranslation</name>
+  </types>
+<types>
+    <members>*</members>   
+    <name>Settings</name>
+  </types>
+<types>   
+    <members>*</members>
+    <name>StandardValueSet</name>
+  </types>
+<types>   
+    <members>*</members>
+    <name>StandardValueSet</name>
+  </types>
+
+   <types>
+    <members>*</members>
+    <name>Translations</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>WebLink</name>
+  </types>
+<types>
+    <members>*</members>
+    <name>Workflow</name>
+  </types>
+  <types>
+    <members>*</members>
+    <name>Flow</name>
+  </types>
+
+<!-- ____________________________________________________
+____________________PKG2_____________________________________
+__________________________________________________________-->
+
+<types>
+<members>*</members>
+<name>AuraDefinitionBundle</name>
+</types>
+<types>
+    <members>*</members>    
+    <name>CustomApplication</name>
+  </types>
+  <types>
+    <members>*</members>
+    <name>CustomFeedFilter</name>
+  </types>
+
+<types>
+    <members>*</members>
+    <name>ApexClass</name>
+</types>
+ <types>
+    <members>*</members>    
+    <name>ApexPage</name>
+</types>
+<types>    
+<members>*</members>
+<name>ApexTrigger</name>
+</types>
+<types>
+    <members>*</members>
+    <name>PermissionSet</name>
+</types>
+<types>
+    <members>*</members>
+    <name>Profile</name>
+ </types>
+<types>
+    <members>*</members>
+    <name>CustomTab</name>
+  </types>
+  <types>
+    <members>*</members>
+    <name>BrandingSet</name>
+  </types>
+
+   <types>
+    <members>*</members>   
+    <name>ContentAsset</name>
+  </types>
+
+<types>
+    <members>Enablement</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk211</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk2111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk21121</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk211211</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk21121111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk211211111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112111111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk21121111111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk211211111111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112111111111</members>
+    <members>Enablement/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112111111114</members>
+    <members>Sales_and_Marketing_Dashboards</members>
+    <members>Sales_and_Marketing_Dashboards/AdoptionDashboard</members>
+    <members>Sales_and_Marketing_Dashboards/Best_Practice_Leads_Dashboard</members>
+    <members>Sales_and_Marketing_Dashboards/Best_Practices_Dashboard6</members>
+    <members>Service_Dashboards</members>
+    <members>Service_Dashboards/Agent_Supervisor_Overview</members>
+    <members>Service_Dashboards/Service_Exec_Overview</members>
+    <members>Service_Dashboards/Service_KPIs</members>
+    <members>trailheadapp__Trailhead_Dashboards/rstQslSdlFkmAaXVFQgluKJSqoPcQk</members>
+    <members>trailheadapp__Trailhead_Dashboards/rstQslSdlFkmAaXVFQgluKJSqoPcQk1</members>
+    <members>trailheadapp__Trailhead_Dashboards/rstQslSdlFkmAaXVFQgluKJSqoPcQk2</members>
+    <members>trailheadapp__Trailhead_Dashboards/rstQslSdlFkmAaXVFQgluKJSqoPcQk21</members>
+    <members>trailheadapp__Trailhead_Dashboards/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112111111112</members>
+    <members>trailheadapp__Trailhead_Dashboards/rstQslSdlFkmAaXVFQgluKJSqoPcQk2112111111113</members>
+    <members>trailheadapp__Trailhead_Dashboards/Trailmix_Overview1</members>
+    <name>Dashboard</name>
+  </types>
+ <types>
+    <members>SalesTools</members>
+    <members>SharedDocuments</members>
+    <name>Document</name>
+  </types>
+<!-->  Tag da definire con valori specifici -->
+   <types>
+    <members>*</members>
+    <name>LightningExperienceTheme</name>
+  </types>
+
+   <types>
+    <members>*</members>    
+    <name>PathAssistant</name>
+  </types>
+
+  <types>
+    <members>*</members>   
+    <name>Queue</name>
+  </types>
+
+   <types>
+    <members>DashboardReportsAdoption</members>
+    <members>DashboardReportsAdoption/UsageActivitiesCompleted</members>
+    <members>Enablement</members>
+    <members>Enablement/Copia_di_All_Badges_By_User_Completed</members>
+    <members>Enablement/Copia_di_Assigned_Trailmixes_By_Status</members>
+    <members>Enablement/Copia_di_Completed_Badges</members>
+    <members>Enablement/Copia_di_Completed_Badges1</members>
+    <members>Enablement/Copia_di_Enablement_Badge_Responsabili</members>
+    <members>Enablement/Enablement_badge_BRM</members>
+    <members>Enablement/Enablement_badge_campaign_digital</members>
+    <members>Enablement/Enablement_Badge_completati</members>
+    <members>Enablement/Enablement_Badge_completati_con_filtro</members>
+    <members>Enablement/Enablement_badge_CRM</members>
+    <members>Enablement/Enablement_badge_CVM</members>
+    <members>Enablement/Enablement_badge_DCO</members>
+    <members>Enablement/Enablement_badge_Marketing_strategico</members>
+    <members>Enablement/Enablement_badge_offering</members>
+    <members>Enablement/Enablement_badge_SISC</members>
+    <members>Enablement/Enablement_badge_vendita_business</members>
+    <members>Enablement/Enablement_badge_vendita_condomini</members>
+    <members>Enablement/Enablement_badge_vendita_MM</members>
+    <members>Enablement/Enablement_badge_vendita_TOP</members>
+    <members>Enablement/PILOTA_Completed_Badges</members>
+    <members>Enablement/PILOTA_Trailmixes_Completati</members>
+    <members>Enablement/Responsabili_badge_totali</members>
+    <members>Enablement/SF_Training_Badges</members>
+    <members>Sales_and_Marketing_Reports</members>
+    <members>Sales_and_Marketing_Reports/Activities_by_Salesperson</members>
+    <members>Sales_and_Marketing_Reports/CampaignROIbyCampaignType</members>
+    <members>Sales_and_Marketing_Reports/CampaignsbyROI</members>
+    <members>Sales_and_Marketing_Reports/Closed_Deals_leader_board</members>
+    <members>Sales_and_Marketing_Reports/Closed_opportunity</members>
+    <members>Sales_and_Marketing_Reports/Leads_by_Industry</members>
+    <members>Sales_and_Marketing_Reports/LeadsbySource</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Amount_per_Camp</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Conversion_Rate</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Converted_Amount</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Converted_and_Won_Amount</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Converted_by_Month</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Leads_by_Campaigns</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Leads_Converted</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_Lead_Trends_by_Status</members>
+    <members>Sales_and_Marketing_Reports/Marketing_Exec_of_Leads</members>
+    <members>Sales_and_Marketing_Reports/OpportunityProductPipeline</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Bookings_Trend</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Closed_Deals_QTD</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Lost_Deals</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Open_Deals</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Open_Pipeline</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Open_Pipeline_next_90_days</members>
+    <members>Sales_and_Marketing_Reports/Sales_Exec_Top_Closed_Deals</members>
+    <members>Sales_and_Marketing_Reports/Sales_Manager_Closed_Deals</members>
+    <members>Sales_and_Marketing_Reports/Sales_Manager_Open_Opportunities</members>
+    <members>Sales_and_Marketing_Reports/Sales_Manager_Open_Pipeline</members>
+    <members>Sales_and_Marketing_Reports/Sales_Manager_Pipeline_Next_90_days</members>
+    <members>Sales_and_Marketing_Reports/Sales_Person_Activities_Completed</members>
+    <members>Sales_and_Marketing_Reports/Sales_Person_Activity</members>
+    <members>Sales_and_Marketing_Reports/Sales_Person_MTD_Sales</members>
+    <members>Sales_and_Marketing_Reports/Sales_Person_Open_Pipeline_by_stage</members>
+    <members>Sales_and_Marketing_Reports/SP_Current_Month_Open_Pipeline</members>
+    <members>Sales_Marketing_Reports</members>
+    <members>Sales_Marketing_Reports/Closed_Lost_by_Reason</members>
+    <members>Sales_Marketing_Reports/Closed_Won_80_This_Q_by_Owner</members>
+    <members>Sales_Marketing_Reports/Closed_Won_by_Type</members>
+    <members>Sales_Marketing_Reports/Closed_Won_This_Q_by_Owner</members>
+    <members>Sales_Marketing_Reports/Closed_Won_This_Q_by_Type</members>
+    <members>Sales_Marketing_Reports/Conversion_Rate</members>
+    <members>Sales_Marketing_Reports/Hot_Leads_w_o_Activity_96_Hours</members>
+    <members>Sales_Marketing_Reports/Leads_Converted_All_Time</members>
+    <members>Sales_Marketing_Reports/Leads_Converted_by_FQ</members>
+    <members>Sales_Marketing_Reports/Leads_Converted_Current_FQ2</members>
+    <members>Sales_Marketing_Reports/Leads_Created_Current_FQ</members>
+    <members>Sales_Marketing_Reports/Open_Oppties_This_Q</members>
+    <members>Sales_Marketing_Reports/Open_Oppties_This_Q_No_Acti_Last_96hrs</members>
+    <members>Sales_Marketing_Reports/Pipeline_Report_This_Q</members>
+    <members>Sales_Marketing_Reports/Win_Ratio</members>
+    <members>Service_Dashboards_Reports</members>
+    <members>Service_Dashboards_Reports/Aged_Cases_by_Account</members>
+    <members>Service_Dashboards_Reports/Aged_Cases_by_Agent</members>
+    <members>Service_Dashboards_Reports/Age_of_Cases_Currently_Open_by_Type</members>
+    <members>Service_Dashboards_Reports/Average_Case_Resolution_Time_1</members>
+    <members>Service_Dashboards_Reports/Average_Case_Resolution_Time_MTD</members>
+    <members>Service_Dashboards_Reports/Avg_Case_Resolution_Time_MTD_by_Agen</members>
+    <members>Service_Dashboards_Reports/Case_Resolution_Time_MTD_by_Origin</members>
+    <members>Service_Dashboards_Reports/Cases_by_Origin</members>
+    <members>Service_Dashboards_Reports/Cases_by_Origin_and_Open_Status</members>
+    <members>Service_Dashboards_Reports/Cases_by_Priority</members>
+    <members>Service_Dashboards_Reports/Cases_by_Type_and_Open_Status</members>
+    <members>Service_Dashboards_Reports/Cases_Closed_MTD</members>
+    <members>Service_Dashboards_Reports/Cases_Closed_MTD_by_Agent</members>
+    <members>Service_Dashboards_Reports/Cases_Created_MTD</members>
+    <members>Service_Dashboards_Reports/Cases_Currently_Open</members>
+    <members>Service_Dashboards_Reports/Cases_Currently_Open_by_Account</members>
+    <members>Service_Dashboards_Reports/Cases_Currently_Open_by_Agent</members>
+    <members>Service_Dashboards_Reports/Cases_Currently_Open_by_Origin</members>
+    <members>Service_Dashboards_Reports/Cases_Currently_Open_by_Priority</members>
+    <members>Service_Dashboards_Reports/Cases_Currently_Open_by_Type</members>
+    <members>Service_Dashboards_Reports/High_Priority_Open_Cases_by_Account</members>
+    <members>Service_Dashboards_Reports/Top_10_Cases_by_Age</members>
+    <members>Service_Dashboards_Reports/Trend_of_Case_Resolution_Time</members>
+    <members>Service_Dashboards_Reports/Trend_of_Cases_Closed</members>
+    <members>Service_Dashboards_Reports/Trend_of_Cases_Created</members>
+    <members>trailheadapp__Trailhead_Reports/Copia_di_Due_Trailmixes_All_Time1</members>
+    <members>trailheadapp__Trailhead_Reports/Copia_di_Trailmixes_Completed_All_Time</members>
+    <members>trailheadapp__Trailhead_Reports/Trailhead_Ranks</members>
+    <members>trailheadapp__Trailhead_Reports/Trailmixes_ID_for_export</members>
+    <members>trailheadapp__Trailhead_Reports/Trailmixes_per_user_status</members>
+    <members>unfiled$public</members>
+    <members>unfiled$public/flow_screen_prebuilt_report</members>
+    <members>unfiled$public/Opportunity_Amount_by_Stage_Sample</members>
+    <members>unfiled$public/SampleReportActiveUsers</members>
+    <members>unfiled$public/SampleReportCasesStatusbyRep</members>
+    <members>unfiled$public/SampleReportClosedSales</members>
+    <members>unfiled$public/SampleReportCompletedActivities</members>
+    <members>unfiled$public/SampleReportCustomReportsbyUser</members>
+    <members>unfiled$public/SampleReportDocumentLibrary</members>
+    <members>unfiled$public/SampleReportLastModifiedBy</members>
+    <members>unfiled$public/SampleReportLeadsbyLeadSource</members>
+    <members>unfiled$public/SampleReportLoginLeaderboard</members>
+    <members>unfiled$public/SampleReportLoginWallofShame</members>
+    <members>unfiled$public/SampleReportMonthtoDateTrending</members>
+    <members>unfiled$public/SampleReportofAccounts</members>
+    <members>unfiled$public/SampleReportofCases</members>
+    <members>unfiled$public/SampleReportofContacts</members>
+    <members>unfiled$public/SampleReportofDocuments</members>
+    <members>unfiled$public/SampleReportofLeads</members>
+    <members>unfiled$public/SampleReportofOpenTasks</members>
+    <members>unfiled$public/SampleReportofOpportunities</members>
+    <members>unfiled$public/SampleReportofReports</members>
+    <members>unfiled$public/SampleReportofSolutions</members>
+    <members>unfiled$public/SampleReportofTasksandActivities</members>
+    <members>unfiled$public/SampleReportOpenCasesByPriority</members>
+    <members>unfiled$public/SampleReportOpenDeals</members>
+    <members>unfiled$public/SampleReportPipelineByCloseMonth</members>
+    <members>unfiled$public/SampleReportPipelineHistory</members>
+    <members>unfiled$public/SampleReportSalesLeaderboard</members>
+    <members>unfiled$public/SampleReportSalesPipelinebyStage</members>
+    <members>unfiled$public/SampleReportsLeadsbyStatus</members>
+    <members>unfiled$public/SampleReportSolutionsAdded</members>
+    <members>unfiled$public/SampleReportTopAccounts</members>
+    <members>unfiled$public/SampleReportUsersLoggedIn</members>
+    <name>Report</name>
+  </types>
+
+ <types>
+    <members>*</members>  
+    <name>Role</name>
+  </types>
+
+    <types>
+    <members>*</members>   
+    <name>StaticResource</name>
+  </types>
+
+  <version>47.0</version>
+</Package>

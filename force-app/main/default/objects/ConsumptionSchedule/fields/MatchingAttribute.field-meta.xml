@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MatchingAttribute</fullName>
+    <inlineHelpText>L&apos;utilizzo viene abbinato a una pianificazione del consumo se i record hanno lo stesso valore di Attributo di corrispondenza.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

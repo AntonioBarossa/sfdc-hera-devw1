@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProcessingOrder</fullName>
+    <inlineHelpText>L&apos;ordine di elaborazione del tasso di utilizzo su più tassi. I tassi di consumo sono valutati a partire dall&apos;ordine di elaborazione più basso.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>

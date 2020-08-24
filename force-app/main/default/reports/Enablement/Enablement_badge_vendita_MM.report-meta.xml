@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__First_Attempted_Date__c</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__Finished_Date__c</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__Badge_Icon__c</field>
+    </columns>
+    <columns>
+        <field>trailheadapp__User_Badge__c.trailheadapp__Status__c</field>
+    </columns>
+    <description>Report on all badges earned by user</description>
+    <filter>
+        <booleanFilter>1 AND 2 AND 3</booleanFilter>
+        <criteriaItems>
+            <column>trailheadapp__User_Badge__c.trailheadapp__Finished_Date__c</column>
+            <isUnlocked>false</isUnlocked>
+            <operator>notEqual</operator>
+            <value/>
+        </criteriaItems>
+        <criteriaItems>
+            <column>CUST_ID</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>a002o00000uUUNo,a002o00000uUUMj,a002o00000uUUOx,a002o00000uUUKO,a002o00000uUUKU,a002o00000uUUHy,a002o00000uUUGP,a002o00000uUUM9,a002o00000uUUGI,a002o00000uUUJl,a002o00000uUUOq,a002o00000uUUJL,a002o00000uUUGZ,a002o00000uV8zc,a002o00000uUUP0,a002o00000uUUO1,a002o00000uUUJ9,a002o00000uUUND</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>trailheadapp__User_Badge__c.trailheadapp__User__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Silvia Ballarini,Silvia Bertinazzi,Domenico Cuomo,Giorgio Fringuelli</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>trailheadapp__User_Badge__c.trailheadapp__User__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Enablement badge vendita MM</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$trailheadapp__Badge__c$trailheadapp__User_Badge__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillingTerm</fullName>
+    <inlineHelpText>Numero di unità di fatturazione per cui vale questa pianificazione del consumo. Ad esempio, se l&apos;Unità periodo di fatturazione è Mese, immettere 12 per applicare le pianificazioni del consumo per 12 mesi. Le pianificazioni del consumo si possono applicare a un massimo di 20 trimestri, 60 mesi o 5 anni.</inlineHelpText>
+    <trackHistory>false</trackHistory>
+</CustomField>
