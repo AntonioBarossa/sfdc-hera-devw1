@@ -8,6 +8,8 @@
 
 .github/
 assets/
+.github/*
+assets/*
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
