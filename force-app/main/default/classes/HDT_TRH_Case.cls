@@ -1,4 +1,4 @@
-public class HDT_TRH_Case {
+public without sharing class  HDT_TRH_Case  {
     
     public void onBeforeInsert() {
     }
@@ -48,6 +48,7 @@ public class HDT_TRH_Case {
         }
 
         Set<String> conflicts = new Set<String>();
+        
         for(Case c : [SELECT Id, CaseNumber, RecordType.Name FROM Case WHERE Id IN :conflictIds]) {
             conflicts.add(c.CaseNumber + ' (' + c.RecordType.Name + ')');
         }
