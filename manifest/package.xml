@@ -3,6 +3,7 @@
 
     <types>    
         <members>*</members>
+        <members>Case</members>
         <name>CustomObject</name>
     </types>
     <types>    
