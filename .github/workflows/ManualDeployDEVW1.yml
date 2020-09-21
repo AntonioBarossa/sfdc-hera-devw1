@@ -37,4 +37,4 @@ jobs:
     - name: 'Run Test on Metadata'
       run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=RunLocalTests --checkonly --wait 120 -u hub-org    
     - name: 'Run Deploy on Metadata'
-      run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=RunLocalTests --wait 120 -u hub-org    
+      run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=NoTestRun --wait 120 -u hub-org    
