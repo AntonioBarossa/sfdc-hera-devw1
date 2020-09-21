@@ -5,6 +5,111 @@
     <businessProcess>SupportProcessDefault</businessProcess>
     <label>HDT RT Subentro GAS</label>
     <picklistValues>
+        <picklist>Caliber__c</picklist>
+        <values>
+            <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2%2C5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Commodity__c</picklist>
+        <values>
+            <fullName>Acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energia Elettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teleriscaldamento</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Market__c</picklist>
+        <values>
+            <fullName>Libero</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>Email</fullName>
@@ -77,6 +182,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SupplyType__c</picklist>
+        <values>
+            <fullName>Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Type</picklist>
         <values>
             <fullName>Feature Request</fullName>
@@ -88,6 +204,17 @@
         </values>
         <values>
             <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Voltage__c</picklist>
+        <values>
+            <fullName>BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT</fullName>
             <default>false</default>
         </values>
     </picklistValues>
