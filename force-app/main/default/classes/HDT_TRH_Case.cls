@@ -1,4 +1,4 @@
-public without sharing class  HDT_TRH_Case  {
+public inherited sharing class  HDT_TRH_Case  {
     
     public void onBeforeInsert() {
     }
