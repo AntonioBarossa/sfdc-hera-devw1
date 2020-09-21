@@ -1,4 +1,4 @@
-public without sharing class HDT_TRH_Order {
+public inherited sharing class HDT_TRH_Order {
 
     public void onBeforeInsert() {
     }
