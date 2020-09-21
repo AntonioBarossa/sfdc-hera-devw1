@@ -4011,10 +4011,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>BotManageBotsTrainingData</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>BulkMacrosAllowed</name>
     </userPermissions>
     <userPermissions>
