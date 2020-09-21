@@ -4011,10 +4011,6 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>BotManageBots</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>BotManageBotsTrainingData</name>
     </userPermissions>
     <userPermissions>
