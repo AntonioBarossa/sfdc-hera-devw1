@@ -80,6 +80,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Cemetery__c</picklist>
+        <values>
+            <fullName>null</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Commodity__c</picklist>
         <values>
             <fullName>Acqua</fullName>

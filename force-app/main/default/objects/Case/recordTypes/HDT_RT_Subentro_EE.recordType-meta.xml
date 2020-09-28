@@ -3,7 +3,7 @@
     <fullName>HDT_RT_Subentro_EE</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>HDT RT Subentro EE</label>
+    <label>Subentro EE</label>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
@@ -76,6 +76,13 @@
         </values>
         <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Cemetery__c</picklist>
+        <values>
+            <fullName>null</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_VerificaGdm_Gas</fullName>
+    <fullName>HDT_RT_VotiveModenaCessazione</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>Verifica GDM Gas</label>
+    <description>Votive Modena/Cessazione</description>
+    <label>Votive Modena Cessazione</label>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
