@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_VerificaGdm_Gas</fullName>
+    <fullName>HDT_RT_SwitchOutSIIEE</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>Verifica GDM Gas</label>
+    <description>Switch-out dal SII EE</description>
+    <label>Switch Out SII EE</label>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>

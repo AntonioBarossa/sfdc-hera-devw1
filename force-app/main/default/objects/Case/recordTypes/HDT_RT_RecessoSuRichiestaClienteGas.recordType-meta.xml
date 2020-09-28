@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_VerificaGdm_Gas</fullName>
+    <fullName>HDT_RT_RecessoSuRichiestaClienteGas</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>Verifica GDM Gas</label>
+    <description>Recesso su richiesta cliente Gas</description>
+    <label>Recesso Su Richiesta Cliente Gas</label>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>

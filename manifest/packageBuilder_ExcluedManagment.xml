@@ -1,14 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
   <types>
+    <members>AccountContactRelation.Relationship_Strength__c</members>
+    <members>AdminPriceQuote__c.Amount__c</members>
+    <members>AdminPriceQuote__c.Caliber__c</members>
+    <members>AdminPriceQuote__c.City__c</members>
+    <members>AdminPriceQuote__c.DefaultPrice__c</members>
+    <members>AdminPriceQuote__c.HasCorrector__c</members>
+    <members>AdminPriceQuote__c.Market__c</members>
+    <members>Case.AddressFormula__c</members>
+    <members>Case.Amount__c</members>
+    <members>Case.Caliber__c</members>
+    <members>Case.CallingCallsign__c</members>
+    <members>Case.Cemetery__c</members>
+    <members>Case.Commodity__c</members>
+    <members>Case.Contract__c</members>
+    <members>Case.ContractCode__c</members>
+    <members>Case.CustomerPresence__c</members>
+    <members>Case.CustomerRecessDate__c</members>
+    <members>Case.CustomerRequestDate__c</members>
+    <members>Case.DeceasedFiscalCode__c</members>
+    <members>Case.DeceasedName__c</members>
+    <members>Case.DeceasedSurname__c</members>
+    <members>Case.DistributorFormula__c</members>
+    <members>Case.EarlyRecess__c</members>
+    <members>Case.EnergyService__c</members>
+    <members>Case.Excises__c</members>
+    <members>Case.ExistCorrector__c</members>
+    <members>Case.Market__c</members>
+    <members>Case.MeterCode__c</members>
+    <members>Case.NotPerformedBefore__c</members>
+    <members>Case.PayerDetails__c</members>
+    <members>Case.Phase__c</members>
+    <members>Case.PhaseStory__c</members>
+    <members>Case.PhoneNumber__c</members>
+    <members>Case.PODPDRFormula__c</members>
+    <members>Case.Power__c</members>
+    <members>Case.Pressure__c</members>
+    <members>Case.RegionalAdditional__c</members>
+    <members>Case.RemoteManagementSystem__c</members>
+    <members>Case.SalesCompany__c</members>
+    <members>Case.ServicePoint__c</members>
+    <members>Case.SupplyType__c</members>
+    <members>Case.SwitchOutDate__c</members>
+    <members>Case.TaxRate__c</members>
+    <members>Case.Voltage__c</members>
+    <members>Case.VulturePracticeReference__c</members>
+    <members>Case.WrittenReceiptRequestDate__c</members>
+    <members>Case.YearManufactureMeter__c</members>
+    <members>Contract.SAPContractCode__c</members>
+    <members>Opportunity.Budget_Confirmed__c</members>
+    <members>Opportunity.Discovery_Completed__c</members>
+    <members>Opportunity.Loss_Reason__c</members>
+    <members>Opportunity.ROI_Analysis_Completed__c</members>
+    <members>Order.Phase__c</members>
+    <members>Order.PhaseStory__c</members>
+    <members>QuoteManagement__c.AdegPotDisp__c</members>
+    <members>QuoteManagement__c.Caliber__c</members>
+    <members>QuoteManagement__c.CausalCode__c</members>
+    <members>QuoteManagement__c.Commodity__c</members>
+    <members>QuoteManagement__c.ComparePotRi__c</members>
+    <members>QuoteManagement__c.ConnectionType__c</members>
+    <members>QuoteManagement__c.EnergyUseType__c</members>
+    <members>QuoteManagement__c.GdmMovement__c</members>
+    <members>QuoteManagement__c.OperationCode__c</members>
+    <members>QuoteManagement__c.Operation_type__c</members>
+    <members>QuoteManagement__c.PhaseVoltage__c</members>
+    <members>QuoteManagement__c.PowerEngaged__c</members>
+    <members>QuoteManagement__c.PowerRequired__c</members>
+    <members>QuoteManagement__c.QuoteType__c</members>
+    <members>QuoteManagement__c.RequestedPhase__c</members>
+    <members>QuoteManagement__c.VendDist__c</members>
+    <members>QuoteManagement__c.VoltageRequired__c</members>
+    <members>ServicePoint__c.Address__c</members>
+    <members>ServicePoint__c.Distributor__c</members>
+    <members>ServicePoint__c.ServicePointCode__c</members>
+    <members>ServicePoint__c.SupplyCity__c</members>
+    <members>ServicePoint__c.SupplyCountry__c</members>
+    <members>ServicePoint__c.SupplyPlace__c</members>
+    <members>ServicePoint__c.SupplyPostalCode__c</members>
+    <members>ServicePoint__c.SupplyProvince__c</members>
+    <members>ServicePoint__c.SupplySAPCityCode__c</members>
+    <members>ServicePoint__c.SupplySAPStreetCode__c</members>
+    <members>ServicePoint__c.SupplyStreet__c</members>
+    <members>ServicePoint__c.SupplyStreetNumber__c</members>
+    <members>ServicePoint__c.SupplyStreetNumberExtension__c</members>
+    <name>CustomField</name>
+  </types>
+  <types>
+    <members>CustomLabels</members>
+    <name>CustomLabels</name>
+  </types>
+  <types>
     <members>Account</members>
     <members>AccountContactRelation</members>
     <members>AccountContactRole</members>
     <members>Activity</members>
+    <members>AdminPriceQuote__c</members>
     <members>Asset</members>
     <members>AssetRelationship</members>
     <members>AssistantProgress</members>
     <members>Campaign</members>
+    <members>CampaignMember</members>
+    <members>Case</members>
     <members>CaseContactRole</members>
     <members>ChatterActivity</members>
     <members>CollaborationGroup</members>
@@ -65,89 +159,14 @@
     <members>QuickTextUsage</members>
     <members>Quote</members>
     <members>QuoteLineItem</members>
+    <members>QuoteManagement__c</members>
     <members>Recommendation</members>
     <members>RecordAction</members>
     <members>RecordMergeHistory</members>
-    <members>SBQQ__AttributeSet__c</members>
-    <members>SBQQ__AttributeValue__c</members>
-    <members>SBQQ__BlockPrice__c</members>
-    <members>SBQQ__ColumnMetadata__c</members>
-    <members>SBQQ__ConfigurationAttribute__c</members>
-    <members>SBQQ__ConfigurationRule__c</members>
-    <members>SBQQ__ContractedPrice__c</members>
-    <members>SBQQ__Cost__c</members>
-    <members>SBQQ__CustomAction__c</members>
-    <members>SBQQ__CustomActionCondition__c</members>
-    <members>SBQQ__CustomScript__c</members>
-    <members>SBQQ__Dimension__c</members>
-    <members>SBQQ__DiscountCategory__c</members>
-    <members>SBQQ__DiscountSchedule__c</members>
-    <members>SBQQ__DiscountTier__c</members>
-    <members>SBQQ__ErrorCondition__c</members>
-    <members>SBQQ__Favorite__c</members>
-    <members>SBQQ__FavoriteProduct__c</members>
-    <members>SBQQ__FavoriteShare__c</members>
-    <members>SBQQ__FieldMetadata__c</members>
-    <members>SBQQ__FieldSetMetadata__c</members>
-    <members>SBQQ__ImportColumn__c</members>
-    <members>SBQQ__ImportFormat__c</members>
-    <members>SBQQ__InstallProcessorLog__c</members>
-    <members>SBQQ__LineColumn__c</members>
-    <members>SBQQ__Localization__c</members>
-    <members>SBQQ__LookupData__c</members>
-    <members>SBQQ__LookupQuery__c</members>
-    <members>SBQQ__OptionConstraint__c</members>
-    <members>SBQQ__OrderItemConsumptionRate__c</members>
-    <members>SBQQ__OrderItemConsumptionSchedule__c</members>
-    <members>SBQQ__PriceAction__c</members>
-    <members>SBQQ__PriceCondition__c</members>
-    <members>SBQQ__PriceRule__c</members>
-    <members>SBQQ__PriceSchedule__c</members>
-    <members>SBQQ__PriceTier__c</members>
-    <members>SBQQ__PricingGuidance__c</members>
-    <members>SBQQ__PricingGuidanceTier__c</members>
-    <members>SBQQ__ProcessInput__c</members>
-    <members>SBQQ__ProcessInputCondition__c</members>
-    <members>SBQQ__ProcessInputValue__c</members>
-    <members>SBQQ__ProductAction__c</members>
-    <members>SBQQ__ProductAttribute__c</members>
-    <members>SBQQ__ProductAttributeSet__c</members>
-    <members>SBQQ__ProductFeature__c</members>
-    <members>SBQQ__ProductOption__c</members>
-    <members>SBQQ__ProductRule__c</members>
-    <members>SBQQ__Quote__c</members>
-    <members>SBQQ__QuoteDocument__c</members>
-    <members>SBQQ__QuoteLine__c</members>
-    <members>SBQQ__QuoteLineConsumptionRate__c</members>
-    <members>SBQQ__QuoteLineConsumptionSchedule__c</members>
-    <members>SBQQ__QuoteLineGroup__c</members>
-    <members>SBQQ__QuoteLinePricingGuidance__c</members>
-    <members>SBQQ__QuoteProcess__c</members>
-    <members>SBQQ__QuoteTemplate__c</members>
-    <members>SBQQ__QuoteTerm__c</members>
-    <members>SBQQ__RecordJob__c</members>
-    <members>SBQQ__RelatedContent__c</members>
-    <members>SBQQ__SearchFilter__c</members>
-    <members>SBQQ__SearchIndex__c</members>
-    <members>SBQQ__SolutionGroup__c</members>
-    <members>SBQQ__SubscribedAsset__c</members>
-    <members>SBQQ__SubscribedQuoteLine__c</members>
-    <members>SBQQ__Subscription__c</members>
-    <members>SBQQ__SubscriptionConsumptionRate__c</members>
-    <members>SBQQ__SubscriptionConsumptionSchedule__c</members>
-    <members>SBQQ__SummaryVariable__c</members>
-    <members>SBQQ__TaxExemptionCertificate__c</members>
-    <members>SBQQ__TemplateContent__c</members>
-    <members>SBQQ__TemplateSection__c</members>
-    <members>SBQQ__TermCondition__c</members>
-    <members>SBQQ__Theme__c</members>
-    <members>SBQQ__TimingLog__c</members>
-    <members>SBQQ__UpgradeSource__c</members>
-    <members>SBQQ__WebQuote__c</members>
-    <members>SBQQ__WebQuoteLine__c</members>
     <members>Scorecard</members>
     <members>ScorecardAssociation</members>
     <members>ScorecardMetric</members>
+    <members>ServicePoint__c</members>
     <members>Site</members>
     <members>SocialPersona</members>
     <members>SocialPost</members>
@@ -157,14 +176,6 @@
     <members>Task</members>
     <members>Topic</members>
     <members>TopicAssignment</members>
-    <members>trailheadapp__Badge__c</members>
-    <members>trailheadapp__Debug_Log__c</members>
-    <members>trailheadapp__Trail__c</members>
-    <members>trailheadapp__Trailhead_User_Data__c</members>
-    <members>trailheadapp__Trailmix_Assignment__c</members>
-    <members>trailheadapp__Trailmix__c</members>
-    <members>trailheadapp__User_Badge__c</members>
-    <members>trailheadapp__User_Trailmix__c</members>
     <members>User</members>
     <members>UserProvisioningRequest</members>
     <members>WorkBadge</members>

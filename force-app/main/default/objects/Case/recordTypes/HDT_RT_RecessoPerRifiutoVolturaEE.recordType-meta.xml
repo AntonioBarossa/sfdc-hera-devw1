@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_VerificaGdm_Gas</fullName>
+    <fullName>HDT_RT_RecessoPerRifiutoVolturaEE</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <label>Verifica GDM Gas</label>
+    <description>Recesso per rifiuto voltura EE</description>
+    <label>Recesso Per Rifiuto Voltura EE</label>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
