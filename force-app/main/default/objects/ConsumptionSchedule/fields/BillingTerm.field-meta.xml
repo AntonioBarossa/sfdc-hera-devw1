@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>BillingTerm</fullName>
-    <inlineHelpText>Numero di unità di fatturazione per cui vale questa pianificazione del consumo. Ad esempio</inlineHelpText>
+    <inlineHelpText>Numero di unità di fatturazione per cui vale questa pianificazione del consumo. </inlineHelpText>
     <trackHistory>false</trackHistory>
 </CustomField>
