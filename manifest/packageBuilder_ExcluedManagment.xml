@@ -49,6 +49,14 @@
     <members>Case.WrittenReceiptRequestDate__c</members>
     <members>Case.YearManufactureMeter__c</members>
     <members>Contract.SAPContractCode__c</members>
+    <members>CS_SelezioneFornitura__c.FieldEle__c</members>
+    <members>CS_SelezioneFornitura__c.FieldGas__c</members>
+    <members>CS_SelezioneFornitura__c.FieldHeating__c</members>
+    <members>CS_SelezioneFornitura__c.FieldWaste__c</members>
+    <members>CS_SelezioneFornitura__c.FieldWater__c</members>
+    <members>CS_SelezioneFornitura__c.Max_Record__c</members>
+    <members>CS_SelezioneFornitura__c.Output_Contract__c</members>
+    <members>CS_SelezioneFornitura__c.OutputServicePoint__c</members>
     <members>Opportunity.Budget_Confirmed__c</members>
     <members>Opportunity.Discovery_Completed__c</members>
     <members>Opportunity.Loss_Reason__c</members>
@@ -114,6 +122,7 @@
     <members>ContentVersion</members>
     <members>Contract</members>
     <members>ContractContactRole</members>
+    <members>CS_SelezioneFornitura__c</members>
     <members>DuplicateRecordItem</members>
     <members>DuplicateRecordSet</members>
     <members>EmailMessage</members>
