@@ -32,11 +32,11 @@
   <members>*</members>
   <name>CustomApplication</name>
 </types>
-<!--<<types>
+<<types>
   <members>*</members>
   <name>CustomField</name>
-</types> -->
-<!--<types>
+</types> 
+<types>
   <members>*</members>
   <name>CustomLabels</name>
 </types>
