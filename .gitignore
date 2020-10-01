@@ -6,9 +6,9 @@
 .sfdx/
 .localdevserver/
 
-#.github/
+.github/
 assets/
-#.github/*
+.github/*
 assets/*
 
 # LWC VSCode autocomplete
