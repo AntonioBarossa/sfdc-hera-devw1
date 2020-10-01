@@ -89,4 +89,6 @@
             </article>
         </li>
     </lightning:card>
+
+    <c:hdtSupplySelection processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>
