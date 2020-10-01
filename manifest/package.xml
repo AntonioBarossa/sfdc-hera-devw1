@@ -125,10 +125,10 @@
   <members>*</members>
   <name>RecordType</name>
 </types>-->
-<!--<types>
+<types>
       <members>*</members>
       <name>CustomObject</name>
-      </types> -->
+      </types> 
 <types>
   <members>*</members>
   <!-- Aggiungere Tutti i Tag a Mano, il tag ALL non è supportato -->
