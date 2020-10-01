@@ -32,10 +32,10 @@
   <members>*</members>
   <name>CustomApplication</name>
 </types>
-<!--<<types>
+<types>
   <members>*</members>
   <name>CustomField</name>
-</types> -->
+</types>
 <types>
   <members>*</members>
   <name>CustomLabels</name>
@@ -121,14 +121,10 @@
   <members>*</members>   
   <name>Queue</name>
 </types>
-<!--<<types>
+<types>
   <members>*</members>
   <name>RecordType</name>
-</types>-->
-<!--<types>
-      <members>*</members>
-      <name>CustomObject</name>
-      </types> -->
+</types>
 <types>
   <members>*</members>
   <!-- Aggiungere Tutti i Tag a Mano, il tag ALL non è supportato -->
