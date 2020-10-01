@@ -8,7 +8,6 @@
   <members>*</members>
   <name>ApexTrigger</name>
 </types>
-<!--
 <types>
   <members>*</members>
   <name>AssignmentRules</name>
@@ -130,8 +129,7 @@
       <name>CustomObject</name>
       </types> 
 <types>
-  <members>*</members> -->
-  <!-- Aggiungere Tutti i Tag a Mano, il tag ALL non è supportato --><!--
+  <members>*</members> 
   <name>Report</name>
 </types>
 <types>
@@ -153,6 +151,6 @@
 <types>
   <members>*</members>
   <name>WebLink</name>
-</types> -->
+</types> 
 <version>49.0</version>
 </Package>
