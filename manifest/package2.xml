@@ -32,10 +32,10 @@
   <members>*</members>
   <name>CustomApplication</name>
 </types>
-<!--<<types>
+<types>
   <members>*</members>
   <name>CustomField</name>
-</types> -->
+</types> 
 <types>
   <members>*</members>
   <name>CustomLabels</name>
@@ -54,7 +54,6 @@
 </types>
 <types>
   <members>*</members>
-  <!-- Aggiungere Tutti i Tag a Mano, il tag ALL non è supportato -->
   <name>EmailTemplate</name>
 </types>
 <types>
@@ -131,7 +130,6 @@
       </types> 
 <types>
   <members>*</members>
-  <!-- Aggiungere Tutti i Tag a Mano, il tag ALL non è supportato -->
   <name>Report</name>
 </types>
 <types>
