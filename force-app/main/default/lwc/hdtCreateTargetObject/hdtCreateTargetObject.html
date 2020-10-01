@@ -1,0 +1,53 @@
+<template>
+    <lightning-button variant="brand" label="Crea Fornitura" title="Crea Fornitura" class="slds-m-left_large" onclick={openModal}></lightning-button>
+
+    <!-- <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="Search Results" aria-modal="true" aria-describedby="result-modal-content" class="slds-modal slds-modal_large slds-backdrop slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header slds-grid slds-wrap">
+                    <button class="slds-button slds-button_icon slds-modal__close" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="medium">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-size_1-of-1 slds-text-heading_medium slds-hyphenate">Nuova Fornitura</h2>
+                    <div class="slds-size_2-of-4 "></div>
+                    <lightning-radio-group variant="label-inline" class="slds-text-align_left slds-size_1-of-6" name="radioGroup" label="Select a record type" onchange={handleRecordTypeSelection} options={recordTypeOptions} value={recordType} type="radio"></lightning-radio-group>
+                </header>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>
+                    <lightning-button label="Next" class="slds-p-left_small" variant="brand" onclick={goToServiceCreateForm}></lightning-button>
+                </footer>
+            </div>
+        </section>
+    </template> -->
+
+    <template if:true={showModal}>
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium">
+                            </lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Service Point</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                       
+                        <div class="slds-m-around_medium">
+                            <p>Some text for testing</p>
+                        </div>
+
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Close" variant="brand" onclick={next}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+        </template>
+
+</template>
