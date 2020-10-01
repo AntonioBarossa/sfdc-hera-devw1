@@ -53,7 +53,7 @@
   <name>DuplicateRule</name>
 </types>
 <types>
-  <members>*<members/>
+  <members>*</members>
   <!-- Aggiungere Tutti i Tag a Mano, il tag ALL non è supportato -->
   <name>EmailTemplate</name>
 </types>
