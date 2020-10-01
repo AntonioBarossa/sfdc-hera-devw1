@@ -29,7 +29,7 @@
   <name>CompactLayout</name>
 </types>
 <types>
-  <members>*
+  <members>*</members>
   <name>CustomApplication</name>
 </types>
 <types>
@@ -41,7 +41,7 @@
   <name>CustomLabels</name>
 </types>
 <types>
-  <members>*</name>
+  <members>*</members>
   <name>CustomTab</name>
 </types>
 <types>
@@ -117,6 +117,7 @@
   <members>*</members>
   <name>QuickAction</name>
 </types>
+<types>
   <members>*</members>   
   <name>Queue</name>
 </types>
