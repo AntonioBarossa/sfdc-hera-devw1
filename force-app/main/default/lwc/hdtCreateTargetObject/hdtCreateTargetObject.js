@@ -1,32 +1,42 @@
-import { LightningElement, api } from 'lwc';
-import { NavigationMixin } from 'lightning/navigation';
+import { LightningElement, api, track } from 'lwc';
 
-export default class hdtCreateTargetObject extends NavigationMixin(LightningElement) {
+
+export default class hdtCreateTargetObject extends LightningElement {
     @api accountid;
     @api targetobject;
-    showModal = false;
-    recordType = '';
+
+    recordTypeId;
+    showRecordTypeSelectionModal = false;
+    showCreateTargetObjectModal = false;
     
-    openModal(){
-        this.showModal = true;
+    handleModalInit(){
+        this.openRecordTypeSelection();
     }
 
-    closeModal(){
-        this.showModal = false;
+    openRecordTypeSelection(){
+        this.showRecordTypeSelectionModal = true;
     }
 
-    get recordTypeOptions(){
-        return [
-            { label: 'Sales', value: 'option1' },
-            { label: 'Force', value: 'option2' },
-        ];
+    closeRecordTypeSelection(){
+        this.showRecordTypeSelectionModal = false;
     }
 
-    handleRecordTypeSelection(){
-
+    openCreateRecordForm(){
+        this.showCreateTargetObjectModal = true;
     }
 
-    goToServiceCreateForm(){
+    closeCreateRecordForm(){
+        this.showCreateTargetObjectModal = false;
+    }
 
+    getRecordTypeId(recordTypeId){
+        this.recordTypeId = recordTypeId;
+    }
+
+    handleNext(event){
+        console.log(event.detail);
+        this.closeRecordTypeSelection();
+        this.getRecordTypeId(event.detail);
+        this.openCreateRecordForm();
     }
 }
