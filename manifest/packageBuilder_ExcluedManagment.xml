@@ -49,14 +49,6 @@
     <members>Case.WrittenReceiptRequestDate__c</members>
     <members>Case.YearManufactureMeter__c</members>
     <members>Contract.SAPContractCode__c</members>
-    <members>CS_SelezioneFornitura__c.FieldEle__c</members>
-    <members>CS_SelezioneFornitura__c.FieldGas__c</members>
-    <members>CS_SelezioneFornitura__c.FieldHeating__c</members>
-    <members>CS_SelezioneFornitura__c.FieldWaste__c</members>
-    <members>CS_SelezioneFornitura__c.FieldWater__c</members>
-    <members>CS_SelezioneFornitura__c.Max_Record__c</members>
-    <members>CS_SelezioneFornitura__c.Output_Contract__c</members>
-    <members>CS_SelezioneFornitura__c.OutputServicePoint__c</members>
     <members>Opportunity.Budget_Confirmed__c</members>
     <members>Opportunity.Discovery_Completed__c</members>
     <members>Opportunity.Loss_Reason__c</members>
@@ -80,9 +72,9 @@
     <members>QuoteManagement__c.RequestedPhase__c</members>
     <members>QuoteManagement__c.VendDist__c</members>
     <members>QuoteManagement__c.VoltageRequired__c</members>
-    <members>ServicePoint__c.Address__c</members>
     <members>ServicePoint__c.Distributor__c</members>
     <members>ServicePoint__c.ServicePointCode__c</members>
+    <members>ServicePoint__c.SupplyAddress__c</members>
     <members>ServicePoint__c.SupplyCity__c</members>
     <members>ServicePoint__c.SupplyCountry__c</members>
     <members>ServicePoint__c.SupplyPlace__c</members>
@@ -153,8 +145,6 @@
     <members>OpportunityLineItem</members>
     <members>Order</members>
     <members>OrderItem</members>
-    <members>OrgMetricScanResult</members>
-    <members>OrgMetricScanSummary</members>
     <members>PartnerRole</members>
     <members>Pricebook2</members>
     <members>PricebookEntry</members>
@@ -180,7 +170,6 @@
     <members>SocialPersona</members>
     <members>SocialPost</members>
     <members>Solution</members>
-    <members>StreamActivityAccess</members>
     <members>StreamingChannel</members>
     <members>Task</members>
     <members>Topic</members>
