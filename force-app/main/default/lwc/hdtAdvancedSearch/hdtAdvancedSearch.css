@@ -1,0 +1,40 @@
+.searchIcon {
+    top: 70% !important;
+}
+.searchInput{
+    margin-top: -16px;
+}
+.slds-form-element__label {
+    padding-bottom: 10px;
+}
+.searchGo {
+    margin-left: -35px;
+}
+.modal-searchGo{
+    margin-left: -15px;
+}
+.filterField{
+    margin-bottom: 15px
+}
+.table-section{
+    height: auto;
+    min-height: 250px;
+}
+.modal-close-button{
+    margin-top: 45px;
+    padding: 10px;
+    margin-right: 15px;
+}
+.slds-modal__container{
+    max-width: 90rem !important;
+    width:90% !important;
+}
+.slds-modal__content{
+    min-height: 200px !important;
+    height: auto !important;
+}
+.modal-header-field{
+    border-bottom: 2px solid #c1c1c1;
+    padding-bottom: 1px;
+    margin-bottom: 20px;
+}
