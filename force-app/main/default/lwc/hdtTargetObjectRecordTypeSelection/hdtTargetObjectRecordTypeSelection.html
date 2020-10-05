@@ -12,11 +12,11 @@
                     </header>
                     <div class="slds-modal__content slds-p-around_medium">
 
-                        <div class="slds-m-around_medium">
+                        <div if:true={objectInfo.data} class="slds-m-around_medium">
                             <lightning-radio-group name="recordType"
                                 label="Select a record type"
                                 options={recordTypeOptions}
-                                value={recordType.value}
+                                value={defaultRecordType.value}
                                 type="radio"
                                 onchange={handleRecordTypeSelection}>
                             </lightning-radio-group>
