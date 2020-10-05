@@ -5,7 +5,7 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api accountid;
     @api targetobject;
 
-    recordTypeId;
+    recordType;
     showRecordTypeSelectionModal = false;
     showCreateTargetObjectModal = false;
     
@@ -29,14 +29,14 @@ export default class hdtCreateTargetObject extends LightningElement {
         this.showCreateTargetObjectModal = false;
     }
 
-    getRecordTypeId(recordTypeId){
-        this.recordTypeId = recordTypeId;
+    getRecordType(recordType){
+        this.recordType = recordType;
     }
 
     handleNext(event){
-        console.log(event.detail);
+        console.log(event.detail.value);
         this.closeRecordTypeSelection();
-        this.getRecordTypeId(event.detail);
+        this.getRecordType(event.detail);
         this.openCreateRecordForm();
     }
 }

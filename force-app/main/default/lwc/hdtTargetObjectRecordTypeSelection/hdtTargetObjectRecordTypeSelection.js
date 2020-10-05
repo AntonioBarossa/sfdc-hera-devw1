@@ -28,19 +28,20 @@ export default class HdtTargetObjectRecordTypeSelection extends LightningElement
     //     return recordTypeOptions;
     // }
 
-    
-    recordType = 'elettrico';
     recordTypeOptions = [
         { label: 'Elettrico', value: 'elettrico' },
         { label: 'Gas', value: 'gas' },
     ];
+    recordType = this.recordTypeOptions[0];
 
     closeRecordTypeSelectionModal(){
         this.dispatchEvent(new CustomEvent('closerecordtypeselection'));
     }
 
     handleRecordTypeSelection(event){
-        this.recordType = event.target.value;
+        // this.recordType = event.target.value;
+        this.recordType = this.recordTypeOptions[0];
+        console.log(this.recordTypeOptions.filter(obj => obj.value == event.target.value));
     }
 
     next(){
