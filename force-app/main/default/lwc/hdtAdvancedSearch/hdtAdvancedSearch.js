@@ -15,6 +15,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     isLoaded = false;
     columns = [];
     originalData=null;
+    preloading=false;
 
     connectedCallback() {}
 
@@ -74,7 +75,9 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     submitSearch(event) {
         event.preventDefault();
+        this.preloading = true;
         getServicePointsByName({code: this.searchInputValue}).then(data => {
+            this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
                 this.formatTableHeaderColumns(data);
@@ -92,6 +95,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.tableData = data;
             }
         }).catch(error => {
+            this.preloading = false;
             let option = {
                 title: 'JavascriptError',
                 message: error,

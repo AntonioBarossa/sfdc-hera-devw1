@@ -5,11 +5,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
 
     connectedCallback(){
-        console.log(this.recordtype);
         getCustomSettings().then(data => {
             console.log(data);
         }).catch(error => {
-            console.log(error);
+            console.log(error.message);
         });
     }
 

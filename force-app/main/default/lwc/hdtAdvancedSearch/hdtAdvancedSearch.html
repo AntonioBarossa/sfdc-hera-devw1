@@ -1,25 +1,26 @@
 <template>
-        <lightning-layout>
-            <lightning-layout-item padding="around-large" size="3">
-                <lightning-input
-                        onkeyup={handleSearchInputKeyChange}
-                        name="enter-search"
-                        type="search"
-                        label=""
-                        onchange={searchAction}
-                        class="searchInput">
-                </lightning-input>
-            </lightning-layout-item>
-            <lightning-layout-item padding="around-large" size="2">
-                <lightning-button
-                        label="search"
-                        disabled={submitButtonStatus}
-                        onclick={submitSearch}
-                        title="Search action"
-                        icon-name="utility:search"
-                        class="slds-m-left_x-small searchGo"></lightning-button>
-            </lightning-layout-item>
-        </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item padding="around-large" size="6">
+            <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+            <lightning-input
+                    onkeyup={handleSearchInputKeyChange}
+                    name="enter-search"
+                    type="search"
+                    label=""
+                    onchange={searchAction}
+                    class="searchInput">
+            </lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-large" size="3">
+            <lightning-button
+                    label="search"
+                    disabled={submitButtonStatus}
+                    onclick={submitSearch}
+                    title="Search action"
+                    icon-name="utility:search"
+                    class="slds-m-left_x-small searchGo"></lightning-button>
+        </lightning-layout-item>
+    </lightning-layout>
 
     <div if:true={openmodel} style="height: auto;">
         <div class="demo-only">
@@ -30,32 +31,33 @@
                             <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
                             <span class="slds-assistive-text">Close</span>
                         </button>
-                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modal Box Example</h2>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h2>
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" if:true={isLoaded}>
                         <div class="slds-grid slds-gutters modal-header-field" >
-                            <div class="slds-col slds-size_3-of-12">
+                            <div class="slds-col slds-size_5-of-12">
+                                <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
                                 <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search" label="" onchange={searchAction} class="searchInput"></lightning-input>
                             </div>
-                            <div class="slds-col slds-size_2-of-12">
+                            <div class="slds-col slds-size_3-of-12">
                                 <lightning-button label="search" disabled={submitButtonStatus} onclick={submitSearch} title="Search action" icon-name="utility:search" class="slds-m-left_x-small modal-searchGo"></lightning-button>
                             </div>
-                            <div class="slds-col slds-size_5-of-12"></div>
 
-                            <div class="slds-col slds-size_2-of-12">
-                                <lightning-combobox
-                                        name="progress"
-                                        value={value}
-                                        placeholder="Select Progress"
-                                        options={options}
-                                        onchange={comboboxHandleChange}>
-                                </lightning-combobox>
+                            <div class="slds-col slds-size_4-of-12">
+<!--                                <lightning-combobox-->
+<!--                                        name="progress"-->
+<!--                                        value={value}-->
+<!--                                        placeholder="Select Progress"-->
+<!--                                        options={options}-->
+<!--                                        onchange={comboboxHandleChange}>-->
+<!--                                </lightning-combobox>-->
                                 <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
                                     <lightning-input type="text" value={filterInputWord} onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Press 'enter' to filter results…"></lightning-input>
                                     <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
                                         <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
                                     </svg>
                                 </div>
+                                <div class="slds-col slds-size_1-of-12"></div>
                             </div>
                         </div>
                         <div style="min-height: 50px;height: 200px;">
