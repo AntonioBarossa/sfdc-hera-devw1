@@ -68,7 +68,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Commodity_Sector__c</field>
+                <field>CommoditySector__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
