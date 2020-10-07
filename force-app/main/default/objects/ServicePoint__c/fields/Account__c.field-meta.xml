@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Account del titolare del punto di fornitura</description>
     <externalId>false</externalId>
-    <label>Account</label>
+    <label>Account Titolare</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Service Points (Account)</relationshipLabel>
     <relationshipName>Service_Points</relationshipName>
