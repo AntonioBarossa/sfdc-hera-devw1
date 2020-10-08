@@ -45,5 +45,5 @@
         </div>
     </lightning:card>
 
-    <c:hdtSupplySelection processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
+    <c:hdtSupplySelection object="{!v.object}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>

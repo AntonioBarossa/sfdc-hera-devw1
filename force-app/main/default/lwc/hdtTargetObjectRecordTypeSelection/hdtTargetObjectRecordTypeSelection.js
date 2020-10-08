@@ -42,7 +42,6 @@ export default class HdtTargetObjectRecordTypeSelection extends LightningElement
     handleRecordTypeSelection(event){
         let selectedRecordType = this.recordTypeOptions.filter(obj => obj.value == event.target.value);
         this.recordType = selectedRecordType[0];
-        console.log(selectedRecordType[0]);
     }
 
     next(){

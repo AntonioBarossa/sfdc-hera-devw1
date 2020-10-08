@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 
 export default class hdtCreateTargetObject extends LightningElement {
@@ -34,7 +34,6 @@ export default class hdtCreateTargetObject extends LightningElement {
     }
 
     handleNext(event){
-        console.log(event.detail.value);
         this.closeRecordTypeSelection();
         this.getRecordType(event.detail);
         this.openCreateRecordForm();

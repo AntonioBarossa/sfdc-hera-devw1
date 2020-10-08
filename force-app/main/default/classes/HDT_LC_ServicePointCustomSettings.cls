@@ -2,6 +2,6 @@ public with sharing class HDT_LC_ServicePointCustomSettings {
 
     @AuraEnabled
     public static CS_SelezioneFornitura__c getCustomSettings(){
-        return CS_SelezioneFornitura__c.getAll();
+        return CS_SelezioneFornitura__c.getInstance();
     }
 }
