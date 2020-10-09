@@ -31,19 +31,7 @@
                                 </div>
                             </div>
 
-                            <div class="slds-border_bottom slds-m-top_large">
-                                <h3 class="slds-text-heading_medium slds-hyphenate">Indirizzo di Fornitura</h3>
-                            </div>
-                            <div class="slds-grid slds-wrap slds-m-top_small">
-                                <template for:each={fieldsAddress} for:item="fieldAddress">
-                                    <lightning-input-field class="slds-size_1-of-3" key={fieldAddress} field-name={fieldAddress} variant="label-stacked"></lightning-input-field>
-                                </template>
-                            </div>
-                            <div class="slds-clearfix">
-                                <div class="slds-float_right">
-                                    <lightning-button disabled={verifyFieldsAddressDisabled} label="Verifica Indirizzo" variant="brand"></lightning-button>
-                                </div>
-                            </div>
+                            <c-hdt-target-object-address-fields onverifyfieldsaddressdisabled={handleVerifyFieldAddressDisabled} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddress={fieldsAddress}></c-hdt-target-object-address-fields>
 
                             <input type="submit" class="hidden" />
                         </lightning-record-edit-form>

@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import { getRecord } from 'lightning/uiRecordApi';
@@ -15,6 +15,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     newServicePointObject;
     fillFieldsDataDisabled = true;
     verifyFieldsAddressDisabled = true;
+    @track submitedAddressFields;
     get saveBtnDisabled(){
         if(this.fillFieldsDataDisabled == false 
             && this.verifyFieldsAddressDisabled == false){
@@ -22,6 +23,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         } else {
             return true;
         }
+    }
+
+    handleVerifyFieldAddressDisabled(event){
+        this.verifyFieldsAddressDisabled = event.detail;
     }
 
     connectedCallback(){
@@ -94,12 +99,23 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.dispatchEvent(new CustomEvent('closecreateform'));
     }
 
+    getSubmitedAddressFields(event){
+        this.submitedAddressFields = event.detail;
+    }
+
     handleSubmit(event){
         event.preventDefault();
         const submitedFields = event.detail.fields;
         submitedFields.RecordTypeId = this.recordtype.value;
         submitedFields.Account__c = this.accountid;
-        this.template.querySelector('lightning-record-edit-form').submit(submitedFields);
+
+        for (let [key, value] of Object.entries(this.submitedAddressFields)) {
+            submitedFields[key] = value;
+        }
+
+        console.log(JSON.stringify(submitedFields));
+
+        // this.template.querySelector('lightning-record-edit-form').submit(submitedFields);
      }
 
      handleSuccess(event){
