@@ -21,8 +21,8 @@
                                 <h3 class="slds-text-heading_medium slds-hyphenate">Punto Di Fornitura</h3>
                             </div>
                             <div class="slds-grid slds-wrap slds-m-top_small">
-                                <template for:each={fieldsData} for:item="fieldData">
-                                    <lightning-input-field onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" key={fieldData} field-name={fieldData} variant="label-stacked"></lightning-input-field>
+                                <template for:each={fieldsDataObject} for:item="fieldData">
+                                    <lightning-input-field required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
                                 </template>
                             </div>
                             <div class="slds-clearfix">
@@ -31,15 +31,14 @@
                                 </div>
                             </div>
 
-                            <c-hdt-target-object-address-fields onverifyfieldsaddressdisabled={handleVerifyFieldAddressDisabled} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddress={fieldsAddress}></c-hdt-target-object-address-fields>
+                            <c-hdt-target-object-address-fields onverifyfieldsaddressdisabled={handleVerifyFieldAddressDisabled} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddressobject={fieldsAddressObject}></c-hdt-target-object-address-fields>
 
-                            <input type="submit" class="hidden" />
                         </lightning-record-edit-form>
 
                     </template>
                 </div>
                 <footer class="slds-modal__footer">
-                    <lightning-button label="Anulla" variant="neutral" onclick={closeCreateTargetObjectModal}></lightning-button>
+                    <lightning-button label="Annulla" variant="neutral" onclick={closeCreateTargetObjectModal}></lightning-button>
                     <lightning-button disabled={saveBtnDisabled} label="Salva" variant="brand" onclick={save} class="slds-m-left_x-small"></lightning-button>
                 </footer>
             </div>

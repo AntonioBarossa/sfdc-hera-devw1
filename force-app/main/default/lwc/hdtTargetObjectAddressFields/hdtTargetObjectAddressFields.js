@@ -2,7 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 
 export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
-    @api fieldsaddress;
+    @api fieldsaddressobject;
     @track submitedAddressFields = {};
     get verifyFieldsAddressDisabled(){
         let result = true;
@@ -36,6 +36,16 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
 
         this.dispatchEvent(evt);
 
+    }
+
+    @api
+    checkInvalidFields(fieldsWithError){
+        for(var i=0; i<fieldsWithError.length; i++){
+            
+            let dataName = "[data-name='"+fieldsWithError[i]+"']";
+            let dataField = this.template.querySelector(dataName);
+            dataField.reportValidity();
+        }
     }
 
 }
