@@ -3,7 +3,7 @@
     <fullName>RequestedPhase__c</fullName>
     <description>Fase richiesta</description>
     <externalId>false</externalId>
-    <label>Requested phase</label>
+    <label>Fase Richiesta</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

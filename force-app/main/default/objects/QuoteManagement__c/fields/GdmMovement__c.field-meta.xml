@@ -3,7 +3,7 @@
     <fullName>GdmMovement__c</fullName>
     <description>Spostamento GdM</description>
     <externalId>false</externalId>
-    <label>Gdm Movement</label>
+    <label>Spostamento GdM</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Adeg pot disponibile</description>
     <externalId>false</externalId>
-    <label>Adeg pot disp</label>
+    <label>Adeg pot disponibile</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

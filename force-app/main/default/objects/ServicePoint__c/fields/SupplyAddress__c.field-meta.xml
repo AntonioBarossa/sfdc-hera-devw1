@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>SupplyStreet__c &amp;&apos; &apos;&amp; SupplyStreetNumber__c &amp;&apos; &apos;&amp; SupplyStreetNumberExtension__c &amp;&apos;, &apos;&amp; SupplyPlace__c &amp; SupplyCity__c &amp;&apos; &apos;&amp; SupplyProvince__c &amp;&apos;, &apos;&amp; SupplyPostalCode__c &amp;&apos; &apos;&amp; SupplyCountry__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Supply Address</label>
+    <label>Indirizzo [Fornitura]</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
