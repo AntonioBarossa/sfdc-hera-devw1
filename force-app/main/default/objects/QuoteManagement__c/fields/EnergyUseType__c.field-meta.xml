@@ -3,7 +3,7 @@
     <fullName>EnergyUseType__c</fullName>
     <description>Tipo uso energia</description>
     <externalId>false</externalId>
-    <label>Energy use type</label>
+    <label>Tipo Uso Energia</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

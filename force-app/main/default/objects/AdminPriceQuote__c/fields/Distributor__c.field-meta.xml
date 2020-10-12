@@ -5,8 +5,8 @@
     <externalId>false</externalId>
     <label>Distributore</label>
     <referenceTo>Account</referenceTo>
-    <relationshipLabel>Service Points</relationshipLabel>
-    <relationshipName>ServicePoints</relationshipName>
+    <relationshipLabel>Administration Price Quotes</relationshipLabel>
+    <relationshipName>Administration_Price_Quotes</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

@@ -3,7 +3,7 @@
     <fullName>Commodity__c</fullName>
     <description>Servizio</description>
     <externalId>false</externalId>
-    <label>Commodity</label>
+    <label>Servizio</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

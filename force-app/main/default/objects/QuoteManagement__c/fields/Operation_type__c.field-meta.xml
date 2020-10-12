@@ -3,7 +3,7 @@
     <fullName>Operation_type__c</fullName>
     <description>Tipo operazione</description>
     <externalId>false</externalId>
-    <label>Operation Type</label>
+    <label>Tipo Operazione</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

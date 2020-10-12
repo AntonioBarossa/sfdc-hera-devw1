@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SupplyPostalCode__c</fullName>
     <externalId>false</externalId>
-    <label>Postal Code [Supply]</label>
+    <label>CAP [Fornitura]</label>
     <length>30</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
