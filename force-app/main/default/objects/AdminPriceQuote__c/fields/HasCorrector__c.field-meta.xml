@@ -3,7 +3,7 @@
     <fullName>HasCorrector__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>HasCorrector</label>
+    <label>Presenza correttore</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

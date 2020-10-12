@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SupplyStreetNumberExtension__c</fullName>
     <externalId>false</externalId>
-    <label>Street Number Extension [Supply]</label>
+    <label>Estens.Civico [Fornitura]</label>
     <length>15</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

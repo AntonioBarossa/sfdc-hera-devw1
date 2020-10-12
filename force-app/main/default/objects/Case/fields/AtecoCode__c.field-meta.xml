@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OperationCode__c</fullName>
+    <fullName>AtecoCode__c</fullName>
+    <description>Combinazione alfanumerica che identifica una ATtività ECOnomica</description>
     <externalId>false</externalId>
-    <label>Codice Prestazione</label>
+    <label>Codice Ateco</label>
     <length>255</length>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

@@ -3,7 +3,7 @@
     <fullName>ConnectionType__c</fullName>
     <description>Tipo connessione</description>
     <externalId>false</externalId>
-    <label>Connection type</label>
+    <label>Tipo Connessione</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

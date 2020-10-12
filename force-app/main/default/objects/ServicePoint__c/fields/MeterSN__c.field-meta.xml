@@ -3,7 +3,7 @@
     <fullName>MeterSN__c</fullName>
     <description>Matricola del contatore attuale</description>
     <externalId>false</externalId>
-    <label>Meter Serial Number</label>
+    <label>Matricola Contatore</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

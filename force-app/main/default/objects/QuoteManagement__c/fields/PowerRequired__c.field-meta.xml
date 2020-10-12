@@ -3,7 +3,7 @@
     <fullName>PowerRequired__c</fullName>
     <description>Potenza richiesta</description>
     <externalId>false</externalId>
-    <label>Power required</label>
+    <label>Potenza Richiesta</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

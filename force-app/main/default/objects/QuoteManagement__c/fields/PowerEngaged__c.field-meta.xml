@@ -3,7 +3,7 @@
     <fullName>PowerEngaged__c</fullName>
     <description>Potenza impegnata</description>
     <externalId>false</externalId>
-    <label>Power engaged</label>
+    <label>Potenza Impegnata</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
