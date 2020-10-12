@@ -1,7 +1,8 @@
 <template>
     <lightning-layout>
-        <lightning-layout-item padding="around-large" size="6">
-            <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+        <lightning-layout-item padding="around-small" size="6">
+            <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
+                               size="small"></lightning-spinner>
             <lightning-input
                     onkeyup={handleSearchInputKeyChange}
                     name="enter-search"
@@ -11,61 +12,77 @@
                     class="searchInput">
             </lightning-input>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-large" size="3">
+        <lightning-layout-item padding="around-small" size="3">
             <lightning-button
                     label="search"
                     disabled={submitButtonStatus}
                     onclick={submitSearch}
                     title="Search action"
                     icon-name="utility:search"
+                    variant="brand"
                     class="slds-m-left_x-small searchGo"></lightning-button>
         </lightning-layout-item>
     </lightning-layout>
 
     <div if:true={openmodel} style="height: auto;">
         <div class="demo-only">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                 <div class="slds-modal__container">
                     <header class="slds-modal__header">
-                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse modal-close-button" title="Close" onclick={closeModal}>
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse modal-close-button"
+                                title="Close" onclick={closeModal}>
                             <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
                             <span class="slds-assistive-text">Close</span>
                         </button>
                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h2>
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" if:true={isLoaded}>
-                        <div class="slds-grid slds-gutters modal-header-field" >
-                            <div class="slds-col slds-size_5-of-12">
-                                <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
-                                <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search" label="" onchange={searchAction} class="searchInput"></lightning-input>
-                            </div>
-                            <div class="slds-col slds-size_3-of-12">
-                                <lightning-button label="search" disabled={submitButtonStatus} onclick={submitSearch} title="Search action" icon-name="utility:search" class="slds-m-left_x-small modal-searchGo"></lightning-button>
-                            </div>
-
-                            <div class="slds-col slds-size_4-of-12">
-<!--                                <lightning-combobox-->
-<!--                                        name="progress"-->
-<!--                                        value={value}-->
-<!--                                        placeholder="Select Progress"-->
-<!--                                        options={options}-->
-<!--                                        onchange={comboboxHandleChange}>-->
-<!--                                </lightning-combobox>-->
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+                                    <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search" label="" onchange={searchAction} class="searchInput"></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small" size="3">
+                                <lightning-button variant="brand" label="search" disabled={submitButtonStatus} onclick={submitSearch} title="Search action" icon-name="utility:search" class="slds-m-left_x-small modal-searchGo"></lightning-button>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="4">
                                 <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
-                                    <lightning-input type="text" value={filterInputWord} onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Press 'enter' to filter results…"></lightning-input>
+                                    <lightning-input type="text" value={filterInputWord} onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Affina Ricerca"></lightning-input>
                                     <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
                                         <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
                                     </svg>
                                 </div>
-                                <div class="slds-col slds-size_1-of-12"></div>
-                            </div>
-                        </div>
-                        <div style="min-height: 50px;height: 200px;">
-                            <lightning-datatable class="table-section" key-field="id" data={tableData} columns={tableColumns}></lightning-datatable>
-                        </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="12">
+                                <lightning-datatable class="table-section" key-field="id" data={tableData} columns={tableColumns}></lightning-datatable>
+                            </lightning-layout-item>
+                        </lightning-layout>
                     </div>
                     <footer class="slds-modal__footer">
-                        <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="slds-grid slds-grid_align-center">
+                                <div class="slds-col">
+<!--                                    <lightning-button class="pagination-button neutral"  onclick={previousPage} label="Previous" icon-name="utility:chevronleft" icon-position="left"></lightning-button>-->
+                                    <button onclick={previousPage} class="slds-button slds-button_neutral pagination-button">
+                                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft"></use>
+                                        </svg>Previous</button>
+                                </div>
+                                <div class="slds-col">
+                                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPage}</p>
+                                </div>
+                                <div class="slds-col">
+                                    <button onclick={nextPage} class="slds-button slds-button_neutral pagination-button next">Next
+                                        <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright"></use>
+                                        </svg></button>
+                                </div>
+                            </div>
+                        <lightning-button label="Cancel" variant="brand" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
                     </footer>
                 </div>
             </section>

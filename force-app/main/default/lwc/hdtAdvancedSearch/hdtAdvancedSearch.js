@@ -1,48 +1,60 @@
 import {LightningElement, track} from 'lwc';
-import getServicePointsByName from '@salesforce/apex/HDT_LC_AdvancedSearch.getServicePointsByName';
-import {ShowToastEvent} from 'lightning/platformShowToastEvent'
+import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServicePoints';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class HdtAdvancedSearch extends LightningElement {
 
     @track
     filterInputWord = null;
     openmodel = false
-    value = 'false';
     submitButtonStatus = true;
     searchInputValue = null;
     tableData = [];
     tableColumns = [];
     isLoaded = false;
     columns = [];
-    originalData=null;
-    preloading=false;
+    originalData = [];
+    pages = [];
+    preloading = false;
+    @track
+    currentPage = 0;
+    totalPage = 0;
+    customSetting = null;
 
-    connectedCallback() {}
-
-    comboboxHandleChange(event) {
-        this.value = event.detail.value;
+    connectedCallback() {
     }
 
+    /**
+     * Filter Data-Table
+     */
     handleFilterDataTable(event) {
         let val = event.target.value;
-        this.tableData = this.originalData.filter(row => {
-            if (row.ServicePointCode__c.startsWith(val)){
-                return row;
+        let self = this;
+        let data;
+        setTimeout(function () {
+            data = JSON.parse(JSON.stringify(self.originalData));
+            if (val.trim() !== '') {
+                data = data.filter(row => {
+                    let found = false;
+                    Object.values(row).forEach(v => {
+                        if (v !== undefined && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase())  !== -1 ) ) {
+                            found = true;
+                        }
+                    });
+                    if (found) return row;
+                })
             }
-        });
+            self.createTable(data); // redesign table
+            self.currentPage = 0; // reset page
+        }, 1000);
     }
 
-    get options() {
-        return [
-            {label: 'Select..', value: 'false'},
-            {label: 'YES', value: 'true'},
-            {label: 'NO', value: 'false'},
-        ]
-    }
-
+    /**
+     * validate search input length
+     */
     handleSearchInputKeyChange(event) {
         this.searchInputValue = event.target.value;
-        if (this.searchInputValue.length > 4) {
+        if (this.searchInputValue.length > 3) {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
@@ -53,59 +65,99 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.openmodel = false
     }
 
+    /**
+     * get input value and also validate input value
+     */
     searchAction(event) {
         this.submitButtonStatus = true;
-        if (event.target.value.length>4){
+        if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
         }
     }
 
+    /**
+     * Create header for Data-Table header with original data
+     */
     formatTableHeaderColumns(rowData) {
         let columns = [];
-        this.tableColumns=[];
+        this.tableColumns = [];
         rowData.forEach(row => {
             let keys = Object.keys(row);
             columns = columns.concat(keys);
         });
         let columnsUniq = [...new Set(columns)];
-        columnsUniq.splice(columnsUniq.indexOf('Id'), 1);
         columnsUniq.forEach(field => this.tableColumns.push({label: field, fieldName: field}));
     }
 
+    /**
+     * Create Data-Table
+     */
+    createTable(data) {
+        let i, j, temporary, chunk = 5;
+        this.pages = [];
+        for (i = 0, j = data.length; i < j; i += chunk) {
+            temporary = data.slice(i, i + chunk);
+            this.pages.push(temporary);
+        }
+        this.totalPage = this.pages.length;
+        this.reLoadTable();
+    }
+
+    reLoadTable() {
+        this.tableData = this.pages[this.currentPage];
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPage - 1) this.currentPage++;
+        this.reLoadTable();
+    }
+
+    previousPage() {
+        if (this.currentPage > 0) this.currentPage--;
+        this.reLoadTable();
+    }
+
+    alert(title,msg,variant){
+        const event = ShowToastEvent({
+            title: title,
+            message:  msg,
+            variant: variant
+        });
+        dispatchEvent(event);
+    }
+
+    get getCurrentPage() {
+        if (this.totalPage===0) return 0;
+        return this.currentPage + 1;
+    }
+
+    /**
+     * Call apex class and get data
+     */
     submitSearch(event) {
         event.preventDefault();
         this.preloading = true;
-        getServicePointsByName({code: this.searchInputValue}).then(data => {
+        getServicePoints({parameter: this.searchInputValue}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
+                this.createTable(data);
                 this.formatTableHeaderColumns(data);
                 this.submitButtonStatus = true;
                 this.openmodel = true;
-                this.tableData = data;
                 this.isLoaded = true;
             } else {
-                const event = ShowToastEvent({
-                    title: 'Table Data',
-                    message: 'No records was found',
-                    variant: 'info'
-                });
-                this.dispatchEvent(event);
+                this.alert('Table Data','No records was found','warn')
                 this.tableData = data;
             }
         }).catch(error => {
             this.preloading = false;
-            let option = {
-                title: 'JavascriptError',
-                message: error,
-                variant: 'error'
-            };
+            let errorMsg = error;
             if ('body' in error && 'message' in error.body) {
-                option.message = error.body.message
+                errorMsg = error.body.message
             }
-            const event = ShowToastEvent(option);
-            this.dispatchEvent(event);
+            this.alert('',errorMsg,'error')
         });
 
     }
