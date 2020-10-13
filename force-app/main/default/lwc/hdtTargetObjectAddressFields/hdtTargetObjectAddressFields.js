@@ -3,6 +3,7 @@ import { LightningElement, api, track } from 'lwc';
 export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
     @api fieldsaddressobject;
+    hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
     get verifyFieldsAddressDisabled(){
         let result = true;
@@ -18,10 +19,6 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         ){
             result = false;
         }
-
-        this.dispatchEvent(new CustomEvent("verifyfieldsaddressdisabled", {
-            detail: result
-          }));
         
         return result;
     }
@@ -46,6 +43,15 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
             let dataField = this.template.querySelector(dataName);
             dataField.reportValidity();
         }
+    }
+
+    handleAddressVerification(){
+        
+        this.hasAddressBeenVerified = true;
+        
+        this.dispatchEvent(new CustomEvent("addressverification", {
+            detail: this.hasAddressBeenVerified
+          }));
     }
 
 }

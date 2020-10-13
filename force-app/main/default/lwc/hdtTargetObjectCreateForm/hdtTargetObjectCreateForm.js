@@ -1,7 +1,6 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
-import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
@@ -20,7 +19,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     fieldsReady = false;
     servicePointCode;
     servicePointId;
-    newServicePointObject;
     fillFieldsDataDisabled = true;
     verifyFieldsAddressDisabled = true;
     fieldsDataReq;
@@ -28,17 +26,19 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     fieldsAddressWithError = [];
     @track submitedAddressFields;
     @track allSubmitedFields = {};
+    hasDataBeenFilled = false;
+    hasAddressBeenVerified = false;
+    saving = false;
     get saveBtnDisabled(){
-        if(this.fillFieldsDataDisabled == false 
-            && this.verifyFieldsAddressDisabled == false){
+        if(this.hasDataBeenFilled && this.hasAddressBeenVerified){
             return false;
         } else {
             return true;
         }
     }
 
-    handleVerifyFieldAddressDisabled(event){
-        this.verifyFieldsAddressDisabled = event.detail;
+    handleAddressVerification(event){
+        this.hasAddressBeenVerified = event.detail;
     }
 
     toArray(fieldsDataRaw){
@@ -112,6 +112,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         });
     }
 
+    renderedCallback(){
+        if(this.fieldsReady){
+            let accountField = this.template.querySelector('[data-name="Account__c"]');
+            if(accountField != null || accountField != undefined){
+                accountField.value = this.accountid;
+            }
+        }
+    }
+
     handleFieldsDataChange(event){
 
         if(event.target.fieldName == 'ServicePointCode__c'){
@@ -130,15 +139,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     handleDataFieldsFilling(){
-        let inp = this.template.querySelectorAll(".fieldsData");
-
-        inp.forEach(function(element){
-
-            if(element.fieldName !="ServicePointCode__c"){
-                element.value = 'testFill';
-            }
-
-        },this);
+        this.hasDataBeenFilled = true;
     }
 
     closeCreateTargetObjectModal(){
@@ -149,30 +150,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.submitedAddressFields = event.detail;
     }
 
-    handleSubmit(event){
-        event.preventDefault();
-        const submitedFields = event.detail.fields;
-        submitedFields.RecordTypeId = this.recordtype.value;
-        submitedFields.Account__c = this.accountid;
-
-        for (let [key, value] of Object.entries(this.submitedAddressFields)) {
-            submitedFields[key] = value;
-        }
-
-     }
-
-     handleSuccess(event){
-        this.servicePointId = event.detail.id;
-        this.closeCreateTargetObjectModal();
-        const toastSuccessMessage = new ShowToastEvent({
-            title: 'Success',
-            message: 'Service Point created successfully',
-            variant: 'success'
-        });
-        this.dispatchEvent(toastSuccessMessage);
-     }
-
-     save(){
+    save(){
 
         let validForm = true;
 
@@ -203,7 +181,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         
         if (validForm) {
-            this.template.querySelector('lightning-record-edit-form').submit(submitedFields);
+            this.saving = true;
+            this.template.querySelector('lightning-record-edit-form').submit(this.allSubmitedFields);
         } else {
 
             this.template.querySelector('c-hdt-target-object-address-fields').checkInvalidFields(this.fieldsAddressWithError);
@@ -216,6 +195,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             
         }
-     }
+    }
+
+    handleSuccess(event){
+        this.saving = false;
+        this.closeCreateTargetObjectModal();
+        this.servicePointId = event.detail.id;
+        const toastSuccessMessage = new ShowToastEvent({
+            title: 'Success',
+            message: 'Service Point created successfully',
+            variant: 'success'
+        });
+        this.dispatchEvent(toastSuccessMessage);
+    }
 
 }

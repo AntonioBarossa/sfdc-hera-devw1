@@ -14,25 +14,23 @@
                     <template if:true={fieldsReady}>
                         
                         <lightning-record-edit-form object-api-name={objectApiName} onsubmit={handleSubmit} onsuccess={handleSuccess}>
-                            <lightning-messages>
-                            </lightning-messages>
-
-                            <div class="slds-border_bottom">
-                                <h3 class="slds-text-heading_medium slds-hyphenate">Punto Di Fornitura</h3>
-                            </div>
-                            <div class="slds-grid slds-wrap slds-m-top_small">
-                                <template for:each={fieldsDataObject} for:item="fieldData">
-                                    <lightning-input-field required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
-                                </template>
-                            </div>
-                            <div class="slds-clearfix">
-                                <div class="slds-float_right">
-                                    <lightning-button disabled={fillFieldsDataDisabled} onclick={handleDataFieldsFilling} label="Arrichimento Dati" variant="brand"></lightning-button>
+                            <lightning-messages></lightning-messages>
+                            <lightning-spinner variant="brand" if:true={saving} alternative-text="Saving..." size="large"></lightning-spinner>
+                                <div class="slds-border_bottom">
+                                    <h3 class="slds-text-heading_medium slds-hyphenate">Punto Di Fornitura</h3>
                                 </div>
-                            </div>
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fieldsDataObject} for:item="fieldData">
+                                        <lightning-input-field required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                                <div class="slds-clearfix">
+                                    <div class="slds-float_right">
+                                        <lightning-button disabled={fillFieldsDataDisabled} onclick={handleDataFieldsFilling} label="Arrichimento Dati" variant="brand"></lightning-button>
+                                    </div>
+                                </div>
 
-                            <c-hdt-target-object-address-fields onverifyfieldsaddressdisabled={handleVerifyFieldAddressDisabled} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddressobject={fieldsAddressObject}></c-hdt-target-object-address-fields>
-
+                                <c-hdt-target-object-address-fields onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddressobject={fieldsAddressObject}></c-hdt-target-object-address-fields>
                         </lightning-record-edit-form>
 
                     </template>
