@@ -8,15 +8,17 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 * Retrieve data from ServicePoint Object By ServiceCode
 	 */
     @AuraEnabled(cacheable = true)
-    public static List<Map<String, Object>> getServicePoints(String parameter) {
+    public static List<Map<String, Object>> getServicePoints(String parameter,String queryType) {
         Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
-        if (parameter.length() < 6) {
+        //if (parameter.length() < 6) {
+        if (queryType == 'serialnumber') {
             Integer.valueOf(parameter);
             servicePoints.addAll(getServicePointsByMeterSerialNumber(parameter));
         } else {
             servicePoints.addAll(getServicePointsByMeterSerialNumber(parameter));
             servicePoints.addAll(getServicePointsByCode(parameter));
         }
+
         checkTheNumberOfRecords(servicePoints.size());
         String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
         List<Map<String, Object>> output = new List<Map<String, Object>>();

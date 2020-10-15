@@ -9,6 +9,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     openmodel = false
     submitButtonStatus = true;
     searchInputValue = null;
+    queryType = 'pod';
     tableData = [];
     tableColumns = [];
     isLoaded = false;
@@ -134,13 +135,17 @@ export default class HdtAdvancedSearch extends LightningElement {
         return this.currentPage + 1;
     }
 
+    onselected(value){
+        this.queryType = value.detail;
+    }
+
     /**
      * Call apex class and get data
      */
     submitSearch(event) {
         event.preventDefault();
         this.preloading = true;
-        getServicePoints({parameter: this.searchInputValue}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -161,30 +166,30 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
-
     }
-
-    /**
+     /**
      * Get selected record from table
      */
     getSelectedServicePoint(event){
-
+        this.preloading = true;
         let selectedRows = event.detail.selectedRows;
 
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
 
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
-
+        this.preloading = false;
     }
 
     /**
      * Handle action when confirm button is pressed
      */
     handleConfirm(){
+        this.preloading = true;
         this.closeModal();
         this.dispatchEvent(new CustomEvent('servicepointselection', {
             detail: this.rowToSend
         }));
         this.confirmButtonDisabled = true;
+        this.preloading = false;
     }
 }

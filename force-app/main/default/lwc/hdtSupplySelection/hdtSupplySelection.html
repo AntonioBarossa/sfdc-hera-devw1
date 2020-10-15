@@ -1,26 +1,15 @@
 <template>
-    <lightning-card>
-
+    <lightning-card title="Selezione Fornitura">
         <lightning-layout>
-            <lightning-layout-item padding="around-small" size="8">
-                <p>Digitare in maniera completa o parziale uno dei seguenti:</p>
-                <ul class="slds-list_dotted">
-                    <li>Codice POD/PDR</li>
-                    <li>Codice contrato</li>
-                    <li>Matricola contatore</li>
-                </ul>
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item padding="around-small" size="8" >
+                <c-hdt-advanced-search onservicepointselection={handleServicePointSelection}></c-hdt-advanced-search>
             </lightning-layout-item>
-
-            <lightning-layout-item padding="around-small" size="4">
+            <lightning-layout-item style="float:right" padding="around-small" size="4" float="right">
                 <c-hdt-create-target-object if:true={showCreateTargetObjectButton} selectedservicepoint={selectedServicePoint} targetobject={targetObject} accountid={accountId}></c-hdt-create-target-object>
             </lightning-layout-item>
         </lightning-layout>
-        <lightning-layout>
-            <lightning-layout-item padding="around-small" size="12">
-                <c-hdt-advanced-search onservicepointselection={handleServicePointSelection}></c-hdt-advanced-search>
-            </lightning-layout-item>
-        </lightning-layout>
-
     </lightning-card>
 
 </template>

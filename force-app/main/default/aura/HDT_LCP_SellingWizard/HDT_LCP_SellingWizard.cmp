@@ -1,7 +1,7 @@
 <aura:component implements = "force:hasRecordId,flexipage:availableForAllPageTypes">
     <aura:attribute name="recordId" type="String" />
-    <lightning:card>
-        <div  class="slds-page-header slds-page-header_record-home">
+    <!-- <lightning:card title="Selezione Fornitura">
+       <div  class="slds-page-header slds-page-header_record-home">
             <div class="slds-summary-detail__title">
                 <div class="slds-up-assistant__step-summary">
                     <div class="slds-media">
@@ -42,8 +42,8 @@
                     </ul>
                 </div>
             </div>
-        </div>
-    </lightning:card>
+        </div> 
+    </lightning:card> -->
 
     <c:hdtSupplySelection object="{!v.object}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>

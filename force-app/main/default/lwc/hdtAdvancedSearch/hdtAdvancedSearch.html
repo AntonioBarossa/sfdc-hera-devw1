@@ -1,18 +1,24 @@
 <template>
+
     <lightning-layout>
         <lightning-layout-item padding="around-small" size="6">
-            <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
-                               size="small"></lightning-spinner>
+            <c-hdt-advanced-search-selection-feild-radio-group onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <lightning-layout>
+        <lightning-layout-item padding="around-small" size="6">
+            <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
             <lightning-input
                     onkeyup={handleSearchInputKeyChange}
                     name="enter-search"
                     type="search"
-                    label=""
+                    label="Nuova Ricerca"
                     onchange={searchAction}
                     class="searchInput">
             </lightning-input>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="3">
+        <lightning-layout-item padding="around-medium" size="3">
             <lightning-button
                     label="search"
                     disabled={submitButtonStatus}
@@ -41,16 +47,26 @@
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="6">
                                     <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
-                                    <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search" label="" onchange={searchAction} class="searchInput"></lightning-input>
+                                    <lightning-input
+                                            onkeyup={handleSearchInputKeyChange}
+                                            name="enter-search"
+                                            type="search"
+                                            label="Nuova Ricerca"
+                                            onchange={searchAction}
+                                            class="searchInput">
+                                    </lightning-input>
                             </lightning-layout-item>
-                            <lightning-layout-item padding="around-small" size="3">
+                            <lightning-layout-item padding="around-medium" size="3">
                                 <lightning-button variant="brand" label="search" disabled={submitButtonStatus} onclick={submitSearch} title="Search action" icon-name="utility:search" class="slds-m-left_x-small modal-searchGo"></lightning-button>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small" size="5">
+                                <c-hdt-advanced-search-selection-feild-radio-group onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
                             </lightning-layout-item>
                         </lightning-layout>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="4">
                                 <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
-                                    <lightning-input type="text" value={filterInputWord} onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Affina Ricerca"></lightning-input>
+                                    <lightning-input type="text" value={filterInputWord} label="Filtra Ricerca" onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Affina Ricerca"></lightning-input>
                                     <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
                                         <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
                                     </svg>
@@ -83,7 +99,7 @@
                                 </div>
                             </div>
                         <lightning-button label="Cancel" variant="brand" onclick={closeModal}></lightning-button>
-                        <lightning-button disabled={confirmButtonDisabled} onclick={handleConfirm} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button disabled={confirmButtonDisabled} onclick={handleConfirm} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
                     </footer>
                 </div>
             </section>
