@@ -1,10 +1,13 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
+import getServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.getServicePoint';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
     @api accountid;
+    @api selectedservicepoint;
+
     objectApiName = 'ServicePoint__c';
     fieldsData;
     @track fieldsDataObject = [];
@@ -28,7 +31,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track allSubmitedFields = {};
     hasDataBeenFilled = false;
     hasAddressBeenVerified = false;
-    saving = false;
+    loading = false;
+    recordTypeId;
+    @track servicePointRetrievedData;
+    fieldsDataRaw;
+    fieldsDataReqRaw;
+    customSettings;
+    
     get saveBtnDisabled(){
         if(this.hasDataBeenFilled && this.hasAddressBeenVerified){
             return false;
@@ -59,35 +68,83 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let fieldsDataObject = [];
 
         fieldsData.forEach(element => {
-            fieldsDataObject.push(
-               {
-                   fieldname: element,
-                   required : fieldsDataReq.includes(element)
-               }
-           ) 
+            
+           if(this.selectedservicepoint != undefined){
+
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : fieldsDataReq.includes(element),
+                        value: this.servicePointRetrievedData[element]
+                    }
+                ) 
+            } else {
+                fieldsDataObject.push(
+                    {
+                        fieldname: element,
+                        required : fieldsDataReq.includes(element),
+                        value: ''
+                    }
+                ) 
+            }
+
         });
+
+        
 
         return fieldsDataObject;
     }
 
     connectedCallback(){
+        this.loading = true;
+        
         getCustomSettings().then(data => {
-            let fieldsDataRaw;
-            let fieldsDataReqRaw;
 
             //get data fields
             switch(this.recordtype.label){
                 case 'Elettrico':
-                    fieldsDataRaw = data.FieldEle__c;
-                    fieldsDataReqRaw = data.FieldRequiredEle__c;
+                    this.fieldsDataRaw = data.FieldEle__c;
+                    this.fieldsDataReqRaw = data.FieldRequiredEle__c;
                     break;
                 case 'Gas':
-                    fieldsDataRaw = data.FieldGas__c;
-                    fieldsDataReqRaw = data.FieldRequiredGas__c;
+                    this.fieldsDataRaw = data.FieldGas__c;
+                    this.fieldsDataReqRaw = data.FieldRequiredGas__c;
             }
 
-            this.fieldsData = this.toArray(fieldsDataRaw);
-            this.fieldsDataReq = this.toArray(fieldsDataReqRaw);
+            if(this.selectedservicepoint != undefined){
+                this.customSettings = data;
+
+            let queryFields = this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c;
+            
+            getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields}).then(data =>{
+                console.log(JSON.parse(JSON.stringify(data)));
+                this.servicePointRetrievedData = data[0];
+
+                this.fieldsData = this.toArray(this.fieldsDataRaw);
+            this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
+            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+
+                //get address fields
+             this.fieldsAddress = this.toArray(this.customSettings.fieldAddress__c);
+             this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
+             this.fieldsAddressObject = this.toObject(this.fieldsAddress, this.fieldsAddressReq);
+             
+             //merge all fields together
+             this.allFieldsData = this.fieldsData.concat(this.fieldsAddress);
+             this.allFieldsDataReq = this.fieldsDataReq.concat(this.fieldsAddressReq);
+             this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
+                
+            }).catch(error => {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Error',
+                    message: error.message,
+                    variant: 'error'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        } else {
+            this.fieldsData = this.toArray(this.fieldsDataRaw);
+            this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
             //get address fields
@@ -99,10 +156,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.allFieldsData = this.fieldsData.concat(this.fieldsAddress);
             this.allFieldsDataReq = this.fieldsDataReq.concat(this.fieldsAddressReq);
             this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
+        }
+        
+             
+            
 
             //fields have been loaded
             this.fieldsReady = true;
+            this.loading = false;
         }).catch(error => {
+            this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Error',
                 message: error.message,
@@ -118,7 +181,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if(accountField != null || accountField != undefined){
                 accountField.value = this.accountid;
             }
+
         }
+    }
+
+    disconnectedCallback(){
+        this.fieldsReady = false;
     }
 
     handleFieldsDataChange(event){
@@ -139,6 +207,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     handleDataFieldsFilling(){
+        // let inp = this.template.querySelectorAll(".fieldsData");
+
+        // if(this.servicePointRetrievedData != undefined){
+
+        // inp.forEach(function(element){
+            
+        //     element.value = 'test';
+        // });
+
+        // }
+
         this.hasDataBeenFilled = true;
     }
 
@@ -181,7 +260,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
         
         if (validForm) {
-            this.saving = true;
+            this.loading = true;
             this.template.querySelector('lightning-record-edit-form').submit(this.allSubmitedFields);
         } else {
 
@@ -198,7 +277,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     handleSuccess(event){
-        this.saving = false;
+        this.loading = false;
         this.closeCreateTargetObjectModal();
         this.servicePointId = event.detail.id;
         const toastSuccessMessage = new ShowToastEvent({

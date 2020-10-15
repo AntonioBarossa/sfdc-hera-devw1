@@ -5,7 +5,7 @@
         </div>
         <div class="slds-grid slds-wrap slds-m-top_small">
             <template for:each={fieldsaddressobject} for:item="fieldAddress">
-                <lightning-input-field required={fieldAddress.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3" data-name={fieldAddress.fieldname} key={fieldAddress.fieldname} field-name={fieldAddress.fieldname} variant="label-stacked"></lightning-input-field>
+                <lightning-input-field value={fieldAddress.value} required={fieldAddress.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3" data-name={fieldAddress.fieldname} key={fieldAddress.fieldname} field-name={fieldAddress.fieldname} variant="label-stacked"></lightning-input-field>
             </template>
         </div>
         <div class="slds-clearfix">

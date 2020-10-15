@@ -20,6 +20,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     currentPage = 0;
     totalPage = 0;
     customSetting = null;
+    confirmButtonDisabled = true;
+    rowToSend;
 
     connectedCallback() {
     }
@@ -160,5 +162,29 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.alert('',errorMsg,'error')
         });
 
+    }
+
+    /**
+     * Get selected record from table
+     */
+    getSelectedServicePoint(event){
+
+        let selectedRows = event.detail.selectedRows;
+
+        this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+
+        this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+
+    }
+
+    /**
+     * Handle action when confirm button is pressed
+     */
+    handleConfirm(){
+        this.closeModal();
+        this.dispatchEvent(new CustomEvent('servicepointselection', {
+            detail: this.rowToSend
+        }));
+        this.confirmButtonDisabled = true;
     }
 }

@@ -11,17 +11,17 @@
                     <h2 class="slds-text-heading_medium slds-hyphenate">New Service Point: {recordtype.label}</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" >
+                    <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
                     <template if:true={fieldsReady}>
                         
                         <lightning-record-edit-form object-api-name={objectApiName} onsubmit={handleSubmit} onsuccess={handleSuccess}>
                             <lightning-messages></lightning-messages>
-                            <lightning-spinner variant="brand" if:true={saving} alternative-text="Saving..." size="large"></lightning-spinner>
                                 <div class="slds-border_bottom">
                                     <h3 class="slds-text-heading_medium slds-hyphenate">Punto Di Fornitura</h3>
                                 </div>
                                 <div class="slds-grid slds-wrap slds-m-top_small">
                                     <template for:each={fieldsDataObject} for:item="fieldData">
-                                        <lightning-input-field required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
+                                        <lightning-input-field value={fieldData.value} required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
                                     </template>
                                 </div>
                                 <div class="slds-clearfix">

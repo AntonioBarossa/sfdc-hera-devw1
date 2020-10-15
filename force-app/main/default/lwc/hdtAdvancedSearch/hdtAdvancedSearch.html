@@ -59,7 +59,7 @@
                         </lightning-layout>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="12">
-                                <lightning-datatable class="table-section" key-field="id" data={tableData} columns={tableColumns}></lightning-datatable>
+                                <lightning-datatable class="table-section" key-field="id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint}></lightning-datatable>
                             </lightning-layout-item>
                         </lightning-layout>
                     </div>
@@ -82,7 +82,8 @@
                                         </svg></button>
                                 </div>
                             </div>
-                        <lightning-button label="Cancel" variant="brand" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <lightning-button label="Cancel" variant="brand" onclick={closeModal}></lightning-button>
+                        <lightning-button disabled={confirmButtonDisabled} onclick={handleConfirm} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
                     </footer>
                 </div>
             </section>
