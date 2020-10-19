@@ -3,7 +3,7 @@
     <fullName>Market__c</fullName>
     <description>Mercato</description>
     <externalId>false</externalId>
-    <label>Market</label>
+    <label>Mercato</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

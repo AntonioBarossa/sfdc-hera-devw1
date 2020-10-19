@@ -3,7 +3,7 @@
     <fullName>MeterCode__c</fullName>
     <description>Matricola</description>
     <externalId>false</externalId>
-    <label>MeterCode</label>
+    <label>Matricola</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

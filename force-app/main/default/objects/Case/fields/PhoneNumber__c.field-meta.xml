@@ -3,7 +3,7 @@
     <fullName>PhoneNumber__c</fullName>
     <description>Recapito Telefonico</description>
     <externalId>false</externalId>
-    <label>PhoneNumber</label>
+    <label>Recapito Telefonico</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
