@@ -3,7 +3,7 @@
     <fullName>NotPerformedBefore__c</fullName>
     <description>Da non eseguire prima del</description>
     <externalId>false</externalId>
-    <label>Not Performed Before</label>
+    <label>Da non eseguire prima del</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

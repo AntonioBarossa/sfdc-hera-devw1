@@ -3,7 +3,7 @@
     <fullName>Excises__c</fullName>
     <description>Accise</description>
     <externalId>false</externalId>
-    <label>Excises</label>
+    <label>Accise</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

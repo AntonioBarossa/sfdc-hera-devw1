@@ -3,7 +3,7 @@
     <fullName>Cemetery__c</fullName>
     <description>Cimitero</description>
     <externalId>false</externalId>
-    <label>Cemetery</label>
+    <label>Cimitero</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

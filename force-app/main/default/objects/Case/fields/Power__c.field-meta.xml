@@ -3,7 +3,7 @@
     <fullName>Power__c</fullName>
     <description>Potenza</description>
     <externalId>false</externalId>
-    <label>Power</label>
+    <label>Potenza</label>
     <precision>3</precision>
     <required>false</required>
     <scale>1</scale>

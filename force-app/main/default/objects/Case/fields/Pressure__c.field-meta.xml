@@ -3,7 +3,7 @@
     <fullName>Pressure__c</fullName>
     <description>Pressione</description>
     <externalId>false</externalId>
-    <label>Pressure</label>
+    <label>Pressione</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

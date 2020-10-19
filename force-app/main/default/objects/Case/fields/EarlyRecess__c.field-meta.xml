@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Recesso Anticipato</description>
     <externalId>false</externalId>
-    <label>Early Recess</label>
+    <label>Recesso Anticipato</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

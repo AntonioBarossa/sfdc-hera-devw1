@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Riferimento Pratica Voltura</description>
     <externalId>false</externalId>
-    <label>Vulture Practice Reference</label>
+    <label>Riferimento Pratica Voltura</label>
     <referenceTo>Order</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>

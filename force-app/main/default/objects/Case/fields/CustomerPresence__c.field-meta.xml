@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Presenza Cliente</description>
     <externalId>false</externalId>
-    <label>Customer Presence</label>
+    <label>Presenza Cliente</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

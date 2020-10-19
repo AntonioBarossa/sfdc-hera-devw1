@@ -3,7 +3,7 @@
     <fullName>CallingCallsign__c</fullName>
     <description>Nominativo chiamante</description>
     <externalId>false</externalId>
-    <label>Calling Callsign</label>
+    <label>Nominativo chiamante</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
