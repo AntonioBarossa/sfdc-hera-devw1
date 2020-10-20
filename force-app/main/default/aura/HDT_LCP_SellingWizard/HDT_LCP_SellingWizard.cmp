@@ -1,5 +1,6 @@
 <aura:component implements = "force:hasRecordId,flexipage:availableForAllPageTypes">
     <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="newServicePoint" type="ServicePoint__c" />
     <!-- <lightning:card title="Selezione Fornitura">
        <div  class="slds-page-header slds-page-header_record-home">
             <div class="slds-summary-detail__title">
@@ -45,5 +46,5 @@
         </div> 
     </lightning:card> -->
 
-    <c:hdtSupplySelection object="{!v.object}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
+    <c:hdtSupplySelection onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>

@@ -1,13 +1,14 @@
-import { LightningElement, api, wire, track } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.getServicePoint';
+import createServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.createServicePoint';
+import updateServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.updateServicePoint';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
     @api accountid;
     @api selectedservicepoint;
-
     objectApiName = 'ServicePoint__c';
     fieldsData;
     @track fieldsDataObject = [];
@@ -37,19 +38,34 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     fieldsDataRaw;
     fieldsDataReqRaw;
     customSettings;
+    @track newServicePoint;
+    validForm = true;
+    verifyAddressDisabledOnUpdate = true;
     
+    /**
+     * Handle save button availability
+     */
     get saveBtnDisabled(){
-        if(this.hasDataBeenFilled && this.hasAddressBeenVerified){
+        if((this.hasDataBeenFilled && this.hasAddressBeenVerified) 
+            || (this.selectedservicepoint != undefined && this.verifyAddressDisabledOnUpdate)
+            || this.selectedservicepoint != undefined && !this.verifyAddressDisabledOnUpdate && this.hasAddressBeenVerified){
             return false;
         } else {
             return true;
         }
     }
 
+    /**
+     * Verify address data
+     */
     handleAddressVerification(event){
         this.hasAddressBeenVerified = event.detail;
     }
 
+    /**
+     * Split string and create array of fields
+     * @param {*} fieldsDataRaw 
+     */
     toArray(fieldsDataRaw){
         let fieldsData = fieldsDataRaw.split(",");
         let fieldsDataFinal = [];
@@ -63,6 +79,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         return fieldsDataFinal;
     }
 
+    /**
+     * Form array of field objects
+     * @param {*} fieldsData 
+     * @param {*} fieldsDataReq 
+     */
     toObject(fieldsData, fieldsDataReq){
 
         let fieldsDataObject = [];
@@ -75,7 +96,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     {
                         fieldname: element,
                         required : fieldsDataReq.includes(element),
-                        value: this.servicePointRetrievedData[element]
+                        value: this.servicePointRetrievedData[element],
+                        disabled: element == 'ServicePointCode__c' ? true : false
                     }
                 ) 
             } else {
@@ -83,16 +105,35 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     {
                         fieldname: element,
                         required : fieldsDataReq.includes(element),
-                        value: ''
+                        value: '',
+                        disabled: false
                     }
                 ) 
             }
 
         });
 
-        
-
         return fieldsDataObject;
+    }
+
+    /**
+     * Organize fields data
+     */
+    manageFields(){
+        //get main data fields
+        this.fieldsData = this.toArray(this.fieldsDataRaw);
+        this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
+        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+
+        //get address fields
+        this.fieldsAddress = this.toArray(this.customSettings.fieldAddress__c);
+        this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
+        this.fieldsAddressObject = this.toObject(this.fieldsAddress, this.fieldsAddressReq);
+        
+        //merge all fields together
+        this.allFieldsData = this.fieldsData.concat(this.fieldsAddress);
+        this.allFieldsDataReq = this.fieldsDataReq.concat(this.fieldsAddressReq);
+        this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
     }
 
     connectedCallback(){
@@ -100,7 +141,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         
         getCustomSettings().then(data => {
 
-            //get data fields
+            //get data fields based on recordtype label
             switch(this.recordtype.label){
                 case 'Elettrico':
                     this.fieldsDataRaw = data.FieldEle__c;
@@ -111,56 +152,31 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.fieldsDataReqRaw = data.FieldRequiredGas__c;
             }
 
+            this.customSettings = data;
+
             if(this.selectedservicepoint != undefined){
-                this.customSettings = data;
 
-            let queryFields = this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c;
-            
-            getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields}).then(data =>{
-                console.log(JSON.parse(JSON.stringify(data)));
-                this.servicePointRetrievedData = data[0];
-
-                this.fieldsData = this.toArray(this.fieldsDataRaw);
-            this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
-            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-
-                //get address fields
-             this.fieldsAddress = this.toArray(this.customSettings.fieldAddress__c);
-             this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
-             this.fieldsAddressObject = this.toObject(this.fieldsAddress, this.fieldsAddressReq);
-             
-             //merge all fields together
-             this.allFieldsData = this.fieldsData.concat(this.fieldsAddress);
-             this.allFieldsDataReq = this.fieldsDataReq.concat(this.fieldsAddressReq);
-             this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
+                let queryFields = this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c;
                 
-            }).catch(error => {
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Error',
-                    message: error.message,
-                    variant: 'error'
+                getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields}).then(data =>{
+                    
+                    this.servicePointRetrievedData = data[0];
+
+                    this.manageFields();
+                    
+                }).catch(error => {
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Error',
+                        message: error.message,
+                        variant: 'error'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
                 });
-                this.dispatchEvent(toastErrorMessage);
-            });
-        } else {
-            this.fieldsData = this.toArray(this.fieldsDataRaw);
-            this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
-            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
-            //get address fields
-            this.fieldsAddress = this.toArray(data.fieldAddress__c);
-            this.fieldsAddressReq = this.toArray(data.FieldRequiredAddress__c);
-            this.fieldsAddressObject = this.toObject(this.fieldsAddress, this.fieldsAddressReq);
-            
-            //merge all fields together
-            this.allFieldsData = this.fieldsData.concat(this.fieldsAddress);
-            this.allFieldsDataReq = this.fieldsDataReq.concat(this.fieldsAddressReq);
-            this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
-        }
+            } else {
+                this.manageFields();
+            }
         
-             
-            
-
             //fields have been loaded
             this.fieldsReady = true;
             this.loading = false;
@@ -175,6 +191,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         });
     }
 
+    /**
+     * Pre-fill Account__c field on render
+     */
     renderedCallback(){
         if(this.fieldsReady){
             let accountField = this.template.querySelector('[data-name="Account__c"]');
@@ -185,27 +204,46 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
     }
 
+    /**
+     * Reset fields loading when closing modal
+     */
     disconnectedCallback(){
         this.fieldsReady = false;
     }
 
-    handleFieldsDataChange(event){
-
-        if(event.target.fieldName == 'ServicePointCode__c'){
+    /**
+     * Handle fill fields button availability
+     * @param {*} fieldName
+     * @param {*} fieldValue
+     */
+    handleFillFieldsButtonAvailability(fieldName, fieldValue){
+        if(fieldName == 'ServicePointCode__c'){
             
-            this.servicePointCode = event.target.value;
-            if (this.servicePointCode.length > 13) {
+            this.servicePointCode = fieldValue;
+            if (this.servicePointCode.length > 13 && this.selectedservicepoint == undefined) {
                 this.fillFieldsDataDisabled = false;
             } else {
                 this.fillFieldsDataDisabled = true;
             }
 
         }
+    }
+
+    /**
+     * Get fields value
+     * @param {*} event 
+     */
+    handleFieldsDataChange(event){
+
+        this.handleFillFieldsButtonAvailability(event.target.fieldName, event.target.value);
 
         this.allSubmitedFields[event.target.fieldName] = event.target.value;
 
     }
 
+    /**
+     * Handle main data fields filling request
+     */
     handleDataFieldsFilling(){
         // let inp = this.template.querySelectorAll(".fieldsData");
 
@@ -221,22 +259,38 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.hasDataBeenFilled = true;
     }
 
+    /**
+     * Close create form
+     */
     closeCreateTargetObjectModal(){
         this.dispatchEvent(new CustomEvent('closecreateform'));
     }
 
+    /**
+     * Get submited address fields values
+     * @param {*} event 
+     */
     getSubmitedAddressFields(event){
         this.submitedAddressFields = event.detail;
     }
 
-    save(){
+    /**
+     * Check validity before saving
+     */
+    validationChecks(){
 
-        let validForm = true;
+        if(this.selectedservicepoint != undefined){
+            this.allSubmitedFields = this.servicePointRetrievedData;
+        } else {
+            this.allSubmitedFields.RecordTypeId = this.recordtype.value;
+            this.allSubmitedFields.Account__c = this.accountid;
+            this.allSubmitedFields.Name = this.servicePointCode;
+        }
 
-        this.allSubmitedFields.RecordTypeId = this.recordtype.value;
-        this.allSubmitedFields.Account__c = this.accountid;
-        for (let [key, value] of Object.entries(this.submitedAddressFields)) {
-            this.allSubmitedFields[key] = value;
+        if(this.submitedAddressFields != undefined){
+            for (let [key, value] of Object.entries(this.submitedAddressFields)) {
+                this.allSubmitedFields[key] = value;
+            }
         }
 
         for(var i=0; i<this.fieldsDataReq.length; i++){
@@ -244,7 +298,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             let reqdata = this.allSubmitedFields[this.fieldsDataReq[i]];
 
             if( reqdata == undefined || reqdata == '' ){
-                validForm = false;
+                this.validForm = false;
                 this.fieldsDataWithError.push(this.fieldsDataReq[i]);
             }
         }
@@ -254,14 +308,29 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             let reqaddr = this.allSubmitedFields[this.fieldsAddressReq[i]];
 
             if( reqaddr == undefined || reqaddr == '' ){
-                validForm = false;
+                this.validForm = false;
                 this.fieldsAddressWithError.push(this.fieldsAddressReq[i]);
             }
         }
-        
-        if (validForm) {
+    }
+
+    /**
+     * Handle new record creation
+     */
+    save(){
+
+        this.validationChecks();
+
+        if (this.validForm) {
+
             this.loading = true;
-            this.template.querySelector('lightning-record-edit-form').submit(this.allSubmitedFields);
+
+            if(this.selectedservicepoint != undefined){
+                this.update();
+            } else {
+                this.create();
+            }
+
         } else {
 
             this.template.querySelector('c-hdt-target-object-address-fields').checkInvalidFields(this.fieldsAddressWithError);
@@ -276,16 +345,95 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
     }
 
-    handleSuccess(event){
-        this.loading = false;
-        this.closeCreateTargetObjectModal();
-        this.servicePointId = event.detail.id;
-        const toastSuccessMessage = new ShowToastEvent({
-            title: 'Success',
-            message: 'Service Point created successfully',
-            variant: 'success'
-        });
-        this.dispatchEvent(toastSuccessMessage);
+    /**
+     * Get form title
+     */
+    get formTitle(){
+        if(this.selectedservicepoint != undefined){
+            return 'Service Point: ' + this.selectedservicepoint['Codice POD/PDR'];
+        } else {
+            return 'Service Point: ' + this.recordtype.label;
+        }
     }
 
+    /**
+     * Get save button name
+     */
+    get saveButtonName(){
+        if(this.selectedservicepoint != undefined){
+            return 'Aggiorna';
+        } else {
+            return 'Salva';
+        }
+    }
+
+    /**
+     * Get verify address for update case
+     * @param {*} event 
+     */
+    handleVerifyAddressOnUpdate(event){
+        this.verifyAddressDisabledOnUpdate = event.detail;
+    }
+
+    /**
+     * Create record
+     */
+    create(){
+        createServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
+            this.loading = false;
+            this.closeCreateTargetObjectModal();
+            this.servicePointId = data.id;
+            this.newServicePoint = data;
+
+            this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
+
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Success',
+                message: 'Service Point created successfully',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+            
+        }).catch(error => {
+            this.loading = false;
+
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Error',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    /**
+     * Update record
+     */
+    update(){
+        updateServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
+            this.loading = false;
+            this.closeCreateTargetObjectModal();
+            this.servicePointId = data.id;
+            this.newServicePoint = data;
+
+            this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
+
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Success',
+                message: 'Service Point updated successfully',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+            
+        }).catch(error => {
+            this.loading = false;
+
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Error',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
 }

@@ -8,7 +8,7 @@
                         </lightning-icon>
                         <span class="slds-assistive-text">Close</span>
                     </button>
-                    <h2 class="slds-text-heading_medium slds-hyphenate">New Service Point: {recordtype.label}</h2>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">{formTitle}</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" >
                     <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="slds-grid slds-wrap slds-m-top_small">
                                     <template for:each={fieldsDataObject} for:item="fieldData">
-                                        <lightning-input-field value={fieldData.value} required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
+                                        <lightning-input-field disabled={fieldData.disabled} value={fieldData.value} required={fieldData.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={fieldData.fieldname} key={fieldData.fieldname} field-name={fieldData.fieldname} variant="label-stacked"></lightning-input-field>
                                     </template>
                                 </div>
                                 <div class="slds-clearfix">
@@ -30,14 +30,14 @@
                                     </div>
                                 </div>
 
-                                <c-hdt-target-object-address-fields onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddressobject={fieldsAddressObject}></c-hdt-target-object-address-fields>
+                                <c-hdt-target-object-address-fields onverifyaddressonupdate={handleVerifyAddressOnUpdate} selectedservicepoint={selectedservicepoint} onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddressobject={fieldsAddressObject}></c-hdt-target-object-address-fields>
                         </lightning-record-edit-form>
 
                     </template>
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning-button label="Annulla" variant="neutral" onclick={closeCreateTargetObjectModal}></lightning-button>
-                    <lightning-button disabled={saveBtnDisabled} label="Salva" variant="brand" onclick={save} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button disabled={saveBtnDisabled} label={saveButtonName} variant="brand" onclick={save} class="slds-m-left_x-small"></lightning-button>
                 </footer>
             </div>
         </section>

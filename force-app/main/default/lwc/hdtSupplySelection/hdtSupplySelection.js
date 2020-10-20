@@ -1,4 +1,4 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class hdtSupplySelection extends LightningElement {
     @api processType;
@@ -8,13 +8,27 @@ export default class hdtSupplySelection extends LightningElement {
     showCreateTargetObjectButton = false;
     selectedServicePoint;
 
+    /**
+     * Show create button when process is undefined
+     */
     connectedCallback(){
         if(this.processType === undefined || this.processType === ''){
             this.showCreateTargetObjectButton = true;
         }
     }
-
+    
+    /**
+     * Get selected service point
+     */
     handleServicePointSelection(event){
         this.selectedServicePoint = event.detail;
+    }
+
+    /**
+     * Dispatch the new created service point to wizard
+     */
+    handleNewServicePoint(event){
+        let newServicePoint = event.detail;
+        this.dispatchEvent(new CustomEvent('newservicepoint', {detail: {newServicePoint}}));
     }
 }
