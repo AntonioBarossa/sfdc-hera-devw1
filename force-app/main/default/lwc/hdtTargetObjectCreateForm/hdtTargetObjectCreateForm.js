@@ -196,11 +196,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     renderedCallback(){
         if(this.fieldsReady){
-            let accountField = this.template.querySelector('[data-name="Account__c"]');
-            if(accountField != null || accountField != undefined){
-                accountField.value = this.accountid;
+            if(this.selectedservicepoint == undefined){
+                let accountField = this.template.querySelector('[data-name="Account__c"]');
+                if(accountField != null || accountField != undefined){
+                    accountField.value = this.accountid;
+                }
             }
-
         }
     }
 

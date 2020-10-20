@@ -10,15 +10,27 @@ public with sharing class HDT_LC_AdvancedSearch {
     @AuraEnabled(cacheable = true)
     public static List<Map<String, Object>> getServicePoints(String parameter,String queryType) {
         Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
-        //if (parameter.length() < 6) {
-        if (queryType == 'serialnumber') {
-            Integer.valueOf(parameter);
-            servicePoints.addAll(getServicePointsByMeterSerialNumber(parameter));
-        } else {
-            servicePoints.addAll(getServicePointsByMeterSerialNumber(parameter));
-            servicePoints.addAll(getServicePointsByCode(parameter));
-        }
 
+        switch on queryType {
+            when 'serialnumber' {
+                Integer.valueOf(parameter);
+                servicePoints.addAll(getServicePointsByMeterSerialNumber(parameter));
+            }
+            when 'pod' {
+                if (parameter.length() < 14 || parameter.length() > 14) {
+                    throw new AuraHandledException('Characters length is Wrong');
+                }
+                servicePoints.addAll(getServicePointsByCode(parameter));
+            }
+            when 'contract' {
+                if (parameter.length() < 10 || parameter.length() > 10) {
+                    throw new AuraHandledException('Characters length is Wrong');
+                }
+                servicePoints.addAll(getServicePointsByCode(parameter));
+            }
+            when else {
+            }
+        }
         checkTheNumberOfRecords(servicePoints.size());
         String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
         List<Map<String, Object>> output = new List<Map<String, Object>>();
@@ -89,9 +101,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 * Query for POD
 	 */
     static List<ServicePoint__c> getServicePointsByCode(String code) {
-        String stringCode = '%' + code.trim() + '%';
+        String stringCode = code.trim();
         String query = 'SELECT ' + customSetting.OutputServicePoint__c +
-                ' FROM ServicePoint__c WHERE ServicePointCode__c LIKE :stringCode ';
+                ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ';
         List<ServicePoint__c> servicePoints = Database.query(query);
         return servicePoints;
     }

@@ -1,4 +1,4 @@
-import {LightningElement, track} from 'lwc';
+import {LightningElement, track,api} from 'lwc';
 import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServicePoints';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
@@ -23,8 +23,15 @@ export default class HdtAdvancedSearch extends LightningElement {
     customSetting = null;
     confirmButtonDisabled = true;
     rowToSend;
+    @api
+    maxRowSelected=false
 
     connectedCallback() {
+        if (this.maxRowSelected ===false){
+            this.maxRowSelected= 1
+        }else {
+            this.maxRowSelected = this.originalData.length
+        }
     }
 
     /**
