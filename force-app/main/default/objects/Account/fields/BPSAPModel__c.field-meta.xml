@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BPSAPModel__c</fullName>
+    <description>Indica il codice BP modello su SAP</description>
+    <externalId>false</externalId>
+    <label>BP Modello SAP</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CLIENTE MODELLO DA CRM</fullName>
+                <default>false</default>
+                <label>CLIENTE MODELLO DA CRM</label>
+            </value>
+            <value>
+                <fullName>CLIENTI GENERICI 10%</fullName>
+                <default>false</default>
+                <label>CLIENTI GENERICI 10%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI GENERICI 20%</fullName>
+                <default>false</default>
+                <label>CLIENTI GENERICI 20%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI GENERICI MMS</fullName>
+                <default>false</default>
+                <label>CLIENTI GENERICI MMS</label>
+            </value>
+            <value>
+                <fullName>CLIENTI NON IMP. ART. 72</fullName>
+                <default>false</default>
+                <label>CLIENTI NON IMP. ART. 72</label>
+            </value>
+            <value>
+                <fullName>CLIENTI NON IMP.ART. 8 E 9</fullName>
+                <default>false</default>
+                <label>CLIENTI NON IMP.ART. 8 E 9</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOCIETA COLLEGATE 10 %</fullName>
+                <default>false</default>
+                <label>CLIENTI SOCIETA COLLEGATE 10 %</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOCIETA COLLEGATE 20 %</fullName>
+                <default>false</default>
+                <label>CLIENTI SOCIETA COLLEGATE 20 %</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOCIETA CONTROLLANTI10</fullName>
+                <default>false</default>
+                <label>CLIENTI SOCIETA CONTROLLANTI10</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOCIETA CONTROLLANTI20</fullName>
+                <default>false</default>
+                <label>CLIENTI SOCIETA CONTROLLANTI20</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOCIETA CONTROLLATE 10</fullName>
+                <default>false</default>
+                <label>CLIENTI SOCIETA CONTROLLATE 10</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOCIETA CONTROLLATE 20</fullName>
+                <default>false</default>
+                <label>CLIENTI SOCIETA CONTROLLATE 20</label>
+            </value>
+            <value>
+                <fullName>INRETE CLIENTE MODELLO GE</fullName>
+                <default>false</default>
+                <label>INRETE CLIENTE MODELLO GE</label>
+            </value>
+            <value>
+                <fullName>SOCIETA DEL GRUPPO CON IVA 10%</fullName>
+                <default>false</default>
+                <label>SOCIETA DEL GRUPPO CON IVA 10%</label>
+            </value>
+            <value>
+                <fullName>SOCIETA DEL GRUPPO CON IVA 20%</fullName>
+                <default>false</default>
+                <label>SOCIETA DEL GRUPPO CON IVA 20%</label>
+            </value>
+            <value>
+                <fullName>Centri di assistenza</fullName>
+                <default>false</default>
+                <label>Centri di assistenza</label>
+            </value>
+            <value>
+                <fullName>Negozi al dettaglio</fullName>
+                <default>false</default>
+                <label>Negozi al dettaglio</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
