@@ -162,7 +162,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.openmodel = true;
                 this.isLoaded = true;
             } else {
-                this.alert('Table Data','No records was found','warn')
+                this.alert('Dati tabela','Nessun record trovato','warn')
                 this.tableData = data;
             }
         }).catch(error => {

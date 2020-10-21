@@ -18,13 +18,13 @@ public with sharing class HDT_LC_AdvancedSearch {
             }
             when 'pod' {
                 if (parameter.length() < 14 || parameter.length() > 14) {
-                    throw new AuraHandledException('Characters length is Wrong');
+                    throw new AuraHandledException('La lunghezza dei caratteri è sbagliata');
                 }
                 servicePoints.addAll(getServicePointsByCode(parameter));
             }
             when 'contract' {
                 if (parameter.length() < 10 || parameter.length() > 10) {
-                    throw new AuraHandledException('Characters length is Wrong');
+                    throw new AuraHandledException('La lunghezza dei caratteri è sbagliata');
                 }
                 servicePoints.addAll(getServicePointsByCode(parameter));
             }
@@ -72,7 +72,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 */
     static void checkTheNumberOfRecords(Integer records) {
         if (records > (customSetting.Max_Record__c).intValue()) {
-            throw new AuraHandledException('Number of records reached Maximum exceeded');
+            throw new AuraHandledException('Numero massimo di record superato');
         }
     }
 

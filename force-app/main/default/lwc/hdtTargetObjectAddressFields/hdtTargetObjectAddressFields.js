@@ -53,6 +53,11 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
               }));
         }
 
+        this.hasAddressBeenVerified = false;
+        this.dispatchEvent(new CustomEvent("addressverification", {
+            detail: this.hasAddressBeenVerified
+          }));
+
     }
 
     /**

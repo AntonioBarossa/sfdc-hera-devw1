@@ -166,7 +166,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
-                        title: 'Error',
+                        title: 'Errore',
                         message: error.message,
                         variant: 'error'
                     });
@@ -183,7 +183,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }).catch(error => {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
-                title: 'Error',
+                title: 'Errore',
                 message: error.message,
                 variant: 'error'
             });
@@ -240,6 +240,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         this.allSubmitedFields[event.target.fieldName] = event.target.value;
 
+        this.validForm = true;
+
     }
 
     /**
@@ -273,6 +275,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     getSubmitedAddressFields(event){
         this.submitedAddressFields = event.detail;
+        this.validForm = true;
     }
 
     /**
@@ -389,8 +392,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
 
             const toastSuccessMessage = new ShowToastEvent({
-                title: 'Success',
-                message: 'Service Point created successfully',
+                title: 'Successo',
+                message: 'Service Point creato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
@@ -399,7 +402,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.loading = false;
 
             const toastErrorMessage = new ShowToastEvent({
-                title: 'Error',
+                title: 'Errore',
                 message: error.body.message,
                 variant: 'error'
             });
@@ -420,8 +423,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
 
             const toastSuccessMessage = new ShowToastEvent({
-                title: 'Success',
-                message: 'Service Point updated successfully',
+                title: 'Successo',
+                message: 'Service Point creato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
@@ -430,7 +433,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.loading = false;
 
             const toastErrorMessage = new ShowToastEvent({
-                title: 'Error',
+                title: 'Errore',
                 message: error.body.message,
                 variant: 'error'
             });
