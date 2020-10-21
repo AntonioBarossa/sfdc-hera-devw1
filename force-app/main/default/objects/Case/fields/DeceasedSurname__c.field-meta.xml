@@ -3,7 +3,7 @@
     <fullName>DeceasedSurname__c</fullName>
     <description>Cognome del defunto</description>
     <externalId>false</externalId>
-    <label>Deceased Surname</label>
+    <label>Cognome del defunto</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

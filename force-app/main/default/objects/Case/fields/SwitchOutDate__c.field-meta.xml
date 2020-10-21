@@ -3,7 +3,7 @@
     <fullName>SwitchOutDate__c</fullName>
     <description>Data Switch Out</description>
     <externalId>false</externalId>
-    <label>Switch Out Date</label>
+    <label>Data Switch Out</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

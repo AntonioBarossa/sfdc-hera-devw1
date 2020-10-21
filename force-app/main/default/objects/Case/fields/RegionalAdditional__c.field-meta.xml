@@ -3,7 +3,7 @@
     <fullName>RegionalAdditional__c</fullName>
     <description>Addizionale Regionale</description>
     <externalId>false</externalId>
-    <label>Regional Additional</label>
+    <label>Addizionale Regionale</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

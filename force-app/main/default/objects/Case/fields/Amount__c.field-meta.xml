@@ -3,7 +3,7 @@
     <fullName>Amount__c</fullName>
     <description>Importo</description>
     <externalId>false</externalId>
-    <label>Amount</label>
+    <label>Importo</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>

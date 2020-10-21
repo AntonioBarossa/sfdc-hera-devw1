@@ -3,7 +3,7 @@
     <fullName>DeceasedFiscalCode__c</fullName>
     <description>Codice fiscale del defunto</description>
     <externalId>false</externalId>
-    <label>Deceased Fiscal Code</label>
+    <label>Codice fiscale del defunto</label>
     <length>16</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

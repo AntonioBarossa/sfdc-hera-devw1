@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Lookup all&apos;object Contract</description>
     <externalId>false</externalId>
-    <label>Contract</label>
+    <label>Contratto</label>
     <referenceTo>Contract</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>
