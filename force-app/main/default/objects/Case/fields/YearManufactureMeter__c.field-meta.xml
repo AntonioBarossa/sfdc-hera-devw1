@@ -3,7 +3,7 @@
     <fullName>YearManufactureMeter__c</fullName>
     <description>Anno di fabbricazione del Contatore</description>
     <externalId>false</externalId>
-    <label>YearManufactureMeter</label>
+    <label>Anno di fabbricazione del Contatore</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

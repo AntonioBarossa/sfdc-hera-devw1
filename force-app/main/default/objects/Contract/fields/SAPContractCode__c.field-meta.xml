@@ -3,7 +3,7 @@
     <fullName>SAPContractCode__c</fullName>
     <description>Numero Contratto Sap</description>
     <externalId>false</externalId>
-    <label>SAP Contract Code</label>
+    <label>Codice Contratto SAP</label>
     <length>12</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

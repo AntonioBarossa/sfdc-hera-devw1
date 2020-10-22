@@ -3,7 +3,7 @@
     <fullName>PayerDetails__c</fullName>
     <description>Dati del pagante (Nome, Cognome, CF)</description>
     <externalId>false</externalId>
-    <label>Payer Details</label>
+    <label>Dati del pagante (Nome, Cognome, CF)</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

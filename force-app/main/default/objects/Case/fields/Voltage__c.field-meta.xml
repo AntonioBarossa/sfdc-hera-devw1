@@ -3,7 +3,7 @@
     <fullName>Voltage__c</fullName>
     <description>Tensione</description>
     <externalId>false</externalId>
-    <label>Voltage</label>
+    <label>Tensione</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

@@ -3,7 +3,7 @@
     <fullName>SalesCompany__c</fullName>
     <description>Società di Vendita</description>
     <externalId>false</externalId>
-    <label>Sales Company</label>
+    <label>Società di Vendita</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

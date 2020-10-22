@@ -3,7 +3,7 @@
     <fullName>CustomerRecessDate__c</fullName>
     <description>Data comunicazione Recesso al Cliente</description>
     <externalId>false</externalId>
-    <label>Customer Recess Date</label>
+    <label>Data comunicazione Recesso al Cliente</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
