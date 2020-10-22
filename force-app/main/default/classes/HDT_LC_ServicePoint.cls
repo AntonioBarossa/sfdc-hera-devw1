@@ -1,18 +1,21 @@
 public with sharing class HDT_LC_ServicePoint {
 
     public static List<ServicePoint__c> getServicePointById(Id id, String fields) {
-        String stringFields = fields;
-        String query = 'SELECT '+ fields +
-                ' FROM ServicePoint__c WHERE Id = :id LIMIT 1';
+        String stringId = String.escapeSingleQuotes(id);
+        String stringFields = String.escapeSingleQuotes(fields);
+
+        String query = 'SELECT '+ stringFields +
+                ' FROM ServicePoint__c WHERE Id = :stringId LIMIT 1';
         List<ServicePoint__c> servicePoints = Database.query(query);
+
         return servicePoints;
     }
 
     @AuraEnabled
     public static List<ServicePoint__c> getServicePoint(String code, String fields) {
-        String stringCode = code.trim();
-        String stringFields = fields;
-        String query = 'SELECT '+ fields +
+        String stringCode = String.escapeSingleQuotes(code.trim());
+        String stringFields = String.escapeSingleQuotes(fields);
+        String query = 'SELECT '+ stringFields +
                 ' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode LIMIT 1';
         List<ServicePoint__c> servicePoints = Database.query(query);
         return servicePoints;
