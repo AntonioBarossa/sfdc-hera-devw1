@@ -284,6 +284,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     validationChecks(){
 
         if(this.selectedservicepoint != undefined){
+
+            if(Object.keys(this.allSubmitedFields).length != 0){
+                for (var key in this.allSubmitedFields) {
+                    this.servicePointRetrievedData[key] = this.allSubmitedFields[key];
+                }
+            }
             this.allSubmitedFields = this.servicePointRetrievedData;
         } else {
             this.allSubmitedFields.RecordTypeId = this.recordtype.value;
@@ -424,7 +430,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
-                message: 'Service Point creato con successo',
+                message: 'Service Point aggiornato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
