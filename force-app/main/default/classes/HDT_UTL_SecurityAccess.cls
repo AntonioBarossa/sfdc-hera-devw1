@@ -88,7 +88,7 @@ public with sharing class HDT_UTL_SecurityAccess {
     public void checkSecurityAccess(){
 
         if (!isSafeObject()) {
-            throw new AuraHandledException('Non ai permessi per accedere al oggeto ' + objName);
+            throw new AuraHandledException('Non hai permessi per accedere al oggetto ' + objName);
         }
 
         List<String> fieldsList = fieldNames.split(',');
@@ -101,7 +101,7 @@ public with sharing class HDT_UTL_SecurityAccess {
         } 
 
         if (!fieldsWithoutAccess.isEmpty()) {
-            throw new AuraHandledException('Non ai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ','));
+            throw new AuraHandledException('Non hai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ','));
         }
 
     }

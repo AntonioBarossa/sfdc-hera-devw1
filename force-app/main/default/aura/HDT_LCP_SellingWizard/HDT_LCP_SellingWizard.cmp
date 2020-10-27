@@ -1,6 +1,14 @@
-<aura:component implements = "force:hasRecordId,flexipage:availableForAllPageTypes">
+<aura:component implements = "force:hasRecordId,flexipage:availableForAllPageTypes,lightning:isUrlAddressable" controller="HDT_LC_SellingWizardController">
+    <aura:attribute name="loading" type="Boolean" />
     <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="saleId" type="String" />
     <aura:attribute name="newServicePoint" type="ServicePoint__c" />
+    <aura:attribute name="sale" type="Sale__c" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:navigation aura:id="navService" />
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if> 
     <!-- <lightning:card title="Selezione Fornitura">
        <div  class="slds-page-header slds-page-header_record-home">
             <div class="slds-summary-detail__title">
@@ -18,33 +26,10 @@
                     </div>
                 </div>
             </div>
-            <div class="slds-page-header__row slds-page-header__row_gutters" >
-                <div class="slds-page-header__col-details">
-                    <ul class="slds-page-header__detail-row">
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Account Name">Data Inizio</div>
-                           	<lightning:formattedDateTime value="" year="numeric" month="numeric" day="numeric" hour="2-digit"
-                                 minute="2-digit"  hour12="false"/>
-                        </li>
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Account Name">Account Name</div>
-                            <div class="slds-truncate" title="Account Name"></div>
-                        </li>
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Codice Fiscale">
-                                Codice Fiscale
-                            </div>
-                            <div class="slds-truncate" title="Codice Fiscale"></div>
-                        </li>
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
-                            <div class="slds-truncate" title="Partita Iva"></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div> 
     </lightning:card> -->
 
+    <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
+    <c:hdtGeneralInfo saleRecord="{!v.sale}"></c:hdtGeneralInfo>
     <c:hdtSupplySelection onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>
