@@ -7,8 +7,6 @@
         var accountId = pageReference.state.c__accountId;
         component.set("v.recordId", accountId);
 
-        console.log(JSON.parse(JSON.stringify(pageReference.state)));
-
         if(pageReference.state.c__saleId != undefined){
             component.set("v.saleId", pageReference.state.c__saleId)
             helper.getSaleRecord(component);

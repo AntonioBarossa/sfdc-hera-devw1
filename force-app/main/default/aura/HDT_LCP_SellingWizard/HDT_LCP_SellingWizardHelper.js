@@ -10,11 +10,13 @@
                 component.set('v.sale', newSale);
 
                 var myPageRef = component.get("v.pageReference");
-                var newState = Object.assign({}, myPageRef.state, {c__accountId: component.get("v.recordId"),c__saleId: newSale.Id});
                 component.find("navService").navigate({
                     type: myPageRef.type,
                     attributes: myPageRef.attributes,
-                    state: newState
+                    state: {
+                        c__accountId: component.get("v.recordId"),
+                        c__saleId: newSale.Id
+                    }
                 });
             } else {
                 console.log(response.getError());
