@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FriendCode__c</fullName>
+    <fullName>FiscalCode__c</fullName>
+    <description>Codice Fiscale</description>
     <externalId>false</externalId>
-    <label>Codice Amico</label>
-    <length>20</length>
+    <label>Codice Fiscale</label>
+    <length>16</length>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackFeedHistory>false</trackFeedHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

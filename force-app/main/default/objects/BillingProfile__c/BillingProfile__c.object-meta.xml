@@ -142,25 +142,26 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <deploymentStatus>InDevelopment</deploymentStatus>
-    <description>Deprecated</description>
-    <enableActivities>false</enableActivities>
-    <enableBulkApi>false</enableBulkApi>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>false</enableHistory>
+    <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
-    <enableSharing>false</enableSharing>
-    <enableStreamingApi>false</enableStreamingApi>
-    <gender>Feminine</gender>
-    <label>VenditaDeprecated</label>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <gender>Masculine</gender>
+    <label>Billing Profile</label>
     <nameField>
-        <label>Sale Name</label>
-        <type>Text</type>
+        <displayFormat>BP-{00000000}</displayFormat>
+        <label>Billing Profile Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Vendite</pluralLabel>
+    <pluralLabel>Billing Profiles</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

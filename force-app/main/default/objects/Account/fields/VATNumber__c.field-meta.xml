@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CampaignCode__c</fullName>
+    <fullName>VATNumber__c</fullName>
+    <description>Partita Iva</description>
     <externalId>false</externalId>
-    <label>Codice Campagna</label>
-    <length>20</length>
+    <label>Partita Iva</label>
+    <length>30</length>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
