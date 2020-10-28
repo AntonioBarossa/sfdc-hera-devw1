@@ -176,7 +176,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 		//	throw new WrtsException(System.Label.AtLeastOneQueryFilterMustBeSet);
 		}
 
-		User u = (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
+		User u; //= (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
 		/*if(u.CompanyDivisionEnforced__c && String.isNotBlank(u.CompanyDivisionId__c)) {
 			companyDivision = u.CompanyDivisionId__c;
 		}*/
@@ -239,7 +239,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 			//throw new WrtsException(System.Label.AtLeastOneQueryFilterMustBeSet);
 		}
 
-		User u = (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
+		User u ;//= (new HDT_QR_UserQueriesOriginal()).getCompanyDivisionId(UserInfo.getUserId());
 		/*if(u.CompanyDivisionEnforced__c && String.isNotBlank(u.CompanyDivisionId__c)) {
 			companyDivision = u.CompanyDivisionId__c;
 		}*/
