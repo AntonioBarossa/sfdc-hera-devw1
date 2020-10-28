@@ -13,7 +13,7 @@ public with sharing class HDT_QR_UserQueriesOriginal {
      *
      * @return User record
      */
-    public User getCompanyDivisionId(String userId) {
+   /* public User getCompanyDivisionId(String userId) {
         List<User> currentUsers = [
                 SELECT Id//,CompanyDivisionId__c,CompanyDivisionEnforced__c
                 FROM User
@@ -21,5 +21,5 @@ public with sharing class HDT_QR_UserQueriesOriginal {
                 LIMIT 1
         ];
         return currentUsers.isEmpty() ? null : currentUsers.get(0);
-    }
+    }*/
 }
