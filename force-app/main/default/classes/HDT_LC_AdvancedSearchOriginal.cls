@@ -8,7 +8,7 @@ public with sharing class HDT_LC_AdvancedSearchOriginal {
 		'ServiceSite__c', 'ServiceSite__r.Name', 'ServiceSite__r.Account__c', 'ServiceSite__r.SiteAddress__c', 
 		'ServiceSite__r.Account__r.Name', 'ServiceSite__r.SiteAddressKey__c'
 	};
-
+	//TEST
 	private static Set<String> pointFieldSet = new Set<String>{
 		'Id', 'Name', 'Key__c', 'RecordTypeId', 'RecordType.Name', 'CurrentSupply__r.CompanyDivision__r.Name', 
 		'CurrentSupply__c', 'CurrentSupply__r.Name', 'CurrentSupply__r.Key__c', 'CurrentSupply__r.Status__c', 
