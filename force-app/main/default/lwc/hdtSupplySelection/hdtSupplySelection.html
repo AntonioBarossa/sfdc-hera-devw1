@@ -7,7 +7,30 @@
                 <c-hdt-advanced-search onservicepointselection={handleServicePointSelection}></c-hdt-advanced-search>
             </lightning-layout-item>
             <lightning-layout-item style="float:right" padding="around-small" size="4">
-                <c-hdt-create-target-object if:true={showCreateTargetObjectButton} onnewservicepoint={handleNewServicePoint} selectedservicepoint={selectedServicePoint} targetobject={targetObject} accountid={accountId}></c-hdt-create-target-object>
+                <c-hdt-create-target-object if:true={showCreateTargetObjectButton} sale={saleRecord} onnewservicepoint={handleNewServicePoint} selectedservicepoint={selectedServicePoint} targetobject={targetObject} accountid={accountId}></c-hdt-create-target-object>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item padding="around-small">
+                <div class="slds-p-around_medium slds-box">
+                    <lightning-tile label="Salesforce UX" type="media">
+                        <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
+                        <dl class="slds-dl_horizontal">
+                            <dt class="slds-dl_horizontal__label">
+                                <p class="slds-truncate" title="Company">Company:</p>
+                            </dt>
+                            <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                <p class="slds-truncate" title="Salesforce">Salesforce</p>
+                            </dd>
+                            <dt class="slds-dl_horizontal__label">
+                                <p class="slds-truncate" title="Email">Email:</p>
+                            </dt>
+                            <dd class="slds-dl_horizontal__detail slds-tile__meta">
+                                <p class="slds-truncate" title="salesforce-ux@salesforce.com">salesforce-ux@salesforce.com</p>
+                            </dd>
+                        </dl>
+                    </lightning-tile>
+                </div>
             </lightning-layout-item>
         </lightning-layout>
     </lightning-card>

@@ -3,12 +3,13 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.createServicePoint';
-import updateServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.updateServicePoint';
+import confirmServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.confirmServicePoint';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
     @api accountid;
     @api selectedservicepoint;
+    @api sale;
     objectApiName = 'ServicePoint__c';
     fieldsData;
     @track fieldsDataObject = [];
@@ -140,6 +141,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.loading = true;
         
         getCustomSettings().then(data => {
+
+            console.log('Record Type: ' + JSON.stringify(this.recordtype));
 
             //get data fields based on recordtype label
             switch(this.recordtype.label){
@@ -336,7 +339,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.loading = true;
 
             if(this.selectedservicepoint != undefined){
-                this.update();
+                this.confirm();
             } else {
                 this.create();
             }
@@ -371,7 +374,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     get saveButtonName(){
         if(this.selectedservicepoint != undefined){
-            return 'Aggiorna';
+            return 'Conferma';
         } else {
             return 'Salva';
         }
@@ -417,10 +420,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     /**
-     * Update record
+     * Confirm record
      */
-    update(){
-        updateServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
+    confirm(){
+
+        console.log('hdtTargetObjectCreateForm: ' + JSON.stringify(this.sale));
+
+        confirmServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;

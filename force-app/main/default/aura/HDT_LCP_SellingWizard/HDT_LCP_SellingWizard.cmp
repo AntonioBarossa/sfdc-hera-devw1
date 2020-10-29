@@ -31,5 +31,5 @@
 
     <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
     <c:hdtGeneralInfo saleRecord="{!v.sale}"></c:hdtGeneralInfo>
-    <c:hdtSupplySelection onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
+    <c:hdtSupplySelection saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>

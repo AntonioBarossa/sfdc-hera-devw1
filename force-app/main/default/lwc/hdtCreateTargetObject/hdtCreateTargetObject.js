@@ -5,6 +5,7 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api accountid;
     @api targetobject;
     @api selectedservicepoint;
+    @api sale;
 
     @track recordType = {label:'',value: ''};
     showCreateTargetObjectModal = false;
@@ -12,6 +13,8 @@ export default class hdtCreateTargetObject extends LightningElement {
 
     get modalStatus(){
         if(this.selectedservicepoint != undefined){
+            console.log('hdtCreateTargetObject: ' + JSON.stringify(this.sale));
+
             if(this.showCreateTargetObjectModal == false){
                 this.showCreateTargetObjectModal = true;
             }

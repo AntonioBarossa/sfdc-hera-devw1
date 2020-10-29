@@ -5,6 +5,7 @@ export default class hdtSupplySelection extends LightningElement {
     @api accountId;
     @api targetObject;
     @api addititionalParam;
+    @api saleRecord;
     showCreateTargetObjectButton = false;
     selectedServicePoint;
 
@@ -12,6 +13,7 @@ export default class hdtSupplySelection extends LightningElement {
      * Show create button when process is undefined
      */
     connectedCallback(){
+        console.log('hdtSupplySelection: ' + JSON.stringify(this.saleRecord));
         if(this.processType === undefined || this.processType === ''){
             this.showCreateTargetObjectButton = true;
         }
