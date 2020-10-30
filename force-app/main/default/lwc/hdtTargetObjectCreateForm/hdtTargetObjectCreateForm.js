@@ -1,9 +1,9 @@
 import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
-import getServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.getServicePoint';
-import createServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.createServicePoint';
-import confirmServicePoint from '@salesforce/apex/HDT_LC_ServicePoint.confirmServicePoint';
+import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
+import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
+import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;

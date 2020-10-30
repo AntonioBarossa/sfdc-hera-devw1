@@ -1,0 +1,28 @@
+public with sharing class HDT_LC_TargetObjectCreateForm {
+    private static HDT_SRV_ServicePoint serviceSP = new HDT_SRV_ServicePoint();
+    private static HDT_SRV_SaleServiceItem saleServiceItemService = new HDT_SRV_SaleServiceItem();
+    private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
+
+
+    @AuraEnabled
+    public static List<ServicePoint__c> getServicePoint(String code, String fields) {
+        
+        return servicePointQuery.getRecordByCode(code, fields);
+    }
+
+    @AuraEnabled
+    public static ServicePoint__c createServicePoint(ServicePoint__c servicePoint) {
+
+        return serviceSP.createRecord(servicePoint);
+    }
+
+    @AuraEnabled
+    public static ServicePoint__c confirmServicePoint(ServicePoint__c servicePoint, Sale__c sale){
+
+        serviceSP.updateRecord(servicePoint);
+
+        saleServiceItemService.createRecord(servicePoint, sale);
+
+        return servicePoint;
+    }
+}
