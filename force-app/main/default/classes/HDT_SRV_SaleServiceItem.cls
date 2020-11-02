@@ -19,11 +19,16 @@ public with sharing class HDT_SRV_SaleServiceItem {
         String recordTypeName = existingServicePoint[0].RecordType.Name;
         String supplyCity = servicePoint.SupplyCity__c;
 
-        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(supplyCity, recordTypeName);
+        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale, supplyCity, recordTypeName);
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
 
         if (!existingSaleServiceItems.isEmpty()) {
+
+            if (isServicePointConfirmed(existingSaleServiceItems, servicePoint.Id)) {
+                throw new AuraHandledException('Service Point '+ servicePoint.ServicePointCode__c +' già confermato ');
+            }
+
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = existingSaleServiceItems[0].Opportunity__c,
                 Quote__c = existingSaleServiceItems[0].Quote__c,
@@ -33,7 +38,7 @@ public with sharing class HDT_SRV_SaleServiceItem {
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
                 Vendita__c = sale.Id,
                 Name = opportunityService.generateName(sale),
-                CloseDate = Date.today().addDays(30), //today + 30
+                CloseDate = Date.today().addDays(30),
                 StageName = 'Proposal',
                 AccountId = sale.Account__c
             ));
@@ -58,5 +63,21 @@ public with sharing class HDT_SRV_SaleServiceItem {
         insert newSaleServiceItem;
 
         return newSaleServiceItem;
+    }
+    
+    /**
+     * Check if Service Point is already confirmed for current Sale__c and Opportunity
+     * @param List<SaleServiceItem__c> saleServiceItems
+     * @param String servicePointId
+     * @return Boolean
+     */
+    private Boolean isServicePointConfirmed(List<SaleServiceItem__c> saleServiceItems, String servicePointId){
+        for (SaleServiceItem__c item : saleServiceItems) {
+            if (item.ServicePoint__c == servicePointId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
