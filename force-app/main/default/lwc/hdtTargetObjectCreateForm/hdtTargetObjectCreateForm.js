@@ -142,8 +142,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         
         getCustomSettings().then(data => {
 
-            console.log('Record Type: ' + JSON.stringify(this.recordtype));
-
             //get data fields based on recordtype label
             switch(this.recordtype.label){
                 case 'Elettrico':
@@ -424,8 +422,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     confirm(){
 
-        console.log('hdtTargetObjectCreateForm: ' + JSON.stringify(this.sale));
-
         confirmServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
             this.loading = false;
             this.closeCreateTargetObjectModal();
@@ -433,6 +429,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.newServicePoint = data;
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
+            this.dispatchEvent(new CustomEvent('newtile'));
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

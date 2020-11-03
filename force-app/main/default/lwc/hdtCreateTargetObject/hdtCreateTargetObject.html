@@ -2,5 +2,5 @@
     <lightning-button variant="brand" label="Crea Fornitura" title="Crea Fornitura" class="slds-m-left_large" onclick={handleModalInit}></lightning-button>
 
     <c-hdt-target-object-record-type-selection if:true={showRecordTypeSelectionModal} oncloserecordtypeselection={closeRecordTypeSelection} onnext={handleNext}></c-hdt-target-object-record-type-selection>
-    <c-hdt-target-object-create-form if:true={modalStatus} sale={sale} onnewservicepoint={handleNewServicePoint} selectedservicepoint={selectedservicepoint} onclosecreateform={closeCreateRecordForm} recordtype={recordType} accountid={accountid}></c-hdt-target-object-create-form>
+    <c-hdt-target-object-create-form if:true={modalStatus} sale={sale} onnewservicepoint={handleNewServicePoint} onnewtile={handleNewTile} selectedservicepoint={selectedservicepoint} onclosecreateform={closeCreateRecordForm} recordtype={recordType} accountid={accountid}></c-hdt-target-object-create-form>
 </template>

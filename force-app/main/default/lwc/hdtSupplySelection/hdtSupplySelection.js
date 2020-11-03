@@ -13,7 +13,6 @@ export default class hdtSupplySelection extends LightningElement {
      * Show create button when process is undefined
      */
     connectedCallback(){
-        console.log('hdtSupplySelection: ' + JSON.stringify(this.saleRecord));
         if(this.processType === undefined || this.processType === ''){
             this.showCreateTargetObjectButton = true;
         }
@@ -32,5 +31,12 @@ export default class hdtSupplySelection extends LightningElement {
     handleNewServicePoint(event){
         let newServicePoint = event.detail;
         this.dispatchEvent(new CustomEvent('newservicepoint', {detail: {newServicePoint}}));
+    }
+
+    /**
+     * Handle the new tile creation
+     */
+    handleNewTile(){
+        this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
     }
 }

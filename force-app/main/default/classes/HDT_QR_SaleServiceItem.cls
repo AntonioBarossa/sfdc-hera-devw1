@@ -25,6 +25,34 @@ public with sharing class HDT_QR_SaleServiceItem {
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Vendita__c = :saleId
         AND ServicePoint__r.SupplyCity__c = :city
-        AND ServicePoint__r.RecordType.Name = :type];
+        AND ServicePoint__r.RecordType.Name = :type
+        WITH SECURITY_ENFORCED];
+    }
+
+    /**
+     * Get records filtered by Opportunity__r.Vendita__c
+     * @param String saleId
+     * @return List<SaleServiceItem__c>
+     */
+    public List<SaleServiceItem__c> getRecordsBySaleId(String saleId){
+        String fieldsToCheck = 'Opportunity__c,Opportunity__r.Vendita__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.SupplyCity__c';
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
+        securityAccess.checkSecurityAccess();
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Vendita__c,
+        Opportunity__r.Name,
+        Quote__c,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.SupplyCity__c
+        FROM SaleServiceItem__c
+        WHERE Opportunity__r.Vendita__c = :saleId
+        WITH SECURITY_ENFORCED
+        ORDER BY CreatedDate ASC
+        ];
     }
 }

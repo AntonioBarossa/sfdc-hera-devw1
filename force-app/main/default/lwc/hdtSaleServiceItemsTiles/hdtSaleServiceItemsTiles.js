@@ -1,3 +1,32 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getTiles from '@salesforce/apex/HDT_LC_SaleServiceItemsTiles.getTiles';
 
-export default class HdtSaleServiceItemsTiles extends LightningElement {}
+export default class hdtSaleServiceItemsTiles extends LightningElement {
+
+    @api sale;
+    @track tilesData;
+    showTilesInList = false;
+
+    @api
+    getTilesData(){
+        getTiles({saleId:this.sale.Id}).then(data =>{
+            
+            this.tilesData = data;
+            this.showTilesInList = data.length > 4 ? true : false;
+
+        }).catch(error => {
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    connectedCallback(){
+        this.getTilesData();
+    }
+
+}

@@ -1,25 +1,54 @@
 <template>
 
-    <div class="slds-grid slds-wrap slds-p-around_small">
+    <template if:true={tilesData}>
 
-        <div class="slds-p-around_small slds-size_1-of-4">
-            <lightning-tile label="" type="media" class="slds-box">
-                <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
-                
-                <ul class="slds-has-inline-block-links_space">
-                    <li>
-                        <p class="slds-truncate" title="Company">Opportunity 1 Vendita 50</p>
-                    </li>
-                    <li>
-                        <p class="slds-truncate" title="Salesforce">IT001E32452322</p>
-                    </li>
-                    <li>
-                        <p>Eletrico BOLOGNA</p>
-                    </li>
-                </ul>
-            </lightning-tile>
-        </div>
+        <template if:true={showTilesInList}>
+            <lightning-layout>
+                <lightning-layout-item size="4">
+                    <div class="slds-p-around_small">
+                        <ul class="slds-has-dividers_bottom-space">
+                            <template for:each={tilesData} for:item="tile">
+                                <li key={tile.Id} class="slds-item">
+                                    <lightning-tile type="media">
+                                        <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
+                                        <p>{tile.Opportunity__r.Name}</p>
+                                        <ul class="slds-list_horizontal slds-has-dividers_right">
+                                            <li class="slds-item">{tile.ServicePoint__r.ServicePointCode__c}</li>
+                                            <li class="slds-item">{tile.ServicePoint__r.RecordType.Name}</li>
+                                            <li class="slds-item">{tile.ServicePoint__r.SupplyCity__c}</li>
+                                        </ul>
+                                    </lightning-tile>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
         
-    </div>
+        <template if:false={showTilesInList}>
+            <div class="slds-grid slds-wrap slds-p-around_small">
+                <template for:each={tilesData} for:item="tile">
+                    <div key={tile.Id} class="slds-p-around_small slds-size_1-of-4">
+                        <lightning-tile label="" type="media" class="slds-box">
+                            <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
+                            <ul class="slds-has-inline-block-links_space">
+                                <li>
+                                    <p class="slds-truncate">{tile.Opportunity__r.Name}</p>
+                                </li>
+                                <li>
+                                    <p class="slds-truncate">{tile.ServicePoint__r.ServicePointCode__c}</p>
+                                </li>
+                                <li>
+                                    <p>{tile.ServicePoint__r.RecordType.Name} {tile.ServicePoint__r.SupplyCity__c}</p>
+                                </li>
+                            </ul>
+                        </lightning-tile>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+    </template>
 
 </template>

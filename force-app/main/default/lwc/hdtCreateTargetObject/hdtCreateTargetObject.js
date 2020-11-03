@@ -14,7 +14,6 @@ export default class hdtCreateTargetObject extends LightningElement {
 
     get modalStatus(){
         if(this.selectedservicepoint != undefined){
-            console.log('hdtCreateTargetObject: ' + JSON.stringify(this.sale));
 
             if(this.showCreateTargetObjectModal == false){
                 this.showCreateTargetObjectModal = true;
@@ -98,5 +97,12 @@ export default class hdtCreateTargetObject extends LightningElement {
      */
     handleNewServicePoint(event){
         this.dispatchEvent(new CustomEvent('newservicepoint', {detail: event.detail}));
+    }
+
+    /**
+     * Dispatch event for creation of new SaleServiceItem__c tile
+     */
+    handleNewTile(){
+        this.dispatchEvent(new CustomEvent('newtile'));
     }
 }
