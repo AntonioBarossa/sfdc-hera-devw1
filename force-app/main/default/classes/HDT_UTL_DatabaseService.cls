@@ -53,7 +53,7 @@ public with sharing class HDT_UTL_DatabaseService {
             return false;
         }
         Schema.SobjectField theField = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName);
-        List<Database.SaveResult> upsertResult = Database.upsert(sObjectList,theField, true);
+        List<Database.UpsertResult> upsertResult = Database.upsert(sObjectList,theField, true);
         return true;
     }
 
@@ -87,10 +87,10 @@ public with sharing class HDT_UTL_DatabaseService {
             return true;
         }
         if (isDmlNotAllowed(sObjectList.size())) {
-            throw new WrtsException.DatabaseException(MAX_NUMBER_RECORDS_EXCEPTION);
+            throw new DatabaseException(MAX_NUMBER_RECORDS_EXCEPTION);
         }
         if (!checkDmlPermissions(sObjectList, operation)) {
-            throw new WrtsException.DatabaseException(String.format(
+            throw new DatabaseException(String.format(
                 PERMISSION_EXCEPTION, new List<String> {UserInfo.getUserId(), SobjectUtils.getSobjectTypeName(sObjectList)}));
         }
         return false;
@@ -101,10 +101,10 @@ public with sharing class HDT_UTL_DatabaseService {
             return true;
         }
         if (isDmlNotAllowed(idList.size())) {
-            throw new WrtsException.DatabaseException(MAX_NUMBER_RECORDS_EXCEPTION);
+            throw new DatabaseException(MAX_NUMBER_RECORDS_EXCEPTION);
         }
         if (!checkDmlPermissions(idList, operation)) {
-            throw new WrtsException.DatabaseException(String.format(
+            throw new DatabaseException(String.format(
                 PERMISSION_EXCEPTION, new List<String> {UserInfo.getUserId(), SobjectUtils.getSobjectTypeName(idList)}));
         }
         return false;
