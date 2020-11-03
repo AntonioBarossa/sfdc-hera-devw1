@@ -1,7 +1,7 @@
 public with sharing class HDT_UTL_DatabaseService {
     
-    private static final String MAX_NUMBER_RECORDS_EXCEPTION = 'Puoi Passare Massimo 10000 Record in una singola azione di DML.';
-    private static final String PERMISSION_EXCEPTION = 'Utente {0} non possiede i permessi per effettuare questa Specifica operazione sull oggetto {1}.';
+    private static final String MAXNUMBERRECORDSEXCEPTION = 'Puoi Passare Massimo 10000 Record in una singola azione di DML.';
+    private static final String PERMISSIONEXCEPTION = 'Utente {0} non possiede i permessi per effettuare questa Specifica operazione sull oggetto {1}.';
 
     public static Boolean insertSObject(SObject sObj) {
         return insertSObject(new List<sObject>{sObj});
@@ -87,11 +87,11 @@ public with sharing class HDT_UTL_DatabaseService {
             return true;
         }
         if (isDmlNotAllowed(sObjectList.size())) {
-            throw new DatabaseException(MAX_NUMBER_RECORDS_EXCEPTION);
+            throw new Exception(MAXNUMBERRECORDSEXCEPTION);
         }
         if (!checkDmlPermissions(sObjectList, operation)) {
-            throw new DatabaseException(String.format(
-                PERMISSION_EXCEPTION, new List<String> {UserInfo.getUserId(), SobjectUtils.getSobjectTypeName(sObjectList)}));
+            throw new Exception(String.format(
+                PERMISSIONEXCEPTION, new List<String> {UserInfo.getUserId(), SobjectUtils.getSobjectTypeName(sObjectList)}));
         }
         return false;
     }
@@ -101,10 +101,10 @@ public with sharing class HDT_UTL_DatabaseService {
             return true;
         }
         if (isDmlNotAllowed(idList.size())) {
-            throw new DatabaseException(MAX_NUMBER_RECORDS_EXCEPTION);
+            throw new Exception(MAX_NUMBER_RECORDS_EXCEPTION);
         }
         if (!checkDmlPermissions(idList, operation)) {
-            throw new DatabaseException(String.format(
+            throw new Exception(String.format(
                 PERMISSION_EXCEPTION, new List<String> {UserInfo.getUserId(), SobjectUtils.getSobjectTypeName(idList)}));
         }
         return false;
