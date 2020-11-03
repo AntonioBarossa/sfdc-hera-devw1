@@ -87,10 +87,10 @@ public with sharing class HDT_UTL_DatabaseService {
             return true;
         }
         if (isDmlNotAllowed(sObjectList.size())) {
-            throw new HDT_UTL_HeraException.DatabaseException(MAXNUMBERRECORDSEXCEPTION);
+            throw new HDT_UTL_HeraException(MAXNUMBERRECORDSEXCEPTION);
         }
         if (!checkDmlPermissions(sObjectList, operation)) {
-            throw new HDT_UTL_HeraException.DatabaseException(String.format(
+            throw new HDT_UTL_HeraException(String.format(
                 PERMISSIONEXCEPTION, new List<String> {UserInfo.getUserId(), HDT_UTL_SobjectUtils.getSobjectTypeName(sObjectList)}));
         }
         return false;
