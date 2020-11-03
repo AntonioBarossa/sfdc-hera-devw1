@@ -91,7 +91,7 @@ public with sharing class HDT_UTL_DatabaseService {
         }
         if (!checkDmlPermissions(sObjectList, operation)) {
             throw new HDT_UTL_HeraException.DatabaseException(String.format(
-                PERMISSIONEXCEPTION, new List<String> {UserInfo.getUserId(), HDT_UTL_SObjectUtils.getSobjectTypeName(sObjectList)}));
+                PERMISSIONEXCEPTION, new List<String> {UserInfo.getUserId(), HDT_UTL_SobjectUtils.getSobjectTypeName(sObjectList)}));
         }
         return false;
     }
@@ -101,11 +101,11 @@ public with sharing class HDT_UTL_DatabaseService {
             return true;
         }
         if (isDmlNotAllowed(idList.size())) {
-            throw new HDT_UTL_HeraException.DatabaseException(MAXNUMBERRECORDSEXCEPTION);
+            throw new HDT_UTL_HeraException(MAXNUMBERRECORDSEXCEPTION);
         }
         if (!checkDmlPermissions(idList, operation)) {
-            throw new HDT_UTL_HeraException.DatabaseException(String.format(
-                PERMISSIONEXCEPTION, new List<String> {UserInfo.getUserId(), HDT_UTL_SObjectUtils.getSobjectTypeName(idList)}));
+            throw new HDT_UTL_HeraException(String.format(
+                PERMISSIONEXCEPTION, new List<String> {UserInfo.getUserId(), HDT_UTL_SobjectUtils.getSobjectTypeName(idList)}));
         }
         return false;
     }
