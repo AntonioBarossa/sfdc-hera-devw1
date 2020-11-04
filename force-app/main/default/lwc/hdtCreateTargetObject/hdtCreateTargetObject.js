@@ -18,19 +18,6 @@ export default class hdtCreateTargetObject extends LightningElement {
             if(this.showCreateTargetObjectModal == false){
                 this.showCreateTargetObjectModal = true;
             }
-
-            getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields:'Id, RecordTypeId, RecordType.name'}).then(data =>{
-                this.recordType.label = data[0].RecordType.Name
-                this.recordType.value = data[0].RecordTypeId
-                
-            }).catch(error => {
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Error',
-                    message: error.message,
-                    variant: 'error'
-                });
-                this.dispatchEvent(toastErrorMessage);
-            });
         }
         return this.showCreateTargetObjectModal;
     }

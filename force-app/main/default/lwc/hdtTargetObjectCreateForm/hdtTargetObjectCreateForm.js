@@ -36,8 +36,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     loading = false;
     recordTypeId;
     @track servicePointRetrievedData;
-    fieldsDataRaw;
-    fieldsDataReqRaw;
+    fieldsDataRaw = '';
+    fieldsDataReqRaw = '';
     customSettings;
     @track newServicePoint;
     validForm = true;
@@ -151,17 +151,31 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 case 'Gas':
                     this.fieldsDataRaw = data.FieldGas__c;
                     this.fieldsDataReqRaw = data.FieldRequiredGas__c;
+                    break;
+                default:
+                    this.fieldsDataRaw = 'RecordTypeId, RecordType.Name, ' + data.FieldEle__c + ', ' + data.FieldGas__c;
+                    this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c;
             }
 
             this.customSettings = data;
 
             if(this.selectedservicepoint != undefined){
 
-                let queryFields = this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c;
-                
-                getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields}).then(data =>{
+                let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c))];
+
+                getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields.join()}).then(data =>{
                     
                     this.servicePointRetrievedData = data[0];
+
+                    switch(this.servicePointRetrievedData.RecordType.Name){
+                        case 'Elettrico':
+                            this.fieldsDataRaw = this.customSettings.FieldEle__c;
+                            this.fieldsDataReqRaw = this.customSettings.FieldRequiredEle__c;
+                            break;
+                        case 'Gas':
+                            this.fieldsDataRaw = this.customSettings.FieldGas__c;
+                            this.fieldsDataReqRaw = this.customSettings.FieldRequiredGas__c;
+                    }
 
                     this.manageFields();
                     
