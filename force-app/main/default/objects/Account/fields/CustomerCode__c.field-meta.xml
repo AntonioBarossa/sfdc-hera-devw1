@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SAPContractCode__c</fullName>
-    <description>Numero Contratto Sap</description>
+    <fullName>CustomerCode__c</fullName>
+    <caseSensitive>false</caseSensitive>
+    <description>Codice Business Partner (BP) di SAP</description>
     <externalId>false</externalId>
-    <label>Codice Contratto SAP</label>
-    <length>10</length>
+    <label>Codice cliente</label>
+    <length>30</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Text</type>
-    <unique>false</unique>
+    <unique>true</unique>
 </CustomField>

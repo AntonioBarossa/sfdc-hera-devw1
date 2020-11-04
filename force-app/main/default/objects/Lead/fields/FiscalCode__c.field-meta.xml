@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SAPContractCode__c</fullName>
-    <description>Numero Contratto Sap</description>
+    <fullName>FiscalCode__c</fullName>
+    <description>Se il record è migrato il controllo sul CF deve essere rilassato</description>
     <externalId>false</externalId>
-    <label>Codice Contratto SAP</label>
-    <length>10</length>
+    <label>Codice Fiscale</label>
+    <length>16</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
