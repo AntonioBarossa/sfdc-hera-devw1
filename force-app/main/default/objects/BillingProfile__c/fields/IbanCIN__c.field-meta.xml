@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SAPContractCode__c</fullName>
-    <description>Numero Contratto Sap</description>
+    <fullName>IbanCIN__c</fullName>
+    <description>Indica il 5° carattere dell&apos;Iban</description>
     <externalId>false</externalId>
-    <label>Codice Contratto SAP</label>
-    <length>10</length>
+    <label>CIN</label>
+    <length>1</length>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>
