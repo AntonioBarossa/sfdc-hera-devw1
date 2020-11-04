@@ -6,7 +6,8 @@ public with sharing class HDT_QR_UserQueriesOriginal {
     public static HDT_QR_UserQueriesOriginal getInstance() {
         return new HDT_QR_UserQueriesOriginal();
     }
-
+    // To Check
+    // check2
     /**
      * Returns the context division's company Id
      * @param userId
