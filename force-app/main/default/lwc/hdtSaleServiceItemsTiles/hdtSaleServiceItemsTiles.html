@@ -3,13 +3,13 @@
     <template if:true={tilesData}>
 
         <!-- <template for:each={tilesData} for:item="tile">
-            <p key={tile}>{tile}</p>
-            <template for:each={tile} for:item="ssi">
-                <p key={ssi.Id}>{ssi.Id}</p>
+            <p key={tile.Id}>{tile.Name}</p>
+            <template for:each={tile.ServicePoints} for:item="item">
+                <p key={item.Id}>{item.ServicePoint__r.ServicePointCode__c}</p>
             </template>
         </template> -->
 
-        <!-- <template if:true={showTilesInList}>
+        <template if:true={showTilesInList}>
             <lightning-layout>
                 <lightning-layout-item size="4">
                     <div class="slds-p-around_small">
@@ -18,11 +18,21 @@
                                 <li key={tile.Id} class="slds-item">
                                     <lightning-tile type="media">
                                         <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
-                                        <p>{tile.Opportunity__r.Name}</p>
-                                        <ul class="slds-list_horizontal slds-has-dividers_right">
-                                            <li class="slds-item">{tile.ServicePoint__r.ServicePointCode__c}</li>
-                                            <li class="slds-item">{tile.ServicePoint__r.RecordType.Name}</li>
-                                            <li class="slds-item">{tile.ServicePoint__r.SupplyCity__c}</li>
+                                        <ul class="slds-has-inline-block-links_space">
+                                            <li class="slds-item">
+                                                <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                    <li class="slds-item"><p>{tile.Name}</p></li>
+                                                    <li class="slds-item"><p>{tile.Type}</p></li>
+                                                    <li class="slds-item"><p>{tile.City}</p></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <ul class="slds-has-inline-block-links_space">
+                                                    <template for:each={tile.ServicePoints} for:item="item">
+                                                        <li class="slds-item" key={item.Id}>{item.ServicePoint__r.ServicePointCode__c}</li>
+                                                    </template>
+                                                </ul>
+                                            </li>
                                         </ul>
                                     </lightning-tile>
                                 </li>
@@ -31,30 +41,35 @@
                     </div>
                 </lightning-layout-item>
             </lightning-layout>
-        </template> -->
+        </template>
         
-        <!-- <template if:false={showTilesInList}>
+        <template if:false={showTilesInList}>
             <div class="slds-grid slds-wrap slds-p-around_small">
                 <template for:each={tilesData} for:item="tile">
                     <div key={tile.Id} class="slds-p-around_small slds-size_1-of-4">
                         <lightning-tile label="" type="media" class="slds-box">
                             <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
                             <ul class="slds-has-inline-block-links_space">
+                                <li class="slds-item"><p>{tile.Name}</p></li>
                                 <li>
-                                    <p class="slds-truncate">{tile.Opportunity__r.Name}</p>
+                                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                                        <li class="slds-item"><p>{tile.Type}</p></li>
+                                        <li class="slds-item"><p>{tile.City}</p></li>
+                                    </ul>
                                 </li>
                                 <li>
-                                    <p class="slds-truncate">{tile.ServicePoint__r.ServicePointCode__c}</p>
-                                </li>
-                                <li>
-                                    <p>{tile.ServicePoint__r.RecordType.Name} {tile.ServicePoint__r.SupplyCity__c}</p>
+                                    <ul class="slds-has-inline-block-links_space">
+                                        <template for:each={tile.ServicePoints} for:item="item">
+                                            <li class="slds-item" key={item.Id}>{item.ServicePoint__r.ServicePointCode__c}</li>
+                                        </template>
+                                    </ul>
                                 </li>
                             </ul>
                         </lightning-tile>
                     </div>
                 </template>
             </div>
-        </template> -->
+        </template>
 
     </template>
 

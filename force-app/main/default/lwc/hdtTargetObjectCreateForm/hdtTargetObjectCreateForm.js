@@ -160,8 +160,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.customSettings = data;
 
             if(this.selectedservicepoint != undefined){
+                console.log(JSON.stringify(this.selectedservicepoint));
 
                 let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c))];
+
+                console.log('queryFields: ', queryFields.join());
 
                 getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields.join()}).then(data =>{
                     
@@ -180,6 +183,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.manageFields();
                     
                 }).catch(error => {
+                    console.log('ERROR: ', error);
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
                         message: error.message,
