@@ -26,7 +26,7 @@ public with sharing class HDT_SRV_SaleServiceItem {
         if (!existingSaleServiceItems.isEmpty()) {
 
             if (isServicePointConfirmed(existingSaleServiceItems, servicePoint.Id)) {
-                throw new AuraHandledException('Service Point '+ servicePoint.ServicePointCode__c +' già confermato ');
+                throw new AuraHandledException('Service Point già presente in ' + existingSaleServiceItems[0].Opportunity__r.Name);
             }
 
             newSaleServiceItem = new SaleServiceItem__c(
@@ -79,5 +79,31 @@ public with sharing class HDT_SRV_SaleServiceItem {
         }
 
         return false;
+    }
+
+    /**
+     * Group records by Opportunity
+     * @param List<Opportunity>
+     * @param List<SaleServiceItem__c>
+     * @return Map<Opportunity,List<SaleServiceItem__c>>
+     */
+    public List<List<SaleServiceItem__c>> groupRecordsByOpportunity(List<Opportunity> oppsList, List<SaleServiceItem__c> itemsList){
+
+        List<List<SaleServiceItem__c>> oppItems = new List<List<SaleServiceItem__c>>();
+
+        for(Opportunity opp : oppsList){
+
+            List<SaleServiceItem__c> tempList = new List<SaleServiceItem__c>();
+
+            for(SaleServiceItem__c item : itemsList){
+                if(item.Opportunity__c == opp.Id){
+                    tempList.add(item);
+                }
+            }
+
+            oppItems.add(tempList);
+        }
+
+        return oppItems;
     }
 }

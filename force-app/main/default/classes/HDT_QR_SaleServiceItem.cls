@@ -9,7 +9,7 @@ public with sharing class HDT_QR_SaleServiceItem {
      */
     public List<SaleServiceItem__c> queryExsistingCityAndType(Sale__c sale, String city, String type){
 
-        String fieldsToCheck = 'Opportunity__c,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,Opportunity__r.Vendita__c';
+        String fieldsToCheck = 'Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,Opportunity__r.Vendita__c';
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
         securityAccess.checkSecurityAccess();
 
@@ -17,6 +17,7 @@ public with sharing class HDT_QR_SaleServiceItem {
 
         return [SELECT Id,
         Opportunity__c,
+        Opportunity__r.Name,
         Quote__c,
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,

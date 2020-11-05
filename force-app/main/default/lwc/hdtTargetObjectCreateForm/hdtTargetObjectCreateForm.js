@@ -447,7 +447,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
-                message: 'Service Point aggiornato con successo',
+                message: 'Service Point confermato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);

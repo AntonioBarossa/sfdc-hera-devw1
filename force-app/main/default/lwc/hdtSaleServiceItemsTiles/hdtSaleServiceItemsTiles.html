@@ -2,7 +2,14 @@
 
     <template if:true={tilesData}>
 
-        <template if:true={showTilesInList}>
+        <!-- <template for:each={tilesData} for:item="tile">
+            <p key={tile}>{tile}</p>
+            <template for:each={tile} for:item="ssi">
+                <p key={ssi.Id}>{ssi.Id}</p>
+            </template>
+        </template> -->
+
+        <!-- <template if:true={showTilesInList}>
             <lightning-layout>
                 <lightning-layout-item size="4">
                     <div class="slds-p-around_small">
@@ -24,9 +31,9 @@
                     </div>
                 </lightning-layout-item>
             </lightning-layout>
-        </template>
+        </template> -->
         
-        <template if:false={showTilesInList}>
+        <!-- <template if:false={showTilesInList}>
             <div class="slds-grid slds-wrap slds-p-around_small">
                 <template for:each={tilesData} for:item="tile">
                     <div key={tile.Id} class="slds-p-around_small slds-size_1-of-4">
@@ -47,7 +54,7 @@
                     </div>
                 </template>
             </div>
-        </template>
+        </template> -->
 
     </template>
 
