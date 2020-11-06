@@ -127,7 +127,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
         //get address fields
-        this.fieldsAddress = this.toArray(this.customSettings.fieldAddress__c);
+        this.fieldsAddress = this.toArray(this.customSettings.FieldAddress__c);
         this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
         this.fieldsAddressObject = this.toObject(this.fieldsAddress, this.fieldsAddressReq);
         
@@ -151,20 +151,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 case 'Gas':
                     this.fieldsDataRaw = data.FieldGas__c;
                     this.fieldsDataReqRaw = data.FieldRequiredGas__c;
-                    break;
-                default:
-                    this.fieldsDataRaw = 'RecordTypeId, RecordType.Name, ' + data.FieldEle__c + ', ' + data.FieldGas__c;
-                    this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c;
             }
 
             this.customSettings = data;
 
             if(this.selectedservicepoint != undefined){
-                console.log(JSON.stringify(this.selectedservicepoint));
 
-                let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.fieldAddress__c))];
+                this.fieldsDataRaw = 'RecordTypeId, RecordType.Name, ' + data.FieldEle__c + ', ' + data.FieldGas__c;
+                this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c;
 
-                console.log('queryFields: ', queryFields.join());
+                let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.FieldAddress__c))];
 
                 getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields.join()}).then(data =>{
                     
@@ -183,7 +179,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.manageFields();
                     
                 }).catch(error => {
-                    console.log('ERROR: ', error);
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
                         message: error.message,
@@ -303,7 +298,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     validationChecks(){
 
         if(this.selectedservicepoint != undefined){
-
             if(Object.keys(this.allSubmitedFields).length != 0){
                 for (var key in this.allSubmitedFields) {
                     this.servicePointRetrievedData[key] = this.allSubmitedFields[key];
