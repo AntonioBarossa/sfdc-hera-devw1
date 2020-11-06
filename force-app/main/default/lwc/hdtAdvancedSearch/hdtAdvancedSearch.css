@@ -2,13 +2,18 @@
     top: 70% !important;
 }
 .searchInput{
-    margin-top: -16px;
+    margin-top: -20px;
 }
 .slds-form-element__label {
     padding-bottom: 10px;
 }
 .searchGo {
     margin-left: -15px;
+}
+.searchApi{
+    width: 114px;
+    margin-left: -17px;
+    padding: 0px;
 }
 .modal-searchGo{
     margin-left: -15px;

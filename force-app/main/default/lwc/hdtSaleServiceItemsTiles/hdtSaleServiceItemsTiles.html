@@ -2,13 +2,6 @@
 
     <template if:true={tilesData}>
 
-        <!-- <template for:each={tilesData} for:item="tile">
-            <p key={tile.Id}>{tile.Name}</p>
-            <template for:each={tile.ServicePoints} for:item="item">
-                <p key={item.Id}>{item.ServicePoint__r.ServicePointCode__c}</p>
-            </template>
-        </template> -->
-
         <template if:true={showTilesInList}>
             <lightning-layout>
                 <lightning-layout-item size="4">
@@ -20,11 +13,20 @@
                                         <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
                                         <ul class="slds-has-inline-block-links_space">
                                             <li class="slds-item">
-                                                <ul class="slds-list_horizontal slds-has-dividers_right">
-                                                    <li class="slds-item"><p>{tile.Name}</p></li>
-                                                    <li class="slds-item"><p>{tile.Type}</p></li>
-                                                    <li class="slds-item"><p>{tile.City}</p></li>
-                                                </ul>
+                                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                                    <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                        <li class="slds-item"><p>{tile.Name}</p></li>
+                                                        <li class="slds-item"><p>{tile.Type}</p></li>
+                                                        <li class="slds-item"><p>{tile.City}</p></li>
+                                                    </ul>
+                                                    <div class="slds-clearfix">
+                                                        <div class="slds-float_right">
+                                                            <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
+                                                                <lightning-icon icon-name="utility:delete" alternative-text="Cancella" title="Cancella" size="x-small"></lightning-icon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </li>
                                             <li>
                                                 <ul class="slds-has-inline-block-links_space">
@@ -50,7 +52,18 @@
                         <lightning-tile label="" type="media" class="slds-box">
                             <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
                             <ul class="slds-has-inline-block-links_space">
-                                <li class="slds-item"><p>{tile.Name}</p></li>
+                                <li class="slds-item">
+                                    <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
+                                        <h3 class="slds-tile__title">{tile.Name}</h3>
+                                        <div class="slds-clearfix">
+                                            <div class="slds-float_right">
+                                                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
+                                                    <lightning-icon icon-name="utility:delete" alternative-text="Cancella" title="Cancella" size="x-small"></lightning-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
                                 <li>
                                     <ul class="slds-list_horizontal slds-has-dividers_right">
                                         <li class="slds-item"><p>{tile.Type}</p></li>

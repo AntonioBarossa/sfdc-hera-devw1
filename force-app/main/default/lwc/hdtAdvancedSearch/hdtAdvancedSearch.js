@@ -1,12 +1,13 @@
 import {LightningElement, track,api} from 'lwc';
 import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServicePoints';
+import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
+import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class HdtAdvancedSearch extends LightningElement {
 
-    @track
-    filterInputWord = null;
-    openmodel = false
+    @track filterInputWord = null;
+    openmodel = false;
     submitButtonStatus = true;
     searchInputValue = null;
     queryType = 'pod';
@@ -17,15 +18,21 @@ export default class HdtAdvancedSearch extends LightningElement {
     originalData = [];
     pages = [];
     preloading = false;
-    @track
-    currentPage = 0;
+    @track currentPage = 0;
     totalPage = 0;
     customSetting = null;
     confirmButtonDisabled = true;
     rowToSend;
-    @api
-    maxRowSelected=false;
+    @api maxRowSelected=false;
     @api disabledinput;
+    @api accountid;
+    apiSearchButtonStatus=true;
+    apiSearchInputValue=null;
+    notFoundMsg={
+        'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
+        'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
+        'serialnumber':'Nessun record trovato'
+    }
 
     connectedCallback() {
         if (this.maxRowSelected ===false){
@@ -81,6 +88,7 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     searchAction(event) {
         this.submitButtonStatus = true;
+        this.apiSearchButtonStatus = true;
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
@@ -147,13 +155,11 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.queryType = value.detail;
     }
 
-    /**
-     * Call apex class and get data
-     */
-    submitSearch(event) {
+    submitContract(event){
         event.preventDefault();
         this.preloading = true;
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
+        console.log('executing query search', this.accountid);
+        getContracts({accountid:this.accountid}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -165,6 +171,46 @@ export default class HdtAdvancedSearch extends LightningElement {
             } else {
                 this.alert('Dati tabela','Nessun record trovato','warn')
                 this.tableData = data;
+            }
+        });
+    }
+
+    /**
+     * Calling Apex callWebService method
+     * TODO this method is not finished yet need webserivce.
+     */
+    callApi(event){
+        callWebService({pod:this.searchInputValue}).then(data=>{
+            if (data == null){
+                console.log("call this.handleConfirm()");
+            }else {
+                console.log("process data");
+            }
+        });
+        // test
+        this.handleConfirm();
+    }
+
+    /**
+     * Call apex class and get data
+     */
+    submitSearch(event) {
+        event.preventDefault();
+        this.preloading = true;
+        let qty = this.queryType;
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
+            this.preloading = false;
+            if (data.length > 0) {
+                this.originalData = JSON.parse(JSON.stringify(data));
+                this.createTable(data);
+                this.formatTableHeaderColumns(data);
+                this.submitButtonStatus = true;
+                this.openmodel = true;
+                this.isLoaded = true;
+            } else {
+                this.alert('Dati tabela',this.notFoundMsg[qty],'warn')
+                this.tableData = data;
+                this.apiSearchButtonStatus=false;
             }
         }).catch(error => {
             this.preloading = false;
@@ -181,9 +227,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     getSelectedServicePoint(event){
         this.preloading = true;
         let selectedRows = event.detail.selectedRows;
-
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
-
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.preloading = false;
     }
