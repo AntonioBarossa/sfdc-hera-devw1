@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_EE</fullName>
+    <active>true</active>
+    <label>Elettrico</label>
+    <picklistValues>
+        <picklist>CommoditySector__c</picklist>
+        <values>
+            <fullName>Acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energia Elettrica</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teleriscaldamento</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
