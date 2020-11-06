@@ -3,6 +3,7 @@ import {LightningElement, api} from 'lwc';
 export default class HdtAdvancedSearchSelectionFeildRadioGroup extends LightningElement {
 
     @api value;
+    @api disabledinput;
 
     get options() {
         return [

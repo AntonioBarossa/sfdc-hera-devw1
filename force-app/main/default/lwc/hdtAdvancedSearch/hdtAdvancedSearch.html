@@ -2,13 +2,14 @@
 
     <lightning-layout>
         <lightning-layout-item padding="around-small" size="12">
-            <c-hdt-advanced-search-selection-feild-radio-group onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
+            <c-hdt-advanced-search-selection-feild-radio-group disabledinput={disabledinput} onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
         </lightning-layout-item>
     </lightning-layout>
     <lightning-layout>
         <lightning-layout-item padding="around-small" size="6">
             <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
             <lightning-input
+                    disabled={disabledinput}
                     onkeyup={handleSearchInputKeyChange}
                     name="enter-search"
                     type="search"

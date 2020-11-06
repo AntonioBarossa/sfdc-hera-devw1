@@ -1,16 +1,20 @@
 <template>
     <lightning-card title="Selezione Fornitura">
         <lightning-layout>
-        </lightning-layout>
-        <lightning-layout>
             <lightning-layout-item padding="around-small" size="8" >
-                <c-hdt-advanced-search onservicepointselection={handleServicePointSelection}></c-hdt-advanced-search>
+                <c-hdt-advanced-search disabledinput={disabledInput} onservicepointselection={handleServicePointSelection}></c-hdt-advanced-search>
             </lightning-layout-item>
             <lightning-layout-item style="float:right" padding="around-small" size="4">
-                <c-hdt-create-target-object if:true={showCreateTargetObjectButton} sale={saleRecord} onnewservicepoint={handleNewServicePoint} onnewtile={handleNewTile} selectedservicepoint={selectedServicePoint} targetobject={targetObject} accountid={accountId}></c-hdt-create-target-object>
+                <c-hdt-create-target-object disabledinput={disabledInput} if:true={showCreateTargetObjectButton} sale={saleRecord} onnewservicepoint={handleNewServicePoint} onnewtile={handleNewTile} selectedservicepoint={selectedServicePoint} targetobject={targetObject} accountid={accountId}></c-hdt-create-target-object>
             </lightning-layout-item>
         </lightning-layout>
         <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord}></c-hdt-sale-service-items-tiles>
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
+            </div>
+        </div>
     </lightning-card>
 
 </template>

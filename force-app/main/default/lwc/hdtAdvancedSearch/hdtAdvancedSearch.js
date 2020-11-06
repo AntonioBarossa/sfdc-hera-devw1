@@ -24,7 +24,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     confirmButtonDisabled = true;
     rowToSend;
     @api
-    maxRowSelected=false
+    maxRowSelected=false;
+    @api disabledinput;
 
     connectedCallback() {
         if (this.maxRowSelected ===false){
