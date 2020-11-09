@@ -29,7 +29,7 @@ public with sharing class HDT_SRV_Opportunity {
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Opportunity', String.join(fields, ','), 'create');
         securityAccess.checkSecurityAccess();
 
-        insert opportunity;
+        HDT_UTL_DatabaseService.insertSObject(opportunity);
 
         return opportunity;
     }

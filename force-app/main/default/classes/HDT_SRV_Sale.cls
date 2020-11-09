@@ -18,7 +18,7 @@ public with sharing class HDT_SRV_Sale {
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Sale__c', String.join(fields, ','), 'create');
         securityAccess.checkSecurityAccess();
 
-        insert sale;
+        HDT_UTL_DatabaseService.insertSObject(sale);
 
         return sale;
     }

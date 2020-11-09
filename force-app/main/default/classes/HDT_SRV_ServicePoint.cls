@@ -21,7 +21,7 @@ public with sharing class HDT_SRV_ServicePoint {
             HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('ServicePoint__c', String.join(fields, ','), 'create');
             securityAccess.checkSecurityAccess();
 
-            insert servicePoint;
+            HDT_UTL_DatabaseService.insertSObject(servicePoint);
             return servicePoint;
         }
     }
@@ -41,7 +41,7 @@ public with sharing class HDT_SRV_ServicePoint {
         if (existingServicePoint[0].ServicePointCode__c != servicePoint.ServicePointCode__c) {
             throw new AuraHandledException('Codice POD/PDR e stato cambiato');
         } else {
-            update servicePoint;
+            HDT_UTL_DatabaseService.updateSObject(servicePoint);
         }
 
     }

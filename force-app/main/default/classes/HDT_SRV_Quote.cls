@@ -13,7 +13,7 @@ public with sharing class HDT_SRV_Quote {
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__Quote__c', String.join(fields, ','), 'create');
         securityAccess.checkSecurityAccess();
 
-        insert quote;
+        HDT_UTL_DatabaseService.insertSObject(quote);
 
         return quote;
     }
