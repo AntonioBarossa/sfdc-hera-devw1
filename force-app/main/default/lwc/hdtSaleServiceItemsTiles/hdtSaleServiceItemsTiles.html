@@ -21,7 +21,7 @@
                                                     </ul>
                                                     <div class="slds-clearfix">
                                                         <div class="slds-float_right">
-                                                            <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
+                                                            <button data-id={tile.Id} data-name={tile.Name} onclick={handleTileDelete} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Cancella">
                                                                 <lightning-icon icon-name="utility:delete" alternative-text="Cancella" title="Cancella" size="x-small"></lightning-icon>
                                                             </button>
                                                         </div>
@@ -57,7 +57,7 @@
                                         <h3 class="slds-tile__title">{tile.Name}</h3>
                                         <div class="slds-clearfix">
                                             <div class="slds-float_right">
-                                                <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
+                                                <button data-id={tile.Id} data-name={tile.Name} onclick={handleTileDelete} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Cancella">
                                                     <lightning-icon icon-name="utility:delete" alternative-text="Cancella" title="Cancella" size="x-small"></lightning-icon>
                                                 </button>
                                             </div>
@@ -85,5 +85,18 @@
         </template>
 
     </template>
+
+    <template if:false={loaded}>
+        <lightning-spinner alternative-text="Loading"></lightning-spinner>
+    </template>
+
+    <c-hdt-confirmation-dialog title={dialogTitle}
+                           message={dialogMessage}
+                           confirm-label='Si'
+                           cancel-label='No'
+                           visible={isDialogVisible}
+                           name="deleteTileConfimation"
+                           onclick={handleDialogResponse}>
+    </c-hdt-confirmation-dialog>
 
 </template>

@@ -53,6 +53,26 @@ public with sharing class HDT_QR_SaleServiceItem {
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Vendita__c = :saleId
         WITH SECURITY_ENFORCED
+        ORDER BY Opportunity__r.CreatedDate ASC
+        ];
+    }
+
+    /**
+     * Get records filtered by Opportunity.Id
+     */
+    public List<SaleServiceItem__c> getRecordsByOpportunityId(String opportunityId){
+        String fieldsToCheck = 'Opportunity__c,Quote__c,ServicePoint__c';
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
+        securityAccess.checkSecurityAccess();
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Quote__c,
+        ServicePoint__c
+        FROM SaleServiceItem__c
+        WHERE Opportunity__c = :opportunityId
+        WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC
         ];
     }

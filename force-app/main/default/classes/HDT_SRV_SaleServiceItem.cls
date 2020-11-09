@@ -64,6 +64,14 @@ public with sharing class HDT_SRV_SaleServiceItem {
 
         return newSaleServiceItem;
     }
+
+    /**
+     * Delete multiple SaleServiceItem__c records
+     * @param List<SaleServiceItem__c>
+     */
+    public void deleteRecords(List<SaleServiceItem__c> records){
+        HDT_UTL_DatabaseService.deleteSObject(records);
+    }
     
     /**
      * Check if Service Point is already confirmed for current Sale__c and Opportunity

@@ -3,6 +3,7 @@ public with sharing class HDT_LC_SaleServiceItemsTiles {
     private static HDT_QR_Opportunity opportunityQuery = new HDT_QR_Opportunity();
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_SRV_SaleServiceItem itemsService = new HDT_SRV_SaleServiceItem();
+    private static HDT_SRV_Opportunity opportunityService = new HDT_SRV_Opportunity();
 
     /**
      * Get list of tiles
@@ -16,6 +17,15 @@ public with sharing class HDT_LC_SaleServiceItemsTiles {
 
         return itemsService.groupRecordsByOpportunity(opps, items);
 
+    }
+
+    /**
+     * Delete single tile
+     * @param String opportunityId
+     */
+    @AuraEnabled
+    public static void deleteTile(String opportunityId){
+        opportunityService.deleteRecord(opportunityId);
     }
 
 }

@@ -24,7 +24,7 @@ public with sharing class HDT_QR_Opportunity {
         String stringFields = String.escapeSingleQuotes(fields);
 
         String query = 'SELECT '+ stringFields +
-                ' FROM Opportunity WHERE Vendita__c = :stringId';
+                ' FROM Opportunity WHERE Vendita__c = :stringId ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }

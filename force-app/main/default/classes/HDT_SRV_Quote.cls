@@ -17,4 +17,12 @@ public with sharing class HDT_SRV_Quote {
 
         return quote;
     }
+
+    /**
+     * Delete single record
+     * @param SBQQ__Quote__c.Id
+     */
+    public void deleteRecord(String quoteId){
+        HDT_UTL_DatabaseService.deleteSObject(quoteId);
+    }
 }
