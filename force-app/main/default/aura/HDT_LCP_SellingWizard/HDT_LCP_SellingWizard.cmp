@@ -28,8 +28,11 @@
             </div>
         </div> 
     </lightning:card> -->
+    <aura:if isTrue="{!v.sale}">
+        <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
+        <c:hdtGeneralInfo saleRecord="{!v.sale}"></c:hdtGeneralInfo>
+        <c:hdtSupplySelection saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
+        <c:hdtConfigureProduct saleRecord="{!v.sale}"></c:hdtConfigureProduct>
+    </aura:if>
 
-    <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
-    <c:hdtGeneralInfo saleRecord="{!v.sale}"></c:hdtGeneralInfo>
-    <c:hdtSupplySelection saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
 </aura:component>

@@ -76,4 +76,31 @@ public with sharing class HDT_QR_SaleServiceItem {
         ORDER BY CreatedDate ASC
         ];
     }
+
+    /**
+     * Get records grouped by SBQQ__Quote__c and filtered by Sale__c.Id
+     * @param Sale__c.Id
+     * @return List<SaleServiceItem__c>
+     */
+    public List<SaleServiceItem__c> getRecordsGroupedByQuote(String saleId){
+
+        List<String> fieldsToCheck = new List<String>{
+            'Quote__c',
+            'Quote__r.Name',
+            'Opportunity__r.Name'
+        };
+
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', String.join(fieldsToCheck, ','), 'read');
+        securityAccess.checkSecurityAccess();
+
+        return [
+            SELECT
+            Quote__c,
+            Quote__r.Name,
+            Opportunity__r.Name
+            FROM SaleServiceItem__c
+            WHERE Quote__r.Vendita__c = :saleId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

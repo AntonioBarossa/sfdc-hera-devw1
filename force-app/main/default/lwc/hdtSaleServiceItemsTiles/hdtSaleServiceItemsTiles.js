@@ -21,8 +21,6 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
 
             this.loaded = true;
 
-            console.log(JSON.parse(JSON.stringify(data)));
-            
             let tilesArray = [];
 
             data.forEach(el => {
