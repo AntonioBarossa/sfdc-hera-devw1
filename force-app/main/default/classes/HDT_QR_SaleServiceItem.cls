@@ -36,7 +36,7 @@ public with sharing class HDT_QR_SaleServiceItem {
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> getRecordsBySaleId(String saleId){
-        String fieldsToCheck = 'Opportunity__c,Opportunity__r.Vendita__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.SupplyCity__c';
+        String fieldsToCheck = 'Opportunity__c,Opportunity__r.Vendita__c,Opportunity__r.Name,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.SupplyCity__c';
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
         securityAccess.checkSecurityAccess();
 
@@ -46,6 +46,7 @@ public with sharing class HDT_QR_SaleServiceItem {
         Opportunity__r.Vendita__c,
         Opportunity__r.Name,
         Quote__c,
+        Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
         ServicePoint__r.RecordType.Name,
@@ -74,33 +75,6 @@ public with sharing class HDT_QR_SaleServiceItem {
         WHERE Opportunity__c = :opportunityId
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC
-        ];
-    }
-
-    /**
-     * Get records grouped by SBQQ__Quote__c and filtered by Sale__c.Id
-     * @param Sale__c.Id
-     * @return List<SaleServiceItem__c>
-     */
-    public List<SaleServiceItem__c> getRecordsGroupedByQuote(String saleId){
-
-        List<String> fieldsToCheck = new List<String>{
-            'Quote__c',
-            'Quote__r.Name',
-            'Opportunity__r.Name'
-        };
-
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', String.join(fieldsToCheck, ','), 'read');
-        securityAccess.checkSecurityAccess();
-
-        return [
-            SELECT
-            Quote__c,
-            Quote__r.Name,
-            Opportunity__r.Name
-            FROM SaleServiceItem__c
-            WHERE Quote__r.Vendita__c = :saleId
-            WITH SECURITY_ENFORCED
         ];
     }
 }

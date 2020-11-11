@@ -1,6 +1,10 @@
 <template>
     <lightning-card title="Configura Prodotti">
 
+        <template if:false={loaded}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+
         <template if:true={quotesData}>
             <div class="slds-p-horizontal_xx-large slds-m-vertical_large">
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered">
@@ -28,29 +32,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="slds-hint-parent">
-                            <td data-label="S.NO">
-                                <div class="slds-truncate" title="1">1</div>
-                            </td>
-                            <td data-label="NAME">
-                                <div class="slds-truncate" title="Q-00001">Q-00001</div>
-                            </td>
-                            <td data-label="TYPE">
-                                <div class="slds-truncate" title="Quote">Quote</div>
-                            </td>
-                            <td data-label="OPPORTUNITY NAME">
-                                <div class="slds-truncate" title="Quote">Quote</div>
-                            </td>
-                            <td data-label="PRODUCT NAME">
-                                <div class="slds-truncate" title=""></div>
-                            </td>
-                            <td>
-                                <lightning-button variant="brand" label="Configura" title="Configura"></lightning-button>
-                            </td>
-                            <td>
-                                <lightning-button variant="brand" label="Elimina" title="Elimina"></lightning-button>
-                            </td>
-                        </tr>
+                        <template for:each={quotesData} for:item="quote">
+                            <tr key={quote.Id} class="slds-hint-parent">
+                                <td data-label="S.NO">
+                                    <div class="slds-truncate" title={quote.Count}>{quote.Count}</div>
+                                </td>
+                                <td data-label="NAME">
+                                    <div class="slds-truncate" title={quote.Name}>{quote.Name}</div>
+                                </td>
+                                <td data-label="TYPE">
+                                    <div class="slds-truncate" title="Quote">Quote</div>
+                                </td>
+                                <td data-label="OPPORTUNITY NAME">
+                                    <div class="slds-truncate" title={quote.OpportunityName}>{quote.OpportunityName}</div>
+                                </td>
+                                <td data-label="PRODUCT NAME">
+                                    <div class="slds-truncate" title=""></div>
+                                </td>
+                                <td>
+                                    <lightning-button variant="brand" label="Configura" title="Configura"></lightning-button>
+                                </td>
+                                <td>
+                                    <lightning-button variant="brand" label="Elimina" title="Elimina"></lightning-button>
+                                </td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
             </div>

@@ -11,7 +11,7 @@
                 <c-hdt-advanced-search disabledinput={disabledInput} onservicepointselection={handleServicePointSelection} accountid={accountId}></c-hdt-advanced-search>
             </lightning-layout-item>
         </lightning-layout>
-        <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord}></c-hdt-sale-service-items-tiles>
+        <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>
         <div class="slds-clearfix slds-p-around_small">
             <div class="slds-float_right">
                 <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>

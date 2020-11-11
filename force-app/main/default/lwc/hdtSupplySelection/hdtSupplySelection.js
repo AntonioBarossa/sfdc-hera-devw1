@@ -41,6 +41,14 @@ export default class hdtSupplySelection extends LightningElement {
      */
     handleNewTile(){
         this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
+        this.dispatchEvent(new CustomEvent('newtile'));
+    }
+
+    /**
+     * Handle tile delete event
+     */
+    handleTileDeleteEvent(){
+        this.dispatchEvent(new CustomEvent('tiledelete'));
     }
 
     toggle(){

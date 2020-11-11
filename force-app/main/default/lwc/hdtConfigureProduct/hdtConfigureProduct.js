@@ -6,12 +6,27 @@ export default class hdtConfigureProduct extends LightningElement {
     
     @api saleRecord;
     quotesData;
+    loaded = false;
 
+    @api
     getQuotesData(){
+        this.loaded = false;
         getQuotes({saleId: this.saleRecord.Id}).then(data =>{
-            this.quotesData = data;
+            this.loaded = true;
 
-            console.log(JSON.parse(JSON.stringify( this.quotesData)));
+            let quotesArray = [];
+            let count = 0;
+
+            data.forEach(el => {
+                quotesArray.push({
+                    "Count"                :++count,
+                    "Id"                   :el[0].Quote__c,
+                    "Name"                 :el[0].Quote__r.Name,
+                    "OpportunityName"      :el[0].Opportunity__r.Name
+                });
+            });
+
+            this.quotesData = quotesArray;
 
         }).catch(error => {
             this.loaded = true;
@@ -25,7 +40,6 @@ export default class hdtConfigureProduct extends LightningElement {
     }
 
     connectedCallback(){
-        // this.getQuotesData();
-        console.log('saleRecord: ',JSON.stringify(this.saleRecord));
+        this.getQuotesData();
     }
 }

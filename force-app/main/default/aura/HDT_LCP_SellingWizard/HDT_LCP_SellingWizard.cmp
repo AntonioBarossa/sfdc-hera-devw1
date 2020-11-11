@@ -31,8 +31,8 @@
     <aura:if isTrue="{!v.sale}">
         <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
         <c:hdtGeneralInfo saleRecord="{!v.sale}"></c:hdtGeneralInfo>
-        <c:hdtSupplySelection saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
-        <c:hdtConfigureProduct saleRecord="{!v.sale}"></c:hdtConfigureProduct>
+        <c:hdtSupplySelection saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/>
+        <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}"></c:hdtConfigureProduct>
     </aura:if>
 
 </aura:component>

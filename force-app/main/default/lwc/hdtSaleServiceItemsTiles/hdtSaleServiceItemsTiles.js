@@ -68,12 +68,13 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
     
                 this.getTilesData();
                 
-                const toastErrorMessage = new ShowToastEvent({
+                const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Opportunity cancellata con successo',
                     variant: 'success'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(toastSuccessMessage);
+                this.dispatchEvent(new CustomEvent('tiledelete'));
     
             }).catch(error => {
                 this.loaded = true;

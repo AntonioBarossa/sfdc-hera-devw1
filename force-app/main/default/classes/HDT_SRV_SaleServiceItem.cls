@@ -93,7 +93,7 @@ public with sharing class HDT_SRV_SaleServiceItem {
      * Group records by Opportunity
      * @param List<Opportunity>
      * @param List<SaleServiceItem__c>
-     * @return Map<Opportunity,List<SaleServiceItem__c>>
+     * @return List<List<SaleServiceItem__c>>
      */
     public List<List<SaleServiceItem__c>> groupRecordsByOpportunity(List<Opportunity> oppsList, List<SaleServiceItem__c> itemsList){
 
@@ -113,5 +113,31 @@ public with sharing class HDT_SRV_SaleServiceItem {
         }
 
         return oppItems;
+    }
+
+    /**
+     * Group records by SBQQ__Quote__c
+     * @param List<SBQQ__Quote__c>
+     * @param List<SaleServiceItem__c>
+     * @return List<List<SaleServiceItem__c>>
+     */
+    public List<List<SaleServiceItem__c>> groupRecordsByQuote(List<SBQQ__Quote__c> quoteList, List<SaleServiceItem__c> itemsList){
+
+        List<List<SaleServiceItem__c>> quoteItems = new List<List<SaleServiceItem__c>>();
+
+        for(SBQQ__Quote__c quote : quoteList){
+
+            List<SaleServiceItem__c> tempList = new List<SaleServiceItem__c>();
+
+            for(SaleServiceItem__c item : itemsList){
+                if(item.Quote__c == quote.Id){
+                    tempList.add(item);
+                }
+            }
+
+            quoteItems.add(tempList);
+        }
+
+        return quoteItems;
     }
 }
