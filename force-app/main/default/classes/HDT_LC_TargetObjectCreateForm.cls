@@ -21,7 +21,9 @@ public with sharing class HDT_LC_TargetObjectCreateForm {
 
         serviceSP.updateRecord(servicePoint);
 
-        saleServiceItemService.createRecord(servicePoint, sale);
+        if (sale != null) {
+            saleServiceItemService.createRecord(servicePoint, sale);
+        }
 
         return servicePoint;
     }

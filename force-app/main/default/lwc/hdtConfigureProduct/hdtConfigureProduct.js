@@ -7,6 +7,7 @@ export default class hdtConfigureProduct extends LightningElement {
     @api saleRecord;
     quotesData;
     loaded = false;
+    showConfigureModal = false;
 
     @api
     getQuotesData(){
@@ -41,5 +42,13 @@ export default class hdtConfigureProduct extends LightningElement {
 
     connectedCallback(){
         this.getQuotesData();
+    }
+
+    handleOpenConfigureModal(){
+        this.showConfigureModal = true;
+    }
+
+    handleCloseConfigureModal(){
+        this.showConfigureModal = false;
     }
 }
