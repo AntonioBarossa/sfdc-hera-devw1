@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_TargetObjectCreateForm {
+public inherited sharing class HDT_LC_TargetObjectCreateForm {
     private static HDT_SRV_ServicePoint serviceSP = new HDT_SRV_ServicePoint();
     private static HDT_SRV_SaleServiceItem saleServiceItemService = new HDT_SRV_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
@@ -7,6 +7,8 @@ public with sharing class HDT_LC_TargetObjectCreateForm {
     @AuraEnabled
     public static List<ServicePoint__c> getServicePoint(String code, String fields) {
         
+        serviceSP.checkReadAccess(fields);
+
         return servicePointQuery.getRecordByCode(code, fields);
     }
 

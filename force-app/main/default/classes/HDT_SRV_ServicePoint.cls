@@ -1,8 +1,23 @@
-public with sharing class HDT_SRV_ServicePoint {
+public inherited sharing class HDT_SRV_ServicePoint {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
+    private static final String READPERMISSION = 'read';
     
+    /**
+     * @param crud Define read, update, create, delete
+     */
+    public void checkAccessInit(String fields, String crud){
+        
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('ServicePoint__c', fields, crud);
+        securityAccess.checkSecurityAccess();
+    }
+
+    public void checkReadAccess(String fields){
+        
+        checkAccessInit(fields, READPERMISSION);
+    }
+
     /**
      * Create ServicePoint__c record
      * @param ServicePoint__c servicePoint

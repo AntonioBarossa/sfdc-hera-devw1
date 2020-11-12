@@ -7,7 +7,8 @@ export default class hdtConfigureProduct extends LightningElement {
     @api saleRecord;
     quotesData;
     loaded = false;
-    showConfigureModal = false;
+    showEditQuote = false;
+    selectedQuoteId;
 
     @api
     getQuotesData(){
@@ -44,11 +45,12 @@ export default class hdtConfigureProduct extends LightningElement {
         this.getQuotesData();
     }
 
-    handleOpenConfigureModal(){
-        this.showConfigureModal = true;
+    handleOpenConfigureModal(event){
+        this.selectedQuoteId = event.currentTarget.dataset.id;
+        this.showEditQuote = true;
     }
 
-    handleCloseConfigureModal(){
-        this.showConfigureModal = false;
+    handleCloseEditQuoteEvent(){
+        this.showEditQuote = false;
     }
 }
