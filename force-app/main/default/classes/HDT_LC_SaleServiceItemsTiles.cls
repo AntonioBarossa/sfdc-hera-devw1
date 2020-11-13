@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_SaleServiceItemsTiles {
+public inherited sharing class HDT_LC_SaleServiceItemsTiles {
     
     private static HDT_QR_Opportunity opportunityQuery = new HDT_QR_Opportunity();
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();

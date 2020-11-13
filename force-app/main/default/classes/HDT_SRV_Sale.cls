@@ -1,4 +1,4 @@
-public with sharing class HDT_SRV_Sale {
+public inherited sharing class HDT_SRV_Sale {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_QR_Account accountQuery = new HDT_QR_Account();

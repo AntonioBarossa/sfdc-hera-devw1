@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_ServicePointCustomSettings {
+public inherited sharing class HDT_LC_ServicePointCustomSettings {
 
     @AuraEnabled
     public static CS_SelezioneFornitura__c getCustomSettings(){

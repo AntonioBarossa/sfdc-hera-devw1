@@ -1,4 +1,4 @@
-public with sharing class HDT_QR_Quote {
+public inherited sharing class HDT_QR_Quote {
 
     /**
      * Get records by Sale__c.Id

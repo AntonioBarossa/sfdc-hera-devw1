@@ -1,4 +1,4 @@
-public with sharing class HDT_QR_SaleServiceItem {
+public inherited sharing class HDT_QR_SaleServiceItem {
     
     /**
      * Check for SaleServiceItem record that has a ServicePoint__c with this city and record type

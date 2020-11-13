@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_ConfigureProduct {
+public inherited sharing class HDT_LC_ConfigureProduct {
     
     private static HDT_QR_Quote quoteQR = new HDT_QR_Quote();
     private static HDT_QR_SaleServiceItem saleServiceItemQR = new HDT_QR_SaleServiceItem();

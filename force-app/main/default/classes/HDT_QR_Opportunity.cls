@@ -1,4 +1,4 @@
-public with sharing class HDT_QR_Opportunity {
+public inherited sharing class HDT_QR_Opportunity {
     
     /**
      * Counts all records

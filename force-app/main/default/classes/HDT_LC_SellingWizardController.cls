@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_SellingWizardController {
+public inherited sharing class HDT_LC_SellingWizardController {
 
     private static HDT_SRV_Sale saleService = new HDT_SRV_Sale();
     private static HDT_QR_Sale saleQuery = new HDT_QR_Sale();

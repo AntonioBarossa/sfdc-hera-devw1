@@ -1,4 +1,4 @@
-public with sharing class HDT_SRV_Opportunity {
+public inherited sharing class HDT_SRV_Opportunity {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_QR_Opportunity opportunityQuery = new HDT_QR_Opportunity();

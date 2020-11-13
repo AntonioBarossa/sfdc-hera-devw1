@@ -1,4 +1,4 @@
-public with sharing class HDT_QR_Account {
+public inherited sharing class HDT_QR_Account {
 
     /**
      * Get Account by Id
