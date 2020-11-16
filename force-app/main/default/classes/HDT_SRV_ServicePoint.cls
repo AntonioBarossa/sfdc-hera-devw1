@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 29/10/2020
+ * @description HDT_SRV_ServicePoint.cls - Class that holds create,update,delete and other business logic for ServicePoint__c
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
+
 public inherited sharing class HDT_SRV_ServicePoint {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
@@ -5,6 +12,8 @@ public inherited sharing class HDT_SRV_ServicePoint {
     private static final String READPERMISSION = 'read';
     
     /**
+     * Init security access check
+     * @param String fields to check
      * @param crud Define read, update, create, delete
      */
     public void checkAccessInit(String fields, String crud){
@@ -13,8 +22,11 @@ public inherited sharing class HDT_SRV_ServicePoint {
         securityAccess.checkSecurityAccess();
     }
 
+    /**
+     * Check if user has read access to fields and throw exception if access not granted
+     * @param String fields
+     */
     public void checkReadAccess(String fields){
-        
         checkAccessInit(fields, READPERMISSION);
     }
 

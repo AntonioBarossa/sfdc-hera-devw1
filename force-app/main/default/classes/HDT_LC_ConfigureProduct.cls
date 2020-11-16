@@ -1,3 +1,9 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 30/10/2020
+ * @description HDT_LC_ConfigureProduct.cls - Class that holds methods that are called from hdtConfigureProduct.js
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
 public inherited sharing class HDT_LC_ConfigureProduct {
     
     private static HDT_QR_Quote quoteQR = new HDT_QR_Quote();

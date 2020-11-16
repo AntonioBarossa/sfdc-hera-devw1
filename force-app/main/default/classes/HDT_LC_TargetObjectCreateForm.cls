@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 30/10/2020
+ * @description HDT_LC_TargetObjectCreateForm.cls - Class that holds methods that are called from hdtTargetObjectCreateForm.js
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
+
 public inherited sharing class HDT_LC_TargetObjectCreateForm {
     private static HDT_SRV_ServicePoint serviceSP = new HDT_SRV_ServicePoint();
     private static HDT_SRV_SaleServiceItem saleServiceItemService = new HDT_SRV_SaleServiceItem();

@@ -1,3 +1,10 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 02/11/2020
+ * @description HDT_QR_Sale.cls - Class that holds queries for Sale__c
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
+
 public inherited sharing class HDT_QR_Sale {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
