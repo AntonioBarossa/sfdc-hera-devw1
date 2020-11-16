@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ImplantType__c</fullName>
+    <description>Tipo impianto o tipologia d&apos;uso</description>
+    <externalId>false</externalId>
+    <label>Tipo impianto</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1101-Domestico</fullName>
+                <default>false</default>
+                <label>1101-Domestico</label>
+            </value>
+            <value>
+                <fullName>1102-Non domestico</fullName>
+                <default>false</default>
+                <label>1102-Non domestico</label>
+            </value>
+            <value>
+                <fullName>1103-Attivita</fullName>
+                <default>false</default>
+                <label>1103-Attivita</label>
+            </value>
+            <value>
+                <fullName>1104-Scar. poz priv. civ. cont</fullName>
+                <default>false</default>
+                <label>1104-Scar. poz priv. civ. cont</label>
+            </value>
+            <value>
+                <fullName>1105-Antincendio</fullName>
+                <default>false</default>
+                <label>1105-Antincendio</label>
+            </value>
+            <value>
+                <fullName>1106-Cantiere</fullName>
+                <default>false</default>
+                <label>1106-Cantiere</label>
+            </value>
+            <value>
+                <fullName>1107-Colonnetta</fullName>
+                <default>false</default>
+                <label>1107-Colonnetta</label>
+            </value>
+            <value>
+                <fullName>1108-Irriguo</fullName>
+                <default>false</default>
+                <label>1108-Irriguo</label>
+            </value>
+            <value>
+                <fullName>1109-Comunale</fullName>
+                <default>false</default>
+                <label>1109-Comunale</label>
+            </value>
+            <value>
+                <fullName>1110-Ente pubblico</fullName>
+                <default>false</default>
+                <label>1110-Ente pubblico</label>
+            </value>
+            <value>
+                <fullName>1111-Promiscuo</fullName>
+                <default>false</default>
+                <label>1111-Promiscuo</label>
+            </value>
+            <value>
+                <fullName>1112-Subfornitura</fullName>
+                <default>false</default>
+                <label>1112-Subfornitura</label>
+            </value>
+            <value>
+                <fullName>1113-Uso interno</fullName>
+                <default>false</default>
+                <label>1113-Uso interno</label>
+            </value>
+            <value>
+                <fullName>1114-Rete</fullName>
+                <default>false</default>
+                <label>1114-Rete</label>
+            </value>
+            <value>
+                <fullName>1115-Scar poz priv.civ no cont</fullName>
+                <default>false</default>
+                <label>1115-Scar poz priv.civ no cont</label>
+            </value>
+            <value>
+                <fullName>1116-Scar. acq reflue uso ind</fullName>
+                <default>false</default>
+                <label>1116-Scar. acq reflue uso ind</label>
+            </value>
+            <value>
+                <fullName>1117-Autobotte (solo usi Hera)</fullName>
+                <default>false</default>
+                <label>1117-Autobotte (solo usi Hera)</label>
+            </value>
+            <value>
+                <fullName>1118-Scar ind no cont. ACQ+POZ</fullName>
+                <default>false</default>
+                <label>1118-Scar ind no cont. ACQ+POZ</label>
+            </value>
+            <value>
+                <fullName>1119-Scar. ind.le  cont. div</fullName>
+                <default>false</default>
+                <label>1119-Scar. ind.le  cont. div</label>
+            </value>
+            <value>
+                <fullName>1120-Scar. ind.le no cont. div</fullName>
+                <default>false</default>
+                <label>1120-Scar. ind.le no cont. div</label>
+            </value>
+            <value>
+                <fullName>1121-Scar.pozzo priv. ind cont</fullName>
+                <default>false</default>
+                <label>1121-Scar.pozzo priv. ind cont</label>
+            </value>
+            <value>
+                <fullName>1122-Scar.poz priv.ind.no cont</fullName>
+                <default>false</default>
+                <label>1122-Scar.poz priv.ind.no cont</label>
+            </value>
+            <value>
+                <fullName>1123-Prel. pozzo priv. no fatt</fullName>
+                <default>false</default>
+                <label>1123-Prel. pozzo priv. no fatt</label>
+            </value>
+            <value>
+                <fullName>1201-Domestico</fullName>
+                <default>false</default>
+                <label>1201-Domestico</label>
+            </value>
+            <value>
+                <fullName>1202-Non domestico</fullName>
+                <default>false</default>
+                <label>1202-Non domestico</label>
+            </value>
+            <value>
+                <fullName>13A0-Usi di Abitazione BT</fullName>
+                <default>false</default>
+                <label>13A0-Usi di Abitazione BT</label>
+            </value>
+            <value>
+                <fullName>13BB-Illuminazione pubblica BT</fullName>
+                <default>false</default>
+                <label>13BB-Illuminazione pubblica BT</label>
+            </value>
+            <value>
+                <fullName>13CB-Non domestici in BT</fullName>
+                <default>false</default>
+                <label>13CB-Non domestici in BT</label>
+            </value>
+            <value>
+                <fullName>13CT-Forn temporanee &lt; 21 gg</fullName>
+                <default>false</default>
+                <label>13CT-Forn temporanee &lt; 21 gg</label>
+            </value>
+            <value>
+                <fullName>13DM-Illuminazione pubblica MT</fullName>
+                <default>false</default>
+                <label>13DM-Illuminazione pubblica MT</label>
+            </value>
+            <value>
+                <fullName>13EM-Non domestici MT</fullName>
+                <default>false</default>
+                <label>13EM-Non domestici MT</label>
+            </value>
+            <value>
+                <fullName>13FM-Non domestici AT</fullName>
+                <default>false</default>
+                <label>13FM-Non domestici AT</label>
+            </value>
+            <value>
+                <fullName>13X0-Usi interni BT</fullName>
+                <default>false</default>
+                <label>13X0-Usi interni BT</label>
+            </value>
+            <value>
+                <fullName>13Y0-Usi interni MT</fullName>
+                <default>false</default>
+                <label>13Y0-Usi interni MT</label>
+            </value>
+            <value>
+                <fullName>13Z0-Grossisti</fullName>
+                <default>false</default>
+                <label>13Z0-Grossisti</label>
+            </value>
+            <value>
+                <fullName>1001-Cottura cibi</fullName>
+                <default>false</default>
+                <label>1001-Cottura cibi</label>
+            </value>
+            <value>
+                <fullName>1002-Cottura/Produz acq calda</fullName>
+                <default>false</default>
+                <label>1002-Cottura/Produz acq calda</label>
+            </value>
+            <value>
+                <fullName>1003-Riscaldamento esclusivo</fullName>
+                <default>false</default>
+                <label>1003-Riscaldamento esclusivo</label>
+            </value>
+            <value>
+                <fullName>1004-Riscaldamento promiscuo</fullName>
+                <default>false</default>
+                <label>1004-Riscaldamento promiscuo</label>
+            </value>
+            <value>
+                <fullName>1005-Risc. centraliz esclusivo</fullName>
+                <default>false</default>
+                <label>1005-Risc. centraliz esclusivo</label>
+            </value>
+            <value>
+                <fullName>1006-Risc. centraliz promiscuo</fullName>
+                <default>false</default>
+                <label>1006-Risc. centraliz promiscuo</label>
+            </value>
+            <value>
+                <fullName>1007-Attivita produttive</fullName>
+                <default>false</default>
+                <label>1007-Attivita produttive</label>
+            </value>
+            <value>
+                <fullName>1008-Promiscuo (prod+ risc)</fullName>
+                <default>false</default>
+                <label>1008-Promiscuo (prod+ risc)</label>
+            </value>
+            <value>
+                <fullName>1009-Reti (cabine primo salto)</fullName>
+                <default>false</default>
+                <label>1009-Reti (cabine primo salto)</label>
+            </value>
+            <value>
+                <fullName>1010-Usi interni</fullName>
+                <default>false</default>
+                <label>1010-Usi interni</label>
+            </value>
+            <value>
+                <fullName>1401-Risc amb singoli</fullName>
+                <default>false</default>
+                <label>1401-Risc amb singoli</label>
+            </value>
+            <value>
+                <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
+                <default>false</default>
+                <label>1402-Risc AcquaIS - Raffr Sing</label>
+            </value>
+            <value>
+                <fullName>1403-Risc Amb centr</fullName>
+                <default>false</default>
+                <label>1403-Risc Amb centr</label>
+            </value>
+            <value>
+                <fullName>1404-Attivita produttive</fullName>
+                <default>false</default>
+                <label>1404-Attivita produttive</label>
+            </value>
+            <value>
+                <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
+                <default>false</default>
+                <label>1405-Risc AcquaIS-Raffr Centr</label>
+            </value>
+            <value>
+                <fullName>1406-Acqua calda Sing unità</fullName>
+                <default>false</default>
+                <label>1406-Acqua calda Sing unità</label>
+            </value>
+            <value>
+                <fullName>1407-Acqua calda Centr</fullName>
+                <default>false</default>
+                <label>1407-Acqua calda Centr</label>
+            </value>
+            <value>
+                <fullName>1408-Ospedalieri</fullName>
+                <default>false</default>
+                <label>1408-Ospedalieri</label>
+            </value>
+            <value>
+                <fullName>1409-Usi interni</fullName>
+                <default>false</default>
+                <label>1409-Usi interni</label>
+            </value>
+            <value>
+                <fullName>1410-Solo Raffrescamento</fullName>
+                <default>false</default>
+                <label>1410-Solo Raffrescamento</label>
+            </value>
+            <value>
+                <fullName>1411-Piscine e Palestre</fullName>
+                <default>false</default>
+                <label>1411-Piscine e Palestre</label>
+            </value>
+            <value>
+                <fullName>G_ICD-Imposta Usi Domestici</fullName>
+                <default>false</default>
+                <label>G_ICD-Imposta Usi Domestici</label>
+            </value>
+            <value>
+                <fullName>G_ICC-Imposta Usi Non Dom.</fullName>
+                <default>false</default>
+                <label>G_ICC-Imposta Usi Non Dom.</label>
+            </value>
+            <value>
+                <fullName>G_ICC-Imp. Usi Civili Commerci</fullName>
+                <default>false</default>
+                <label>G_ICC-Imp. Usi Civili Commerci</label>
+            </value>
+            <value>
+                <fullName>E_I_USIDOM-Domestici</fullName>
+                <default>false</default>
+                <label>E_I_USIDOM-Domestici</label>
+            </value>
+            <value>
+                <fullName>EIMP_L01-Illuminaz. Pubb.</fullName>
+                <default>false</default>
+                <label>EIMP_L01-Illuminaz. Pubb.</label>
+            </value>
+            <value>
+                <fullName>EIMP_M04-Non domestici</fullName>
+                <default>false</default>
+                <label>EIMP_M04-Non domestici</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
