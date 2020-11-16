@@ -1,4 +1,6 @@
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import createQuoteLine from '@salesforce/apex/HDT_LC_EditQuote.createQuoteLine';
 
 export default class hdtEditQuote extends LightningElement {
 
@@ -11,6 +13,23 @@ export default class hdtEditQuote extends LightningElement {
 
     connectedCallback(){
         this.iframeSrc = this.getIframeSrc(this.quoteId);
+    }
+
+    disconnectedCallback(){
+        console.log('OK!');
+        
+        createQuoteLine({quoteId: this.quoteId}).then(data =>{
+            
+
+        }).catch(error => {
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+        
     }
 
     handleCloseModal(){
