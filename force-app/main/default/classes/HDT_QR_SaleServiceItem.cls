@@ -83,15 +83,15 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     * @date 16/11/2020
     * @description Get single record by quote id that has ServicePoint__r.RecordType.Name
     * @param String quoteId – SBQQ__Quote__c.Id
-    * @return Descrizione di quanto ritorna il metodo
+    * @return List<SaleServiceItem__c>
     */
-    public SaleServiceItem__c getRecordByQuote(String quoteId){
+    public List<SaleServiceItem__c> getRecordsByQuote(String quoteId){
 
         String fieldsToCheck = 'Quote__c,ServicePoint__c,ServicePoint__r.RecordType.Name';
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
         securityAccess.checkSecurityAccess();
 
-        List<SaleServiceItem__c> records = [
+        return [
             SELECT  
             Quote__c,
             ServicePoint__c,
@@ -99,9 +99,6 @@ public inherited sharing class HDT_QR_SaleServiceItem {
             FROM SaleServiceItem__c
             WHERE Quote__c = :quoteId
             WITH SECURITY_ENFORCED
-            LIMIT 1
         ];
-
-        return records[0];
     }
 }

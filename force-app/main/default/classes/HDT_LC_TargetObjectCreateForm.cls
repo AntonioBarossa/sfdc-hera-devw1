@@ -22,16 +22,26 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     @AuraEnabled
     public static ServicePoint__c createServicePoint(ServicePoint__c servicePoint) {
 
-        return serviceSP.createRecord(servicePoint);
+        try{
+            return serviceSP.createRecord(servicePoint);
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+
     }
 
     @AuraEnabled
     public static ServicePoint__c confirmServicePoint(ServicePoint__c servicePoint, Sale__c sale){
 
-        serviceSP.updateRecord(servicePoint);
+        try {
+            serviceSP.updateRecord(servicePoint);
 
-        if (sale != null) {
-            saleServiceItemService.createRecord(servicePoint, sale);
+            if (sale != null) {
+                saleServiceItemService.createRecord(servicePoint, sale);
+            }
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
         }
 
         return servicePoint;

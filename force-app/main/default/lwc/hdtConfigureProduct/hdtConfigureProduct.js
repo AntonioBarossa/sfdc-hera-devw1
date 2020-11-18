@@ -16,17 +16,22 @@ export default class hdtConfigureProduct extends LightningElement {
         getQuotes({saleId: this.saleRecord.Id}).then(data =>{
             this.loaded = true;
 
+            console.log('QuoteLines: ', JSON.parse(JSON.stringify(data)));
+
             let quotesArray = [];
             let count = 0;
 
             data.forEach(el => {
                 quotesArray.push({
                     "Count"                :++count,
-                    "Id"                   :el[0].Quote__c,
-                    "Name"                 :el[0].Quote__r.Name,
-                    "OpportunityName"      :el[0].Opportunity__r.Name
+                    "Id"                   :el.quote[0].Id,
+                    "Name"                 :el.quote[0].Name,
+                    "OpportunityName"      :el.quote[0].SBQQ__Opportunity2__r.Name,
+                    "QuoteLines"           :el.quoteLines
                 });
             });
+
+            console.log('QuoteLinesArray: ', quotesArray);
 
             this.quotesData = quotesArray;
 

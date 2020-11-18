@@ -45,6 +45,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
                 Vendita__c = sale.Id,
+                SBQQ__Opportunity2__c = newOpportunity.Id,
                 SBQQ__Account__c = sale.Account__c
             ));
 
@@ -113,31 +114,5 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         }
 
         return oppItems;
-    }
-
-    /**
-     * Group records by SBQQ__Quote__c
-     * @param List<SBQQ__Quote__c>
-     * @param List<SaleServiceItem__c>
-     * @return List<List<SaleServiceItem__c>>
-     */
-    public List<List<SaleServiceItem__c>> groupRecordsByQuote(List<SBQQ__Quote__c> quoteList, List<SaleServiceItem__c> itemsList){
-
-        List<List<SaleServiceItem__c>> quoteItems = new List<List<SaleServiceItem__c>>();
-
-        for(SBQQ__Quote__c quote : quoteList){
-
-            List<SaleServiceItem__c> tempList = new List<SaleServiceItem__c>();
-
-            for(SaleServiceItem__c item : itemsList){
-                if(item.Quote__c == quote.Id){
-                    tempList.add(item);
-                }
-            }
-
-            quoteItems.add(tempList);
-        }
-
-        return quoteItems;
     }
 }

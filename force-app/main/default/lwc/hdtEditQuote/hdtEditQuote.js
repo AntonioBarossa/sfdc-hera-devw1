@@ -16,10 +16,12 @@ export default class hdtEditQuote extends LightningElement {
     }
 
     disconnectedCallback(){
-        console.log('OK!');
         
         createQuoteLine({quoteId: this.quoteId}).then(data =>{
+            console.log('Disconnected hdtEditQuote: ');
+            console.log('Created QuoteLines: ');
             
+            console.log(JSON.parse(JSON.stringify(data)));
 
         }).catch(error => {
             const toastErrorMessage = new ShowToastEvent({

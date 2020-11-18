@@ -56,6 +56,31 @@
                                     <lightning-button data-id={quote.Id} variant="brand" label="Elimina" title="Elimina"></lightning-button>
                                 </td>
                             </tr>
+                            <template for:each={quote.QuoteLines} for:item="quoteLine">
+                                <tr key={quoteLine.Id} class="slds-hint-parent">
+                                    <td data-label="S.NO">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                    <td data-label="NAME">
+                                        <div class="slds-truncate" title={quoteLine.Name}>{quoteLine.Name}</div>
+                                    </td>
+                                    <td data-label="TYPE">
+                                        <div class="slds-truncate" title="QuoteLine">QuoteItem</div>
+                                    </td>
+                                    <td data-label="OPPORTUNITY NAME">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                    <td data-label="PRODUCT NAME">
+                                        <div class="slds-truncate" title={quoteLine.SBQQ__Product__r.Name}>{quoteLine.SBQQ__Product__r.Name}</div>
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </template>
                         </template>
                     </tbody>
                 </table>
