@@ -35,5 +35,10 @@
     handleTileDeleteEvent : function(component){
         var hdtConfigureProduct = component.find("hdtConfigureProduct");
         hdtConfigureProduct.getQuotesData();
+    },
+
+    handleQuoteCancelEvent : function(component){
+        var hdtSupplySelection = component.find("hdtSupplySelection");
+        hdtSupplySelection.refreshTileData();
     }
 })

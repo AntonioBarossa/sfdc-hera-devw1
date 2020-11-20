@@ -23,9 +23,30 @@ public inherited sharing class HDT_QR_Opportunity {
         String stringId = String.escapeSingleQuotes(saleId);
         String stringFields = String.escapeSingleQuotes(fields);
 
+        String stageNameFilter = 'Closed Lost';
+
         String query = 'SELECT '+ stringFields +
-                ' FROM Opportunity WHERE Vendita__c = :stringId ORDER BY CreatedDate ASC';
+                ' FROM Opportunity WHERE Vendita__c = :stringId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
         return Database.query(query);
 
+    }
+
+    public Opportunity getRecordById(String opportunityId){
+        String fieldsToCheck = 'StageName';
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Opportunity', fieldsToCheck, 'read');
+        securityAccess.checkSecurityAccess();
+
+        List<Opportunity> records = [
+            SELECT
+            Id,
+            StageName
+            FROM Opportunity
+            WHERE Id = :opportunityId
+            AND StageName != 'Closed Lost'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        return records[0];
     }
 }

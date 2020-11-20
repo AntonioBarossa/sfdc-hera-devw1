@@ -36,11 +36,16 @@ export default class hdtSupplySelection extends LightningElement {
         this.dispatchEvent(new CustomEvent('newservicepoint', {detail: {newServicePoint}}));
     }
 
+    @api
+    refreshTileData(){
+        this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
+    }
+
     /**
      * Handle the new tile creation
      */
     handleNewTile(){
-        this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
+        this.refreshTileData();
         this.dispatchEvent(new CustomEvent('newtile'));
     }
 

@@ -41,7 +41,7 @@
                                     <div class="slds-truncate" title={quote.Name}>{quote.Name}</div>
                                 </td>
                                 <td data-label="TYPE">
-                                    <div class="slds-truncate" title="Quote">Quote</div>
+                                    <div class="slds-truncate" title={quote.Type}>{quote.Type}</div>
                                 </td>
                                 <td data-label="OPPORTUNITY NAME">
                                     <div class="slds-truncate" title={quote.OpportunityName}>{quote.OpportunityName}</div>
@@ -50,10 +50,10 @@
                                     <div class="slds-truncate" title=""></div>
                                 </td>
                                 <td>
-                                    <lightning-button data-id={quote.Id} variant="brand" label="Configura" title="Configura" onclick={handleOpenConfigureModal}></lightning-button>
+                                    <lightning-button disabled={disabledButton} data-id={quote.Id} variant="brand" label="Configura" title="Configura" onclick={handleOpenConfigureModal}></lightning-button>
                                 </td>
                                 <td>
-                                    <lightning-button data-id={quote.Id} variant="brand" label="Elimina" title="Elimina"></lightning-button>
+                                    <lightning-button disabled={disabledButton} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
                                 </td>
                             </tr>
                             <template for:each={quote.QuoteLines} for:item="quoteLine">
@@ -86,10 +86,25 @@
                 </table>
             </div>
         </template>
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
+            </div>
+        </div>
 
         <template if:true={showEditQuote}>
             <c-hdt-edit-quote quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent}></c-hdt-edit-quote>
         </template>
         
+        <c-hdt-confirmation-dialog title={dialogTitle}
+                           message={dialogMessage}
+                           confirm-label='Si'
+                           cancel-label='No'
+                           visible={isDialogVisible}
+                           name="deleteQuoteConfimation"
+                           onclick={handleDialogResponse}>
+        </c-hdt-confirmation-dialog>
+
     </lightning-card>
 </template>

@@ -7,13 +7,16 @@
 public inherited sharing class HDT_LC_ConfigureProduct {
     
     private static HDT_QR_Quote quoteQR = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSRV = new HDT_SRV_Quote();
     private static HDT_QR_SaleServiceItem saleServiceItemQR = new HDT_QR_SaleServiceItem();
     private static HDT_SRV_SaleServiceItem saleServiceItemSRV = new HDT_SRV_SaleServiceItem();
     private static HDT_QR_QuoteLine quoteLineQR = new HDT_QR_QuoteLine();
     private static HDT_SRV_QuoteLine quoteLineSRV = new HDT_SRV_QuoteLine();
+    private static HDT_QR_Opportunity opportunityQR = new HDT_QR_Opportunity();
+    private static HDT_SRV_Opportunity opportunitySRV = new HDT_SRV_Opportunity();
 
     /**
-     * @author Keltin Mesonjesi
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 18/11/2020
      * @description Get SBQQ__Quote__c and SBQQ__QuoteLine__c records to fill table
      * @param String Sale.Id
@@ -34,5 +37,29 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         }
 
         return resultsList;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @date 19/11/2020
+     * @description Cancel SBQQ__Quote__c record by changing its status (Status=”Annullata”) and related Opportunity (StageName= “Chiusa/Annullata”)
+     * @param String quoteId
+     */
+    @AuraEnabled
+    public static void cancelQuote(String quoteId){
+        try {
+            
+            SBQQ__Quote__c quoteToUpdate = quoteQR.getRecordById(quoteId);
+            quoteToUpdate.SBQQ__Status__c = 'Rejected';
+
+            Opportunity oppToUpdate = opportunityQR.getRecordById(quoteToUpdate.SBQQ__Opportunity2__c);
+            oppToUpdate.StageName = 'Closed Lost';
+
+            quoteSRV.updateRecord(quoteToUpdate);
+            opportunitySRV.updateRecord(oppToUpdate);
+
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
     }
 }
