@@ -19,7 +19,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         String recordTypeName = existingServicePoint[0].RecordType.Name;
         String supplyCity = servicePoint.SupplyCity__c;
 
-        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale, supplyCity, recordTypeName);
+        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale.Id, supplyCity, recordTypeName);
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
 

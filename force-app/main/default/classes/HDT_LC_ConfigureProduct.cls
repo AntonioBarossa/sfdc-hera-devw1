@@ -28,7 +28,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         List<Map<String,List<SObject>>> resultsList = new List<Map<String,List<SObject>>>();
 
         try {
-            List<SBQQ__Quote__c> quoteList = quoteQR.getRecordsBySale(saleId);
+            List<SBQQ__Quote__c> quoteList = quoteQR.getRecordsBySaleFilterStatus(saleId, 'Rejected');
             List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQR.getRecordsBySale(saleId);
 
             resultsList = quoteLineSRV.groupRecordsByQuote(quoteList, quoteLineList);

@@ -15,10 +15,6 @@ public inherited sharing class HDT_QR_Product {
     * @return Product2
     */
     public Product2 getRecordByProductCode(String productCode){
-        
-        String fieldsToCheck = 'Name,ProductCode';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Product2', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
 
         List<Product2> records = [
             SELECT

@@ -12,7 +12,7 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
     @AuraEnabled
     public static List<List<SaleServiceItem__c>> getTiles(String saleId){
 
-        List<Opportunity> opps = opportunityQuery.getRecordsBySale(saleId, 'Id,Name');
+        List<Opportunity> opps = opportunityQuery.getRecordsBySaleFilterStageName(saleId, 'Id,Name', 'Closed Lost');
         List<SaleServiceItem__c> items = saleServiceItemQuery.getRecordsBySaleId(saleId);
 
         return itemsService.groupRecordsByOpportunity(opps, items);

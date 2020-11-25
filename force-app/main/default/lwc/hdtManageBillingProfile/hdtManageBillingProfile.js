@@ -17,7 +17,6 @@ export default class hdtManageBillingProfile extends LightningElement {
 
     getBillingProfileData(){
         // this.loaded = false;
-        console.log(this.accountId);
         getBillingProfileList({accountId: this.accountId}).then(data =>{
             // this.loaded = true;
             

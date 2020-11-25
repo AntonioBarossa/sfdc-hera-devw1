@@ -1,3 +1,5 @@
 <template>
-    <lightning-button variant="brand" label="CREA" title="CREA" class="slds-m-left_large"></lightning-button>
+    <lightning-button onclick={handleCreateEvent} variant="brand" label="CREA" title="CREA" class="slds-m-left_large"></lightning-button>
+
+    <c-hdt-billing-profile-form if:true={showForm} oncancel={handleCancelEvent}></c-hdt-billing-profile-form>
 </template>

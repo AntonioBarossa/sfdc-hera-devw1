@@ -1,16 +1,18 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/10/2020
+* @description HDT_QR_Quote – Contains queries for SBQQ__Quote__c
+* @history Keltin Mesonjesi – 30/10/2020 – Created class
+*/
 public inherited sharing class HDT_QR_Quote {
 
     /**
-     * Get records by Sale__c.Id
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records by Sale__c.Id
      * @param String Sale__c.Id
      * @return List<SBQQ__Quote__c>
      */
-    public List<SBQQ__Quote__c> getRecordsBySale(String saleId){
-
-        String fieldsToCheck = 'Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c';
-
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__Quote__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
+    public List<SBQQ__Quote__c> getRecordsBySaleFilterStatus(String saleId, String status){
 
         return [
             SELECT
@@ -20,17 +22,19 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Type__c
             FROM SBQQ__Quote__c
             WHERE Vendita__c = :saleId
-            AND SBQQ__Status__c != 'Rejected'
+            AND SBQQ__Status__c != :status
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];
     }
 
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get record by Id
+     * @param String quoteId
+     * @return SBQQ__Quote__c
+     */
     public SBQQ__Quote__c getRecordById(String quoteId){
-
-        String fieldsToCheck = 'SBQQ__Status__c,SBQQ__Opportunity2__c,SBQQ__Type__c';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__Quote__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
 
         List<SBQQ__Quote__c> records = [
             SELECT
@@ -40,7 +44,31 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Type__c
             FROM SBQQ__Quote__c
             WHERE Id = :quoteId
-            AND SBQQ__Status__c != 'Rejected'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        return records[0];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get record by Id and filtered by status
+     * @param String quoteId
+     * @param String status
+     * @return SBQQ__Quote__c
+     */
+    public SBQQ__Quote__c getRecordByIdFilterStatus(String quoteId, String status){
+
+        List<SBQQ__Quote__c> records = [
+            SELECT
+            Id,
+            SBQQ__Status__c,
+            SBQQ__Opportunity2__c,
+            SBQQ__Type__c
+            FROM SBQQ__Quote__c
+            WHERE Id = :quoteId
+            AND SBQQ__Status__c != :status
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];

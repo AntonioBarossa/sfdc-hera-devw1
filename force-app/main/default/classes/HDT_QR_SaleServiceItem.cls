@@ -1,19 +1,21 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 30/10/2020
+ * @description HDT_QR_SaleServiceItem.cls - Class that holds queries for SaleServiceItem
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
+
 public inherited sharing class HDT_QR_SaleServiceItem {
     
     /**
-     * Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
-     * @param Sale__c sale
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
+     * @param String saleId
      * @param String ServicePoint__r.SupplyCity__c
      * @param String ServicePoint__r.RecordType.Name
      * @return List<SaleServiceItem__c>
      */
-    public List<SaleServiceItem__c> queryExsistingCityAndType(Sale__c sale, String city, String type){
-
-        String fieldsToCheck = 'Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,Opportunity__r.Vendita__c';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
-
-        String saleId = sale.Id;
+    public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type){
 
         return [SELECT Id,
         Opportunity__c,
@@ -31,14 +33,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     }
 
     /**
-     * Get records filtered by Opportunity__r.Vendita__c
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records filtered by Opportunity__r.Vendita__c
      * @param String saleId
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> getRecordsBySaleId(String saleId){
-        String fieldsToCheck = 'Opportunity__c,Opportunity__r.Vendita__c,Opportunity__r.Name,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.SupplyCity__c';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
 
         return [SELECT 
         Id,
@@ -59,12 +59,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     }
 
     /**
-     * Get records filtered by Opportunity.Id
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records filtered by Opportunity.Id
+     * @param String opportunityId
+     * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> getRecordsByOpportunityId(String opportunityId){
-        String fieldsToCheck = 'Opportunity__c,Quote__c,ServicePoint__c';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
 
         return [SELECT 
         Id,
@@ -86,10 +86,6 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     * @return List<SaleServiceItem__c>
     */
     public List<SaleServiceItem__c> getRecordsByQuote(String quoteId){
-
-        String fieldsToCheck = 'Quote__c,ServicePoint__c,ServicePoint__r.RecordType.Name';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
 
         return [
             SELECT  

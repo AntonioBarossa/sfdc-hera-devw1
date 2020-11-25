@@ -1,7 +1,14 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 30/10/2020
+* @description HDT_QR_Opportunity – Contains queries for Opportunity
+* @history Keltin Mesonjesi – 30/10/2020 – Created class
+*/
 public inherited sharing class HDT_QR_Opportunity {
     
     /**
-     * Counts all records
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Counts all records
      * @param String Sale__c.Id
      * @return Integer
      */
@@ -10,31 +17,28 @@ public inherited sharing class HDT_QR_Opportunity {
     }
 
     /**
-     * Get Opportunities by Sale__c
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get Opportunities by Sale__c filtered by StageName
      * @param String Sale__c.Id
      * @param String fields
+     * @param String stageNameFilter
      * @return List<Opportunity>
      */
-    public List<Opportunity> getRecordsBySale(String saleId, String fields){
+    public List<Opportunity> getRecordsBySaleFilterStageName(String saleId, String fields, String stageNameFilter){
         
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Opportunity', fields, 'read');
-        securityAccess.checkSecurityAccess();
-
-        String stringId = String.escapeSingleQuotes(saleId);
-        String stringFields = String.escapeSingleQuotes(fields);
-
-        String stageNameFilter = 'Closed Lost';
-
-        String query = 'SELECT '+ stringFields +
-                ' FROM Opportunity WHERE Vendita__c = :stringId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
+        String query = 'SELECT '+ fields +
+                ' FROM Opportunity WHERE Vendita__c = :saleId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }
 
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get record by Id
+     * @param String opportunityId
+     * @return Opportunity
+     */
     public Opportunity getRecordById(String opportunityId){
-        String fieldsToCheck = 'StageName';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Opportunity', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
 
         List<Opportunity> records = [
             SELECT
@@ -42,7 +46,29 @@ public inherited sharing class HDT_QR_Opportunity {
             StageName
             FROM Opportunity
             WHERE Id = :opportunityId
-            AND StageName != 'Closed Lost'
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
+        return records[0];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get record by Id and filtered by status
+     * @param String opportunityId
+     * @param String status
+     * @return Opportunity
+     */
+    public Opportunity getRecordByIdFilterStatus(String opportunityId, String status){
+
+        List<Opportunity> records = [
+            SELECT
+            Id,
+            StageName
+            FROM Opportunity
+            WHERE Id = :opportunityId
+            AND StageName != :status
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];

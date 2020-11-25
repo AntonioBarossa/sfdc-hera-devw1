@@ -16,10 +16,6 @@ public inherited sharing class HDT_QR_QuoteLine {
     */
     public List<SBQQ__QuoteLine__c> getRecordsBySale(String saleId){
 
-        String fieldsToCheck = 'Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name';
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__QuoteLine__c', fieldsToCheck, 'read');
-        securityAccess.checkSecurityAccess();
-
         return [
             SELECT
             Id,
