@@ -29,32 +29,42 @@ export default class hdtSupplySelection extends LightningElement {
     }
 
     /**
-     * Dispatch the new created service point to wizard
+     * Dispatch the new created/updated service point to wizard
      */
     handleNewServicePoint(event){
         let newServicePoint = event.detail;
         this.dispatchEvent(new CustomEvent('newservicepoint', {detail: {newServicePoint}}));
     }
 
-    @api
-    refreshTileData(){
-        this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
+    /**
+     * Dispatch confirmed service point
+     */
+    handleConfirmServicePoint(event){
+        let servicePoint = event.detail;
+        console.log('hdtSupplySelection: ', JSON.parse(JSON.stringify(servicePoint)));
+        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
+
+    // @api
+    // refreshTileData(){
+    //     this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
+    // }
 
     /**
      * Handle the new tile creation
      */
-    handleNewTile(){
-        this.refreshTileData();
-        this.dispatchEvent(new CustomEvent('newtile'));
-    }
+    // handleNewTile(event){
+    //     this.refreshTileData();
+
+    //     this.dispatchEvent(new CustomEvent('newtile', {detail: event.detail}));
+    // }
 
     /**
      * Handle tile delete event
      */
-    handleTileDeleteEvent(){
-        this.dispatchEvent(new CustomEvent('tiledelete'));
-    }
+    // handleTileDeleteEvent(){
+    //     this.dispatchEvent(new CustomEvent('tiledelete'));
+    // }
 
     toggle(){
         this.disabledInput = !this.disabledInput;

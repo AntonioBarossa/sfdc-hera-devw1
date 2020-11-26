@@ -441,14 +441,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.newServicePoint = data;
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
-            this.dispatchEvent(new CustomEvent('newtile'));
-
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Successo',
-                message: 'Service Point confermato con successo',
-                variant: 'success'
-            });
-            this.dispatchEvent(toastSuccessMessage);
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
             
         }).catch(error => {
             this.loading = false;

@@ -1,0 +1,4 @@
+<template>
+    <c-hdt-supply-selection onnewservicepoint={handleNewServicePoint} onconfirmservicepoint={handleConfirmServicePointEvent} process-type="" account-id={accountId} target-object="Fornitura" addititional-param=""></c-hdt-supply-selection>
+    <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>
+</template>

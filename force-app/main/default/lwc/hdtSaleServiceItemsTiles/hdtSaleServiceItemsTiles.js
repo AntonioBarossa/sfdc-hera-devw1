@@ -17,6 +17,7 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
 
     @api
     getTilesData(){
+        this.loaded = false;
         getTiles({saleId:this.sale.Id}).then(data =>{
 
             this.loaded = true;

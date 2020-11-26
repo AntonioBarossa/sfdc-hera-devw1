@@ -88,9 +88,11 @@ export default class hdtCreateTargetObject extends LightningElement {
     }
 
     /**
-     * Dispatch event for creation of new SaleServiceItem__c tile
+     * Dispatch event for ServicePoint confirm
      */
-    handleNewTile(){
-        this.dispatchEvent(new CustomEvent('newtile'));
+    handleConfirmServicePoint(event){
+        let servicePoint = event.detail;
+        console.log('hdtCreateTargetObject: ',JSON.parse(JSON.stringify(servicePoint)));
+        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 }

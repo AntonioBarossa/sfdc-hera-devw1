@@ -7,11 +7,7 @@ public inherited sharing class HDT_LC_ManageBillingProfile {
         
         List<BillingProfile__c> records = new List<BillingProfile__c>();
 
-        try {
-            records = billingProfileQR.getRecordsByAccount(accountId);
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
+        records = billingProfileQR.getRecordsByAccount(accountId);
 
         return records;
     }

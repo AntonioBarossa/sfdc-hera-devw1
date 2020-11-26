@@ -38,7 +38,7 @@
     },
 
     handleQuoteCancelEvent : function(component){
-        var hdtSupplySelection = component.find("hdtSupplySelection");
-        hdtSupplySelection.refreshTileData();
+        var hdtSaleServiceContainer = component.find("hdtSaleServiceContainer");
+        hdtSaleServiceContainer.refreshTileData();
     }
 })

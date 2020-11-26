@@ -36,9 +36,9 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         try {
             serviceSP.updateRecord(servicePoint);
 
-            if (sale != null) {
-                saleServiceItemService.createRecord(servicePoint, sale);
-            }
+            // if (sale != null) {
+            //     saleServiceItemService.createRecord(servicePoint, sale);
+            // }
             
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
