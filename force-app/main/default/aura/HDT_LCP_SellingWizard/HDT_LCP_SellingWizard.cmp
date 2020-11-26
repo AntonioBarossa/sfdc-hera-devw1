@@ -31,7 +31,6 @@
     <aura:if isTrue="{!v.sale}">
         <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
         <c:hdtGeneralInfo saleRecord="{!v.sale}"></c:hdtGeneralInfo>
-        <!-- <c:hdtSupplySelection aura:id="hdtSupplySelection" saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""/> -->
         <c:hdtSaleServiceContainer aura:id="hdtSaleServiceContainer" saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""></c:hdtSaleServiceContainer>
         <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}" onquotecancel="{!c.handleQuoteCancelEvent}"></c:hdtConfigureProduct>
         <c:hdtConfigurePaymentMethods accountId="{!v.recordId}"></c:hdtConfigurePaymentMethods>

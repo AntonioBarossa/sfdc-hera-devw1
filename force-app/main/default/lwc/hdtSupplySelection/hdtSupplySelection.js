@@ -8,9 +8,9 @@ export default class hdtSupplySelection extends LightningElement {
     @api saleRecord;
     showCreateTargetObjectButton = false;
     selectedServicePoint;
-    disabledInput = false;
-    disabledNext = false;
-    hiddenEdit = true;
+    // disabledInput = false;
+    // disabledNext = false;
+    // hiddenEdit = true;
 
     /**
      * Show create button when process is undefined
@@ -41,42 +41,20 @@ export default class hdtSupplySelection extends LightningElement {
      */
     handleConfirmServicePoint(event){
         let servicePoint = event.detail;
-        console.log('hdtSupplySelection: ', JSON.parse(JSON.stringify(servicePoint)));
         this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 
-    // @api
-    // refreshTileData(){
-    //     this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
+    // toggle(){
+    //     this.disabledInput = !this.disabledInput;
+    //     this.disabledNext = !this.disabledNext;
+    //     this.hiddenEdit = !this.hiddenEdit;
     // }
 
-    /**
-     * Handle the new tile creation
-     */
-    // handleNewTile(event){
-    //     this.refreshTileData();
-
-    //     this.dispatchEvent(new CustomEvent('newtile', {detail: event.detail}));
+    // handleNext(){
+    //     this.toggle();
     // }
 
-    /**
-     * Handle tile delete event
-     */
-    // handleTileDeleteEvent(){
-    //     this.dispatchEvent(new CustomEvent('tiledelete'));
+    // handleEdit(){
+    //     this.toggle();
     // }
-
-    toggle(){
-        this.disabledInput = !this.disabledInput;
-        this.disabledNext = !this.disabledNext;
-        this.hiddenEdit = !this.hiddenEdit;
-    }
-
-    handleNext(){
-        this.toggle();
-    }
-
-    handleEdit(){
-        this.toggle();
-    }
 }

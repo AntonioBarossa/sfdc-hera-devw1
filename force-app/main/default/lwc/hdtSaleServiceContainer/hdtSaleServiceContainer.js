@@ -9,6 +9,9 @@ export default class hdtSaleServiceContainer extends LightningElement {
     @api targetObject;
     @api addititionalParam;
     servicePoint;
+    disabledInput = false;
+    disabledNext = false;
+    hiddenEdit = true;
 
     @api
     refreshTileData(){
@@ -21,11 +24,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
     }
 
     handleConfirmServicePointEvent(event){
-        console.log('hdtSaleServiceContainer: ',JSON.parse(JSON.stringify(event.detail)));
         this.servicePoint = event.detail;
-
-        console.log('servicePoint:', JSON.stringify(this.servicePoint));
-        console.log('sale: ', JSON.stringify(this.saleRecord));
 
         createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord}).then(data =>{
 
@@ -52,5 +51,19 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
     handleTileDeleteEvent(){
         this.dispatchEvent(new CustomEvent('tiledelete'));
+    }
+
+    toggle(){
+        this.disabledInput = !this.disabledInput;
+        this.disabledNext = !this.disabledNext;
+        this.hiddenEdit = !this.hiddenEdit;
+    }
+
+    handleNext(){
+        this.toggle();
+    }
+
+    handleEdit(){
+        this.toggle();
     }
 }
