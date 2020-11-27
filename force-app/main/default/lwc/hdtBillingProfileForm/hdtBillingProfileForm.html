@@ -20,7 +20,7 @@
                             <template if:true={fields}>    
                                 <div class="slds-grid slds-wrap slds-m-top_small">
                                     <template for:each={fields} for:item="field">
-                                        <lightning-input-field onchange={handleFieldsDataChange} class="slds-size_1-of-3 fieldsData" data-name={field} key={field} field-name={field} variant="label-stacked"></lightning-input-field>
+                                        <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={field} key={field} field-name={field} variant="label-stacked"></lightning-input-field>
                                     </template>
                                 </div>
                             </template>

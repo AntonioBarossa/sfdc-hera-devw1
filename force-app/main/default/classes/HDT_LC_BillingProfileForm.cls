@@ -7,6 +7,8 @@
 
 public inherited sharing class HDT_LC_BillingProfileForm {
 
+    private static HDT_SRV_BillingProfile billingProfileSRV = new HDT_SRV_BillingProfile();
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 27/11/2020
@@ -46,6 +48,12 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'SubjectCodeStartDate__c',
             'SubjectCodeEndDate__c'
         };
+
+        List<String> fieldsToCheck = new List<String>();
+        fieldsToCheck.addAll(bollettionoPostale);
+        fieldsToCheck.addAll(rid);
+        fieldsToCheck.addAll(fatturazioneElettronica);
+        billingProfileSRV.checkReadAccess(String.join(fieldsToCheck,','));
 
         switch on paymentMethod {
             when  'Bollettino postale'{

@@ -6,6 +6,7 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     loading = false;
     fields;
+    dataToSubmit = [];
 
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
@@ -24,11 +25,23 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: error.message,
+                message: error.body.message,
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);
+            console.log('Errore: ',error.body.message);
         });
 
+    }
+
+    handleCollectFieldsData(event){
+        this.dataToSubmit[event.target.fieldName] = event.target.value;
+        console.log(this.dataToSubmit);
+    }
+
+    validateFields() {
+        this.template.querySelectorAll('lightning-input-field').forEach(element => {
+            element.reportValidity();
+        });
     }
 }
