@@ -181,10 +181,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: error.message,
+                        message: error.body.message,
                         variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
+                    console.log('Errore: ', error.body.message);
                 });
 
             } else {
