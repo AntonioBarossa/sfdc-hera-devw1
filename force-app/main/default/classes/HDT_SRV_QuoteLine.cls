@@ -8,6 +8,7 @@
 public inherited sharing class HDT_SRV_QuoteLine {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
+    private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
 
     /**
@@ -22,6 +23,15 @@ public inherited sharing class HDT_SRV_QuoteLine {
         securityAccess.checkSecurityAccess();
     }
     
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check if user has read access to fields and throw exception if access not granted
+     * @param String fields
+     */
+    public void checkReadAccess(String fields){
+        checkAccessInit(fields, READPERMISSION);
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020

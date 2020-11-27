@@ -1,5 +1,19 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 27/11/2020
+* @description Apex controller for hdtBillingProfileForm.js component
+* @history Keltin Mesonjesi – 27/11/2020 – Created class
+*/
+
 public inherited sharing class HDT_LC_BillingProfileForm {
 
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @date 27/11/2020
+     * @description Get form fields based on selected payment method
+     * @param String paymentMethod
+     * @return List<String>
+     */
     @AuraEnabled
     public static List<String> getFormFields(String paymentMethod){
         

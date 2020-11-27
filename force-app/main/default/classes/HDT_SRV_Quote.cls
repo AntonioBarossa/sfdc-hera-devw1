@@ -1,8 +1,15 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 27/11/2020
+* @description Class that holds crud and business logic for SBQQ__Quote__c
+* @history Keltin Mesonjesi – 27/11/2020 – Created class
+*/
 public inherited sharing class HDT_SRV_Quote {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
-    private static String CREATEPERMISSION = 'create';
-    private static String UPDATEPERMISSION = 'update';
+    private static final String READPERMISSION = 'read';
+    private static final String CREATEPERMISSION = 'create';
+    private static final String UPDATEPERMISSION = 'update';
     // private static String DELETEPERMISSION = 'delete';
 
     /**
@@ -15,6 +22,15 @@ public inherited sharing class HDT_SRV_Quote {
     public void checkAccessInit(String fields, String crud){
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SBQQ__Quote__c', fields, crud);
         securityAccess.checkSecurityAccess();
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check if user has read access to fields and throw exception if access not granted
+     * @param String fields
+     */
+    public void checkReadAccess(String fields){
+        checkAccessInit(fields, READPERMISSION);
     }
 
     /**
@@ -48,8 +64,10 @@ public inherited sharing class HDT_SRV_Quote {
     // }
 
     /**
-     * Create SBQQ__Quote__c record
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Create SBQQ__Quote__c record
      * @param SBQQ__Quote__c quote
+     * @return SBQQ__Quote__c
      */
     public SBQQ__Quote__c createRecord(SBQQ__Quote__c quote){
         
@@ -62,7 +80,8 @@ public inherited sharing class HDT_SRV_Quote {
     }
 
     /**
-     * Delete single record
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Delete single record
      * @param SBQQ__Quote__c.Id
      */
     public void deleteRecord(String quoteId){

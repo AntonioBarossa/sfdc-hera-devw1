@@ -27,6 +27,9 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
         List<Map<String,List<SObject>>> resultsList = new List<Map<String,List<SObject>>>();
 
+        quoteSRV.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c');
+        quoteLineSRV.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
+
         List<SBQQ__Quote__c> quoteList = quoteQR.getRecordsBySaleFilterStatus(saleId, 'Rejected');
         List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQR.getRecordsBySale(saleId);
 
@@ -44,9 +47,11 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     @AuraEnabled
     public static void cancelQuote(String quoteId){
 
+        quoteSRV.checkReadAccess('SBQQ__Status__c');
         SBQQ__Quote__c quoteToUpdate = quoteQR.getRecordById(quoteId);
         quoteToUpdate.SBQQ__Status__c = 'Rejected';
 
+        opportunitySRV.checkReadAccess('StageName');
         Opportunity oppToUpdate = opportunityQR.getRecordById(quoteToUpdate.SBQQ__Opportunity2__c);
         oppToUpdate.StageName = 'Closed Lost';
 

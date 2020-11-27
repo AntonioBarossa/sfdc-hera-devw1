@@ -12,7 +12,8 @@ public inherited sharing class HDT_SRV_ServicePoint {
     private static final String READPERMISSION = 'read';
     
     /**
-     * Init security access check
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Init security access check
      * @param String fields to check
      * @param crud Define read, update, create, delete
      */
@@ -23,7 +24,8 @@ public inherited sharing class HDT_SRV_ServicePoint {
     }
 
     /**
-     * Check if user has read access to fields and throw exception if access not granted
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check if user has read access to fields and throw exception if access not granted
      * @param String fields
      */
     public void checkReadAccess(String fields){
@@ -31,7 +33,8 @@ public inherited sharing class HDT_SRV_ServicePoint {
     }
 
     /**
-     * Create ServicePoint__c record
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Create ServicePoint__c record
      * @param ServicePoint__c servicePoint
      * @return ServicePoint__c servicePoint
      */
@@ -54,7 +57,8 @@ public inherited sharing class HDT_SRV_ServicePoint {
     }
 
     /**
-     * Update ServicePoint__c
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update ServicePoint__c
      * @param ServicePoint__c servicePoint
      */
     public void updateRecord(ServicePoint__c servicePoint){

@@ -1,3 +1,9 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 27/11/2020
+* @description Class that holds crud and business logic for SaleServiceItem__c
+* @history Keltin Mesonjesi – 27/11/2020 – Created class
+*/
 public inherited sharing class HDT_SRV_SaleServiceItem {
     
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
@@ -5,9 +11,42 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_SRV_Quote quoteService = new HDT_SRV_Quote();
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
+    private static final String READPERMISSION = 'read';
+    private static final String CREATEPERMISSION = 'create';
 
     /**
-     * Create SaleServiceItem__c record
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Initialize security access instance
+    * @param String fields - Fields to check for access
+    * @param String crud - crud operation passed as a string (create, read, update, delete)
+    */
+    public void checkAccessInit(String fields, String crud){
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', fields, crud);
+        securityAccess.checkSecurityAccess();
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check if user has read access to fields and throw exception if access not granted
+     * @param String fields
+     */
+    public void checkReadAccess(String fields){
+        checkAccessInit(fields, READPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 19/11/2020
+    * @description Check if current user has create permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkCreateAccess(String fields){
+        checkAccessInit(fields, CREATEPERMISSION);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Create SaleServiceItem__c record
      * @param ServicePoint__c servicePoint
      * @param Sale__c sale
      * @return SaleServiceItem__c saleServiceItem
@@ -58,8 +97,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         List<String> fields = helperMethods.getObjAttrList(newSaleServiceItem);
 
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('SaleServiceItem__c', String.join(fields, ','), 'create');
-        securityAccess.checkSecurityAccess();
+        checkCreateAccess(String.join(fields, ','));
 
         HDT_UTL_DatabaseService.insertSObject(newSaleServiceItem);
 
@@ -67,7 +105,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     }
 
     /**
-     * Delete multiple SaleServiceItem__c records
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Delete multiple SaleServiceItem__c records
      * @param List<SaleServiceItem__c>
      */
     public void deleteRecords(List<SaleServiceItem__c> records){
@@ -75,7 +114,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     }
     
     /**
-     * Check if Service Point is already confirmed for current Sale__c and Opportunity
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check if Service Point is already confirmed for current Sale__c and Opportunity
      * @param List<SaleServiceItem__c> saleServiceItems
      * @param String servicePointId
      * @return Boolean
@@ -91,7 +131,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     }
 
     /**
-     * Group records by Opportunity
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Group records by Opportunity
      * @param List<Opportunity>
      * @param List<SaleServiceItem__c>
      * @return List<List<SaleServiceItem__c>>

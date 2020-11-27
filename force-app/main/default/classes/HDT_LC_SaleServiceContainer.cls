@@ -17,10 +17,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
     @AuraEnabled
     public static void createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale){
         
-        try {
-            saleServiceItemSRV.createRecord(servicePoint, sale);
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
+        saleServiceItemSRV.createRecord(servicePoint, sale);
+
     }
 }
