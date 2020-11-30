@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SDBill__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Fattura SD</description>
+    <externalId>false</externalId>
+    <label>Fattura SD</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
