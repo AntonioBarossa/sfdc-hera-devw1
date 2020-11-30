@@ -12,9 +12,10 @@ public inherited sharing class HDT_QR_Opportunity {
      * @param String Sale__c.Id
      * @return Integer
      */
-    public Integer countRecordsBySale(String saleId){
+    // MOMENTANEAMENTE DISABITATO PER MANCANZA DI CAMPO
+   /* public Integer countRecordsBySale(String saleId){
         return [SELECT count() FROM Opportunity WHERE Vendita__c = :saleId WITH SECURITY_ENFORCED];
-    }
+    }*/
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)

@@ -21,7 +21,8 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Opportunity2__r.Name,
             SBQQ__Type__c
             FROM SBQQ__Quote__c
-            WHERE Vendita__c = :saleId
+            WHERE
+           // WHERE Vendita__c = :saleId DISABILITATO PER MANCANZA CAMPO IN DEVW1 ANcora da Creare
             AND SBQQ__Status__c != :status
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC

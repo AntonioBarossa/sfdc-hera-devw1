@@ -26,8 +26,8 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.RecordType.Name,
         Opportunity__r.Vendita__c
         FROM SaleServiceItem__c
-        WHERE Opportunity__r.Vendita__c = :saleId
-        AND ServicePoint__r.SupplyCity__c = :city
+        //WHERE  Opportunity__r.Vendita__c = :saleId DISABILITATO PER MANCANZA DI CAMPO IN DEVW1
+        WHERE ServicePoint__r.SupplyCity__c = :city
         AND ServicePoint__r.RecordType.Name = :type
         WITH SECURITY_ENFORCED];
     }
@@ -52,7 +52,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.RecordType.Name,
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
-        WHERE Opportunity__r.Vendita__c = :saleId
+        //WHERE Opportunity__r.Vendita__c = :saleId DISABILITATO PER MANCANZA CAMPO IN DEVW1
         WITH SECURITY_ENFORCED
         ORDER BY Opportunity__r.CreatedDate ASC
         ];
