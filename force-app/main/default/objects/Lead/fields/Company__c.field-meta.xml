@@ -8,7 +8,44 @@
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>CompanyOwner__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_Company</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>AAA-EBT</controllingFieldValue>
+            <valueName>AAA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>AAA-EBT</controllingFieldValue>
+            <valueName>EBT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>HC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>HCM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>HCNE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>HSPA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>EB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>MMS</controllingFieldValue>
+            <valueName>MMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reseller</controllingFieldValue>
+            <valueName>Reseller</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

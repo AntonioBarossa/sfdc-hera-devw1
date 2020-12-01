@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Reason__c</fullName>
+    <description>Motivazione</description>
+    <externalId>false</externalId>
+    <label>Motivazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cliente paga un acconto</fullName>
+                <default>false</default>
+                <label>Cliente paga un acconto</label>
+            </value>
+            <value>
+                <fullName>Incongruenza sui sistemi</fullName>
+                <default>false</default>
+                <label>Incongruenza sui sistemi</label>
+            </value>
+            <value>
+                <fullName>Cambio Conto</fullName>
+                <default>false</default>
+                <label>Cambio Conto</label>
+            </value>
+            <value>
+                <fullName>Cambio Banca</fullName>
+                <default>false</default>
+                <label>Cambio Banca</label>
+            </value>
+            <value>
+                <fullName>Cambio da Click&amp;Pay</fullName>
+                <default>false</default>
+                <label>Cambio da Click&amp;Pay</label>
+            </value>
+            <value>
+                <fullName>Errata Domiciliazione/non richiesta</fullName>
+                <default>false</default>
+                <label>Errata Domiciliazione/non richiesta</label>
+            </value>
+            <value>
+                <fullName>Domiciliazione non attiva</fullName>
+                <default>false</default>
+                <label>Domiciliazione non attiva</label>
+            </value>
+            <value>
+                <fullName>Chiusura Conto</fullName>
+                <default>false</default>
+                <label>Chiusura Conto</label>
+            </value>
+            <value>
+                <fullName>Cambio modalità di pagamento</fullName>
+                <default>false</default>
+                <label>Cambio modalità di pagamento</label>
+            </value>
+            <value>
+                <fullName>Cessazione Contratto</fullName>
+                <default>false</default>
+                <label>Cessazione Contratto</label>
+            </value>
+            <value>
+                <fullName>Plico Rate non ricevute</fullName>
+                <default>false</default>
+                <label>Plico Rate non ricevute</label>
+            </value>
+            <value>
+                <fullName>Rinuncia piano rate</fullName>
+                <default>false</default>
+                <label>Rinuncia piano rate</label>
+            </value>
+            <value>
+                <fullName>Piano Rate errato</fullName>
+                <default>false</default>
+                <label>Piano Rate errato</label>
+            </value>
+            <value>
+                <fullName>Segnalazione doppio pagamento non registrato</fullName>
+                <default>false</default>
+                <label>Segnalazione doppio pagamento non registrato</label>
+            </value>
+            <value>
+                <fullName>Informazione su doppio pagamento/incasso</fullName>
+                <default>false</default>
+                <label>Informazione su doppio pagamento/incasso</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
