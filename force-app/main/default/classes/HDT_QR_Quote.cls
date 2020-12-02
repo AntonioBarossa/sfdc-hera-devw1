@@ -23,7 +23,7 @@ public inherited sharing class HDT_QR_Quote {
             FROM SBQQ__Quote__c
             WHERE
            // WHERE Vendita__c = :saleId DISABILITATO PER MANCANZA CAMPO IN DEVW1 ANcora da Creare
-            AND SBQQ__Status__c != :status
+             SBQQ__Status__c != :status
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];

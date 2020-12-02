@@ -23,8 +23,8 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__c,
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
-        ServicePoint__r.RecordType.Name,
-        Opportunity__r.Vendita__c
+        ServicePoint__r.RecordType.Name
+        //Opportunity__r.Vendita__c
         FROM SaleServiceItem__c
         //WHERE  Opportunity__r.Vendita__c = :saleId DISABILITATO PER MANCANZA DI CAMPO IN DEVW1
         WHERE ServicePoint__r.SupplyCity__c = :city
@@ -43,7 +43,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         return [SELECT 
         Id,
         Opportunity__c,
-        Opportunity__r.Vendita__c,
+        //Opportunity__r.Vendita__c,
         Opportunity__r.Name,
         Quote__c,
         Quote__r.Name,
