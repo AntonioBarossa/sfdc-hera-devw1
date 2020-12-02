@@ -7,7 +7,9 @@
 
 public inherited sharing class HDT_SRV_BillingProfile {
 
+    private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
+    private static final String CREATEPERMISSION = 'create';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -27,5 +29,30 @@ public inherited sharing class HDT_SRV_BillingProfile {
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has create permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkCreateAccess(String fields){
+        checkAccessInit(fields, CREATEPERMISSION);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Create BillingProfile__c record
+     * @param BillingProfile__c
+     * @return BillingProfile__c
+     */
+    public BillingProfile__c createRecord(BillingProfile__c billingProfile){
+        
+        List<String> fields = helperMethods.getObjAttrList(billingProfile);
+        checkCreateAccess(String.join(fields, ','));
+
+        HDT_UTL_DatabaseService.insertSObject(billingProfile);
+
+        return billingProfile;
     }
 }

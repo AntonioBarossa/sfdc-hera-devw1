@@ -8,6 +8,8 @@
 public inherited sharing class HDT_LC_BillingProfileForm {
 
     private static HDT_SRV_BillingProfile billingProfileSRV = new HDT_SRV_BillingProfile();
+    private static HDT_SRV_Account accountSRV = new HDT_SRV_Account();
+    private static HDT_QR_Account accountQR = new HDT_QR_Account();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -17,13 +19,14 @@ public inherited sharing class HDT_LC_BillingProfileForm {
      * @return List<String>
      */
     @AuraEnabled
-    public static List<String> getFormFields(String paymentMethod){
+    public static List<String> getFormFields(String paymentMethod, String accountId){
         
         List<String> result = new List<String>();
 
         List<String> bollettionoPostale = new List<String>{
             'InvoiceEmailAddress__c',
-            'InvoiceCertifiedEmailAddress__c'
+            'InvoiceCertifiedEmailAddress__c',
+            'BillSendingMethod__c'
         };
 
         List<String> rid = new List<String>{
@@ -64,8 +67,25 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             }
         }
 
+        accountSRV.checkReadAccess('RecordType.Name');
+        Account currentAccount = accountQR.getRecordById(accountId, 'RecordType.Name');
+        if (currentAccount.RecordType.Name == 'Business') {
+            result.addAll(fatturazioneElettronica);
+        }
+
         return result;
 
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Create BillingProfile__C record
+     * @param BillingProfile__c
+     * @return BillingProfile__c
+     */
+    @AuraEnabled
+    public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
+        return billingProfileSRV.createRecord(billingProfile);
     }
 
 }

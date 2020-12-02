@@ -7,6 +7,7 @@ export default class hdtManageBillingProfile extends LightningElement {
     billingProfileData = [];
     emptyTable = false;
     columnsLength;
+    loading = false;
 
     columns = [
         {label: 'Metodo di pagamento', fieldName: 'PaymentMethod__c', type: 'text'},
@@ -15,10 +16,11 @@ export default class hdtManageBillingProfile extends LightningElement {
         {label: 'IBAN', fieldName: 'IBAN__c', type: 'text'}
     ];
 
+    @api
     getBillingProfileData(){
-        // this.loaded = false;
+        this.loading = true;
         getBillingProfileList({accountId: this.accountId}).then(data =>{
-            // this.loaded = true;
+            this.loading = false;
             
             console.log(JSON.parse(JSON.stringify(data)));
 
@@ -30,10 +32,11 @@ export default class hdtManageBillingProfile extends LightningElement {
             }
 
         }).catch(error => {
-            // this.loaded = true;
+            this.loading = false;
+            console.log(error.body.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: error.message,
+                message: error.body.message,
                 variant: 'error'
             });
             this.dispatchEvent(toastErrorMessage);

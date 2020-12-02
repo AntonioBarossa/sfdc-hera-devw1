@@ -2,12 +2,16 @@
     <lightning-card title="Configura Metodi di Pagamento">
         <div class="slds-grid slds-gutters slds-float_right slds-p-vertical_small slds-p-horizontal_xx-large">
             <div class="slds-col">
-                <c-hdt-create-billing-profile></c-hdt-create-billing-profile>
+                <c-hdt-create-billing-profile account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile>
             </div>
             <div class="slds-col">
                 <c-hdt-apply-payment-method></c-hdt-apply-payment-method>
             </div>
         </div>
-        <c-hdt-manage-billing-profile account-id={accountId}></c-hdt-manage-billing-profile>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-size_1-of-1">
+            <c-hdt-manage-billing-profile account-id={accountId}></c-hdt-manage-billing-profile>
+            </div>
+        </div>
     </lightning-card>
 </template>

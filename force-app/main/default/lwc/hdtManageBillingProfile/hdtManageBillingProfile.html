@@ -1,6 +1,6 @@
 <template>
     <div class="slds-p-horizontal_xx-large slds-m-vertical_large">
-
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
         <template if:true={billingProfileData}>
             <lightning-datatable
                 if:false={emptyTable}
