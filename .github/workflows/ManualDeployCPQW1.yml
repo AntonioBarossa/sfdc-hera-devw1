@@ -1,4 +1,4 @@
-name: ManualDeployDEVW1
+name: ManualDeployCPQW1
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -30,12 +30,9 @@ jobs:
       run: openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out server.key -base64 -K ${{secrets.DECRYPTION_KEY}} -iv ${{secrets.DECRYPTION_IV}}
     - name: 'Authorize'
       run: |
-        echo username value ${{ secrets.USERNAME_DEVW1 }}
-        sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY_DEW1 }} --username=${{ secrets.USERNAME_DEVW1  }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
+        echo username value ${{ secrets.USERNAME_DEVCPQW1 }}
+        sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY_DEWCPQ1 }} --username=${{ secrets.USERNAME_DEVCPQW1  }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
     - name: 'Convert Metadata'
-      run: sfdx force:source:convert -x ./manifest/package.xml --outputdir=convert
+      run: sfdx force:source:convert --rootdir=force-app --outputdir=convert
     - name: 'Run Test on Metadata'
-      run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=NoTestRun --checkonly --wait 120 -u hub-org
-    - name: 'Run Deploy on Metadata'
-      run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=NoTestRun --wait 120 -u hub-org
-
+      run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=RunLocalTests --wait 120 --checkonly -u hub-org    
