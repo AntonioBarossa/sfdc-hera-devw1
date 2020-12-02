@@ -21,15 +21,16 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     @AuraEnabled
     public static List<String> getFormFields(String paymentMethod, String accountId){
         
-        List<String> result = new List<String>();
+        Set<String> resultSet = new Set<String>();
+        List<String> resultList = new List<String>();
 
-        List<String> bollettionoPostale = new List<String>{
+        Set<String> bollettionoPostale = new Set<String>{
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
             'BillSendingMethod__c'
         };
 
-        List<String> rid = new List<String>{
+        Set<String> rid = new Set<String>{
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
             'IbanIsForeign__c',
@@ -44,7 +45,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'BankAccountSignatoryLastName__c'
         };
 
-        List<String> fatturazioneElettronica = new List<String>{
+        Set<String> fatturazioneElettronica = new Set<String>{
             'BillSendingMethod__c',
             'SubjectCode__c',
             'InvoiceCertifiedEmailAddress__c',
@@ -60,20 +61,22 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         switch on paymentMethod {
             when  'Bollettino postale'{
-                result = bollettionoPostale;
+                resultSet = bollettionoPostale;
             }
             when 'RID' {
-                result = rid;
+                resultSet = rid;
             }
         }
 
         accountSRV.checkReadAccess('RecordType.Name');
         Account currentAccount = accountQR.getRecordById(accountId, 'RecordType.Name');
         if (currentAccount.RecordType.Name == 'Business') {
-            result.addAll(fatturazioneElettronica);
+            resultSet.addAll(fatturazioneElettronica);
         }
 
-        return result;
+        resultList.addAll(resultSet);
+
+        return resultList;
 
     }
 
