@@ -24,7 +24,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
             paymentMethod = 'Bolletino';
         }
 
-        quoteLineSRV.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
+        quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
         return quoteLineQr.getRecordsBySaleFilteredPaymentMethod(saleId, paymentMethod);
     }
