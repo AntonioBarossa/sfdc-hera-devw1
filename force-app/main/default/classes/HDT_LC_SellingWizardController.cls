@@ -9,7 +9,7 @@ public inherited sharing class HDT_LC_SellingWizardController {
     private static HDT_SRV_Sale saleService = new HDT_SRV_Sale();
     private static HDT_QR_Sale saleQuery = new HDT_QR_Sale();
     private static HDT_QR_Account accountQuery = new HDT_QR_Account();
-    private static HDT_SRV_Account accountSRV = new HDT_SRV_Account();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -20,7 +20,7 @@ public inherited sharing class HDT_LC_SellingWizardController {
      */
     @AuraEnabled
     public static Account getAccount(String id, String fields){
-        accountSRV.checkReadAccess(fields);
+        accountSrv.checkReadAccess(fields);
         return accountQuery.getRecordById(id, fields);
     }
 

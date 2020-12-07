@@ -6,7 +6,7 @@
 */
 public inherited sharing class HDT_LC_SaleServiceContainer {
     
-    private static HDT_SRV_SaleServiceItem saleServiceItemSRV = new HDT_SRV_SaleServiceItem();
+    private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -17,7 +17,7 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
     @AuraEnabled
     public static void createSaleServiceItemTile(ServicePoint__c servicePoint, Sale__c sale){
         
-        saleServiceItemSRV.createRecord(servicePoint, sale);
+        saleServiceItemSrv.createRecord(servicePoint, sale);
 
     }
 }

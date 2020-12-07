@@ -6,14 +6,14 @@
  */
 public inherited sharing class HDT_LC_ConfigureProduct {
     
-    private static HDT_QR_Quote quoteQR = new HDT_QR_Quote();
-    private static HDT_SRV_Quote quoteSRV = new HDT_SRV_Quote();
-    private static HDT_QR_SaleServiceItem saleServiceItemQR = new HDT_QR_SaleServiceItem();
-    private static HDT_SRV_SaleServiceItem saleServiceItemSRV = new HDT_SRV_SaleServiceItem();
-    private static HDT_QR_QuoteLine quoteLineQR = new HDT_QR_QuoteLine();
-    private static HDT_SRV_QuoteLine quoteLineSRV = new HDT_SRV_QuoteLine();
-    private static HDT_QR_Opportunity opportunityQR = new HDT_QR_Opportunity();
-    private static HDT_SRV_Opportunity opportunitySRV = new HDT_SRV_Opportunity();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
+    private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
+    private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
+    private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
+    private static HDT_QR_Opportunity opportunityQr = new HDT_QR_Opportunity();
+    private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -27,13 +27,13 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
         List<Map<String,List<SObject>>> resultsList = new List<Map<String,List<SObject>>>();
 
-        quoteSRV.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c');
-        quoteLineSRV.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
+        quoteSrv.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c');
+        quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
-        List<SBQQ__Quote__c> quoteList = quoteQR.getRecordsBySaleFilterStatus(saleId, 'Rejected');
-        List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQR.getRecordsBySale(saleId);
+        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(saleId, 'Rejected');
+        List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getRecordsBySale(saleId);
 
-        resultsList = quoteLineSRV.groupRecordsByQuote(quoteList, quoteLineList);
+        resultsList = quoteLineSrv.groupRecordsByQuote(quoteList, quoteLineList);
 
         return resultsList;
     }
@@ -47,15 +47,15 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     @AuraEnabled
     public static void cancelQuote(String quoteId){
 
-        quoteSRV.checkReadAccess('SBQQ__Status__c');
-        SBQQ__Quote__c quoteToUpdate = quoteQR.getRecordById(quoteId);
+        quoteSrv.checkReadAccess('SBQQ__Status__c');
+        SBQQ__Quote__c quoteToUpdate = quoteQr.getRecordById(quoteId);
         quoteToUpdate.SBQQ__Status__c = 'Rejected';
 
-        opportunitySRV.checkReadAccess('StageName');
-        Opportunity oppToUpdate = opportunityQR.getRecordById(quoteToUpdate.SBQQ__Opportunity2__c);
+        opportunitySrv.checkReadAccess('StageName');
+        Opportunity oppToUpdate = opportunityQr.getRecordById(quoteToUpdate.SBQQ__Opportunity2__c);
         oppToUpdate.StageName = 'Closed Lost';
 
-        quoteSRV.updateRecord(quoteToUpdate);
-        opportunitySRV.updateRecord(oppToUpdate);
+        quoteSrv.updateRecord(quoteToUpdate);
+        opportunitySrv.updateRecord(oppToUpdate);
     }
 }

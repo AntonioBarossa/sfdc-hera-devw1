@@ -7,8 +7,8 @@
 
 public inherited sharing class HDT_LC_ManageBillingProfile {
     
-    private static HDT_QR_BillingProfile billingProfileQR = new HDT_QR_BillingProfile();
-    private static HDT_SRV_BillingProfile billingProfileSRV = new HDT_SRV_BillingProfile();
+    private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
+    private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -20,9 +20,9 @@ public inherited sharing class HDT_LC_ManageBillingProfile {
     @AuraEnabled
     public static List<BillingProfile__c> getBillingProfileList(String accountId){
         
-        billingProfileSRV.checkReadAccess('PaymentMethod__c,InvoicingCountry__c,BillSendingMethod__c,IBAN__c');
+        billingProfileSrv.checkReadAccess('PaymentMethod__c,InvoicingCountry__c,BillSendingMethod__c,IBAN__c');
 
-        return billingProfileQR.getRecordsByAccount(accountId);
+        return billingProfileQr.getRecordsByAccount(accountId);
 
     }
 }

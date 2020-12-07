@@ -8,16 +8,16 @@
 
 public inherited sharing class HDT_LC_EditQuote {
 
-    private static HDT_QR_SaleServiceItem saleServiceItemQR = new HDT_QR_SaleServiceItem();
-    private static HDT_QR_Product productQR = new HDT_QR_Product();
-    private static HDT_SRV_QuoteLine quoteLineSRV = new HDT_SRV_QuoteLine();
-    private static String ELECTRIC = 'Elettrico';
-    private static String GAS = 'Gas';
-    private static String PRODUCTELECTRICCODE = 'test_luce';
-    private static String PRODUCTGASCODE = 'test_gas';
-    private static String PRODUCTPODCODE = 'pod';
-    private static String PAYMENTTYPERID = 'RID';
-    private static String PAYMENTTYPEBOLL = 'Bollettino';
+    private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
+    private static HDT_QR_Product productQr = new HDT_QR_Product();
+    private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
+    private static final String ELECTRIC = 'Elettrico';
+    private static final String GAS = 'Gas';
+    private static final String PRODUCTELECTRICCODE = 'test_luce';
+    private static final String PRODUCTGASCODE = 'test_gas';
+    private static final String PRODUCTPODCODE = 'pod';
+    private static final String PAYMENTTYPERID = 'RID';
+    private static final String PAYMENTTYPEBOLL = 'Bollettino';
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -29,12 +29,12 @@ public inherited sharing class HDT_LC_EditQuote {
     @AuraEnabled
     public static List<SBQQ__QuoteLine__c> createQuoteLine(String quoteId){
 
-        List<SaleServiceItem__c> items = saleServiceItemQR.getRecordsByQuote(quoteId);
+        List<SaleServiceItem__c> items = saleServiceItemQr.getRecordsByQuote(quoteId);
 
         //Init primary product
-        Product2 primaryProductElectric = productQR.getRecordByProductCode(PRODUCTELECTRICCODE);
-        Product2 primaryProductGas = productQR.getRecordByProductCode(PRODUCTGASCODE);
-        Product2 productPod = productQR.getRecordByProductCode(PRODUCTPODCODE);
+        Product2 primaryProductElectric = productQr.getRecordByProductCode(PRODUCTELECTRICCODE);
+        Product2 primaryProductGas = productQr.getRecordByProductCode(PRODUCTGASCODE);
+        Product2 productPod = productQr.getRecordByProductCode(PRODUCTPODCODE);
         String paymentType;
         List<SBQQ__QuoteLine__c> quoteLineObjects = new List<SBQQ__QuoteLine__c>{};
 
@@ -74,7 +74,7 @@ public inherited sharing class HDT_LC_EditQuote {
         }
 
         //Pass list as param to method that creates QuoteLines
-        return quoteLineSRV.createRecords(quoteLineObjects);
+        return quoteLineSrv.createRecords(quoteLineObjects);
 
     }
 

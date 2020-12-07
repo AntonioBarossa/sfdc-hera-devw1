@@ -7,9 +7,9 @@
 
 public inherited sharing class HDT_LC_BillingProfileForm {
 
-    private static HDT_SRV_BillingProfile billingProfileSRV = new HDT_SRV_BillingProfile();
-    private static HDT_SRV_Account accountSRV = new HDT_SRV_Account();
-    private static HDT_QR_Account accountQR = new HDT_QR_Account();
+    private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -68,8 +68,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             }
         }
 
-        accountSRV.checkReadAccess('RecordType.Name');
-        Account currentAccount = accountQR.getRecordById(accountId, 'RecordType.Name');
+        accountSrv.checkReadAccess('RecordType.Name');
+        Account currentAccount = accountQr.getRecordById(accountId, 'RecordType.Name');
         if (currentAccount.RecordType.Name == 'Business') {
             resultSet.addAll(fatturazioneElettronica);
         }
@@ -88,7 +88,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
      */
     @AuraEnabled
     public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
-        return billingProfileSRV.createRecord(billingProfile);
+        return billingProfileSrv.createRecord(billingProfile);
     }
 
 }

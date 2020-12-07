@@ -6,8 +6,8 @@
 */
 public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     
-    private static HDT_QR_QuoteLine quoteLineQR = new HDT_QR_QuoteLine();
-    private static HDT_SRV_QuoteLine quoteLineSRV = new HDT_SRV_QuoteLine();
+    private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
+    private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -26,7 +26,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
 
         quoteLineSRV.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
-        return quoteLineQR.getRecordsBySaleFilteredPaymentMethod(saleId, paymentMethod);
+        return quoteLineQr.getRecordsBySaleFilteredPaymentMethod(saleId, paymentMethod);
     }
 
     /**
@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
             quoteLineListUpdate.add(quoteLineUpdate);
         }
 
-        quoteLineSRV.updateRecords(quoteLineListUpdate);
+        quoteLineSrv.updateRecords(quoteLineListUpdate);
 
     }
 
