@@ -10,6 +10,7 @@ public inherited sharing class HDT_SRV_QuoteLine {
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
+    private static final String UPDATEPERMISSION = 'update';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -44,6 +45,15 @@ public inherited sharing class HDT_SRV_QuoteLine {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has update permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkUpdateAccess(String fields){
+        checkAccessInit(fields, UPDATEPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020
     * @description Create records in bulk
     * @param List<SBQQ__QuoteLine__c> objectsList
@@ -59,6 +69,21 @@ public inherited sharing class HDT_SRV_QuoteLine {
         HDT_UTL_DatabaseService.insertSObject(objectsList);
 
         return objectsList;
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Update records in bulk
+    * @param List<SBQQ__QuoteLine__c> objectsList
+    */
+    public void updateRecords(List<SBQQ__QuoteLine__c> objectsList){
+        
+        for (SBQQ__QuoteLine__c quoteLine : objectsList) {
+            List<String> fields = helperMethods.getObjAttrList(quoteLine);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(objectsList);
     }
 
     /**

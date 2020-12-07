@@ -8,6 +8,7 @@ export default class hdtManageBillingProfile extends LightningElement {
     emptyTable = false;
     columnsLength;
     loading = false;
+    rowToSend;
 
     columns = [
         {label: 'Metodo di pagamento', fieldName: 'PaymentMethod__c', type: 'text'},
@@ -22,8 +23,6 @@ export default class hdtManageBillingProfile extends LightningElement {
         getBillingProfileList({accountId: this.accountId}).then(data =>{
             this.loading = false;
             
-            console.log(JSON.parse(JSON.stringify(data)));
-
             if(data.length == 0){
                 this.emptyTable = true;
                 this.columnsLength = this.columns.length;
@@ -45,5 +44,11 @@ export default class hdtManageBillingProfile extends LightningElement {
 
     connectedCallback(){
         this.getBillingProfileData();
+    }
+
+    getSelectedBillingProfile(event){
+        let selectedRows = event.detail.selectedRows;
+        this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+        this.dispatchEvent(new CustomEvent('selectedbillingprofile', {detail: this.rowToSend}));
     }
 }

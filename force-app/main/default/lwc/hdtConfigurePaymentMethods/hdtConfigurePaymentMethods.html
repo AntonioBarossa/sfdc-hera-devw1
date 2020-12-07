@@ -5,12 +5,12 @@
                 <c-hdt-create-billing-profile account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile>
             </div>
             <div class="slds-col">
-                <c-hdt-apply-payment-method></c-hdt-apply-payment-method>
+                <c-hdt-apply-payment-method selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method>
             </div>
         </div>
         <div class="slds-grid slds-gutters">
             <div class="slds-size_1-of-1">
-            <c-hdt-manage-billing-profile account-id={accountId}></c-hdt-manage-billing-profile>
+            <c-hdt-manage-billing-profile account-id={accountId} onselectedbillingprofile={handleSelectedBillingProfileEvent}></c-hdt-manage-billing-profile>
             </div>
         </div>
     </lightning-card>

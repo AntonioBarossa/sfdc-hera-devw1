@@ -30,4 +30,27 @@ public inherited sharing class HDT_QR_QuoteLine {
 
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c
+    * @param String saleId – Sale__c.Id
+    * @param String paymentMethod
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethod(String saleId, String paymentMethod){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Vendita__c = :saleId
+            AND Modalit_di_pagamento__c = :paymentMethod
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }

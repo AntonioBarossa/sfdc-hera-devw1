@@ -71,9 +71,6 @@ export default class hdtBillingProfileForm extends LightningElement {
                             field.reportValidity();
                         }
                         break;
-                    default:
-                        isValid = false;
-                        break;
                 }
 
             });

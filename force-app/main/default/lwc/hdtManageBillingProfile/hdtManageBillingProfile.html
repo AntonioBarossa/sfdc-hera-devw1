@@ -7,7 +7,8 @@
                 key-field="id"
                 data={billingProfileData}
                 columns={columns}
-                max-row-selection=1>
+                max-row-selection=1
+                onrowselection={getSelectedBillingProfile}>
             </lightning-datatable>
 
             <table if:true={emptyTable} class="slds-table slds-table_cell-buffer slds-table_bordered">
@@ -30,9 +31,6 @@
             </table>
 
         </template>
-        
-
-            
         
     </div>
 </template>
