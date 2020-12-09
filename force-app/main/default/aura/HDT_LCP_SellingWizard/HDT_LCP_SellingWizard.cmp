@@ -34,6 +34,7 @@
         <c:hdtSaleServiceContainer aura:id="hdtSaleServiceContainer" saleRecord="{!v.sale}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""></c:hdtSaleServiceContainer>
         <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}" onquotecancel="{!c.handleQuoteCancelEvent}"></c:hdtConfigureProduct>
         <c:hdtConfigurePaymentMethods accountId="{!v.recordId}" saleRecord="{!v.sale}"></c:hdtConfigurePaymentMethods>
+        <c:hdtSaleActions saleRecord="{!v.sale}"></c:hdtSaleActions>
     </aura:if>
 
 </aura:component>

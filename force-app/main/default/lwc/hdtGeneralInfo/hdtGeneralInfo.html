@@ -16,13 +16,13 @@
                         <lightning-input-field disabled={disabledInput} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
                     </div>
                 </lightning-record-edit-form>
-                <div class="slds-clearfix slds-p-around_small">
-                    <div class="slds-float_right">
-                        <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
-                        <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
-                    </div>
-                </div>
             </lightning-layout-item>
         </lightning-layout>
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
+            </div>
+        </div>
     </lightning-card>
 </template>

@@ -2,15 +2,21 @@
     <lightning-card title="Configura Metodi di Pagamento">
         <div class="slds-grid slds-gutters slds-float_right slds-p-vertical_small slds-p-horizontal_xx-large">
             <div class="slds-col">
-                <c-hdt-create-billing-profile account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile>
+                <c-hdt-create-billing-profile disabled-input={disabledInput} account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile>
             </div>
             <div class="slds-col">
-                <c-hdt-apply-payment-method selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method>
+                <c-hdt-apply-payment-method disabled-input={disabledInput} selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method>
             </div>
         </div>
         <div class="slds-grid slds-gutters">
             <div class="slds-size_1-of-1">
-            <c-hdt-manage-billing-profile account-id={accountId} onselectedbillingprofile={handleSelectedBillingProfileEvent}></c-hdt-manage-billing-profile>
+            <c-hdt-manage-billing-profile disabled-input={disabledInput} account-id={accountId} onselectedbillingprofile={handleSelectedBillingProfileEvent}></c-hdt-manage-billing-profile>
+            </div>
+        </div>
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
             </div>
         </div>
     </lightning-card>

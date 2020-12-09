@@ -2,14 +2,28 @@
     <div class="slds-p-horizontal_xx-large slds-m-vertical_large">
         <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
         <template if:true={billingProfileData}>
-            <lightning-datatable
-                if:false={emptyTable}
-                key-field="id"
-                data={billingProfileData}
-                columns={columns}
-                max-row-selection=1
-                onrowselection={getSelectedBillingProfile}>
-            </lightning-datatable>
+            
+            <template if:true={disabledInput}>
+                <lightning-datatable
+                    if:false={emptyTable}
+                    key-field="id"
+                    data={billingProfileData}
+                    columns={columns}
+                    max-row-selection=1
+                    onrowselection={getSelectedBillingProfile}
+                    hide-checkbox-column=false>
+                </lightning-datatable>
+            </template>
+            <template if:false={disabledInput}>
+                <lightning-datatable
+                    if:false={emptyTable}
+                    key-field="id"
+                    data={billingProfileData}
+                    columns={columns}
+                    max-row-selection=1
+                    onrowselection={getSelectedBillingProfile}>
+                </lightning-datatable>
+            </template>
 
             <table if:true={emptyTable} class="slds-table slds-table_cell-buffer slds-table_bordered">
                 <thead>

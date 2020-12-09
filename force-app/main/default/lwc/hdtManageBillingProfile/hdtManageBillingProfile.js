@@ -9,6 +9,7 @@ export default class hdtManageBillingProfile extends LightningElement {
     columnsLength;
     loading = false;
     rowToSend;
+    @api disabledInput;
 
     columns = [
         {label: 'Metodo di pagamento', fieldName: 'PaymentMethod__c', type: 'text'},
