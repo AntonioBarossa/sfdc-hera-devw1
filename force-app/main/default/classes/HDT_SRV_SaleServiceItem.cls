@@ -11,6 +11,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_SRV_Quote quoteService = new HDT_SRV_Quote();
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
 
@@ -53,11 +54,13 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
      */
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale){
 
+        servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.Name');
         List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.Name');
 
         String recordTypeName = existingServicePoint[0].RecordType.Name;
         String supplyCity = servicePoint.SupplyCity__c;
 
+        checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,Opportunity__r.Sale__c');
         List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale.Id, supplyCity, recordTypeName);
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
@@ -75,7 +78,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             );
         } else {
             Opportunity newOpportunity = opportunityService.createRecord(new Opportunity(
-                Vendita__c = sale.Id,
+                Sale__c = sale.Id,
                 Name = opportunityService.generateName(sale),
                 CloseDate = Date.today().addDays(30),
                 StageName = 'Proposal',

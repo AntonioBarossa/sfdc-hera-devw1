@@ -24,9 +24,9 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
         ServicePoint__r.RecordType.Name,
-        Opportunity__r.Vendita__c
+        Opportunity__r.Sale__c
         FROM SaleServiceItem__c
-        WHERE Opportunity__r.Vendita__c = :saleId
+        WHERE Opportunity__r.Sale__c = :saleId
         AND ServicePoint__r.SupplyCity__c = :city
         AND ServicePoint__r.RecordType.Name = :type
         WITH SECURITY_ENFORCED];
@@ -34,7 +34,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-     * @description Get records filtered by Opportunity__r.Vendita__c
+     * @description Get records filtered by Opportunity__r.Sale__c
      * @param String saleId
      * @return List<SaleServiceItem__c>
      */
@@ -43,7 +43,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         return [SELECT 
         Id,
         Opportunity__c,
-        Opportunity__r.Vendita__c,
+        Opportunity__r.Sale__c,
         Opportunity__r.Name,
         Quote__c,
         Quote__r.Name,
@@ -52,7 +52,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.RecordType.Name,
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
-        WHERE Opportunity__r.Vendita__c = :saleId
+        WHERE Opportunity__r.Sale__c = :saleId
         WITH SECURITY_ENFORCED
         ORDER BY Opportunity__r.CreatedDate ASC
         ];

@@ -13,7 +13,7 @@ public inherited sharing class HDT_QR_Opportunity {
      * @return Integer
      */
     public Integer countRecordsBySale(String saleId){
-        return [SELECT count() FROM Opportunity WHERE Vendita__c = :saleId WITH SECURITY_ENFORCED];
+        return [SELECT count() FROM Opportunity WHERE Sale__c = :saleId WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -27,7 +27,7 @@ public inherited sharing class HDT_QR_Opportunity {
     public List<Opportunity> getRecordsBySaleFilterStageName(String saleId, String fields, String stageNameFilter){
         
         String query = 'SELECT '+ fields +
-                ' FROM Opportunity WHERE Vendita__c = :saleId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
+                ' FROM Opportunity WHERE Sale__c = :saleId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }
