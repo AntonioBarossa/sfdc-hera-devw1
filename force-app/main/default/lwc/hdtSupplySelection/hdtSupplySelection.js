@@ -8,9 +8,7 @@ export default class hdtSupplySelection extends LightningElement {
     @api saleRecord;
     showCreateTargetObjectButton = false;
     selectedServicePoint;
-    // disabledInput = false;
-    // disabledNext = false;
-    // hiddenEdit = true;
+    @api disabledInput;
 
     /**
      * Show create button when process is undefined
@@ -44,17 +42,4 @@ export default class hdtSupplySelection extends LightningElement {
         this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 
-    // toggle(){
-    //     this.disabledInput = !this.disabledInput;
-    //     this.disabledNext = !this.disabledNext;
-    //     this.hiddenEdit = !this.hiddenEdit;
-    // }
-
-    // handleNext(){
-    //     this.toggle();
-    // }
-
-    // handleEdit(){
-    //     this.toggle();
-    // }
 }

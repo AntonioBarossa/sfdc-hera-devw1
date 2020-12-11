@@ -7,6 +7,7 @@
 public inherited sharing class HDT_LC_SaleServiceContainer {
     
     private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
+    private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -19,5 +20,15 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
         
         saleServiceItemSrv.createRecord(servicePoint, sale);
 
+    }
+    
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update Sale
+     * @param Sale__c sale
+     */
+    @AuraEnabled
+    public static void updateSale(Sale__c sale){
+        saleSrv.updateRecord(sale);
     }
 }

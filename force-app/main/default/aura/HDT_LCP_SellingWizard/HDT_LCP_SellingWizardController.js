@@ -40,5 +40,9 @@
     handleQuoteCancelEvent : function(component){
         var hdtSaleServiceContainer = component.find("hdtSaleServiceContainer");
         hdtSaleServiceContainer.refreshTileData();
+    },
+
+    handleSaleUpdateEvent : function(component, event, helper) {
+        helper.getSaleRecord(component);
     }
 })

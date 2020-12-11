@@ -1,12 +1,47 @@
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import updateSale from '@salesforce/apex/HDT_LC_ConfigurePaymentMethods.updateSale';
 
 export default class hdtConfigurePaymentMethods extends LightningElement {
     @api saleRecord;
     @api accountId;
     selectedBillingProfile;
-    disabledInput = false;
-    disabledNext = false;
-    hiddenEdit = true;
+    loading = false;
+    currentStep = 4;
+    nextStep = 5;
+
+    get hiddenEdit(){
+        let result = true;
+        if(this.saleRecord.CurrentStep__c <= this.currentStep){
+            result = true;
+        } else if(this.saleRecord.CurrentStep__c > this.currentStep){
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledNext(){
+        let result = false;
+        if(this.saleRecord.CurrentStep__c != this.currentStep){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledInput(){
+        let result = false;
+        if(this.saleRecord.CurrentStep__c != this.currentStep){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
 
     handleNewBillingProfileEvent(){
         this.template.querySelector('c-hdt-manage-billing-profile').getBillingProfileData();
@@ -17,17 +52,28 @@ export default class hdtConfigurePaymentMethods extends LightningElement {
         this.selectedBillingProfile = event.detail;
     }
 
-    toggle(){
-        this.disabledInput = !this.disabledInput;
-        this.disabledNext = !this.disabledNext;
-        this.hiddenEdit = !this.hiddenEdit;
+    updateSaleRecord(saleData){
+        this.loading = true;
+        updateSale({sale: saleData}).then(data =>{
+            this.loading = false;
+            this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+        }).catch(error => {
+            this.loading = false;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     handleNext(){
-        this.toggle();
+        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});
     }
 
     handleEdit(){
-        this.toggle();
+        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep});
     }
 }

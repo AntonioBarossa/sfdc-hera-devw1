@@ -14,6 +14,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
     private static HDT_QR_Opportunity opportunityQr = new HDT_QR_Opportunity();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
+    private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -57,5 +58,15 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
         quoteSrv.updateRecord(quoteToUpdate);
         opportunitySrv.updateRecord(oppToUpdate);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update Sale
+     * @param Sale__c sale
+     */
+    @AuraEnabled
+    public static void updateSale(Sale__c sale){
+        saleSrv.updateRecord(sale);
     }
 }

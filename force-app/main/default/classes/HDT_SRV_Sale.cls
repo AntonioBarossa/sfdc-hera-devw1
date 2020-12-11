@@ -10,6 +10,7 @@ public inherited sharing class HDT_SRV_Sale {
     private static HDT_QR_Account accountQuery = new HDT_QR_Account();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
+    private static final String UPDATEPERMISSION = 'update';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -43,6 +44,16 @@ public inherited sharing class HDT_SRV_Sale {
     }
 
     /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 19/11/2020
+    * @description Check if current user has update permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkUpdateAccess(String fields){
+        checkAccessInit(fields, UPDATEPERMISSION);
+    }
+
+    /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create Sale__c record
      * @param Sale__c sale
@@ -60,5 +71,20 @@ public inherited sharing class HDT_SRV_Sale {
         HDT_UTL_DatabaseService.insertSObject(sale);
 
         return sale;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update Sale__c record
+     * @param Sale__c sale
+     */
+    public void updateRecord(Sale__c sale){
+
+        List<String> fields = helperMethods.getObjAttrList(sale);
+
+        checkUpdateAccess(String.join(fields, ','));
+
+        HDT_UTL_DatabaseService.updateSObject(sale);
+
     }
 }

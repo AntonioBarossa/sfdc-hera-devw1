@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getQuotes from '@salesforce/apex/HDT_LC_ConfigureProduct.getQuotes';
 import cancelQuote from '@salesforce/apex/HDT_LC_ConfigureProduct.cancelQuote';
+import updateSale from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSale';
 
 export default class hdtConfigureProduct extends LightningElement {
     
@@ -14,10 +15,52 @@ export default class hdtConfigureProduct extends LightningElement {
     dialogTitle;
     dialogMessage;
     isDialogVisible = false;
-    disabledInput = false;
-    disabledNext = false;
-    hiddenEdit = true;
-    disabledButton = false;
+    currentStep = 3;
+    nextStep = 4;
+
+    get hiddenEdit(){
+        let result = true;
+        if(this.saleRecord.CurrentStep__c <= this.currentStep){
+            result = true;
+        } else if(this.saleRecord.CurrentStep__c > this.currentStep){
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledNext(){
+        let result = false;
+        if(this.saleRecord.CurrentStep__c != this.currentStep){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledInput(){
+        let result = false;
+        if(this.saleRecord.CurrentStep__c != this.currentStep){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledButton(){
+        let result = false;
+        if(this.saleRecord.CurrentStep__c != this.currentStep){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
 
     @api
     getQuotesData(){
@@ -104,17 +147,28 @@ export default class hdtConfigureProduct extends LightningElement {
         }
     }
 
-    toggle(){
-        this.disabledButton = !this.disabledButton;
-        this.disabledNext = !this.disabledNext;
-        this.hiddenEdit = !this.hiddenEdit;
+    updateSaleRecord(saleData){
+        this.loaded = false;
+        updateSale({sale: saleData}).then(data =>{
+            this.loaded = true;
+            this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+        }).catch(error => {
+            this.loaded = true;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     handleNext(){
-        this.toggle();
+        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});
     }
 
     handleEdit(){
-        this.toggle();
+        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep});
     }
 }

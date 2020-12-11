@@ -1,12 +1,13 @@
 <template>
     <lightning-card>
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
         <div class="slds-grid slds-wrap">
             <div class="slds-col slds-size_11-of-12">
-                <c-hdt-supply-selection onnewservicepoint={handleNewServicePoint} onconfirmservicepoint={handleConfirmServicePointEvent} process-type="" account-id={accountId} target-object="Fornitura" addititional-param=""></c-hdt-supply-selection>
+                <c-hdt-supply-selection disabled-input={disabledInput} onnewservicepoint={handleNewServicePoint} onconfirmservicepoint={handleConfirmServicePointEvent} process-type="" account-id={accountId} target-object="Fornitura" addititional-param=""></c-hdt-supply-selection>
             </div>
             <div class="slds-col slds-size_1-of-12">
                 <div class="slds-m-top_xx-large">
-                <lightning-button variant="brand" label="VAS" title="VAS"></lightning-button>
+                <lightning-button disabled={disabledInput} variant="brand" label="VAS" title="VAS"></lightning-button>
                 </div>
             </div>
         </div>
