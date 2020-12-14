@@ -2,15 +2,16 @@
 
     <template if:true={saleRecord}>
         <div class="slds-card slds-clearfix slds-p-around_small">
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
             <ul class="slds-button-group-list slds-float_right">
                 <li>
                     <lightning-button icon-name="utility:cancel_file_request" variant="destructive" label="Cancel" title="Cancel action"></lightning-button>
                 </li>
                 <li>
-                    <lightning-button icon-name="standard:drafts" variant="neutral" label="Save Draft" title="Save Draft action"></lightning-button>
+                    <lightning-button onclick={handleSaveDraft} icon-name="standard:drafts" variant="neutral" label="Save Draft" title="Save Draft action"></lightning-button>
                 </li>
                 <li>
-                    <lightning-button disabled={disabledSave} icon-name="utility:save" variant="brand" label="Save" title="Save action"></lightning-button>
+                    <lightning-button onclick={handleSave} disabled={disabledSave} icon-name="utility:save" variant="brand" label="Save" title="Save action"></lightning-button>
                 </li>
             </ul>
         </div>

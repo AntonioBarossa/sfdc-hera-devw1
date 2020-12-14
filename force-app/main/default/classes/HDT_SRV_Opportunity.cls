@@ -92,6 +92,22 @@ public inherited sharing class HDT_SRV_Opportunity {
     }
 
     /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 14/12/2020
+    * @description Update Opportunity records based on Opportunity.Id
+    * @param List<Opportunity>
+    */
+    public void updateRecords(List<Opportunity> opportunities){
+
+        for (Opportunity opp : opportunities) {
+            List<String> fields = helperMethods.getObjAttrList(opp);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(opportunities);
+    }
+
+    /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Delete single record
      * @param Opportunity.Id
