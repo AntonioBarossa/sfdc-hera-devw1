@@ -19,7 +19,11 @@ public inherited sharing class HDT_QR_Quote {
             Id,
             Name,
             SBQQ__Opportunity2__r.Name,
-            SBQQ__Type__c
+            SBQQ__Type__c,
+            SBQQ__Status__c,
+            SBQQ__Ordered__c,
+            SBQQ__LineItemsGrouped__c,
+            SBQQ__OrderByQuoteLineGroup__c
             FROM SBQQ__Quote__c
             WHERE Vendita__c = :saleId
             AND SBQQ__Status__c != :status

@@ -48,16 +48,69 @@ public inherited sharing class HDT_LC_SaleActions {
             throw new AuraHandledException('Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento');
         }
 
-        //Change Opportunity stage
+        //Update Opportunity stage
         opportunitySrv.checkReadAccess('StageName');
         List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName', 'Proposal');
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
         }
-        opportunitySrv.updateRecords(opps);
+        // opportunitySrv.updateRecords(opps);
 
-        //Change SBQQ__Quote
+        //Update SBQQ__Quote
+        quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
+        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(sale.Id, 'Rejected'); //quotes that have a status of not rejected
+
+        for (SBQQ__Quote__c quote : quoteList) {
+            quote.SBQQ__Status__c = 'Accepted';
+            quote.SBQQ__Ordered__c = true;
+            quote.SBQQ__LineItemsGrouped__c = true;
+            quote.SBQQ__OrderByQuoteLineGroup__c = true;
+        }
+        // quoteSrv.updateRecords(quoteList);
+
+        //Update Sale
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Chiusa');
+        // saleSrv.updateRecord(saleToUpdate);
+
+        //SBQQ__QuoteLineGroup__c
+        //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
+
+        //Associazione su ogni QuoteLineGroup del record configurato su SBQQ__QuoteProcess__c
+
+
+        //SBQQ__QuoteLine__c
+        //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Cancel sale
+     * @param Sale__c sale
+     */
+    @AuraEnabled
+    public static void cancel(Sale__c sale){
+        
+        //1 - Update sale
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Annullata');
+        // saleSrv.updateRecord(saleToUpdate);
+
+        //2- Update Opportunity
+        opportunitySrv.checkReadAccess('StageName');
+        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName', 'Proposal');
+        for (Opportunity opp : opps) {
+            opp.StageName = 'Closed Lost';
+        }
+        // opportunitySrv.updateRecords(opps);
+
+        //3 - Update Quotes
+        quoteSrv.checkReadAccess('SBQQ__Status__c');
+        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(sale.Id, 'Rejected'); //quotes that have a status of not rejected
+
+        for (SBQQ__Quote__c quote : quoteList) {
+            quote.SBQQ__Status__c = 'Rejected';
+        }
+        // quoteSrv.updateRecords(quoteList);
 
     }
 }

@@ -101,4 +101,20 @@ public inherited sharing class HDT_SRV_Quote {
 
         HDT_UTL_DatabaseService.updateSObject(quote);
     }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 15/12/2020
+    * @description Update SBQQ__Quote__c records based on SBQQ__Quote__c.Id
+    * @param List<SBQQ__Quote__c>
+    */
+    public void updateRecords(List<SBQQ__Quote__c> quotes){
+
+        for (SBQQ__Quote__c quote : quotes) {
+            List<String> fields = helperMethods.getObjAttrList(quote);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(quotes);
+    }
 }
