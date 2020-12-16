@@ -66,7 +66,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             SELECT
             Id,
             Name,
-            Billing_Profile__c
+            Billing_Profile__c,
+            SBQQ__Quote__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Vendita__c = :saleId
             AND Modalit_di_pagamento__c != null

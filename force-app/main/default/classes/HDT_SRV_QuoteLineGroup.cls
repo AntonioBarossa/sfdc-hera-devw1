@@ -56,4 +56,22 @@ public inherited sharing class HDT_SRV_QuoteLineGroup {
         return quoteLineGroup;
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Create records in bulk
+    * @param List<SBQQ__QuoteLine__c> objectsList
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLineGroup__c> createRecords(List<SBQQ__QuoteLineGroup__c> quoteLineGroupList){
+
+        for (SBQQ__QuoteLineGroup__c quoteLineGroup : quoteLineGroupList) {
+            List<String> fields = helperMethods.getObjAttrList(quoteLineGroup);
+            checkCreateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.insertSObject(quoteLineGroupList);
+
+        return quoteLineGroupList;
+    }
+
 }

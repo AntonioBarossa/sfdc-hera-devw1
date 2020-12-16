@@ -13,6 +13,7 @@ public inherited sharing class HDT_LC_SaleActions {
     private static HDT_QR_Opportunity opportunityQr = new HDT_QR_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_QuoteLineGroup quoteLineGroupSrv = new HDT_SRV_QuoteLineGroup();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -33,7 +34,7 @@ public inherited sharing class HDT_LC_SaleActions {
     public static void save(Sale__c sale){
         
         //Check if QuoteLines have BillingProfiles associated
-        quoteLineSrv.checkReadAccess('Name,Billing_Profile__c');
+        quoteLineSrv.checkReadAccess('Name,Billing_Profile__c,SBQQ__Quote__c');
         List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
 
         List<String> quoteLinesWithoutBilling = new List<String>();
@@ -45,7 +46,7 @@ public inherited sharing class HDT_LC_SaleActions {
         }
         
         if (!quoteLinesWithoutBilling.isEmpty()) {
-            throw new AuraHandledException('Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento');
+            // throw new AuraHandledException('Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento');
         }
 
         //Update Opportunity stage
@@ -75,9 +76,17 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
-
         //Associazione su ogni QuoteLineGroup del record configurato su SBQQ__QuoteProcess__c
+        List<SBQQ__QuoteLineGroup__c> quoteLineGroupList = new List<SBQQ__QuoteLineGroup__c>();
 
+        for (SBQQ__QuoteLine__c quoteLine : quoteLinesList) {
+            SBQQ__QuoteLineGroup__c quoteLineGroup = new SBQQ__QuoteLineGroup__c(
+                SBQQ__Quote__c = quoteLine.SBQQ__Quote__c
+                // SBQQ__QuoteProcess__c = ''
+            );
+            quoteLineGroupList.add(quoteLineGroup);
+        }
+        // quoteLineGroupSrv.createRecords(quoteLineGroupList);
 
         //SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
