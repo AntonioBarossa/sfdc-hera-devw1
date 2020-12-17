@@ -14,6 +14,8 @@ public inherited sharing class HDT_LC_SaleActions {
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
     private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_SRV_QuoteLineGroup quoteLineGroupSrv = new HDT_SRV_QuoteLineGroup();
+    private static HDT_SRV_QuoteProcess quoteProcessSrv = new HDT_SRV_QuoteProcess();
+    private static HDT_QR_QuoteProcess quoteProcessQr = new HDT_QR_QuoteProcess();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -77,19 +79,31 @@ public inherited sharing class HDT_LC_SaleActions {
         //SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
         //Associazione su ogni QuoteLineGroup del record configurato su SBQQ__QuoteProcess__c
-        List<SBQQ__QuoteLineGroup__c> quoteLineGroupList = new List<SBQQ__QuoteLineGroup__c>();
+        Map<String,SBQQ__QuoteLineGroup__c> mapLineGroup = new Map<String,SBQQ__QuoteLineGroup__c>();
+
+        quoteProcessSrv.checkReadAccess('SBQQ__Default__c,SBQQ__GuidedOnly__c,SBQQ__ProductAutoSelected__c,SBQQ__ProductConfigurationInitializer__c,SBQQ__ProductSearchExecutor__c,SBQQ__SortOrder__c,Name');
+        List<SBQQ__QuoteProcess__c> quoteProcessList = quoteProcessQr.getProcessForGroupAssoc();
 
         for (SBQQ__QuoteLine__c quoteLine : quoteLinesList) {
             SBQQ__QuoteLineGroup__c quoteLineGroup = new SBQQ__QuoteLineGroup__c(
-                SBQQ__Quote__c = quoteLine.SBQQ__Quote__c
-                // SBQQ__QuoteProcess__c = ''
+                SBQQ__Account__c = sale.Account__c,
+                Name = quoteLine.Name + ' Group',
+                SBQQ__Quote__c = quoteLine.SBQQ__Quote__c,
+                SBQQ__QuoteProcess__c = quoteProcessList[0].Id
             );
-            quoteLineGroupList.add(quoteLineGroup);
+
+            mapLineGroup.put(quoteLine.Id, quoteLineGroup);
+
         }
-        // quoteLineGroupSrv.createRecords(quoteLineGroupList);
+        // quoteLineGroupSrv.createRecords(mapLineGroup.values());
 
         //SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
+        for(SBQQ__QuoteLine__c quoteLine : quoteLinesList){
+            system.debug(mapLineGroup.get(quoteLine.Id).Id);
+            quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;        
+        }
+        // quoteLineSrv.updateRecords(quoteLinesList);
     }
 
     /**

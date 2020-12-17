@@ -75,4 +75,27 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by SBQQ__RequiredBy__c
+    * @param String saleId – Sale__c.Id
+    * @param List<String> listIdToQuery
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredByRequired(String saleId, List<String> listIdToQuery){
+        return [
+            SELECT
+             Id,
+             SBQQ__Product__r.Name,
+             SBQQ__Quote__c,
+             Name,
+             SBQQ__Number__c,
+             SBQQ__RequiredBy__c 
+             FROM SBQQ__QuoteLine__c
+             WHERE SBQQ__Quote__r.Vendita__c = :saleId 
+             AND SBQQ__RequiredBy__c IN :listIdToQuery
+             WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
