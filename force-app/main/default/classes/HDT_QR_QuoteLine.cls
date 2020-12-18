@@ -24,7 +24,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
             FROM SBQQ__QuoteLine__c
-            WHERE SBQQ__Quote__r.Vendita__c = :saleId
+            // WHERE SBQQ__Quote__r.Vendita__c = :saleId DISABILITATO PER MANCANZA CAMPO IN DEVW1
             WITH SECURITY_ENFORCED
         ];
 
