@@ -35,7 +35,7 @@ public inherited sharing class HDT_LC_SaleActions {
     @AuraEnabled
     public static void save(Sale__c sale){
         
-        //Check if QuoteLines have BillingProfiles associated
+        //1 - Check if QuoteLines have BillingProfiles associated
         quoteLineSrv.checkReadAccess('Name,Billing_Profile__c,SBQQ__Quote__c');
         List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
 
@@ -48,19 +48,18 @@ public inherited sharing class HDT_LC_SaleActions {
         }
         
         if (!quoteLinesWithoutBilling.isEmpty()) {
-            // throw new AuraHandledException('Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento');
+            throw new AuraHandledException('Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento');
         }
 
-        //Update Opportunity stage
+        //2 - Update Opportunity stage
         opportunitySrv.checkReadAccess('StageName');
         List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName', 'Proposal');
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
         }
-        // opportunitySrv.updateRecords(opps);
 
-        //Update SBQQ__Quote
+        //3 - Update SBQQ__Quote
         quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(sale.Id, 'Rejected'); //quotes that have a status of not rejected
 
@@ -70,13 +69,11 @@ public inherited sharing class HDT_LC_SaleActions {
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
         }
-        // quoteSrv.updateRecords(quoteList);
 
-        //Update Sale
+        //4 - Update Sale
         Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Chiusa');
-        // saleSrv.updateRecord(saleToUpdate);
 
-        //SBQQ__QuoteLineGroup__c
+        //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
         //Associazione su ogni QuoteLineGroup del record configurato su SBQQ__QuoteProcess__c
         Map<String,SBQQ__QuoteLineGroup__c> mapLineGroup = new Map<String,SBQQ__QuoteLineGroup__c>();
@@ -95,15 +92,20 @@ public inherited sharing class HDT_LC_SaleActions {
             mapLineGroup.put(quoteLine.Id, quoteLineGroup);
 
         }
-        // quoteLineGroupSrv.createRecords(mapLineGroup.values());
 
-        //SBQQ__QuoteLine__c
+        //6 - SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
+        quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
         for(SBQQ__QuoteLine__c quoteLine : quoteLinesList){
             system.debug(mapLineGroup.get(quoteLine.Id).Id);
-            quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;        
+            quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
         }
-        // quoteLineSrv.updateRecords(quoteLinesList);
+
+        //7 - Execute actions
+        opportunitySrv.updateRecords(opps);
+        quoteSrv.updateRecords(quoteList);
+        saleSrv.updateRecord(saleToUpdate);
+        quoteLineSrv.updateRecords(quoteLinesList);
     }
 
     /**
@@ -116,7 +118,6 @@ public inherited sharing class HDT_LC_SaleActions {
         
         //1 - Update sale
         Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Annullata');
-        // saleSrv.updateRecord(saleToUpdate);
 
         //2- Update Opportunity
         opportunitySrv.checkReadAccess('StageName');
@@ -124,7 +125,6 @@ public inherited sharing class HDT_LC_SaleActions {
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Lost';
         }
-        // opportunitySrv.updateRecords(opps);
 
         //3 - Update Quotes
         quoteSrv.checkReadAccess('SBQQ__Status__c');
@@ -133,7 +133,11 @@ public inherited sharing class HDT_LC_SaleActions {
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Rejected';
         }
-        // quoteSrv.updateRecords(quoteList);
+
+        //4 - Excecute actions
+        saleSrv.updateRecord(saleToUpdate);
+        opportunitySrv.updateRecords(opps);
+        quoteSrv.updateRecords(quoteList);
 
     }
 }
