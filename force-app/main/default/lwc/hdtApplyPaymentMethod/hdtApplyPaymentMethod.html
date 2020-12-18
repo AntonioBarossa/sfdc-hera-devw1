@@ -1,0 +1,5 @@
+<template>
+    <lightning-button disabled={buttonDisabled} onclick={handleApplyClick} variant="brand" label="APPLICA" title="APPLICA" class="slds-m-left_large"></lightning-button>
+
+    <c-hdt-apply-billing-profile-modal if:true={showApplyModal} sale={sale} oncancelapply={handleCancelApplyEvent} selected-billing-profile={selectedBillingProfile}></c-hdt-apply-billing-profile-modal>
+</template>

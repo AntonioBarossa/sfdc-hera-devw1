@@ -1,4 +1,4 @@
-name: Manual Deploy DEVW1
+name: ManualDeployDEVW1
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -38,3 +38,4 @@ jobs:
       run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=NoTestRun --checkonly --wait 120 -u hub-org
     - name: 'Run Deploy on Metadata'
       run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=NoTestRun --wait 120 -u hub-org
+

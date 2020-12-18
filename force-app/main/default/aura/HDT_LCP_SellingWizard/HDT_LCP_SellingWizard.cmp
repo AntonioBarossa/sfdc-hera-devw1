@@ -1,0 +1,40 @@
+<aura:component implements = "force:hasRecordId,flexipage:availableForAllPageTypes,lightning:isUrlAddressable" controller="HDT_LC_SellingWizardController">
+    <aura:attribute name="loading" type="Boolean" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="saleId" type="String" />
+    <aura:attribute name="newServicePoint" type="ServicePoint__c" />
+    <aura:attribute name="sale" type="Sale__c" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:navigation aura:id="navService" />
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if> 
+    <!-- <lightning:card title="Selezione Fornitura">
+       <div  class="slds-page-header slds-page-header_record-home">
+            <div class="slds-summary-detail__title">
+                <div class="slds-up-assistant__step-summary">
+                    <div class="slds-media">
+                        <div class="slds-media__body slds-m-top_x-small">
+                            <div class="slds-media">
+                                <div class="slds-setup-assistant__step-summary-content slds-media__body">
+                                    <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                                        
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </lightning:card> -->
+    <aura:if isTrue="{!v.sale}">
+        <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
+        <c:hdtGeneralInfo saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}"></c:hdtGeneralInfo>
+        <c:hdtSaleServiceContainer aura:id="hdtSaleServiceContainer" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""></c:hdtSaleServiceContainer>
+        <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onquotecancel="{!c.handleQuoteCancelEvent}"></c:hdtConfigureProduct>
+        <c:hdtConfigurePaymentMethods accountId="{!v.recordId}" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}"></c:hdtConfigurePaymentMethods>
+        <c:hdtSaleActions saleRecord="{!v.sale}"></c:hdtSaleActions>
+    </aura:if>
+
+</aura:component>

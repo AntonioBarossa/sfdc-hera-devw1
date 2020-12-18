@@ -1,4 +1,4 @@
-public with sharing class HDT_UTL_SecurityAccess {
+public inherited sharing class HDT_UTL_SecurityAccess {
 
     private String objName;
     private String fieldNames;
