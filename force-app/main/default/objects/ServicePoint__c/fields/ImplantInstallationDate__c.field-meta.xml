@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ServicePointCode__c</fullName>
+    <fullName>ImplantInstallationDate__c</fullName>
+    <description>Data installazione Impianto</description>
     <externalId>false</externalId>
-    <label>Codice Punto</label>
-    <length>50</length>
+    <label>Data installazione Impianto</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Date</type>
 </CustomField>

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ServicePointCode__c</fullName>
+    <fullName>Resident__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Residente</description>
     <externalId>false</externalId>
-    <label>Codice Punto</label>
-    <length>50</length>
-    <required>false</required>
+    <label>Residente</label>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Checkbox</type>
 </CustomField>
