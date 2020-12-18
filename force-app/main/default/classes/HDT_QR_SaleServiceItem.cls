@@ -23,6 +23,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__c,
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
+
         ServicePoint__r.RecordType.Name,
         Opportunity__r.Sale__c
         FROM SaleServiceItem__c
@@ -34,6 +35,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+
      * @description Get records filtered by Opportunity__r.Sale__c
      * @param String saleId
      * @return List<SaleServiceItem__c>

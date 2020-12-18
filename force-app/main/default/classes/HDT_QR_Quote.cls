@@ -27,6 +27,7 @@ public inherited sharing class HDT_QR_Quote {
             FROM SBQQ__Quote__c
             WHERE Vendita__c = :saleId
             AND SBQQ__Status__c != :status
+
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];

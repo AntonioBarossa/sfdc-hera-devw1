@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Si/No</fullName>
+        <default>false</default>
+        <label>Si/No</label>
+    </customValue>
+    <customValue>
+        <fullName>Indicatore 1-5</fullName>
+        <default>false</default>
+        <label>Indicatore 1-5</label>
+    </customValue>
+    <customValue>
+        <fullName>Numerico</fullName>
+        <default>false</default>
+        <label>Numerico</label>
+    </customValue>
+    <customValue>
+        <fullName>Dominio chiuso</fullName>
+        <default>false</default>
+        <label>Dominio chiuso</label>
+    </customValue>
+    <customValue>
+        <fullName>Data</fullName>
+        <default>false</default>
+        <label>Data</label>
+    </customValue>
+    <masterLabel>Survey Response Type</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

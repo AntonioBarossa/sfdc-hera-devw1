@@ -25,10 +25,12 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Vendita__c = :saleId
+
             WITH SECURITY_ENFORCED
         ];
 
     }
+
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -97,5 +99,4 @@ public inherited sharing class HDT_QR_QuoteLine {
              WITH SECURITY_ENFORCED
         ];
     }
-
 }

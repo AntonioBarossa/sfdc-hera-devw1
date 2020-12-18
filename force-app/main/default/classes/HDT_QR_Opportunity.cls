@@ -12,9 +12,11 @@ public inherited sharing class HDT_QR_Opportunity {
      * @param String Sale__c.Id
      * @return Integer
      */
+
     public Integer countRecordsBySale(String saleId){
         return [SELECT count() FROM Opportunity WHERE Sale__c = :saleId WITH SECURITY_ENFORCED];
     }
+
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -27,6 +29,7 @@ public inherited sharing class HDT_QR_Opportunity {
     public List<Opportunity> getRecordsBySaleFilterStageName(String saleId, String fields, String stageNameFilter){
         
         String query = 'SELECT '+ fields +
+
                 ' FROM Opportunity WHERE Sale__c = :saleId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
         return Database.query(query);
 
