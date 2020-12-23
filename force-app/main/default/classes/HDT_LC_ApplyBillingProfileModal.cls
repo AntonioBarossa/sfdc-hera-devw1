@@ -20,10 +20,6 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     @AuraEnabled
     public static List<SBQQ__QuoteLine__c> getQuoteLineBundle(String saleId, String paymentMethod){
 
-        if (paymentMethod == 'Bollettino Postale') {
-            paymentMethod = 'Bolletino';
-        }
-
         quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
         return quoteLineQr.getRecordsBySaleFilteredPaymentMethod(saleId, paymentMethod);

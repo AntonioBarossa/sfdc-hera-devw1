@@ -38,6 +38,7 @@ public inherited sharing class HDT_LC_SaleActions {
         //1 - Check if QuoteLines have BillingProfiles associated
         quoteLineSrv.checkReadAccess('Name,Billing_Profile__c,SBQQ__Quote__c');
         List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
+        List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
 
         List<String> quoteLinesWithoutBilling = new List<String>();
 
@@ -61,7 +62,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //3 - Update SBQQ__Quote
         quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
-        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(sale.Id, 'Rejected'); //quotes that have a status of not rejected
+        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Accepted';
@@ -71,7 +72,7 @@ public inherited sharing class HDT_LC_SaleActions {
         }
 
         //4 - Update Sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Chiusa');
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva');
 
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
@@ -96,16 +97,26 @@ public inherited sharing class HDT_LC_SaleActions {
         //6 - SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
         quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
-        for(SBQQ__QuoteLine__c quoteLine : quoteLinesList){
-            system.debug(mapLineGroup.get(quoteLine.Id).Id);
-            quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
+
+        List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
+        system.debug('allQuoteLines: ' + allQuoteLines);
+        for(SBQQ__QuoteLine__c quoteLine : allQuoteLines){
+            // system.debug(mapLineGroup.get(quoteLine.Id).Id);
+            // quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
+
+            SBQQ__QuoteLine__c quoteLineToUpdate = new SBQQ__QuoteLine__c(
+                Id = quoteLine.Id,
+                SBQQ__Group__c = (quoteLine.SBQQ__RequiredBy__c == null ? mapLineGroup.get(quoteLine.Id).Id : mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c).Id)
+            );
+
+            quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);
         quoteSrv.updateRecords(quoteList);
         saleSrv.updateRecord(saleToUpdate);
-        quoteLineSrv.updateRecords(quoteLinesList);
+        quoteLineSrv.updateRecords(quoteLinesListToUpdate);
     }
 
     /**
@@ -128,7 +139,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //3 - Update Quotes
         quoteSrv.checkReadAccess('SBQQ__Status__c');
-        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(sale.Id, 'Rejected'); //quotes that have a status of not rejected
+        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleCancelEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
             quote.SBQQ__Status__c = 'Rejected';

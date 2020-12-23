@@ -19,10 +19,10 @@
                 console.log("SUCSSES1",response.getReturnValue());
                 var accountId = response.getReturnValue().Account__c;
                 var workspaceAPI = component.find("workspace");
-                var status = response.getReturnValue().Stato__c;
+                var status = response.getReturnValue().Status__c;
                 console.log('status==='+status);
                 var msg = 'Non puoi riprendere una vendità conclusa';
-                if (status !== 'Draft') {
+                if (status !== 'Bozza') {
                     var toastEvent = $A.get("e.force:showToast");
                     toastEvent.setParams({
                         "title": "Error!",
@@ -37,19 +37,19 @@
 
             var focusedTabId = response2.tabId;
             console.log('focusedTabId=='+focusedTabId);
-            console.log('venditeId=='+venditeId);
+            console.log('saleId=='+venditeId);
             workspaceAPI.openSubtab({
                 parentTabId: focusedTabId,
                 pageReference: {
                     type: 'standard__component',
                     
                     attributes: {
-                       componentName: 'c:HDT_LCP_venditaContainer',
+                       componentName: 'c:HDT_LCP_sellingWizard',
              
                     },
                     state: {
                         "c__accountId": accountId,
-                        "c__venditeId" : venditeId
+                        "c__saleId" : venditeId
 
                     }
                 },

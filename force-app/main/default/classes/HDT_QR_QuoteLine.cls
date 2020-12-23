@@ -22,7 +22,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             Name,
             SBQQ__Product__r.Name,
             SBQQ__Quote__r.Name,
-            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Vendita__c = :saleId
 

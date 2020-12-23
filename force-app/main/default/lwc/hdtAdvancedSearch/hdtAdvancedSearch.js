@@ -230,6 +230,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.preloading = false;
+        console.log('selectedRows: ', JSON.parse(JSON.stringify(selectedRows)));
     }
 
     /**

@@ -88,8 +88,13 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
                 Vendita__c = sale.Id,
                 SBQQ__Opportunity2__c = newOpportunity.Id,
-                SBQQ__Account__c = sale.Account__c
+                SBQQ__Account__c = sale.Account__c,
+                SBQQ__Primary__c = true
             ));
+
+            newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
+
+            opportunityService.updateRecord(newOpportunity);
 
             newSaleServiceItem = new SaleServiceItem__c(
                 Opportunity__c = newOpportunity.Id,

@@ -20,6 +20,9 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
     getModalData(){
         this.loading = true;
 
+
+        console.log('this.selectedBillingProfile.PaymentMethod__c: ', this.selectedBillingProfile.PaymentMethod__c);
+
         getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: this.selectedBillingProfile.PaymentMethod__c}).then(data =>{
             this.loading = false;
             

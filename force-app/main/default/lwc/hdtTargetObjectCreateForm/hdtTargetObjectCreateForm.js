@@ -162,7 +162,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
                 let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.FieldAddress__c))];
 
-                getServicePoint({code:this.selectedservicepoint['Codice POD/PDR'],fields: queryFields.join()}).then(data =>{
+                getServicePoint({code:this.selectedservicepoint['Codice Punto'],fields: queryFields.join()}).then(data =>{
                     
                     this.servicePointRetrievedData = data[0];
 
@@ -374,7 +374,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     get formTitle(){
         if(this.selectedservicepoint != undefined){
-            return 'Service Point: ' + this.selectedservicepoint['Codice POD/PDR'];
+            return 'Service Point: ' + this.selectedservicepoint['Codice Punto'];
         } else {
             return 'Service Point: ' + this.recordtype.label;
         }

@@ -15,7 +15,29 @@ export default class hdtSaleActions extends LightningElement {
 
     get disabledSave(){
         let result = false;
-        if(this.saleRecord.CurrentStep__c != this.currentStep){
+        if(this.saleRecord.CurrentStep__c != this.currentStep || this.saleRecord.Status__c != 'Bozza'){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledSaveDraft(){
+        let result = false;
+        if(this.saleRecord.Status__c != 'Bozza'){
+            result = true;
+        } else {
+            result = false;
+        }
+
+        return result;
+    }
+
+    get disabledCancel(){
+        let result = false;
+        if(this.saleRecord.Status__c != 'Bozza'){
             result = true;
         } else {
             result = false;

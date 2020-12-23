@@ -16,8 +16,9 @@ public inherited sharing class HDT_LC_EditQuote {
     private static final String PRODUCTELECTRICCODE = 'test_luce';
     private static final String PRODUCTGASCODE = 'test_gas';
     private static final String PRODUCTPODCODE = 'pod';
+    private static final String PRODUCTPDRCODE = 'pdr';
     private static final String PAYMENTTYPERID = 'RID';
-    private static final String PAYMENTTYPEBOLL = 'Bollettino';
+    private static final String PAYMENTTYPEBOLL = 'Bollettino postale';
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -35,47 +36,112 @@ public inherited sharing class HDT_LC_EditQuote {
         Product2 primaryProductElectric = productQr.getRecordByProductCode(PRODUCTELECTRICCODE);
         Product2 primaryProductGas = productQr.getRecordByProductCode(PRODUCTGASCODE);
         Product2 productPod = productQr.getRecordByProductCode(PRODUCTPODCODE);
+        Product2 productPdr = productQr.getRecordByProductCode(PRODUCTPDRCODE);
         String paymentType;
+        String productName;
         List<SBQQ__QuoteLine__c> quoteLineObjects = new List<SBQQ__QuoteLine__c>{};
+        List<SBQQ__QuoteLine__c> quoteLinePrimaryList = new List<SBQQ__QuoteLine__c>{};
+        List<HDT_WRP_QuoteLineAssoc> quoteLineWrapList = new List<HDT_WRP_QuoteLineAssoc>{};
+        Map<SBQQ__QuoteLine__c,SBQQ__QuoteLine__c> mapQuoteLines = new Map<SBQQ__QuoteLine__c,SBQQ__QuoteLine__c>();
+
 
         for (SaleServiceItem__c item : items) {
             
             Product2 primaryProduct = new Product2();
 
+            //Get id of product 'POD'
+            Product2 secondaryProduct = new Product2();
+
             if (item.ServicePoint__r.RecordType.Name == ELECTRIC) {
                 //Get id of product 'Test luce'
                 primaryProduct = primaryProductElectric;
+                secondaryProduct = productPod;
                 paymentType = PAYMENTTYPERID;
+                productName = 'POD';
             } else if (item.ServicePoint__r.RecordType.Name == GAS) {
                 //Get id of product 'Test gas'
                 primaryProduct = primaryProductGas;
+                secondaryProduct = productPdr;
                 paymentType = PAYMENTTYPEBOLL;
+                productName = 'PDR';
             }
 
-            //Get id of product 'POD'
-            Product2 secondaryProduct = productPod;
+            
 
             //Build SBQQ__QuoteLine__c nr.1 with product 'Test Luce or gas'
             SBQQ__QuoteLine__c primaryQuoteLine = new SBQQ__QuoteLine__c(
                 Modalit_di_pagamento__c = paymentType,
                 SBQQ__Product__c = primaryProduct.Id,
-                SBQQ__Quote__c = quoteId
+                SBQQ__Quote__c = quoteId,
+                SBQQ__Number__c = 1,
+                SBQQ__Bundle__c = true,
+                // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
+                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                SBQQ__Quantity__c = 1,
+                SBQQ__NetPrice__c = 1,
+                SBQQ__UnitCost__c = 1
             );
 
             //Build SBQQ__QuoteLine__c nr.2 with product 'POD'
             SBQQ__QuoteLine__c secondaryQuoteLine = new SBQQ__QuoteLine__c(
                 SBQQ__Product__c = secondaryProduct.Id,
-                SBQQ__Quote__c = quoteId
+                SBQQ__Quote__c = quoteId,
+                SBQQ__UnitCost__c = 1,
+                SBQQ__NetPrice__c = 1,
+                SBQQ__Number__c = 2,
+                SBQQ__OptionLevel__c = 1,
+                // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
+                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                SBQQ__RequiredBy__c = primaryQuoteLine.Id,
+                SBQQ__Quantity__c = 1,
+                Service_Point__c = item.ServicePoint__r.Id
+                // SBQQ__EffectiveQuantity__c = 1
             );
 
             //Put QuoteLines in a list
-            quoteLineObjects.add(primaryQuoteLine);
-            quoteLineObjects.add(secondaryQuoteLine);
+
+            HDT_WRP_QuoteLineAssoc wrapQuoteLinePri = new HDT_WRP_QuoteLineAssoc();
+            wrapQuoteLinePri.primary = primaryQuoteLine;
+            wrapQuoteLinePri.secondary = secondaryQuoteLine;
+
+            // mapQuoteLines.put(primaryQuoteLine,secondaryQuoteLine);
+            quoteLinePrimaryList.add(primaryQuoteLine);
+            quoteLineWrapList.add(wrapQuoteLinePri);
+
+
+            // quoteLineObjects.add(primaryQuoteLine);
+            // quoteLineObjects.add(secondaryQuoteLine);
         }
 
-        //Pass list as param to method that creates QuoteLines
-        return quoteLineSrv.createRecords(quoteLineObjects);
 
+
+        // List<SBQQ__QuoteLine__c> quoteLinesPriList = new List<SBQQ__QuoteLine__c>();
+        // quoteLinesPriList.addAll(mapQuoteLines.keySet());
+
+        //Pass list as param to method that creates QuoteLines
+         quoteLineSrv.createRecords(quoteLinePrimaryList);
+         system.debug('quoteLinePrimaryList: ' + quoteLinePrimaryList);
+
+         for (HDT_WRP_QuoteLineAssoc quoteLineWrap : quoteLineWrapList) {
+            SBQQ__QuoteLine__c quoteLineSecUpdate = quoteLineWrap.secondary;
+            system.debug('quoteLineSecWrap: ' + quoteLineWrap.secondary);
+            quoteLineSecUpdate.SBQQ__RequiredBy__c = quoteLineWrap.primary.Id;
+            system.debug('quoteLineSecUpdate: ' + quoteLineSecUpdate);
+            quoteLineObjects.add(quoteLineSecUpdate);
+         }
+
+         quoteLineSrv.createRecords(quoteLineObjects);
+
+         quoteLineObjects.addAll(quoteLinePrimaryList);
+
+         return quoteLineObjects;
+
+    }
+
+    public inherited sharing class HDT_WRP_QuoteLineAssoc {
+
+        SBQQ__QuoteLine__c primary = new SBQQ__QuoteLine__c();
+        SBQQ__QuoteLine__c secondary = new SBQQ__QuoteLine__c();
     }
 
 }
