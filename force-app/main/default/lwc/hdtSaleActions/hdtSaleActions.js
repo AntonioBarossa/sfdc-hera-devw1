@@ -57,6 +57,7 @@ export default class hdtSaleActions extends LightningElement {
             });
             this.dispatchEvent(toastSuccessMessage);
             this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+            this.dispatchEvent(new CustomEvent('savesaleevent'));
         }).catch(error => {
             this.loading = false;
             console.log(error.body.message);
@@ -80,6 +81,7 @@ export default class hdtSaleActions extends LightningElement {
             });
             this.dispatchEvent(toastSuccessMessage);
             this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+            this.dispatchEvent(new CustomEvent('cancelsaleevent'));
         }).catch(error => {
             this.loading = false;
             console.log(error.body.message);
@@ -97,6 +99,7 @@ export default class hdtSaleActions extends LightningElement {
         saveDraft({sale: {Id:this.saleRecord.Id, CurrentStep__c:this.saleRecord.CurrentStep__c}}).then(data =>{
             this.loading = false;
             this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+            this.dispatchEvent(new CustomEvent('savedraftevent'));
         }).catch(error => {
             this.loading = false;
             console.log(error.body.message);

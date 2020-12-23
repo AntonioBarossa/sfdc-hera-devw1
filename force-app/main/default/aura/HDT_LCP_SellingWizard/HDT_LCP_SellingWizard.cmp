@@ -6,6 +6,7 @@
     <aura:attribute name="sale" type="Sale__c" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <lightning:navigation aura:id="navService" />
+    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:if isTrue="{!v.loading}">
         <lightning:spinner alternativeText="Loading" size="large" />
     </aura:if> 
@@ -34,7 +35,7 @@
         <c:hdtSaleServiceContainer aura:id="hdtSaleServiceContainer" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""></c:hdtSaleServiceContainer>
         <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onquotecancel="{!c.handleQuoteCancelEvent}"></c:hdtConfigureProduct>
         <c:hdtConfigurePaymentMethods accountId="{!v.recordId}" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}"></c:hdtConfigurePaymentMethods>
-        <c:hdtSaleActions saleRecord="{!v.sale}"></c:hdtSaleActions>
+        <c:hdtSaleActions saleRecord="{!v.sale}" onsavedraftevent="{!c.handleSaveDraftEvent}" oncancelsaleevent="{!c.handleCancelSaleEvent}" onsavesaleevent="{!c.handleSaveSaleEvent}"></c:hdtSaleActions>
     </aura:if>
 
 </aura:component>

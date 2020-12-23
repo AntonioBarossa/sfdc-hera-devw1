@@ -44,5 +44,23 @@
 
     handleSaleUpdateEvent : function(component, event, helper) {
         helper.getSaleRecord(component);
+    },
+
+    handleSaveDraftEvent : function(component, event, helper) {
+        var saleId = component.get("v.saleId");
+        var objectApiName = 'Sale__c';
+        helper.redirectToSObjectSubtab(component, saleId, objectApiName);
+    },
+
+    handleCancelSaleEvent : function (component, event, helper){
+        var accountId = component.get("v.recordId");
+        var objectApiName = 'Account';
+        helper.redirectToSObjectSubtab(component, accountId, objectApiName);
+    },
+
+    handleSaveSaleEvent : function(component, event, helper){
+        var saleId = component.get("v.saleId");
+        var objectApiName = 'Sale__c';
+        helper.redirectToSObjectSubtab(component, saleId, objectApiName);
     }
 })
