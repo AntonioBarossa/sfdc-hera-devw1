@@ -22,6 +22,7 @@ export default class hdtEditQuote extends LightningElement {
             console.log('Created QuoteLines: ');
             
             console.log(JSON.parse(JSON.stringify(data)));
+            this.dispatchEvent(new CustomEvent('cretedquotelines'));
 
         }).catch(error => {
             const toastErrorMessage = new ShowToastEvent({

@@ -147,6 +147,10 @@ export default class hdtConfigureProduct extends LightningElement {
         }
     }
 
+    handleCreatedQuoteLinesEvent(){
+        this.getQuotesData();
+    }
+
     updateSaleRecord(saleData){
         this.loaded = false;
         updateSale({sale: saleData}).then(data =>{

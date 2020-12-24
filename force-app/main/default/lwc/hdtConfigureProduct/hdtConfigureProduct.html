@@ -94,7 +94,7 @@
         </div>
 
         <template if:true={showEditQuote}>
-            <c-hdt-edit-quote quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent}></c-hdt-edit-quote>
+            <c-hdt-edit-quote quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
         </template>
         
         <c-hdt-confirmation-dialog title={dialogTitle}

@@ -10,13 +10,11 @@
                 component.set('v.sale', newSale);
 
                 var myPageRef = component.get("v.pageReference");
+                var newState = Object.assign({}, myPageRef.state, {c__accountId: component.get("v.recordId"), c__saleId: newSale.Id});
                 component.find("navService").navigate({
                     type: myPageRef.type,
                     attributes: myPageRef.attributes,
-                    state: {
-                        c__accountId: component.get("v.recordId"),
-                        c__saleId: newSale.Id
-                    }
+                    state: newState
                 });
             } else {
                 console.log(response.getError());
@@ -28,7 +26,7 @@
 
     getSaleRecord : function(component) {
         var saleIdParam = component.get("v.saleId");
-        var fieldsParam = 'Id,Name,Account__r.Name,Account__r.FiscalCode__c,CurrentStep__c,Status__c,CreatedDate';
+        var fieldsParam = 'Id,Name,Account__r.Name,Account__r.FiscalCode__c,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c';
 
         var action = component.get("c.getSale");
         action.setParams({id : saleIdParam, fields: fieldsParam});
