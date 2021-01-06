@@ -19,7 +19,27 @@ public inherited sharing class HDT_QR_Order {
             Status
             FROM Order 
             WHERE Vendita__c = :saleId
-            WITH SECURITY_ENFORCED];
+            WITH SECURITY_ENFORCED
+            ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 06/01/2020
+    * @description Get list of records by Sale__c.Id and filtered by recordTypeId
+    * @param String saleId – Sale__c.Id
+    * @param String recordTypeId
+    * @return List<Order>
+    */
+    public List<Order> getRecordBySaleFilterRecordTypeId(String saleId, String recordTypeId){
+        return [
+            SELECT
+            Status
+            FROM Order 
+            WHERE Vendita__c = :saleId
+            AND RecordTypeId = :recordTypeId
+            WITH SECURITY_ENFORCED
+            ];
     }
 
 }

@@ -1,3 +1,112 @@
-<aura:component implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
+<aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
 
-</aura:component>	
+    <aura:attribute name='orderParentId' type="String"/>
+    <aura:attribute name='ordineVenditaName' type="String"/>
+    <aura:attribute name='accountId' type="String"/>
+    <aura:attribute name='accountName' type="String"/>
+    <aura:attribute name="openModale" type="Boolean" default="false"/> 
+    <aura:attribute name="orderList" type="List"/>
+    <aura:attribute name="orderId" type="String"/>
+    <aura:attribute name="codFi" type="String"/>
+    <aura:attribute name="pIv" type="String"/>
+    <aura:attribute name="columnsDocumenti" type="List"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:card>
+        <div class="slds-page-header slds-page-header_record-home" >
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                                        {! v.ordineVenditaName}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header__row slds-page-header__row_gutters" >
+                <div class="slds-page-header__col-details">
+                    <ul class="slds-page-header__detail-row">
+                        <li class="slds-page-header__detail-block">
+                            <div class="slds-text-title slds-truncate" title="Account Name">Account Name</div>
+                            <div class="slds-truncate" title="Account Name">{!v.accountName}</div>
+                        </li>
+                        <li class="slds-page-header__detail-block">
+                            <div class="slds-text-title slds-truncate" title="Codice Fiscale">
+                                Codice Fiscale
+                            </div>
+                            <div class="slds-truncate" title="Codice Fiscale">{!v.codFi}</div>
+                        </li>
+                        <li class="slds-page-header__detail-block">
+                            <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
+                            <div class="slds-truncate" title="Partita Iva">{!v.pIv}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </lightning:card>
+
+    <lightning:path 
+        aura:id="path" 
+        recordId="{!v.ordineVenditaId}"
+        variant="non-linear"
+        hideUpdateButton="true"
+    />
+    <br/>
+
+    <lightning:card>
+
+        <lightning:datatable
+            keyField="id"
+            data="{! v.orderList }"
+            columns="{! v.columnsDocumenti }"
+            hideCheckboxColumn="true"
+            onrowaction="{! c.handleRowAction}"
+        />
+        <br/>
+
+        <footer class="slds-clearfix slds-p-right_medium">
+            <ul class="slds-button-group-list slds-float_right">
+             <!--   <li>
+                    <lightning:button variant="destructive"
+                                      iconName="utility:cancel_file_request" onclick="{!c.cancel}">
+                        Cancel</lightning:button>
+                </li> -->
+                <li>
+                    <lightning:button variant="neutral" onclick="{!c.saveDraft}"
+                                      iconName="standard:drafts">
+                        Save Draft</lightning:button>
+                </li>
+                <li><!--5-->
+                    <lightning:button variant="brand" onclick="{!c.save}"
+                                      iconName="utility:save">
+                        Save</lightning:button>
+                </li>
+            </ul>
+        </footer>
+
+    </lightning:card>
+
+    <aura:if isTrue="{!v.openModale}">
+
+        <div class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <lightning:card> 
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <!-- <c:HDT_LCP_ProcessoOrder orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.ordineVenditaId}"/> -->
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+    </aura:if>
+
+</aura:component>

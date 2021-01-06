@@ -7,6 +7,8 @@
 public inherited sharing class HDT_SRV_Order {
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
+    private static final String CREATEPERMISSION = 'create';
+    private static final String UPDATEPERMISSION = 'update';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -27,5 +29,73 @@ public inherited sharing class HDT_SRV_Order {
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has create permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkCreateAccess(String fields){
+        checkAccessInit(fields, CREATEPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has update permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkUpdateAccess(String fields){
+        checkAccessInit(fields, UPDATEPERMISSION);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Order record
+     * @param Order quote
+     * @return Order
+     */
+    public Order createRecord(Order order){
+        
+        List<String> fields = helperMethods.getObjAttrList(order);
+        checkCreateAccess(String.join(fields, ','));
+
+        HDT_UTL_DatabaseService.insertSObject(order);
+
+        return order;
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 06/01/2021
+    * @description Update Order records
+    * @param List<Order>
+    */
+    public void updateRecords(List<Order> orders){
+
+        for (Order order : orders) {
+            List<String> fields = helperMethods.getObjAttrList(order);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(orders);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 06/01/2021
+    * @description Get record type ID for 'HDT_RT_OrderDossier'
+    * @param String
+    */
+    public String getRecordTypeIdOrderDossier(){
+        List<Schema.RecordTypeInfo> recordTypes = Order.SObjectType.getDescribe().getRecordTypeInfos();
+        String recordTypeIdOrderDossier = '';
+        for (Schema.RecordTypeInfo recordType : recordTypes) {
+            if (recordType.getDeveloperName() == 'HDT_RT_OrderDossier') {
+                recordTypeIdOrderDossier = recordType.getRecordTypeId();
+            }
+        }
+
+        return recordTypeIdOrderDossier;
     }
 }
