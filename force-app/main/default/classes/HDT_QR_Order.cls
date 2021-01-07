@@ -34,12 +34,57 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordBySaleFilterRecordTypeId(String saleId, String recordTypeId){
         return [
             SELECT
+            AccountId,
             Status
             FROM Order 
             WHERE Vendita__c = :saleId
             AND RecordTypeId = :recordTypeId
             WITH SECURITY_ENFORCED
             ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get record by record Id
+    * @param String orderId
+    * @return Order
+    */
+    public Order getRecordById(String orderId){
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Name
+            FROM Order 
+            WHERE Id = :orderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get child records by parent order Id
+    * @param String parentOrderId
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersByParentId(String parentOrderId){
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Recordtypeid,
+            Recordtype.Name,
+            Status,
+            OrderNumber
+            FROM
+            Order
+            WHERE ParentOrder__c = :parentOrderId
+            WITH SECURITY_ENFORCED
+        ];
     }
 
 }

@@ -1,14 +1,14 @@
 <aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
 
     <aura:attribute name='orderParentId' type="String"/>
-    <aura:attribute name='ordineVenditaName' type="String"/>
+    <aura:attribute name='parentOrderName' type="String"/>
     <aura:attribute name='accountId' type="String"/>
     <aura:attribute name='accountName' type="String"/>
     <aura:attribute name="openModale" type="Boolean" default="false"/> 
-    <aura:attribute name="orderList" type="List"/>
+    <aura:attribute name="childOrdersList" type="List"/>
     <aura:attribute name="orderId" type="String"/>
-    <aura:attribute name="codFi" type="String"/>
-    <aura:attribute name="pIv" type="String"/>
+    <aura:attribute name="fiscalCode" type="String"/>
+    <aura:attribute name="vatNumber" type="String"/>
     <aura:attribute name="columnsDocumenti" type="List"/>
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
@@ -22,7 +22,7 @@
                             <div class="slds-page-header__name">
                                 <div class="slds-page-header__name-title">
                                     <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
-                                        {! v.ordineVenditaName}
+                                        {! v.parentOrderName}
                                     </h3>
                                 </div>
                             </div>
@@ -41,11 +41,11 @@
                             <div class="slds-text-title slds-truncate" title="Codice Fiscale">
                                 Codice Fiscale
                             </div>
-                            <div class="slds-truncate" title="Codice Fiscale">{!v.codFi}</div>
+                            <div class="slds-truncate" title="Codice Fiscale">{!v.fiscalCode}</div>
                         </li>
                         <li class="slds-page-header__detail-block">
                             <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
-                            <div class="slds-truncate" title="Partita Iva">{!v.pIv}</div>
+                            <div class="slds-truncate" title="Partita Iva">{!v.vatNumber}</div>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +55,7 @@
 
     <lightning:path 
         aura:id="path" 
-        recordId="{!v.ordineVenditaId}"
+        recordId="{!v.orderParentId}"
         variant="non-linear"
         hideUpdateButton="true"
     />
@@ -65,7 +65,7 @@
 
         <lightning:datatable
             keyField="id"
-            data="{! v.orderList }"
+            data="{! v.childOrdersList }"
             columns="{! v.columnsDocumenti }"
             hideCheckboxColumn="true"
             onrowaction="{! c.handleRowAction}"
@@ -100,7 +100,7 @@
             <div class="slds-modal__container">
                 <lightning:card> 
                     <div class="slds-modal__content slds-p-around--medium">
-                        <!-- <c:HDT_LCP_ProcessoOrder orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.ordineVenditaId}"/> -->
+                        <!-- <c:HDT_LCP_ProcessoOrder orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.orderParentId}"/> -->
                     </div>
                 </lightning:card>
             </div>
