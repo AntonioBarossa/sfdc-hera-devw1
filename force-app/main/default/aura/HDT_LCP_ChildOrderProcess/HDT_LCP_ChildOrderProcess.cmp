@@ -1,0 +1,136 @@
+<aura:component controller="HDT_LC_ChildOrderProcess" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,lightning:availableForFlowScreens" access="global">
+
+    <aura:attribute name='orderId' type="String"/>
+    <aura:attribute name='ordername' type="String"/>
+    <aura:attribute name='orderstatus' type="String"/>
+    <aura:attribute name='orderPod' type="String"/>
+    <aura:attribute name='selectedValue' type='String' default="Prima Attivazione"/>
+    <aura:attribute name='precheck' type='String' default=""/>
+	<aura:attribute name='compatibilita' type='String' default=""/>
+    <aura:attribute name="openModale" type="Boolean" default="false"/>
+    <aura:attribute name="recordtypeOrder" type="String"/>
+    <aura:attribute name="ordineVendita" type="String"/>
+    <aura:attribute name='causale' type='String' default=""/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <lightning:card>
+        <div class="slds-page-header slds-page-header_record-home" >
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <aura:if isTrue="{!v.orderId}">
+                                            <lightning:recordViewForm objectApiName="Order" recordId="{!v.orderId}">
+                                                <lightning:outputField fieldName="OrderNumber"/>
+                                            </lightning:recordViewForm>
+                                        </aura:if>
+                                        
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-page-header__row slds-page-header__row_gutters" >
+                <div class="slds-page-header__col-details">
+                    <ul class="slds-page-header__detail-row">
+                        <li class="slds-page-header__detail-block">
+                            <div class="slds-text-title slds-truncate" title="order status">Status</div>
+                            <div class="slds-truncate" title="Account Name">{!v.orderstatus}</div>
+                        </li>
+                        <li class="slds-page-header__detail-block">
+                            <div class="slds-text-title slds-truncate" title="order pod">POD/PDR</div>
+                            <div class="slds-truncate" title="Account Name">{!v.orderPod}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                <lightning:select onchange="{!c.handleSelezionaProcesso}" aura:id ="selezioneProcesso" label="Processo" required="true" value="{!v.selectedValue}">
+                    <option value="Prima Attivazione">Prima Attivazione</option>
+                    <option value="Subentro">Subentro</option>    
+                </lightning:select>     
+            </div>
+            
+            <div class="slds-col slds-size_8-of-12"></div>
+        </div>
+        <br/>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                <div class="slds-text-title slds-truncate" title="order status">Precheck</div>
+                <aura:if isTrue="{! v.precheck == 'OK'}">
+                    <lightning:icon iconName="action:approval" size="small" alternativeText="Indicates approval"/>
+                    <aura:set attribute="else">
+                    	<lightning:icon iconName="action:close" size="small" alternativeText="Indicates close"/>
+                    </aura:set>
+                </aura:if>
+             <!--   <lightning:input type="String" name="Precheck" label="Precheck" value="{! v.precheck}" disabled="true"/> -->
+            </div>
+            <div class="slds-col slds-size_2-of-12"/>
+            <div class="slds-col slds-size_6-of-12">
+            	 <lightning:input type="String" name="Causale" label="Causale Precheck" value="{! v.causale}" disabled="true"/>
+            </div>
+        </div>
+        <br/>
+        <aura:if isTrue="{! v.precheck == 'OK'}">
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_4-of-12">
+                <div class="slds-text-title slds-truncate" title="order status">Compatibilità</div>
+                <aura:if isTrue="{! v.compatibilita == 'OK'}">
+                    <lightning:icon iconName="action:approval" size="small" alternativeText="Indicates approval"/>
+                    <aura:set attribute="else">
+                    	<lightning:icon iconName="action:close" size="small" alternativeText="Indicates close"/>
+                    </aura:set>
+                </aura:if>
+                
+              <!--  <lightning:input type="String" name="Compatibilità" label="Compatibilità" value="{! v.compatibilita}" disabled="true"/> -->
+            </div>
+            <div class="slds-col slds-size_2-of-12"></div>
+            <div class="slds-col slds-size_6-of-12">
+            	 <lightning:input type="String" name="Causale" label="Causale Compatibilità" value="{! v.causaleCompatibilita}" disabled="true"/>
+            </div>
+        </div>
+        </aura:if>
+        <br/>
+        <div class="slds-grid slds-gutters">
+        
+        <div class="slds-col slds-size_9-of-12"/>   
+            <div class="slds-col slds-size_3-of-12">
+                <div class="slds-float_right slds-m-top_medium">
+                    <lightning:button variant="brand"
+                                        disabled="{! not(and(v.compatibilita =='OK',v.precheck =='OK' )) }"
+                                        aura:id="confirmStep1" name="confirmStep1"
+                                        iconName="utility:right"
+                                        label="Avanti" onclick="{!c.nextStep}">
+                    </lightning:button>
+                </div>
+            </div>
+        </div>
+        <br/>
+        
+    </lightning:card>
+    <br/>
+
+    <aura:if isTrue="{! not(v.recordtypeOrder=='Generic')}"> 
+        <lightning:card title="{! 'Processo di ' + v.recordtypeOrder}">
+        
+            <br/><br/><br/><br/>
+            
+        </lightning:card>
+    </aura:if>
+
+    <div class="slds-modal__footer">
+        <lightning:button variant="neutral" iconName="utility:close" label="Chiudi"
+                        onclick="{!c.closeModal}"/>
+        <lightning:button variant="brand" disabled="{! v.recordtypeOrder=='Generic'}" iconName="utility:save" label="Save" 
+                        onclick="{!c.save}"/>
+    </div>
+
+</aura:component>	

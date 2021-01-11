@@ -101,6 +101,7 @@
                 <lightning:card> 
                     <div class="slds-modal__content slds-p-around--medium">
                         <!-- <c:HDT_LCP_ProcessoOrder orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.orderParentId}"/> -->
+                        <c:HDT_LCP_ChildOrderProcess orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.orderParentId}"/>
                     </div>
                 </lightning:card>
             </div>

@@ -1,7 +1,5 @@
 ({
     helperInit : function(component,event,helper,orderParentId,accountId) {
-        console.log('*******ORDParent ' + orderParentId);
-        console.log('*******ACC ' + accountId);
 		var action = component.get('c.controllerInit');
         action.setParams({
             "orderParentId" : orderParentId,
@@ -9,12 +7,12 @@
         action.setCallback(this, function(response) {
             var state = response.getState();
                 if (state === "SUCCESS") {
-                    console.log("SUCSSES1",response.getReturnValue());
+
                     let results = response.getReturnValue();
 
                     let childOrdersList = results.childOrdersList;// let orderList = results.orderList;
                     let orderItemList = results.orderItemList;
-                    console.log("******* orderItemList:" + orderItemList);
+
                     childOrdersList.forEach(ord => {
                         if(ord.RecordType){
                             ord.recordtypename = ord.RecordType.Name;
@@ -98,73 +96,74 @@
     //         });
     //         $A.enqueueAction(cnl);
     // },
-    // saveDraftHelper: function(component) {
-    //     var ordineVendita = component.get("v.ordineVenditaId");
-    //     let action = component.get('c.saveDraftController');
-    //     action.setParams({
-    //         "ordineVendita" : ordineVendita
-    //     });
-    //     action.setCallback(this, function(response) {
-    //         var state = response.getState();
-    //         if (state === "SUCCESS") {                
-    //            //console.log("cnl",response.getReturnValue());
-    //             this.showToastSucsses('Draft saved');
+
+    saveDraftHelper: function(component) {
+        var orderParentId = component.get("v.orderParentId");
+        let action = component.get('c.saveDraftController');
+        action.setParams({
+            "orderParentId" : orderParentId
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {                
+                this.showToastSucsses('Draft saved');
                 
-    //             //this.closeTab(component);
-    //             this.redirectToSObjectSubtabFix(component,ordineVendita,'Ordine_di_Vendita__c');
-    //         }
-    //         else {
-    //             console.log("Failed with state: " + state);
-    //         }
-    //     });
-    //     $A.enqueueAction(action);
-    // },
-    // saveOption: function(component){
-    //     var ordineVendita = component.get("v.ordineVenditaId");
-    //     let action = component.get('c.saveProsegui');
-    //     action.setParams({
-    //         "ordineVendita" : ordineVendita
-    //     });
-    //     action.setCallback(this, function(response) {
-    //         	var state = response.getState();
-    //         	var result = response.getReturnValue(); 
-    //             console.log("first step " + state);
-    //             if (state === "SUCCESS") {                
-    //                 console.log("cnl",response.getReturnValue());
-    //                 if(!result){
-    //                     this.showToastError("Non sono stati esitati tutti gli Order");
-    //                 }
-    //                 else{
-    //                     this.showToastSucsses("Concluso con Successo!");
-    //                    // this.redirectToSObject(component,venditaId,'Vendite__c');
-    //                     //this.closeTab(component);
-    //                     this.redirectToSObjectSubtabFix(component,ordineVendita,'Ordine_di_Vendita__c');
-    //                 }
-    //             }
-    //             else {
-    //                 console.log("Failed with state: " + state);
-    //             }
-    //         });
-    //         $A.enqueueAction(action);
-    // },
-    // showToastSucsses : function(msg) {
-    //     var toastEvent = $A.get("e.force:showToast");
-    //     toastEvent.setParams({
-    //         "title": "Successo!",
-    //         "message": msg ,
-    //         "type": "success"
-    //     });
-    //     toastEvent.fire();
-    // },
-    // showToastError : function(msg) {
-    //     var toastEvent = $A.get("e.force:showToast");
-    //     toastEvent.setParams({
-    //         "title": "Attenzione!",
-    //         "message": msg ,
-    //         "type": "error"
-    //     });
-    //     toastEvent.fire();
-    // },
+                this.redirectToSObjectSubtabFix(component,orderParentId,'Order');
+            }
+            else {
+                console.log("Failed with state: " + state);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+
+    saveOption: function(component){
+        var orderParentId = component.get("v.orderParentId");
+        let action = component.get('c.saveProsegui');
+        action.setParams({
+            "orderParentId" : orderParentId
+        });
+        action.setCallback(this, function(response) {
+            	var state = response.getState();
+            	var result = response.getReturnValue(); 
+                console.log("first step " + state);
+                if (state === "SUCCESS") {                
+                    console.log("cnl",response.getReturnValue());
+                    if(!result){
+                        this.showToastError("Non sono stati esitati tutti gli Order");
+                    }
+                    else{
+                        this.showToastSucsses("Concluso con Successo!");
+                        this.redirectToSObjectSubtabFix(component,orderParentId,'Order');
+                    }
+                }
+                else {
+                    console.log("Failed with state: " + state);
+                }
+            });
+            $A.enqueueAction(action);
+    },
+
+    showToastSucsses : function(msg) {
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            "title": "Successo!",
+            "message": msg ,
+            "type": "success"
+        });
+        toastEvent.fire();
+    },
+
+    showToastError : function(msg) {
+        var toastEvent = $A.get("e.force:showToast");
+        toastEvent.setParams({
+            "title": "Attenzione!",
+            "message": msg ,
+            "type": "error"
+        });
+        toastEvent.fire();
+    },
+
     // closeTab: function(component){
     //     var workspaceAPI = component.find("workspace");
     //     workspaceAPI.getFocusedTabInfo().then(function(response) {
@@ -270,39 +269,40 @@
         //         console.log('******' + error);
         //     });
         // },
-        // redirectToSObjectSubtabFix : function(component,venditaid,objectApiname){
-        //     var workspaceAPI = component.find("workspace");
-        //     console.log("Begin Redirect");
-        //     workspaceAPI.getFocusedTabInfo().then(function(response) {
-        //         console.log("Begin Redirect_2_: " + JSON.stringify(response));
-        //         var focusedTabId = response.parentTabId;
-        //         var focusedTab = response.tabId;
+
+        redirectToSObjectSubtabFix : function(component,objectId,objectApiname){
+            var workspaceAPI = component.find("workspace");
+            console.log("Begin Redirect");
+            workspaceAPI.getFocusedTabInfo().then(function(response) {
+                console.log("Begin Redirect_2_: " + JSON.stringify(response));
+                var focusedTabId = response.parentTabId;
+                var focusedTab = response.tabId;
                 
-        //         console.log("Begin Redirect_3_: " + focusedTabId);
-        //         console.log("Begin Redirect_4_: " + venditaid);
-        //         console.log("Begin Redirect_5_: " + objectApiname);
-        //         workspaceAPI.openSubtab({//Subtab({
-        //             parentTabId: focusedTabId,
-        //             //recordId : venditaid,
-        //             pageReference: {
-        //                 type: 'standard__recordPage',
-        //                 attributes: {
-        //                     recordId: venditaid,
-        //                     objectApiName:objectApiname,
-        //                     actionName : 'view'
-        //                 }
-        //             },
-        //             focus: true
-        //         }).then(function(response2){
-        //             workspaceAPI.closeTab({tabId: focusedTab});
-        //         })
-        //         .catch(function(error) {
-        //             console.log('******' + error);
-        //         });
-        //     })
-        //     .catch(function(error) {
-        //         console.log('******' + error);
-        //     });
+                console.log("Begin Redirect_3_: " + focusedTabId);
+                console.log("Begin Redirect_4_: " + objectId);
+                console.log("Begin Redirect_5_: " + objectApiname);
+                workspaceAPI.openSubtab({//Subtab({
+                    parentTabId: focusedTabId,
+                    //recordId : venditaid,
+                    pageReference: {
+                        type: 'standard__recordPage',
+                        attributes: {
+                            recordId: objectId,
+                            objectApiName:objectApiname,
+                            actionName : 'view'
+                        }
+                    },
+                    focus: true
+                }).then(function(response2){
+                    workspaceAPI.closeTab({tabId: focusedTab});
+                })
+                .catch(function(error) {
+                    console.log('******' + error);
+                });
+            })
+            .catch(function(error) {
+                console.log('******' + error);
+            });
             
-        // }
+        }
 })

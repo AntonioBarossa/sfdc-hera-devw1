@@ -1,6 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateSale from '@salesforce/apex/HDT_LC_GeneralInfo.updateSale';
+import getCurrentUserName from '@salesforce/apex/HDT_LC_GeneralInfo.getCurrentUserName';
 
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
@@ -11,6 +12,7 @@ export default class HdtGeneralInfo extends LightningElement {
     dataToSubmit = {};
     currentStep = 1;
     nextStep = 2;
+    currentUserName = '';
 
     toggle(){
         this.disabledInput = !this.disabledInput;
@@ -44,6 +46,24 @@ export default class HdtGeneralInfo extends LightningElement {
         });
     }
 
+    setUserName(){
+        this.loading = true;
+        getCurrentUserName().then(data =>{
+            this.loading = false;
+            this.currentUserName = data;
+
+        }).catch(error => {
+            this.loading = false;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
     handleNext(){
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
@@ -55,6 +75,14 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
     connectedCallback(){
+
+        //Set CreatedBy of Sale on component mount
+        if(this.saleRecord.CreatedBy__c === '' || this.saleRecord.CreatedBy__c === null) {
+            this.setUserName();
+        } else {
+            this.currentUserName = this.saleRecord.CreatedBy__c;
+        }
+
         this.initDataToSubmit();
         if(this.saleRecord.CurrentStep__c != this.currentStep){
             this.toggle();

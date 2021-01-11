@@ -57,7 +57,10 @@ public inherited sharing class HDT_QR_Order {
             Account.Name,
             Account.VATNumber__c,
             Account.FiscalCode__c,
-            Name
+            Name,
+            RecordType.Name,
+            SystemModstamp,
+            Status
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -76,6 +79,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT 
             AccountId,
             Account.Name,
+            Name,
             Recordtypeid,
             Recordtype.Name,
             Status,

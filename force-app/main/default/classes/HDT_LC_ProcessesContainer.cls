@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_ProcessesContainer {
     */
     @AuraEnabled
     public static map<string,object> controllerInit(String saleId) {
-		System.debug('********recordid :' +saleId);
+
         boolean check = false;
         map<string,object> mapResponse = new map<string,object>();
 
@@ -66,24 +66,8 @@ public inherited sharing class HDT_LC_ProcessesContainer {
         mapResponse.put('checkExist',!listOrderParent.isEmpty());
         mapResponse.put('orderParent',parentOrder.Id);
         mapResponse.put('accountId',parentOrder.AccountId);
-        
-        return mapResponse;     
-    }
 
-    // @AuraEnabled
-    // public static map<string,object> controllerInitRedirect(String ordineVenditaId) {
-	// 	System.debug('********recordid :' +ordineVenditaId);
-    //     boolean check = true;
-    //     map<string,object> mapResponse = new map<string,object>();
-    //     Ordine_di_vendita__c ordven = [Select id,account__c,stato__c from ordine_di_vendita__c where id = :ordineVenditaId];
-    //     if(ordven.stato__c == 'Completato'){
-    //         check = false;
-    //     }
-    //     mapResponse.put('check',check);
-    //     mapResponse.put('ordineVendita',ordven.Id);
-    //     mapResponse.put('accountId',ordven.Account__c);
-        
-    //     return mapResponse;     
-    // }
+        return mapResponse;
+    }
 
 }

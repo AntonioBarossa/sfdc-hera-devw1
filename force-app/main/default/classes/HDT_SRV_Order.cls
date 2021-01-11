@@ -67,6 +67,19 @@ public inherited sharing class HDT_SRV_Order {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 08/01/2021
+    * @description Update Order record based on Order.Id
+    * @param Order order - Order record with fields to update
+    */
+    public void updateRecord(Order order){
+        List<String> fields = helperMethods.getObjAttrList(order);
+        checkUpdateAccess(String.join(fields, ','));
+
+        HDT_UTL_DatabaseService.updateSObject(order);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 06/01/2021
     * @description Update Order records
     * @param List<Order>

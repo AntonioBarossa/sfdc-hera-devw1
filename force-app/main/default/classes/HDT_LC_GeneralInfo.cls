@@ -17,4 +17,15 @@ public inherited sharing class HDT_LC_GeneralInfo {
     public static void updateSale(Sale__c sale){
         saleSrv.updateRecord(sale);
     }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get current username
+     * @return String username
+     */
+    @AuraEnabled
+    public static String getCurrentUserName(){
+        String userName = UserInfo.getUserName();
+        return userName;
+    }
 }

@@ -17,21 +17,23 @@
         console.log("HOLA2 : " + action.value);
         if(action.value == "Avvia Processo"){
             component.set("v.orderId",row.Id);
-           	// component.set("v.openModale",true);
+           	component.set("v.openModale",true);
         }
-    }
-    // closeModal : function(component,event,helper){
-    //     component.set("v.openModale",false); 
-    // },
+    },
+
+    closeModal : function(component,event,helper){
+        component.set("v.openModale",false); 
+    },
+
     // cancel: function(component, event, helper) {
     //     helper.cancelVendite(component);
     // },
 
-    // saveDraft: function(component, event, helper) {
-    //     helper.saveDraftHelper(component);
-    // },
-    // save: function(component, event, helper){
-    //   	console.log('Save Lanciato');
-    //   	helper.saveOption(component);  
-    // }
+    saveDraft: function(component, event, helper) {
+        helper.saveDraftHelper(component);
+    },
+
+    save: function(component, event, helper){
+      	helper.saveOption(component);
+    }
 })

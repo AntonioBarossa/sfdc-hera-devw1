@@ -58,30 +58,41 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     //     return ordVen.account__c;
     // }
 
-    // @AuraEnabled
-    // public static boolean saveProsegui(String ordineVendita){
-    //     Boolean check = true;
-    //     List<Order> ordList = [SELECT AccountId,Account.Name,Name, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
-    //     For(Order ord : ordList){
-    //         if(ord.Status != 'Activated'){
-    //         	check = false;
-    //         }
-    //     }
-    //     if(check){
-    //     	Ordine_di_Vendita__c odv = [SELECT SystemModstamp, Id,stato__c FROM Ordine_di_Vendita__c where id = :ordineVendita];
-    //         odv.Stato__c = 'Attivo';
-    //         update odv;
-    //     }    
-            
-    //     return check;
-    // }
+    @AuraEnabled
+    public static boolean saveProsegui(String orderParentId){
+        Boolean check = true;
 
-    // @AuraEnabled
-    // public static void saveDraftController(String ordineVendita){
-    //     Boolean check = true;
-    //     system.debug('******' + ordineVendita);
-    //     ordine_di_vendita__c odv = new Ordine_di_vendita__c(id=ordineVendita,stato__c='Sospeso');
-	// 	update odv;
-    // }
+        orderSrv.checkReadAccess('AccountId,Account.Name,Name,Status,OrderNumber');
+        List<Order>ordList = orderQr.getChildOrdersByParentId(orderParentId);
+
+        for(Order ord : ordList){
+            if(ord.Status != 'Activated'){
+            	check = false;
+            }
+        }
+        
+        if(check){
+            orderSrv.checkReadAccess('SystemModstamp,Status');
+            Order orderParent = orderQr.getRecordById(orderParentId);
+
+            orderParent.Status = 'Activated';
+            orderSrv.updateRecord(orderParent);
+        }
+
+        return check;
+    }
+
+    @AuraEnabled
+    public static void saveDraftController(String orderParentId){
+        
+        Boolean check = true;
+
+        Order orderParent = new Order(
+            Id = orderParentId,
+            Status = 'Draft'
+        );
+
+        orderSrv.updateRecord(orderParent);
+    }
 
 }
