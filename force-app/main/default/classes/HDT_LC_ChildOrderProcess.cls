@@ -11,6 +11,12 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_OrderItem orderItemSrv = new HDT_SRV_OrderItem();
     
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Initialize order process component
+    * @param String orderId
+    * @return Map<String, Object>
+    */
     @AuraEnabled
     public static Map<String, Object> controllerInit(String orderId) {
 
@@ -35,23 +41,41 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         return mapResponse;
     }
     
-    // @AuraEnabled
-    // public static void saveOption(String orderId,String processo,String ordineVendita) {
-    //     Order ord = [SELECT AccountId,Account.Name, Id,Name, Status FROM Order Where id = :orderId];
-    //     System.debug('****** :' + processo);
-    //     List<Recordtype> rList = [Select id from Recordtype where sObjectType='Order' AND Developername = :processo];
-    //     List<Ordine_di_Vendita__c> ordvenLis = [Select id,stato__c from Ordine_di_Vendita__c Where id = :ordineVendita and (stato__c = 'Bozza' OR stato__c = 'Sospeso')];
-    //     if(!ordvenLis.isEmpty())
-    //     {
-    //         ordvenLis[0].stato__c = 'In Lavorazione';
-    //         update ordvenLis[0];
-    //     }
-    //     //Id RecordtypeSelected =	Schema.getGlobalDescribe().get('Order').getDescribe().getRecordTypeInfosByDeveloperName().get(Processo).getRecordTypeId();
-    //     ord.Status = 'In Lavorazione' ;
-    //    	if(!rList.isEmpty())
-    //     	ord.RecordTypeId = rList[0].id;
-    //     update ord;
-    //     //mapResponse.put('orderStatus');
-    // }
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Initialize order process component
+    * @param String orderId
+    * @param String processo - Dropdown selection for child order process
+    * @param String parentOrderId
+    */
+    @AuraEnabled
+    public static void saveOption(String orderId,String processo,String parentOrderId) {//Reference: String ordineVendita
+        
+        //Reference: Order ord = [SELECT AccountId,Account.Name, Id,Name, Status FROM Order Where id = :orderId];
+        orderSrv.checkReadAccess('AccountId,Account.Name,Name,Status');
+        Order ord = orderQr.getRecordById(orderId);
+
+        System.debug('****** :' + processo);
+        //Reference: List<Recordtype> rList = [Select id from Recordtype where sObjectType='Order' AND Developername = :processo];
+        String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(processo);
+
+        //Reference: List<Ordine_di_Vendita__c> ordvenLis = [Select id,stato__c from Ordine_di_Vendita__c Where id = :ordineVendita and (stato__c = 'Bozza' OR stato__c = 'Sospeso')];
+        List<Order> ordvenLis = orderQr.getRecordByIdFilterStatus(parentOrderId, 'Draft');
+
+        if(!ordvenLis.isEmpty()) {
+            // ordvenLis[0].Status = 'In Lavorazione';
+            // orderSrv.updateRecord(ordvenLis[0]);
+        }
+        
+        // ord.Status = 'In Lavorazione' ;
+
+       	// Reference: if(!rList.isEmpty()) {
+        if(recordTypeId != '') {
+            // Reference: ord.RecordTypeId = rList[0].id;
+            // ord.RecordTypeId = recordTypeId;
+        }
+
+        orderSrv.updateRecord(ord);
+    }
 
 }

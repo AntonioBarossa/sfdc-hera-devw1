@@ -11,13 +11,53 @@
     },
     
     handleRowAction : function(component,event,helper){
+        var navService = component.find("navService");
+        var workspaceAPI = component.find("workspace");
         var row = event.getParam('row');
         var action = event.getParam('action');
         console.log("HOLA : " + row.Id);
         console.log("HOLA2 : " + action.value);
         if(action.value == "Avvia Processo"){
             component.set("v.orderId",row.Id);
-           	component.set("v.openModale",true);
+               // component.set("v.openModale",true);
+               
+               workspaceAPI.getFocusedTabInfo().then(function(response2) {
+                var focusedTabId;
+                if(response2.parentTabId){
+                    focusedTabId = response2.parentTabId;
+                }
+                else{
+                    focusedTabId = response2.tabId;
+                }
+                    // /lightning/cmp/HDT_LCP_ChildOrderProcess' open in new subTab;
+                workspaceAPI.openSubtab({
+                    parentTabId: focusedTabId,
+                    pageReference: {
+                        type: 'standard__component',
+                        attributes: {
+                            componentName: 'c:HDT_LCP_ChildOrderProcess',
+                        },
+                        state: {
+                            "c__orderParent": component.get("v.orderParentId"),
+                            "c__orderId" : row.Id
+                        }
+                    },
+                    focus: true
+                }).then(function(response2) {
+                    workspaceAPI.setTabLabel({
+                        tabId: response2,
+                        label: "Processo ordine individuale"
+                    });
+                    
+                })
+                .catch(function(error) {
+                    console.log('******' + error);
+                });
+            })
+            .catch(function(error) {
+                console.log('******' + error);
+            });
+
         }
     },
 

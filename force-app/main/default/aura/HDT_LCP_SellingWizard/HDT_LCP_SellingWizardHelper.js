@@ -8,6 +8,7 @@
             if(state == 'SUCCESS') {
                 var newSale = response.getReturnValue();
                 component.set('v.sale', newSale);
+                component.set('v.saleId', newSale.Id);
 
                 var myPageRef = component.get("v.pageReference");
                 var newState = Object.assign({}, myPageRef.state, {c__accountId: component.get("v.recordId"), c__saleId: newSale.Id});

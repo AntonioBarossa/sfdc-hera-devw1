@@ -99,6 +99,7 @@ public inherited sharing class HDT_SRV_Order {
     * @date 06/01/2021
     * @description Get record type ID for 'HDT_RT_OrderDossier'
     * @param String
+    * @return String
     */
     public String getRecordTypeIdOrderDossier(){
         List<Schema.RecordTypeInfo> recordTypes = Order.SObjectType.getDescribe().getRecordTypeInfos();
@@ -110,5 +111,24 @@ public inherited sharing class HDT_SRV_Order {
         }
 
         return recordTypeIdOrderDossier;
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 11/01/2021
+    * @description Get record type ID by developerName
+    * @param String
+    * @return String
+    */
+    public String getRecordTypeIdByDeveloperName(String developerName){
+        List<Schema.RecordTypeInfo> recordTypes = Order.SObjectType.getDescribe().getRecordTypeInfos();
+        String recordTypeId = '';
+        for (Schema.RecordTypeInfo recordType : recordTypes) {
+            if (recordType.getDeveloperName() == developerName) {
+                recordTypeId = recordType.getRecordTypeId();
+            }
+        }
+
+        return recordTypeId;
     }
 }

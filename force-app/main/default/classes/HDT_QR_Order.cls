@@ -91,4 +91,24 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 11/01/2021
+    * @description Get record by id and filter status
+    * @param String orderId
+    * @param String status
+    * @return List<Order>
+    */
+    public List<Order> getRecordByIdFilterStatus(String orderId, String status){
+        return [
+            SELECT
+            Status 
+            FROM
+            Order
+            WHERE Id = :orderId
+            AND Status = :status
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }

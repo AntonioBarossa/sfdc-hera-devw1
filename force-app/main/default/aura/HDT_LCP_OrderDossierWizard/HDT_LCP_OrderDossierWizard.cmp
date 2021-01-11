@@ -1,4 +1,4 @@
-<aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
+<aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
 
     <aura:attribute name='orderParentId' type="String"/>
     <aura:attribute name='parentOrderName' type="String"/>
@@ -10,8 +10,9 @@
     <aura:attribute name="fiscalCode" type="String"/>
     <aura:attribute name="vatNumber" type="String"/>
     <aura:attribute name="columnsDocumenti" type="List"/>
-    <lightning:workspaceAPI aura:id="workspace"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:navigation aura:id="navService"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
 
     <lightning:card>
         <div class="slds-page-header slds-page-header_record-home" >
@@ -61,6 +62,15 @@
     />
     <br/>
 
+    <lightning:card title="Title">
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning:button label="Avanti" variant="brand" iconName="utility:right"></lightning:button>
+                <lightning:button label="Modifica" variant="brand" class="slds-m-left_x-small" iconName="utility:edit"></lightning:button>
+            </div>
+        </div>
+    </lightning:card>
+
     <lightning:card>
 
         <lightning:datatable
@@ -93,21 +103,5 @@
         </footer>
 
     </lightning:card>
-
-    <aura:if isTrue="{!v.openModale}">
-
-        <div class="slds-modal slds-fade-in-open">
-            <div class="slds-modal__container">
-                <lightning:card> 
-                    <div class="slds-modal__content slds-p-around--medium">
-                        <!-- <c:HDT_LCP_ProcessoOrder orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.orderParentId}"/> -->
-                        <c:HDT_LCP_ChildOrderProcess orderId="{!v.orderId}" openModale="{!v.openModale}" ordineVendita="{!v.orderParentId}"/>
-                    </div>
-                </lightning:card>
-            </div>
-        </div>
-        <div class="slds-backdrop slds-backdrop_open"></div>
-
-    </aura:if>
 
 </aura:component>
