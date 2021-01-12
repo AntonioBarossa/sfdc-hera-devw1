@@ -77,7 +77,7 @@ export default class HdtGeneralInfo extends LightningElement {
     connectedCallback(){
 
         //Set CreatedBy of Sale on component mount
-        if(this.saleRecord.CreatedBy__c === '' || this.saleRecord.CreatedBy__c === null) {
+        if(this.saleRecord.CreatedBy__c === '' || this.saleRecord.CreatedBy__c === null || this.saleRecord.CreatedBy__c === undefined) {
             this.setUserName();
         } else {
             this.currentUserName = this.saleRecord.CreatedBy__c;

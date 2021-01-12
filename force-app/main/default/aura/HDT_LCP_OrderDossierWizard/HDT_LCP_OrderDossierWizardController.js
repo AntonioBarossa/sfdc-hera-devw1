@@ -1,26 +1,33 @@
 ({
     doInit : function(component, event, helper) {
 		let pageRef = component.get("v.pageReference");
-        let orderParentId = pageRef.state.c__orderParent;
+        let saleId = pageRef.state.c__venditaId;
         let accountId = pageRef.state.c__accountId;
-        component.set("v.orderParentId",orderParentId);
+        component.set("v.saleId",saleId);
+
+        if (pageRef.state.c__orderParent !== undefined) {
+            let orderParentId = pageRef.state.c__orderParent;
+            component.set("v.orderParentId",orderParentId);
+            component.set("v.check", true);
+        } else {
+            component.set("v.check", false);
+        }
+
         component.set("v.accountId",accountId);
-        helper.setColums(component,event,helper);
-        helper.helperInit(component,event,helper,orderParentId,accountId);
-        
+        helper.helperInit(component,event,helper,saleId,accountId);
     },
     
-    handleRowAction : function(component,event,helper){
+    handleRowActionEvent : function(component,event,helper){
+        
+        let c__orderParent = event.getParam('c__orderParent');
+        let c__orderId = event.getParam('c__orderId');
+        let action = event.getParam('action');
+
         var navService = component.find("navService");
         var workspaceAPI = component.find("workspace");
-        var row = event.getParam('row');
-        var action = event.getParam('action');
-        console.log("HOLA : " + row.Id);
-        console.log("HOLA2 : " + action.value);
-        if(action.value == "Avvia Processo"){
-            component.set("v.orderId",row.Id);
-               // component.set("v.openModale",true);
-               
+
+        if(action === "Avvia Processo"){
+
                workspaceAPI.getFocusedTabInfo().then(function(response2) {
                 var focusedTabId;
                 if(response2.parentTabId){
@@ -38,8 +45,8 @@
                             componentName: 'c:HDT_LCP_ChildOrderProcess',
                         },
                         state: {
-                            "c__orderParent": component.get("v.orderParentId"),
-                            "c__orderId" : row.Id
+                            "c__orderParent": c__orderParent,
+                            "c__orderId" : c__orderId
                         }
                     },
                     focus: true

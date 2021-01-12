@@ -34,6 +34,7 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordBySaleFilterRecordTypeId(String saleId, String recordTypeId){
         return [
             SELECT
+            Name,
             AccountId,
             Status
             FROM Order 

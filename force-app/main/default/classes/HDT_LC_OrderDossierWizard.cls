@@ -6,6 +6,8 @@
 */
 public inherited sharing class HDT_LC_OrderDossierWizard {
     
+    private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
+    private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
@@ -16,36 +18,64 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     * @date 06/01/2021
     * @description Initialize controller
     * @param String saleId
+    * @return Map<String, Object>
     */
     @AuraEnabled
-    public static Map<String, Object> controllerInit(String orderParentId) {//String ordineVendita
+    public static Map<String, Object> controllerInit(String saleId) {
         
         Map<String,Object> mapResponse = new Map<String,Object>();
         
-        List<id> listChildOrderId = new List<Id>(); //List<id> listaOrderId = new List<ID>();
+        Boolean check = false;
 
-        orderSrv.checkReadAccess('AccountId,Account.Name,Account.VATNumber__c,Account.FiscalCode__c,Name');
-        Order orderParent = orderQr.getRecordById(orderParentId); // Ordine_di_Vendita__c ordVen = [Select id,account__c,account__r.name,Account__r.VAT_Number__c ,Account__r.Fiscal_Code__c,Name from Ordine_di_vendita__c where id=:ordineVendita];
+        //Get Sale
+        saleSrv.checkReadAccess('Status__c,Account__c,Name');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Status__c,Account__c,Name');
+        check = sale.Status__c == 'Attiva' ? true : false;
+        
+        //Get Orders
+        List<Order> listOrder = orderQr.getRecordBySale(saleId);
+        
+        //Get OrderDossier record type
+        String recordTypeIdOrderDossier = orderSrv.getRecordTypeIdOrderDossier();
 
-        orderSrv.checkReadAccess('AccountId,Account.Name,Recordtypeid,Recordtype.Name,Status,OrderNumber');
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.name, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
+        //Check for parent orders
+        List<Order> listOrderParent = orderQr.getRecordBySaleFilterRecordTypeId(saleId, recordTypeIdOrderDossier);
 
-        // for(Order o : ordList){
-        //     listaOrderId.add(o.id);
-        // }
-        for (Order o : childOrders) {
-            listChildOrderId.add(o.Id);
+        //Init parent order
+        Order parentOrder = new Order(
+            Name = 'Ordine ' + sale.Name,
+            AccountId = sale.Account__c,
+            Vendita__c = sale.Id,
+            Status = 'Draft',
+            RecordTypeId = recordTypeIdOrderDossier,
+            EffectiveDate = Date.today()
+        );
+
+        //Case Order is 'Attiva'
+        if(check){
+            //When there is no parent order
+            if(listOrderParent.isEmpty()){    
+                orderSrv.createRecord(parentOrder);
+                for(Order o : listOrder){
+                    o.ParentOrder__c = parentOrder.Id;
+                }
+                if(listOrder != null && !listOrder.isEmpty()){
+                    orderSrv.updateRecords(listOrder);
+                }
+            } else { //when there is a parent order
+                parentOrder = listOrderParent[0];
+            }
         }
-        
-        orderItemSrv.checkReadAccess('Service_Point__r.Name,OrderId,Product2.Name');
-        List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listChildOrderId); // List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId IN :listaOrderId];
-        
-        mapResponse.put('accountName',orderParent.Account.Name); // mapResponse.put('accountName',ordVen.Account__r.Name);
-        mapResponse.put('orderParentName',orderParent.Name); // mapResponse.put('ordineVenditaName',ordVen.Name);
-        mapResponse.put('fiscalCode',orderParent.Account.FiscalCode__c); // mapResponse.put('codFi',ordVen.Account__r.Fiscal_Code__c);
-        mapResponse.put('vatNumber',orderParent.Account.VATNumber__c); // mapResponse.put('pIv',ordVen.Account__r.VAT_Number__c);
-        mapResponse.put('childOrdersList',childOrders); // mapResponse.put('orderList',ordList);
-        mapResponse.put('orderItemList',orderItemList); // mapResponse.put('orderItemList',orderItemList);
+
+        mapResponse.put('check',check);
+        mapResponse.put('checkExist',!listOrderParent.isEmpty());
+        mapResponse.put('orderParent',parentOrder.Id);
+        mapResponse.put('orderParentName',parentOrder.Name);
+        mapResponse.put('accountId',parentOrder.AccountId);
+
+        // mapResponse.put('accountName',orderParent.Account.Name); // mapResponse.put('accountName',ordVen.Account__r.Name);
+        // mapResponse.put('fiscalCode',orderParent.Account.FiscalCode__c); // mapResponse.put('codFi',ordVen.Account__r.Fiscal_Code__c);
+        // mapResponse.put('vatNumber',orderParent.Account.VATNumber__c); // mapResponse.put('pIv',ordVen.Account__r.VAT_Number__c);
         
         return mapResponse;
     }

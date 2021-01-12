@@ -1,74 +1,39 @@
 ({
-    helperInit : function(component,event,helper,orderParentId,accountId) {
+    helperInit : function(component,event,helper,saleId,accountId) {
 		var action = component.get('c.controllerInit');
         action.setParams({
-            "orderParentId" : orderParentId,
+            "saleId" : saleId,
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
                 if (state === "SUCCESS") {
 
                     let results = response.getReturnValue();
-
-                    let childOrdersList = results.childOrdersList;// let orderList = results.orderList;
-                    let orderItemList = results.orderItemList;
-
-                    childOrdersList.forEach(ord => {
-                        if(ord.RecordType){
-                            ord.recordtypename = ord.RecordType.Name;
-                        }
-                        ord.pod = '';
-                        ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
-                        orderItemList.forEach( ordItem => {
-                            if(ordItem.OrderId == ord.Id && ordItem.Service_Point__c !== undefined){
-                                ord.pod = ordItem.Service_Point__r.ServicePointCode__c;
-                            }
-                        });
-
-                    });
                     
-                    component.set("v.accountName", results.accountName); // component.set("v.accountName", results.accountName);
         			component.set("v.parentOrderName", results.orderParentName); // component.set("v.ordineVenditaName",results.ordineVenditaName);
-        			component.set("v.fiscalCode", results.fiscalCode); // component.set("v.codFi", results.codFi);
-        			component.set("v.vatNumber", results.vatNumber); // component.set("v.pIv", results.pIv);
-        
-                    component.set("v.childOrdersList",childOrdersList);// component.set("v.orderList",orderList);
-                    // component.set("v.step", 2)
+                    component.set("v.orderParentId", results.orderParent);
+                    component.set("v.accountId", results.accountId);
+                    component.set("v.check", results.check);
+
+                    var myPageRef = component.get("v.pageReference");
+                    var newState = Object.assign({}, myPageRef.state, {c__accountId: results.accountId, c__venditaId: saleId, c__orderParent: results.orderParent});
+                    component.find("navService").navigate({
+                        type: myPageRef.type,
+                        attributes: myPageRef.attributes,
+                        state: newState
+                    });
+
+                    // component.set("v.accountName", results.accountName); // component.set("v.accountName", results.accountName);
+                    // component.set("v.fiscalCode", results.fiscalCode); // component.set("v.codFi", results.codFi);
+        			// component.set("v.vatNumber", results.vatNumber); // component.set("v.pIv", results.pIv);
                 }
                 else {
                     console.log("Failed with state: " + state);
                 }
             });
             $A.enqueueAction(action);   
-	},
-    setColums : function(component,event,helper){
-        component.set('v.columnsDocumenti', [
-            {fieldName: 'CustomerName__c', // This field should have the actual URL in it.
-             type: 'url', 
-             sortable: "false",
-             label: 'Numero Ordine',
-             typeAttributes: {
-                 label: {
-                     fieldName: 'OrderNumber' 
-                     // whatever field contains the actual label of the link
-                 },
-                 target: '_parent', 
-                 tooltip: 'Open the customer page'
-             }},
-            {label: 'POD/PDR', fieldName: 'pod', type: 'text'},
-            {label: 'Status', fieldName: 'Status', type: 'text'},
-            {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
-            {type:  'button',typeAttributes:{
-                	iconName: 'utility:edit',
-                    label: 'Avvia Processo', 
-                    name: 'editRecord', 
-                    title: 'Avvia Processo', 
-                    disabled: false, 
-                    value: 'Avvia Processo'
-                }
-            }
-        ]);  
     },
+    
     // cancelVendite: function(component, componentId, className){
     //     let cnl = component.get('c.ordineVenditaCancel');
         

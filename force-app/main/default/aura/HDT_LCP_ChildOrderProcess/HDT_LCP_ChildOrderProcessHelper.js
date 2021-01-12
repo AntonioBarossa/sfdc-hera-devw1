@@ -19,7 +19,7 @@
                     let ord = results.order;
                     let orderItem = results.orderItem;
                     if(orderItem && orderItem.Service_Point__c !== undefined) {
-                        component.set('v.orderPod',orderItem.Service_Point__c !== undefined);
+                        component.set('v.orderPod',orderItem.Service_Point__r.ServicePointCode__c);
                     }
                     component.set("v.ordername", ord.Name);
                     component.set("v.orderstatus",ord.Status);

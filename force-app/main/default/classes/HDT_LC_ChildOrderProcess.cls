@@ -75,7 +75,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
             // ord.RecordTypeId = recordTypeId;
         }
 
-        orderSrv.updateRecord(ord);
+        // orderSrv.updateRecord(ord);
     }
 
 }

@@ -1,87 +1,52 @@
 <aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
 
+    <aura:attribute name='check' type="Boolean" default="false"/>
+    <aura:attribute name='saleId' type="String"/>
     <aura:attribute name='orderParentId' type="String"/>
     <aura:attribute name='parentOrderName' type="String"/>
     <aura:attribute name='accountId' type="String"/>
-    <aura:attribute name='accountName' type="String"/>
-    <aura:attribute name="openModale" type="Boolean" default="false"/> 
-    <aura:attribute name="childOrdersList" type="List"/>
     <aura:attribute name="orderId" type="String"/>
+
+    
+    <aura:attribute name='accountName' type="String"/>
     <aura:attribute name="fiscalCode" type="String"/>
     <aura:attribute name="vatNumber" type="String"/>
     <aura:attribute name="columnsDocumenti" type="List"/>
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
     <lightning:navigation aura:id="navService"/>
     <lightning:workspaceAPI aura:id="workspace"/>
 
-    <lightning:card>
-        <div class="slds-page-header slds-page-header_record-home" >
-            <div class="slds-page-header__row">
-                <div class="slds-page-header__col-title">
-                    <div class="slds-media">
-                        <div class="slds-media__body">
-                            <div class="slds-page-header__name">
-                                <div class="slds-page-header__name-title">
-                                    <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
-                                        {! v.parentOrderName}
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="slds-page-header__row slds-page-header__row_gutters" >
-                <div class="slds-page-header__col-details">
-                    <ul class="slds-page-header__detail-row">
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Account Name">Account Name</div>
-                            <div class="slds-truncate" title="Account Name">{!v.accountName}</div>
-                        </li>
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Codice Fiscale">
-                                Codice Fiscale
-                            </div>
-                            <div class="slds-truncate" title="Codice Fiscale">{!v.fiscalCode}</div>
-                        </li>
-                        <li class="slds-page-header__detail-block">
-                            <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
-                            <div class="slds-truncate" title="Partita Iva">{!v.vatNumber}</div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- Header -->
+    <c:hdtOrderDossierWizardHeader></c:hdtOrderDossierWizardHeader>
+
+    <!-- lightning path -->
+    <aura:if isTrue="{!v.orderParentId}">
+        <div class="slds-m-top_small">
+            <lightning:path
+                aura:id="path" 
+                recordId="{!v.orderParentId}"
+                variant="non-linear"
+                hideUpdateButton="true"
+            />
         </div>
-    </lightning:card>
+    </aura:if>
+    
+    <!-- Dati firma -->
+    <div class="slds-m-top_small">
+        <c:hdtOrderDossierWizardSignature></c:hdtOrderDossierWizardSignature>
+    </div>
 
-    <lightning:path 
-        aura:id="path" 
-        recordId="{!v.orderParentId}"
-        variant="non-linear"
-        hideUpdateButton="true"
-    />
-    <br/>
-
-    <lightning:card title="Title">
-        <div class="slds-clearfix slds-p-around_small">
-            <div class="slds-float_right">
-                <lightning:button label="Avanti" variant="brand" iconName="utility:right"></lightning:button>
-                <lightning:button label="Modifica" variant="brand" class="slds-m-left_x-small" iconName="utility:edit"></lightning:button>
-            </div>
+    <!-- Gestione Ordini -->
+    <aura:if isTrue="{!v.orderParentId}">
+        <div class="slds-m-top_small">
+            <c:hdtOrderDossierWizardTable orderParentId="{!v.orderParentId}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
         </div>
-    </lightning:card>
+    </aura:if>
 
+    <!-- Actions buttons -->
     <lightning:card>
-
-        <lightning:datatable
-            keyField="id"
-            data="{! v.childOrdersList }"
-            columns="{! v.columnsDocumenti }"
-            hideCheckboxColumn="true"
-            onrowaction="{! c.handleRowAction}"
-        />
-        <br/>
-
         <footer class="slds-clearfix slds-p-right_medium">
             <ul class="slds-button-group-list slds-float_right">
              <!--   <li>
@@ -101,7 +66,6 @@
                 </li>
             </ul>
         </footer>
-
     </lightning:card>
 
 </aura:component>
