@@ -25,7 +25,7 @@ public inherited sharing class HDT_LC_GeneralInfo {
      */
     @AuraEnabled
     public static String getCurrentUserName(){
-        String userName = UserInfo.getUserName();
+        String userName = UserInfo.getName();
         return userName;
     }
 }

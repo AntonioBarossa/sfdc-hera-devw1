@@ -16,7 +16,16 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getRecordBySale(String saleId){
         return [
             SELECT
-            Status
+            Name,
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c
             FROM Order 
             WHERE Vendita__c = :saleId
             WITH SECURITY_ENFORCED
@@ -36,7 +45,14 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Name,
             AccountId,
-            Status
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c
             FROM Order 
             WHERE Vendita__c = :saleId
             AND RecordTypeId = :recordTypeId
@@ -61,7 +77,11 @@ public inherited sharing class HDT_QR_Order {
             Name,
             RecordType.Name,
             SystemModstamp,
-            Status
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

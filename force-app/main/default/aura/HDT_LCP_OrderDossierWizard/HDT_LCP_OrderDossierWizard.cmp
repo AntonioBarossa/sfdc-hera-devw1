@@ -3,6 +3,7 @@
     <aura:attribute name='check' type="Boolean" default="false"/>
     <aura:attribute name='saleId' type="String"/>
     <aura:attribute name='orderParentId' type="String"/>
+    <aura:attribute name='orderParentRecord' type="Order"/>
     <aura:attribute name='parentOrderName' type="String"/>
     <aura:attribute name='accountId' type="String"/>
     <aura:attribute name="orderId" type="String"/>
@@ -19,7 +20,9 @@
     <lightning:workspaceAPI aura:id="workspace"/>
 
     <!-- Header -->
-    <c:hdtOrderDossierWizardHeader></c:hdtOrderDossierWizardHeader>
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <c:hdtOrderDossierWizardHeader orderParentRecord="{!v.orderParentRecord}"></c:hdtOrderDossierWizardHeader>
+    </aura:if>
 
     <!-- lightning path -->
     <aura:if isTrue="{!v.orderParentId}">
@@ -34,9 +37,11 @@
     </aura:if>
     
     <!-- Dati firma -->
-    <div class="slds-m-top_small">
-        <c:hdtOrderDossierWizardSignature></c:hdtOrderDossierWizardSignature>
-    </div>
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <div class="slds-m-top_small">
+            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}"></c:hdtOrderDossierWizardSignature>
+        </div>
+    </aura:if>
 
     <!-- Gestione Ordini -->
     <aura:if isTrue="{!v.orderParentId}">

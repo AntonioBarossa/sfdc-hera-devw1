@@ -10,8 +10,9 @@
 
                     let results = response.getReturnValue();
                     
-        			component.set("v.parentOrderName", results.orderParentName); // component.set("v.ordineVenditaName",results.ordineVenditaName);
+        			component.set("v.parentOrderName", results.orderParentName);
                     component.set("v.orderParentId", results.orderParent);
+                    component.set("v.orderParentRecord", results.orderParentRecord);
                     component.set("v.accountId", results.accountId);
                     component.set("v.check", results.check);
 

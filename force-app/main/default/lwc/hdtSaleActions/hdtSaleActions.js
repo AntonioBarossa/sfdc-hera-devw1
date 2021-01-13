@@ -26,7 +26,7 @@ export default class hdtSaleActions extends LightningElement {
 
     get disabledSaveDraft(){
         let result = false;
-        if(this.saleRecord.Status__c != 'Bozza'){
+        if(this.saleRecord.Status__c != undefined && this.saleRecord.Status__c != 'Bozza'){
             result = true;
         } else {
             result = false;
@@ -37,7 +37,7 @@ export default class hdtSaleActions extends LightningElement {
 
     get disabledCancel(){
         let result = false;
-        if(this.saleRecord.Status__c != 'Bozza'){
+        if(this.saleRecord.Status__c != undefined && this.saleRecord.Status__c != 'Bozza'){
             result = true;
         } else {
             result = false;

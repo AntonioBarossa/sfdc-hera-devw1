@@ -42,26 +42,34 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         List<Order> listOrderParent = orderQr.getRecordBySaleFilterRecordTypeId(saleId, recordTypeIdOrderDossier);
 
         //Init parent order
-        Order parentOrder = new Order(
-            Name = 'Ordine ' + sale.Name,
-            AccountId = sale.Account__c,
-            Vendita__c = sale.Id,
-            Status = 'Draft',
-            RecordTypeId = recordTypeIdOrderDossier,
-            EffectiveDate = Date.today()
-        );
+        Order parentOrder = new Order();
 
         //Case Order is 'Attiva'
         if(check){
             //When there is no parent order
-            if(listOrderParent.isEmpty()){    
-                orderSrv.createRecord(parentOrder);
+            if(listOrderParent.isEmpty()){
+                
+                Order parentOrderNew = new Order(
+                    Name = 'Ordine ' + sale.Name,
+                    AccountId = sale.Account__c,
+                    Vendita__c = sale.Id,
+                    Status = 'Draft',
+                    RecordTypeId = recordTypeIdOrderDossier,
+                    EffectiveDate = Date.today()
+                );
+
+                orderSrv.createRecord(parentOrderNew);
+                
                 for(Order o : listOrder){
-                    o.ParentOrder__c = parentOrder.Id;
+                    o.ParentOrder__c = parentOrderNew.Id;
                 }
+
                 if(listOrder != null && !listOrder.isEmpty()){
                     orderSrv.updateRecords(listOrder);
                 }
+
+                parentOrder = orderQr.getRecordById(parentOrderNew.Id);
+
             } else { //when there is a parent order
                 parentOrder = listOrderParent[0];
             }
@@ -70,13 +78,10 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         mapResponse.put('check',check);
         mapResponse.put('checkExist',!listOrderParent.isEmpty());
         mapResponse.put('orderParent',parentOrder.Id);
+        mapResponse.put('orderParentRecord',parentOrder);
         mapResponse.put('orderParentName',parentOrder.Name);
         mapResponse.put('accountId',parentOrder.AccountId);
 
-        // mapResponse.put('accountName',orderParent.Account.Name); // mapResponse.put('accountName',ordVen.Account__r.Name);
-        // mapResponse.put('fiscalCode',orderParent.Account.FiscalCode__c); // mapResponse.put('codFi',ordVen.Account__r.Fiscal_Code__c);
-        // mapResponse.put('vatNumber',orderParent.Account.VATNumber__c); // mapResponse.put('pIv',ordVen.Account__r.VAT_Number__c);
-        
         return mapResponse;
     }
 
