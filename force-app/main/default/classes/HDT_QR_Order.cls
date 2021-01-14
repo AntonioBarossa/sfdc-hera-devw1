@@ -81,7 +81,8 @@ public inherited sharing class HDT_QR_Order {
             ContractSigned__c,
             SignedDate__c,
             SignatureMethod__c,
-            DocSendingMethod__c
+            DocSendingMethod__c,
+            Vendita__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

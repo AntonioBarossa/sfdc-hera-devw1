@@ -19,6 +19,14 @@
 
             helper.createSaleRecord(component, saleObject);
         }
+
+        var workspaceAPI = component.find("workspace");
+
+        workspaceAPI.getFocusedTabInfo().then(function(response3) {
+            workspaceAPI.setTabLabel({
+            tabId: response3.tabId,
+            label: "Wizard Vendita"
+        })});
         
     },
 

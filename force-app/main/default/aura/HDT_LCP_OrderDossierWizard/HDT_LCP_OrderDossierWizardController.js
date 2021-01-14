@@ -15,6 +15,13 @@
 
         component.set("v.accountId",accountId);
         helper.helperInit(component,event,helper,saleId,accountId);
+
+        var workspaceAPI = component.find("workspace");
+        workspaceAPI.getFocusedTabInfo().then(function(response3) {
+            workspaceAPI.setTabLabel({
+            tabId: response3.tabId,
+            label: "Wizard Ordine"
+        })});
     },
     
     handleRowActionEvent : function(component,event,helper){

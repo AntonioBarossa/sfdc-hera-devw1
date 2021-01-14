@@ -70,4 +70,28 @@ public inherited sharing class HDT_LC_ProcessesContainer {
         return mapResponse;
     }
 
+    @AuraEnabled
+    public static map<string,object> controllerInitRedirect(String orderParentId) {
+        System.debug('********recordid :' +orderParentId);
+        
+        Boolean check = true;
+
+        Map<String,Object> mapResponse = new Map<String,Object>();
+
+        // Ordine_di_vendita__c ordven = [Select id,account__c,stato__c from ordine_di_vendita__c where id = :ordineVenditaId];
+        orderSrv.checkReadAccess('AccountId,Vendita__c,Status');
+        Order orderParent = orderQr.getRecordById(orderParentId);
+
+        if(orderParent.Status == 'Activated'){
+            check = false;
+        }
+
+        mapResponse.put('check',check);
+        mapResponse.put('orderParent',orderParent.Id);
+        mapResponse.put('accountId',orderParent.AccountId);
+        mapResponse.put('saleId',orderParent.Vendita__c);
+        
+        return mapResponse;     
+    }
+
 }

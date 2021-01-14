@@ -9,6 +9,10 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     isDisabledSignedDate = true;
     disabledInput = false;
     loading = false;
+    isMailVisible = false;
+    get mailClasses(){
+        return this.isMailVisible ? 'slds-size_1-of-2 slds-show' : 'slds-size_1-of-2 slds-hide';
+    }
 
     get hiddenEdit(){
         let result = true;
@@ -53,6 +57,10 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.isDisabledSignedDate = !this.isDisabledSignedDate;
             this.disabledInput = !this.disabledInput;
         }
+
+        if (fieldName === 'DocSendingMethod__c') {
+            this.isMailVisible = (fieldValue === 'Mail');
+        }
     }
 
     handleNext(){
@@ -78,6 +86,10 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         if (this.orderParentRecord.ContractSigned__c !== undefined) {
             this.isDisabledSignedDate = !this.orderParentRecord.ContractSigned__c;
             this.disabledInput = this.orderParentRecord.ContractSigned__c;
+        }
+
+        if (this.orderParentRecord.DocSendingMethod__c === 'Mail') {
+            this.isMailVisible = true;
         }
     }
 

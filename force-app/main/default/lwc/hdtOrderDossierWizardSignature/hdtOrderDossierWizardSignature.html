@@ -10,6 +10,8 @@
                             <lightning-input-field disabled={isDisabledSignedDate} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignedDate__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignatureMethod__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="DocSendingMethod__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field onchange={handleDataCollection} class={mailClasses} field-name="Mail__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input disabled class="slds-size_1-of-2" variant="label-stacked" type="email" label="Mail Account" value="test@test.com"></lightning-input>
                         </div>
                     </lightning-record-edit-form>
                 </lightning-layout-item>
