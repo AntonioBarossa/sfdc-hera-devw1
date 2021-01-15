@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import controllerInit from '@salesforce/apex/HDT_LC_OrderDossierWizardSignature.controllerInit';
 import next from '@salesforce/apex/HDT_LC_OrderDossierWizardSignature.next';
 
 export default class hdtOrderDossierWizardSignature extends LightningElement {
@@ -10,6 +11,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     disabledInput = false;
     loading = false;
     isMailVisible = false;
+    primaryContactEmail = '';
+    ordChildList = [];
     get mailClasses(){
         return this.isMailVisible ? 'slds-size_1-of-2 slds-show' : 'slds-size_1-of-2 slds-hide';
     }
@@ -61,6 +64,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         if (fieldName === 'DocSendingMethod__c') {
             this.isMailVisible = (fieldValue === 'Mail');
         }
+
+        if (fieldName === 'SignatureMethod__c' && (fieldValue === 'OTP' || fieldValue === 'Vocal Order')){
+            this.isMailVisible = (this.template.querySelector("[data-id='DocSendingMethod__c']").value === 'Mail');
+        }
+
     }
 
     handleNext(){
@@ -81,8 +89,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         });
     }
 
-    connectedCallback(){
-
+    handleFormInit(){
         if (this.orderParentRecord.ContractSigned__c !== undefined) {
             this.isDisabledSignedDate = !this.orderParentRecord.ContractSigned__c;
             this.disabledInput = this.orderParentRecord.ContractSigned__c;
@@ -91,6 +98,31 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         if (this.orderParentRecord.DocSendingMethod__c === 'Mail') {
             this.isMailVisible = true;
         }
+    }
+
+    handleControllerInit(){
+        this.loading = true;
+        controllerInit({orderParentId: this.orderParentRecord.Id, accountId: this.orderParentRecord.AccountId}).then(data =>{
+            this.loading = false;
+            this.primaryContactEmail = data.primaryContactEmail;
+            console.log('data.ordChildList: ', data.ordChildList);
+            this.ordChildList = data.ordChildList;
+        }).catch(error => {
+            this.loading = false;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    connectedCallback(){
+        console.log('Account address: ', JSON.stringify(this.orderParentRecord.Account.BillingAddress));
+        this.handleFormInit();
+        this.handleControllerInit();
     }
 
 }

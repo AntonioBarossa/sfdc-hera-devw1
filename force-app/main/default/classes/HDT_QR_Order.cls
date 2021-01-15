@@ -48,6 +48,8 @@ public inherited sharing class HDT_QR_Order {
             Account.Name,
             Account.VATNumber__c,
             Account.FiscalCode__c,
+            Account.BillingAddress,
+            Account.ShippingAddress,
             Status,
             ContractSigned__c,
             SignedDate__c,
@@ -74,6 +76,8 @@ public inherited sharing class HDT_QR_Order {
             Account.Name,
             Account.VATNumber__c,
             Account.FiscalCode__c,
+            Account.BillingAddress,
+            Account.ShippingAddress,
             Name,
             RecordType.Name,
             SystemModstamp,
@@ -105,6 +109,14 @@ public inherited sharing class HDT_QR_Order {
             Recordtypeid,
             Recordtype.Name,
             Status,
+            BillingProfile__r.InvoicingCityCode__c,
+            BillingProfile__r.InvoicingCountry__c,
+            BillingProfile__r.InvoicingPlace__c,
+            BillingProfile__r.InvoicingPostalCode__c,
+            BillingProfile__r.InvoicingProvince__c,
+            BillingProfile__r.InvoicingStreetName__c,
+            BillingProfile__r.InvoicingStreetNumber__c,
+            BillingProfile__r.InvoicingStreetNumberExtension__c,
             OrderNumber
             FROM
             Order
