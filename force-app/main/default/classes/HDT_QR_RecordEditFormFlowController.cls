@@ -13,9 +13,10 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
             userInputFlowList = [
             SELECT FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c
             FROM HDT_UserInputFlow__mdt
-            WHERE ProcessType__c =: processType
+            WHERE ProcessType__c =: processType 
+            WITH SECURITY_ENFORCED           
             LIMIT 1
-        ];
+            ];
         
         }catch(Exception e){
 
@@ -33,7 +34,7 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
 
         securityClass.checkSecurityAccess();
         
-        List<ContentDocumentLink> cdLs = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :arecordId];
+        List<ContentDocumentLink> cdLs = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :arecordId WITH SECURITY_ENFORCED];
         
         return cdLs;
         
@@ -45,7 +46,7 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
 
         securityClass.checkSecurityAccess();
         
-        List<ContentDocument> entries = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList];
+        List<ContentDocument> entries = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList WITH SECURITY_ENFORCED];
         
         return entries;
         
