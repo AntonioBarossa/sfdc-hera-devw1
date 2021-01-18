@@ -72,7 +72,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
+    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Assenga_Process_Type</name>
         <label>Assenga Process Type</label>
