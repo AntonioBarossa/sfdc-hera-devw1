@@ -1,7 +1,7 @@
-public without sharing class HDT_UTL_QuoteManagement {
+public inherited sharing class HDT_UTL_QuoteManagement {
 
     @InvocableMethod
-    public static List<QuoteManagement__c> addRequiredInformation(List<FlowInputs> inputs){
+    public static List<QuoteManagement__c> addRequiredInformation(List<HDT_UTL_FlowInputs> inputs){
 		System.debug('dentro classe' + inputs);
 		
 		List<QuoteManagement__c> toReturnQuoteManagement = new List<QuoteManagement__c>();
@@ -20,13 +20,13 @@ public without sharing class HDT_UTL_QuoteManagement {
 		return toReturnQuoteManagement;
     }
 	
-	private static List<QuoteManagement__c> menageVerifiche(List<FlowInputs> inputs){
+	private static List<QuoteManagement__c> menageVerifiche(List<HDT_UTL_FlowInputs> inputs){
 		String operationType = inputs[0].operationtype;
         String commodity = inputs[0].commodity;
 		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType);
 	}
 	
-	private static List<QuoteManagement__c> menagePreventivi(List<FlowInputs> inputs){
+	private static List<QuoteManagement__c> menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
 		
 		String localDispatcher 		= inputs[0].localDispatcher; 
 		String seller 				= inputs[0].seller;
@@ -97,7 +97,7 @@ public without sharing class HDT_UTL_QuoteManagement {
 	
 	private static String check;
 	
-    public class FlowInputs{
+    public class HDT_UTL_FlowInputs{
 
         @InvocableVariable
         public String processType;

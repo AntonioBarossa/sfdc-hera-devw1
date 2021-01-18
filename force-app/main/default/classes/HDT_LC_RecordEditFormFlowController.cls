@@ -1,14 +1,15 @@
-public without sharing class HDT_LC_RecordEditFormFlowController {
+public inherited sharing class HDT_LC_RecordEditFormFlowController {
     
     @AuraEnabled(cacheable=true)
     public static String getFields(String processType) {
         String userInputFlow;
-        List<HDT_UserInputFlow__mdt> userInputFlowList = [
+        List<HDT_UserInputFlow__mdt> userInputFlowList = HDT_QR_RecordEditFormFlowController.queryInput(processType);
+        /*List<HDT_UserInputFlow__mdt> userInputFlowList = [
             SELECT FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c
             FROM HDT_UserInputFlow__mdt
             WHERE ProcessType__c =: processType
             LIMIT 1
-        ];
+        ];*/
 
         if(userInputFlowList.size() > 0 ){
             userInputFlow = JSON.serialize(userInputFlowList);
@@ -33,15 +34,16 @@ public without sharing class HDT_LC_RecordEditFormFlowController {
     @AuraEnabled
     public static List<ContentDocument> getContentDocs(Id arecordId)
     {   
-        List<ContentDocumentLink> CDLs = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :arecordId];
-        if (CDLs.size() < 1) return new List<ContentDocument>(); 
+        //List<ContentDocumentLink> cdLs = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :arecordId];
+        List<ContentDocumentLink> cdLs = HDT_QR_RecordEditFormFlowController.queryCdLink(arecordId);
+        if (cdLs.size() < 1) return new List<ContentDocument>(); 
 
         // Make a List of ContentDocument IDs
-        List <Id> CDIdList = new List <Id> ();
-        for (ContentDocumentLink nextCDL : CDLs) {
-            CDIdList.add(nextCDL.ContentDocumentId); }        
+        List <Id> cdIdList = new List <Id> ();
+        for (ContentDocumentLink nextCdl : cdLs) {
+            cdIdList.add(nextCdl.ContentDocumentId); }        
 
-        List<ContentDocument> entries = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :CDIdList];
-        return entries;
+        //List<ContentDocument> entries = [SELECT Id, Title, FileType,CreatedDate FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList];
+        return HDT_QR_RecordEditFormFlowController.queryCd(cdIdList);
     }
 }

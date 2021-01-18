@@ -1,4 +1,4 @@
-public without sharing class HDT_QR_AmountQuote {
+public inherited sharing class HDT_QR_AmountQuote {
 
 
     public static List<AdminPriceQuote__c> queryAmount(String distributor, String city, String caliber, Boolean hasCorrector, String market){

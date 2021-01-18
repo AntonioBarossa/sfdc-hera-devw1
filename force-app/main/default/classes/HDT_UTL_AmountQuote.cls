@@ -1,11 +1,11 @@
 /*HDT_UTL_AmountQuote class
   ----Francesco Panico*/
 
-public without sharing class HDT_UTL_AmountQuote {
+public inherited sharing class HDT_UTL_AmountQuote {
 
   //List<FlowInputs> looks like a good solution to overcome constraints on InvocableMethod inputs.
   @InvocableMethod
-  public static  List<AdminPriceQuote__c> calculateAmountQuote(List<FlowInputs> inputs){
+  public static  List<AdminPriceQuote__c> calculateAmountQuote(List<HDT_UTL_FlowInputs> inputs){
     
     //Assigning values to string in order to avoid query inside loops
     String distributor = inputs[0].distributor;
@@ -25,7 +25,7 @@ public without sharing class HDT_UTL_AmountQuote {
   }
 
 
-    public class FlowInputs{
+    public class HDT_UTL_FlowInputs{
 
           //Distributor and City fields are not being used at the moment because they do not appear on Case object
           @InvocableVariable

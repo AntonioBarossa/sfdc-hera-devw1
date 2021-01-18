@@ -1,4 +1,4 @@
-public without sharing class HDT_QR_QuoteManagement {
+public inherited sharing class HDT_QR_QuoteManagement {
 
     public static List<QuoteManagement__c> queryAddInformation(String commodity, String operationType){
 
