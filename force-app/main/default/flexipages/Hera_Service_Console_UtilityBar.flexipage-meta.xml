@@ -12,7 +12,7 @@
                     <name>entityNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>ApiAnomalyEventStore</value>
+                            <value>Account</value>
                         </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
