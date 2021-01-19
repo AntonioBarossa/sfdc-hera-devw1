@@ -155,12 +155,11 @@
     <gender>Masculine</gender>
     <label>Documento selezionato</label>
     <nameField>
-        <displayFormat>DS-{0000000}</displayFormat>
         <label>Nome Documento</label>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Documenti selezionati</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
