@@ -6,6 +6,6 @@
         <label>Libero</label>
     </customValue>
     <description>Elenco del mercato</description>
-    <masterLabel>Mercato</masterLabel>
+    <masterLabel>Mercato(Deprecate)</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

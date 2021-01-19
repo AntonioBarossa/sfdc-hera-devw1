@@ -8,33 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Libero</fullName>
-                <default>false</default>
-                <label>Libero</label>
-            </value>
-            <value>
-                <fullName>Default</fullName>
-                <default>false</default>
-                <label>Default</label>
-            </value>
-            <value>
-                <fullName>FUI</fullName>
-                <default>false</default>
-                <label>FUI</label>
-            </value>
-            <value>
-                <fullName>Regolamentato</fullName>
-                <default>false</default>
-                <label>Regolamentato</label>
-            </value>
-            <value>
-                <fullName>Salvaguardia</fullName>
-                <default>false</default>
-                <label>Salvaguardia</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_Market</valueSetName>
     </valueSet>
 </CustomField>

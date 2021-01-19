@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DisplacementDistance__c</fullName>
+    <description>Distanza Spostamento utilizzato per i preventivi di Spostamento Impianto</description>
+    <externalId>false</externalId>
+    <label>Distanza Spostamento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>01 - Entro 10m</fullName>
+                <default>false</default>
+                <label>01 - Entro 10m</label>
+            </value>
+            <value>
+                <fullName>02 - Oltre 10m</fullName>
+                <default>false</default>
+                <label>02 - Oltre 10m</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

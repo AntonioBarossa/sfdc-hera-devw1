@@ -4,7 +4,7 @@
     <description>Numero Fattura</description>
     <externalId>false</externalId>
     <label>CAB</label>
-    <length>15</length>
+    <length>5</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
