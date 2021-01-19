@@ -43,10 +43,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @track contentDocument;
     @track formats=[];
     @track showInputSection = false;
-    @track showNotificationMessage = false;
-    @track notificationDescription = '';
-    @track notificationType = '';
-    @track delay = 3000;
+    //@track showNotificationMessage = false;
+    //@track notificationDescription = '';
+    //@track notificationType = '';
+    //@track delay = 3000;
     @track show = false;
 
     @wire(getFields, { processType: '$processType' }) 
