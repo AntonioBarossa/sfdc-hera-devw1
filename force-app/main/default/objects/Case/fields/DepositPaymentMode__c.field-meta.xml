@@ -4,11 +4,29 @@
     <description>Modalità Pagamento Acconto</description>
     <externalId>false</externalId>
     <label>Modalità Pagamento Acconto</label>
-    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In Compartecipazione</fullName>
+                <default>false</default>
+                <label>In Compartecipazione</label>
+            </value>
+            <value>
+                <fullName>Totalmente da Istituzioni pubbliche</fullName>
+                <default>false</default>
+                <label>Totalmente da Istituzioni pubbliche</label>
+            </value>
+            <value>
+                <fullName>Totalmente Dal Cliente</fullName>
+                <default>false</default>
+                <label>Totalmente Dal Cliente</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

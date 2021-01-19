@@ -9,18 +9,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Multiorario</fullName>
-                <default>false</default>
-                <label>Multiorario</label>
-            </value>
-            <value>
-                <fullName>Monorario</fullName>
-                <default>false</default>
-                <label>Monorario</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_MeterType</valueSetName>
     </valueSet>
 </CustomField>
