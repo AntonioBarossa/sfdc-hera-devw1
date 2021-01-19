@@ -33,7 +33,7 @@ jobs:
       run: |
         echo username value ${{ secrets.USERNAME_DEVW1 }}
         sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY_DEW1 }} --username=${{ secrets.USERNAME_DEVW1  }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
-    - name: 'Convert Metadata'
-      run: sfdx force:source:convert -x ./manifest/package.xml --outputdir=convert
+    #- name: 'Convert Metadata'
+    #  run: sfdx force:source:convert -x ./manifest/package.xml --outputdir=convert
     - name: 'Run Test on Metadata'
-      run: sfdx force:mdapi:deploy --deploydir=convert --testlevel=NoTestRun  --checkonly --wait 120 -u hub-org    
+      run: sfdx force:mdapi:deploy -x ./manifest/package.xml --testlevel=NoTestRun  --checkonly --wait 120 -u hub-org    
