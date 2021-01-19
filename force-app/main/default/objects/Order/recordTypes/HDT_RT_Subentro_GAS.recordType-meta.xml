@@ -4,6 +4,48 @@
     <active>true</active>
     <label>HDT RT Subentro GAS</label>
     <picklistValues>
+        <picklist>ElectronicInvoicingMethod__c</picklist>
+        <values>
+            <fullName>Estero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML %2B carta%2Femail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML PA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Market__c</picklist>
+        <values>
+            <fullName>Default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Libero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regolamentato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
             <fullName>BL010</fullName>
@@ -88,6 +130,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SalesCompany__c</picklist>
+        <values>
+            <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Comm Marche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Comm NordEst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Status</picklist>
         <values>
             <fullName>Activated</fullName>
@@ -95,6 +156,17 @@
         </values>
         <values>
             <fullName>Draft</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>XMLType__c</picklist>
+        <values>
+            <fullName>Dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sintetico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

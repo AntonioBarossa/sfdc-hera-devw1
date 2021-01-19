@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>GENERICI 10%-01</fullName>
+        <default>false</default>
+        <label>GENERICI 10%-01</label>
+    </customValue>
+    <customValue>
+        <fullName>GENERICI 20%-02</fullName>
+        <default>false</default>
+        <label>GENERICI 20%-02</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. CONTROLLATE 10%-03</fullName>
+        <default>false</default>
+        <label>SOC. CONTROLLATE 10%-03</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC.CONTROLLATE 20%-04</fullName>
+        <default>false</default>
+        <label>SOC.CONTROLLATE 20%-04</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. COLLEGATE 10%-05</fullName>
+        <default>false</default>
+        <label>SOC. COLLEGATE 10%-05</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. COLLEGATE 20%-06</fullName>
+        <default>false</default>
+        <label>SOC. COLLEGATE 20%-06</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. CONTROLLANTI 10%-07</fullName>
+        <default>false</default>
+        <label>SOC. CONTROLLANTI 10%-07</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. CONTROLLANTI 20%-08</fullName>
+        <default>false</default>
+        <label>SOC. CONTROLLANTI 20%-08</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCIETA&apos; DEL GRUPPO 10%-09</fullName>
+        <default>false</default>
+        <label>SOCIETA&apos; DEL GRUPPO 10%-09</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCIETA&apos; DEL GRUPPO 20%-10</fullName>
+        <default>false</default>
+        <label>SOCIETA&apos; DEL GRUPPO 20%-10</label>
+    </customValue>
+    <customValue>
+        <fullName>NON IMP. ART. 72-12</fullName>
+        <default>false</default>
+        <label>NON IMP. ART. 72-12</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOFATT. F.CAMPO IVA ART.2-13</fullName>
+        <default>false</default>
+        <label>AUTOFATT. F.CAMPO IVA ART.2-13</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. PARTECIPATE 10%-14</fullName>
+        <default>false</default>
+        <label>SOC. PARTECIPATE 10%-14</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC. PARTECIPATE 20%-16</fullName>
+        <default>false</default>
+        <label>SOC. PARTECIPATE 20%-16</label>
+    </customValue>
+    <customValue>
+        <fullName>LIVIGNO/CAMPIONE FUOR CAMPO-19</fullName>
+        <default>false</default>
+        <label>LIVIGNO/CAMPIONE FUOR CAMPO-19</label>
+    </customValue>
+    <customValue>
+        <fullName>NON IMP. ART. 8 S. MARINO-17</fullName>
+        <default>false</default>
+        <label>NON IMP. ART. 8 S. MARINO-17</label>
+    </customValue>
+    <customValue>
+        <fullName>Reverse Charge-25</fullName>
+        <default>false</default>
+        <label>Reverse Charge-25</label>
+    </customValue>
+    <customValue>
+        <fullName>Split payment clienti 10%-S1</fullName>
+        <default>false</default>
+        <label>Split payment clienti 10%-S1</label>
+    </customValue>
+    <customValue>
+        <fullName>Split payment clienti 22%-S2</fullName>
+        <default>false</default>
+        <label>Split payment clienti 22%-S2</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller IVA ES-26</fullName>
+        <default>false</default>
+        <label>Reseller IVA ES-26</label>
+    </customValue>
+    <customValue>
+        <fullName>Split payment soc gruppo10%-S3</fullName>
+        <default>false</default>
+        <label>Split payment soc gruppo10%-S3</label>
+    </customValue>
+    <customValue>
+        <fullName>Split payment soc gruppo10%-S4</fullName>
+        <default>false</default>
+        <label>Split payment soc gruppo10%-S4</label>
+    </customValue>
+    <customValue>
+        <fullName>Consociate IVA ridotta-27</fullName>
+        <default>false</default>
+        <label>Consociate IVA ridotta-27</label>
+    </customValue>
+    <customValue>
+        <fullName>Consociate IVA ordinaria-28</fullName>
+        <default>false</default>
+        <label>Consociate IVA ordinaria-28</label>
+    </customValue>
+    <masterLabel>Percentuale IVA</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
