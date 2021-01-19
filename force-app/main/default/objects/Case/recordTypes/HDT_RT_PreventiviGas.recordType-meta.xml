@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_AttivazionePODVariazionePDR</fullName>
+    <fullName>HDT_RT_PreventiviGas</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <description>Attivazione POD Variazione Stato PDR</description>
-    <label>Attivazione POD Variazione Stato PDR</label>
+    <description>RT che racchiude tutti i preventivi Gas</description>
+    <label>Preventivi Gas</label>
     <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
@@ -431,6 +431,18 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
+            <fullName>Assistenza Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolletta Fuga H2O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calamità Naturali</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio Banca</fullName>
             <default>false</default>
         </values>
@@ -459,11 +471,67 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Delibera 655 2016</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagio Economico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagio Economico %28Bonus Sociale%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disguido Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disoccupato%2FCassintegrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doc%2E ricevuto dopo scadenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Domiciliazione non attiva</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errata Domiciliazione%2Fnon richiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evasione%2FElusione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura Plurim_TLR_Tur %2B 3%2E5%25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_EE %28noD1%29_GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_EE SME ML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_Gas%3E5000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione bloccata plurim</fullName>
             <default>false</default>
         </values>
         <values>
@@ -475,7 +543,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Malfunzione Gruppo di misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Piano Rate errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano d%27autorità</fullName>
             <default>false</default>
         </values>
         <values>
@@ -488,6 +564,14 @@
         </values>
         <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TCP Comune no Int</fullName>
             <default>false</default>
         </values>
     </picklistValues>

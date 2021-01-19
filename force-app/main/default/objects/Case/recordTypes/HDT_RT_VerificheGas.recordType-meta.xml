@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_AttivazionePODVariazionePDR</fullName>
+    <fullName>HDT_RT_VerificheGas</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <description>Attivazione POD Variazione Stato PDR</description>
-    <label>Attivazione POD Variazione Stato PDR</label>
+    <description>RT ad hoc per processi Verifiche Gas</description>
+    <label>Verifiche Gas</label>
     <picklistValues>
         <picklist>AccountholderTypeBeneficiary__c</picklist>
         <values>
@@ -374,7 +374,51 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BL010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -386,7 +430,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo ricalcolato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -815,11 +895,27 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Altre Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Feature Request</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Tensione - Pressione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica GDM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
