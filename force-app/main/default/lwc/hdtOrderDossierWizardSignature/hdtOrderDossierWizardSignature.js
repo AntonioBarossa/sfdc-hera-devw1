@@ -91,10 +91,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.isAddrVisible = (this.template.querySelector("[data-id='DocSendingMethod__c']").value === 'Posta');
         }
 
-        // if (fieldName === 'SignatureMethod__c' && (fieldValue === 'OTP' || fieldValue === 'Stampa')){
-        //     this.isAddrVisible = (this.template.querySelector("[data-id='DocSendingMethod__c']").value === 'Posta');
-        // }
-
     }
 
     handleNext(){
