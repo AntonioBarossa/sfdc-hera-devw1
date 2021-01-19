@@ -358,7 +358,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>QuoteType__c</field>
+            <field>QuotationType__c</field>
             <value>
                 <elementReference>Quote_Management.QuoteType__c</elementReference>
             </value>
