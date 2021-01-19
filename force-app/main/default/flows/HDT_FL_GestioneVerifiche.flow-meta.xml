@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_Amount_Quote</name>
         <label>Get Amount Quote</label>
-        <locationX>688</locationX>
-        <locationY>446</locationY>
+        <locationX>667</locationX>
+        <locationY>218</locationY>
         <actionName>HDT_UTL_AmountQuote</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -72,6 +72,7 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Assenga_Process_Type</name>
         <label>Assenga Process Type</label>
@@ -259,11 +260,6 @@
         </rules>
     </decisions>
     <description>Flow per la gestione delle verifiche</description>
-    <formulas>
-        <name>DemoEntitlementName</name>
-        <dataType>String</dataType>
-        <expression>&quot;Entitlement - &quot; &amp; TEXT( NOW() ) &amp; &quot; - &quot; &amp; {!Get_Case.CaseNumber}</expression>
-    </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVerifiche</label>
     <processMetadataValues>
@@ -294,6 +290,7 @@
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -313,6 +310,7 @@
         <connector>
             <targetReference>Energia_Elettrica_o_Gas</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -333,6 +331,7 @@
         <label>Aggiorna Fase in Inviare Preventivo</label>
         <locationX>208</locationX>
         <locationY>1472</locationY>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -568,14 +567,6 @@
         </connector>
     </start>
     <status>Active</status>
-    <variables>
-        <name>Entitlement</name>
-        <dataType>SObject</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <objectType>Entitlement</objectType>
-    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
