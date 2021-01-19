@@ -36,4 +36,4 @@ jobs:
     #- name: 'Convert Metadata'
     #  run: sfdx force:source:convert -x ./manifest/package.xml --outputdir=convert
     - name: 'Run Test on Metadata'
-      run: sfdx force:mdapi:deploy -x ./manifest/package.xml --testlevel=NoTestRun  --checkonly --wait 120 -u hub-org    
+      run: sfdx force:source:deploy -x ./manifest/package.xml --testlevel=NoTestRun  --checkonly --wait 120 -u hub-org    
