@@ -72,7 +72,6 @@
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
-    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Assenga_Process_Type</name>
         <label>Assenga Process Type</label>
@@ -295,7 +294,6 @@
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -315,7 +313,6 @@
         <connector>
             <targetReference>Energia_Elettrica_o_Gas</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -336,7 +333,6 @@
         <label>Aggiorna Fase in Inviare Preventivo</label>
         <locationX>208</locationX>
         <locationY>1472</locationY>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
