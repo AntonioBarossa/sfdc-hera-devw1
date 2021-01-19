@@ -9,6 +9,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
+    private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -22,9 +23,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
     public static Map<String,Object> controllerInit(String orderParentId, String accountId){
         Map<String,Object> result = new Map<String,Object>();
 
+        contactSrv.checkReadAccess('Email');
         Contact primaryContact = contactQr.getPrimaryContactByAccount(accountId);
         result.put('primaryContactEmail', primaryContact.Email);
 
+        orderSrv.checkReadAccess('BillingProfile__c,BillingProfile__r.InvoicingCityCode__c,BillingProfile__r.InvoicingCountry__c,BillingProfile__r.InvoicingPlace__c,BillingProfile__r.InvoicingPostalCode__c,BillingProfile__r.InvoicingProvince__c,BillingProfile__r.InvoicingStreetName__c,BillingProfile__r.InvoicingStreetNumber__c,BillingProfile__r.InvoicingStreetNumberExtension__c');
         List<Order>ordChildList = orderQr.getChildOrdersByParentId(orderParentId);
         result.put('ordChildList', ordChildList);
 

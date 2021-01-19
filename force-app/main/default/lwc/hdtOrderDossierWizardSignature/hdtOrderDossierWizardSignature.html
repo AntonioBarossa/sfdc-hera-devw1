@@ -12,16 +12,15 @@
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="DocSendingMethod__c" data-id="DocSendingMethod__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field onchange={handleDataCollection} class={mailClasses} field-name="Mail__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input disabled class={mailClasses} variant="label-stacked" type="email" label="Mail Account" value={primaryContactEmail}></lightning-input>
-                            <!-- orderParentRecord.Account.BillingAddress -->
-                            <lightning-input disabled variant="label-stacked" type="address" label="Indirizzo di residenza" value={orderParentRecord.Account.BillingAddress}></lightning-input>
-                            <lightning-formatted-address
-                                street={orderParentRecord.Account.BillingAddress.street}
-                                city={orderParentRecord.Account.BillingAddress.city}
-                                country={orderParentRecord.Account.BillingAddress.country}
-                                province={orderParentRecord.Account.BillingAddress.province}
-                                postal-code={orderParentRecord.Account.BillingAddress.postalCode}
-                                disabled
-                            ></lightning-formatted-address>
+
+                            <lightning-radio-group name="Indirizzi"
+                                label="Indirizzi"
+                                options={addressOptions}
+                                value={value}
+                                type="radio"
+                                class={addrClasses}>
+                            </lightning-radio-group>
+
                         </div>
                     </lightning-record-edit-form>
                 </lightning-layout-item>
