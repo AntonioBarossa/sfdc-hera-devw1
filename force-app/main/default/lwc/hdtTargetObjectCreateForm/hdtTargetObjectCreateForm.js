@@ -4,18 +4,23 @@ import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSetting
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
+import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
     @api accountid;
     @api selectedservicepoint;
+    @api wrapObjectInput= [];
+    @api wrapAddressObject;
     @api sale;
+    @api fieldsWrapObject=[];
+    data;
     objectApiName = 'ServicePoint__c';
     fieldsData;
     @track fieldsDataObject = [];
     fieldsAddress;
     fieldsAddressReq;
-    @track fieldsAddressObject = [];
+    @api fieldsAddressObject = [];
     @track allFieldsObject = [];
     allFieldsData;
     allFieldsDataReq;
@@ -35,7 +40,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     hasAddressBeenVerified = false;
     loading = false;
     recordTypeId;
-    @track servicePointRetrievedData;
+    @api servicePointRetrievedData;
     fieldsDataRaw = '';
     fieldsDataReqRaw = '';
     customSettings;
@@ -117,6 +122,28 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         return fieldsDataObject;
     }
 
+    toObjectAddressInit(data){
+
+        let fieldsDataObject = [];
+        console.log('');
+        Object.keys(data).forEach(keys=> {
+        
+           
+
+                fieldsDataObject.push(
+                    {
+                        fieldname: keys,
+                        required : false,
+                        value: '',
+                        disabled: false
+                    }
+                ) 
+
+        });
+
+        return fieldsDataObject;
+    }
+
     /**
      * Organize fields data
      */
@@ -129,7 +156,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         //get address fields
         this.fieldsAddress = this.toArray(this.customSettings.FieldAddress__c);
         this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
-        this.fieldsAddressObject = this.toObject(this.fieldsAddress, this.fieldsAddressReq);
         
         //merge all fields together
         this.allFieldsData = this.fieldsData.concat(this.fieldsAddress);
@@ -141,43 +167,49 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.loading = true;
         
         getCustomSettings().then(data => {
-
             //get data fields based on recordtype label
             switch(this.recordtype.label){
-                case 'Elettrico':
-                    this.fieldsDataRaw = data.FieldEle__c;
-                    this.fieldsDataReqRaw = data.FieldRequiredEle__c;
+                case 'Punto Elettrico':
+                    this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldEle__c  : (data.FieldEle__c == null || data.FieldEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldEle__c ) );
+                    //this.fieldsDataRaw +=','+ data.FieldEle__c;
+                    this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredEle__c  : (data.FieldRequiredEle__c == null || data.FieldRequiredEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredEle__c ) );
                     break;
-                case 'Gas':
-                    this.fieldsDataRaw = data.FieldGas__c;
-                    this.fieldsDataReqRaw = data.FieldRequiredGas__c;
+                case 'Punto Gas':
+                    this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c  : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldGas__c ) );
+                    //this.fieldsDataRaw = undefined || null  ? this.fieldsDataRaw += data.FieldGas__c :  this.fieldsDataRaw +=','+ data.FieldGas__c;
+                   // this.fieldsDataRaw += data.FieldGas__c;
+                    this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredGas__c  : (data.FieldRequiredGas__c == null || data.FieldRequiredGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredGas__c ) );
             }
 
             this.customSettings = data;
-
+            console.log(JSON.stringify(this.selectedservicepoint)+'********selectedServicePoint');
             if(this.selectedservicepoint != undefined){
-
-                this.fieldsDataRaw = 'RecordTypeId, RecordType.Name, ' + data.FieldEle__c + ', ' + data.FieldGas__c;
-                this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c;
+                
+                this.fieldsDataRaw = 'RecordTypeId, RecordType.Name, ' + data.FieldEle__c + ', ' + data.FieldGas__c+','+ data.FieldGeneric__c;
+                this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c+','+ data.FieldRequiredGeneric__c;
 
                 let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.FieldAddress__c))];
-
+                console.log('queryFields*************'+JSON.stringify(queryFields) );
                 getServicePoint({code:this.selectedservicepoint['Codice Punto'],fields: queryFields.join()}).then(data =>{
                     
                     this.servicePointRetrievedData = data[0];
-
+                    console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData));
                     switch(this.servicePointRetrievedData.RecordType.Name){
-                        case 'Elettrico':
-                            this.fieldsDataRaw = this.customSettings.FieldEle__c;
-                            this.fieldsDataReqRaw = this.customSettings.FieldRequiredEle__c;
-                            break;
-                        case 'Gas':
-                            this.fieldsDataRaw = this.customSettings.FieldGas__c;
-                            this.fieldsDataReqRaw = this.customSettings.FieldRequiredGas__c;
-                    }
+                        case 'Punto Elettrico':
+                            this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c  : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c ) );
 
+                           // this.fieldsDataRaw = this.customSettings.FieldEle__c;
+                            this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredEle__c  : (this.customSettings.FieldRequiredEle__c == null || this.customSettings.FieldRequiredEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredEle__c ) );
+                            break;
+                        case 'Punto Gas':
+                            this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c  : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c ) );
+
+                           // this.fieldsDataRaw = this.customSettings.FieldGas__c;
+                            this.fieldsDataReqRaw =(this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c  : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c ) );
+                    }
+                    //this.template.querySelector('c-hdt-target-object-address-fields').connectedCallback();
                     this.manageFields();
-                    
+                    this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObject(this.servicePointRetrievedData);
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -185,13 +217,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
-                    console.log('Errore: ', error.body.message);
+                    console.log('error****'+error.body.message);
                 });
 
             } else {
+                console.log(this.selectedservicepoint+'selectedServicePoint');
                 this.manageFields();
+                console.log('fieldsData'+ this.fieldsAddress);
             }
-        
+            console.log('fieldsData'+ this.fieldsAddress);
             //fields have been loaded
             this.fieldsReady = true;
             this.loading = false;
@@ -331,10 +365,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             
             let reqaddr = this.allSubmitedFields[this.fieldsAddressReq[i]];
 
-            if( reqaddr == undefined || reqaddr == '' ){
-                this.validForm = false;
-                this.fieldsAddressWithError.push(this.fieldsAddressReq[i]);
-            }
+            // if( reqaddr == undefined || reqaddr == '' ){
+            //     this.validForm = false;
+            //     this.fieldsAddressWithError.push(this.fieldsAddressReq[i]);
+            // }
         }
     }
 
