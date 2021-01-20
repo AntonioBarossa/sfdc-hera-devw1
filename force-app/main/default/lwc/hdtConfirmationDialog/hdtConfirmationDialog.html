@@ -1,9 +1,7 @@
-<!-- Confirmation Dialog -->
 <template>
     <lightning-card if:true={visible}>
         <div class="slds-container_small">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
-                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
                 <div class="slds-modal__container">
                     <header class="slds-modal__header">
                         <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{title}</h2>
@@ -12,10 +10,17 @@
                         <p>{message}</p>
                     </div>
                     <footer class="slds-modal__footer">
-                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right" variant="neutral" name="cancel" label={cancelLabel} title={cancelLabel}
-                            onclick={handleClick}></lightning-button>
-                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right" variant="destructive" name="confirm" label={confirmLabel} title={confirmLabel}
-                            onclick={handleClick}></lightning-button>
+                        <lightning-button variant="destructive"
+                                          name="cancel"
+                                          label={cancelLabel}
+                                          title={cancelLabel}
+                                          onclick={handleClick} ></lightning-button>
+                        <lightning-button class="slds-m-left_small" 
+                                          variant="success"
+                                          name="confirm"
+                                          label={confirmLabel}
+                                          title={confirmLabel}
+                                          onclick={handleClick} ></lightning-button>
                     </footer>
                 </div>
             </section>

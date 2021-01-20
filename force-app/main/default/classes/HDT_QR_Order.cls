@@ -1,0 +1,149 @@
+/**
+* @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+* @date 05/01/2020
+* @description HDT_QR_Order – Contains queries for Order
+* @history Keltin Mesonjesi – 05/01/2020 – Created class
+*/
+public inherited sharing class HDT_QR_Order {
+    
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 05/01/2020
+    * @description Get list of records by Sale__c.Id
+    * @param String saleId – Sale__c.Id
+    * @return List<Order>
+    */
+    public List<Order> getRecordBySale(String saleId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c
+            FROM Order 
+            WHERE Vendita__c = :saleId
+            WITH SECURITY_ENFORCED
+            ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 06/01/2020
+    * @description Get list of records by Sale__c.Id and filtered by recordTypeId
+    * @param String saleId – Sale__c.Id
+    * @param String recordTypeId
+    * @return List<Order>
+    */
+    public List<Order> getRecordBySaleFilterRecordTypeId(String saleId, String recordTypeId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Account.BillingAddress,
+            Account.ShippingAddress,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c
+            FROM Order 
+            WHERE Vendita__c = :saleId
+            AND RecordTypeId = :recordTypeId
+            WITH SECURITY_ENFORCED
+            ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get record by record Id
+    * @param String orderId
+    * @return Order
+    */
+    public Order getRecordById(String orderId){
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Account.VATNumber__c,
+            Account.FiscalCode__c,
+            Account.BillingAddress,
+            Account.ShippingAddress,
+            Name,
+            RecordType.Name,
+            SystemModstamp,
+            Status,
+            ContractSigned__c,
+            SignedDate__c,
+            SignatureMethod__c,
+            DocSendingMethod__c,
+            Vendita__c
+            FROM Order 
+            WHERE Id = :orderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get child records by parent order Id
+    * @param String parentOrderId
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersByParentId(String parentOrderId){
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Name,
+            Recordtypeid,
+            Recordtype.Name,
+            Status,
+            BillingProfile__c,
+            BillingProfile__r.InvoicingCityCode__c,
+            BillingProfile__r.InvoicingCountry__c,
+            BillingProfile__r.InvoicingPlace__c,
+            BillingProfile__r.InvoicingPostalCode__c,
+            BillingProfile__r.InvoicingProvince__c,
+            BillingProfile__r.InvoicingStreetName__c,
+            BillingProfile__r.InvoicingStreetNumber__c,
+            BillingProfile__r.InvoicingStreetNumberExtension__c,
+            OrderNumber
+            FROM
+            Order
+            WHERE ParentOrder__c = :parentOrderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 11/01/2021
+    * @description Get record by id and filter status
+    * @param String orderId
+    * @param String status
+    * @return List<Order>
+    */
+    public List<Order> getRecordByIdFilterStatus(String orderId, String status){
+        return [
+            SELECT
+            Status 
+            FROM
+            Order
+            WHERE Id = :orderId
+            AND Status = :status
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+}
