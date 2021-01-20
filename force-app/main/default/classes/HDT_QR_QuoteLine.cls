@@ -25,7 +25,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
             SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
-            WHERE SBQQ__Quote__r.Vendita__c = :saleId
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
 
             WITH SECURITY_ENFORCED
         ];
@@ -50,7 +50,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
             FROM SBQQ__QuoteLine__c
-            WHERE SBQQ__Quote__r.Vendita__c = :saleId
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND Modalit_di_pagamento__c = :paymentMethod
             WITH SECURITY_ENFORCED
         ];
@@ -72,7 +72,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             Billing_Profile__c,
             SBQQ__Quote__c
             FROM SBQQ__QuoteLine__c
-            WHERE SBQQ__Quote__r.Vendita__c = :saleId
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND Modalit_di_pagamento__c != null
             WITH SECURITY_ENFORCED
         ];
@@ -95,7 +95,7 @@ public inherited sharing class HDT_QR_QuoteLine {
              SBQQ__Number__c,
              SBQQ__RequiredBy__c 
              FROM SBQQ__QuoteLine__c
-             WHERE SBQQ__Quote__r.Vendita__c = :saleId 
+             WHERE SBQQ__Quote__r.Sale__c = :saleId 
              AND SBQQ__RequiredBy__c IN :listIdToQuery
              WITH SECURITY_ENFORCED
         ];

@@ -25,7 +25,7 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__LineItemsGrouped__c,
             SBQQ__OrderByQuoteLineGroup__c
             FROM SBQQ__Quote__c
-            WHERE Vendita__c = :saleId
+            WHERE Sale__c = :saleId
             AND SBQQ__Status__c != :status
 
             WITH SECURITY_ENFORCED
@@ -96,7 +96,7 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__LineItemsGrouped__c,
             SBQQ__OrderByQuoteLineGroup__c
             FROM SBQQ__Quote__c
-            WHERE Vendita__c = :saleId
+            WHERE Sale__c = :saleId
             AND SBQQ__Status__c != 'Rejected'
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
@@ -115,7 +115,7 @@ public inherited sharing class HDT_QR_Quote {
             SELECT
             SBQQ__Status__c
             FROM SBQQ__Quote__c
-            WHERE Vendita__c = :saleId
+            WHERE Sale__c = :saleId
             AND SBQQ__Status__c != 'Rejected'
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
