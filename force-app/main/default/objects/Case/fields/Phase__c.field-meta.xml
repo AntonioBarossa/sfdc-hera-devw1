@@ -32,6 +32,216 @@
                 <default>false</default>
                 <label>RC010</label>
             </value>
+            <value>
+                <fullName>Acconto Paperless Non Pagato</fullName>
+                <default>false</default>
+                <label>Acconto Paperless Non Pagato</label>
+            </value>
+            <value>
+                <fullName>Acconto Paperless Pagato</fullName>
+                <default>false</default>
+                <label>Acconto Paperless Pagato</label>
+            </value>
+            <value>
+                <fullName>Approvazione KO</fullName>
+                <default>false</default>
+                <label>Approvazione KO</label>
+            </value>
+            <value>
+                <fullName>Approvazione OK</fullName>
+                <default>false</default>
+                <label>Approvazione OK</label>
+            </value>
+            <value>
+                <fullName>In Attesa Approvazione</fullName>
+                <default>false</default>
+                <label>In Attesa Approvazione</label>
+            </value>
+            <value>
+                <fullName>Piano Rata Annullato</fullName>
+                <default>false</default>
+                <label>Piano Rata Annullato</label>
+            </value>
+            <value>
+                <fullName>Attesa Info da Banca</fullName>
+                <default>false</default>
+                <label>Attesa Info da Banca</label>
+            </value>
+            <value>
+                <fullName>Elaborazione Manuale</fullName>
+                <default>false</default>
+                <label>Elaborazione Manuale</label>
+            </value>
+            <value>
+                <fullName>KO Definitivo</fullName>
+                <default>false</default>
+                <label>KO Definitivo</label>
+            </value>
+            <value>
+                <fullName>KO Rilavorato</fullName>
+                <default>false</default>
+                <label>KO Rilavorato</label>
+            </value>
+            <value>
+                <fullName>Attesa conferma preventivo cliente</fullName>
+                <default>false</default>
+                <label>Attesa conferma preventivo cliente</label>
+            </value>
+            <value>
+                <fullName>Errore Lavorazione SAP</fullName>
+                <default>false</default>
+                <label>Errore Lavorazione SAP</label>
+            </value>
+            <value>
+                <fullName>Inviare preventivo</fullName>
+                <default>false</default>
+                <label>Inviare preventivo</label>
+            </value>
+            <value>
+                <fullName>Inviare preventivo ricalcolato</fullName>
+                <default>false</default>
+                <label>Inviare preventivo ricalcolato</label>
+            </value>
+            <value>
+                <fullName>KO</fullName>
+                <default>false</default>
+                <label>KO</label>
+            </value>
+            <value>
+                <fullName>Preventivo accettato</fullName>
+                <default>false</default>
+                <label>Preventivo accettato</label>
+            </value>
+            <value>
+                <fullName>Preventivo rifiutato</fullName>
+                <default>false</default>
+                <label>Preventivo rifiutato</label>
+            </value>
+            <value>
+                <fullName>Preventivo scaduto</fullName>
+                <default>false</default>
+                <label>Preventivo scaduto</label>
+            </value>
+            <value>
+                <fullName>Verifica in laboratorio</fullName>
+                <default>false</default>
+                <label>Verifica in laboratorio</label>
+            </value>
+            <value>
+                <fullName>Ammissibilità KO</fullName>
+                <default>false</default>
+                <label>Ammissibilità KO</label>
+            </value>
+            <value>
+                <fullName>Ammissibilità OK</fullName>
+                <default>false</default>
+                <label>Ammissibilità OK</label>
+            </value>
+            <value>
+                <fullName>Annullato</fullName>
+                <default>false</default>
+                <label>Annullato</label>
+            </value>
+            <value>
+                <fullName>Esito KO da DL</fullName>
+                <default>false</default>
+                <label>Esito KO da DL</label>
+            </value>
+            <value>
+                <fullName>Esito OK da DL</fullName>
+                <default>false</default>
+                <label>Esito OK da DL</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione SAP</fullName>
+                <default>false</default>
+                <label>In Lavorazione SAP</label>
+            </value>
+            <value>
+                <fullName>Inviato al DL</fullName>
+                <default>false</default>
+                <label>Inviato al DL</label>
+            </value>
+            <value>
+                <fullName>Paperless Non Generato</fullName>
+                <default>false</default>
+                <label>Paperless Non Generato</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione</fullName>
+                <default>false</default>
+                <label>In Lavorazione</label>
+            </value>
+            <value>
+                <fullName>Esito KO da SAP</fullName>
+                <default>false</default>
+                <label>Esito KO da SAP</label>
+            </value>
+            <value>
+                <fullName>Esito OK da SAP</fullName>
+                <default>false</default>
+                <label>Esito OK da SAP</label>
+            </value>
+            <value>
+                <fullName>Inviata a SAP</fullName>
+                <default>false</default>
+                <label>Inviata a SAP</label>
+            </value>
+            <value>
+                <fullName>Non Inviata a SAP</fullName>
+                <default>false</default>
+                <label>Non Inviata a SAP</label>
+            </value>
+            <value>
+                <fullName>E-Mail Inviata</fullName>
+                <default>false</default>
+                <label>E-Mail Inviata</label>
+            </value>
+            <value>
+                <fullName>E-Mail Non Inviata</fullName>
+                <default>false</default>
+                <label>E-Mail Non Inviata</label>
+            </value>
+            <value>
+                <fullName>Paperless Generato</fullName>
+                <default>false</default>
+                <label>Paperless Generato</label>
+            </value>
+            <value>
+                <fullName>SMS Inviato</fullName>
+                <default>false</default>
+                <label>SMS Inviato</label>
+            </value>
+            <value>
+                <fullName>SMS Non Inviato</fullName>
+                <default>false</default>
+                <label>SMS Non Inviato</label>
+            </value>
+            <value>
+                <fullName>Da Inviare</fullName>
+                <default>false</default>
+                <label>Da Inviare</label>
+            </value>
+            <value>
+                <fullName>Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
+                <fullName>Comunicazione verso Heroku OK</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Heroku OK</label>
+            </value>
+            <value>
+                <fullName>Bozza</fullName>
+                <default>false</default>
+                <label>Bozza</label>
+            </value>
+            <value>
+                <fullName>Chiuso</fullName>
+                <default>false</default>
+                <label>Chiuso</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

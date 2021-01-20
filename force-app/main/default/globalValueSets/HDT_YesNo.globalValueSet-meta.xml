@@ -10,6 +10,8 @@
         <default>false</default>
         <label>No</label>
     </customValue>
-    <masterLabel>Yes No</masterLabel>
+    <description>Si 
+No</description>
+    <masterLabel>Si / No</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
