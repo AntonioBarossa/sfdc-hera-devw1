@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FieldWater__c</fullName>
+    <description>elenco campi necessari alla creazione di un Service Point acqua</description>
+    <externalId>false</externalId>
+    <label>Field Acqua</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>TextArea</type>
+</CustomField>

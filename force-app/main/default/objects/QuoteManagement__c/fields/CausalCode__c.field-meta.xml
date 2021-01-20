@@ -3,7 +3,7 @@
     <fullName>CausalCode__c</fullName>
     <description>Codice causale</description>
     <externalId>false</externalId>
-    <label>Causal Code</label>
+    <label>Codice Causale</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

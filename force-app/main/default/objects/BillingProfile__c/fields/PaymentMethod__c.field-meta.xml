@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PaymentMethod__c</fullName>
+    <description>Bollettino postale
+Bonifico bancario
+RID</description>
+    <externalId>false</externalId>
+    <label>Modalità pagamento</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bollettino postale</fullName>
+                <default>false</default>
+                <label>Bollettino postale</label>
+            </value>
+            <value>
+                <fullName>Bonifico bancario</fullName>
+                <default>false</default>
+                <label>Bonifico bancario</label>
+            </value>
+            <value>
+                <fullName>RID</fullName>
+                <default>false</default>
+                <label>RID</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

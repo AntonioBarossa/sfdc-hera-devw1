@@ -3,7 +3,7 @@
     <fullName>ServicePoint__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Service Point</label>
+    <label>Fornitura</label>
     <referenceTo>ServicePoint__c</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>

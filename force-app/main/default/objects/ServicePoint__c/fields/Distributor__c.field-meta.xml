@@ -3,7 +3,7 @@
     <fullName>Distributor__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
-    <label>Distributor</label>
+    <label>Distributore</label>
     <referenceTo>Account</referenceTo>
     <relationshipLabel>Service Points</relationshipLabel>
     <relationshipName>ServicePoints</relationshipName>

@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Presenza Correttore</description>
     <externalId>false</externalId>
-    <label>ExistCorrector</label>
+    <label>Presenza correttore</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

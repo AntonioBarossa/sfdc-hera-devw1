@@ -3,7 +3,7 @@
     <fullName>VoltageRequired__c</fullName>
     <description>Tensione richiesta</description>
     <externalId>false</externalId>
-    <label>Voltage required</label>
+    <label>Tensione Richiesta</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

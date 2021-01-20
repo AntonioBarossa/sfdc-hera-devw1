@@ -3,7 +3,7 @@
     <fullName>SupplyType__c</fullName>
     <description>Tipo fornitura</description>
     <externalId>false</externalId>
-    <label>SupplyType</label>
+    <label>Tipo fornitura cliente</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

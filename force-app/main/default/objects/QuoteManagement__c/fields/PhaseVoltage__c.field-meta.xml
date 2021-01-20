@@ -3,7 +3,7 @@
     <fullName>PhaseVoltage__c</fullName>
     <description>Tensione fase</description>
     <externalId>false</externalId>
-    <label>Phase voltage</label>
+    <label>Tensione Fase</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

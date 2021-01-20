@@ -3,9 +3,9 @@
     <fullName>AddressFormula__c</fullName>
     <description>Indirizzo di fornitura preso in lookup dal Service Point</description>
     <externalId>false</externalId>
-    <formula>ServicePoint__r.Address__c</formula>
+    <formula>ServicePoint__r.SupplyAddress__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Address</label>
+    <label>Indirizzo di fornitura</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
