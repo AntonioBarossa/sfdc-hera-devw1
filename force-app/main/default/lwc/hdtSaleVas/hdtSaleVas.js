@@ -1,9 +1,10 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import confirmAction from '@salesforce/apex/HDT_LC_SaleVas.confirmAction';
 
 export default class hdtSaleVas extends LightningElement {
 
+    @api sale;
     isModalVisible = false;
     isInputVisible = false;
     selectedOption = '';
