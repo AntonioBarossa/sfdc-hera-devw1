@@ -76,7 +76,7 @@ public inherited sharing class HDT_LC_EditQuote {
                 SBQQ__Number__c = 1,
                 SBQQ__Bundle__c = true,
                 // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
-                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                // SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
                 SBQQ__Quantity__c = 1,
                 SBQQ__NetPrice__c = 1,
                 SBQQ__UnitCost__c = 1

@@ -52,12 +52,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Handle save button availability
      */
     get saveBtnDisabled(){
-        if((this.hasDataBeenFilled && this.hasAddressBeenVerified) 
-            || (this.selectedservicepoint != undefined && this.verifyAddressDisabledOnUpdate)
+        console.log('HdtTargetObjectCreateForm - get saveBtnDisabled' + JSON.stringify(this.verifyAddressDisabledOnUpdate));
+        if((this.selectedservicepoint != undefined && this.verifyAddressDisabledOnUpdate)
             || this.selectedservicepoint != undefined && !this.verifyAddressDisabledOnUpdate && this.hasAddressBeenVerified){
+                console.log('saveBtnDisabled false');
             return false;
         } else {
-            return true;
+            console.log('saveBtnDisabled true');
+            return false;
         }
     }
 
@@ -355,10 +357,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             
             let reqdata = this.allSubmitedFields[this.fieldsDataReq[i]];
 
-            if( reqdata == undefined || reqdata == '' ){
-                this.validForm = false;
-                this.fieldsDataWithError.push(this.fieldsDataReq[i]);
-            }
+            // if( reqdata == undefined || reqdata == '' ){
+            //     this.validForm = false;
+            //     this.fieldsDataWithError.push(this.fieldsDataReq[i]);
+            // }
         }
 
         for(var i=0; i<this.fieldsAddressReq.length; i++){
@@ -444,6 +446,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.newServicePoint = data;
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

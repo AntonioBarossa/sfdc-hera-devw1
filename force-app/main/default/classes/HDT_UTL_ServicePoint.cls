@@ -15,10 +15,7 @@ public with sharing class HDT_UTL_ServicePoint {
         return listFields;
 
     }
-    @AuraEnabled
-    public static string methodName(){
-      Mapz<string,string> mapNumberFields = new Map<string,string>();
-    }
+
     
     @AuraEnabled(cacheable=true)
     public static  HDT_WRP_AddressObject getInstanceWrapAddressObject (ServicePoint__c s ){
