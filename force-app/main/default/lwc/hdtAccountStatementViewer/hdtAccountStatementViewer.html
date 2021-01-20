@@ -1,0 +1,276 @@
+<template>
+
+    <template if:true={showAcctStmt} >
+        <c-hdt-acct-stmt-type-choise stmt-type={statementType} onclosestmtchoise={closestmtchoise} onchoisestmt={setNewChoise}></c-hdt-acct-stmt-type-choise>
+    </template>
+
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
+    <template if:true={joinFilterModal} >
+        <c-hdt-join-filter-modal
+                onclosemodal={closeModal}
+                fields-to-filter={fieldsToFilter}
+                onsetobjfilter={applyFilter}
+        ></c-hdt-join-filter-modal >
+    </template>
+
+    <template if:true={showOperationModal} >    
+        <c-hdt-operation-modal oncloseopmodal={closeOpModal}> </c-hdt-operation-modal>
+    </template>
+
+    <div if:true={spinnerObj.spinner} >
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+
+
+    <div if:true={showError} class="slds-text-align_center">
+        <lightning-card>
+            <lightning-icon icon-name="utility:wifi"
+                alternative-text="Warning!"
+                title="Warning"
+                size="large"
+            ></lightning-icon>
+
+        <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
+            <p>{showErrorMessage}</p>
+        </div>
+
+        </lightning-card>
+    </div>
+
+    <div if:false={showError} class="slds-grid slds-wrap">
+
+        <!-- Section 1: menu button, pagination and page index -->
+        <div class="slds-col slds-size_1-of-1">
+            <div class="slds-grid slds-gutters slds-scrollable_x">
+                <!-- menu buttons -->
+                <div class="slds-col">
+                    <div class="slds-button-group" role="group">
+                        <template for:each={confObj} for:item="c">
+                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} name={c.name} >{c.label}</button>
+                        </template>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-align_absolute-center">
+                    <span if:true={filterOn} class="slds-pill slds-pill_link" style="background-color: #f2f2f2">
+                        <span class="slds-pill__icon_container">
+                          <span class="slds-icon_container" style="background-color: #f2f2f2">
+                            <lightning-icon icon-name="standard:filter" alternative-text="filterApplied" title="filterApplied" variant="success" size="medium"></lightning-icon>
+                          </span>
+                        </span>
+                        <a href="javascript:void(0);" class="slds-pill__action" >
+                          <span class="slds-pill__label">Filtro applicato</span>
+                        </a>
+                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" >
+                          <lightning-helptext content="E' stata applicata un' interrogazione"></lightning-helptext>
+                        </button>
+                      </span>                
+                </div>
+
+                <template if:true={showFile}>
+                    <div onclick={openFile} style="cursor: pointer;" >
+                        <lightning-icon icon-name="doctype:pdf" alternative-text="Apri PDF" title="Apri PDF" ></lightning-icon>
+                    </div>
+                    <a href={url} download={fileName} style="cursor: pointer;" class="slds-align_absolute-center dark-background" >
+                        <lightning-icon icon-name="utility:download" size="small" variant="inverse" alternative-text="Download PDF" title="Download PDF"></lightning-icon>
+                    </a>
+                </template>
+
+                <!-- pagination -->
+                <div class="slds-col slds-align_absolute-center">
+                    <div if:true={showPagination} class="slds-align_absolute-center slds-border_left slds-border_right">
+
+                        <lightning-button-group>
+                            <template if:true={hasPrev}>
+                                    <lightning-button icon-name="utility:left"
+                                                      data-id="leftArrow"
+                                                      variant="base"
+                                                      title="First"
+                                                      onclick ={onFirst}
+                                    ></lightning-button>
+                                    <lightning-button icon-name="utility:chevronleft"
+                                                      data-id="leftArrow"
+                                                      variant="base"
+                                                      title="Prev"
+                                                      onclick ={onPrev}
+                                    ></lightning-button>
+                            </template>
+                            <template for:each={pagesList} for:item= "pageNumber">
+                                    <lightning-button data-name="pagination"
+                                                      data-id={pageNumber}
+                                                      variant="neutral"
+                                                      label={pageNumber}
+                                                      title="pagination"
+                                                      onclick={onPageClick}
+                                                      key={pageNumber}
+                                    ></lightning-button>
+                            </template>
+                            <template if:true={hasNext}>
+                                    <lightning-button icon-name="utility:chevronright"
+                                                      data-id="rightArrow"
+                                                      variant="base"
+                                                      title="Next"
+                                                      class="slds-m-left_x-small"
+                                                      onclick ={onNext}
+                                    ></lightning-button>
+                                    <lightning-button icon-name="utility:right"
+                                                      data-id="rightArrow"
+                                                      variant="base"
+                                                      title="Last"
+                                                      onclick ={onLast}
+                                    ></lightning-button>         
+                            </template>
+                        </lightning-button-group>
+
+                    </div>
+                </div>
+
+                <!--<div class="slds-col slds-box slds-box_xx-small slds-align_absolute-center" onclick={changeType} style="cursor: pointer; padding:0.2rem;background:#16325c" >
+                    <div class="slds-text-body_regular slds-text-color_inverse">{acctStmt}</div>
+                </div>-->
+                <div class="slds-col slds-align_absolute-center">
+                    <lightning-button variant="brand-outline" label={acctStmt} title="Tipo Estratto Conto" icon-name="utility:change_record_type" class="slds-m-left_x-small" onclick={changeType} ></lightning-button>
+                </div>
+                <!-- page index -->
+                <div class="slds-col slds-align_absolute-center">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-text-heading_small slds-m-right_medium">
+                            <div class="slds-grid">
+                                <div class="slds-col">
+                                    {checkboxCount}
+                                </div>
+                                <div class="slds-col">
+                                    <lightning-icon class="slds-m-left_small" size="small" icon-name="utility:multi_select_checkbox" alternative-text="checkbox selected" variant="success">
+                                    </lightning-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-box slds-box_xx-small" style="padding:0.2rem;background:#16325c">
+                            <div class="slds-text-body_regular slds-text-color_inverse slds-m-right_small slds-m-left_small">
+                                {fromRec}&nbsp;-&nbsp;{toRec}&nbsp;of&nbsp;{totRecs}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section 2: data of first level -->
+        <div id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll">
+            <table class="slds-table" >
+                <thead>
+                    <tr>
+                        <th style="width:3.25rem;">
+                            <template if:true={showAccountData} >
+                                <!-- checkbox header -->
+                                <lightning-input name="headerCheckbox"
+                                                 value="0"
+                                                 type="checkbox"
+                                                 label=" "
+                                                 onchange={checkboxHeaderHandler}
+                                ></lightning-input>
+                           </template>
+                        </th>
+
+                        <template for:each={columns} for:item="c">
+                            <th key={c.fieldName} >
+                                <div class="slds-m-left_x-small slds-truncate slds-align_absolute-center divheader" title={c.label}><!--slds-cell-fixed-->
+                                    <p>{c.label}</p>
+                                    <p if:true={c.showAmount}>
+                                        &nbsp;-&nbsp;
+                                        <lightning-formatted-number value={totAmount}
+                                                                    format-style="currency"
+                                                                    currency-code="EUR"
+                                                                    currency-display-as="symbol"
+                                        ></lightning-formatted-number>
+                                    </p>
+
+                                    <template if:true={c.showSort} >
+                                        &nbsp;&nbsp;&nbsp;
+                                        <lightning-button-icon name={c.fieldName}
+                                                               icon-name="utility:sort"
+                                                               variant="bare"
+                                                               alternative-text="Order"
+                                                               title="Order"
+                                                               class="slds-float_right"
+                                                               onclick={sort}
+                                        ></lightning-button-icon>
+                                    </template>
+                                </div>
+                            </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Interrogazione -->
+                    <template if:false={showAccountData} >
+                        <tr>
+                            <td data-label="buttongo">
+                                <div class="slds-truncate slds-form-element" title="filter0">
+                                    <lightning-button-icon icon-name="utility:play"
+                                                           variant="brand"
+                                                           alternative-text="Applica interrogazione"
+                                                           onclick={applyInterrogation}
+                                    ></lightning-button-icon>
+                                </div>
+                            </td>
+
+                            <template iterator:c={columns} >
+                                <td key={c.value.fieldName} style="width: 200px; text-align:center">
+                                   <c-hdt-input-field field={c.value.fieldName} field-type={c.value.detail.type} onsettdvalue={setIntParam} ></c-hdt-input-field>
+                                </td>
+                            </template>
+
+                        </tr>                    
+                    </template>
+
+                    <!-- Table to show account statement -->
+                    <template if:true={showAccountData} iterator:it={accountData} >
+                        
+                        <tr key={it.value.id} data-id={it.value.id} onclick={handleRowAction} >
+                            
+                            <td style="width:3.25rem;">
+                                <lightning-input
+                                    data-id={it.value.id}
+                                    type="checkbox"
+                                    label=" "
+                                    name={it.value.id}
+                                    onclick={checkboxHandler}
+                                ></lightning-input>
+                            </td>
+
+                            <template iterator:c={columns} >
+                                <td key={c.value.fieldName} style="width: 200px; text-align:center">
+                                   <c-hdt-table-cell record={it.value} field={c.value.fieldName} field-type={c.value.detail.type} ></c-hdt-table-cell>
+                                </td>
+                            </template>
+
+                        </tr>
+                        
+                    </template>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 3: data of sevond level -->
+        <div if:true={showSecondLevel} class="slds-col slds-size_1-of-1">
+            <c-hdt-account-statement-detail-viewer
+                tab-code={tabCode}
+                accountdetails={secondLevelList}
+                onremovefilter={refreshSecondLevel}
+                filter-applied={filterApplied}
+            ></c-hdt-account-statement-detail-viewer>
+        </div>
+
+    </div>
+
+</template>

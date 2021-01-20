@@ -1,0 +1,18 @@
+.tableFixHead{ overflow-y: auto; height:42vh;/*height:230px;*/ }
+.tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
+.divheader { /*width: 200px;*/ }
+.mainbutton { white-space: nowrap; }
+
+table { border-collapse: collapse; width: 100%; }
+th { padding: 4px 8px; width: 200px; background:#eee; border-bottom: 1px solid #b5b1b1; border-top: 1px solid #b5b1b1; }
+td { padding: 4px 8px; /*width: 200px;*/ text-align:center; }
+tr { border-bottom: 1px solid #eee; }
+
+table tbody tr:first-child { background: #ecebea; }
+
+.dark-background{
+    background-color: #16325c;
+    border-radius: 5px;
+    padding: 3px;
+    color: #fff;
+}
