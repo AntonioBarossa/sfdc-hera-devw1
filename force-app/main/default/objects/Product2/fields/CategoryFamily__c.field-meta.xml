@@ -14,8 +14,124 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>M Giusto Casa</fullName>
+                <default>false</default>
+                <label>M Giusto Casa</label>
+            </value>
+            <value>
+                <fullName>Hello Hera Casa</fullName>
+                <default>false</default>
+                <label>Hello Hera Casa</label>
+            </value>
+            <value>
+                <fullName>Hera Comm Placet</fullName>
+                <default>false</default>
+                <label>Hera Comm Placet</label>
+            </value>
+            <value>
+                <fullName>Hera Impronta Zero</fullName>
+                <default>false</default>
+                <label>Hera Impronta Zero</label>
+            </value>
+            <value>
+                <fullName>Nuova Idea</fullName>
+                <default>false</default>
+                <label>Nuova Idea</label>
+            </value>
+            <value>
+                <fullName>Prezzo Certo</fullName>
+                <default>false</default>
+                <label>Prezzo Certo</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Hera</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Hera</label>
+            </value>
+            <value>
+                <fullName>Prezzo Garantito</fullName>
+                <default>false</default>
+                <label>Prezzo Garantito</label>
+            </value>
+            <value>
+                <fullName>Prezzo Sicurezza</fullName>
+                <default>false</default>
+                <label>Prezzo Sicurezza</label>
+            </value>
+            <value>
+                <fullName>Welcome Hera</fullName>
+                <default>false</default>
+                <label>Welcome Hera</label>
+            </value>
+            <value>
+                <fullName>Casa Dolce Casa</fullName>
+                <default>false</default>
+                <label>Casa Dolce Casa</label>
+            </value>
+            <value>
+                <fullName>Energia Serena</fullName>
+                <default>false</default>
+                <label>Energia Serena</label>
+            </value>
+            <value>
+                <fullName>Tutela Simile</fullName>
+                <default>false</default>
+                <label>Tutela Simile</label>
+            </value>
+            <value>
+                <fullName>Tre per te</fullName>
+                <default>false</default>
+                <label>Tre per te</label>
+            </value>
+            <value>
+                <fullName>Simply Hera</fullName>
+                <default>false</default>
+                <label>Simply Hera</label>
+            </value>
+            <value>
+                <fullName>Gente Hera</fullName>
+                <default>false</default>
+                <label>Gente Hera</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Verde</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Verde</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Special</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Natura</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Natura</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Impresa</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Impresa</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Lavoro</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Lavoro</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special Web</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Special Web</label>
+            </value>
+            <value>
+                <fullName>Hera Eta Piu</fullName>
+                <default>false</default>
+                <label>Hera Eta Piu</label>
+            </value>
+            <value>
                 <fullName>TBD</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>TBD</label>
             </value>
         </valueSetDefinition>
