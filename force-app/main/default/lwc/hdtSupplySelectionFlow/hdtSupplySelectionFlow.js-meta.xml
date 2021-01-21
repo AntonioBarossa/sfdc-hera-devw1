@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="processType" type="String" label="Process Type" description="process type passed by the flow" role="inputOnly"/>
+            <property name="accountId" type="String" label="Account Id" description="account id" role="inputOnly"/>
+            <property name="targetObject" type="String" label="targetObject" description="targetObject" role="inputOnly"/>
+            <property name="addititionalParam" type="String" label="addititionalParam" description="addititionalParam" role="inputOnly"/>
+            <property name="selectedServicePointFlow" type="String" label="selectedServicePointFlow" description="selectedServicePointFlow" role="outputOnly"/>
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Enable Cancel Button" role="inputOnly"/>
+            <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
+            <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
