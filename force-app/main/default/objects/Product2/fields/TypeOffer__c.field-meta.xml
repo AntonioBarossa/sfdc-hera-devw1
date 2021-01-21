@@ -16,6 +16,18 @@
                 <default>false</default>
                 <label>TBD</label>
             </value>
+            <value>
+                <fullName>Progetto</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Progetto</label>
+            </value>
+            <value>
+                <fullName>Scaffale</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Scaffale</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

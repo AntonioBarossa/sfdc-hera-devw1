@@ -1,0 +1,18 @@
+<template>
+    <lightning-record-edit-form object-api-name={objectapiname}>
+        <div class="slds-border_bottom slds-m-top_large">
+            <h3 class="slds-text-heading_medium slds-hyphenate">Indirizzo di Fornitura</h3>
+        </div>
+        <div class="slds-grid slds-wrap slds-m-top_small">
+            <template for:each={wrapAddressObject} for:item="fieldAddress">
+                <lightning-input type="Text" key={fieldAddress.fieldname} name={fieldAddress.fieldname} value={fieldAddress.value} label={fieldAddress.fieldname} class="slds-size_1-of-3" variant="label-stacked" ></lightning-input>
+            </template>
+        </div>
+        <div class="slds-clearfix">
+            <div class="slds-float_right">
+                <lightning-button disabled={verifyFieldsAddressDisabled} onclick={handleAddressVerification} label="Verifica Indirizzo" variant="brand"></lightning-button>
+            </div>
+        </div>
+    </lightning-record-edit-form>
+    
+</template>
