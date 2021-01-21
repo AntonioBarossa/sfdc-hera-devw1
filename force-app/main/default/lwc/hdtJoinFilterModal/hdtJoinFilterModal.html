@@ -1,0 +1,202 @@
+<template>    
+    <section role="dialog" tabindex="-1"
+             aria-labelledby="modal-heading-01"
+             aria-modal="true"
+             aria-describedby="modal-content-id-1"
+             class="slds-modal slds-fade-in-open">
+
+        <div class="slds-modal__container">
+
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Aggrega e filtra</h2>
+            </header>
+
+            <!-- modal body start -->        
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: min-content;">
+        
+                <div class="slds-form slds-m-top_x-large slds-m-bottom_x-large" >
+
+                    <div if:true={spinnerObj.spinner}>
+                        <lightning-spinner style="height: 50%; top:200px" alternative-text="Loading" size="large" ></lightning-spinner>
+                    </div>
+
+                    <div if:false={spinnerObj.spinner} class="slds-grid slds-wrap">
+
+                            <!-- Livello di Aggregazione -> Aggregazione -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj0.name} >
+                                        {joinFilterObj.obj0.label}
+                                    </label>
+                                    <div class="slds-form-element__control">
+
+                                        <lightning-combobox
+                                            data-id={joinFilterObj.obj0.name}
+                                            data-type="text"
+                                            name={joinFilterObj.obj0.name}
+                                            label=" "
+                                            placeholder="Seleziona livello di aggregazione"
+                                            options={picklistValues}
+                                            onchange={setFilterParam}
+                                        ></lightning-combobox>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nr. Fattura -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj1.name} >
+                                        {joinFilterObj.obj1.label}
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-input
+                                            data-id={joinFilterObj.obj1.name}
+                                            data-type="text"
+                                            name={joinFilterObj.obj1.name}
+                                            type="text"
+                                            label=" "
+                                            pattern="^([^a-z]*)$"
+                                            message-when-pattern-mismatch="Puoi inserire solo numeri"
+                                            min-length={joinFilterObj.obj1.minLength}
+                                            onchange={setFilterParam}
+                                        ></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conto contrattuale -> apre una tabella per selezionare un record su SF -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj2.name} >
+                                        {joinFilterObj.obj2.label}
+                                    </label>
+                                    <div class="slds-form-element__control slds-m-top_medium">
+                                        <c-hdt-custom-lookup   
+                                            unique-key={item.code}
+                                            value-id={item.selectedId}
+                                            obj-name="Opportunity"
+                                            search-by="Name"
+                                            set-as-key="StageName"
+                                            icon-name="custom:custom57"
+                                            label-name="labelName"
+                                            onvalueselect={handleSelection}
+                                            placeholder="Seleziona Billing profile..."
+                                        ></c-hdt-custom-lookup>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Nr Bollettino -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj3.name} >
+                                        {joinFilterObj.obj3.label}
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-input
+                                            data-id={joinFilterObj.obj3.name}
+                                            data-type="text"
+                                            name={joinFilterObj.obj3.name}
+                                            type="text"
+                                            label=" "
+                                            pattern="^([^a-z]*)$"
+                                            message-when-pattern-mismatch="Puoi inserire solo numeri"
+                                            min-length={joinFilterObj.obj3.minLength}
+                                            onchange={setFilterParam}
+                                        ></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data emissione Da -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj4.name} >
+                                        {joinFilterObj.obj4.label}
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-input
+                                            data-id={joinFilterObj.obj4.name}
+                                            data-type="date"
+                                            date-style="short"
+                                            name={joinFilterObj.obj4.name}
+                                            type="date"
+                                            label=" "
+                                            onchange={setFilterParam}
+                                        ></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Emissione A -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj5.name} >
+                                        {joinFilterObj.obj5.label}
+                                    </label>
+                                    <div class="slds-form-element__control">
+                                        <lightning-input
+                                            data-id={joinFilterObj.obj5.name}
+                                            data-type="date"
+                                            date-style="short"
+                                            name={joinFilterObj.obj5.name}
+                                            type="date"
+                                            label=" "
+                                            onchange={setFilterParam}
+                                        ></lightning-input>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Società -->
+                            <div class="slds-col slds-size_1-of-2">
+                                <div class="slds-form-element slds-m-around_x-small slds-m-bottom_small">
+                                    <lightning-helptext content="Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj6.name} >
+                                        {joinFilterObj.obj6.label}
+                                    </label>
+                                    <div if:true={showPick} class="slds-form-element__control">
+                                        <lightning-combobox
+                                            data-id={joinFilterObj.obj6.name}
+                                            data-type="text"
+                                            name={joinFilterObj.obj6.name}
+                                            label=" "
+                                            placeholder="Seleziona la Società"
+                                            options={companyValues}
+                                            onchange={setFilterParam}
+                                        ></lightning-combobox>
+                                        <!---->
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- modal footer start-->
+            <footer class="slds-modal__footer">
+                <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Interroga" title="confirm" onclick={applyFilter} ></lightning-button>
+                <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={closeModal} ></lightning-button>
+            </footer>
+
+        </div>
+
+    </section>
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>
