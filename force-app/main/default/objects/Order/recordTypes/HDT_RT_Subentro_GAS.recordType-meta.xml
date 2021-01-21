@@ -151,11 +151,15 @@
     <picklistValues>
         <picklist>Status</picklist>
         <values>
-            <fullName>Activated</fullName>
+            <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Draft</fullName>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In lavorazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>
