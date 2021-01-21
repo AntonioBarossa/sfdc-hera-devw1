@@ -4,8 +4,8 @@
             <h3 class="slds-text-heading_medium slds-hyphenate">Indirizzo di Fornitura</h3>
         </div>
         <div class="slds-grid slds-wrap slds-m-top_small">
-            <template for:each={fieldsaddressobject} for:item="fieldAddress">
-                <lightning-input-field value={fieldAddress.value} required={fieldAddress.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3" data-name={fieldAddress.fieldname} key={fieldAddress.fieldname} field-name={fieldAddress.fieldname} variant="label-stacked"></lightning-input-field>
+            <template for:each={wrapAddressObject} for:item="fieldAddress">
+                <lightning-input type="Text" key={fieldAddress.fieldname} name={fieldAddress.fieldname} value={fieldAddress.value} label={fieldAddress.fieldname} class="slds-size_1-of-3" variant="label-stacked" ></lightning-input>
             </template>
         </div>
         <div class="slds-clearfix">

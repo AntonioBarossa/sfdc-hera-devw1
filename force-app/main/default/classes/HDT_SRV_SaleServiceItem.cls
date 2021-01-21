@@ -86,7 +86,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             ));
 
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
-                Vendita__c = sale.Id,
+                Sale__c = sale.Id,
                 SBQQ__Opportunity2__c = newOpportunity.Id,
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,
@@ -97,7 +97,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,
                 SalesCompany__c = sale.SalesCompany__c,
-                Comune_Fornitura__c = servicePoint.SupplyCity__c
+                SupplyCity__c = servicePoint.SupplyCity__c
             ));
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

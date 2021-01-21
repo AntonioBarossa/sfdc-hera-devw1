@@ -10,7 +10,32 @@
         <default>false</default>
         <label>Non Domestico</label>
     </customValue>
-    <description>Tipologia d’uso della fornitura</description>
-    <masterLabel>Supply Type</masterLabel>
+    <customValue>
+        <fullName>A-Domestico</fullName>
+        <default>false</default>
+        <label>A-Domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>B-Condominio</fullName>
+        <default>false</default>
+        <label>B-Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>C-Aziende di pubblica utilita</fullName>
+        <default>false</default>
+        <label>C-Aziende di pubblica utilita</label>
+    </customValue>
+    <customValue>
+        <fullName>D-Altri usi</fullName>
+        <default>false</default>
+        <label>D-Altri usi</label>
+    </customValue>
+    <description>Domestico
+Non Domestico
+A-Domestico
+B-Condominio
+C-Aziende di pubblica utilita
+D-Altri usi</description>
+    <masterLabel>Tipo Fornitura</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

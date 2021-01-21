@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         for (SObject quoteLine : quoteLinesToUpdate) {
             SBQQ__QuoteLine__c quoteLineUpdate = new SBQQ__QuoteLine__c(
                 Id = quoteLine.Id,
-                Billing_Profile__c = billingProfileId
+                BillingProfile__c = billingProfileId
             );
             quoteLineListUpdate.add(quoteLineUpdate);
         }

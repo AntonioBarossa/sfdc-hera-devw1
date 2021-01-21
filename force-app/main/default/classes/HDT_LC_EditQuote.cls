@@ -70,13 +70,13 @@ public inherited sharing class HDT_LC_EditQuote {
 
             //Build SBQQ__QuoteLine__c nr.1 with product 'Test Luce or gas'
             SBQQ__QuoteLine__c primaryQuoteLine = new SBQQ__QuoteLine__c(
-                Modalit_di_pagamento__c = paymentType,
+                PaymentMode__c = paymentType,
                 SBQQ__Product__c = primaryProduct.Id,
                 SBQQ__Quote__c = quoteId,
                 SBQQ__Number__c = 1,
                 SBQQ__Bundle__c = true,
                 // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
-                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                // SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
                 SBQQ__Quantity__c = 1,
                 SBQQ__NetPrice__c = 1,
                 SBQQ__UnitCost__c = 1
@@ -91,10 +91,10 @@ public inherited sharing class HDT_LC_EditQuote {
                 SBQQ__Number__c = 2,
                 SBQQ__OptionLevel__c = 1,
                 // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
-                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                // SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
                 SBQQ__RequiredBy__c = primaryQuoteLine.Id,
                 SBQQ__Quantity__c = 1,
-                Service_Point__c = item.ServicePoint__r.Id
+                ServicePoint__c = item.ServicePoint__r.Id
                 // SBQQ__EffectiveQuantity__c = 1
             );
 

@@ -9,7 +9,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     @track filterInputWord = null;
     openmodel = false;
     submitButtonStatus = true;
-    searchInputValue = null;
+    @api searchInputValue = null;
     queryType = 'pod';
     tableData = [];
     tableColumns = [];
@@ -80,7 +80,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     closeModal() {
-        this.openmodel = false
+        this.openmodel = false;
     }
 
     /**
@@ -153,6 +153,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     onselected(value){
         this.queryType = value.detail;
+        this.apiSearchButtonStatus= true;
     }
 
     submitContract(event){
@@ -186,6 +187,13 @@ export default class HdtAdvancedSearch extends LightningElement {
             }else {
                 console.log("process data");
             }
+        }).catch(error => {
+            this.preloading = false;
+            let errorMsg = error;
+            if ('body' in error && 'message' in error.body) {
+                errorMsg = error.body.message
+            }
+            this.alert('',errorMsg,'error')
         });
         // test
         this.handleConfirm();
@@ -207,6 +215,8 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.submitButtonStatus = true;
                 this.openmodel = true;
                 this.isLoaded = true;
+                this.apiSearchButtonStatus=true;
+                this.searchInputValue= null;
             } else {
                 this.alert('Dati tabela',this.notFoundMsg[qty],'warn')
                 this.tableData = data;

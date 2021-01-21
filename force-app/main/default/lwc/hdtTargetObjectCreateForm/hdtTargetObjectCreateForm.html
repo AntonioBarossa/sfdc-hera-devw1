@@ -26,18 +26,18 @@
                                 </div>
                                 <div class="slds-clearfix">
                                     <div class="slds-float_right">
-                                        <lightning-button disabled={fillFieldsDataDisabled} onclick={handleDataFieldsFilling} label="Arrichimento Dati" variant="brand"></lightning-button>
+                                        <!-- <lightning-button disabled={fillFieldsDataDisabled} onclick={handleDataFieldsFilling} label="Arrichimento Dati" variant="brand"></lightning-button> -->
                                     </div>
                                 </div>
 
-                                <c-hdt-target-object-address-fields onverifyaddressonupdate={handleVerifyAddressOnUpdate} selectedservicepoint={selectedservicepoint} onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} fieldsaddressobject={fieldsAddressObject}></c-hdt-target-object-address-fields>
+                                <c-hdt-target-object-address-fields  onverifyaddressonupdate={handleVerifyAddressOnUpdate} servicepointretrieveddata={servicePointRetrievedData} wrapaddressobject={wrapAddressObject} selectedservicepoint={selectedservicepoint} onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} ></c-hdt-target-object-address-fields>
                         </lightning-record-edit-form>
 
                     </template>
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning-button label="Annulla" variant="neutral" onclick={closeCreateTargetObjectModal}></lightning-button>
-                    <lightning-button disabled={saveBtnDisabled} label={saveButtonName} variant="brand" onclick={save} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button disabled={saveBtnDisabled} label="Conferma" variant="brand" onclick={save} class="slds-m-left_x-small"></lightning-button>
                 </footer>
             </div>
         </section>

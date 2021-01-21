@@ -70,7 +70,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         accountSrv.checkReadAccess('RecordType.Name');
         Account currentAccount = accountQr.getRecordById(accountId, 'RecordType.Name');
-        if (currentAccount.RecordType.Name == 'Business') {
+        if (currentAccount.RecordType.Name == 'HDT_RT_Business') {
             resultSet.addAll(fatturazioneElettronica);
         }
 

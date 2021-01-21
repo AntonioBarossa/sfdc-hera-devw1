@@ -36,14 +36,14 @@ public inherited sharing class HDT_LC_SaleActions {
     public static void save(Sale__c sale){
         
         //1 - Check if QuoteLines have BillingProfiles associated
-        quoteLineSrv.checkReadAccess('Name,Billing_Profile__c,SBQQ__Quote__c');
+        quoteLineSrv.checkReadAccess('Name,BillingProfile__c,SBQQ__Quote__c');
         List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
         List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
 
         List<String> quoteLinesWithoutBilling = new List<String>();
 
         for (SBQQ__QuoteLine__c quoteLine : quoteLinesList) {
-            if (quoteLine.Billing_Profile__c == null) {
+            if (quoteLine.BillingProfile__c == null) {
                 quoteLinesWithoutBilling.add(quoteLine.Name);
             }
         }
