@@ -11,7 +11,7 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;EV_RelatedCase__c&quot;,
+&quot;FieldName&quot; : &quot;RelatedCase__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1
 }
@@ -29,21 +29,21 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-    {
+<!--     {
         &quot;FieldName&quot; : &quot;EV_MarketType__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
-    },
+    }, -->
     {
         &quot;FieldName&quot; : &quot;Note__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-    {
+<!--     {
         &quot;FieldName&quot; : &quot;EV_AccountPhoneNumber__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
-    },
+    }, -->
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
@@ -59,13 +59,13 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
-    {
+<!--     {
         &quot;FieldName&quot; : &quot;EV_MeterCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
-    },
+    }, -->
     {
-        &quot;FieldName&quot; : &quot;EV_DistributorName__c&quot;,
+        &quot;FieldName&quot; : &quot;DistributorName__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
@@ -74,11 +74,11 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
-    {
+<!--     {
         &quot;FieldName&quot; : &quot;EV_SupplyType__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
-    },
+    }, -->
     {
         &quot;FieldName&quot; : &quot;CommodityFormula__c&quot;,
         &quot;Required&quot;   : true,

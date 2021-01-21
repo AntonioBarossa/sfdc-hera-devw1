@@ -29,7 +29,7 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-    {
+<!--     {
         &quot;FieldName&quot; : &quot;EV_MeterCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
@@ -43,14 +43,14 @@
         &quot;FieldName&quot; : &quot;EV_AccountPhoneNumber__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
-    },
+    }, -->
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;EV_DistributorName__c&quot;,
+        &quot;FieldName&quot; : &quot;DistributorName__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },

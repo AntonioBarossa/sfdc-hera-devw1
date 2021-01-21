@@ -6,12 +6,12 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
     {
-        &quot;FieldName&quot; : &quot;EV_Argument__c&quot;,
+        &quot;FieldName&quot; : &quot;BillingErrorArgument__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;EV_CustomerPaymentAggreements__c&quot;,
+        &quot;FieldName&quot; : &quot;CustomerPaymentAgreements__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
     }
@@ -29,7 +29,7 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-    {
+<!--     {
         &quot;FieldName&quot; : &quot;EV_MarketType__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
@@ -38,7 +38,7 @@
         &quot;FieldName&quot; : &quot;EV_AccountPhoneNumber__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
-    },
+    }, -->
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
