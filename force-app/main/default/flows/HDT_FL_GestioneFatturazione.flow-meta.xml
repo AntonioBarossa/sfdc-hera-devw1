@@ -46,7 +46,7 @@
             <name>Case_Correlato</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>UpdatedCase.EV_RelatedCase__c</leftValueReference>
+                <leftValueReference>UpdatedCase.RelatedCase__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -358,7 +358,7 @@
         <dataType>Picklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
-        <picklistField>EV_UtilisationCeasingMotivation__c</picklistField>
+        <picklistField>UtilisationCeasingMotivation__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
     <formulas>
@@ -374,7 +374,7 @@
     <formulas>
         <name>PrimaBollettaNonAncoraEmessa</name>
         <dataType>Boolean</dataType>
-        <expression>TODAY() &lt; ({!UpdatedCase.EV_ContractStartDate__c} + 60)</expression>
+        <expression>TODAY() &lt; ({!UpdatedCase.ContractStartDate__c} + 60)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneFatturazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneFatturazione</label>
