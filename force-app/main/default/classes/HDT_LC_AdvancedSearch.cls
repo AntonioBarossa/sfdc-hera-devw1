@@ -75,7 +75,7 @@ public with sharing class HDT_LC_AdvancedSearch {
         List<Contract> contracts = getAccountContracts(accountid);
         Map<String, String> mapSubscriptions = new Map<String, String>();
 		for (SBQQ__Subscription__c subscription : subscriptions) {
-			mapSubscriptions.put(subscription.SBQQ__Contract__c, subscription.Service_Point__r.ServicePointCode__c);
+			mapSubscriptions.put(subscription.SBQQ__Contract__c, subscription.ServicePoint__r.ServicePointCode__c);
 		}
         List<Map<String,String>> customContracts = new List<Map<String,String>>();
 		for (Contract contract : contracts) {
@@ -154,7 +154,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 */
 	static List<SBQQ__Subscription__c> getAccountSubscriptions(String accountid) {
 		//List<ServicePoint__c> servicePoints = [ SELECT ServicePointCode__c ,(SELECT Name,SBQQ__Contract__r.ContractNumber FROM Subscriptions__r) FROM ServicePoint__c ];
-		return [SELECT Name, SBQQ__Contract__r.ContractNumber, SBQQ__Account__c, SBQQ__Account__r.Name, Service_Point__r.ServicePointCode__c FROM SBQQ__Subscription__c WHERE SBQQ__Account__c =: accountid WITH SECURITY_ENFORCED];
+		return [SELECT Name, SBQQ__Contract__r.ContractNumber, SBQQ__Account__c, SBQQ__Account__r.Name, ServicePoint__r.ServicePointCode__c FROM SBQQ__Subscription__c WHERE SBQQ__Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 
 	/*
