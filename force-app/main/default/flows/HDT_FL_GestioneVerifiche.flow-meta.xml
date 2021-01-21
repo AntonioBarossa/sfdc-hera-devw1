@@ -55,7 +55,7 @@
         <inputParameters>
             <name>commodity</name>
             <value>
-                <elementReference>Get_Case.Commodity__c</elementReference>
+                <elementReference>Get_Case.CommodityFormula__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -150,7 +150,7 @@
             <name>Energia_Elettrica</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.Commodity__c</leftValueReference>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Energia Elettrica</stringValue>
