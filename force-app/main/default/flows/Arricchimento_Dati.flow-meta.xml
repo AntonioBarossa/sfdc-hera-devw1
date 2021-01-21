@@ -574,7 +574,7 @@
                     <stringValue>Picklist</stringValue>
                 </value>
             </processMetadataValues>
-            <field>VoltageLevelAvailable__c</field>
+            <field>VoltageAvailable__c</field>
             <value>
                 <stringValue>BT</stringValue>
             </value>

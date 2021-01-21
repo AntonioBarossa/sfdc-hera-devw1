@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_Case_Id</name>
         <label>Assegna Case Id</label>
-        <locationX>446</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>Assegna_Fornitura</name>
         <label>Assegna Fornitura</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.ServicePoint__c</assignToReference>
@@ -36,27 +36,12 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>446</locationX>
+        <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default</defaultConnectorLabel>
-        <rules>
-            <name>Cluster_Pagamenti</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Richiesta Domiciliazione</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Gestione_Pagamenti_Subflow</targetReference>
-            </connector>
-            <label>Cluster Pagamenti</label>
-        </rules>
         <rules>
             <name>Cluster_Verifiche</name>
             <conditionLogic>or</conditionLogic>
@@ -71,21 +56,6 @@
                 <targetReference>Seleziona_Fornitura_Screen</targetReference>
             </connector>
             <label>Cluster Verifiche</label>
-        </rules>
-        <rules>
-            <name>Cluster_Disattivazioni</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Chiusura Contatore</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Selezione_Fornitura_0</targetReference>
-            </connector>
-            <label>Cluster Disattivazioni</label>
         </rules>
     </decisions>
     <description>Flow richiamato dal Catalogo Servizi che si occupa di innescare il corretto Flow di processo</description>
@@ -113,7 +83,7 @@
     <recordCreates>
         <name>Crea_Case</name>
         <label>Crea Case</label>
-        <locationX>446</locationX>
+        <locationX>182</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>Assegna_Case_Id</targetReference>
@@ -148,7 +118,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -170,7 +140,7 @@
         <description>Recupera l&apos;Id del record type sulla base del RecordType passato in input</description>
         <name>Get_RecordType_Id</name>
         <label>Get RecordType Id</label>
-        <locationX>446</locationX>
+        <locationX>182</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -191,7 +161,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>998</locationY>
         <connector>
             <targetReference>Gestione_Verifiche_Subflow</targetReference>
@@ -201,7 +171,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>842</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -217,7 +187,7 @@
     <screens>
         <name>Seleziona_Fornitura_Screen</name>
         <label>Seleziona Fornitura Screen</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>638</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -268,27 +238,8 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <screens>
-        <name>Selezione_Fornitura_0</name>
-        <label>Selezione Fornitura 0</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Gestione_Disattivazioni</targetReference>
-        </connector>
-        <fields>
-            <name>SelezioneFornituraText_0</name>
-            <fieldText>&lt;p&gt;Inserire LWC Selezione Fornitura&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
     <start>
-        <locationX>320</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_RecordType_Id</targetReference>
@@ -296,36 +247,9 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>Gestione_Disattivazioni</name>
-        <label>Gestione Disattivazioni Subflow</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
-        <flowName>HDT_FL_GestioneDisattivazioni</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>Crea_Case</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Gestione_Pagamenti_Subflow</name>
-        <label>Gestione Pagamenti Subflow</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <flowName>HDT_FL_GestionePagamenti</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>Crea_Case</elementReference>
-            </value>
-        </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </subflows>
-    <subflows>
         <name>Gestione_Verifiche_Subflow</name>
         <label>Gestione Verifiche Subflow</label>
-        <locationX>314</locationX>
+        <locationX>50</locationX>
         <locationY>1118</locationY>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
