@@ -7,7 +7,7 @@
         <locationX>908</locationX>
         <locationY>50</locationY>
         <assignmentItems>
-            <assignToReference>InputCase.EV_Argument__c</assignToReference>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Spese Accessorie</stringValue>
@@ -23,7 +23,7 @@
         <locationX>970</locationX>
         <locationY>273</locationY>
         <assignmentItems>
-            <assignToReference>InputCase.EV_Argument__c</assignToReference>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Spese sollecito</stringValue>
@@ -39,7 +39,7 @@
         <locationX>904</locationX>
         <locationY>492</locationY>
         <assignmentItems>
-            <assignToReference>InputCase.EV_Argument__c</assignToReference>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Interessi</stringValue>
