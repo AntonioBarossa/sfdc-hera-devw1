@@ -72,6 +72,8 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
+            if(processType != null)
+                inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
 
             component.set('v.enableRefresh', true);
         }
