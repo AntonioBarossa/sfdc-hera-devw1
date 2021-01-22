@@ -3,15 +3,21 @@
     <groupingStringEnum>OrderStatusCode</groupingStringEnum>
     <sorted>false</sorted>
     <standardValue>
-        <fullName>Draft</fullName>
+        <fullName>Bozza</fullName>
         <default>false</default>
-        <label>Draft</label>
+        <label>Bozza</label>
         <groupingString>Draft</groupingString>
     </standardValue>
     <standardValue>
-        <fullName>Activated</fullName>
+        <fullName>In lavorazione</fullName>
         <default>false</default>
-        <label>Activated</label>
+        <label>In lavorazione</label>
+        <groupingString>Draft</groupingString>
+    </standardValue>
+    <standardValue>
+        <fullName>Chiuso</fullName>
+        <default>false</default>
+        <label>Chiuso</label>
         <groupingString>Activated</groupingString>
     </standardValue>
 </StandardValueSet>
