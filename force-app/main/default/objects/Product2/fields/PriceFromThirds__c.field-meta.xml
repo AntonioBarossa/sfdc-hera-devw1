@@ -4,9 +4,22 @@
     <description>Prezzo da Terzi	Prezzo da Terzi VAS</description>
     <externalId>false</externalId>
     <label>Prezzo da Terzi</label>
-    <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
     <trackHistory>false</trackHistory>
-    <type>Currency</type>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Yes</fullName>
+                <default>false</default>
+                <label>Yes</label>
+            </value>
+            <value>
+                <fullName>No</fullName>
+                <default>false</default>
+                <label>No</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>
