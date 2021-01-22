@@ -67,6 +67,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>ReferenceMarket__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SBQQ__ExcludeFromOpportunity__c</field>
             </layoutItems>
             <layoutItems>
@@ -443,6 +447,24 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PriceBonusGas__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns/>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Info stampa in fattura bonus e contributi</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PrintOnBill__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TextInPrint__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns/>

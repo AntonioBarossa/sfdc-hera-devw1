@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DurationDayGas__c</fullName>
+    <fullName>PriceF2__c</fullName>
     <externalId>false</externalId>
-    <formula>SBQQ__OptionalSKU__r.DurationDayGas__c</formula>
+    <formula>SBQQ__OptionalSKU__r.PriceF2__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Durata Gas (gg)</label>
+    <label>Prezzo F2</label>
     <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>
