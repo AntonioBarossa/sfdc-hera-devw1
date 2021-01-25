@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Tracciamento di tutti gli esiti su canale SMS  inviate da Marketing Cloud</description>
+    <description>Oggetto di configurazione per la determinazione di Rete Category e Contract Template nella funzionalità di configurazione offerta tecnica</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -155,13 +155,13 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Feminine</gender>
-    <label>SMS Tracking</label>
+    <label>Rate Template</label>
     <nameField>
-        <displayFormat>STK-{00000000}</displayFormat>
-        <label>Name</label>
+        <displayFormat>RTP-{00000000}</displayFormat>
+        <label>Rate Template</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>SMS Tracking</pluralLabel>
+    <pluralLabel>Rate Templates</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<<<<<<< HEAD:force-app/main/default/objects/SBQQ__ProductOption__c/SBQQ__ProductOption__c.object-meta.xml
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+=======
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -143,7 +146,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Tracciamento di tutti gli esiti su canale SMS  inviate da Marketing Cloud</description>
+    <description>Oggetto custom per la gestione dei gruppi di login legati alla configurazione dei criteri di eleggibilià e ai prodotti</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,15 +157,16 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <gender>Feminine</gender>
-    <label>SMS Tracking</label>
+    <gender>Masculine</gender>
+    <label>Login Group</label>
     <nameField>
-        <displayFormat>STK-{00000000}</displayFormat>
-        <label>Name</label>
+        <displayFormat>LGG-{00000000}</displayFormat>
+        <label>Login Group</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>SMS Tracking</pluralLabel>
+    <pluralLabel>Login Groups</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
+>>>>>>> 3f2fced7ea9b0a6ca29b449865d90e792a8db597:force-app/main/default/objects/LoginGroup__c/LoginGroup__c.object-meta.xml
 </CustomObject>
