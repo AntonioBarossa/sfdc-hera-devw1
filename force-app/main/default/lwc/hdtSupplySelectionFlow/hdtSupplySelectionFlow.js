@@ -16,6 +16,11 @@ export default class HdtSupplySelectionFlow extends LightningElement {
         this.selectedServicePointFlow = event.detail["Codice Punto"];
         console.log('forn '+ this.selectedServicePointFlow);
     }
+
+    handleConfirmServicePoint(event){
+        console.log('forn '+ this.selectedServicePointFlow);
+        this.handleSave(event);
+    }
     handleSave(event){
 
         const navigateNextEvent = new FlowNavigationNextEvent();

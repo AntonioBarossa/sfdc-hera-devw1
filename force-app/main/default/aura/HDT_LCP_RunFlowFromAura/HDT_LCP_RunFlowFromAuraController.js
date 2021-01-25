@@ -103,16 +103,19 @@
             console.log('# Refresh page -> ' + enableRefresh);
 
             console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
+            console.log('enableRefresh: ' + enableRefresh);
 
             if(!enableRefresh){
                 var outputVariables = event.getParam('outputVariables');
+                console.log('outputVariables: ' + outputVariables);
                 var outputVar;
                 var newCaseId;
                 for(var i = 0; i < outputVariables.length; i++) {
                     outputVar = outputVariables[i];
-
+                    console.log('outputVar.name: ' + outputVar.name);
                     if(outputVar.name === "CaseId") {
                         newCaseId = outputVar.value;
+                        console.log('newCaseId: ' + newCaseId);
                     }
 
                 }
