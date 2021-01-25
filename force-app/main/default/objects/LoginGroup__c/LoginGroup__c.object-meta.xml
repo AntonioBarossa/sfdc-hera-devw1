@@ -142,48 +142,27 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <customHelpPage>SBQQ__ProductOptionHelp</customHelpPage>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
-    <description>Option for a configurable product.</description>
+    <description>Oggetto custom per la gestione dei gruppi di login legati alla configurazione dei criteri di eleggibilià e ai prodotti</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>Product Option</label>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <gender>Masculine</gender>
+    <label>Login Group</label>
     <nameField>
-        <displayFormat>PO-{000000}</displayFormat>
-        <label>Option Name</label>
+        <displayFormat>LGG-{00000000}</displayFormat>
+        <label>Login Group</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Product Options</pluralLabel>
-    <searchLayouts>
-        <lookupDialogsAdditionalFields>SBQQ__ConfiguredSKU__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__Feature__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__Number__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__OptionalSKU__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__Quantity__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__Bundled__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__ConfiguredSKU__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__Feature__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__Number__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__OptionalSKU__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>NAME</searchFilterFields>
-        <searchFilterFields>SBQQ__ConfiguredSKU__c</searchFilterFields>
-        <searchFilterFields>SBQQ__Number__c</searchFilterFields>
-        <searchFilterFields>SBQQ__Feature__c</searchFilterFields>
-        <searchFilterFields>SBQQ__OptionalSKU__c</searchFilterFields>
-        <searchFilterFields>SBQQ__Bundled__c</searchFilterFields>
-        <searchFilterFields>SBQQ__Quantity__c</searchFilterFields>
-        <searchFilterFields>SBQQ__Discount__c</searchFilterFields>
-        <searchFilterFields>UPDATEDBY_USER</searchFilterFields>
-    </searchLayouts>
+    <pluralLabel>Login Groups</pluralLabel>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
