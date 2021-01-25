@@ -1,4 +1,4 @@
-global class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
+global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
 {
     //Costruttore -- può essere null
     global HDT_UTL_SearchPlug()
@@ -56,13 +56,17 @@ global class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
         sl.add('Offerta commerciale');
         sl.add('VAS Prodotto');
         
-        Id QuoteId = String.valueOf(quote.get('Id'));
-        SBQQ__Quote__c quote2= [SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c from SBQQ__Quote__c where Id =: QuoteId];
-        additionalFilter += 'PriceBook2Id = \'' + quote2.get('SBQQ__PriceBook__c') + '\'';
+        Id currentId = String.valueOf(quote.get('Id'));
+        SBQQ__Quote__c myQuote= [
+            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
+            FROM SBQQ__Quote__c where Id =: currentId
+            WITH SECURITY_ENFORCED
+        ];
+        additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter +=' AND Product2.Family IN :sl';
 	    //additionalFilter +=' AND (Product2.Family = \'Offerta commerciale\')';
         //additionalFilter +=' AND (Product2.Family = \'VAS Prodotto\')';
-        //additionalFilter += ' AND Product2.Comune__c = \''+ quote2.Comune_Fornitura__c+'\'';
+        //additionalFilter += ' AND Product2.Comune__c = \''+ myQuote.Comune_Fornitura__c+'\'';
         //additionalFilter +=' AND (NOT Product2.Family like \'Bonus%\') and (NOT Product2.Family like \'Contri%\')';
         //additionalFilter +=' AND (NOT Product2.Family like \'Opzione VAS%\') AND (NOT Product2.Family like \'Scont%VAS%\')';
         additionalFilter +=' AND Product2.Status__c=\'Vendibile\'';
@@ -110,19 +114,24 @@ global class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
         sl.add('Offerta commerciale');
         sl.add('VAS Prodotto');
         
-        Id QuoteId = String.valueOf(quote.get('Id'));
-        SBQQ__Quote__c quote2= [SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c  from SBQQ__Quote__c where Id =: QuoteId];
-        whereClause += 'PriceBook2Id = \'' + quote2.get('SBQQ__PriceBook__c') + '\'';
+        Id currentId = String.valueOf(quote.get('Id'));
+        SBQQ__Quote__c myQuote= [
+            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
+            FROM SBQQ__Quote__c where Id =: currentId
+            WITH SECURITY_ENFORCED
+        ];
+
+        whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
 		whereClause += ' AND Product2.Family IN :sl';
         //whereClause +=' AND (Product2.Family = \'Offerta commerciale\')';
         //whereClause +=' AND (Product2.Family = \'VAS Prodotto\')';
 		whereClause +=' AND Product2.Status__c=\'Vendibile\'';
 		whereClause +=' AND Product2.IsActive = true';
 		
-        //whereClause += ' AND Product2.Comune__c = \''+ quote2.Comune_Fornitura__c+'\'';
+        //whereClause += ' AND Product2.Comune__c = \''+ myQuote.Comune_Fornitura__c+'\'';
 
         //modifica montors
-        //whereClause += ' AND Product2Id IN (SELECT Product2Id__c FROM CityEligible__c WHERE Name = \'' + quote2.Comune_Fornitura__c + '\')';
+        //whereClause += ' AND Product2Id IN (SELECT Product2Id__c FROM CityEligible__c WHERE Name = \'' + myQuote.Comune_Fornitura__c + '\')';
         //whereClause +=' AND (NOT Product2.Family like \'Bonus%\') and (NOT Product2.Family like \'Contri%\')';
         //whereClause +=' AND (NOT Product2.Family like \'Opzione VAS%\') AND (NOT Product2.Family like \'Scont%VAS%\')';
         //whereClause +=' AND Product2.Status__c=\'Vendibile\'';
@@ -148,10 +157,14 @@ global class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
     }
     global String getInputDefaultValue(SObject quote, String input){
         System.debug('METHOD CALLED: getInputDefaultValue ' + input);
-        Id QuoteId = String.valueOf(quote.get('Id'));
-        SBQQ__Quote__c quote2= [SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c from SBQQ__Quote__c where Id =: QuoteId];
+        Id currentId = String.valueOf(quote.get('Id'));
+        SBQQ__Quote__c myQuote= [
+            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
+            FROM SBQQ__Quote__c where Id =: currentId
+            WITH SECURITY_ENFORCED
+        ];
 		/*if(input.equalsIgnoreCase('Comune__c'))
-        	return String.valueOf(quote2.Comune_Fornitura__c);
+        	return String.valueOf(myQuote.Comune_Fornitura__c);
         else return null;*/
         return null;
     }
@@ -164,7 +177,7 @@ global class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
      global List<PricebookEntry> suggest( sObject query, Map<String,Object> usg ){
                  system.debug('suggest');
 
-        return [SELECT Id FROM PricebookEntry LIMIT 1];
+        return [SELECT Id FROM PricebookEntry WITH SECURITY_ENFORCED LIMIT 1];
     }
     global String getAdditionalSuggestFilters( sObject quote, Map<String,Object> suggFilts )
     {
@@ -187,13 +200,17 @@ global class HDT_UTL_SearchPlug implements SBQQ.ProductSearchPlugin
         sl.add('VAS Prodotto');
         
         //*** start ciro modification ***
-        Id QuoteId = String.valueOf(quote.get('Id'));
-        SBQQ__Quote__c quote2= [SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c from SBQQ__Quote__c where Id =: QuoteId];
-        additionalFilter += 'PriceBook2Id = \'' + quote2.get('SBQQ__PriceBook__c') + '\'';
+        Id currentId = String.valueOf(quote.get('Id'));
+        SBQQ__Quote__c myQuote= [
+            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
+            FROM SBQQ__Quote__c where Id =: currentId
+            WITH SECURITY_ENFORCED
+        ];
+        additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += ' AND Product2.Family :IN sl';
 		//additionalFilter +=' AND (Product2.Family = \'Offerta commerciale\')';
         //additionalFilter +=' AND (Product2.Family = \'VAS Prodotto\')';
-        /*additionalFilter += ' AND Product2.Comune__c = \''+ quote2.Comune_Fornitura__c+'\'';
+        /*additionalFilter += ' AND Product2.Comune__c = \''+ myQuote.Comune_Fornitura__c+'\'';
         additionalFilter +=' AND (NOT Product2.Family like \'Bonus%\') and (NOT Product2.Family like \'Contri%\')';
         additionalFilter +=' AND (NOT Product2.Family like \'Opzione VAS%\') AND (NOT Product2.Family like \'Scont%VAS%\')';*/
         additionalFilter +=' AND Product2.Status__c=\'Vendibile\'';
