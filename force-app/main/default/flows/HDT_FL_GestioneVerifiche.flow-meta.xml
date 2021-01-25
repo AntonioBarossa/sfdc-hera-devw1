@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Get_Amount_Quote</name>
         <label>Get Amount Quote</label>
-        <locationX>667</locationX>
-        <locationY>218</locationY>
+        <locationX>688</locationX>
+        <locationY>326</locationY>
         <actionName>HDT_UTL_AmountQuote</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -454,7 +454,13 @@
             <inputParameters>
                 <name>labelInputSection</name>
                 <value>
-                    <stringValue>Variabili di Processo</stringValue>
+                    <stringValue>Dati di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -550,7 +556,7 @@
             <inputParameters>
                 <name>labelInputSection</name>
                 <value>
-                    <stringValue>Variabili di Processo</stringValue>
+                    <stringValue>Dati di Processo</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

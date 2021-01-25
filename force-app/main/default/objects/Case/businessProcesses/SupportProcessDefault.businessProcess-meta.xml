@@ -3,7 +3,11 @@
     <fullName>SupportProcessDefault</fullName>
     <isActive>true</isActive>
     <values>
-        <fullName>Closed</fullName>
+        <fullName>Bozza</fullName>
+        <default>true</default>
+    </values>
+    <values>
+        <fullName>Chiuso</fullName>
         <default>false</default>
     </values>
     <values>
@@ -11,8 +15,8 @@
         <default>false</default>
     </values>
     <values>
-        <fullName>New</fullName>
-        <default>true</default>
+        <fullName>In Lavorazione</fullName>
+        <default>false</default>
     </values>
     <values>
         <fullName>On Hold</fullName>
