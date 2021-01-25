@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+<<<<<<< HEAD
   <types>
     <members>ChangePasswordController</members>
     <members>ChangePasswordControllerTest</members>
@@ -2445,4 +2446,62 @@
     <name>WorkflowRule</name>
   </types>
   <version>47.0</version>
+=======
+	<types>
+		<members>HDT_LC_RecordEditFormFlowController</members>
+		<members>HDT_QR_AmountQuote</members>
+		<members>HDT_QR_QuoteManagement</members>
+		<members>HDT_UTL_AmountQuote</members>
+		<members>HDT_UTL_QuoteManagement</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>Case.SupportProcessDefault</members>
+		<name>BusinessProcess</name>
+	</types>
+	<types>
+		<members>Case.General_Compact_Layout</members>
+		<name>CompactLayout</name>
+	</types>
+	<types>
+		<members>HDT_UserInputFlow.Verifiche_Energia_Elettrica</members>
+		<members>HDT_UserInputFlow.Verifiche_Energia_Elettrica_Modifica</members>
+		<members>HDT_UserInputFlow.Verifiche_Gas</members>
+		<members>HDT_UserInputFlow.Verifiche_Gas_Modifica</members>
+		<name>CustomMetadata</name>
+	</types>
+	<types>
+		<members>AdminPriceQuote__c</members>
+		<members>QuoteManagement__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Account_Service_Console</members>
+		<members>HDT_General_Case_Record_Page</members>
+		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>Arricchimento_Dati</members>
+		<members>HDT_FL_GestioneVerifiche</members>
+		<members>HDT_FL_PostSalesMasterDispatch</members>
+		<members>HDT_FL_SupplySelection</members>
+		<members>HDT_PB_RelateActivity</members>
+		<name>Flow</name>
+	</types>
+	<types>
+		<members>Case-HDT_VerificheEle</members>
+		<members>Case-HDT_VerificheGas</members>
+		<members>HDT_LocalDispatcherInrete__mdt-Local Dispatcher InRete Layout</members>
+		<members>HDT_PowerRangeValue__mdt-Power Range Value Layout</members>
+		<members>HDT_UserInputFlow__mdt-HDT_UserInputFlow Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>hdtRecordEditFormFlow</members>
+		<members>hdtSupplySelection</members>
+		<members>hdtSupplySelectionFlow</members>
+		<name>LightningComponentBundle</name>
+	</types>
+	<version>50.0</version>
+>>>>>>> 561b7804f65ca188779e79306367e27af5b11e79
 </Package>
