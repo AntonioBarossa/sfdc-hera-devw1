@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Tracciamento di tutti gli esiti su canale SMS  inviate da Marketing Cloud</description>
+    <description>Oggetto custom per la gestione dei gruppi di Profile legati alla configurazione dei criteri di eleggibilià e ai prodotti</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,14 +154,14 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <gender>Feminine</gender>
-    <label>SMS Tracking</label>
+    <gender>Masculine</gender>
+    <label>Profile Group</label>
     <nameField>
-        <displayFormat>STK-{00000000}</displayFormat>
-        <label>Name</label>
+        <displayFormat>PFG-{00000000}</displayFormat>
+        <label>Profile Group</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>SMS Tracking</pluralLabel>
+    <pluralLabel>Profile Groups</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
