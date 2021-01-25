@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Tracciamento di tutti gli esiti su canale SMS  inviate da Marketing Cloud</description>
+    <description>Oggetto per la gestione delle fasce di consumo</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -155,13 +155,13 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Feminine</gender>
-    <label>SMS Tracking</label>
+    <label>Fascia</label>
     <nameField>
-        <displayFormat>STK-{00000000}</displayFormat>
-        <label>Name</label>
+        <displayFormat>RNG-{00000000}</displayFormat>
+        <label>Fascia</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>SMS Tracking</pluralLabel>
+    <pluralLabel>Fasce</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
