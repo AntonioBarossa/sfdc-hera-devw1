@@ -72,6 +72,8 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
+            if(processType != null)
+                inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
 
             component.set('v.enableRefresh', true);
         }
@@ -101,16 +103,19 @@
             console.log('# Refresh page -> ' + enableRefresh);
 
             console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
+            console.log('enableRefresh: ' + enableRefresh);
 
             if(!enableRefresh){
                 var outputVariables = event.getParam('outputVariables');
+                console.log('outputVariables: ' + outputVariables);
                 var outputVar;
                 var newCaseId;
                 for(var i = 0; i < outputVariables.length; i++) {
                     outputVar = outputVariables[i];
-
+                    console.log('outputVar.name: ' + outputVar.name);
                     if(outputVar.name === "CaseId") {
                         newCaseId = outputVar.value;
+                        console.log('newCaseId: ' + newCaseId);
                     }
 
                 }

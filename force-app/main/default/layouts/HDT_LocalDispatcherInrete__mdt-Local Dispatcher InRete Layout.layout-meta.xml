@@ -14,6 +14,7 @@
                 <behavior>Required</behavior>
                 <field>DeveloperName</field>
             </layoutItems>
+<<<<<<< HEAD
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DispatcherDesc__c</field>
@@ -22,6 +23,8 @@
                 <behavior>Edit</behavior>
                 <field>DispatcherCode__c</field>
             </layoutItems>
+=======
+>>>>>>> 561b7804f65ca188779e79306367e27af5b11e79
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

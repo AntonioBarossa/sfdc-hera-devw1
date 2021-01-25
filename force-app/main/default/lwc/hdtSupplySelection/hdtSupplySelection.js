@@ -24,6 +24,10 @@ export default class hdtSupplySelection extends LightningElement {
      */
     handleServicePointSelection(event){
         this.selectedServicePoint = event.detail;
+        this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
+            detail: event.detail
+        }));
+        this.showCreateTargetObjectButton = true;
     }
 
     /**
