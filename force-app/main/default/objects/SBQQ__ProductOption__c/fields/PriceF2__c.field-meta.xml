@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PriceF2__c</fullName>
     <externalId>false</externalId>
-    <formula>SBQQ__ConfiguredSKU__r.PriceF2__c</formula>
+    <formula>SBQQ__OptionalSKU__r.PriceF2__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Prezzo F2</label>
     <precision>18</precision>
