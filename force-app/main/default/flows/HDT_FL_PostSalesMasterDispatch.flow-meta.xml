@@ -18,6 +18,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Case_Id_0_0_0</name>
+        <label>Assegna Case Id</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_1</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Subflow_Gestione_Disattivazioni</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Istanzia_Variabile_RT_Ele</name>
         <label>Istanzia Variabile RT Ele</label>
         <locationX>314</locationX>
@@ -77,12 +93,12 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <defaultConnectorLabel>Errore</defaultConnectorLabel>
         <rules>
             <name>Cluster_Verifiche</name>
             <conditionLogic>or</conditionLogic>
@@ -97,6 +113,21 @@
                 <targetReference>Selezione_Fornitura</targetReference>
             </connector>
             <label>Cluster Verifiche</label>
+        </rules>
+        <rules>
+            <name>Cluster_Disattivazioni</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_0</targetReference>
+            </connector>
+            <label>Cluster Disattivazioni</label>
         </rules>
     </decisions>
     <description>Flow richiamato dal Catalogo Servizi che si occupa di innescare il corretto Flow di processo</description>
@@ -198,10 +229,87 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_1</name>
+        <label>Crea Case</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_0_0_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Disattivazioni.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -231,6 +339,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>AccountContactRelation</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Disattivazioni</name>
+        <label>Get RT Disattivazioni</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -278,7 +407,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -292,7 +421,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>254</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
@@ -352,6 +481,60 @@
             <assignToReference>ServicePointId</assignToReference>
             <name>ServicePointId</name>
         </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Selezione_Fornitura_0</name>
+        <label>Selezione Fornitura</label>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Get_RT_Disattivazioni</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Subflow_Gestione_Disattivazioni</name>
+        <label>Subflow Gestione Disattivazioni</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
+        <flowName>HDT_FL_GestioneDisattivazioni</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_1</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <variables>
         <description>Account Id passato in input dal Service Catalog</description>
