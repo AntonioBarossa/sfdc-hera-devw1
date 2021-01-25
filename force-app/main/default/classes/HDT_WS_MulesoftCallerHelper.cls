@@ -1,0 +1,289 @@
+public without sharing class HDT_WS_MulesoftCallerHelper {
+
+    public static String sessionId = '00D58000000KR1c!AQgAQNIvQXOZKRXH_2DErPKUuZ36i4zYEbycgr26OwE3DnNyCWNm_A.fEoW34b.F2vdHwH1cc9Q_u4qA6pmXNgxVJylDHa7B';
+
+    public static Object createMulesoftCall(String techObj, String requestObj, Boolean isMock ){
+
+        Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
+
+        TechObj tObj = (TechObj)JSON.deserialize(techObj, TechObj.class);
+        System.debug('# Technical Object: -> ' + tObj);
+        System.debug('# RequestObj -> ' + requestObj);
+
+        HDT_WS_MulesoftCaller.DataBodyRow dbr;
+        if(String.isBlank(requestObj)){
+            System.debug('# requestObj is null');
+            dbr = new HDT_WS_MulesoftCaller.DataBodyRow();
+        } else {
+            System.debug('# requestObj is NOT null');
+            dbr = (HDT_WS_MulesoftCaller.DataBodyRow)JSON.deserialize(requestObj, HDT_WS_MulesoftCaller.DataBodyRow.class);
+        }
+
+        try{
+            List<HDT_RequestEstrattoConto__mdt> mdtList = new List<HDT_RequestEstrattoConto__mdt>();
+            mdtList = [
+                SELECT Aggregazione__c, TipoEstrattoConto__c, TipoTransazione__c, LoginId__c
+                FROM HDT_RequestEstrattoConto__mdt
+                WHERE DeveloperName =: tObj.requestType
+            ];
+
+            if(mdtList.size()==0){
+                System.debug('# No custom metadata found on Salesforce');
+                HDT_WS_MulesoftCaller.ReponseObj respObjErr = new HDT_WS_MulesoftCaller.ReponseObj();
+                respObjErr.success = false;
+                respObjErr.message = 'No custom metadata found on Salesforce';
+                return respObjErr;
+            }   
+
+            dbr.applicativo = tObj.requestType;
+            dbr.codiceCliente = tObj.recordId;
+            dbr.aggregazione = mdtList[0].Aggregazione__c;
+            dbr.tipoTransazione = tObj.tabCode;
+            dbr.tipoEstrattoConto = tObj.statementType;//mdtList[0].TipoEstrattoConto__c;
+            dbr.loginId = mdtList[0].LoginId__c;
+
+            switch on tObj.requestType {
+                when 'home' {
+                    
+                }
+                when 'allRecentItems' {
+                    Date todayDate = date.today();
+                    Date minusDate = todayDate.addYears(-5);                    
+                    dbr.dataFine = String.valueOf(todayDate.day()) + '/' + String.valueOf(todayDate.month()) + '/' + String.valueOf(todayDate.year());
+                    dbr.dataInizio = String.valueOf(minusDate.day()) + '/' + String.valueOf(minusDate.month()) + '/' + String.valueOf(minusDate.year());
+                }
+                when 'joinFilter' {
+                    dbr.dataFine = convertDateFormat(dbr.dataFine);
+                    dbr.dataInizio = convertDateFormat(dbr.dataInizio);
+                }
+                when 'viewResult' {
+
+                }
+
+            }
+
+        } catch (Exception ex){
+            System.debug('# Exception #');
+            HDT_WS_MulesoftCaller.ReponseObj respObjException = new HDT_WS_MulesoftCaller.ReponseObj();
+            respObjException.success = false;
+            respObjException.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
+            return respObjException;
+        }
+
+        HDT_WS_MulesoftCaller.HttpObj httpObj = setHttpObject(tObj.tabCode);
+
+
+        if(!isMock){
+            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/statement/search';
+            httpObj.authValueString = 'auth';
+            dbr.applicativo = 'applicativo';
+            dbr.aggregazione = 'Aggregazione';
+            dbr.codiceCliente = 'home';
+            dbr.tipoTransazione = 'TipoTransazione';
+            dbr.tipoEstrattoConto = 'TipoEstrattoConto';
+            dbr.dataInizio = '03/10/2010';
+            dbr.dataFine = '08/05/2015';
+            dbr.numeroFattura = 'NumeroFattura';
+            dbr.numeroBollettino = 'NumeroBollettino';
+            dbr.contoContrattuale = 'ContoContrattuale';
+            dbr.societa = 'Societa';
+            dbr.contratto = 'Contratto';
+            dbr.loginId = 'LoginId';
+        }
+
+       //ORIGINAL CODE START HERE
+       ////REST call
+       //HDT_WS_MulesoftCaller.ReponseObj respObj =  HDT_WS_MulesoftCaller.retrieveData(dbr, httpObj);
+       //System.debug('## WS_SOAP_TEST_RetrieveData: ' + respObj);
+
+       //if(!respObj.success){
+       //    return respObj;
+       //}
+
+       //if(respObj.data == null || respObj.data.size()==0){
+       //    respObj.success = false;
+       //    respObj.message = 'No data returned from Mulesoft';
+       //    return respObj;
+       //}
+
+       //respObj.totAmount = 0;
+
+       //for(Integer i=0; i<respObj.data.size(); i++){
+       //    respObj.data[i].id = respObj.data[i].idPrimoLivelloSAP;
+       //    respObj.totAmount += Decimal.valueOf(respObj.data[i].importo);            
+       //}
+    
+       //return respObj;
+       //ORIGINAL CODE END HERE
+
+       //MODIFICATION START HERE
+       String body = JSON.serialize(dbr);
+       HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+
+       if(!responseCtrl.success){
+            ReponseObjGeneric r = new ReponseObjGeneric();
+            r.success = false;
+            r.message = responseCtrl.message;
+            return r;
+        }
+
+       if(tObj.tabCode.equalsIgnoreCase('EC')){
+
+            ReponseObj resp = new ReponseObj();
+
+            HDT_WRP_AccountStatement.ReturnObj restMessage = (HDT_WRP_AccountStatement.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_AccountStatement.ReturnObj.class);
+            resp.data = new List<HDT_WRP_AccountStatement.DataWrapper>();
+
+            if(restMessage.status != 'success'){
+                resp.success = false;
+                resp.message += 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                resp.message += ']; Detail: ' + restMessage.errorDetails.message;
+                resp.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+                return resp;
+            }
+
+            resp.data = restMessage.data;
+            resp.totAmount = 0;
+
+            for(Integer i=0; i<resp.data.size(); i++){
+                resp.data[i].id = resp.data[i].idPrimoLivelloSAP;
+                resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
+            }
+            
+            resp.success = true;
+
+            return resp;
+        } else if(commonTabs.contains(tObj.tabCode)){
+            ReponseObjCommonTab resp = new ReponseObjCommonTab();
+            HDT_WRP_CommonTab.ReturnObj restMessage = (HDT_WRP_CommonTab.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_CommonTab.ReturnObj.class);
+            resp.data = new List<HDT_WRP_CommonTab.FirstLevelObj>();
+
+            if(restMessage.status != 'success'){
+                resp.success = false;
+                resp.message += 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                resp.message += ']; Detail: ' + restMessage.errorDetails.message;
+                resp.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+                return resp;
+            }
+
+            resp.data = restMessage.data;
+            resp.totAmount = 0;
+
+            for(Integer i=0; i<resp.data.size(); i++){
+                resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
+            }
+
+            resp.success = true;
+
+            return resp;
+        } else if(tObj.tabCode.equalsIgnoreCase('paperless')){
+            ReponseObjPaperless resp = new ReponseObjPaperless();
+
+            HDT_WRP_Paperless.ReturnObj restMessage = (HDT_WRP_Paperless.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_Paperless.ReturnObj.class);
+            resp.data = new List<HDT_WRP_Paperless.FirstLevelObj>();
+
+            if(restMessage.status != 'success'){
+                resp.success = false;
+                resp.message += 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                resp.message += ']; Detail: ' + restMessage.errorDetails.message;
+                resp.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+                return resp;
+            }
+
+            resp.data = restMessage.data;
+           //resp.totAmount = 0;
+
+           //for(Integer i=0; i<resp.data.size(); i++){
+           //    resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
+           //}
+
+            resp.success = true;
+
+            return resp;
+        }
+
+        ReponseObjGeneric respNull = new ReponseObjGeneric();
+        respNull.success = false;
+        respNull.message = 'No logic developed';
+        return respNull;
+
+       //MODIFICATION END HERE
+    }
+
+    public static HDT_WS_MulesoftCaller.HttpObj setHttpObject(String tabCode){
+        HDT_WS_MulesoftCaller.HttpObj httpObj = new HDT_WS_MulesoftCaller.HttpObj();
+
+        List<HDT_TabConfiguration__mdt> endPointMDT = new List<HDT_TabConfiguration__mdt>();
+        endPointMDT = [
+            SELECT EndpointService__c
+            FROM HDT_TabConfiguration__mdt
+            WHERE DeveloperName =: tabCode
+        ];
+
+        /*if(tabCode.equalsIgnoreCase('')){
+            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/statement/search';
+            httpObj.authValueString = 'auth';
+        } else if(tabCode.equalsIgnoreCase('EC')){
+            //TAB -> ESTRATTO CONTO
+            httpObj.endPoint = endPointMDT[0].EndpointService__c;//'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
+            httpObj.authValueString = 'Bearer ' + sessionId;
+        } else if(tabCode.equalsIgnoreCase('EC9')){
+            //TAB -> GESTIONE DEL CREDITO, SCADUTO PER RIATTIVAZIONE, RATE, SOLLECITI, PARTITE NON FATTURATE, ECC
+            httpObj.endPoint = endPointMDT[0].EndpointService__c;//'https://monted-dev-ed.my.salesforce.com/services/apexrest/getExpiredForReactivation/0';
+            httpObj.authValueString = 'Bearer ' + sessionId;
+        } else if(tabCode.equalsIgnoreCase('paperless')){
+            //TAB -> PAPERLESS
+            httpObj.endPoint = endPointMDT[0].EndpointService__c;//'https://monted-dev-ed.my.salesforce.com/services/apexrest/getPaperless/0';
+            httpObj.authValueString = 'Bearer ' + sessionId;
+        }*/
+
+        httpObj.endPoint = endPointMDT[0].EndpointService__c;
+        httpObj.authValueString = 'Bearer ' + sessionId;
+
+        return httpObj;
+    }
+
+    public static String convertDateFormat(String inputDate){
+        Date tempDate = Date.valueOf(inputDate);
+        String day = String.valueOf(tempDate.day());
+        String month = String.valueOf(tempDate.month());
+        String year = String.valueOf(tempDate.year());
+        return day + '/' + month + '/' + year;
+    }
+
+    public class ReponseObjGeneric {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+    }
+
+    //RESPONSE OBJ RETURNED TO CONTROLLER FOR ACCOUNT STATEMENT
+    public class ReponseObj {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public List<HDT_WRP_AccountStatement.DataWrapper> data;
+        @AuraEnabled public Decimal totAmount;
+    }
+
+    //RESPONSE OBJ RETURNED TO CONTROLLER FOR Other tab
+    public class ReponseObjCommonTab {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public List<HDT_WRP_CommonTab.FirstLevelObj> data;
+        @AuraEnabled public Decimal totAmount;
+    }
+
+    //RESPONSE OBJ RETURNED TO CONTROLLER FOR Paperless
+    public class ReponseObjPaperless {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public List<HDT_WRP_Paperless.FirstLevelObj> data;
+    }
+
+    public class TechObj {
+        public String requestType;
+        public String recordId;
+        public String tabCode;
+        public String statementType;
+    }
+
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Paperless</label>
+    <protected>false</protected>
+    <values>
+        <field>EndpointService__c</field>
+        <value xsi:type="xsd:string">https://monted-dev-ed.my.salesforce.com/services/apexrest/getPaperless/0</value>
+    </values>
+    <values>
+        <field>HasAmountField__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>HasSecondLevel__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>SecondLevelAPI_Name__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>TabOrder__c</field>
+        <value xsi:type="xsd:double">4.0</value>
+    </values>
+</CustomMetadata>

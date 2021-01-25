@@ -1,0 +1,7 @@
+<aura:component implements="lightning:isUrlAddressable" >
+    <aura:attribute name="recordid" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <c:hdtAccountStatementTabs recordId="{!v.recordid}" ></c:hdtAccountStatementTabs>
+
+</aura:component>
