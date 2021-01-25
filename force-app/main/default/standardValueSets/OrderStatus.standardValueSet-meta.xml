@@ -9,27 +9,21 @@
         <groupingString>Draft</groupingString>
     </standardValue>
     <standardValue>
-<<<<<<< HEAD
         <fullName>In lavorazione</fullName>
         <default>false</default>
         <label>In lavorazione</label>
         <groupingString>Draft</groupingString>
     </standardValue>
     <standardValue>
-=======
->>>>>>> 561b7804f65ca188779e79306367e27af5b11e79
         <fullName>Chiuso</fullName>
         <default>false</default>
         <label>Chiuso</label>
         <groupingString>Activated</groupingString>
     </standardValue>
-<<<<<<< HEAD
-=======
     <standardValue>
         <fullName>In lavorazione</fullName>
         <default>false</default>
         <label>In lavorazione</label>
         <groupingString>Draft</groupingString>
     </standardValue>
->>>>>>> 561b7804f65ca188779e79306367e27af5b11e79
 </StandardValueSet>
