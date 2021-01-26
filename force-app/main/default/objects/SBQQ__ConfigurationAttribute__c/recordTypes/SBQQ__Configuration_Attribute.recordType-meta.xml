@@ -41,11 +41,4 @@
             <default>true</default>
         </values>
     </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__TargetField__c</picklist>
-        <values>
-            <fullName>Unit Price</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
 </RecordType>
