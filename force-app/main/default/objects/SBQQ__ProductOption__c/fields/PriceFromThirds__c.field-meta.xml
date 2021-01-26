@@ -2,9 +2,13 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PriceFromThirds__c</fullName>
     <externalId>false</externalId>
-    <formula>SBQQ__OptionalSKU__r.PriceFromThirds__c</formula>
+    <formula>/*SBQQ__OptionalSKU__r.PriceFromThirds__c*/
+52</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Prezzo da Terzi</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Checkbox</type>
+    <type>Currency</type>
 </CustomField>

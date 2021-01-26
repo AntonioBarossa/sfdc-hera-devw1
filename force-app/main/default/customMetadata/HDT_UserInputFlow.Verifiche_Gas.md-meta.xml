@@ -11,7 +11,7 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;SuppliedPhone&quot;,
+&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
 }
@@ -33,7 +33,7 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;CommodityFormula__c&quot;,
+&quot;FieldName&quot; : &quot;Commodity__c&quot;,
 &quot;Column&quot; : 1
 },
 {
@@ -66,14 +66,6 @@
 },
 {
 &quot;FieldName&quot; : &quot;DistributorName__c&quot;,
-&quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;ExistCorrector__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;Pressure__c&quot;,
 &quot;Column&quot; : 2
 }
 ]</value>

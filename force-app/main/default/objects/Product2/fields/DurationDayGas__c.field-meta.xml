@@ -4,7 +4,7 @@
     <description>Durata gas (gg)</description>
     <externalId>false</externalId>
     <label>Durata gas (gg)</label>
-    <precision>5</precision>
+    <precision>3</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
