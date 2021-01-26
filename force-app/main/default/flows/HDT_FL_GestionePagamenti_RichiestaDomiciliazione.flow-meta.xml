@@ -155,21 +155,21 @@
             <assignToReference>CFIntestatarioCC</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CaseInput.Account.Codice_Fiscale_Intestatario_c_c__c</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.FiscalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>NomeIntestatarioCC</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CaseInput.Account.Nome_Intestatario_c_c__c</elementReference>
+                <elementReference>AccountFirstName</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>CognomeIntestatario</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CaseInput.Account.Cognome_Intestatario_c_c__c</elementReference>
+                <elementReference>AccountLastName</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -468,6 +468,16 @@
         <picklistField>Tipologia_Intestatario__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>AccountFirstName</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!Get_Case_Aggiornato.Account.Name}, FIND( &quot; &quot;, {!Get_Case_Aggiornato.Account.Name} ) -1 )</expression>
+    </formulas>
+    <formulas>
+        <name>AccountLastName</name>
+        <dataType>String</dataType>
+        <expression>RIGHT({!Get_Case_Aggiornato.Account.Name}, LEN({!Get_Case_Aggiornato.Account.Name}) - FIND(&quot; &quot;, {!Get_Case_Aggiornato.Account.Name}))</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_RichiestaDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Richiesta Domiciliazione/Attivazione Click&amp;Pay</label>
     <processMetadataValues>
