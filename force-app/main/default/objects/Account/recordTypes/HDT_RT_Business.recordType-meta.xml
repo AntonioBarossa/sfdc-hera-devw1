@@ -232,6 +232,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CustomerAccountStatus__c</picklist>
+        <values>
+            <fullName>Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prospect</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CustomerMarking__c</picklist>
         <values>
             <fullName>AAS Associazione</fullName>

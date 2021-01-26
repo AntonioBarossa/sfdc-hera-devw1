@@ -12,20 +12,21 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Scaffale</fullName>
+                <fullName>TBD</fullName>
                 <default>false</default>
-                <label>Scaffale</label>
+                <label>TBD</label>
             </value>
             <value>
                 <fullName>Progetto</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Progetto</label>
             </value>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>Scaffale</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
-                <label>TBD</label>
+                <label>Scaffale</label>
             </value>
         </valueSetDefinition>
     </valueSet>
