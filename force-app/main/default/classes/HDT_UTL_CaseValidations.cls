@@ -1,4 +1,4 @@
-public without sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
+public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
     public String validate(String fields, String recordId){
 
@@ -10,7 +10,8 @@ public without sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVali
 
             //result = validateReclamoScritto(fields, recordId);
 
-        } else if(caseType == 'Doppi Pagamenti/Incassi'){
+        } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
+        || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay'){
 
             result = validatePagamenti(fields, caseType);
 
