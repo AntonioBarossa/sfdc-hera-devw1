@@ -89,7 +89,7 @@
 
     },
     
-    handleStatusChange : function (component, event) {
+    handleStatusChange : function (component, event, helper) {
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
 
@@ -131,29 +131,13 @@
                         }
                     },
                     focus: true
+                }).then(function(openSubResponse) {
+                    helper.closeSubTab(component,event, helper);
                 });
 
+            } else {
+                helper.closeSubTabAndRefresh(component,event, helper);
             }
-
-            workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                console.log('# Refresh page -> ' + enableRefresh);
-                if(enableRefresh){
-                    console.log('# OK Refresh page #');
-                    $A.get('e.force:refreshView').fire();
-                }
-
-                //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                //    workspaceAPI.refreshTab({
-                //        tabId: subTabToRefresh,
-                //        includeAllSubtabs: true
-                //    }).catch(function(error) {
-                //        console.log(error);
-                //    });
-                //});
-
-            }).catch(function(error) {
-                console.log(error);
-            });
 
        }
     }
