@@ -2,6 +2,11 @@ public with sharing class HDT_QR_GenericRecordSelection {
 
     public List<List<sObject>> executeQuery(String fields, String filters, String limitStr,String soslSearchTerm, String objectName){
         String query;
+
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess(objectName, fields, 'read');
+
+        securityAccess.checkSecurityAccess();
+
         query = 'Id, ' + fields;
 
         if(String.isNotBlank(filters)){

@@ -15,6 +15,7 @@ public inherited sharing class HDT_LC_AddDocumentSelected {
 
         securityClass.checkSecurityAccess();
 
+
         try{
 
             insert documenti;
