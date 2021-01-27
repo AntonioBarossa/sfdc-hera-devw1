@@ -1,0 +1,58 @@
+.searchIcon {
+    top: 70% !important;
+}
+.searchInput{
+    margin-top: -20px;
+}
+.slds-form-element__label {
+    padding-bottom: 10px;
+}
+.searchGo {
+    margin-left: -15px;
+}
+.searchApi{
+    width: 114px;
+    margin-left: 5px;
+    padding: 0px;
+}
+.modal-searchGo{
+    margin-left: -15px;
+}
+.filterField{
+    margin-top: 7px;
+}
+.table-section{
+    height: auto;
+    min-height: 250px;
+}
+.modal-close-button{
+    margin-top: 45px;
+    padding: 10px;
+    margin-right: 15px;
+}
+.slds-modal__container{
+    max-width: 90rem !important;
+    width:90% !important;
+}
+.slds-modal__content{
+    min-height: 200px !important;
+    height: auto !important;
+}
+.modal-header-field{
+    padding-bottom: 1px;
+    margin-bottom: 20px;
+    height: 20px;
+}
+.pagination-button{
+    width: 97px;
+    height: 26px;
+    font-size: 11px;
+    border: none;
+    background: #f3f3f8;
+}
+.pagination-button.next{
+    width: 77px;
+}
+.slds-modal__header{
+    border: none;
+}
