@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>SBQQ__OptionalSKU__r.DurationDay__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Durata</label>
+    <label>Durata Prodotto (gg)</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

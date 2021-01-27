@@ -20,10 +20,4 @@
         <label>Chiuso</label>
         <groupingString>Activated</groupingString>
     </standardValue>
-    <standardValue>
-        <fullName>In lavorazione</fullName>
-        <default>false</default>
-        <label>In lavorazione</label>
-        <groupingString>Draft</groupingString>
-    </standardValue>
 </StandardValueSet>
