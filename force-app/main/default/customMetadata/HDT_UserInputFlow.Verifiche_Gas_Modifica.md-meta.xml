@@ -11,7 +11,7 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;SuppliedPhone&quot;,
+&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
 },

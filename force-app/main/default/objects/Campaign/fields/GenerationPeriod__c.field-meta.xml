@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GenerationPeriod__c</fullName>
+    <description>Numerico che indica ogni quante settimane deve essere innescata la generazione della Campagna</description>
+    <externalId>false</externalId>
+    <label>Periodo generazione (Numero settimane)</label>
+    <precision>3</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

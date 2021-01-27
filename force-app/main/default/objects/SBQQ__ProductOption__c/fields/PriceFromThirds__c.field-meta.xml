@@ -5,9 +5,6 @@
     <formula>SBQQ__OptionalSKU__r.PriceFromThirds__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Prezzo da Terzi</label>
-    <precision>18</precision>
-    <required>false</required>
-    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Checkbox</type>
 </CustomField>

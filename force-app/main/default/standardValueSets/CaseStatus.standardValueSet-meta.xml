@@ -16,19 +16,13 @@
     <standardValue>
         <fullName>Closed</fullName>
         <default>false</default>
-        <label>Chiuso</label>
+        <label>Closed</label>
         <closed>true</closed>
     </standardValue>
     <standardValue>
         <fullName>New</fullName>
         <default>true</default>
-        <label>Bozza</label>
-        <closed>false</closed>
-    </standardValue>
-    <standardValue>
-        <fullName>In Lavorazione</fullName>
-        <default>false</default>
-        <label>In Lavorazione</label>
+        <label>New</label>
         <closed>false</closed>
     </standardValue>
 </StandardValueSet>
