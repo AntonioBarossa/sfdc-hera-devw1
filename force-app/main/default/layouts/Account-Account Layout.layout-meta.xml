@@ -158,7 +158,6 @@
         <fields>NAME</fields>
         <fields>ContractAccountCode__c</fields>
         <fields>ActivationDate__c</fields>
-        <fields>PaymentMethodFormula__c</fields>
         <fields>Status__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>

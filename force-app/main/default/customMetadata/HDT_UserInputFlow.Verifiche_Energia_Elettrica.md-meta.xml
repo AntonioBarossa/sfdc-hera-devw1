@@ -11,7 +11,7 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+&quot;FieldName&quot; : &quot;SuppliedPhone&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
 }
@@ -50,7 +50,7 @@
    },
    {
       &quot;FieldName&quot;:&quot;SupplyType__c&quot;,
-      &quot;Column&quot;:2
+      &quot;Column&quot;:1
    },
    {
       &quot;FieldName&quot;:&quot;Amount__c&quot;,
@@ -67,10 +67,13 @@
    {
       &quot;FieldName&quot;:&quot;RemoteManagementSystem__c&quot;,
       &quot;Column&quot;:2
-   }
-   ,
+   },
    {
       &quot;FieldName&quot;:&quot;PhaseTypeAvailable__c&quot;,
+      &quot;Column&quot;:2
+   },
+   {
+      &quot;FieldName&quot;:&quot;PowerAvailable__c&quot;,
       &quot;Column&quot;:2
    }
 ]</value>
