@@ -18,8 +18,11 @@ public inherited sharing class HDT_LC_AddDocumentSelected {
 
         try{
 
-            insert documenti;
+            if(DocumentSelected__c.SObjectType.getDescribe().isCreateable()){
+
+                insert documenti;
         
+            }
         } catch (Exception e){
 
             System.debug(e);
