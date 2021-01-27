@@ -11,12 +11,13 @@ public inherited sharing class HDT_LC_AddDocumentSelected {
 
         }
 
-        HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess('DocumentSelected__c','Name, Case__c','create');
+        /*HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess('DocumentSelected__c','Name, Case__c','create');
 
-        securityClass.checkSecurityAccess();
+        securityClass.checkSecurityAccess();*/
 
+        HDT_UTL_DatabaseService.insertSObject(documenti);
 
-        try{
+        /*try{
 
             if(DocumentSelected__c.SObjectType.getDescribe().isCreateable()){
 
@@ -27,7 +28,7 @@ public inherited sharing class HDT_LC_AddDocumentSelected {
 
             System.debug(e);
 
-        }
+        }*/
         return;
 
     }
