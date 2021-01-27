@@ -36,24 +36,8 @@ public with sharing class HDT_UTL_ServicePoint {
 
     }
 
-    @AuraEnabled
-    public static Map<string,string> getRecordTypeName(string s){
-        system.debug(' HDT_UTL_ServicePoint - getRecordTypeName START');
-        ServicePoint__c servicePoint = new ServicePoint__c();
-        Map<string,string> res=new Map<string,string>();
-        servicePoint = [Select Id,Name, RecordTypeId  FROM ServicePoint__c where Name = :s LIMIT 1 ]; 
-        system.debug('servicePoint******'+ servicePoint.RecordTypeId);
-        if(servicePoint.RecordTypeId == '0121X000001oom3QAA'){
-            res.put(servicePoint.RecordTypeId, 'Punto Gas');
-        }
-        if(servicePoint.RecordTypeId == '0121X000001oom1QAA'){
-            res.put(servicePoint.RecordTypeId,'Punto Elettrico');
-        }
-        system.debug('HDT_UTL_ServicePoint - getRecordTypeName END');
-        return res;
-    }
 
-    @AuraEnabled(cacheable=true)
+   /* @AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject getServicePointToContract(string s){
         system.debug(' HDT_UTL_ServicePoint getServicePointToContract - START');
         ServicePoint__c servicePoint = new ServicePoint__c();
@@ -66,8 +50,12 @@ public with sharing class HDT_UTL_ServicePoint {
     
         system.debug(' HDT_UTL_ServicePoint getServicePointToContract - END');
         return res;
+<<<<<<< HEAD
+    }*/
+=======
 
     }
+>>>>>>> c17507a2dde9b39a4df2afa29868a5bd0b3772c5
 
     @AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject mapFieldsAddressWithWrapObject(ServicePoint__c s){
