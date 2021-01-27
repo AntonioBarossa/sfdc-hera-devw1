@@ -4,7 +4,7 @@
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
         <locationX>380</locationX>
-        <locationY>1550</locationY>
+        <locationY>1310</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,7 +23,7 @@
         <name>AI</name>
         <label>Assegna Iban It</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -81,7 +81,7 @@
         <name>Assign_Iban_Ex</name>
         <label>Assign Iban Ex.</label>
         <locationX>314</locationX>
-        <locationY>1238</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -104,7 +104,7 @@
         <name>Assign_Iban_Selezionato</name>
         <label>Assign Iban Selezionato</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -120,7 +120,7 @@
         <name>Assign_Intestatario</name>
         <label>Assign Intestatario</label>
         <locationX>50</locationX>
-        <locationY>2726</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>CFIntestatarioCC</assignToReference>
             <operator>Assign</operator>
@@ -150,7 +150,7 @@
         <name>Assign_Intestatario_0</name>
         <label>Assign Intestatario</label>
         <locationX>314</locationX>
-        <locationY>2606</locationY>
+        <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>CFIntestatarioCC</assignToReference>
             <operator>Assign</operator>
@@ -201,7 +201,7 @@
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Insert_Iban_Ex</targetReference>
         </defaultConnector>
@@ -226,7 +226,7 @@
         <name>Iban_Italiano_0</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>2942</locationY>
+        <locationY>2702</locationY>
         <defaultConnector>
             <targetReference>Passa_a_Elaborazione_Manuale</targetReference>
         </defaultConnector>
@@ -250,12 +250,12 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>990</locationX>
+        <locationX>743</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>CaseInput.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -263,8 +263,15 @@
                     <stringValue>Bozza</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>CaseInput.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Da Inviare</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>Inserimento_Dati_Iniziale</targetReference>
+                <targetReference>Get_Ibans</targetReference>
             </connector>
             <label>Bozza</label>
         </rules>
@@ -288,7 +295,7 @@
         <name>Inserimento_Dati_Manualmente</name>
         <label>Inserimento Dati Manualmente?</label>
         <locationX>182</locationX>
-        <locationY>2486</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>Assign_Intestatario_0</targetReference>
         </defaultConnector>
@@ -338,7 +345,7 @@
         <name>Inserimento_Manuale</name>
         <label>Inserimento Manuale?</label>
         <locationX>380</locationX>
-        <locationY>758</locationY>
+        <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assign_Iban_Selezionato</targetReference>
         </defaultConnector>
@@ -360,32 +367,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Salva_In_Bozza_o_Conferma</name>
-        <label>Salva In Bozza o Conferma?</label>
-        <locationX>611</locationX>
-        <locationY>398</locationY>
-        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
-        <rules>
-            <name>Conferma</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Ibans</targetReference>
-            </connector>
-            <label>Conferma</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>380</locationX>
-        <locationY>2246</locationY>
+        <locationY>2006</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -407,7 +392,7 @@
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
         <locationX>380</locationX>
-        <locationY>1670</locationY>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Screen_IBAN_non_validato</targetReference>
         </defaultConnector>
@@ -503,7 +488,7 @@
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
         <locationX>182</locationX>
-        <locationY>2366</locationY>
+        <locationY>2126</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Dati_Manualmente</targetReference>
@@ -524,7 +509,7 @@
         <name>Get_Ibans</name>
         <label>Get Ibans</label>
         <locationX>380</locationX>
-        <locationY>518</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Show_Ibans</targetReference>
@@ -545,7 +530,7 @@
         <name>Aggiorna_Case_Bozza</name>
         <label>Aggiorna Iban Case Bozza</label>
         <locationX>380</locationX>
-        <locationY>2006</locationY>
+        <locationY>1766</locationY>
         <connector>
             <targetReference>Screen_Mostra_Dati</targetReference>
         </connector>
@@ -605,7 +590,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>50</locationX>
-        <locationY>3062</locationY>
+        <locationY>2822</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -650,7 +635,7 @@
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>314</locationX>
-        <locationY>3062</locationY>
+        <locationY>2822</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -692,102 +677,10 @@
         <object>Case</object>
     </recordUpdates>
     <screens>
-        <name>Inserimento_Dati_Iniziale</name>
-        <label>Inserimento Dati Iniziale</label>
-        <locationX>611</locationX>
-        <locationY>278</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Salva_In_Bozza_o_Conferma</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayHeader</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtRecordEditForm</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <stringValue>Richiesta Domiciliazione 1</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Inserimento_Dati_Manuale</name>
         <label>Inserimento Dati Manuale</label>
         <locationX>50</locationX>
-        <locationY>2606</locationY>
+        <locationY>2366</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -831,7 +724,7 @@
         <name>Insert_Iban_Ex</name>
         <label>Insert Iban Ex.</label>
         <locationX>314</locationX>
-        <locationY>1118</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -860,7 +753,7 @@
         <name>Insert_Iban_IT</name>
         <label>Insert Iban IT</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -949,7 +842,7 @@
         <name>Paese_IBAN</name>
         <label>Paese IBAN</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -978,7 +871,7 @@
         <name>Screen_IBAN_non_validato</name>
         <label>Screen IBAN non validato</label>
         <locationX>468</locationX>
-        <locationY>1790</locationY>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -996,7 +889,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>1106</locationX>
+        <locationX>842</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1074,7 +967,7 @@
         <name>Screen_Mostra_Dati</name>
         <label>Screen Mostra Dati</label>
         <locationX>380</locationX>
-        <locationY>2126</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1178,7 +1071,7 @@
         <name>Show_Ibans</name>
         <label>Show Ibans</label>
         <locationX>380</locationX>
-        <locationY>638</locationY>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1204,7 +1097,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>864</locationX>
+        <locationX>617</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
