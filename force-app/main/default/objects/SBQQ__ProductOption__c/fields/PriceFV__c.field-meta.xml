@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PriceFV__c</fullName>
     <externalId>false</externalId>
-    <formula>SBQQ__ConfiguredSKU__r.PricePickOut__c</formula>
+    <formula>SBQQ__OptionalSKU__r.PricePickOut__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Prezzo FV</label>
     <precision>18</precision>
