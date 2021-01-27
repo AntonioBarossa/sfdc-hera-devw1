@@ -22,12 +22,16 @@ export default class HdtAdvancedSearch extends LightningElement {
     totalPage = 0;
     customSetting = null;
     confirmButtonDisabled = true;
+
     @api servicePointRetrievedData;
+
     rowToSend;
     @api maxRowSelected=false;
     @api disabledinput;
     @api accountid;
+
     apiSearchButtonStatus= true;
+
     apiSearchInputValue=null;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
@@ -77,7 +81,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
-          
+
         }
     }
 
@@ -91,7 +95,9 @@ export default class HdtAdvancedSearch extends LightningElement {
     searchAction(event) {
         this.submitButtonStatus = true;
         this.apiSearchButtonStatus = true;
+
         console.log('event value: '+ event.target.value);
+
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
@@ -160,7 +166,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     submitContract(event){
-        
+
         event.preventDefault();
         this.preloading = true;
         console.log('executing query search', this.accountid);
@@ -183,6 +189,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     /**
      * 
+
      * Calling Apex callWebService method
      * TODO this method is not finished yet need webserivce.
      */
@@ -210,7 +217,9 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     submitSearch(event) {
         event.preventDefault();
+
         console.log('event value submitSearch() '+ event.target.value);
+
         this.preloading = true;
         let qty = this.queryType;
         getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
@@ -237,7 +246,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
-        
+
     }
      /**
      * Get selected record from table
@@ -248,14 +257,16 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.preloading = false;
+
         console.log('rowToSend: ', JSON.parse(JSON.stringify(this.rowToSend)));
+
     }
 
     /**
      * Handle action when confirm button is pressed
      */
     handleConfirm(){
-        
+
         this.preloading = true;
         this.closeModal();
         this.dispatchEvent(new CustomEvent('servicepointselection', {
@@ -264,5 +275,5 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.confirmButtonDisabled = true;
         this.preloading = false;
     }
-    
+
 }

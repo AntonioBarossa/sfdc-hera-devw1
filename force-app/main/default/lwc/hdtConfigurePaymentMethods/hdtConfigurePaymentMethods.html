@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Configura Metodi di Pagamento">
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+        <div class="slds-grid slds-gutters slds-float_right slds-p-vertical_small slds-p-horizontal_xx-large">
+            <div class="slds-col">
+                <c-hdt-create-billing-profile disabled-input={disabledInput} account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile>
+            </div>
+            <div class="slds-col">
+                <c-hdt-apply-payment-method disabled-input={disabledInput} selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-size_1-of-1">
+            <c-hdt-manage-billing-profile disabled-input={disabledInput} account-id={accountId} onselectedbillingprofile={handleSelectedBillingProfileEvent}></c-hdt-manage-billing-profile>
+            </div>
+        </div>
+    </lightning-card>
+</template>

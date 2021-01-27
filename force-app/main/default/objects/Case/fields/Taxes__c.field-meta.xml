@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Taxes__c</fullName>
+    <externalId>false</externalId>
+    <label>Imposte</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Imp Labor. Did - E_IE_L05</fullName>
+                <default>false</default>
+                <label>Imp Labor. Did - E_IE_L05</label>
+            </value>
+            <value>
+                <fullName>Imp Illum Pubbl - E_IE_L01</fullName>
+                <default>false</default>
+                <label>Imp Illum Pubbl - E_IE_L01</label>
+            </value>
+            <value>
+                <fullName>Imp Opifici % - E_IE_13A</fullName>
+                <default>false</default>
+                <label>Imp Opifici % - E_IE_13A</label>
+            </value>
+            <value>
+                <fullName>Imp Miner-Chim Met - E_IE_06C</fullName>
+                <default>false</default>
+                <label>Imp Miner-Chim Met - E_IE_06C</label>
+            </value>
+            <value>
+                <fullName>Imp Grossiti EE - E_IE_L98</fullName>
+                <default>false</default>
+                <label>Imp Grossiti EE - E_IE_L98</label>
+            </value>
+            <value>
+                <fullName>Imp FFSS - E_IE_L03</fullName>
+                <default>false</default>
+                <label>Imp FFSS - E_IE_L03</label>
+            </value>
+            <value>
+                <fullName>Imp Ese Forze Arm - E_IE_15A</fullName>
+                <default>false</default>
+                <label>Imp Ese Forze Arm - E_IE_15A</label>
+            </value>
+            <value>
+                <fullName>Imp Grossisti EE DOM - E_IE_L2</fullName>
+                <default>false</default>
+                <label>Imp Grossisti EE DOM - E_IE_L2</label>
+            </value>
+            <value>
+                <fullName>Imp FFSS Alta Vel - E_IE_03B</fullName>
+                <default>false</default>
+                <label>Imp FFSS Alta Vel - E_IE_03B</label>
+            </value>
+            <value>
+                <fullName>Imp Usi Chim Met % - E_IE_11D</fullName>
+                <default>false</default>
+                <label>Imp Usi Chim Met % - E_IE_11D</label>
+            </value>
+            <value>
+                <fullName>Imp Trasp tras dist - E_IE_06B</fullName>
+                <default>false</default>
+                <label>Imp Trasp tras dist - E_IE_06B</label>
+            </value>
+            <value>
+                <fullName>Imp Usi Mineral. - E_IE_11A</fullName>
+                <default>false</default>
+                <label>Imp Usi Mineral. - E_IE_11A</label>
+            </value>
+            <value>
+                <fullName>Imp Usi Mineral. % - E_IE_11C</fullName>
+                <default>false</default>
+                <label>Imp Usi Mineral. % - E_IE_11C</label>
+            </value>
+            <value>
+                <fullName>Imp Trasp Urb. - E_IE_L04</fullName>
+                <default>false</default>
+                <label>Imp Trasp Urb. - E_IE_L04</label>
+            </value>
+            <value>
+                <fullName>Imp Prod. EE - E_IE_L06</fullName>
+                <default>false</default>
+                <label>Imp Prod. EE - E_IE_L06</label>
+            </value>
+            <value>
+                <fullName>Imp Opifici - E_IE_L13</fullName>
+                <default>false</default>
+                <label>Imp Opifici - E_IE_L13</label>
+            </value>
+            <value>
+                <fullName>Imp Telefonia - RAI - E_IE_L07</fullName>
+                <default>false</default>
+                <label>Imp Telefonia - RAI - E_IE_L07</label>
+            </value>
+            <value>
+                <fullName>Imp Sedi Dipl. - E_IE_L02</fullName>
+                <default>false</default>
+                <label>Imp Sedi Dipl. - E_IE_L02</label>
+            </value>
+            <value>
+                <fullName>Esente Lav. Elettrolitiche</fullName>
+                <default>false</default>
+                <label>Esente Lav. Elettrolitiche</label>
+            </value>
+            <value>
+                <fullName>Esente Scambio</fullName>
+                <default>false</default>
+                <label>Esente Scambio</label>
+            </value>
+            <value>
+                <fullName>Esente Fabbricante</fullName>
+                <default>false</default>
+                <label>Esente Fabbricante</label>
+            </value>
+            <value>
+                <fullName>Esente Erariale</fullName>
+                <default>false</default>
+                <label>Esente Erariale</label>
+            </value>
+            <value>
+                <fullName>E_I_USIDOM-Domestici</fullName>
+                <default>false</default>
+                <label>E_I_USIDOM-Domestici</label>
+            </value>
+            <value>
+                <fullName>Imp Altri Usi - E_IE_M04</fullName>
+                <default>false</default>
+                <label>Imp Altri Usi - E_IE_M04</label>
+            </value>
+            <value>
+                <fullName>Imp Chim Elet Metal - E_IE_L11</fullName>
+                <default>false</default>
+                <label>Imp Chim Elet Metal - E_IE_L11</label>
+            </value>
+            <value>
+                <fullName>Imp Com. Militari - E_IE_L10</fullName>
+                <default>false</default>
+                <label>Imp Com. Militari - E_IE_L10</label>
+            </value>
+            <value>
+                <fullName>Imp C E&gt;50% uni prod- E_IE_14A</fullName>
+                <default>false</default>
+                <label>Imp C E&gt;50% uni prod- E_IE_14A</label>
+            </value>
+            <value>
+                <fullName>Esente Telecom</fullName>
+                <default>false</default>
+                <label>Esente Telecom</label>
+            </value>
+            <value>
+                <fullName>Imp Archeolo. - E_IE_L08</fullName>
+                <default>false</default>
+                <label>Imp Archeolo. - E_IE_L08</label>
+            </value>
+            <value>
+                <fullName>Non Ridotta IVA 20%-G_ICC</fullName>
+                <default>false</default>
+                <label>Non Ridotta IVA 20%-G_ICC</label>
+            </value>
+            <value>
+                <fullName>Ridotta-G_I04</fullName>
+                <default>false</default>
+                <label>Ridotta-G_I04</label>
+            </value>
+            <value>
+                <fullName>Non Ridotta Condomini-G_ICD</fullName>
+                <default>false</default>
+                <label>Non Ridotta Condomini-G_ICD</label>
+            </value>
+            <value>
+                <fullName>Non Ridotta IVA 10%-G_ICC10</fullName>
+                <default>false</default>
+                <label>Non Ridotta IVA 10%-G_ICC10</label>
+            </value>
+            <value>
+                <fullName>G_ICD-Imposta Usi Domestici</fullName>
+                <default>false</default>
+                <label>G_ICD-Imposta Usi Domestici</label>
+            </value>
+            <value>
+                <fullName>Imp Grossiti GAS DiES - G_I201</fullName>
+                <default>false</default>
+                <label>Imp Grossiti GAS DiES - G_I201</label>
+            </value>
+            <value>
+                <fullName>Imp Grossisti GAS - G_I20</fullName>
+                <default>false</default>
+                <label>Imp Grossisti GAS - G_I20</label>
+            </value>
+            <value>
+                <fullName>Imp Grossiti GAS - G_I20</fullName>
+                <default>false</default>
+                <label>Imp Grossiti GAS - G_I20</label>
+            </value>
+            <value>
+                <fullName>G_I15-Imp. Autopr-Prod EE Ind.</fullName>
+                <default>false</default>
+                <label>G_I15-Imp. Autopr-Prod EE Ind.</label>
+            </value>
+            <value>
+                <fullName>G_I09-Imp. Autotrazione</fullName>
+                <default>false</default>
+                <label>G_I09-Imp. Autotrazione</label>
+            </value>
+            <value>
+                <fullName>G_I22-Imp. Processi Metallurg.</fullName>
+                <default>false</default>
+                <label>G_I22-Imp. Processi Metallurg.</label>
+            </value>
+            <value>
+                <fullName>G_I24-Imp. Forze Armate Nazion</fullName>
+                <default>false</default>
+                <label>G_I24-Imp. Forze Armate Nazion</label>
+            </value>
+            <value>
+                <fullName>G_I23-Imp. Processi Mineralog.</fullName>
+                <default>false</default>
+                <label>G_I23-Imp. Processi Mineralog.</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

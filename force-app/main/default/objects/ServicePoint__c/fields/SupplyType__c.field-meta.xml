@@ -1,46 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SupplyType__c</fullName>
-    <description>Tipologia di fornitura (Tipo d&apos;uso)</description>
+    <description>Domestico
+Non Domestico
+A-Domestico
+B-Condominio
+C-Aziende di pubblica utilita
+D-Altri usi</description>
     <externalId>false</externalId>
-    <label>Tipologia Fornitura</label>
+    <label>Tipo Fornitura</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Domestico</fullName>
-                <default>false</default>
-                <label>Domestico</label>
-            </value>
-            <value>
-                <fullName>Non Domestico</fullName>
-                <default>false</default>
-                <label>Non Domestico</label>
-            </value>
-            <value>
-                <fullName>A-Domestico</fullName>
-                <default>false</default>
-                <label>A-Domestico</label>
-            </value>
-            <value>
-                <fullName>B-Condominio</fullName>
-                <default>false</default>
-                <label>B-Condominio</label>
-            </value>
-            <value>
-                <fullName>C-Aziende di pubblica utilita</fullName>
-                <default>false</default>
-                <label>C-Aziende di pubblica utilita</label>
-            </value>
-            <value>
-                <fullName>D-Altri usi</fullName>
-                <default>false</default>
-                <label>D-Altri usi</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_SupplyType</valueSetName>
     </valueSet>
 </CustomField>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Estero</fullName>
+        <default>false</default>
+        <label>Estero</label>
+    </customValue>
+    <customValue>
+        <fullName>XML</fullName>
+        <default>false</default>
+        <label>XML</label>
+    </customValue>
+    <customValue>
+        <fullName>XML + carta/email</fullName>
+        <default>false</default>
+        <label>XML + carta/email</label>
+    </customValue>
+    <customValue>
+        <fullName>XML PA</fullName>
+        <default>false</default>
+        <label>XML PA</label>
+    </customValue>
+    <description>Estero
+XML
+XML + carta/email
+XML PA</description>
+    <masterLabel>Modalità Invio Fatturazione</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

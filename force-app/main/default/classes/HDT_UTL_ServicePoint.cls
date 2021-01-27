@@ -15,7 +15,6 @@ public with sharing class HDT_UTL_ServicePoint {
         return listFields;
 
     }
- 
 
     @AuraEnabled(cacheable=true)
     public static  HDT_WRP_AddressObject getInstanceWrapAddressObject (ServicePoint__c s ){
@@ -27,11 +26,14 @@ public with sharing class HDT_UTL_ServicePoint {
         return  result =   mapFieldsAddressWithWrapObject(s);
     }else{     
     
+
         result = new HDT_WRP_AddressObject('','','','','','','','','',false,false);
+
         System.debug('result:' +  result);
     }
     System.debug('HDT_UTL_ServicePoint - getInstanceWrapAddressObject END');
     return result;
+
     }
 
     @AuraEnabled
@@ -64,12 +66,14 @@ public with sharing class HDT_UTL_ServicePoint {
     
         system.debug(' HDT_UTL_ServicePoint getServicePointToContract - END');
         return res;
+
     }
 
     @AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject mapFieldsAddressWithWrapObject(ServicePoint__c s){
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject START');
         HDT_WRP_AddressObject h = new HDT_WRP_AddressObject();
+
         if(s.SupplyPostalCode__c==null){
             h.CAP= '';
         }else{
@@ -132,7 +136,7 @@ public with sharing class HDT_UTL_ServicePoint {
  
             h.FlagVerificato = s.supplyIsAddressVerified__c;
         
-          
+
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject END');
         return h;
         
