@@ -4,7 +4,7 @@
     <description>Delay (gg)</description>
     <externalId>false</externalId>
     <label>Delay (gg)</label>
-    <precision>5</precision>
+    <precision>3</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
