@@ -11,7 +11,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             //result = validateReclamoScritto(fields, recordId);
 
         } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
-        || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay'){
+        || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' || 
+        caseType == 'Storno Rateizzazione'){
 
             result = validatePagamenti(fields, caseType);
 

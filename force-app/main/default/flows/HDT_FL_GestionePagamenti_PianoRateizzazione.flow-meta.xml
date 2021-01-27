@@ -167,7 +167,7 @@
             <name>Sospeso</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.Totale_Residuo__c</leftValueReference>
+                <leftValueReference>Get_Case.TotalResidue__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <numberValue>0.0</numberValue>
@@ -264,7 +264,7 @@
         <dataType>Date</dataType>
         <expression>DATEVALUE({!CaseInput.CreatedDate})+20</expression>
     </formulas>
-    <interviewLabel>HDT_FL_GestionPagamenti_PianoRateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Gestione Pagamenti - Piano Rateizzazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Piano Rateizzazione</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -452,12 +452,6 @@
             </value>
         </filters>
         <inputAssignments>
-            <field>Data_Sospensione__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Sospesa</stringValue>
@@ -467,6 +461,12 @@
             <field>Status</field>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuspensionDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
