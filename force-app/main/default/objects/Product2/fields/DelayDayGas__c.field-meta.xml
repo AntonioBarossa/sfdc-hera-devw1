@@ -4,7 +4,7 @@
     <description>Delay gas (gg)</description>
     <externalId>false</externalId>
     <label>Delay gas (gg)</label>
-    <precision>3</precision>
+    <precision>5</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
