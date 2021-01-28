@@ -16,6 +16,10 @@
   <members>*</members>
   <name>AutoResponseRules</name>
 </types>
+   <types>
+    <members>*</members>
+    <name>LightningComponentBundle</name>
+  </types>
 <types>
   <members>*</members>
   <name>BusinessProcess</name>
