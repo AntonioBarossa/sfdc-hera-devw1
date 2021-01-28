@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Feature Request</fullName>
+        <default>false</default>
+        <label>Feature Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Question</fullName>
+        <default>false</default>
+        <label>Question</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Allineamento Canone Rai</fullName>
+        <default>false</default>
+        <label>Allineamento Canone Rai</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione Canone Rai</fullName>
+        <default>false</default>
+        <label>Sospensione Canone Rai</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
+        <default>false</default>
+        <label>Verifica Pareggio Fittizio Canone Rai</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Blocco Sollecito/Interessi</fullName>
+        <default>false</default>
+        <label>Blocco Sollecito/Interessi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contenzioso In Corso</fullName>
+        <default>false</default>
+        <label>Contenzioso In Corso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Copia Bolletta/Bollettino</fullName>
+        <default>false</default>
+        <label>Copia Bolletta/Bollettino</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Paperless</fullName>
+        <default>false</default>
+        <label>Paperless</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Storno Rateizzazione</fullName>
+        <default>false</default>
+        <label>Storno Rateizzazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comunicazione Pagamento</fullName>
+        <default>false</default>
+        <label>Comunicazione Pagamento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Doppi Pagamenti/Incassi</fullName>
+        <default>false</default>
+        <label>Doppi Pagamenti/Incassi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Chiusura Contatore</fullName>
+        <default>false</default>
+        <label>Chiusura Contatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Recesso per Altri Motivi</fullName>
+        <default>false</default>
+        <label>Recesso per Altri Motivi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Recesso per Rifiuto Voltura</fullName>
+        <default>false</default>
+        <label>Recesso per Rifiuto Voltura</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Recesso su Richesta Cliente</fullName>
+        <default>false</default>
+        <label>Recesso su Richesta Cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Switch Out SII</fullName>
+        <default>false</default>
+        <label>Switch Out SII</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Attivazione Click&amp;Pay</fullName>
+        <default>false</default>
+        <label>Attivazione Click&amp;Pay</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Revoca Domiciliazione</fullName>
+        <default>false</default>
+        <label>Revoca Domiciliazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Richiesta Domiciliazione</fullName>
+        <default>false</default>
+        <label>Richiesta Domiciliazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Domiciliazione</fullName>
+        <default>false</default>
+        <label>Variazione Domiciliazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Piano Rateizzazione</fullName>
+        <default>false</default>
+        <label>Piano Rateizzazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rimborso</fullName>
+        <default>false</default>
+        <label>Rimborso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Altre Verifiche</fullName>
+        <default>false</default>
+        <label>Altre Verifiche</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Potenza</fullName>
+        <default>false</default>
+        <label>Variazione Potenza</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Tensione - Pressione</fullName>
+        <default>false</default>
+        <label>Variazione Tensione - Pressione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica GDM</fullName>
+        <default>false</default>
+        <label>Verifica GDM</label>
+    </standardValue>
+</StandardValueSet>

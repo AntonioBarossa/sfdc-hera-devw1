@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>1001-Cottura cibi</fullName>
+        <default>false</default>
+        <label>1001-Cottura cibi</label>
+    </customValue>
+    <customValue>
+        <fullName>1002-Cottura/Produz acq calda</fullName>
+        <default>false</default>
+        <label>1002-Cottura/Produz acq calda</label>
+    </customValue>
+    <customValue>
+        <fullName>1003-Riscaldamento esclusivo</fullName>
+        <default>false</default>
+        <label>1003-Riscaldamento esclusivo</label>
+    </customValue>
+    <customValue>
+        <fullName>1004-Riscaldamento promiscuo</fullName>
+        <default>false</default>
+        <label>1004-Riscaldamento promiscuo</label>
+    </customValue>
+    <customValue>
+        <fullName>1005-Risc. centraliz esclusivo</fullName>
+        <default>false</default>
+        <label>1005-Risc. centraliz esclusivo</label>
+    </customValue>
+    <customValue>
+        <fullName>1006-Risc. centraliz promiscuo</fullName>
+        <default>false</default>
+        <label>1006-Risc. centraliz promiscuo</label>
+    </customValue>
+    <customValue>
+        <fullName>1007-Attivita produttive</fullName>
+        <default>false</default>
+        <label>1007-Attivita produttive</label>
+    </customValue>
+    <customValue>
+        <fullName>1008-Promiscuo (prod+ risc)</fullName>
+        <default>false</default>
+        <label>1008-Promiscuo (prod+ risc)</label>
+    </customValue>
+    <customValue>
+        <fullName>1009-Reti (cabine primo salto)</fullName>
+        <default>false</default>
+        <label>1009-Reti (cabine primo salto)</label>
+    </customValue>
+    <customValue>
+        <fullName>1010-Usi interni</fullName>
+        <default>false</default>
+        <label>1010-Usi interni</label>
+    </customValue>
+    <customValue>
+        <fullName>13A0-Usi di Abitazione BT</fullName>
+        <default>false</default>
+        <label>13A0-Usi di Abitazione BT</label>
+    </customValue>
+    <customValue>
+        <fullName>13BB-Illuminazione pubblica BT</fullName>
+        <default>false</default>
+        <label>13BB-Illuminazione pubblica BT</label>
+    </customValue>
+    <customValue>
+        <fullName>13CB-Non domestici in BT</fullName>
+        <default>false</default>
+        <label>13CB-Non domestici in BT</label>
+    </customValue>
+    <customValue>
+        <fullName>13CT-Forn temporanee &lt; 21 gg</fullName>
+        <default>false</default>
+        <label>13CT-Forn temporanee &lt; 21 gg</label>
+    </customValue>
+    <customValue>
+        <fullName>13DM-Illuminazione pubblica MT</fullName>
+        <default>false</default>
+        <label>13DM-Illuminazione pubblica MT</label>
+    </customValue>
+    <customValue>
+        <fullName>13EM-Non domestici MT</fullName>
+        <default>false</default>
+        <label>13EM-Non domestici MT</label>
+    </customValue>
+    <customValue>
+        <fullName>13FM-Non domestici AT</fullName>
+        <default>false</default>
+        <label>13FM-Non domestici AT</label>
+    </customValue>
+    <customValue>
+        <fullName>13X0-Usi interni BT</fullName>
+        <default>false</default>
+        <label>13X0-Usi interni BT</label>
+    </customValue>
+    <customValue>
+        <fullName>13Y0-Usi interni MT</fullName>
+        <default>false</default>
+        <label>13Y0-Usi interni MT</label>
+    </customValue>
+    <customValue>
+        <fullName>13Z0-Grossisti</fullName>
+        <default>false</default>
+        <label>13Z0-Grossisti</label>
+    </customValue>
+    <description>1001-Cottura cibi
+1002-Cottura/Produz acq calda
+1003-Riscaldamento esclusivo</description>
+    <masterLabel>Tipologia Impianto</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

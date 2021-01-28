@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SubscriberID__c</fullName>
+    <description>The subscriber ID for the affected subscriber. This number represents the unique ID for each subscriber record</description>
+    <externalId>false</externalId>
+    <label>SubscriberID</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

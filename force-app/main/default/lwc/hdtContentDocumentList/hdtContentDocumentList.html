@@ -1,0 +1,16 @@
+<template>
+    <div style="max-height: 300px;">
+        <c-hdt-custom-lightning-datatable columns={columns} 
+                        data={files} 
+                        key-field="id"
+                        hide-checkbox-column="true"
+                        show-row-number-column="true"
+                        oncustomrowaction={handleRowAction}></c-hdt-custom-lightning-datatable>
+    </div>
+    <br>
+    <!-- Confirmation Dialog for delete -->
+    <c-hdt-confirmation-dialog title='Attenzione' message='Sei sicuro di voler cancellare il File?'
+        confirm-label='Cancella' cancel-label='Annulla' visible={isDialogVisible} original-message={originalMessage}
+        name="confirmModal" onclick={handleDelete}>
+    </c-hdt-confirmation-dialog>
+</template>

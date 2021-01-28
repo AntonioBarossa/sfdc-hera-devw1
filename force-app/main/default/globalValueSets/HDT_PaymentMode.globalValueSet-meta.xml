@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Bollettino</fullName>
+        <default>false</default>
+        <label>Bollettino</label>
+    </customValue>
+    <customValue>
+        <fullName>Rate</fullName>
+        <default>false</default>
+        <label>Rate</label>
+    </customValue>
+    <customValue>
+        <fullName>RID</fullName>
+        <default>false</default>
+        <label>RID</label>
+    </customValue>
+    <customValue>
+        <fullName>Standard</fullName>
+        <default>false</default>
+        <label>Standard</label>
+    </customValue>
+    <masterLabel>Modalita di Pagamento</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
