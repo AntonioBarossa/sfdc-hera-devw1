@@ -49,7 +49,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String fatturaPrescrivibile;
         @AuraEnabled public String fatturaPrescritta;
         @AuraEnabled public String dEL_569;
-        @AuraEnabled public List<SecondLevelObj> secondoLivello;
+        @AuraEnabled public List<SecondLevelObj> secondoLivelloInformativo;
     }
     
     public class SecondLevelObj{

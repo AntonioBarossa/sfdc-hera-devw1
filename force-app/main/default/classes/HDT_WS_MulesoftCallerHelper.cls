@@ -1,6 +1,6 @@
 public without sharing class HDT_WS_MulesoftCallerHelper {
 
-    public static String sessionId = '00D58000000KR1c!AQgAQPyTr8__JvJoLkx4EkByzlRQSXYXa5EUUiiqx4u3Lw8YNwyC9LxSZLL.S1SPJrdZG4iKx3KNHXaHYBcQdOmFPm_H9LiL';
+    public static String sessionId = '00D58000000KR1c!AQgAQCHK6tkwy4HjQtE1_OD8M3j7S3G1SvIpgXOHHAySqKWaxgy6B0Es8x6kdKmwGRzEHcgDXRbeJ2vv3Jm.3sMmaCtZ6Apk';
 
     public static Object createMulesoftCall(String techObj, String requestObj, Boolean isMock ){
 
@@ -74,22 +74,33 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
 
         if(!isMock){
-            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/statement/search';
-            httpObj.authValueString = 'auth';
-            dbr.applicativo = 'applicativo';
-            dbr.aggregazione = 'Aggregazione';
-            dbr.codiceCliente = 'home';
-            dbr.tipoTransazione = 'TipoTransazione';
-            dbr.tipoEstrattoConto = 'TipoEstrattoConto';
-            dbr.dataInizio = '03/10/2010';
-            dbr.dataFine = '08/05/2015';
-            dbr.numeroFattura = 'NumeroFattura';
-            dbr.numeroBollettino = 'NumeroBollettino';
-            dbr.contoContrattuale = 'ContoContrattuale';
-            dbr.societa = 'Societa';
-            dbr.contratto = 'Contratto';
-            dbr.loginId = 'LoginId';
-        }
+            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/service-console/statements/search';
+            //httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/statement/search';
+            httpObj.authValueString = 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=';
+            // httpObj.authValueString = 'auth';
+            //'Content-Type: application/json';
+            //dbr = new HDT_WS_MulesoftCaller.DataBodyRow();
+            dbr.applicativo = 'AL';
+            dbr.aggregazione = '01';
+            dbr.codiceCliente = '1001635149';
+            dbr.tipoTransazione = 'EC2';
+            dbr.tipoEstrattoConto = 'ORDINARIO';
+
+
+            //dbr.applicativo = 'AL';
+            //dbr.aggregazione = '01';
+            //dbr.codiceCliente = '1000006684';
+            //dbr.tipoTransazione = 'EC1';
+            //dbr.tipoEstrattoConto = 'ORDINARIO';
+            //dbr.dataInizio = '02/02/2015';
+            //dbr.dataFine = '02/02/2015';
+            //dbr.numeroFattura = 'numeroFattura';
+            //dbr.numeroBollettino = 'NumeroBollettino';
+            //dbr.contoContrattuale = 'contoCon';
+            //dbr.societa = '1234';
+            //dbr.contratto = 'contratto';
+            //dbr.loginId = 'loginId';
+        }//
 
        //ORIGINAL CODE START HERE
        ////REST call
@@ -117,7 +128,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
        //ORIGINAL CODE END HERE
 
        //MODIFICATION START HERE
-       String body = JSON.serialize(dbr);
+       String body = JSON.serialize(dbr, true);
        HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
        if(!responseCtrl.success){
@@ -147,7 +158,9 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
             for(Integer i=0; i<resp.data.size(); i++){
                 resp.data[i].id = resp.data[i].idPrimoLivelloSAP;
-                resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
+                if(!String.isBlank(resp.data[i].importo)){
+                    resp.totAmount += Decimal.valueOf(resp.data[i].importo);
+                }      
             }
             
             resp.success = true;

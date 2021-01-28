@@ -163,7 +163,7 @@ public class HDT_LC_AccountStatementController {
     @AuraEnabled
     public static Object callMulesoft(String techObj, String requestObj){//HDT_WS_MulesoftCaller.ReponseObj
         System.debug('# callMulesoft #');
-        return HDT_WS_MulesoftCallerHelper.createMulesoftCall(techObj, requestObj, true);
+        return HDT_WS_MulesoftCallerHelper.createMulesoftCall(techObj, requestObj, false);
     }
 
     @AuraEnabled

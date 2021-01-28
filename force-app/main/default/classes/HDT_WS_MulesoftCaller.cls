@@ -14,9 +14,10 @@ public without sharing class HDT_WS_MulesoftCaller {
 
         try{
             String body = JSON.serialize(dbr);
+            System.debug('---> ' + body);
             req.setEndpoint(httpObj.endPoint);
             req.setMethod('POST');
-            req.setHeader('Authorization', httpObj.authValueString);
+            req.setHeader('authorization', httpObj.authValueString);
             req.setHeader('Content-Type', 'application/json');
             req.setbody(body);
             req.setTimeout(120000); // timeout in milliseconds
@@ -28,8 +29,10 @@ public without sharing class HDT_WS_MulesoftCaller {
 
             String responseStatus = res.getStatus();
             System.debug('## Response status -> ' + responseStatus);
+            System.debug('## Body -> ' + body);
 
             if(responseStatus != 'OK'){
+
                 switch on res.getStatusCode() {
                     when 500 {
                         respObj.message = 'Something goes wrong on Mulesoft side';
