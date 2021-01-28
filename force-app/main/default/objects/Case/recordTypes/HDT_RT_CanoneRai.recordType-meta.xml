@@ -44,6 +44,53 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillingErrorArgument__c</picklist>
+        <values>
+            <fullName>CMOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commissioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposito cauzionale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diritti fissi contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eventi eccezionali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interessi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potenza%2FCalibro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spese Accessorie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spese sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima rata piatta Ferrara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storno per dati fiscali errati</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
             <fullName>G1%2C6</fullName>
@@ -463,6 +510,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ConsumptionsCorrectionType__c</picklist>
+        <values>
+            <fullName>Errore Stima Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Lettura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CustomerPaymentAgreements__c</picklist>
+        <values>
+            <fullName>Non pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
             <fullName>In Compartecipazione</fullName>
@@ -533,6 +602,25 @@
         <picklist>Nome_cimitero__c</picklist>
         <values>
             <fullName>null</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OperationType__c</picklist>
+        <values>
+            <fullName>Separazione CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Separazione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione bolletta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -628,6 +716,17 @@
         <values>
             <fullName>Medium</fullName>
             <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ReadType__c</picklist>
+        <values>
+            <fullName>Reale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stimata</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
