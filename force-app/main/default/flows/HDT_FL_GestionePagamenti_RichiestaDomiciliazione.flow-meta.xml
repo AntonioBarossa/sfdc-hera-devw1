@@ -799,10 +799,6 @@
             <fieldText>Inserire Iban Estero</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;L&apos; Iban deve essere composto da massimo 27 caratteri&lt;/p&gt;</errorMessage>
-                <formulaExpression>LEN({!Inserire_Iban_Estero}) &lt; 27</formulaExpression>
-            </validationRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
