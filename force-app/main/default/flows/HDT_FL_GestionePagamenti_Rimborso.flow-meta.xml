@@ -22,7 +22,7 @@
         <name>ControllaDocumentiCreditoDebito_0</name>
         <label>Controlla Documenti Credito/Debito</label>
         <locationX>710</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -40,7 +40,7 @@
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
         <locationX>908</locationX>
-        <locationY>2126</locationY>
+        <locationY>2246</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -59,7 +59,7 @@
         <name>AI</name>
         <label>AI</label>
         <locationX>578</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -174,10 +174,61 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Valori_predefaultati</name>
+        <label>Assegna Valori predefaultati</label>
+        <locationX>710</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>Iban</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.Iban__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanABI_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanABI__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanCAB_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCAB__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanCIN_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCIN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanNumeriControllo_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCIN_IBAN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanContoCorrente_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCodeNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iban_Italiano</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Iban_Ex</name>
         <label>Assign Iban Ex.</label>
         <locationX>842</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -277,7 +328,7 @@
         <name>Documenti_Residuo_Nullo_Debito_Credito</name>
         <label>Documenti Residuo Nullo, Debito/Credito?</label>
         <locationX>710</locationX>
-        <locationY>3062</locationY>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0</targetReference>
         </defaultConnector>
@@ -348,7 +399,7 @@
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
         <locationX>710</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>Insert_Iban_Ex</targetReference>
         </defaultConnector>
@@ -507,7 +558,7 @@
         <name>SalvaInBozzaOConferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>908</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -529,7 +580,7 @@
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
         <locationX>908</locationX>
-        <locationY>2246</locationY>
+        <locationY>2366</locationY>
         <defaultConnector>
             <targetReference>Screen_Iban_non_Validato</targetReference>
         </defaultConnector>
@@ -677,7 +728,7 @@
         <name>Aggiorna_con_dati</name>
         <label>Aggiorna con dati</label>
         <locationX>908</locationX>
-        <locationY>2582</locationY>
+        <locationY>2702</locationY>
         <connector>
             <targetReference>Screen_Inserimento_Dati_0_0</targetReference>
         </connector>
@@ -806,7 +857,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0</name>
         <label>Aggiorna con dati Account e cambia Fase Elaborazione Manuale</label>
         <locationX>578</locationX>
-        <locationY>3182</locationY>
+        <locationY>3302</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -893,7 +944,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>3182</locationY>
+        <locationY>3302</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1085,7 +1136,7 @@
         <name>Insert_Iban_Ex</name>
         <label>Insert Iban Ex.</label>
         <locationX>842</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1106,6 +1157,10 @@
             <fieldText>Inserire Iban Estero</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;L&apos; Iban deve essere composto da massimo 27 caratteri&lt;/span&gt;&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Inserire_Iban_Estero}) &lt; 27</formulaExpression>
+            </validationRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -1114,7 +1169,7 @@
         <name>Insert_Iban_IT</name>
         <label>Insert Iban IT</label>
         <locationX>578</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1208,7 +1263,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Iban_Italiano</targetReference>
+            <targetReference>Assegna_Valori_predefaultati</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_3</name>
@@ -1232,7 +1287,7 @@
         <name>Screen_Iban_non_Validato</name>
         <label>Screen Iban non Validato</label>
         <locationX>996</locationX>
-        <locationY>2366</locationY>
+        <locationY>2486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1420,7 +1475,7 @@
         <name>Screen_Inserimento_Dati_0_0</name>
         <label>Screen Inserimento Dati</label>
         <locationX>908</locationX>
-        <locationY>2702</locationY>
+        <locationY>2822</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

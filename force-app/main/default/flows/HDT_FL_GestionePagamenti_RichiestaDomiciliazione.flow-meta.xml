@@ -4,7 +4,7 @@
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
         <locationX>380</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -23,7 +23,7 @@
         <name>AI</name>
         <label>Assegna Iban It</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -78,10 +78,61 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Valori_Predefaultati</name>
+        <label>Assegna Valori Predefaultati</label>
+        <locationX>182</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Iban</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.Iban__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanABI_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanABI__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanCAB_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCAB__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanCIN_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCIN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanContoCorrente_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCodeNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IbanNumeriControllo_CC</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CaseInput.IbanCIN_IBAN__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Iban_Italiano</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Iban_Ex</name>
         <label>Assign Iban Ex.</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -120,7 +171,7 @@
         <name>Assign_Intestatario</name>
         <label>Assign Intestatario</label>
         <locationX>50</locationX>
-        <locationY>2486</locationY>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>CFIntestatarioCC</assignToReference>
             <operator>Assign</operator>
@@ -150,7 +201,7 @@
         <name>Assign_Intestatario_0</name>
         <label>Assign Intestatario</label>
         <locationX>314</locationX>
-        <locationY>2366</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>CFIntestatarioCC</assignToReference>
             <operator>Assign</operator>
@@ -201,7 +252,7 @@
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Insert_Iban_Ex</targetReference>
         </defaultConnector>
@@ -226,7 +277,7 @@
         <name>Iban_Italiano_0</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>2702</locationY>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Passa_a_Elaborazione_Manuale</targetReference>
         </defaultConnector>
@@ -295,7 +346,7 @@
         <name>Inserimento_Dati_Manualmente</name>
         <label>Inserimento Dati Manualmente?</label>
         <locationX>182</locationX>
-        <locationY>2246</locationY>
+        <locationY>2366</locationY>
         <defaultConnector>
             <targetReference>Assign_Intestatario_0</targetReference>
         </defaultConnector>
@@ -306,6 +357,9 @@
             <conditions>
                 <leftValueReference>Get_Case_Aggiornato.AccountholderTypeBeneficiary__c</leftValueReference>
                 <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rappresentante Legale</stringValue>
+                </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>CaseInput.ClientCategory__c</leftValueReference>
@@ -370,7 +424,7 @@
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>380</locationX>
-        <locationY>2006</locationY>
+        <locationY>2126</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -392,7 +446,7 @@
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
         <locationX>380</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>Screen_IBAN_non_validato</targetReference>
         </defaultConnector>
@@ -488,7 +542,7 @@
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
         <locationX>182</locationX>
-        <locationY>2126</locationY>
+        <locationY>2246</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Dati_Manualmente</targetReference>
@@ -530,7 +584,7 @@
         <name>Aggiorna_Case_Bozza</name>
         <label>Aggiorna Iban Case Bozza</label>
         <locationX>380</locationX>
-        <locationY>1766</locationY>
+        <locationY>1886</locationY>
         <connector>
             <targetReference>Screen_Mostra_Dati</targetReference>
         </connector>
@@ -590,7 +644,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>50</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -635,7 +689,7 @@
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>314</locationX>
-        <locationY>2822</locationY>
+        <locationY>2942</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -680,7 +734,7 @@
         <name>Inserimento_Dati_Manuale</name>
         <label>Inserimento Dati Manuale</label>
         <locationX>50</locationX>
-        <locationY>2366</locationY>
+        <locationY>2486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -724,7 +778,7 @@
         <name>Insert_Iban_Ex</name>
         <label>Insert Iban Ex.</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -745,6 +799,10 @@
             <fieldText>Inserire Iban Estero</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
+            <validationRule>
+                <errorMessage>&lt;p&gt;L&apos; Iban deve essere composto da massimo 27 caratteri&lt;/p&gt;</errorMessage>
+                <formulaExpression>LEN({!Inserire_Iban_Estero}) &lt; 27</formulaExpression>
+            </validationRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
@@ -753,7 +811,7 @@
         <name>Insert_Iban_IT</name>
         <label>Insert Iban IT</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -847,7 +905,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Iban_Italiano</targetReference>
+            <targetReference>Assegna_Valori_Predefaultati</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_2</name>
@@ -871,7 +929,7 @@
         <name>Screen_IBAN_non_validato</name>
         <label>Screen IBAN non validato</label>
         <locationX>468</locationX>
-        <locationY>1550</locationY>
+        <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -967,7 +1025,7 @@
         <name>Screen_Mostra_Dati</name>
         <label>Screen Mostra Dati</label>
         <locationX>380</locationX>
-        <locationY>1886</locationY>
+        <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
