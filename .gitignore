@@ -10,6 +10,9 @@
 assets/
 #.github/*
 assets/*
+manifest/package.xml
+.gitignore
+
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
