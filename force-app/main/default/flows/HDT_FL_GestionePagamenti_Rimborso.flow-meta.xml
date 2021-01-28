@@ -1607,7 +1607,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>CaseInput</name>
         <dataType>SObject</dataType>
