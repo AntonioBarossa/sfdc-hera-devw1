@@ -142,43 +142,25 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <customHelpPage>SBQQ__ProductFeatureHelp</customHelpPage>
     <deploymentStatus>Deployed</deploymentStatus>
-    <deprecated>false</deprecated>
-    <description>Feature of a configurable product that consists of one or more options. Features are configured by selecting one or more options.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
-    <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>true</enableReports>
-    <enableSearch>true</enableSearch>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <label>Product Feature</label>
+    <externalSharingModel>Private</externalSharingModel>
+    <gender>Feminine</gender>
+    <label>Lavorazione FUB</label>
     <nameField>
-        <label>Feature Name</label>
+        <label>Lavorazione FUB Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>Product Features</pluralLabel>
-    <searchLayouts>
-        <lookupDialogsAdditionalFields>SBQQ__ConfiguredSKU__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__Number__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__MinOptionCount__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>SBQQ__MaxOptionCount__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>UPDATEDBY_USER</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__ConfiguredSKU__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__Number__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__MinOptionCount__c</lookupPhoneDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>SBQQ__MaxOptionCount__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>NAME</searchFilterFields>
-        <searchFilterFields>SBQQ__ConfiguredSKU__c</searchFilterFields>
-        <searchFilterFields>SBQQ__Number__c</searchFilterFields>
-        <searchFilterFields>SBQQ__MinOptionCount__c</searchFilterFields>
-        <searchFilterFields>SBQQ__MaxOptionCount__c</searchFilterFields>
-        <searchFilterFields>UPDATEDBY_USER</searchFilterFields>
-    </searchLayouts>
+    <pluralLabel>Lavorazioni FUB</pluralLabel>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

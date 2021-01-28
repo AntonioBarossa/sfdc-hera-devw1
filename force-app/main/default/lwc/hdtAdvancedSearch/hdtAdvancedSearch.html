@@ -1,10 +1,12 @@
 <template>
 
     <lightning-layout>
-        <lightning-layout-item padding="around-small" size="9">
+
+        <lightning-layout-item padding="around-small" size="5">
             <c-hdt-advanced-search-selection-feild-radio-group disabledinput={disabledinput} onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="3" style="margin-left:-5px;font-size: 11px;">
+        <lightning-layout-item padding="around-small" size="5" style="margin-left:-5px;font-size: 11px;">
+
             <lightning-button
                     disabled={disabledinput}
                     label="Contratti Cliente"
@@ -12,10 +14,14 @@
                     title="Contratti Cliente"
                     variant="brand"
                     class="slds-m-left_x-small searchGo"></lightning-button>
+
+            <!--<c-hdt-create-target-object></c-hdt-create-target-object> -->
         </lightning-layout-item>
+
     </lightning-layout>
     <lightning-layout>
-        <lightning-layout-item padding="around-small" size="6">
+        <lightning-layout-item padding="around-small" size="5">
+
             <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
             <lightning-input
                     disabled={disabledinput}
@@ -28,7 +34,9 @@
                     class="searchInput">
             </lightning-input>
         </lightning-layout-item>
-        <lightning-layout-item padding="around-small" size="3">
+
+        <lightning-layout-item padding="around-small" size="5">
+
             <lightning-button
                     label="search"
                     disabled={submitButtonStatus}
@@ -37,8 +45,10 @@
                     icon-name="utility:search"
                     variant="brand"
                     class="slds-m-left_x-small searchGo"></lightning-button>
+
         </lightning-layout-item>
         <lightning-layout-item padding="around-small" size="2">
+
             <button class="slds-button slds-button_brand searchApi" onclick={callApi} disabled={apiSearchButtonStatus}>Ricerca in Sap</button>
         </lightning-layout-item>
     </lightning-layout>
@@ -111,7 +121,9 @@
                                 </div>
                             </div>
                         <lightning-button label="Cancel" variant="brand" onclick={closeModal}></lightning-button>
+
                         <lightning-button disabled={confirmButtonDisabled} onclick={handleConfirm} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+
                     </footer>
                 </div>
             </section>

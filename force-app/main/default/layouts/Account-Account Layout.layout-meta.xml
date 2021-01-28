@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
@@ -155,6 +156,9 @@
     </relatedContent>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>ContractAccountCode__c</fields>
+        <fields>ActivationDate__c</fields>
+        <fields>Status__c</fields>
         <relatedList>BillingProfile__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -219,7 +223,10 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>ServicePoint__c.Distributor__c</relatedList>
+        <fields>SAPImplantCode__c</fields>
+        <fields>ServicePointCode__c</fields>
+        <fields>CommoditySector__c</fields>
+        <relatedList>ServicePoint__c.Account__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

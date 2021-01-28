@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <description>Canale verso il quale verrà erogata la campagna</description>
+    <externalId>false</externalId>
+    <label>Canale</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Telefonico Inbound</fullName>
+                <default>false</default>
+                <label>Telefonico Inbound</label>
+            </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>SOL</fullName>
+                <default>false</default>
+                <label>SOL</label>
+            </value>
+            <value>
+                <fullName>Telefonico Outbound</fullName>
+                <default>false</default>
+                <label>Telefonico Outbound</label>
+            </value>
+            <value>
+                <fullName>Door to Door</fullName>
+                <default>false</default>
+                <label>Door to Door</label>
+            </value>
+            <value>
+                <fullName>SMS</fullName>
+                <default>false</default>
+                <label>SMS</label>
+            </value>
+            <value>
+                <fullName>Mail</fullName>
+                <default>false</default>
+                <label>Mail</label>
+            </value>
+            <value>
+                <fullName>Push</fullName>
+                <default>false</default>
+                <label>Push</label>
+            </value>
+            <value>
+                <fullName>Cartaceo</fullName>
+                <default>false</default>
+                <label>Cartaceo</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
