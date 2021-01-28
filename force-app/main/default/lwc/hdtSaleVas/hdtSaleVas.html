@@ -18,25 +18,49 @@
                     <div data-id="modal-body" class="slds-modal__content slds-p-around_medium modal-body-height">
                         <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Saving..." size="large"></lightning-spinner>
                         
-                        <lightning-layout>
-                            <lightning-layout-item flexibility="auto" padding="around-small">
-                                <lightning-radio-group
-                                    label="Seleziona"
-                                    options={radioGroupOptions}
-                                    onchange={handleRadioGroupChange}>
-                                </lightning-radio-group>
-                            </lightning-layout-item>
-                            <lightning-layout-item if:true={isInputVisible} flexibility="auto" padding="around-small">
-                                <div class="slds-p-around_medium lgc-bg">
-                                    <lightning-input type="text" label="Comune" onchange={handleInputText}></lightning-input>
+                        <div class="slds-grid">
+                            <div class="slds-size_1-of-2">
+                                <div class="slds-m-left_large">
+                                    <lightning-radio-group
+                                        label="Seleziona"
+                                        options={radioGroupOptions}
+                                        onchange={handleRadioGroupChange}>
+                                    </lightning-radio-group>
                                 </div>
-                            </lightning-layout-item>
-                        </lightning-layout>
-    
+                            </div>
+                            <div if:true={isInputVisible} class="slds-size_1-of-2">
+                                <lightning-input type="text" label="Comune" onchange={handleInputText}></lightning-input>
+                            </div>
+                        </div>
+                        
+                        <div if:true={isOrderListVisible} class="slds-grid slds-m-top_large">
+                            <div class="slds-size_1-of-1">
+                                <lightning-datatable
+                                    key-field="id"
+                                    data={ordersList}
+                                    columns={ordersListcolumns}
+                                    max-row-selection=1
+                                    onrowselection={getSelectedOrder}>
+                                </lightning-datatable>
+                            </div>
+                        </div>
+
+                        <div if:true={isContractsListVisible} class="slds-grid slds-m-top_large">
+                            <div class="slds-size_1-of-1">
+                                <lightning-datatable
+                                    key-field="id"
+                                    data={contractsList}
+                                    columns={contractsListcolumns}
+                                    max-row-selection=1
+                                    onrowselection={getSelectedContract}>
+                                </lightning-datatable>
+                            </div>
+                        </div>
+
                     </div>
                     <footer class="slds-modal__footer">
                         <lightning-button onclick={handleCancelEvent} label="Annulla" variant="neutral"></lightning-button>
-                        <lightning-button onclick={handleConfirmEvent} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
+                        <lightning-button disabled={isConfirmDisabled} onclick={handleConfirmEvent} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
                     </footer>
                 </div>
             </section>

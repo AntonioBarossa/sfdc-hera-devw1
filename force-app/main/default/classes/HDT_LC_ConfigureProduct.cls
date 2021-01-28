@@ -50,7 +50,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
         quoteSrv.checkReadAccess('SBQQ__Status__c');
         SBQQ__Quote__c quoteToUpdate = quoteQr.getRecordById(quoteId);
-        quoteToUpdate.SBQQ__Status__c = 'Rejected';
+        quoteToUpdate.SBQQ__Status__c = 'Rifiutata';
 
         opportunitySrv.checkReadAccess('StageName');
         Opportunity oppToUpdate = opportunityQr.getRecordById(quoteToUpdate.SBQQ__Opportunity2__c);
