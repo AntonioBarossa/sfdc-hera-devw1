@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Passa_a_Approvato_KO</fullName>
+        <field>Phase__c</field>
+        <literalValue>Approvazione KO</literalValue>
+        <name>Passa a &quot;Approvato KO&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Passa_a_Approvato_OK</fullName>
+        <field>Phase__c</field>
+        <literalValue>Approvazione OK</literalValue>
+        <name>Passa a &quot;Approvato OK&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Passa_a_Da_Inviare</fullName>
+        <field>Phase__c</field>
+        <literalValue>Da Inviare</literalValue>
+        <name>Passa a &quot;Da Inviare&quot;</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+</Workflow>

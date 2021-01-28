@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MacroActivity__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Relazione gerarchica con la Macroattività</description>
+    <externalId>false</externalId>
+    <label>Macroattività</label>
+    <referenceTo>MacroActivityEasyCIM__c</referenceTo>
+    <relationshipLabel>Campagne EasyCIM</relationshipLabel>
+    <relationshipName>Campagne_EasyCIM</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

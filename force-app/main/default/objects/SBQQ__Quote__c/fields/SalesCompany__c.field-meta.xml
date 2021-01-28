@@ -9,28 +9,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Hera Comm Marche</fullName>
-                <default>false</default>
-                <label>Hera Comm Marche</label>
-            </value>
-            <value>
-                <fullName>Acegas Aps Service</fullName>
-                <default>false</default>
-                <label>Acegas Aps Service</label>
-            </value>
-            <value>
-                <fullName>Hera Comm NordEst</fullName>
-                <default>false</default>
-                <label>Hera Comm NordEst</label>
-            </value>
-            <value>
-                <fullName>Hera Comm S.p.A.</fullName>
-                <default>false</default>
-                <label>Hera Comm S.p.A.</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_SalesCompany</valueSetName>
     </valueSet>
 </CustomField>

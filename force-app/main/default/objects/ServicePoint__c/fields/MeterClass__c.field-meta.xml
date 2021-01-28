@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>MeterClass__c</fullName>
+    <description>Classe o Calibro Contatore</description>
+    <externalId>false</externalId>
+    <label>Classe Contatore</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>G6500</fullName>
+                <default>false</default>
+                <label>G6500</label>
+            </value>
+            <value>
+                <fullName>G2,5 pareti def.</fullName>
+                <default>false</default>
+                <label>G2,5 pareti def.</label>
+            </value>
+            <value>
+                <fullName>G4 Pareti def.</fullName>
+                <default>false</default>
+                <label>G4 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G6 Pareti def.</fullName>
+                <default>false</default>
+                <label>G6 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G10 Pareti def.</fullName>
+                <default>false</default>
+                <label>G10 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G16 Pareti def.</fullName>
+                <default>false</default>
+                <label>G16 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G25 Pareti def.</fullName>
+                <default>false</default>
+                <label>G25 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G40 Pareti def.</fullName>
+                <default>false</default>
+                <label>G40 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G65 Pareti def.</fullName>
+                <default>false</default>
+                <label>G65 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G100 Pareti def.</fullName>
+                <default>false</default>
+                <label>G100 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G1,6 Pareti def.</fullName>
+                <default>false</default>
+                <label>G1,6 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G160 Pareti def.</fullName>
+                <default>false</default>
+                <label>G160 Pareti def.</label>
+            </value>
+            <value>
+                <fullName>G650 Turbina</fullName>
+                <default>false</default>
+                <label>G650 Turbina</label>
+            </value>
+            <value>
+                <fullName>G1000 Turbina</fullName>
+                <default>false</default>
+                <label>G1000 Turbina</label>
+            </value>
+            <value>
+                <fullName>G65 Turbina</fullName>
+                <default>false</default>
+                <label>G65 Turbina</label>
+            </value>
+            <value>
+                <fullName>G100 Turbina</fullName>
+                <default>false</default>
+                <label>G100 Turbina</label>
+            </value>
+            <value>
+                <fullName>G160 Turbina</fullName>
+                <default>false</default>
+                <label>G160 Turbina</label>
+            </value>
+            <value>
+                <fullName>G250 Turbina</fullName>
+                <default>false</default>
+                <label>G250 Turbina</label>
+            </value>
+            <value>
+                <fullName>G400 Turbina</fullName>
+                <default>false</default>
+                <label>G400 Turbina</label>
+            </value>
+            <value>
+                <fullName>G40 Turbina</fullName>
+                <default>false</default>
+                <label>G40 Turbina</label>
+            </value>
+            <value>
+                <fullName>G65 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G65 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G160 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G160 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G250 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G250 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G250G Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G250G Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G650 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G650 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G1000 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G1000 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G400 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G400 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G1600 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G1600 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G4000 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G4000 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>DIR Monorario</fullName>
+                <default>false</default>
+                <label>DIR Monorario</label>
+            </value>
+            <value>
+                <fullName>DIR Orario</fullName>
+                <default>false</default>
+                <label>DIR Orario</label>
+            </value>
+            <value>
+                <fullName>DIR Biorario</fullName>
+                <default>false</default>
+                <label>DIR Biorario</label>
+            </value>
+            <value>
+                <fullName>100 Volt</fullName>
+                <default>false</default>
+                <label>100 Volt</label>
+            </value>
+            <value>
+                <fullName>400 Volt</fullName>
+                <default>false</default>
+                <label>400 Volt</label>
+            </value>
+            <value>
+                <fullName>230 Volt</fullName>
+                <default>false</default>
+                <label>230 Volt</label>
+            </value>
+            <value>
+                <fullName>Elettronico</fullName>
+                <default>false</default>
+                <label>Elettronico</label>
+            </value>
+            <value>
+                <fullName>8</fullName>
+                <default>false</default>
+                <label>8</label>
+            </value>
+            <value>
+                <fullName>100</fullName>
+                <default>false</default>
+                <label>100</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>4</label>
+            </value>
+            <value>
+                <fullName>30</fullName>
+                <default>false</default>
+                <label>30</label>
+            </value>
+            <value>
+                <fullName>50</fullName>
+                <default>false</default>
+                <label>50</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

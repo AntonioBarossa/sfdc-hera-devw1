@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position__c</fullName>
+    <description>Campo di configurazione usato per indicare il nome /codice del record dell&apos;oggetto delle Fasce legato alla funzionalità dei Criteri di Eleggiblità</description>
+    <externalId>false</externalId>
+    <label>Posizione</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_RangePosition</valueSetName>
+    </valueSet>
+</CustomField>
