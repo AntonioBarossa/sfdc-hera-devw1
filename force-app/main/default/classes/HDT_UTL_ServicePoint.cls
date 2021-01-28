@@ -50,12 +50,9 @@ public with sharing class HDT_UTL_ServicePoint {
     
         system.debug(' HDT_UTL_ServicePoint getServicePointToContract - END');
         return res;
-<<<<<<< HEAD
-    }*/
-=======
 
-    }
->>>>>>> c17507a2dde9b39a4df2afa29868a5bd0b3772c5
+    }*/
+
 
     @AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject mapFieldsAddressWithWrapObject(ServicePoint__c s){
