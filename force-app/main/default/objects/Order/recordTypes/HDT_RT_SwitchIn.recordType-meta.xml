@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_Subentro</fullName>
+    <fullName>HDT_RT_SwitchIn</fullName>
     <active>true</active>
-    <description>Record type per gli ordini di Subentro</description>
-    <label>Subentro</label>
+    <description>Record type per gli ordini di SwitchIn</description>
+    <label>SwitchIn</label>
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
@@ -69,7 +69,7 @@
         </values>
         <values>
             <fullName>IR010</fullName>
-            <default>true</default>
+            <default>false</default>
         </values>
         <values>
             <fullName>IR020</fullName>
