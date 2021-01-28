@@ -1,14 +1,10 @@
 
 import { LightningElement, api, track, wire } from 'lwc';
-
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
-
-import getRecordTypeName from '@salesforce/apex/HDT_UTL_ServicePoint.getRecordTypeName';
-
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
@@ -100,7 +96,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
         return fieldsDataFinal;
     }
-
 
 
 
@@ -531,6 +526,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Handle new record creation
      */
     save(){
+
         console.log('save() START');
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         
@@ -662,6 +658,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
+
 
             
         }).catch(error => {
