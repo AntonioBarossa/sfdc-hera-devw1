@@ -1,6 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
 
-import getServicePointToContract from '@salesforce/apex/HDT_UTL_ServicePoint.getServicePointToContract';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 
 export default class hdtTargetObjectAddressFields extends LightningElement {
@@ -165,6 +164,7 @@ disabledverifyFieldsAddressDisabled(){
         Object.keys(data).forEach(keys=> {
         
 
+
                 fieldsDataObject.push(
                     {
                         fieldname: keys,
@@ -310,6 +310,7 @@ disabledverifyFieldsAddressDisabled(){
 
  }
 
+ 
 
 
     /**
