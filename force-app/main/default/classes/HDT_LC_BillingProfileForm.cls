@@ -39,7 +39,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'IbanCAB__c',
             'IbanCodeNumber__c',
             'SignatoryType__c',
-            'OtherPayer_c__c',
+            'OtherPayer__c',
             'BankAccountSignatoryFiscalCode__c',
             'BankAccountSignatoryFirstName__c',
             'BankAccountSignatoryLastName__c'

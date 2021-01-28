@@ -54,13 +54,13 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
      */
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale){
 
-        servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.Name');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.Name');
+        servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName');
 
-        String recordTypeName = existingServicePoint[0].RecordType.Name;
+        String recordTypeName = existingServicePoint[0].RecordType.DeveloperName;
         String supplyCity = servicePoint.SupplyCity__c;
 
-        checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,Opportunity__r.Sale__c');
+        checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.DeveloperName,Opportunity__r.Sale__c');
         List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale.Id, supplyCity, recordTypeName);
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
@@ -87,6 +87,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
                 Sale__c = sale.Id,
+                SBQQ__Status__c = 'In Review',
                 SBQQ__Opportunity2__c = newOpportunity.Id,
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,

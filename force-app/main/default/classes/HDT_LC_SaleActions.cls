@@ -65,11 +65,13 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Accepted';
+            quote.SBQQ__Status__c = 'Accettata';
             quote.SBQQ__Ordered__c = true;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
         }
+
+        system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
         Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva');
@@ -142,7 +144,7 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleCancelEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Rejected';
+            quote.SBQQ__Status__c = 'Rifiutata';
         }
 
         //4 - Excecute actions
