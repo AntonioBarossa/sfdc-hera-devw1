@@ -1,0 +1,50 @@
+<template>
+    <div class="slds-p-horizontal_xx-large slds-m-vertical_large">
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+        <template if:true={billingProfileData}>
+            
+            <template if:true={disabledInput}>
+                <lightning-datatable
+                    if:false={emptyTable}
+                    key-field="id"
+                    data={billingProfileData}
+                    columns={columns}
+                    max-row-selection=1
+                    onrowselection={getSelectedBillingProfile}
+                    hide-checkbox-column=false>
+                </lightning-datatable>
+            </template>
+            <template if:false={disabledInput}>
+                <lightning-datatable
+                    if:false={emptyTable}
+                    key-field="id"
+                    data={billingProfileData}
+                    columns={columns}
+                    max-row-selection=1
+                    onrowselection={getSelectedBillingProfile}>
+                </lightning-datatable>
+            </template>
+
+            <table if:true={emptyTable} class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <template for:each={columns} for:item="column">
+                            <th key={column.fieldName} class="" scope="col">
+                            <div class="slds-truncate" title={column.label}>{column.label}</div>
+                        </th>
+                        </template>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="slds-hint-parent">
+                        <td colspan={columnsLength}>
+                            <div class="slds-text-align_center">Nessun dato disponibile</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </template>
+        
+    </div>
+</template>

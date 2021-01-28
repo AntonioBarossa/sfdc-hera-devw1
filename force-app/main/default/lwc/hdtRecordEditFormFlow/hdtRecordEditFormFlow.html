@@ -1,0 +1,135 @@
+<template>
+
+    <!--Start Erorr Message-->
+
+    <!--<div if:true={showNotificationMessage}>
+
+        <c-hdt-toast-messages 
+            notification-type={notificationType}
+            description={notificationDescription}
+            sub-description=""
+        ></c-hdt-toast-messages>
+    
+    </div>-->
+
+    <!--End Error Message-->
+
+    <template if:true={error}>
+        <p> Si è verificato un errore {errorMessage}</p>
+    </template>
+    <template if:false={error}>
+        <lightning-record-edit-form record-id={recordId}
+                                        object-api-name={objectName}
+                                        onsuccess={handleSuccess}
+                                        onsubmit ={handleSubmit}
+                                        density={density}>
+            <template if:true={showInputSection}>
+                <div class="slds-section slds-is-open">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title="Section Title">{labelInputSection}</span>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content">
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-3">
+                                <template for:each={firstColumn} for:item="field">
+                                    <lightning-input-field field-name={field.FieldName} key={field.FieldName} required={field.Required} readonly={field.ReadOnly}>
+                                    </lightning-input-field>
+                                </template>
+                            </div>
+                            <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <template for:each={secondColumn} for:item="field">
+                                    <lightning-input-field field-name={field.FieldName} key={field.FieldName} required={field.Required} readonly={field.ReadOnly}>
+                                    </lightning-input-field>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template if:true={showReadOnly}>
+                <lightning-record-view-form record-id={recordId}
+                                    object-api-name={objectName}
+                                    density={density}>
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">{labelReadOnlySection}</span>
+                        </h3>
+                        <div aria-hidden="false" class="slds-section__content slds-theme_shade">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <template for:each={firstColumnReadOnly} for:item="field">
+                                        <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
+                                        </lightning-output-field>
+                                    </template>
+                                </div>
+                                <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <template for:each={secondColumnReadOnly} for:item="field">
+                                        <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
+                                        </lightning-output-field>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-record-view-form>
+            </template>
+            <template if:true={addContentDocument}>
+                <div class="slds-section slds-is-open">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Documenti</span>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content">
+                        <template if:true={contentDocument}>
+                            <c-hdt-content-document-list files={contentDocument} onfiledelete={handleActionFinished}></c-hdt-content-document-list>                            
+                        </template>
+                        <lightning-file-upload
+                                    label={contentDocumentLabel}
+                                    name="fileUploader"
+                                    record-id={recordId}
+                                    multiple
+                                    accept={formats}
+                                    onuploadfinished={handleUploadFinished}>
+                        </lightning-file-upload>
+                    </div>
+                </div>
+            </template>
+            <lightning-messages>
+            </lightning-messages>
+                <!-- buttons -->
+                <!--div class="slds-clearfix slds-modal__footer slds-p-top_xsmall slds-m-bottom_small slds-theme_default"-->
+            <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+                <div class="actionsLeft">
+
+                </div>
+                <div class="actionsRight">
+                    <template if:true={saveButton}> 
+                        <lightning-button
+                            class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                            variant="brand" type="submit" name="save" label={labelSaveButton}>
+                        </lightning-button>
+                    </template>
+                    <template if:true={draftButton}>
+                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                            variant="neutral" type="button" name="cancel" label={labelDraftButton} onclick={handleDraft}>
+                        </lightning-button>
+                    </template>
+                    <template if:true={previousButton}> 
+                        <lightning-button
+                            class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                            variant="neutral" type="button" name="save" label={labelPreviousButton} onclick={handlePrevious}>
+                        </lightning-button>
+                    </template>
+                    <template if:true={cancelButton}>
+                        <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                            variant="destructive" type="button" name="cancel" label="Annulla Pratica">
+                        </lightning-button>
+                    </template>
+                </div>
+            </div>
+        </lightning-record-edit-form>
+    </template>
+</template>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OptOut__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Whether the subscriber has opted out of SMS messages (1 = true, 0 = false)</description>
+    <externalId>false</externalId>
+    <label>OptOut</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

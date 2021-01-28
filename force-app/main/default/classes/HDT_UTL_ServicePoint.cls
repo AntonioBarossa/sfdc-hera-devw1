@@ -15,7 +15,6 @@ public with sharing class HDT_UTL_ServicePoint {
         return listFields;
 
     }
- 
 
     @AuraEnabled(cacheable=true)
     public static  HDT_WRP_AddressObject getInstanceWrapAddressObject (ServicePoint__c s ){
@@ -27,31 +26,18 @@ public with sharing class HDT_UTL_ServicePoint {
         return  result =   mapFieldsAddressWithWrapObject(s);
     }else{     
     
+
         result = new HDT_WRP_AddressObject('','','','','','','','','',false,false);
+
         System.debug('result:' +  result);
     }
     System.debug('HDT_UTL_ServicePoint - getInstanceWrapAddressObject END');
     return result;
+
     }
 
-    @AuraEnabled
-    public static Map<string,string> getRecordTypeName(string s){
-        system.debug(' HDT_UTL_ServicePoint - getRecordTypeName START');
-        ServicePoint__c servicePoint = new ServicePoint__c();
-        Map<string,string> res=new Map<string,string>();
-        servicePoint = [Select Id,Name, RecordTypeId  FROM ServicePoint__c where Name = :s LIMIT 1 ]; 
-        system.debug('servicePoint******'+ servicePoint.RecordTypeId);
-        if(servicePoint.RecordTypeId == '0121X000001oom3QAA'){
-            res.put(servicePoint.RecordTypeId, 'Punto Gas');
-        }
-        if(servicePoint.RecordTypeId == '0121X000001oom1QAA'){
-            res.put(servicePoint.RecordTypeId,'Punto Elettrico');
-        }
-        system.debug('HDT_UTL_ServicePoint - getRecordTypeName END');
-        return res;
-    }
 
-    @AuraEnabled(cacheable=true)
+   /* @AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject getServicePointToContract(string s){
         system.debug(' HDT_UTL_ServicePoint getServicePointToContract - START');
         ServicePoint__c servicePoint = new ServicePoint__c();
@@ -64,12 +50,15 @@ public with sharing class HDT_UTL_ServicePoint {
     
         system.debug(' HDT_UTL_ServicePoint getServicePointToContract - END');
         return res;
-    }
+
+    }*/
+
 
     @AuraEnabled(cacheable=true)
     public static HDT_WRP_AddressObject mapFieldsAddressWithWrapObject(ServicePoint__c s){
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject START');
         HDT_WRP_AddressObject h = new HDT_WRP_AddressObject();
+
         if(s.SupplyPostalCode__c==null){
             h.CAP= '';
         }else{
@@ -132,7 +121,7 @@ public with sharing class HDT_UTL_ServicePoint {
  
             h.FlagVerificato = s.supplyIsAddressVerified__c;
         
-          
+
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject END');
         return h;
         

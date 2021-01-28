@@ -13,9 +13,49 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>OptionConfiguration</fullName>
+                <fullName>Bonus_EE</fullName>
                 <default>false</default>
-                <label>OptionConfiguration</label>
+                <label>Bonus_EE</label>
+            </value>
+            <value>
+                <fullName>Bonus_Gas</fullName>
+                <default>false</default>
+                <label>Bonus_Gas</label>
+            </value>
+            <value>
+                <fullName>Contributo_Gas</fullName>
+                <default>false</default>
+                <label>Contributo_Gas</label>
+            </value>
+            <value>
+                <fullName>Contributo_EE</fullName>
+                <default>false</default>
+                <label>Contributo_EE</label>
+            </value>
+            <value>
+                <fullName>Contenitore_EE</fullName>
+                <default>false</default>
+                <label>Contenitore_EE</label>
+            </value>
+            <value>
+                <fullName>Contenitore_Gas</fullName>
+                <default>false</default>
+                <label>Contenitore_Gas</label>
+            </value>
+            <value>
+                <fullName>VAS_prodotti</fullName>
+                <default>false</default>
+                <label>VAS_prodotti</label>
+            </value>
+            <value>
+                <fullName>VAS_Servizio</fullName>
+                <default>false</default>
+                <label>VAS_Servizio</label>
+            </value>
+            <value>
+                <fullName>VAS_Fatturabili</fullName>
+                <default>false</default>
+                <label>VAS_Fatturabili</label>
             </value>
         </valueSetDefinition>
     </valueSet>

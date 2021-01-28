@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Hera Comm Marche</fullName>
+        <default>false</default>
+        <label>Hera Comm Marche</label>
+    </customValue>
+    <customValue>
+        <fullName>Acegas Aps Service</fullName>
+        <default>false</default>
+        <label>Acegas Aps Service</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Comm NordEst</fullName>
+        <default>false</default>
+        <label>Hera Comm NordEst</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Comm S.p.A.</fullName>
+        <default>false</default>
+        <label>Hera Comm S.p.A.</label>
+    </customValue>
+    <masterLabel>Societa di vendita</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
