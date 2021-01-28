@@ -22,7 +22,12 @@
 },	
 {
 &quot;FieldName&quot; : &quot;CustomerPresence__c&quot;,
-&quot;Required&quot; : true,
+&quot;Required&quot; : false,
+&quot;Column&quot; : 2
+},
+{
+&quot;FieldName&quot; : &quot;AlternativeAddress__c&quot;,
+&quot;Required&quot; : false,
 &quot;Column&quot; : 2
 },
 {
@@ -93,6 +98,10 @@
    },
    {
       &quot;FieldName&quot;:&quot;TaxRate__c&quot;,
+      &quot;Column&quot;:2
+   },
+   {
+      &quot;FieldName&quot;:&quot;Excises__c&quot;,
       &quot;Column&quot;:2
    },
    {
