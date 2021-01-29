@@ -223,7 +223,8 @@ public class HDT_LC_AccountStatementController {
                 pickObj.companyList.add(company);
             }
 
-            Schema.DescribeFieldResult fieldResult = HDT_RequestEstrattoConto__mdt.Aggregazione__c.getDescribe();
+            //Schema.DescribeFieldResult fieldResult = HDT_RequestEstrattoConto__mdt.Aggregazione__c.getDescribe();
+            Schema.DescribeFieldResult fieldResult = HDT_StatementRequest__mdt.Aggregation__c.getDescribe();
             List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
             PicklistObj joinLevel;
             for( Schema.PicklistEntry f : ple){

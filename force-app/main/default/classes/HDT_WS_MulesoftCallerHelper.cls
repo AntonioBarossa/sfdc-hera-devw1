@@ -20,16 +20,23 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         }
 
         try{
-            List<HDT_RequestEstrattoConto__mdt> mdtList = new List<HDT_RequestEstrattoConto__mdt>();
+            //List<HDT_RequestEstrattoConto__mdt> mdtList = new List<HDT_RequestEstrattoConto__mdt>();
+            //mdtList = [
+            //    SELECT Aggregazione__c, TipoEstrattoConto__c, TipoTransazione__c, LoginId__c
+            //    FROM HDT_RequestEstrattoConto__mdt
+            //    WHERE DeveloperName =: tObj.requestType
+            //];
+
+            List<HDT_StatementRequest__mdt> mdtList = new List<HDT_StatementRequest__mdt>();
             mdtList = [
-                SELECT Aggregazione__c, TipoEstrattoConto__c, TipoTransazione__c, LoginId__c
-                FROM HDT_RequestEstrattoConto__mdt
+                SELECT Aggregation__c, StatementType__c, TransactionType__c, LoginId__c
+                FROM HDT_StatementRequest__mdt
                 WHERE DeveloperName =: tObj.requestType
             ];
 
             if(mdtList.size()==0){
                 System.debug('# No custom metadata found on Salesforce');
-                HDT_WS_MulesoftCaller.ReponseObj respObjErr = new HDT_WS_MulesoftCaller.ReponseObj();
+                ReponseObjGeneric respObjErr = new ReponseObjGeneric();
                 respObjErr.success = false;
                 respObjErr.message = 'No custom metadata found on Salesforce';
                 return respObjErr;
@@ -37,9 +44,9 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
             dbr.applicativo = tObj.requestType;
             dbr.codiceCliente = tObj.recordId;
-            dbr.aggregazione = mdtList[0].Aggregazione__c;
+            dbr.aggregazione = mdtList[0].Aggregation__c;
             dbr.tipoTransazione = tObj.tabCode;
-            dbr.tipoEstrattoConto = tObj.statementType;//mdtList[0].TipoEstrattoConto__c;
+            dbr.tipoEstrattoConto = tObj.statementType;
             dbr.loginId = mdtList[0].LoginId__c;
 
             switch on tObj.requestType {
@@ -64,7 +71,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
         } catch (Exception ex){
             System.debug('# Exception #');
-            HDT_WS_MulesoftCaller.ReponseObj respObjException = new HDT_WS_MulesoftCaller.ReponseObj();
+            ReponseObjGeneric respObjException = new ReponseObjGeneric();
             respObjException.success = false;
             respObjException.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
             return respObjException;
@@ -79,31 +86,6 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
             dbr.tipoTransazione = 'EC2';
             dbr.tipoEstrattoConto = 'ORDINARIO';
         }
-
-       //ORIGINAL CODE START HERE
-       ////REST call
-       //HDT_WS_MulesoftCaller.ReponseObj respObj =  HDT_WS_MulesoftCaller.retrieveData(dbr, httpObj);
-       //System.debug('## WS_SOAP_TEST_RetrieveData: ' + respObj);
-
-       //if(!respObj.success){
-       //    return respObj;
-       //}
-
-       //if(respObj.data == null || respObj.data.size()==0){
-       //    respObj.success = false;
-       //    respObj.message = 'No data returned from Mulesoft';
-       //    return respObj;
-       //}
-
-       //respObj.totAmount = 0;
-
-       //for(Integer i=0; i<respObj.data.size(); i++){
-       //    respObj.data[i].id = respObj.data[i].idPrimoLivelloSAP;
-       //    respObj.totAmount += Decimal.valueOf(respObj.data[i].importo);            
-       //}
-    
-       //return respObj;
-       //ORIGINAL CODE END HERE
 
        //MODIFICATION START HERE
        String body = JSON.serialize(dbr, true);
@@ -222,7 +204,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
     
             httpObj.endPoint = endPointMDT[0].EndpointService__c;
             httpObj.httpMethod = 'POST';
-            httpObj.headersMap.put('Authorization', Label.MontoDevAuth);
+            httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
             httpObj.headersMap.put('Content-Type', 'application/json');
         }
 

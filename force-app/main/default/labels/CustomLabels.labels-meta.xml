@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata"/>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>MockSessionId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MockSessionId</shortDescription>
+        <value>00D58000000KR1c!AQgAQBYxlt3m0UH3bFCQiIgsKdZZ.cfEfQjgo9Non6SmYiG1U112UtUwsUFeKgsdRv1FCj1tXhkoI33QHTkmeTOtdkUSzeQw</value>
+    </labels>
+</CustomLabels>

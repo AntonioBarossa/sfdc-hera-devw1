@@ -4,6 +4,7 @@
 		<members>HDT_LC_AccountStatementController</members>
 		<members>HDT_WRP_AccountStatement</members>
 		<members>HDT_WRP_CommonTab</members>
+		<members>HDT_WRP_HttpDataBodyRow</members>
 		<members>HDT_WRP_Paperless</members>
 		<members>HDT_WS_MulesoftCaller</members>
 		<members>HDT_WS_MulesoftCallerHelper</members>
@@ -168,10 +169,10 @@
 		<members>HDT_ImageURL.SmileyGreen</members>
 		<members>HDT_ImageURL.SmileyRed</members>
 		<members>HDT_ImageURL.SmileyYellow</members>
-		<members>HDT_RequestEstrattoConto.allRecentItems</members>
-		<members>HDT_RequestEstrattoConto.home</members>
-		<members>HDT_RequestEstrattoConto.joinFilter</members>
-		<members>HDT_RequestEstrattoConto.viewResult</members>
+		<members>HDT_StatementRequest.allRecentItems</members>
+		<members>HDT_StatementRequest.home</members>
+		<members>HDT_StatementRequest.joinFilter</members>
+		<members>HDT_StatementRequest.viewResult</members>
 		<members>HDT_TabConfiguration.EC</members>
 		<members>HDT_TabConfiguration.EC1</members>
 		<members>HDT_TabConfiguration.EC4</members>
@@ -185,23 +186,22 @@
 		<name>CustomMetadata</name>
 	</types>
 	<types>
-		<members>HDT_AccountStatementConf__mdt</members>
+		<!--<members>HDT_AccountStatementConf__mdt</members>-->
 		<members>HDT_ButtonDetails__mdt</members>
 		<members>HDT_ColumnsFirstLevel__mdt</members>
 		<members>HDT_ColumnsSecondLevel__mdt</members>
 		<members>HDT_HeraCompany__mdt</members>
-		<members>HDT_RequestEstrattoConto__mdt</members>
+		<members>HDT_StatementRequest__mdt</members>
 		<members>HDT_TabConfiguration__mdt</members>
 		<name>CustomObject</name>
 	</types>
 	<types>
-		<members>HDT_AccountStatementConf__mdt-Configurazione Estratto Conto Layout</members>
-		<members>HDT_AccountStatementTabConf__mdt-Conf Tab Estratto Conto Layout</members>
+		<!--<members>HDT_AccountStatementConf__mdt-Configurazione Estratto Conto Layout</members>-->
 		<members>HDT_ButtonDetails__mdt-Button Details Layout</members>
 		<members>HDT_ColumnsFirstLevel__mdt-Columns First Level Layout</members>
 		<members>HDT_ColumnsSecondLevel__mdt-Columns Second Level Layout</members>
 		<members>HDT_HeraCompany__mdt-Società Layout</members>
-		<members>HDT_RequestEstrattoConto__mdt-Request Estratto Conto Layout</members>
+		<members>HDT_StatementRequest__mdt-Request Estratto Conto Layout</members>
 		<members>HDT_TabConfiguration__mdt-Tab Configuration Layout</members>
 		<name>Layout</name>
 	</types>
@@ -221,6 +221,10 @@
 	<types>
 		<members>Account.HDT_AccountStatement</members>
 		<name>QuickAction</name>
+	</types>
+	<types>
+		<members>MockSessionId</members>
+		<name>CustomLabel</name>
 	</types>
 	<version>50.0</version>
 </Package>

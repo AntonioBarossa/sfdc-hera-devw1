@@ -13,7 +13,7 @@ public class HDT_WS_SOAP_EngageOnePrint {
             req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
             req.setMethod('POST');
 
-            req.setHeader('Authorization', Label.MontoDevAuth);
+            req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
             req.setHeader('Content-Type', 'application/json');
             req.setbody(bodyString);
             req.setTimeout(120000); // timeout in milliseconds
