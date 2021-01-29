@@ -20,12 +20,6 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         }
 
         try{
-            //List<HDT_RequestEstrattoConto__mdt> mdtList = new List<HDT_RequestEstrattoConto__mdt>();
-            //mdtList = [
-            //    SELECT Aggregazione__c, TipoEstrattoConto__c, TipoTransazione__c, LoginId__c
-            //    FROM HDT_RequestEstrattoConto__mdt
-            //    WHERE DeveloperName =: tObj.requestType
-            //];
 
             List<HDT_StatementRequest__mdt> mdtList = new List<HDT_StatementRequest__mdt>();
             mdtList = [
