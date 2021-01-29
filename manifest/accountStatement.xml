@@ -17,27 +17,6 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
-		<members>HDT_AccountStatementConf.bloccoAlSollecito</members>
-		<members>HDT_AccountStatementConf.contoContrattuale</members>
-		<members>HDT_AccountStatementConf.dataEmissione</members>
-		<members>HDT_AccountStatementConf.dataScadenza</members>
-		<members>HDT_AccountStatementConf.dilazione</members>
-		<members>HDT_AccountStatementConf.fatturaPrescritta</members>
-		<members>HDT_AccountStatementConf.fatturaPrescrivibile</members>
-		<members>HDT_AccountStatementConf.importo</members>
-		<members>HDT_AccountStatementConf.modalitaPagamento</members>
-		<members>HDT_AccountStatementConf.numeroBollettino</members>
-		<members>HDT_AccountStatementConf.numeroDocumento</members>
-		<members>HDT_AccountStatementConf.numeroFattura</members>
-		<members>HDT_AccountStatementConf.r</members>
-		<members>HDT_AccountStatementConf.rateizzato</members>
-		<members>HDT_AccountStatementConf.recuperoCrediti</members>
-		<members>HDT_AccountStatementConf.residuo</members>
-		<members>HDT_AccountStatementConf.societa</members>
-		<members>HDT_AccountStatementConf.sollecitato</members>
-		<members>HDT_AccountStatementConf.tipoDocumento</members>
-		<members>HDT_AccountStatementConf.totaleCopertina</members>
-		<members>HDT_AccountStatementTabConf.EC</members>
 		<members>HDT_ButtonDetails.EC1_1_Interrogazione</members>
 		<members>HDT_ButtonDetails.EC7_1_Interrogazione</members>
 		<members>HDT_ButtonDetails.EC9_1_Interrogazione</members>
@@ -164,11 +143,6 @@
 		<members>HDT_HeraCompany.V001</members>
 		<members>HDT_HeraCompany.V002</members>
 		<members>HDT_HeraCompany.V003</members>
-		<members>HDT_ImageURL.Service4</members>
-		<members>HDT_ImageURL.Service5</members>
-		<members>HDT_ImageURL.SmileyGreen</members>
-		<members>HDT_ImageURL.SmileyRed</members>
-		<members>HDT_ImageURL.SmileyYellow</members>
 		<members>HDT_StatementRequest.allRecentItems</members>
 		<members>HDT_StatementRequest.home</members>
 		<members>HDT_StatementRequest.joinFilter</members>
@@ -186,7 +160,6 @@
 		<name>CustomMetadata</name>
 	</types>
 	<types>
-		<!--<members>HDT_AccountStatementConf__mdt</members>-->
 		<members>HDT_ButtonDetails__mdt</members>
 		<members>HDT_ColumnsFirstLevel__mdt</members>
 		<members>HDT_ColumnsSecondLevel__mdt</members>
@@ -196,7 +169,6 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
-		<!--<members>HDT_AccountStatementConf__mdt-Configurazione Estratto Conto Layout</members>-->
 		<members>HDT_ButtonDetails__mdt-Button Details Layout</members>
 		<members>HDT_ColumnsFirstLevel__mdt-Columns First Level Layout</members>
 		<members>HDT_ColumnsSecondLevel__mdt-Columns Second Level Layout</members>
