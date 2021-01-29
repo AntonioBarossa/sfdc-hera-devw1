@@ -194,6 +194,66 @@
                 <default>false</default>
                 <label>TCP Comune no Int</label>
             </value>
+            <value>
+                <fullName>Agevolazioni non Energy indirette</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Agevolazioni non Energy indirette</label>
+            </value>
+            <value>
+                <fullName>Blocco per frode</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Blocco per frode</label>
+            </value>
+            <value>
+                <fullName>Bolletta Periodica</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bolletta Periodica</label>
+            </value>
+            <value>
+                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bonus integrativo solo per non Energy</label>
+            </value>
+            <value>
+                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
+            </value>
+            <value>
+                <fullName>Malfunzionamento</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Malfunzionamento</label>
+            </value>
+            <value>
+                <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo</label>
+            </value>
+            <value>
+                <fullName>Permanenza condizioni di disagio</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Permanenza condizioni di disagio</label>
+            </value>
+            <value>
+                <fullName>Prima Bolletta</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prima Bolletta</label>
+            </value>
+            <value>
+                <fullName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
