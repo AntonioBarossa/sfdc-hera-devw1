@@ -3,7 +3,7 @@
     <actionCalls>
         <name>ControllaDocumentiCreditoDebito</name>
         <label>Controlla Documenti Credito/Debito</label>
-        <locationX>1502</locationX>
+        <locationX>1766</locationX>
         <locationY>758</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
@@ -21,7 +21,7 @@
     <actionCalls>
         <name>ControllaDocumentiCreditoDebito_0</name>
         <label>Controlla Documenti Credito/Debito</label>
-        <locationX>710</locationX>
+        <locationX>776</locationX>
         <locationY>3062</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
@@ -39,7 +39,7 @@
     <actionCalls>
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>2246</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
@@ -58,7 +58,7 @@
     <assignments>
         <name>AI</name>
         <label>AI</label>
-        <locationX>578</locationX>
+        <locationX>743</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -116,7 +116,7 @@
     <assignments>
         <name>Assegna_Dati_Account</name>
         <label>Assegna Dati Account</label>
-        <locationX>776</locationX>
+        <locationX>941</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CFIntestatarioCC</assignToReference>
@@ -146,7 +146,7 @@
     <assignments>
         <name>Assegna_Dati_Account_0</name>
         <label>Assegna Dati Account Erede</label>
-        <locationX>1040</locationX>
+        <locationX>1205</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CFIntestatarioCC</assignToReference>
@@ -176,7 +176,7 @@
     <assignments>
         <name>Assegna_Valori_predefaultati</name>
         <label>Assegna Valori predefaultati</label>
-        <locationX>710</locationX>
+        <locationX>875</locationX>
         <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -227,7 +227,7 @@
     <assignments>
         <name>Assign_Iban_Ex</name>
         <label>Assign Iban Ex.</label>
-        <locationX>842</locationX>
+        <locationX>1007</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -250,7 +250,7 @@
     <assignments>
         <name>Assign_Iban_Selezionato</name>
         <label>Assign Iban Selezionato</label>
-        <locationX>1106</locationX>
+        <locationX>1271</locationX>
         <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -287,7 +287,7 @@
     <decisions>
         <name>Assegno_Bonifico_o_Compensazione</name>
         <label>Assegno, Bonifico o Compensazione</label>
-        <locationX>842</locationX>
+        <locationX>974</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>ControllaDocumentiCreditoDebito</targetReference>
@@ -325,12 +325,37 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Documenti_Residuo_Nullo_Debito_Credito</name>
-        <label>Documenti Residuo Nullo, Debito/Credito?</label>
-        <locationX>710</locationX>
-        <locationY>3182</locationY>
+        <name>Attesa_Firma_Documento</name>
+        <label>Attesa Firma Documento?</label>
+        <locationX>974</locationX>
+        <locationY>3302</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Attesa Firma</defaultConnectorLabel>
+        <rules>
+            <name>Attesa_Firma</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CaseInput.AccountholderTypeBeneficiary__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Erede</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_Attesa_Modulo</targetReference>
+            </connector>
+            <label>Attesa Firma</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Documenti_Residuo_Nullo_Debito_Credito</name>
+        <label>Documenti Residuo Nullo, Debito/Credito?</label>
+        <locationX>776</locationX>
+        <locationY>3182</locationY>
+        <defaultConnector>
+            <targetReference>Attesa_Firma_Documento</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Documenti a credito</defaultConnectorLabel>
         <rules>
@@ -366,7 +391,7 @@
     <decisions>
         <name>Documenti_Residuo_Nullo_Debito_Credito_0</name>
         <label>Documenti Residuo Nullo, Debito/Credito?</label>
-        <locationX>1502</locationX>
+        <locationX>1766</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0</targetReference>
@@ -398,7 +423,7 @@
     <decisions>
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
-        <locationX>710</locationX>
+        <locationX>875</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>Insert_Iban_Ex</targetReference>
@@ -423,7 +448,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>1898</locationX>
+        <locationX>2129</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -460,7 +485,7 @@
     <decisions>
         <name>Inserimento_Manuale</name>
         <label>Inserimento Manuale?</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Assign_Iban_Selezionato</targetReference>
@@ -510,7 +535,7 @@
     <decisions>
         <name>Quale_Beneficiario_0</name>
         <label>Quale Beneficiario?</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assegna_Dati_Account_0</targetReference>
@@ -535,7 +560,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>1370</locationX>
+        <locationX>1568</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -557,7 +582,7 @@
     <decisions>
         <name>SalvaInBozzaOConferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>2942</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -579,7 +604,7 @@
     <decisions>
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>2366</locationY>
         <defaultConnector>
             <targetReference>Screen_Iban_non_Validato</targetReference>
@@ -685,7 +710,7 @@
     <recordLookups>
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
-        <locationX>842</locationX>
+        <locationX>974</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -706,7 +731,7 @@
     <recordLookups>
         <name>Get_Ibans</name>
         <label>Get Ibans</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -727,7 +752,7 @@
     <recordUpdates>
         <name>Aggiorna_con_dati</name>
         <label>Aggiorna con dati</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>2702</locationY>
         <connector>
             <targetReference>Screen_Inserimento_Dati_0_0</targetReference>
@@ -943,8 +968,8 @@
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
-        <locationX>842</locationX>
-        <locationY>3302</locationY>
+        <locationX>1106</locationX>
+        <locationY>3422</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1030,7 +1055,7 @@
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Elaborazione Manuale</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>998</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1057,7 +1082,7 @@
     <recordUpdates>
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>998</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1071,6 +1096,93 @@
             <field>Phase__c</field>
             <value>
                 <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_con_dati_Account_e_cambia_Fase_Attesa_Modulo</name>
+        <label>Aggiorna con dati Account e cambia Fase Attesa Modulo</label>
+        <locationX>842</locationX>
+        <locationY>3422</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BankAccountSignatoryFirstName__c</field>
+            <value>
+                <elementReference>NomeIntestatarioCC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BankAccountSignatoryFiscalCode__c</field>
+            <value>
+                <elementReference>CFIntestatarioCC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BankAccountSignatoryLastName__c</field>
+            <value>
+                <elementReference>CognomeIntestatario</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IbanABI__c</field>
+            <value>
+                <elementReference>IbanABI_CC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IbanCAB__c</field>
+            <value>
+                <elementReference>IbanCAB_CC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IbanCIN_IBAN__c</field>
+            <value>
+                <elementReference>IbanNumeriControllo_CC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IbanCIN__c</field>
+            <value>
+                <elementReference>IbanCIN_CC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IbanCodeNumber__c</field>
+            <value>
+                <elementReference>IbanContoCorrente_CC</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IbanIsForeign__c</field>
+            <value>
+                <elementReference>IbanIsForeign</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Iban__c</field>
+            <value>
+                <elementReference>Iban</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Attesa Modulo Firmato</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1135,7 +1247,7 @@
     <screens>
         <name>Insert_Iban_Ex</name>
         <label>Insert Iban Ex.</label>
-        <locationX>842</locationX>
+        <locationX>1007</locationX>
         <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1164,7 +1276,7 @@
     <screens>
         <name>Insert_Iban_IT</name>
         <label>Insert Iban IT</label>
-        <locationX>578</locationX>
+        <locationX>743</locationX>
         <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1253,7 +1365,7 @@
     <screens>
         <name>Paese_IBAN</name>
         <label>Paese IBAN</label>
-        <locationX>710</locationX>
+        <locationX>875</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1282,7 +1394,7 @@
     <screens>
         <name>Screen_Iban_non_Validato</name>
         <label>Screen Iban non Validato</label>
-        <locationX>996</locationX>
+        <locationX>1161</locationX>
         <locationY>2486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1301,7 +1413,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>1370</locationX>
+        <locationX>1568</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1393,7 +1505,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1470,7 +1582,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>2822</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1574,7 +1686,7 @@
     <screens>
         <name>Show_Ibans</name>
         <label>Show Ibans</label>
-        <locationX>908</locationX>
+        <locationX>1073</locationX>
         <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1601,7 +1713,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1772</locationX>
+        <locationX>2003</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
