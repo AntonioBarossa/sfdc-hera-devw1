@@ -1,8 +1,8 @@
 public without sharing class HDT_WS_MulesoftCallerHelper {
 
-    public static String sessionId = '00D58000000KR1c!AQgAQCHK6tkwy4HjQtE1_OD8M3j7S3G1SvIpgXOHHAySqKWaxgy6B0Es8x6kdKmwGRzEHcgDXRbeJ2vv3Jm.3sMmaCtZ6Apk';
+    public static Boolean isMock = true; 
 
-    public static Object createMulesoftCall(String techObj, String requestObj, Boolean isMock ){
+    public static Object createMulesoftCall(String techObj, String requestObj){
 
         Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
 
@@ -10,13 +10,13 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         System.debug('# Technical Object: -> ' + tObj);
         System.debug('# RequestObj -> ' + requestObj);
 
-        HDT_WS_MulesoftCaller.DataBodyRow dbr;
+        HDT_WRP_HttpDataBodyRow dbr;
         if(String.isBlank(requestObj)){
             System.debug('# requestObj is null');
-            dbr = new HDT_WS_MulesoftCaller.DataBodyRow();
+            dbr = new HDT_WRP_HttpDataBodyRow();
         } else {
             System.debug('# requestObj is NOT null');
-            dbr = (HDT_WS_MulesoftCaller.DataBodyRow)JSON.deserialize(requestObj, HDT_WS_MulesoftCaller.DataBodyRow.class);
+            dbr = (HDT_WRP_HttpDataBodyRow)JSON.deserialize(requestObj, HDT_WRP_HttpDataBodyRow.class);
         }
 
         try{
@@ -72,35 +72,13 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
         HDT_WS_MulesoftCaller.HttpObj httpObj = setHttpObject(tObj.tabCode);
 
-
-        if(!isMock){
-            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/service-console/statements/search';
-            //httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/statement/search';
-            httpObj.authValueString = 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=';
-            // httpObj.authValueString = 'auth';
-            //'Content-Type: application/json';
-            //dbr = new HDT_WS_MulesoftCaller.DataBodyRow();
+        if(isMock){
             dbr.applicativo = 'AL';
             dbr.aggregazione = '01';
             dbr.codiceCliente = '1001635149';
             dbr.tipoTransazione = 'EC2';
             dbr.tipoEstrattoConto = 'ORDINARIO';
-
-
-            //dbr.applicativo = 'AL';
-            //dbr.aggregazione = '01';
-            //dbr.codiceCliente = '1000006684';
-            //dbr.tipoTransazione = 'EC1';
-            //dbr.tipoEstrattoConto = 'ORDINARIO';
-            //dbr.dataInizio = '02/02/2015';
-            //dbr.dataFine = '02/02/2015';
-            //dbr.numeroFattura = 'numeroFattura';
-            //dbr.numeroBollettino = 'NumeroBollettino';
-            //dbr.contoContrattuale = 'contoCon';
-            //dbr.societa = '1234';
-            //dbr.contratto = 'contratto';
-            //dbr.loginId = 'loginId';
-        }//
+        }
 
        //ORIGINAL CODE START HERE
        ////REST call
@@ -224,34 +202,29 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
     }
 
     public static HDT_WS_MulesoftCaller.HttpObj setHttpObject(String tabCode){
+
         HDT_WS_MulesoftCaller.HttpObj httpObj = new HDT_WS_MulesoftCaller.HttpObj();
+        httpObj.headersMap = new Map<String, String>();
 
-        List<HDT_TabConfiguration__mdt> endPointMDT = new List<HDT_TabConfiguration__mdt>();
-        endPointMDT = [
-            SELECT EndpointService__c
-            FROM HDT_TabConfiguration__mdt
-            WHERE DeveloperName =: tabCode
-        ];
+        if(isMock){
+            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/service-console/statements/search';
+            httpObj.httpMethod = 'POST';
 
-        /*if(tabCode.equalsIgnoreCase('')){
-            httpObj.endPoint = 'https://hera-salesforce-api-exp-dev.de-c1.cloudhub.io:443/api/v1/statement/search';
-            httpObj.authValueString = 'auth';
-        } else if(tabCode.equalsIgnoreCase('EC')){
-            //TAB -> ESTRATTO CONTO
-            httpObj.endPoint = endPointMDT[0].EndpointService__c;//'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
-            httpObj.authValueString = 'Bearer ' + sessionId;
-        } else if(tabCode.equalsIgnoreCase('EC9')){
-            //TAB -> GESTIONE DEL CREDITO, SCADUTO PER RIATTIVAZIONE, RATE, SOLLECITI, PARTITE NON FATTURATE, ECC
-            httpObj.endPoint = endPointMDT[0].EndpointService__c;//'https://monted-dev-ed.my.salesforce.com/services/apexrest/getExpiredForReactivation/0';
-            httpObj.authValueString = 'Bearer ' + sessionId;
-        } else if(tabCode.equalsIgnoreCase('paperless')){
-            //TAB -> PAPERLESS
-            httpObj.endPoint = endPointMDT[0].EndpointService__c;//'https://monted-dev-ed.my.salesforce.com/services/apexrest/getPaperless/0';
-            httpObj.authValueString = 'Bearer ' + sessionId;
-        }*/
-
-        httpObj.endPoint = endPointMDT[0].EndpointService__c;
-        httpObj.authValueString = 'Bearer ' + sessionId;
+            httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');
+            httpObj.headersMap.put('Content-Type', 'application/json');
+        } else {
+            List<HDT_TabConfiguration__mdt> endPointMDT = new List<HDT_TabConfiguration__mdt>();
+            endPointMDT = [
+                SELECT EndpointService__c
+                FROM HDT_TabConfiguration__mdt
+                WHERE DeveloperName =: tabCode
+            ];
+    
+            httpObj.endPoint = endPointMDT[0].EndpointService__c;
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Authorization', Label.MontoDevAuth);
+            httpObj.headersMap.put('Content-Type', 'application/json');
+        }
 
         return httpObj;
     }
