@@ -1450,10 +1450,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Feature Request</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Inversione del Contatore</fullName>
             <default>false</default>
         </values>
@@ -1467,10 +1463,6 @@
         </values>
         <values>
             <fullName>Prescrizione Fatture</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Question</fullName>
             <default>false</default>
         </values>
         <values>

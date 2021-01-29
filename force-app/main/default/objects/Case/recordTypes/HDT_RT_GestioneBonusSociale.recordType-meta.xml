@@ -1446,10 +1446,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Feature Request</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
         </values>
@@ -1459,10 +1455,6 @@
         </values>
         <values>
             <fullName>Piano Rateizzazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Question</fullName>
             <default>false</default>
         </values>
         <values>
