@@ -2,11 +2,6 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
     <standardValue>
-        <fullName>Feature Request</fullName>
-        <default>false</default>
-        <label>Feature Request</label>
-    </standardValue>
-    <standardValue>
         <fullName>Question</fullName>
         <default>false</default>
         <label>Question</label>
@@ -135,5 +130,65 @@
         <fullName>Verifica GDM</fullName>
         <default>false</default>
         <label>Verifica GDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Testo Contratto in Bolletta</fullName>
+        <default>false</default>
+        <label>Testo Contratto in Bolletta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+        <default>false</default>
+        <label>Unificazione/Separazione CA-Bolletta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sollecito Emissione Bolletta</fullName>
+        <default>false</default>
+        <label>Sollecito Emissione Bolletta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gestione Bonus Sociale</fullName>
+        <default>false</default>
+        <label>Gestione Bonus Sociale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ritorno a Fatturazione Bimestrale/Mensile</fullName>
+        <default>false</default>
+        <label>Ritorno a Fatturazione Bimestrale/Mensile</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Titolarità POD/PDR</fullName>
+        <default>false</default>
+        <label>Verifica Titolarità POD/PDR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inversione del Contatore</fullName>
+        <default>false</default>
+        <label>Inversione del Contatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Prescrizione Fatture</fullName>
+        <default>false</default>
+        <label>Prescrizione Fatture</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ricostruzione Consumi</fullName>
+        <default>false</default>
+        <label>Ricostruzione Consumi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Errore di Fatturazione</fullName>
+        <default>false</default>
+        <label>Errore di Fatturazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
+        <default>false</default>
+        <label>Rettifica Consumi - Errore Stima Consumi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rettifica Consumi - Errore di Lettura</fullName>
+        <default>false</default>
+        <label>Rettifica Consumi - Errore di Lettura</label>
     </standardValue>
 </StandardValueSet>
