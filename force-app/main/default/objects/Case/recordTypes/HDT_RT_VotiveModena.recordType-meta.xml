@@ -44,6 +44,64 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillingErrorArgument__c</picklist>
+        <values>
+            <fullName>CMOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commissioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposito cauzionale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diritti fissi contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eventi eccezionali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interessi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potenza%2FCalibro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spese Accessorie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spese sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima rata piatta Ferrara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storno per dati fiscali errati</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>BillingFrequency__c</picklist>
+        <values>
+            <fullName>Bimestrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
             <fullName>G1%2C6</fullName>
@@ -194,6 +252,223 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Caliber__c</picklist>
+        <values>
+            <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2%2C5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CancellationReasonDescription__c</picklist>
+        <values>
+            <fullName>AG02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC04</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RG03</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SG02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SG04</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SW02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SW03</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SW07</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VG02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VS02</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CancellationReason__c</picklist>
+        <values>
+            <fullName>Annullamento da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullo cambio offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullo voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Classificazione errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Codice ABI obsoleto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancanza titolarità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multi-ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No conferma Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDR%2FPOD errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality - Annullo cambio offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca ai sensi del comma 6%2E3 del TIMOE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento da cliente oltre i termini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento tramite quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CemeteryName__c</picklist>
         <values>
             <fullName>TBD</fullName>
@@ -242,6 +517,28 @@
         </values>
         <values>
             <fullName>Temporanea permanente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ConsumptionsCorrectionType__c</picklist>
+        <values>
+            <fullName>Errore Stima Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Lettura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CustomerPaymentAgreements__c</picklist>
+        <values>
+            <fullName>Non pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -316,6 +613,25 @@
         <picklist>Nome_cimitero__c</picklist>
         <values>
             <fullName>null</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OperationType__c</picklist>
+        <values>
+            <fullName>Separazione CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Separazione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione bolletta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -403,6 +719,17 @@
         <values>
             <fullName>Medium</fullName>
             <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ReadType__c</picklist>
+        <values>
+            <fullName>Reale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stimata</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -1161,6 +1488,17 @@
             <fullName>AT</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Voltage__c</picklist>
         <values>
             <fullName>BT</fullName>
             <default>false</default>

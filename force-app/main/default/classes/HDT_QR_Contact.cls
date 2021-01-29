@@ -19,7 +19,7 @@ public inherited sharing class HDT_QR_Contact {
     * @param String accountid
     * @return Contact
     */
-    public Contact getPrimaryContactByAccount(String accountId){
+    public List<Contact> getPrimaryContactByAccount(String accountId){
         return [
             SELECT
             Email

@@ -1,0 +1,49 @@
+<template>
+    <template if:true={orderParentRecord}>
+        <lightning-card>
+            <div class="slds-page-header slds-page-header_record-home slds-p-around_medium" >
+                <div class="slds-page-header__row">
+                    <div class="slds-page-header__col-title">
+                        <div class="slds-media">
+                            <div class="slds-media__body">
+                                <div class="slds-page-header__name">
+                                    <div class="slds-page-header__name-title">
+                                        <h3 class="slds-setup-assistant__step-summary-title slds-text-heading_small">
+                                            { orderName }
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__row slds-page-header__row_gutters">
+                    <div class="slds-page-header__col-details slds-p-around_medium">
+                        <ul class="slds-page-header__detail-row">
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Account Name</div>
+                                <div class="slds-truncate" title="Account Name">
+                                    { accountName }
+                                </div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Codice Fiscale">
+                                    Codice Fiscale
+                                </div>
+                                <div class="slds-truncate" title="Codice Fiscale">
+                                    { accountFiscalCode }
+                                </div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
+                                <div class="slds-truncate" title="Partita Iva">
+                                    { accountVatNumber }
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+    </template>
+</template>

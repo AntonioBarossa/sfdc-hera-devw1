@@ -1,10 +1,9 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
-import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
     @api recordtype;
@@ -47,6 +46,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track newServicePoint;
     validForm = true;
     verifyAddressDisabledOnUpdate = true;
+    @api theRecord= [];
     
     /**
      * Handle save button availability
@@ -68,6 +68,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     handleAddressVerification(event){
         this.hasAddressBeenVerified = event.detail;
+    }
+    @api
+    saveWrapObject(wrapObjectInput){
+        console.log('wrapObjectInput in entrata'+ JSON.stringify(wrapObjectInput));
+        this.wrapObjectInput = wrapObjectInput;
+        console.log('wrapObjectInput in USCITA'+ JSON.stringify(this.wrapObjectInput));
+
     }
 
     /**
@@ -168,6 +175,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     connectedCallback(){
         this.loading = true;
         
+        /*getRecordTypeName(this.selectedservicepoint['Service Point']).then(data=>{
+            console.log('getRecordTypeName ******************+ START');
+            console.log('getRecordTypeName data'+ JSON.stringify(data));
+            this.objectApiName.keys(data).forEach(keys=>{
+                this.recordtype.push(
+                    {
+                        label: data[keys],
+                        value: keys
+                        
+                    }
+                ) 
+            });
+
+        });*/
         getCustomSettings().then(data => {
             //get data fields based on recordtype label
             switch(this.recordtype.label){
@@ -209,17 +230,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                            // this.fieldsDataRaw = this.customSettings.FieldGas__c;
                             this.fieldsDataReqRaw =(this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c  : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c ) );
                     }
-                    //this.template.querySelector('c-hdt-target-object-address-fields').connectedCallback();
                     this.manageFields();
                     this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObject(this.servicePointRetrievedData);
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
-                        message: error.body.message,
+                        message: error.message,
                         variant: 'error'
                     });
                     this.dispatchEvent(toastErrorMessage);
-                    console.log('error****'+error.body.message);
+                    console.log('error****'+error.message);
                 });
 
             } else {
@@ -333,7 +353,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Check validity before saving
      */
     validationChecks(){
-
         if(this.selectedservicepoint != undefined){
             if(Object.keys(this.allSubmitedFields).length != 0){
                 for (var key in this.allSubmitedFields) {
@@ -357,21 +376,101 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             
             let reqdata = this.allSubmitedFields[this.fieldsDataReq[i]];
 
-            // if( reqdata == undefined || reqdata == '' ){
-            //     this.validForm = false;
-            //     this.fieldsDataWithError.push(this.fieldsDataReq[i]);
-            // }
+            /* if( reqdata == undefined || reqdata == '' ){
+                this.validForm = false;
+                this.fieldsDataWithError.push(this.fieldsDataReq[i]);
+            }*/
         }
 
         for(var i=0; i<this.fieldsAddressReq.length; i++){
             
             let reqaddr = this.allSubmitedFields[this.fieldsAddressReq[i]];
 
-            // if( reqaddr == undefined || reqaddr == '' ){
-            //     this.validForm = false;
-            //     this.fieldsAddressWithError.push(this.fieldsAddressReq[i]);
-            // }
+            /* if( reqaddr == undefined || reqaddr == '' ){
+                this.validForm = false;
+                this.fieldsAddressWithError.push(this.fieldsAddressReq[i]);
+            }*/
         }
+    }
+    
+        updateServicePoint(){
+        console.log('update START');
+        console.log('servicePointRetrievedData : ' + JSON.stringify(this.servicePointRetrievedData));
+        if(this.servicePointRetrievedData!= undefined){
+
+            if(this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']){
+                this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
+            }
+            if(this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune']){
+                this.servicePointRetrievedData['SupplyCity__c'] = this.theRecord['Comune'];
+            }
+            if(this.servicePointRetrievedData['SupplyPostalCode__c'] != this.theRecord['CAP']){
+                this.servicePointRetrievedData['SupplyPostalCode__c'] = this.theRecord['CAP'];
+            }
+            if(this.servicePointRetrievedData['SupplyCountry__c'] != this.theRecord['Stato']){
+                this.servicePointRetrievedData['SupplyCountry__c'] = this.theRecord['Stato'];
+            }
+            if(this.servicePointRetrievedData['SupplyProvince__c'] != this.theRecord['Provincia']){
+                this.servicePointRetrievedData['SupplyProvince__c'] = this.theRecord['Provincia'];
+            }
+            if(this.servicePointRetrievedData['SupplySAPCityCode__c'] != this.theRecord['Codice Comune SAP']){
+                this.servicePointRetrievedData['SupplySAPCityCode__c'] = this.theRecord['Codice Comune SAP'];
+            }
+            if(this.servicePointRetrievedData['SupplySAPStreetCode__c'] != this.theRecord['Codice Via Stradario SAP']){
+                this.servicePointRetrievedData['SupplySAPStreetCode__c'] = this.theRecord['Codice Via Stradario SAP'];
+            }
+            if(this.servicePointRetrievedData['SupplyStreetNumberExtension__c'] != this.theRecord['Estens.Civico']){
+                this.servicePointRetrievedData['SupplyStreetNumberExtension__c'] = this.theRecord['Estens.Civico'];
+            }
+            if(this.servicePointRetrievedData['SupplyStreetNumber__c'] != this.theRecord['Civico']){
+                this.servicePointRetrievedData['SupplyStreetNumber__c'] = this.theRecord['Civico'];
+            }
+            if(this.servicePointRetrievedData['supplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']){
+                this.servicePointRetrievedData['supplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
+            }
+            
+        }
+
+        console.log('update END');
+    }
+
+    updateSubmitedField(){
+        console.log(' create START');
+        console.log(' create START' + JSON.stringify(this.allSubmitedFields));
+        if(this.allSubmitedFields!= undefined){
+
+            if(this.allSubmitedFields['SupplyStreet__c'] != this.theRecord['Via']){
+                this.allSubmitedFields['SupplyStreet__c'] = this.theRecord['Via'];
+            }
+            if(this.allSubmitedFields['SupplyCity__c'] != this.theRecord['Comune']){
+                this.allSubmitedFields['SupplyCity__c'] = this.theRecord['Comune'];
+            }
+            if(this.allSubmitedFields['SupplyPostalCode__c'] != this.theRecord['CAP']){
+                this.allSubmitedFields['SupplyPostalCode__c'] = this.theRecord['CAP'];
+            }
+            if(this.allSubmitedFields['SupplyCountry__c'] != this.theRecord['Stato']){
+                this.allSubmitedFields['SupplyCountry__c'] = this.theRecord['Stato'];
+            }
+            if(this.allSubmitedFields['SupplyProvince__c'] != this.theRecord['Provincia']){
+                this.allSubmitedFields['SupplyProvince__c'] = this.theRecord['Provincia'];
+            }
+            if(this.allSubmitedFields['SupplySAPCityCode__c'] != this.theRecord['Codice Comune SAP']){
+                this.allSubmitedFields['SupplySAPCityCode__c'] = this.theRecord['Codice Comune SAP'];
+            }
+            if(this.allSubmitedFields['SupplySAPStreetCode__c'] != this.theRecord['Codice Via Stradario SAP']){
+                this.allSubmitedFields['SupplySAPStreetCode__c'] = this.theRecord['Codice Via Stradario SAP'];
+            }
+            if(this.allSubmitedFields['SupplyStreetNumberExtension__c'] != this.theRecord['Estens.Civico']){
+                this.allSubmitedFields['SupplyStreetNumberExtension__c'] = this.theRecord['Estens.Civico'];
+            }
+            if(this.allSubmitedFields['SupplyStreetNumber__c'] != this.theRecord['Civico']){
+                this.allSubmitedFields['SupplyStreetNumber__c'] = this.theRecord['Civico'];
+            }
+            if(this.allSubmitedFields['supplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']){
+                this.allSubmitedFields['supplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
+            }
+        }
+
     }
 
     /**
@@ -379,6 +478,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     save(){
 
+        this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+        
         this.validationChecks();
 
         if (this.validForm) {
@@ -386,8 +487,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.loading = true;
 
             if(this.selectedservicepoint != undefined){
+                this.updateServicePoint();
                 this.confirm();
             } else {
+                this.updateSubmitedField();
                 this.create();
             }
 
@@ -419,13 +522,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     /**
      * Get save button name
      */
-    get saveButtonName(){
+    /*get saveButtonName(){
         if(this.selectedservicepoint != undefined){
             return 'Conferma';
         } else {
             return 'Salva';
         }
-    }
+    }*/
 
     /**
      * Get verify address for update case

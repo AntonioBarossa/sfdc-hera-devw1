@@ -24,12 +24,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
 
-        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
         Opportunity__r.Sale__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
         AND ServicePoint__r.SupplyCity__c = :city
-        AND ServicePoint__r.RecordType.Name = :type
+        AND ServicePoint__r.RecordType.DeveloperName = :type
         WITH SECURITY_ENFORCED];
     }
 
@@ -51,7 +51,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
-        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
@@ -93,7 +93,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
             SELECT  
             Quote__c,
             ServicePoint__c,
-            ServicePoint__r.RecordType.Name
+            ServicePoint__r.RecordType.DeveloperName
             FROM SaleServiceItem__c
             WHERE Quote__c = :quoteId
             WITH SECURITY_ENFORCED

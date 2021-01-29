@@ -242,6 +242,66 @@
                 <default>false</default>
                 <label>Chiuso</label>
             </value>
+            <value>
+                <fullName>Blocco Effettuato</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Blocco Effettuato</label>
+            </value>
+            <value>
+                <fullName>Blocco Non Effettuato</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Blocco Non Effettuato</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni con il DL</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Comunicazioni con il DL</label>
+            </value>
+            <value>
+                <fullName>Fattura messa a perdita</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fattura messa a perdita</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione - Inviare Comunicazione Disconoscimento</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In Lavorazione - Inviare Comunicazione Disconoscimento</label>
+            </value>
+            <value>
+                <fullName>In Lavorazione - Inviare Lettera di Legittimità</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>In Lavorazione - Inviare Lettera di Legittimità</label>
+            </value>
+            <value>
+                <fullName>Istruttoria Creata</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Istruttoria Creata</label>
+            </value>
+            <value>
+                <fullName>Istruttoria non necessaria</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Istruttoria non necessaria</label>
+            </value>
+            <value>
+                <fullName>Prescrizione concessa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prescrizione concessa</label>
+            </value>
+            <value>
+                <fullName>Prescrizione non concessa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prescrizione non concessa</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
