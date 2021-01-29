@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import createQuoteLine from '@salesforce/apex/HDT_LC_EditQuote.createQuoteLine';
+// import createQuoteLine from '@salesforce/apex/HDT_LC_EditQuote.createQuoteLine';
 
 export default class hdtEditQuote extends LightningElement {
 
@@ -16,22 +16,24 @@ export default class hdtEditQuote extends LightningElement {
     }
 
     disconnectedCallback(){
-        
-        createQuoteLine({quoteId: this.quoteId}).then(data =>{
-            console.log('Disconnected hdtEditQuote: ');
-            console.log('Created QuoteLines: ');
-            
-            console.log(JSON.parse(JSON.stringify(data)));
-            this.dispatchEvent(new CustomEvent('cretedquotelines'));
 
-        }).catch(error => {
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
-        });
+        this.dispatchEvent(new CustomEvent('cretedquotelines'));
+        
+        // createQuoteLine({quoteId: this.quoteId}).then(data =>{
+        //     console.log('Disconnected hdtEditQuote: ');
+        //     console.log('Created QuoteLines: ');
+            
+        //     console.log(JSON.parse(JSON.stringify(data)));
+        //     this.dispatchEvent(new CustomEvent('cretedquotelines'));
+
+        // }).catch(error => {
+        //     const toastErrorMessage = new ShowToastEvent({
+        //         title: 'Errore',
+        //         message: error.message,
+        //         variant: 'error'
+        //     });
+        //     this.dispatchEvent(toastErrorMessage);
+        // });
         
     }
 

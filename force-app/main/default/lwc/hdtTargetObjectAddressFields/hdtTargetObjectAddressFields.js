@@ -1,5 +1,4 @@
 import { LightningElement, api, track } from 'lwc';
-
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 
 export default class hdtTargetObjectAddressFields extends LightningElement {
@@ -9,7 +8,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api wrapAddressObject;
     @api fieldsDataReq;
     @api selectedservicepoint;
-    @api servicePointRetrievedData ;
+    @api servicePointRetrievedData;
     hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
     verifyDisabledOnUpdate = true;
@@ -151,27 +150,23 @@ handleTextChange(event){
 
     }
 
-@api
+    @api
 disabledverifyFieldsAddressDisabled(){
     this.verifyFieldsAddressDisabled= false;
 }
 
-@api
+    @api
     toObjectAddressInit(data){
 
         let fieldsDataObject = [];
-        
+ 
         Object.keys(data).forEach(keys=> {
         
-
-
                 fieldsDataObject.push(
                     {
                         fieldname: keys,
                         required : false,
-
                         value: data[keys],
-
                         disabled: false
                     }
                 ) 
@@ -181,8 +176,7 @@ disabledverifyFieldsAddressDisabled(){
         return fieldsDataObject;
     }
 
-
-@api
+    @api
     connectedCallback()
     {
        /* let bool = false;
@@ -205,7 +199,6 @@ disabledverifyFieldsAddressDisabled(){
             getInstanceWrapAddressObject({s:this.selectedservicepoint}).then(data => {
                 console.log('connectedCallback - getInstanceWrapAddressObject - on selectedservicepoint'+ JSON.stringify(data));
                 this.wrapAddressObject = this.toObjectAddressInit(data);
-
                 console.log('wrapAddressObject********************' + JSON.stringify(this.wrapAddressObject));
                 //this.toObjectAddress();
                 
@@ -216,35 +209,28 @@ disabledverifyFieldsAddressDisabled(){
     }
 
 
-@api
-
+    @api
     getInstanceWrapObject(servicePointRetrievedData){
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
-
             this.handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
             //this.wrapAddressObject = this.toObjectAddressInit(data);
-            
 
             console.log('getInstanceWrapObject - wrapAddressObject' + JSON.stringify(this.wrapAddressObject));
             //this.toObjectAddress();
             
         });
 
-        
         console.log('getInstanceWrapObject - END');
     }
+
     /**
      * Get availability of verify address button
      */
-    
     /*get verifyFieldsAddressDisabled(){
-        console.log('verifyFieldsAddressDisabled - START ' + JSON.stringify(this.wrapAddressObject));
-        let result = true;       
-        
-
+        let result = true;
 
         if(
             (
@@ -262,15 +248,14 @@ disabledverifyFieldsAddressDisabled(){
         }
         
         return result;
-
     }*/
-@api
+
+    @api
     stampWrapObject(){
         console.log('wrapAddressObject in StampWrapAddressObject*******************'+ this.wrapAddressObject);
     }
 
-
-  @api  
+    @api  
      objectToMap(wrapAddressObject) {
         console.log('hdtTargetObjectAddressFields - objectToMap START');  
         let wrapObjectInput=[];
@@ -285,7 +270,6 @@ disabledverifyFieldsAddressDisabled(){
         };
         console.log('hdtTargetObjectAddressFields - objectToMap END');
         return wrapObjectInput;
-
     }
 
     @api
@@ -307,20 +291,14 @@ disabledverifyFieldsAddressDisabled(){
         });*/
         console.log('hdtTargetObjectAddressFields - toObjectAddress END');
 
-
- }
-
- 
-
+    }
 
     /**
      * Get address fields values
      * @param {*} event 
      */
     handleFieldsDataChange(event){
-
-        this.disabledverifyFieldsAddressDisabled()
-        console.log('hdtTargetObjectAddressFields - handleFieldsDataChange Start');
+        this.disabledverifyFieldsAddressDisabled();
 
         this.submitedAddressFields[event.target.fieldName] = event.target.value;
         
@@ -370,6 +348,4 @@ disabledverifyFieldsAddressDisabled(){
           }));
     }
 
-
 }
-

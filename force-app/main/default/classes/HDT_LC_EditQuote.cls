@@ -8,6 +8,7 @@
 
 public inherited sharing class HDT_LC_EditQuote {
 
+    /*
     private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
     private static HDT_QR_Product productQr = new HDT_QR_Product();
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
@@ -19,6 +20,7 @@ public inherited sharing class HDT_LC_EditQuote {
     private static final String PRODUCTPDRCODE = 'pdr';
     private static final String PAYMENTTYPERID = 'RID';
     private static final String PAYMENTTYPEBOLL = 'Bollettino postale';
+    */
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -27,6 +29,7 @@ public inherited sharing class HDT_LC_EditQuote {
     * @param String quoteId – SBQQ__Quote__c.Id
     * @return List<SBQQ__QuoteLine__c>
     */
+    /*
     @AuraEnabled
     public static List<SBQQ__QuoteLine__c> createQuoteLine(String quoteId){
 
@@ -76,7 +79,7 @@ public inherited sharing class HDT_LC_EditQuote {
                 SBQQ__Number__c = 1,
                 SBQQ__Bundle__c = true,
                 // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
-                // SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
                 SBQQ__Quantity__c = 1,
                 SBQQ__NetPrice__c = 1,
                 SBQQ__UnitCost__c = 1
@@ -91,7 +94,7 @@ public inherited sharing class HDT_LC_EditQuote {
                 SBQQ__Number__c = 2,
                 SBQQ__OptionLevel__c = 1,
                 // SBQQ__PricebookEntryId__c = '01s2o00000142oqAAA',
-                // SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
+                SBQQ__PricebookEntryId__c = '01u0E00000IbG8dQAF',
                 SBQQ__RequiredBy__c = primaryQuoteLine.Id,
                 SBQQ__Quantity__c = 1,
                 ServicePoint__c = item.ServicePoint__r.Id
@@ -136,12 +139,12 @@ public inherited sharing class HDT_LC_EditQuote {
 
          return quoteLineObjects;
 
-    }
+    }*/
 
-    public inherited sharing class HDT_WRP_QuoteLineAssoc {
+    /*public inherited sharing class HDT_WRP_QuoteLineAssoc {
 
         SBQQ__QuoteLine__c primary = new SBQQ__QuoteLine__c();
         SBQQ__QuoteLine__c secondary = new SBQQ__QuoteLine__c();
-    }
-
+    }*/
+    
 }

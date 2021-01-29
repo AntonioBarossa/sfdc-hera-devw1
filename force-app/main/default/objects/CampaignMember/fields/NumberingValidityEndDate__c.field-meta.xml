@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NumberingValidityEndDate__c</fullName>
+    <description>Data oltre la quale la chiamata non deve essere effettuata. Da processo standard il campo viene valorizzato dall’utente Marketing Cloud</description>
+    <externalId>false</externalId>
+    <label>Data fine validità numerazione</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>
