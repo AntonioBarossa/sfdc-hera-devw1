@@ -12,9 +12,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Null</fullName>
+                <fullName>Approvazione Quote</fullName>
                 <default>false</default>
-                <label>Null</label>
+                <label>Approvazione Quote</label>
             </value>
         </valueSetDefinition>
     </valueSet>

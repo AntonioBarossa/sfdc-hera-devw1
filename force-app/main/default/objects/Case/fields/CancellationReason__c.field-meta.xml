@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CancellationReason__c</fullName>
+    <description>Indica la motivazione per cui si sta innescondo un processo del cluster Annullamento</description>
+    <externalId>false</externalId>
+    <label>Motivazione Annullamento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_CancellationReason</valueSetName>
+    </valueSet>
+</CustomField>

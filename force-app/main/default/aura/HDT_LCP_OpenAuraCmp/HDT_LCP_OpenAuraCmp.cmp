@@ -1,0 +1,21 @@
+<aura:component implements="lightning:isUrlAddressable,lightning:availableForFlowScreens,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
+    
+    <!--common-->
+    <aura:attribute name="flowName" type="String" />
+
+    <!-- case id - richiamato dal processo -->
+    <aura:attribute name="id" type="String" />
+    
+    <!-- service catalog -->
+    <aura:attribute name="processType" type="String" />
+    <aura:attribute name="recordTypeName" type="String" />
+
+    <!-- cluster - Annullamento processi-->
+    <!--aura:attribute name="cluster" type="String" /-->
+    <aura:attribute name="recordToCancell" type="String" />
+    <aura:attribute name="sObjectRecordToCancell" type="String" />
+
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
+
+ </aura:component>

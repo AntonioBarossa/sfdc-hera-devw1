@@ -23,4 +23,26 @@ public inherited sharing class HDT_QR_ServicePoint {
         List<ServicePoint__c> servicePoints = Database.query(query);
         return servicePoints;
     }
+
+    /*
+	 * Query for Serial Number
+	 */
+	public List<ServicePoint__c> getServicePointsByMeterSerialNumber(String serialNumber, String fields) {
+		String stringSerialNumber = '%' + serialNumber + '%';
+		String query = 'SELECT ' + fields +
+				' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber ';
+		List<ServicePoint__c> servicePoints = Database.query(query);
+		return servicePoints;
+    }
+    
+    /*
+	 * Query for POD
+	 */
+	public List<ServicePoint__c> getServicePointsByCode(String code, String fields) {
+		String stringCode = code.trim();
+		String query = 'SELECT ' + fields +
+				' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ';
+		List<ServicePoint__c> servicePoints = Database.query(query);
+		return servicePoints;
+	}
 }

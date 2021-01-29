@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillingErrorArgument__c</fullName>
+    <description>Indica l&apos;argomento specifico dell&apos;errore di fatturazione segnalato dal cliente</description>
+    <externalId>false</externalId>
+    <label>Argomento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CMOR</fullName>
+                <default>false</default>
+                <label>CMOR</label>
+            </value>
+            <value>
+                <fullName>Commissioni</fullName>
+                <default>false</default>
+                <label>Commissioni</label>
+            </value>
+            <value>
+                <fullName>Deposito cauzionale</fullName>
+                <default>false</default>
+                <label>Deposito cauzionale</label>
+            </value>
+            <value>
+                <fullName>Diritti fissi contratto</fullName>
+                <default>false</default>
+                <label>Diritti fissi contratto</label>
+            </value>
+            <value>
+                <fullName>Eventi eccezionali</fullName>
+                <default>false</default>
+                <label>Eventi eccezionali</label>
+            </value>
+            <value>
+                <fullName>Interessi</fullName>
+                <default>false</default>
+                <label>Interessi</label>
+            </value>
+            <value>
+                <fullName>Potenza/Calibro</fullName>
+                <default>false</default>
+                <label>Potenza/Calibro</label>
+            </value>
+            <value>
+                <fullName>Spese Accessorie</fullName>
+                <default>false</default>
+                <label>Spese Accessorie</label>
+            </value>
+            <value>
+                <fullName>Spese sollecito</fullName>
+                <default>false</default>
+                <label>Spese sollecito</label>
+            </value>
+            <value>
+                <fullName>Stima rata piatta Ferrara</fullName>
+                <default>false</default>
+                <label>Stima rata piatta Ferrara</label>
+            </value>
+            <value>
+                <fullName>Storno per dati fiscali errati</fullName>
+                <default>false</default>
+                <label>Storno per dati fiscali errati</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

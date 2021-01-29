@@ -1,0 +1,38 @@
+<template>
+    <div class="demo-only" style="height: 640px;">
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeRecordTypeSelectionModal}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="small">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">New Service Point</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div if:true={objectInfo.data} class="slds-m-around_medium">
+                        <lightning-layout class="slds-m-around_large">
+                            <lightning-layout-item class="slds-p-around_medium" size="4">
+                                <h4>Select a record type </h4>
+                            </lightning-layout-item>
+                            <lightning-layout-item class="slds-p-top_medium" size="4">
+                                <lightning-radio-group class="slds-line-height-text" name="recordType"
+                                options={recordTypeOptions}
+                                value={defaultRecordType.value}
+                                type="radio"
+                                onchange={handleRecordTypeSelection}>
+                                </lightning-radio-group>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Annulla" variant="neutral" onclick={closeRecordTypeSelectionModal}></lightning-button>
+                    <lightning-button label="Avanti" variant="brand" onclick={next} class="slds-m-left_x-small"></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

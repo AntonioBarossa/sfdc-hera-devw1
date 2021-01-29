@@ -1,4 +1,4 @@
-name: Manual Deploy DEVW1
+name: ManualDeployDEVW1
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -27,11 +27,11 @@ jobs:
         ./sfdx-cli/install
  # Runs a set of commands using the runners shell
     - name: 'Decrypt file'
-      run: openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out server.key -base64 -K ${{secrets.DECRYPTION_KEY}} -iv ${{secrets.DECRYPTION_IV}}
+      run: openssl enc -nosalt -aes-256-cbc -d -in assets/server2.key.enc -out server.key -base64 -K ${{secrets.DECRYPTION_KEY_NEW}} -iv ${{secrets.DECRYPTION_IV_NEW}}
     - name: 'Authorize'
       run: |
         echo username value ${{ secrets.USERNAME_DEVW1 }}
-        sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY_DEW1 }} --username=${{ secrets.USERNAME_DEVW1  }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
+        sfdx force:auth:jwt:grant --clientid=${{ secrets.CONSUMER_KEY_DEVW1_NEW }} --username=${{ secrets.USERNAME_DEVW1_NEW  }} --jwtkeyfile server.key --setdefaultdevhubusername --setalias=hub-org
     - name: 'Convert Metadata'
       run: sfdx force:source:convert -x ./manifest/package.xml --outputdir=convert
     - name: 'Run Test on Metadata'

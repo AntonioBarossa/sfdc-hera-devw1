@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactID__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>The subscriber key for the affected subscriber</description>
+    <externalId>false</externalId>
+    <label>ID Contatto</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>SMS Tracking</relationshipLabel>
+    <relationshipName>SMS_Tracking</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

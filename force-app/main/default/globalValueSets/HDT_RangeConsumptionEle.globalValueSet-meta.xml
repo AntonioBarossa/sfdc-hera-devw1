@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>&lt; 10 W</fullName>
+        <default>false</default>
+        <label>&lt; 10 W</label>
+    </customValue>
+    <customValue>
+        <fullName>da 11 W a 60 W</fullName>
+        <default>false</default>
+        <label>da 11 W a 60 W</label>
+    </customValue>
+    <customValue>
+        <fullName>da 61 W a 150 W</fullName>
+        <default>false</default>
+        <label>da 61 W a 150 W</label>
+    </customValue>
+    <customValue>
+        <fullName>&gt; 150 W</fullName>
+        <default>false</default>
+        <label>&gt; 150 W</label>
+    </customValue>
+    <masterLabel>Fascia Consumo Ele</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

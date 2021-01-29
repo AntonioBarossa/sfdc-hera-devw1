@@ -41,19 +41,4 @@
             <default>true</default>
         </values>
     </picklistValues>
-    <picklistValues>
-        <picklist>SBQQ__TargetField__c</picklist>
-        <values>
-            <fullName>Discount %28%25%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Discount %28Amt%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Unit Price</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
 </RecordType>

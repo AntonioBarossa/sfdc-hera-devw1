@@ -1,0 +1,16 @@
+<template>
+    <template if:true={orderParentId}>
+        <lightning-card title="Gestione Ordini">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+            </template>
+            <lightning-datatable
+                key-field="id"
+                data={childOrdersList}
+                columns={columnsDocumenti}
+                hide-checkbox-column="true"
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </lightning-card>
+    </template>
+</template>

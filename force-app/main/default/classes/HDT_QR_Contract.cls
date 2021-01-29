@@ -1,3 +1,4 @@
+
 public with sharing class HDT_QR_Contract {
 
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
@@ -7,6 +8,7 @@ public with sharing class HDT_QR_Contract {
 
     }
         /**
+
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get active records by accountId
     * @param String accountId
@@ -26,7 +28,6 @@ public with sharing class HDT_QR_Contract {
             WITH SECURITY_ENFORCED
         ];
     }
-
 
     @AuraEnabled(cacheable=true)
     public static Contract getContractFromRow(string cNumber,string accountId){
@@ -49,4 +50,5 @@ public with sharing class HDT_QR_Contract {
     system.debug('getContractFromRow END ' + con);
     return c;
  }
+
 }

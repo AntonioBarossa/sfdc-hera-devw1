@@ -8,14 +8,17 @@ export default class hdtSupplySelection extends LightningElement {
     @api saleRecord;
     showCreateTargetObjectButton = false;
     selectedServicePoint;
+
     disabledInput = false;
     disabledNext = false;
     hiddenEdit = true;
+
 
     /**
      * Show create button when process is undefined
      */
     connectedCallback(){
+
         console.log('connectedCallback START');
 
         if(this.processType === undefined || this.processType === ''){
@@ -26,6 +29,7 @@ export default class hdtSupplySelection extends LightningElement {
         console.log('connectedCallback END');
     }
  
+
     
     /**
      * Get selected service point
@@ -35,7 +39,9 @@ export default class hdtSupplySelection extends LightningElement {
     }
 
     /**
+
      * Dispatch the new created service point to wizard
+
      */
     handleNewServicePoint(event){
         let newServicePoint = event.detail;
@@ -43,6 +49,7 @@ export default class hdtSupplySelection extends LightningElement {
     }
 
     /**
+
      * Handle the new tile creation
      */
     handleNewTile(){
@@ -63,6 +70,7 @@ export default class hdtSupplySelection extends LightningElement {
         this.toggle();
     }
        /**
+
      * Dispatch confirmed service point
      */
     handleConfirmServicePoint(event){
@@ -71,3 +79,4 @@ export default class hdtSupplySelection extends LightningElement {
     }
 
 }
+
