@@ -5,6 +5,21 @@
     <description>Record type per gli ordini di Attivazione</description>
     <label>Attivazione</label>
     <picklistValues>
+        <picklist>ConnectionType__c</picklist>
+        <values>
+            <fullName>Permanente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea permanente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
             <fullName>Mail</fullName>
