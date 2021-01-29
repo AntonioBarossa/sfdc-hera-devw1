@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OperationType__c</fullName>
+    <description>Picklist specifica per il processo &quot;Unificazione/Separazione CA-Bolletta&quot;.</description>
+    <externalId>false</externalId>
+    <label>Tipologia Operazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Unificazione CA</fullName>
+                <default>false</default>
+                <label>Unificazione CA</label>
+            </value>
+            <value>
+                <fullName>Separazione CA</fullName>
+                <default>false</default>
+                <label>Separazione CA</label>
+            </value>
+            <value>
+                <fullName>Unificazione bolletta</fullName>
+                <default>false</default>
+                <label>Unificazione bolletta</label>
+            </value>
+            <value>
+                <fullName>Separazione bolletta</fullName>
+                <default>false</default>
+                <label>Separazione bolletta</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

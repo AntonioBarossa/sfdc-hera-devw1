@@ -51,7 +51,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            // AND Modalit_di_pagamento__c = :paymentMethod
+            AND PaymentMode__c = :paymentMethod
             WITH SECURITY_ENFORCED
         ];
     }
@@ -73,7 +73,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            // AND Modalit_di_pagamento__c != null
+            AND PaymentMode__c != null
             WITH SECURITY_ENFORCED
         ];
     }

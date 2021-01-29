@@ -3,6 +3,8 @@ public with sharing class HDT_LC_AdvancedSearch {
 	private static List<ServicePoint__c> servicePoints;
 	private static Map<String, String> servicePointFields = getservicePointObjectFields();
 	private static CS_SelezioneFornitura__c customSetting = getCustomSetting();
+	private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+	private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 
 
 	/*
@@ -16,19 +18,22 @@ public with sharing class HDT_LC_AdvancedSearch {
 		switch on queryType {
 			when 'serialnumber' {
 				Integer.valueOf(parameter);
-				servicePoints.addAll(getServicePointsByMeterSerialNumber(parameter));
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumber(parameter, customSetting.OutputServicePoint__c));
 			}
 			when 'pod' {
 				if (parameter.length() < 14 || parameter.length() > 14) {
 					throw new AuraHandledException('La lunghezza dei caratteri è sbagliata');
 				}
-				servicePoints.addAll(getServicePointsByCode(parameter));
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByCode(parameter, customSetting.OutputServicePoint__c));
 			}
 			when 'contract' {
 				if (parameter.length() < 10 || parameter.length() > 10) {
 					throw new AuraHandledException('La lunghezza dei caratteri è sbagliata');
 				}
-				servicePoints.addAll(getServicePointsByCode(parameter));
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByCode(parameter, customSetting.OutputServicePoint__c));
 			}
 			when else {
 			}
@@ -125,28 +130,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 			fields.put(name, label);
 		}
 		return fields;
-	}
-
-	/*
-	 * Query for POD
-	 */
-	static List<ServicePoint__c> getServicePointsByCode(String code) {
-		String stringCode = code.trim();
-		String query = 'SELECT ' + customSetting.OutputServicePoint__c +
-				' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ';
-		List<ServicePoint__c> servicePoints = Database.query(query);
-		return servicePoints;
-	}
-
-	/*
-	 * Query for Serial Number
-	 */
-	static List<ServicePoint__c> getServicePointsByMeterSerialNumber(String serialNumber) {
-		String stringSerialNumber = '%' + serialNumber + '%';
-		String query = 'SELECT ' + customSetting.OutputServicePoint__c +
-				' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber ';
-		List<ServicePoint__c> servicePoints = Database.query(query);
-		return servicePoints;
 	}
 
 	/*

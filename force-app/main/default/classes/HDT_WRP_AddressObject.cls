@@ -21,7 +21,6 @@ public with sharing class HDT_WRP_AddressObject {
     public HDT_WRP_AddressObject(String Stato, string Provincia, string Comune, 
                                     string CAP, string Via, string Civico, 
                                     string CodiceComuneSAP, string EstensCivico, string CodiceViaStradarioSAP,Boolean FlagForzato,Boolean FlagVerificato) 
-
     {
 
         this.Stato = Stato;
@@ -35,7 +34,6 @@ public with sharing class HDT_WRP_AddressObject {
         this.CodiceViaStradarioSAP = CodiceViaStradarioSAP;
         this.FlagForzato = FlagForzato;
         this.FlagVerificato = FlagVerificato;
-
         
     }
 

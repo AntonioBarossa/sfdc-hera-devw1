@@ -2,7 +2,23 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Subentro</fullName>
     <active>true</active>
-    <label>HDT RT Subentro</label>
+    <description>Record type per gli ordini di Subentro</description>
+    <label>Subentro</label>
+    <picklistValues>
+        <picklist>DocSendingMethod__c</picklist>
+        <values>
+            <fullName>Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stampa</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>ElectronicInvoicingMethod__c</picklist>
         <values>
@@ -149,17 +165,32 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SignatureMethod__c</picklist>
+        <values>
+            <fullName>OTP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stampa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vocal Order</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Status</picklist>
         <values>
-            <fullName>Bozza</fullName>
+            <fullName>Activated</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiuso</fullName>
+            <fullName>Draft</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In lavorazione</fullName>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>
