@@ -91,6 +91,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillingFrequency__c</picklist>
+        <values>
+            <fullName>Bimestrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
             <fullName>G1%2C6</fullName>
