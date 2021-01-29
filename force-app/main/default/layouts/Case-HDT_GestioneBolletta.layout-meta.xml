@@ -11,18 +11,18 @@
                 <behavior>Readonly</behavior>
                 <field>AccountId</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_MarketType__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reason__c</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_AccountPhoneNumber__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SalesCompany__c</field>
@@ -39,19 +39,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>EV_ContractStartDate__c</field>
+                <field>ContractStartDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_Campaign__c</field>
+                <field>Campaign__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_BillingFrequency__c</field>
+                <field>BillingFrequency__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_CustomBillText__c</field>
+                <field>CustomBillText__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

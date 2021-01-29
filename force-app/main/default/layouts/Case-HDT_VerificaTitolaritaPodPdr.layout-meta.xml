@@ -11,26 +11,26 @@
                 <behavior>Readonly</behavior>
                 <field>AccountId</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_MarketType__c</field>
+            </layoutItems> -->
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>StartBilledPeriod__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_StartBilledPeriod__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>EV_EndBilledPeriod__c</field>
+                <field>EndBilledPeriod__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SendMode__c</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_AccountPhoneNumber__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SalesCompany__c</field>

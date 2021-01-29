@@ -13,16 +13,16 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_CustomerPaymentAggreements__c</field>
+                <field>CustomerPaymentAgreements__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_Argument__c</field>
+                <field>BillingErrorArgument__c</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_MarketType__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PhoneNumber__c</field>

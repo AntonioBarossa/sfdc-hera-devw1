@@ -11,18 +11,18 @@
                 <behavior>Readonly</behavior>
                 <field>AccountId</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_MarketType__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Reason__c</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>EV_AccountPhoneNumber__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SalesCompany__c</field>
@@ -39,15 +39,15 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_NominativeHavingRightCeaseConcession__c</field>
+                <field>NominativeHavingRightCeaseConcession__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_SocialBonusEndDate__c</field>
+                <field>SocialBonusEndDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>EV_DocumentationRequiredByCityHall__c</field>
+                <field>DocumentationRequired__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
