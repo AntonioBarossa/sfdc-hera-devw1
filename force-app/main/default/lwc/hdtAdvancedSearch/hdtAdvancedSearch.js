@@ -3,7 +3,6 @@ import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServiceP
 import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
-
 import getContractFromRow from '@salesforce/apex/HDT_QR_Contract.getContractFromRow';
 
 export default class HdtAdvancedSearch extends LightningElement {

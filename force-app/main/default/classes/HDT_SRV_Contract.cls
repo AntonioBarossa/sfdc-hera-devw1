@@ -25,6 +25,7 @@ public inherited sharing class HDT_SRV_Contract {
      * @param String fields
      */
     public void checkReadAccess(String fields){
+        
         checkAccessInit(fields, READPERMISSION);
     }
 }
