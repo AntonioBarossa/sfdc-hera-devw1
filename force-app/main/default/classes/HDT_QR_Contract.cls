@@ -46,6 +46,7 @@ public with sharing class HDT_QR_Contract {
     }
     
     
+    
 
     system.debug('getContractFromRow END ' );
     return c;
