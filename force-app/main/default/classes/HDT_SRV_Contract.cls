@@ -18,7 +18,7 @@ public inherited sharing class HDT_SRV_Contract {
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('Contract', fields, crud);
         securityAccess.checkSecurityAccess();
     }
-
+    
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
