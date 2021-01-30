@@ -189,15 +189,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             });
 
         });*/
+        console.log('hdtTargetObjectForm - connectedCallback - recordtype: ', JSON.stringify(this.recordtype));
         getCustomSettings().then(data => {
             //get data fields based on recordtype label
-            switch(this.recordtype.label){
-                case 'Punto Elettrico':
+            switch(this.recordtype.DeveloperName){
+                case 'HDT_RT_Ele':
                     this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldEle__c  : (data.FieldEle__c == null || data.FieldEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldEle__c ) );
                     //this.fieldsDataRaw +=','+ data.FieldEle__c;
                     this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredEle__c  : (data.FieldRequiredEle__c == null || data.FieldRequiredEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredEle__c ) );
                     break;
-                case 'Punto Gas':
+                case 'HDT_RT_Gas':
                     this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c  : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldGas__c ) );
                     //this.fieldsDataRaw = undefined || null  ? this.fieldsDataRaw += data.FieldGas__c :  this.fieldsDataRaw +=','+ data.FieldGas__c;
                    // this.fieldsDataRaw += data.FieldGas__c;
@@ -208,7 +209,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             console.log(JSON.stringify(this.selectedservicepoint)+'********selectedServicePoint');
             if(this.selectedservicepoint != undefined){
                 
-                this.fieldsDataRaw = 'RecordTypeId, RecordType.Name, ' + data.FieldEle__c + ', ' + data.FieldGas__c+','+ data.FieldGeneric__c;
+                this.fieldsDataRaw = 'RecordTypeId, RecordType.DeveloperName, ' + data.FieldEle__c + ', ' + data.FieldGas__c+','+ data.FieldGeneric__c;
                 this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c+','+ data.FieldRequiredGeneric__c;
 
                 let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.FieldAddress__c))];
@@ -217,14 +218,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     
                     this.servicePointRetrievedData = data[0];
                     console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData));
-                    switch(this.servicePointRetrievedData.RecordType.Name){
-                        case 'Punto Elettrico':
+                    switch(this.servicePointRetrievedData.RecordType.DeveloperName){
+                        case 'HDT_RT_Ele':
                             this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c  : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c ) );
 
                            // this.fieldsDataRaw = this.customSettings.FieldEle__c;
                             this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredEle__c  : (this.customSettings.FieldRequiredEle__c == null || this.customSettings.FieldRequiredEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredEle__c ) );
                             break;
-                        case 'Punto Gas':
+                        case 'HDT_RT_Gas':
                             this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c  : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c ) );
 
                            // this.fieldsDataRaw = this.customSettings.FieldGas__c;

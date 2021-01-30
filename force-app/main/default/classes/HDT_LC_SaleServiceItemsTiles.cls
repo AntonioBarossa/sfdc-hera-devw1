@@ -22,7 +22,7 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
     public static List<List<SaleServiceItem__c>> getTiles(String saleId){
 
         opportunityService.checkReadAccess('Name');
-        saleServiceItemSRV.checkReadAccess('Opportunity__c,Opportunity__r.Sale__c,Opportunity__r.Name,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.SupplyCity__c');
+        saleServiceItemSRV.checkReadAccess('Opportunity__c,Opportunity__r.Sale__c,Opportunity__r.Name,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.SupplyCity__c');
 
         List<Opportunity> opps = opportunityQuery.getRecordsBySaleFilterStageName(saleId, 'Id,Name', 'Closed Lost');
         List<SaleServiceItem__c> items = saleServiceItemQuery.getRecordsBySaleId(saleId);

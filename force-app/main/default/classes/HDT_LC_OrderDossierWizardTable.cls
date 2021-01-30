@@ -21,8 +21,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         orderSrv.checkReadAccess('AccountId,Account.Name,Account.VATNumber__c,Account.FiscalCode__c,Name');
         Order orderParent = orderQr.getRecordById(orderParentId); // Ordine_di_Vendita__c ordVen = [Select id,account__c,account__r.name,Account__r.VAT_Number__c ,Account__r.Fiscal_Code__c,Name from Ordine_di_vendita__c where id=:ordineVendita];
 
-        orderSrv.checkReadAccess('AccountId,Account.Name,Recordtypeid,Recordtype.Name,Status,OrderNumber');
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.name, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
+        orderSrv.checkReadAccess('AccountId,Account.Name,Recordtypeid,Recordtype.DeveloperName,Status,OrderNumber');
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.DeveloperName, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
 
         // for(Order o : ordList){
         //     listaOrderId.add(o.id);

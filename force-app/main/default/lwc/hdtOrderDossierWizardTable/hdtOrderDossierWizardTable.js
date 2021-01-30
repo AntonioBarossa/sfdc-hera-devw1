@@ -50,7 +50,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
 
             this.childOrdersList.forEach(ord => {
                 if(ord.RecordType){
-                    ord.recordtypename = ord.RecordType.Name;
+                    ord.recordtypename = ord.RecordType.DeveloperName;
                 }
                 ord.pod = '';
                 ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
