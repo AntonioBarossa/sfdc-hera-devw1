@@ -7,6 +7,7 @@
 public inherited sharing class HDT_SRV_Contract {
     
     private static final String READPERMISSION = 'read';
+    
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Initialize security access instance

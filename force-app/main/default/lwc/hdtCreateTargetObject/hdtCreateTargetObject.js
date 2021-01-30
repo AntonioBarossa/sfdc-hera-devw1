@@ -8,7 +8,6 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api selectedservicepoint;
     @api sale;
     @api disabledinput;
-
     @track recordType = {label:'',value: ''};
     showCreateTargetObjectModal = false;
     showRecordTypeSelectionModal = false;
