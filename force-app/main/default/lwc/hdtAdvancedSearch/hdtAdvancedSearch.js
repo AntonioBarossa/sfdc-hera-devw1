@@ -5,7 +5,6 @@ import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebServic
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getContractFromRow from '@salesforce/apex/HDT_QR_Contract.getContractFromRow';
 
-
 export default class HdtAdvancedSearch extends LightningElement {
 
     @track filterInputWord = null;
