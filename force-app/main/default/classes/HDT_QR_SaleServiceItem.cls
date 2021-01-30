@@ -51,6 +51,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
