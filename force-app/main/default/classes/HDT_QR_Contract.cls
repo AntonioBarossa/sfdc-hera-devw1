@@ -1,5 +1,5 @@
 
-public with sharing class HDT_QR_Contract {
+public inherited sharing class HDT_QR_Contract {
 
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();

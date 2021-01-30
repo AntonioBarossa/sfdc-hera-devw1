@@ -10,7 +10,6 @@ export default class hdtSupplySelection extends LightningElement {
     selectedServicePoint;
     disabledInput = false;
 
-    
     disabledNext = false;
     hiddenEdit = true;
 
