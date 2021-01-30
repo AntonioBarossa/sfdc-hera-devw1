@@ -16,7 +16,7 @@ public with sharing class HDT_QR_Contract {
     * @param String accountId
     * @return List<Contract>
     */
-    public List<Contract> getActiveRecordsByAccountId(String accountId){
+   /* public List<Contract> getActiveRecordsByAccountId(String accountId){
         return [
             SELECT
             Name,
@@ -29,13 +29,12 @@ public with sharing class HDT_QR_Contract {
             AND Status = 'Activated'
             WITH SECURITY_ENFORCED
         ];
-    }
+    }*/
 
     @AuraEnabled(cacheable=true)
     public static Contract getContractFromRow(string cNumber,string accountId){
     system.debug('getContractFromRow START '+ cNumber);
-    contractSrv.checkReadAccess(fields);
-    contractQr.getActiveRecordsByAccountId(accountId);
+    contractSrv.checkReadAccess(fields); 
     Contract c = new Contract() ;
     List<Contract> con = Database.query('SELECT '+fields +' FROM Contract WHERE ContractNumber =: cNumber');
 
