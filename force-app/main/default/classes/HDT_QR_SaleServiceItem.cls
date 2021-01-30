@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
      * @description Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
      * @param String saleId
      * @param String ServicePoint__r.SupplyCity__c
-     * @param String ServicePoint__r.RecordType.Name
+     * @param String ServicePoint__r.RecordType.DeveloperName
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type){
@@ -83,7 +83,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 16/11/2020
-    * @description Get single record by quote id that has ServicePoint__r.RecordType.Name
+    * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
     * @param String quoteId – SBQQ__Quote__c.Id
     * @return List<SaleServiceItem__c>
     */

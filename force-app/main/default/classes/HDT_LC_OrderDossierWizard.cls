@@ -55,7 +55,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     Sale__c = sale.Id,
                     Status = 'Draft',
                     RecordTypeId = recordTypeIdOrderDossier,
-                    EffectiveDate = Date.today()
+                    EffectiveDate = Date.today(),
+                    Step__c = 1
                 );
 
                 orderSrv.createRecord(parentOrderNew);

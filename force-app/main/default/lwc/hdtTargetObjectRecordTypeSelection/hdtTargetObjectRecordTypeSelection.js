@@ -1,38 +1,39 @@
 import { LightningElement, wire, track } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import SERVICE_POINT_OBJECT from '@salesforce/schema/ServicePoint__c';
+import getRecordTypesForServicePoint from '@salesforce/apex/HDT_LC_TargetObjectRecordTypeSelection.getRecordTypesForServicePoint';
 
 export default class HdtTargetObjectRecordTypeSelection extends LightningElement {
+
+    recordTypeOptions = [];
 
     @wire(getObjectInfo, { objectApiName: SERVICE_POINT_OBJECT })
     objectInfo;
 
-    @track recordType = {label:'',value: ''};
+    @track recordType = {label:'',value: '', DeveloperName: ''};
 
     get defaultRecordType(){
         return {label:'',value: this.objectInfo.data.defaultRecordTypeId};
     }
 
-    get recordTypeOptions(){
-        
-        let recordTypeOptions = [];
+    getRecordTypeOptions(){
 
-        let recordTypeInfos = this.objectInfo.data.recordTypeInfos;
+        getRecordTypesForServicePoint().then(data =>{
+            console.log('hdtTargetObjectRecordTypeSelection - getRecordTypesForServicePoint: ', JSON.stringify(data));
+            this.recordTypeOptions = data.filter(function(el){
+                return el.DeveloperName !== 'Master';
+            });
+            console.log(JSON.stringify(this.recordTypeOptions));
 
-        for(var eachRecordtype in  recordTypeInfos)
-        {
-            if(recordTypeInfos[eachRecordtype].name !== 'Master') {
-                recordTypeOptions.push(
-                    { 
-                        label: recordTypeInfos[eachRecordtype].name,
-                        value: recordTypeInfos[eachRecordtype].recordTypeId 
-                    }
-                );
-            }
-            
-        }
-
-        return recordTypeOptions;
+        }).catch(error => {
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     closeRecordTypeSelectionModal(){
@@ -52,6 +53,10 @@ export default class HdtTargetObjectRecordTypeSelection extends LightningElement
         }
 
         this.dispatchEvent(new CustomEvent('next', {detail:this.recordType}));
+    }
+
+    connectedCallback(){
+        this.getRecordTypeOptions();
     }
 
 }
