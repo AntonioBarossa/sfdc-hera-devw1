@@ -28,7 +28,7 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
                 tilesArray.push({
                     "Id"           :el[0].Opportunity__c,
                     "Name"         :el[0].Opportunity__r.Name,
-                    "Type"         :el[0].ServicePoint__r.RecordType.Name,
+                    "Type"         :el[0].ServicePoint__r.RecordType.DeveloperName,
                     "City"         :el[0].ServicePoint__r.SupplyCity__c,
                     "ServicePoints":el
                 });

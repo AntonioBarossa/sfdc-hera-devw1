@@ -21,18 +21,19 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param Contract contract
      * @param String supplyCity
      * @param String accountId
+     * @param Sale sale
      */
     @AuraEnabled
-    public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId){
+    public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
             when  'Ordini in corso'{
-                handleActiveOrderConfirm(order, supplyCity);
+                handleActiveOrderConfirm(order, supplyCity, sale);
             }
             when 'Contratti Attivi'{
-                handleActiveContractConfirm(contract, supplyCity);
+                handleActiveContractConfirm(contract, supplyCity, sale);
             }
             when 'VAS stand alone'{
-                handleVasStandAloneConfirm(supplyCity, accountId);
+                handleVasStandAloneConfirm(supplyCity, accountId, sale);
             }
             
         }
@@ -70,20 +71,22 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param Order order
      * @param String supplyCity
      */
-    public static void handleActiveOrderConfirm(Order order, String supplyCity){
+    public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
         
         if (order.Id == null || supplyCity == '') {
             throw new AuraHandledException('Devi scegliere un ordine e compilare il comune!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
-            Name = 'VAS Opportunity Order',
+            Sale__c = sale.Id,
+            Name = opportunitySrv.generateName(sale) + ' VAS',
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = order.AccountId
         ));
 
         SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+            Sale__c = sale.Id,
             OrderReference__c = order.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
             SBQQ__Account__c = order.AccountId,
@@ -108,20 +111,22 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param Contract contract
      * @param String supplyCity
      */
-    public static void handleActiveContractConfirm(Contract contract, String supplyCity){
+    public static void handleActiveContractConfirm(Contract contract, String supplyCity, Sale__c sale){
         
         if (contract.Id == null || supplyCity == '') {
             throw new AuraHandledException('Devi scegliere un contrato e compilare il comune!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
-            Name = 'VAS Opportunity Contract',
+            Sale__c = sale.Id,
+            Name = opportunitySrv.generateName(sale) + ' VAS',
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = contract.AccountId
         ));
 
         SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+            Sale__c = sale.Id,
             ContractReference__c = contract.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
             SBQQ__Account__c = contract.AccountId,
@@ -146,20 +151,22 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param String supplyCity
      * @param String accountId
      */
-    public static void handleVasStandAloneConfirm(String supplyCity, String accountId){
+    public static void handleVasStandAloneConfirm(String supplyCity, String accountId, Sale__c sale){
         
         if (supplyCity == '') {
             throw new AuraHandledException('Devi compilare il comune!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
-            Name = 'VAS Opportunity Stand Alone',
+            Sale__c = sale.Id,
+            Name = opportunitySrv.generateName(sale) + ' VAS',
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = accountId
         ));
 
         SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+            Sale__c = sale.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
             SBQQ__Account__c = accountId,
             SBQQ__Primary__c = true,
