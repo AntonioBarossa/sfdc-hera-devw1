@@ -6,7 +6,6 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getContractFromRow from '@salesforce/apex/HDT_QR_Contract.getContractFromRow';
 
 
-
 export default class HdtAdvancedSearch extends LightningElement {
 
     @track filterInputWord = null;

@@ -36,13 +36,13 @@ public with sharing class HDT_QR_Contract {
     system.debug('getContractFromRow START '+ cNumber);
     contractSrv.checkReadAccess(fields); 
     Contract c = new Contract() ;
-    List<Contract> con = Database.query('SELECT '+fields +' FROM Contract WHERE ContractNumber =: cNumber');
+    List<Contract> con = Database.query('SELECT '+fields +' FROM Contract WHERE ContractNumber =: cNumber WITH SECURITY_ENFORCED');
 
     if(con != null && con.size()> 0){
         c= con[0];
     }
     system.debug('getContractFromRow END ' );
-    return c;
+    return c ;
  }
 
 }

@@ -19,7 +19,6 @@ public inherited sharing class HDT_SRV_Contract {
         securityAccess.checkSecurityAccess();
     }
 
-    
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check if user has read access to fields and throw exception if access not granted
