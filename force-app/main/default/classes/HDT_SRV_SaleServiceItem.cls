@@ -168,7 +168,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 }
             }
 
-            oppItems.add(tempList);
+            if(!tempList.isEmpty()){
+                oppItems.add(tempList);
+            }
+
         }
 
         return oppItems;

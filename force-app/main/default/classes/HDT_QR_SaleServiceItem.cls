@@ -47,6 +47,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Opportunity__c,
         Opportunity__r.Sale__c,
         Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
         Quote__c,
         Quote__r.Name,
         ServicePoint__c,
