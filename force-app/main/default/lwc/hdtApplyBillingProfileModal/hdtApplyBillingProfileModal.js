@@ -33,7 +33,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                 
                 this.handleCancelEvent();
                 const event = ShowToastEvent({
-                    title: 'Sucesso',
+                    title: '',
                     message:  'Nessun record trovato',
                     variant: 'warn'
                 });

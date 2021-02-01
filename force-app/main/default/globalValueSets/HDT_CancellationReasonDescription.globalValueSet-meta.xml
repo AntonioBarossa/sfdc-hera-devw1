@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>AG02</fullName>
+        <fullName>Annullamento ACG per errata trasmissione</fullName>
         <default>false</default>
         <label>Annullamento ACG per errata trasmissione</label>
     </customValue>
     <customValue>
-        <fullName>RC02</fullName>
+        <fullName>Annullamento RC per disattivazione della fornitura</fullName>
         <default>false</default>
         <label>Annullamento RC per disattivazione della fornitura</label>
     </customValue>
     <customValue>
-        <fullName>VS02</fullName>
+        <fullName>Annullamento VSG per errata trasmissione</fullName>
         <default>false</default>
         <label>Annullamento VSG per errata trasmissione</label>
     </customValue>
     <customValue>
-        <fullName>SW03</fullName>
+        <fullName>Revoca ai sensi del comma 14.3 del TIMOE</fullName>
         <default>false</default>
         <label>Revoca ai sensi del comma 14.3 del TIMOE</label>
     </customValue>
@@ -26,34 +26,49 @@
         <label>Revoca ai sensi del comma 6.3 del TIMOE</label>
     </customValue>
     <customValue>
-        <fullName>SG02</fullName>
+        <fullName>Revoca ai sensi del comma 8.2 del TIMG</fullName>
         <default>false</default>
         <label>Revoca ai sensi del comma 8.2 del TIMG</label>
     </customValue>
     <customValue>
-        <fullName>RG03</fullName>
+        <fullName>Revoca risoluzione per errata trasmissione</fullName>
         <default>false</default>
         <label>Revoca risoluzione per errata trasmissione</label>
     </customValue>
     <customValue>
-        <fullName>RC04</fullName>
+        <fullName>Revoca risoluzione per pratica errata</fullName>
         <default>false</default>
         <label>Revoca risoluzione per pratica errata</label>
     </customValue>
     <customValue>
-        <fullName>SG04</fullName>
+        <fullName>Revoca switching per errata trasmissione</fullName>
         <default>false</default>
         <label>Revoca switching per errata trasmissione</label>
     </customValue>
     <customValue>
-        <fullName>SW07</fullName>
+        <fullName>Revoca switching per pratica errata</fullName>
         <default>false</default>
         <label>Revoca switching per pratica errata</label>
     </customValue>
     <customValue>
-        <fullName>VG02</fullName>
+        <fullName>Revoca voltura per pratica errata</fullName>
         <default>false</default>
         <label>Revoca voltura per pratica errata</label>
+    </customValue>
+    <customValue>
+        <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale</fullName>
+        <default>false</default>
+        <label>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale</label>
+    </customValue>
+    <customValue>
+        <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale Gas</fullName>
+        <default>false</default>
+        <label>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Risoluzione contrattuale per contratto non richiesto</fullName>
+        <default>false</default>
+        <label>Risoluzione contrattuale per contratto non richiesto</label>
     </customValue>
     <masterLabel>Descrizione Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>

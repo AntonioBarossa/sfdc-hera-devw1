@@ -82,8 +82,8 @@ public inherited sharing class HDT_SRV_ServicePoint {
      */
     public void updateRecord(ServicePoint__c servicePoint){
 
-        checkReadAccess('ServicePointCode__c,RecordType.Name');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.Name');
+        checkReadAccess('ServicePointCode__c,RecordType.DeveloperName');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName');
 
         if (existingServicePoint[0].ServicePointCode__c != servicePoint.ServicePointCode__c) {
             throw new AuraHandledException('Codice POD/PDR e stato cambiato');

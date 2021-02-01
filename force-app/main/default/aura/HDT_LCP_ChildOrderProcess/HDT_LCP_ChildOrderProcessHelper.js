@@ -24,7 +24,7 @@
                     component.set("v.ordername", ord.Name);
                     component.set("v.orderstatus",ord.Status);
                     if(ord.RecordType){
-                    	component.set("v.recordtypeOrder",ord.RecordType.Name);
+                    	component.set("v.recordtypeOrder",ord.RecordType.DeveloperName);
                     }
                 }
                 else {

@@ -91,6 +91,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillingFrequency__c</picklist>
+        <values>
+            <fullName>Bimestrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
             <fullName>G1%2C6</fullName>
@@ -318,47 +329,59 @@
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
         <values>
-            <fullName>AG02</fullName>
+            <fullName>Annullamento ACG per errata trasmissione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RC02</fullName>
+            <fullName>Annullamento RC per disattivazione della fornitura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RC04</fullName>
+            <fullName>Annullamento VSG per errata trasmissione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RG03</fullName>
+            <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SG02</fullName>
+            <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SG04</fullName>
+            <fullName>Revoca risoluzione per errata trasmissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca risoluzione per pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per errata trasmissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca voltura per pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione contrattuale per contratto non richiesto</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>SW02</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SW03</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SW07</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VG02</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VS02</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -679,10 +702,6 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
@@ -700,14 +719,6 @@
         </values>
         <values>
             <fullName>Esito OK da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1259,7 +1270,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripristino Fornitura Interrotta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore - Cavi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Votive Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Tensione</fullName>
             <default>false</default>
         </values>
     </picklistValues>
