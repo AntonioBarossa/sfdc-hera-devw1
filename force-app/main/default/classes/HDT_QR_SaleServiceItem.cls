@@ -23,7 +23,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__c,
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
-
+        ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
         Opportunity__r.Sale__c
         FROM SaleServiceItem__c
@@ -95,6 +95,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
             SELECT  
             Quote__c,
             ServicePoint__c,
+            ServicePoint__r.RecordType.Name,
             ServicePoint__r.RecordType.DeveloperName
             FROM SaleServiceItem__c
             WHERE Quote__c = :quoteId
