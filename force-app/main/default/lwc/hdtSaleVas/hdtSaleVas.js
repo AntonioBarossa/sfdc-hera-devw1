@@ -136,6 +136,7 @@ export default class hdtSaleVas extends LightningElement {
             this.isInputVisible = false;
             this.isOrderListVisible = false;
             this.isContractsListVisible = false;
+            this.dispatchEvent(new CustomEvent('createvas'));
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'VAS confermato con successo',

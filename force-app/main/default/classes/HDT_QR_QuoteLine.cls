@@ -100,4 +100,29 @@ public inherited sharing class HDT_QR_QuoteLine {
              WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 17/11/2020
+    * @description Get records by quoteId and Product.Name "POD"
+    * @param String quoteId - SBQQ__Quote__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getRecordsByQuoteIdAndProductPod(String quoteId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            ServicePoint__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__Product__r.Name = 'POD'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
 }
