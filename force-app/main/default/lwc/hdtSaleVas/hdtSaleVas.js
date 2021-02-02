@@ -7,6 +7,7 @@ import confirmAction from '@salesforce/apex/HDT_LC_SaleVas.confirmAction';
 export default class hdtSaleVas extends LightningElement {
 
     @api accountId;
+    @api sale;
     isModalVisible = false;
     isInputVisible = false;
     isOrderListVisible = false;
@@ -127,7 +128,8 @@ export default class hdtSaleVas extends LightningElement {
             order:this.selectedOrder,
             contract:this.selectedContract,
             supplyCity:this.inputText,
-            accountId: this.accountId
+            accountId: this.accountId,
+            sale: this.sale
             }).then(data =>{
             this.isLoading = false;
             this.isModalVisible = false;
