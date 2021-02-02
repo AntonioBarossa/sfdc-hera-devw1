@@ -31,7 +31,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         quoteSrv.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c');
         quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
-        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsBySaleFilterStatus(saleId, 'Rejected');
+        List<SBQQ__Quote__c> quoteList = quoteQr.getActiveRecords(saleId);
         List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getRecordsBySale(saleId);
 
         resultsList = quoteLineSrv.groupRecordsByQuote(quoteList, quoteLineList);
@@ -44,17 +44,30 @@ public inherited sharing class HDT_LC_ConfigureProduct {
      * @date 19/11/2020
      * @description Cancel SBQQ__Quote__c record by changing its status (Status=”Annullata”) and related Opportunity (StageName= “Chiusa/Annullata”)
      * @param String quoteId
+     * @param String opportunityId
+     * @param String cancellationReason
      */
     @AuraEnabled
-    public static void cancelQuote(String quoteId){
+    public static void cancelQuote(String quoteId, String opportunityId, String cancellationReason){
+        
+        SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(
+            Id = quoteId,
+            CancellationReason__c = cancellationReason
+        );
 
-        quoteSrv.checkReadAccess('SBQQ__Status__c');
-        SBQQ__Quote__c quoteToUpdate = quoteQr.getRecordById(quoteId);
-        quoteToUpdate.SBQQ__Status__c = 'Rifiutata';
+        switch on cancellationReason {
+            when  'Errata operativita'{
+                quoteToUpdate.SBQQ__Status__c = 'Cancelled';
+            }
+            when 'Volonta cliente'{
+                quoteToUpdate.SBQQ__Status__c = 'Rejected';
+            }
+        }
 
-        opportunitySrv.checkReadAccess('StageName');
-        Opportunity oppToUpdate = opportunityQr.getRecordById(quoteToUpdate.SBQQ__Opportunity2__c);
-        oppToUpdate.StageName = 'Closed Lost';
+        Opportunity oppToUpdate = new Opportunity(
+            Id = opportunityId,
+            StageName = 'Closed Lost'
+        );
 
         quoteSrv.updateRecord(quoteToUpdate);
         opportunitySrv.updateRecord(oppToUpdate);

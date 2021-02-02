@@ -53,7 +53,7 @@
                                     <lightning-button disabled={disabledButton} data-id={quote.Id} variant="brand" label="Configura" title="Configura" onclick={handleOpenConfigureModal}></lightning-button>
                                 </td>
                                 <td>
-                                    <lightning-button disabled={disabledButton} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
+                                    <lightning-button disabled={disabledButton} data-opportunityid={quote.OpportunityId} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
                                 </td>
                             </tr>
                             <template for:each={quote.QuoteLines} for:item="quoteLine">
@@ -96,15 +96,18 @@
         <template if:true={showEditQuote}>
             <c-hdt-edit-quote sale={saleRecord} quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
         </template>
-        
-        <c-hdt-confirmation-dialog title={dialogTitle}
+
+        <c-hdt-confirmation-dialog-dropdown
+                           object-api-name="SBQQ__Quote__c"
+                           picklist-api-name="CancellationReason__c"
+                           title={dialogTitle}
                            message={dialogMessage}
                            confirm-label='Si'
                            cancel-label='No'
                            visible={isDialogVisible}
                            name="deleteQuoteConfimation"
                            onclick={handleDialogResponse}>
-        </c-hdt-confirmation-dialog>
+        </c-hdt-confirmation-dialog-dropdown>
 
     </lightning-card>
 </template>
