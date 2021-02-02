@@ -169,7 +169,8 @@ export default class hdtConfigureProduct extends LightningElement {
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
-                variant: 'error'
+                variant: 'error',
+                mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
         });

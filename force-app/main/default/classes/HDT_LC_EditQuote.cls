@@ -179,7 +179,7 @@ public inherited sharing class HDT_LC_EditQuote {
             quoteLineSrv.updateRecords(quoteLinesToUpdate);
 
         } else {
-            throw new AuraHandledException('Configurare i prodotti per tutti i Service Point!');
+            system.debug('HDT_LC_EditQuote - assocPodToQuoteLine - Configurare i prodotti per tutti i Service Point!');
         }
 
     }
