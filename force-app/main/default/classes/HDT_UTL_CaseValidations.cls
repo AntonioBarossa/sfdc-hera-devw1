@@ -16,6 +16,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validatePagamenti(fields, caseType);
 
+        } else if(caseType == 'Gestione Disalimentabilità'){
+
+            result = validateMorosita(fields, recordId);
+
         }
 
         return result;
@@ -29,6 +33,39 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         if(caseType != getFieldValue(fields, 'Type')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile modificare tipo processo'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
+
+        return result;
+
+    }
+
+    public String validateMorosita(String fields, string recordId){
+
+        String result;
+
+        String disconnectable = getFieldValue(fields, 'Disconnectable__c');
+
+        String disconnectableCategory = getFieldValue(fields, 'NotDisconnectableCategory__c');
+
+        String phonePesse = getFieldValue(fields, 'MobilePhonePersonalizedNoticePesse__c');
+
+        List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+        WHERE LinkedEntityId = :recordId 
+        WITH SECURITY_ENFORCED];
+
+        if(disconnectable == 'false' 
+        && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
+        || (phonePesse == 'null' || phonePesse == '') 
+        || (attachedDocument.size() == 0))){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
+                'Il telefono Pesse\nEd è necessario inserire un allegato'));
 
         } else {
 
@@ -75,7 +112,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         //System.debug('Indice campo '+ fieldToGet + ': ' + fields.indexOf(fieldToGet));
         
-        gotField = gotField.substring(fields.indexOf(fieldToGet));
+        gotField = gotField.substring(gotField.indexOf(fieldToGet));
 
         //System.debug('GotField String: ' +gotField);
 
