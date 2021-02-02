@@ -4,8 +4,8 @@ public without sharing class HDT_WS_MulesoftCaller {
 
         ResponseCtrl respObj = new ResponseCtrl();
 
-        Integer initialLimit = Limits.getHeapSize();
-        Datetime startTime = Datetime.now();
+        //Integer initialLimit = Limits.getHeapSize();
+        //Datetime startTime = Datetime.now();
 
         HttpRequest req = new HttpRequest();
 
@@ -54,7 +54,7 @@ public without sharing class HDT_WS_MulesoftCaller {
                 respObj.body = res.getBody();
             }
 
-            Datetime endTime = Datetime.now();
+            /*Datetime endTime = Datetime.now();
             Integer finalLimit = Limits.getHeapSize();
             Integer limitValue = Limits.getLimitHeapSize();
 
@@ -66,7 +66,7 @@ public without sharing class HDT_WS_MulesoftCaller {
 
             Integer t = endTime.second() - startTime.second();
             System.debug('# Time of execution -> ' + t + ' [sec]');
-            System.debug('# ' + endTime + ' - ' + startTime);
+            System.debug('# ' + endTime + ' - ' + startTime);*/
 
         } catch (Exception ex){
             System.debug('HDT_WS_MulesoftCaller -> ERROR: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());

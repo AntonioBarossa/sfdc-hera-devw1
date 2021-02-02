@@ -12,7 +12,7 @@ public with sharing class SampleContinuationClass {
 
         if(success){
             // Create continuation. Argument is timeout in seconds.
-            Continuation con = new Continuation(40);
+            Continuation con = new Continuation(120);
             // Set callback method
             con.continuationMethod='processResponse';
             // Set state

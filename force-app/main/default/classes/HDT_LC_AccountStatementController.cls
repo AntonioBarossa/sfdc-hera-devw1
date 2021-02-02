@@ -160,12 +160,56 @@ public class HDT_LC_AccountStatementController {
         return objDetail;
     }
 
-    @AuraEnabled
-    public static Object callMulesoft(String techObj, String requestObj){//HDT_WS_MulesoftCaller.ReponseObj
-        System.debug('# callMulesoft #');
+    @AuraEnabled//Sync caller method
+    public static Object callMulesoft(String techObj, String requestObj){
+        System.debug('# Sync callMulesoft #');
         return HDT_WS_MulesoftCallerHelper.createMulesoftCall(techObj, requestObj);
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+    /*@AuraEnabled(continuation=true)//Async caller method
+    public static Object callMulesoftAsync(String techObj, String requestObj){
+        System.debug('# Async callMulesoft #');
+        HDT_WS_MakeMulesoftCall.ResponseCtrl respObj = HDT_WS_MulesoftCallerAsync.createMulesoftCall(techObj, requestObj);
+
+        if(respObj.success){
+            System.debug('# continuation true #');
+            // Create continuation. Argument is timeout in seconds.
+            Continuation con = new Continuation(120);
+            // Set callback method
+            con.continuationMethod='processResponse';
+            // Set state
+            con.state = techObj;
+            // Add callout request to continuation
+            con.addHttpRequest(respObj.httpReq);
+            // Return the continuation
+            return con;
+        } else {
+            System.debug('# continuation false #');
+            return respObj;
+        }
+
+    }
+
+    @AuraEnabled
+    public static Object processResponse(List<String> labels, Object state) {
+        
+        System.debug('#### processResponse ####');
+        // Get the response by using the unique label
+        HttpResponse response = Continuation.getResponse(labels[0]);
+
+        // Set the result variable
+        String responseStatus = response.getStatus();
+        Integer statusCode = response.getStatusCode();
+
+        System.debug('## Response status -> ' + responseStatus + ' - ' + statusCode);
+        System.debug('## Continuation state -> ' + state);
+
+        return HDT_WS_MulesoftCallerAsync.processResponse(String.valueOf(state), statusCode, response.getBody());
+
+    }*/
+    //------------------------------------------------------------------------------------------------------------------
+    
     @AuraEnabled
     public static ResponseObj sendFileToPrint(String dataList){
         System.debug('# saveNewOfferConfigured #');

@@ -1,5 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import getTabConfiguration from '@salesforce/apex/HDT_LC_AccountStatementController.getTabConfiguration';
+//import callMulesoft from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.callMulesoftAsync';
 import callMulesoft from '@salesforce/apex/HDT_LC_AccountStatementController.callMulesoft';
 import operationBackend from '@salesforce/apex/HDT_LC_AccountStatementController.operationBackend';
 import sendFileToPrint from '@salesforce/apex/HDT_LC_AccountStatementController.sendFileToPrint';
@@ -463,25 +464,36 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 console.log('# success: ' + result.success);
 
                 if(result.success){
-                    this.allData = result.data;
+                    
+                    var obj = JSON.parse(result.data);
+                    console.log('---> data ' + obj.data.length);
+                    
+                    this.totAmount = 0;
+                    obj.data.forEach((e) => { 
+                        e.id = e['idPrimoLivelloSAP'];
+                        this.totAmount += parseFloat(e['importo']);
+                    });
+
+                    this.allData = obj.data;//result.data;
 
                     if(result.data.length > this.perpage){
-                        this.accountData = result.data.slice(0, this.perpage);
+                        this.accountData = obj.data.slice(0, this.perpage);
                     } else {
                         this.accountData = this.allData;
                     }
 
-                    this.totAmountStored = result.totAmount;
-                    this.totAmount = result.totAmount;
-                     this.secondLevelList = result.data[0][this.detailTable];
+                    //this.totAmountStored = result.totAmount;
+                    //this.totAmount = result.totAmount;
+                    this.totAmountStored = this.totAmount;
+                    this.secondLevelList = obj.data[0][this.detailTable];
                     //this.spinnerObj.spinner = false;
                     this.totRecs = this.allData.length;
                     this.fromRec = 1;
 
-                    if(result.data.length > this.perpage){
+                    if(obj.data.length > this.perpage){
                         this.toRec = this.perpage;
                     } else {
-                        this.toRec = result.data.length;
+                        this.toRec = obj.data.length;
                     }
 
                     this.setPages(this.allData.length);

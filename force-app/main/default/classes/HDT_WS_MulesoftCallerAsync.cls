@@ -1,10 +1,10 @@
-public without sharing class HDT_WS_MulesoftCallerHelper {
+public class HDT_WS_MulesoftCallerAsync {
 
     public static Boolean isMock = false; 
 
-    public static Object createMulesoftCall(String techObj, String requestObj){
+    public static HDT_WS_MakeMulesoftCall.ResponseCtrl createMulesoftCall(String techObj, String requestObj){
 
-        Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
+        HDT_WS_MakeMulesoftCall.ResponseCtrl responseCtrl;
 
         TechObj tObj = (TechObj)JSON.deserialize(techObj, TechObj.class);
         System.debug('# Technical Object: -> ' + tObj);
@@ -30,10 +30,10 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
             if(mdtList.size()==0){
                 System.debug('# No custom metadata found on Salesforce');
-                ReponseObjGeneric respObjErr = new ReponseObjGeneric();
-                respObjErr.success = false;
-                respObjErr.message = 'No custom metadata found on Salesforce';
-                return respObjErr;
+                responseCtrl = new HDT_WS_MakeMulesoftCall.ResponseCtrl();
+                responseCtrl.success = false;
+                responseCtrl.message = 'No custom metadata found on Salesforce';
+                return responseCtrl;
             }   
 
             dbr.applicativo = tObj.requestType;
@@ -65,13 +65,13 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
         } catch (Exception ex){
             System.debug('# Exception #');
-            ReponseObjGeneric respObjException = new ReponseObjGeneric();
-            respObjException.success = false;
-            respObjException.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
-            return respObjException;
+            responseCtrl = new HDT_WS_MakeMulesoftCall.ResponseCtrl();
+            responseCtrl.success = false;
+            responseCtrl.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
+            return responseCtrl;
         }
 
-        HDT_WS_MulesoftCaller.HttpObj httpObj = setHttpObject(tObj.tabCode);
+        HDT_WS_MakeMulesoftCall.HttpObj httpObj = setHttpObject(tObj.tabCode);
 
         if(isMock){
             dbr.applicativo = 'AL';
@@ -83,29 +83,61 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
        //MODIFICATION START HERE
        String body = JSON.serialize(dbr, true);
-       HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+       responseCtrl = HDT_WS_MakeMulesoftCall.makeHttpRequest(body, httpObj);
 
-       if(!responseCtrl.success){
+       return responseCtrl;
+    }
+
+    public static Object processResponse(String techObj, Integer statusCode, String resultBody){
+
+        Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
+        HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl;
+        TechObj tObj = (TechObj)JSON.deserialize(techObj, TechObj.class);
+        System.debug('# Technical Object: -> ' + tObj);
+
+        if(statusCode != 200){
             ReponseObjGeneric r = new ReponseObjGeneric();
             r.success = false;
-            r.message = responseCtrl.message;
+            r.message = 'Status code ' + String.valueOf(statusCode) + '[';
+
+            switch on statusCode {
+                when 500 {
+                    r.message += 'Something goes wrong on Mulesoft side';
+                }	
+                when 401 {
+                    r.message += 'Expired session Id';
+                }
+                when 400 {
+                    r.message += 'Bad Request';
+                }
+                when 2000 {
+                    r.message += 'The timeout was reached, and the server didn’t get a chance to respond.';
+                }
+                when 2001 {
+                    r.message += 'There was a connection failure.';
+                }
+                when 2002 {
+                    r.message += 'Exceptions occurred.';
+                }
+                when 2003 {
+                    r.message += 'The response hasn\'t arrived (which also means that the Apex asynchronous callout framework hasn’t resumed).';
+                }
+                when 2004 {   
+                    r.message += 'The response size is too large (greater than 1 MB).';
+                } when  else {
+                    r.message += 'It\'s seems there is no signal';
+                }
+            }
+
+            r.message += ']; ' + r.message;
             return r;
         }
 
-        HDT_WRP_MulesoftResponse restMessage = (HDT_WRP_MulesoftResponse)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.class);
-        
-        ReponseExampleObj exampleObj = new ReponseExampleObj();
-        exampleObj.success = true;
-        exampleObj.totAmount = 0;
-        exampleObj.data = responseCtrl.body;
-        return exampleObj;
-
-        /*
-       if(tObj.tabCode.equalsIgnoreCase('EC')){
+        if(tObj.tabCode.equalsIgnoreCase('EC')){
 
             ReponseObj resp = new ReponseObj();
 
-            HDT_WRP_AccountStatement.ReturnObj restMessage = (HDT_WRP_AccountStatement.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_AccountStatement.ReturnObj.class);
+            HDT_WRP_AccountStatement.ReturnObj restMessage = (HDT_WRP_AccountStatement.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_AccountStatement.ReturnObj.class);
             resp.data = new List<HDT_WRP_AccountStatement.DataWrapper>();
 
             if(restMessage.status != 'success'){
@@ -131,7 +163,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
             return resp;
         } else if(commonTabs.contains(tObj.tabCode)){
             ReponseObjCommonTab resp = new ReponseObjCommonTab();
-            HDT_WRP_CommonTab.ReturnObj restMessage = (HDT_WRP_CommonTab.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_CommonTab.ReturnObj.class);
+            HDT_WRP_CommonTab.ReturnObj restMessage = (HDT_WRP_CommonTab.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_CommonTab.ReturnObj.class);
             resp.data = new List<HDT_WRP_CommonTab.FirstLevelObj>();
 
             if(restMessage.status != 'success'){
@@ -155,7 +187,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         } else if(tObj.tabCode.equalsIgnoreCase('paperless')){
             ReponseObjPaperless resp = new ReponseObjPaperless();
 
-            HDT_WRP_Paperless.ReturnObj restMessage = (HDT_WRP_Paperless.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_Paperless.ReturnObj.class);
+            HDT_WRP_Paperless.ReturnObj restMessage = (HDT_WRP_Paperless.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_Paperless.ReturnObj.class);
             resp.data = new List<HDT_WRP_Paperless.FirstLevelObj>();
 
             if(restMessage.status != 'success'){
@@ -167,11 +199,11 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
             }
 
             resp.data = restMessage.data;
-           //resp.totAmount = 0;
+            //resp.totAmount = 0;
 
-           //for(Integer i=0; i<resp.data.size(); i++){
-           //    resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
-           //}
+            //for(Integer i=0; i<resp.data.size(); i++){
+            //    resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
+            //}
 
             resp.success = true;
 
@@ -182,13 +214,13 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         respNull.success = false;
         respNull.message = 'No logic developed';
         return respNull;
-*/
-       //MODIFICATION END HERE
+
+        //MODIFICATION END HERE
     }
 
-    public static HDT_WS_MulesoftCaller.HttpObj setHttpObject(String tabCode){
+    public static HDT_WS_MakeMulesoftCall.HttpObj setHttpObject(String tabCode){
 
-        HDT_WS_MulesoftCaller.HttpObj httpObj = new HDT_WS_MulesoftCaller.HttpObj();
+        HDT_WS_MakeMulesoftCall.HttpObj httpObj = new HDT_WS_MakeMulesoftCall.HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
         if(isMock){
@@ -225,14 +257,6 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
     public class ReponseObjGeneric {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
-    }
-
-    //EXAMPLE OBJ
-    public class ReponseExampleObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public String data;
-        @AuraEnabled public Decimal totAmount;
     }
 
     //RESPONSE OBJ RETURNED TO CONTROLLER FOR ACCOUNT STATEMENT
