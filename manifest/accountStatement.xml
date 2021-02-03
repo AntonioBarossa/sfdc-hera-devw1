@@ -2,13 +2,18 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
 		<members>HDT_LC_AccountStatementController</members>
-		<members>HDT_WRP_AccountStatement</members>
-		<members>HDT_WRP_CommonTab</members>
+		<!--<members>HDT_WRP_AccountStatement</members>-->
+		<!--<members>HDT_WRP_CommonTab</members>-->
+		<!--<members>HDT_WRP_HttpDataBodyRow</members>-->
+		<!--<members>HDT_WRP_Paperless</members>-->
 		<members>HDT_WRP_HttpDataBodyRow</members>
-		<members>HDT_WRP_Paperless</members>
+		<members>HDT_WS_MakeMulesoftCall</members>
+		<members>HDT_WS_MulesoftCallerAsync</members>
+		<members>HDT_WRP_MulesoftResponse</members>
 		<members>HDT_WS_MulesoftCaller</members>
 		<members>HDT_WS_MulesoftCallerHelper</members>
 		<members>HDT_WS_SOAP_EngageOnePrint</members>
+		<members>HDT_LC_CustomLookupController</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -188,6 +193,7 @@
 		<members>hdtJoinFilterModal</members>
 		<members>hdtOperationModal</members>
 		<members>hdtTableCell</members>
+		<members>hdtCustomLookup</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>

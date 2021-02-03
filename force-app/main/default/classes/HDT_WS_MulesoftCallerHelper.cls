@@ -1,6 +1,6 @@
 public without sharing class HDT_WS_MulesoftCallerHelper {
 
-    public static Boolean isMock = true; 
+    public static Boolean isMock = false; 
 
     public static Object createMulesoftCall(String techObj, String requestObj){
 
@@ -239,7 +239,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
     }
 
     //RESPONSE OBJ RETURNED TO CONTROLLER FOR ACCOUNT STATEMENT
-    public class ReponseObj {
+    /*public class ReponseObj {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public List<HDT_WRP_AccountStatement.DataWrapper> data;
@@ -259,7 +259,7 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public List<HDT_WRP_Paperless.FirstLevelObj> data;
-    }
+    }*/
 
     public class TechObj {
         public String requestType;
