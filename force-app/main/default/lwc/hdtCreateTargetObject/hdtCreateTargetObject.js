@@ -11,13 +11,16 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api showCreateTargetObjectButton;
 
     @track recordType = {label:'',value: '', DeveloperName: ''};
+
     showCreateTargetObjectModal = false;
     showRecordTypeSelectionModal = false;
 
     get modalStatus(){
         if(this.selectedservicepoint != undefined){
 
-            if(this.showCreateTargetObjectModal == false){
+
+            if(this.showCreateTargetObjectModal == false && this.targetobject == 'Fornitura'){
+
                 this.showCreateTargetObjectModal = true;
             }
         }
@@ -76,6 +79,9 @@ export default class hdtCreateTargetObject extends LightningElement {
      * @param {*} event 
      */
     handleNext(event){
+
+        console.log('handleNext'+ JSON.stringify(event.detail));
+
         this.closeRecordTypeSelection();
         this.getRecordType(event.detail);
         this.openCreateRecordForm();

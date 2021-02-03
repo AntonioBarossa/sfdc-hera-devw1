@@ -256,6 +256,38 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
+            <valueName>Plico Rate non ricevute</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
+            <valueName>Rinuncia piano rate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
+            <valueName>Piano Rate errato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
+            <valueName>Segnalazione doppio pagamento non registrato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
+            <valueName>Informazione su doppio pagamento/incasso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
+            <valueName>Chiusura Conto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
+            <valueName>Cambio modalità di pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
+            <valueName>Cessazione Contratto</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <valueName>Cambio Conto</valueName>
         </valueSettings>
@@ -350,38 +382,6 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>TCP Comune no Int</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
-            <valueName>Plico Rate non ricevute</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
-            <valueName>Rinuncia piano rate</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
-            <valueName>Piano Rate errato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
-            <valueName>Segnalazione doppio pagamento non registrato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
-            <valueName>Informazione su doppio pagamento/incasso</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
-            <valueName>Chiusura Conto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
-            <valueName>Cambio modalità di pagamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
-            <valueName>Cessazione Contratto</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
