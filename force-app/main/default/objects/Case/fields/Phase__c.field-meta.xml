@@ -243,6 +243,16 @@
                 <label>Chiuso</label>
             </value>
             <value>
+                <fullName>Esito OK</fullName>
+                <default>false</default>
+                <label>Esito OK</label>
+            </value>
+            <value>
+                <fullName>Esito KO</fullName>
+                <default>false</default>
+                <label>Esito KO</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

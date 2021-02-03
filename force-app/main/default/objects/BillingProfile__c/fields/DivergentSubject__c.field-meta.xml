@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>OtherPayer__c</fullName>
+    <fullName>DivergentSubject__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Account pagatore delle bollette (diverso dal titolare della fornitura)</description>
     <externalId>false</externalId>
-    <label>Pagatore Alternativo</label>
-    <referenceTo>Account</referenceTo>
-    <relationshipLabel>Billing Profiles (Pagatore Alternativo)</relationshipLabel>
-    <relationshipName>BillingProfilesOtherPayer</relationshipName>
+    <label>Destinatario Divergente</label>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Billing Profiles</relationshipLabel>
+    <relationshipName>BillingProfilesDivergentSubject</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
