@@ -8,10 +8,13 @@
 
 public inherited sharing class HDT_LC_EditQuote {
 
-    /*
-    private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
-    private static HDT_QR_Product productQr = new HDT_QR_Product();
+    private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
+    private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
+    private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
+
+    /*
+    private static HDT_QR_Product productQr = new HDT_QR_Product();
     private static final String ELECTRIC = 'Elettrico';
     private static final String GAS = 'Gas';
     private static final String PRODUCTELECTRICCODE = 'test_luce';
@@ -147,4 +150,38 @@ public inherited sharing class HDT_LC_EditQuote {
         SBQQ__QuoteLine__c secondary = new SBQQ__QuoteLine__c();
     }*/
     
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Associate ServicePoint to QuoteLines of type "POD"
+    * @param String saleId – Sale__c.Id
+    * @param String quoteId - SBQQ__Quote__c
+    */
+    @AuraEnabled
+    public static void assocPodToQuoteLine(String saleId, String quoteId){
+       
+        quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,ServicePoint__c');
+        List<SBQQ__QuoteLine__c> quoteLinePods = quoteLineQr.getRecordsByQuoteIdAndProductPod(quoteId);
+
+        saleServiceItemSrv.checkReadAccess('Quote__c,ServicePoint__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName');
+        List<SaleServiceItem__c> saleServiceItems = saleServiceItemQr.getRecordsByQuote(quoteId);
+
+        if (quoteLinePods.size() == saleServiceItems.size()) {
+
+            List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
+
+            for (Integer i = 0; i < saleServiceItems.size(); i++) {
+                quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(
+                    Id = quoteLinePods[i].Id,
+                    ServicePoint__c = saleServiceItems[i].ServicePoint__c
+                ));
+            }
+
+            quoteLineSrv.updateRecords(quoteLinesToUpdate);
+
+        } else {
+            throw new AuraHandledException('Configurare i prodotti per tutti i Service Point!');
+        }
+
+    }
+
 }
