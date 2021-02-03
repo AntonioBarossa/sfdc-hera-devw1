@@ -469,10 +469,16 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     console.log('---> data ' + obj.data.length);
                     
                     this.totAmount = 0;
-                    obj.data.forEach((e) => { 
-                        e.id = e['idPrimoLivelloSAP'];
-                        this.totAmount += parseFloat(e['importo']);
-                    });
+                    if(this.amountField != null && this.amountField != ''){
+                        obj.data.forEach((e) => { 
+                            e.id = e['idPrimoLivelloSAP'];
+                            this.totAmount += parseFloat(e[this.amountField]);
+                        });
+                    } else {
+                        obj.data.forEach((e) => { 
+                            e.id = e['idPrimoLivelloSAP'];
+                        });
+                    }
 
                     this.allData = obj.data;//result.data;
 

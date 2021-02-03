@@ -167,7 +167,7 @@ public class HDT_LC_AccountStatementController {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    /*@AuraEnabled(continuation=true)//Async caller method
+    @AuraEnabled(continuation=true)//Async caller method
     public static Object callMulesoftAsync(String techObj, String requestObj){
         System.debug('# Async callMulesoft #');
         HDT_WS_MakeMulesoftCall.ResponseCtrl respObj = HDT_WS_MulesoftCallerAsync.createMulesoftCall(techObj, requestObj);
@@ -207,7 +207,7 @@ public class HDT_LC_AccountStatementController {
 
         return HDT_WS_MulesoftCallerAsync.processResponse(String.valueOf(state), statusCode, response.getBody());
 
-    }*/
+    }
     //------------------------------------------------------------------------------------------------------------------
     
     @AuraEnabled

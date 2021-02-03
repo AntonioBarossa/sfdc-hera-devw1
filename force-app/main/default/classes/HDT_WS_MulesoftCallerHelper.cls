@@ -1,9 +1,10 @@
 public without sharing class HDT_WS_MulesoftCallerHelper {
 
-    public static Boolean isMock = false; 
+    public static Boolean isMock = true; 
 
     public static Object createMulesoftCall(String techObj, String requestObj){
 
+        ReponseWrapper wrapObj = new ReponseWrapper();
         Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
 
         TechObj tObj = (TechObj)JSON.deserialize(techObj, TechObj.class);
@@ -30,10 +31,9 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
             if(mdtList.size()==0){
                 System.debug('# No custom metadata found on Salesforce');
-                ReponseObjGeneric respObjErr = new ReponseObjGeneric();
-                respObjErr.success = false;
-                respObjErr.message = 'No custom metadata found on Salesforce';
-                return respObjErr;
+                wrapObj.success = false;
+                wrapObj.message = 'No custom metadata found on Salesforce';
+                return wrapObj;
             }   
 
             dbr.applicativo = tObj.requestType;
@@ -65,10 +65,9 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
 
         } catch (Exception ex){
             System.debug('# Exception #');
-            ReponseObjGeneric respObjException = new ReponseObjGeneric();
-            respObjException.success = false;
-            respObjException.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
-            return respObjException;
+            wrapObj.success = false;
+            wrapObj.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
+            return wrapObj;
         }
 
         HDT_WS_MulesoftCaller.HttpObj httpObj = setHttpObject(tObj.tabCode);
@@ -86,19 +85,24 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
        HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
        if(!responseCtrl.success){
-            ReponseObjGeneric r = new ReponseObjGeneric();
-            r.success = false;
-            r.message = responseCtrl.message;
-            return r;
+            wrapObj.success = false;
+            wrapObj.message = responseCtrl.message;
+            return wrapObj;
         }
 
-        HDT_WRP_MulesoftResponse restMessage = (HDT_WRP_MulesoftResponse)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.class);
-        
-        ReponseExampleObj exampleObj = new ReponseExampleObj();
-        exampleObj.success = true;
-        exampleObj.totAmount = 0;
-        exampleObj.data = responseCtrl.body;
-        return exampleObj;
+        HDT_WRP_MulesoftResponse.ReturnObj restMessage = (HDT_WRP_MulesoftResponse.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.ReturnObj.class);
+
+        if(restMessage.status != 'success'){
+            wrapObj.success = false;
+            wrapObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+            wrapObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+            wrapObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+            return wrapObj;
+        }
+
+        wrapObj.success = true;
+        wrapObj.data = responseCtrl.body;
+        return wrapObj;
 
         /*
        if(tObj.tabCode.equalsIgnoreCase('EC')){
@@ -222,17 +226,16 @@ public without sharing class HDT_WS_MulesoftCallerHelper {
         return day + '/' + month + '/' + year;
     }
 
-    public class ReponseObjGeneric {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-    }
+    //public class ReponseObjGeneric {
+    //    @AuraEnabled public Boolean success;
+    //    @AuraEnabled public String message;
+    //}
 
     //EXAMPLE OBJ
-    public class ReponseExampleObj {
+    public class ReponseWrapper {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public String data;
-        @AuraEnabled public Decimal totAmount;
     }
 
     //RESPONSE OBJ RETURNED TO CONTROLLER FOR ACCOUNT STATEMENT

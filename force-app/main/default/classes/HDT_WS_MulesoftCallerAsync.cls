@@ -90,8 +90,9 @@ public class HDT_WS_MulesoftCallerAsync {
 
     public static Object processResponse(String techObj, Integer statusCode, String resultBody){
 
+        ReponseWrapper wrapObj = new ReponseWrapper();
         Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
-        HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl;
+        //HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl;
         TechObj tObj = (TechObj)JSON.deserialize(techObj, TechObj.class);
         System.debug('# Technical Object: -> ' + tObj);
 
@@ -133,7 +134,22 @@ public class HDT_WS_MulesoftCallerAsync {
             return r;
         }
 
-        if(tObj.tabCode.equalsIgnoreCase('EC')){
+
+        HDT_WRP_MulesoftResponse.ReturnObj restMessage = (HDT_WRP_MulesoftResponse.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_MulesoftResponse.ReturnObj.class);
+
+        if(restMessage.status != 'success'){
+            wrapObj.success = false;
+            wrapObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+            wrapObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+            wrapObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+            return wrapObj;
+        }
+
+        wrapObj.success = true;
+        wrapObj.data = resultBody;
+        return wrapObj;
+
+        /*if(tObj.tabCode.equalsIgnoreCase('EC')){
 
             ReponseObj resp = new ReponseObj();
 
@@ -215,7 +231,7 @@ public class HDT_WS_MulesoftCallerAsync {
         respNull.message = 'No logic developed';
         return respNull;
 
-        //MODIFICATION END HERE
+        //MODIFICATION END HERE*/
     }
 
     public static HDT_WS_MakeMulesoftCall.HttpObj setHttpObject(String tabCode){
@@ -252,6 +268,12 @@ public class HDT_WS_MulesoftCallerAsync {
         String month = String.valueOf(tempDate.month());
         String year = String.valueOf(tempDate.year());
         return day + '/' + month + '/' + year;
+    }
+
+    public class ReponseWrapper {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public String data;
     }
 
     public class ReponseObjGeneric {
