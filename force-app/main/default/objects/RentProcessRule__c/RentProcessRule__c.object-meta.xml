@@ -152,10 +152,11 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Feminine</gender>
     <label>Regola rateizzazione</label>
     <nameField>
-        <displayFormat>RPR-{0000000}</displayFormat>
+        <displayFormat>RPR-{00000000}</displayFormat>
         <label>Codice Regola</label>
         <type>AutoNumber</type>
     </nameField>

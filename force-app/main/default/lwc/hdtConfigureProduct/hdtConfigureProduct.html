@@ -1,0 +1,110 @@
+<template>
+    <lightning-card title="Configura Prodotti">
+
+        <template if:false={loaded}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+
+        <template if:true={quotesData}>
+            <div class="slds-p-horizontal_xx-large slds-m-vertical_large">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="S.NO">S.NO</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="NAME">NAME</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="TYPE">TYPE</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="OPPORTUNITY NAME">OPPORTUNITY NAME</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="PRODUCT NAME">PRODUCT NAME</div>
+                            </th>
+                            <th class="" scope="col">
+                            </th>
+                            <th class="" scope="col">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={quotesData} for:item="quote">
+                            <tr key={quote.Id} class="slds-hint-parent">
+                                <td data-label="S.NO">
+                                    <div class="slds-truncate" title={quote.Count}>{quote.Count}</div>
+                                </td>
+                                <td data-label="NAME">
+                                    <div class="slds-truncate" title={quote.Name}>{quote.Name}</div>
+                                </td>
+                                <td data-label="TYPE">
+                                    <div class="slds-truncate" title={quote.Type}>{quote.Type}</div>
+                                </td>
+                                <td data-label="OPPORTUNITY NAME">
+                                    <div class="slds-truncate" title={quote.OpportunityName}>{quote.OpportunityName}</div>
+                                </td>
+                                <td data-label="PRODUCT NAME">
+                                    <div class="slds-truncate" title=""></div>
+                                </td>
+                                <td>
+                                    <lightning-button disabled={disabledButton} data-id={quote.Id} variant="brand" label="Configura" title="Configura" onclick={handleOpenConfigureModal}></lightning-button>
+                                </td>
+                                <td>
+                                    <lightning-button disabled={disabledButton} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
+                                </td>
+                            </tr>
+                            <template for:each={quote.QuoteLines} for:item="quoteLine">
+                                <tr key={quoteLine.Id} class="slds-hint-parent">
+                                    <td data-label="S.NO">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                    <td data-label="NAME">
+                                        <div class="slds-truncate" title={quoteLine.Name}>{quoteLine.Name}</div>
+                                    </td>
+                                    <td data-label="TYPE">
+                                        <div class="slds-truncate" title="QuoteLine">QuoteItem</div>
+                                    </td>
+                                    <td data-label="OPPORTUNITY NAME">
+                                        <div class="slds-truncate"></div>
+                                    </td>
+                                    <td data-label="PRODUCT NAME">
+                                        <div class="slds-truncate" title={quoteLine.SBQQ__Product__r.Name}>{quoteLine.SBQQ__Product__r.Name}</div>
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </template>
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
+            </div>
+        </div>
+
+        <template if:true={showEditQuote}>
+            <c-hdt-edit-quote sale={saleRecord} quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
+        </template>
+        
+        <c-hdt-confirmation-dialog title={dialogTitle}
+                           message={dialogMessage}
+                           confirm-label='Si'
+                           cancel-label='No'
+                           visible={isDialogVisible}
+                           name="deleteQuoteConfimation"
+                           onclick={handleDialogResponse}>
+        </c-hdt-confirmation-dialog>
+
+    </lightning-card>
+</template>

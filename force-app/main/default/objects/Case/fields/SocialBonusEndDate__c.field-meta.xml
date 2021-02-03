@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SocialBonusEndDate__c</fullName>
+    <description>Data specifica per il processo &quot;Gestione Bonus Sociale&quot;.</description>
+    <externalId>false</externalId>
+    <label>Data termine diritto agevolazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

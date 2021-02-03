@@ -1,0 +1,24 @@
+<aura:component implements="lightning:isUrlAddressable" >
+    <aura:attribute name="recordid" type="String"/>
+    <aura:attribute name="accid" type="String"/>
+    <aura:attribute name="flowName" type="String"/>
+    <aura:attribute name="subTabToClose" type="String"/>
+    <aura:attribute name="accountTabId" type="String"/>
+    <aura:attribute name="enableRefresh" type="Boolean"/>
+
+    <aura:attribute name="processType" type="String" />
+    <aura:attribute name="recordTypeName" type="String" />
+
+    <!--Attributi Cluster Annullamento-->    
+    <!--aura:attribute name="cluster" type="String" /-->
+    <aura:attribute name="recordToCancell" type="String" />
+    <aura:attribute name="sObjectRecordToCancell" type="String" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:workspaceAPI aura:id="workspace" />
+
+    <div class="slds-box slds-theme_default">
+    	<lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
+    </div>
+
+</aura:component>

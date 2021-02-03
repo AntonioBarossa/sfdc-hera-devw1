@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title="Informazioni Generali">
+        <template if:true={saleRecord}>
+            <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-large" size="12">
+                    <lightning-record-edit-form record-id={saleRecord.Account__c} object-api-name="Account">
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="AccountSource" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="CompanyOwner__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="OwnerId" variant="label-stacked"></lightning-input-field>
+                        </div>
+                    </lightning-record-edit-form>
+                    <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
+                        <!-- <div class="slds-grid slds-wrap slds-m-top_small">
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CampaignCode__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CampaignRef__c" variant="label-stacked"></lightning-input-field>
+                        </div> -->
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Channel__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CampaignCode__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Agency__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CampaignRef__c" variant="label-stacked"></lightning-input-field>
+                        </div>
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+            </lightning-layout>
+            <div class="slds-clearfix slds-p-around_small">
+                <div class="slds-float_right">
+                    <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                    <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

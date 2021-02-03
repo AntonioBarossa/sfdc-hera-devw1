@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
      * @description Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
      * @param String saleId
      * @param String ServicePoint__r.SupplyCity__c
-     * @param String ServicePoint__r.RecordType.Name
+     * @param String ServicePoint__r.RecordType.DeveloperName
      * @return List<SaleServiceItem__c>
      */
     public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type){
@@ -23,18 +23,20 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__c,
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
-        ServicePoint__r.RecordType.Name
-        //Opportunity__r.Vendita__c
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        Opportunity__r.Sale__c
         FROM SaleServiceItem__c
-        //WHERE  Opportunity__r.Vendita__c = :saleId DISABILITATO PER MANCANZA DI CAMPO IN DEVW1
-        WHERE ServicePoint__r.SupplyCity__c = :city
-        AND ServicePoint__r.RecordType.Name = :type
+        WHERE Opportunity__r.Sale__c = :saleId
+        AND ServicePoint__r.SupplyCity__c = :city
+        AND ServicePoint__r.RecordType.DeveloperName = :type
         WITH SECURITY_ENFORCED];
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-     * @description Get records filtered by Opportunity__r.Vendita__c
+
+     * @description Get records filtered by Opportunity__r.Sale__c
      * @param String saleId
      * @return List<SaleServiceItem__c>
      */
@@ -43,16 +45,18 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         return [SELECT 
         Id,
         Opportunity__c,
-        //Opportunity__r.Vendita__c,
+        Opportunity__r.Sale__c,
         Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
         Quote__c,
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
         ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
-        //WHERE Opportunity__r.Vendita__c = :saleId DISABILITATO PER MANCANZA CAMPO IN DEVW1
+        WHERE Opportunity__r.Sale__c = :saleId
         WITH SECURITY_ENFORCED
         ORDER BY Opportunity__r.CreatedDate ASC
         ];
@@ -81,7 +85,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 16/11/2020
-    * @description Get single record by quote id that has ServicePoint__r.RecordType.Name
+    * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
     * @param String quoteId – SBQQ__Quote__c.Id
     * @return List<SaleServiceItem__c>
     */
@@ -91,7 +95,8 @@ public inherited sharing class HDT_QR_SaleServiceItem {
             SELECT  
             Quote__c,
             ServicePoint__c,
-            ServicePoint__r.RecordType.Name
+            ServicePoint__r.RecordType.Name,
+            ServicePoint__r.RecordType.DeveloperName
             FROM SaleServiceItem__c
             WHERE Quote__c = :quoteId
             WITH SECURITY_ENFORCED
