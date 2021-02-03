@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_Business</fullName>
+    <fullName>HDT_RT_Partner</fullName>
     <active>true</active>
-    <label>Business</label>
+    <description>Agenzia / Teleseller / D2D</description>
+    <label>Partner</label>
     <picklistValues>
         <picklist>AccountSource</picklist>
         <values>

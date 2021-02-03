@@ -4,7 +4,7 @@
     <description>Tipologia Disalimentabilità, vincolata al flag si</description>
     <externalId>false</externalId>
     <label>Tipologia Disalimentabilità</label>
-    <required>true</required>
+    <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
