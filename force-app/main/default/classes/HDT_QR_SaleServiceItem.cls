@@ -30,12 +30,12 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         WHERE Opportunity__r.Sale__c = :saleId
         AND ServicePoint__r.SupplyCity__c = :city
         AND ServicePoint__r.RecordType.DeveloperName = :type
+        AND Opportunity__r.StageName NOT IN ('Closed Lost')
         WITH SECURITY_ENFORCED];
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-
      * @description Get records filtered by Opportunity__r.Sale__c
      * @param String saleId
      * @return List<SaleServiceItem__c>
@@ -57,6 +57,35 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
+        WITH SECURITY_ENFORCED
+        ORDER BY Opportunity__r.CreatedDate ASC
+        ];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get active records filtered by Opportunity__r.Sale__c
+     * @param String saleId
+     * @return List<SaleServiceItem__c>
+     */
+    public List<SaleServiceItem__c> getActiveRecordsBySaleId(String saleId){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c
+        FROM SaleServiceItem__c
+        WHERE Opportunity__r.Sale__c = :saleId
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
         WITH SECURITY_ENFORCED
         ORDER BY Opportunity__r.CreatedDate ASC
         ];

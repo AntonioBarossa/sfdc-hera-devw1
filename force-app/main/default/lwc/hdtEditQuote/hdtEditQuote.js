@@ -50,6 +50,7 @@ export default class hdtEditQuote extends LightningElement {
             });
             this.dispatchEvent(toastSuccessMessage);
         }).catch(error => {
+            this.dispatchEvent(new CustomEvent('closeeditquote'));
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
@@ -58,6 +59,5 @@ export default class hdtEditQuote extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             console.log('Error: ', error.body.message);
         });
-
     }
 }
