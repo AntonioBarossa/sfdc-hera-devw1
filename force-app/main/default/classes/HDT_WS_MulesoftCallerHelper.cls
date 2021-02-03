@@ -1,6 +1,6 @@
 public without sharing class HDT_WS_MulesoftCallerHelper {
 
-    public static Boolean isMock = false; 
+    public static Boolean isMock = true; 
 
     public static Object createMulesoftCall(String techObj, String requestObj){
 

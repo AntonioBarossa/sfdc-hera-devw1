@@ -1,0 +1,10 @@
+<aura:component implements="lightning:isUrlAddressable" >
+
+    <aura:attribute name="recordid" type="String"/>
+    <aura:attribute name="type" type="String"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <c:hdtViewSapDataTable recordId="{!v.recordid}" type="{!v.type}"></c:hdtViewSapDataTable>
+
+</aura:component>
