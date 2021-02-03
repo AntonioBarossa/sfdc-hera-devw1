@@ -282,7 +282,7 @@ public class HDT_WS_MulesoftCallerAsync {
     }
 
     //RESPONSE OBJ RETURNED TO CONTROLLER FOR ACCOUNT STATEMENT
-    public class ReponseObj {
+    /*public class ReponseObj {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public List<HDT_WRP_AccountStatement.DataWrapper> data;
@@ -302,7 +302,7 @@ public class HDT_WS_MulesoftCallerAsync {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public List<HDT_WRP_Paperless.FirstLevelObj> data;
-    }
+    }*/
 
     public class TechObj {
         public String requestType;
