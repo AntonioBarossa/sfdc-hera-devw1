@@ -1,7 +1,7 @@
 ({
     openTabWithSubtab : function(component, event, helper) {
 
-        var accountId = component.get("v.recordId");
+        var accountId = component.get("v.recordId");     
         var workspaceAPI = component.find("workspace");
 
         workspaceAPI.openTab({
@@ -16,14 +16,14 @@
                     },
                     state: {
                         c__recordid: accountId,
-                        c__type: 'cmor'
+                        c__type: 'socialBonus'
                     }
 				}
             });
 
             workspaceAPI.setTabLabel({
                 tabId: i,
-                label: 'CMOR'
+                label: 'Bonus sociale'
             });
             workspaceAPI.setTabIcon({
                 tabId: i,

@@ -11,11 +11,13 @@
 	</types>
    	<types>
 		<members>Account.cmor</members>
+		<members>Account.raiFee</members>
+		<members>Account.socialBonus</members>
 		<name>QuickAction</name>
 	</types>
 	<types>
 		<members>FakeSAPdata</members>
 		<name>CspTrustedSite</name>
-	</types>    
+	</types> 
 	<version>50.0</version>
 </Package>

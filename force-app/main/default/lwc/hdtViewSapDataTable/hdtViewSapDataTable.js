@@ -1,51 +1,52 @@
 import { LightningElement, api } from 'lwc';
-
-const columns = [
-    { label: 'Label', fieldName: 'name' },
-    { label: 'Phone', fieldName: 'phone', type: 'phone' },
-    { label: 'Balance', fieldName: 'amount', type: 'currency' },
-    { label: 'CloseAt', fieldName: 'closeAt', type: 'date' },
-];
+import callMulesoft from '@salesforce/apexContinuation/HDT_LC_ViewSapDataTableCtrl.startRequest';
+import getTableConfig from '@salesforce/apex/HDT_LC_ViewSapDataTableCtrl.getTableConfig';
 
 export default class HdtViewSapDataTable extends LightningElement {
     data = [];
-    columns = columns;
+    columns;
+    tableTitle;
     @api recordId;
     @api type;
 
     connectedCallback(){
-        console.log('# recordId -> ' + this.recordId);
-        console.log('# type -> ' + this.type);
-        this.restCall();
+        console.log('# type: ' + this.type);
+        this.getConfiguration();
+        this.backendCall();
     }
 
-    restCall(event) {
+    getConfiguration(){
+        console.log('# getConfiguration #');
+    
+        getTableConfig({recordId: this.recordId, type: this.type})
 
-        console.log('# restCall #');
+        .then(result => {
+            console.log('# getTableConfig #');
+            this.tableTitle = result.tableTitle;
+            this.columns = result.columns;
+        }).catch(error => {
+            console.log('# error -> ' + error);
+        });
+    
+    }
 
-        fetch(
-                'https://monted-dev-ed.my.salesforce.com/services/apexrest/GetSAPfakeData/0',
-                {
-                // Request type
-                method: 'POST',
-                body: JSON.stringify({value1: 'x'}),
-                headers:{
-                    // content type
-                    'Content-Type': 'application/json',
-                    "Authorization": "Bearer 00D58000000KR1c!AQgAQFRdXqZ_kFTgfNJQFap.98.MCuf.rO5D8zjxpPbre8a5Y1wmjokAMe3R0t9kGPiwWX6mXQ1CR8GDAUYT2msxIL7RRGSB",
-                }
-        })
-        .then((response) => {
-            // returning the response in the form of JSON
-            console.log('### response.json ');
-            return response.json();
-        })
-        .then((jsonResponse) => {
-            console.log('### jsonResponse_status: ' + jsonResponse.status);            
-        })
-        .catch(error => {
+    backendCall(){
+        console.log('# Get data from Mulesoft #');
+    
+        callMulesoft({recordId: this.recordId, type: this.type})
 
-        })
+        .then(result => {
+            console.log('# Mulesoft result #');
+
+            var obj = JSON.parse(result);
+
+            console.log('# success: ' + obj.status);
+            this.data = obj.data;
+            
+        }).catch(error => {
+            console.log('# error -> ' + error);
+        });
+    
     }
 
 }

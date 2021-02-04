@@ -16,14 +16,14 @@
                     },
                     state: {
                         c__recordid: accountId,
-                        c__type: 'cmor'
+                        c__type: 'raiFee'
                     }
 				}
             });
 
             workspaceAPI.setTabLabel({
                 tabId: i,
-                label: 'CMOR'
+                label: 'Canone RAI'
             });
             workspaceAPI.setTabIcon({
                 tabId: i,
