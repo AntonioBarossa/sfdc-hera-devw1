@@ -107,6 +107,7 @@ public inherited sharing class HDT_QR_Order {
             Account.Name,
             Name,
             Recordtypeid,
+            Recordtype.Name,
             Recordtype.DeveloperName,
             Status,
             BillingProfile__c,
