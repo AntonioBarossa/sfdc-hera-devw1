@@ -1,6 +1,6 @@
 <template>
     
-    <lightning-card  title={tableTitle}>
+    <lightning-card  icon-name={iconName} title={tableTitle}>
         <div style="height: 22vh;"><!--height: 150px;-->
             <lightning-datatable
                     key-field="id"
@@ -10,6 +10,18 @@
         </div>
     </lightning-card>
 
-
+    <template if:true={showSecondTable} >
+        <div class="slds-m-top_xx-large" >
+            <lightning-card  icon-name={iconName2} title={tableTitle2} >
+                <div style="height: 22vh;"><!--height: 150px;-->
+                    <lightning-datatable
+                            key-field="id"
+                            data={data2}
+                            columns={columns2}>
+                    </lightning-datatable>
+                </div>
+            </lightning-card>
+        </div>
+    </template>
 
 </template>

@@ -1,24 +1,48 @@
 public without sharing class HDT_LC_ViewSapDataTableCtrl {
 
     @AuraEnabled
-    public static TableMetaData getTableConfig(String recordId, String type){
-        TableMetaData tdata = new TableMetaData();
-        try {
-            tdata.columns = new List<ColumnObj>();
-            tdata = (TableMetaData)JSON.deserialize(s, TableMetaData.class);
-
+    public static ReturnedObj getTableConfig(String recordId, String type){
+        
+        ReturnedObj retObj = new ReturnedObj();
+        retObj.tables = new List<TableMetaData>();
+        
+        
+        try {            
             if(type == 'cmor'){
-                tdata.tableTitle = 'CMOR';
-            } else if(type == 'socialBonus'){
-                tdata.tableTitle = 'Bonus Sociale';
-            } else if(type == 'raiFee'){
-                tdata.tableTitle = 'Canone RAI';
-            }
+                TableMetaData tdata = new TableMetaData();
+                tdata.columns = new List<ColumnObj>();
+                tdata = (TableMetaData)JSON.deserialize(cmorColumns1, TableMetaData.class);
+                tdata.tableTitle = 'CMOR - Venditore entrante';
+                tdata.iconName = 'standard:record_update';
+                retObj.tables.add(tdata);
 
+                TableMetaData tdata2 = new TableMetaData();
+                tdata2.columns = new List<ColumnObj>();
+                tdata2 = (TableMetaData)JSON.deserialize(cmorColumns2, TableMetaData.class);
+                tdata2.tableTitle = 'CMOR - Venditore uscente';
+                tdata2.iconName = 'standard:record_update';
+                retObj.tables.add(tdata2);
+
+            } else if(type == 'socialBonus'){
+                TableMetaData tdata = new TableMetaData();
+                tdata.columns = new List<ColumnObj>();
+                tdata = (TableMetaData)JSON.deserialize(socialBonusColumns, TableMetaData.class);
+                tdata.tableTitle = 'Bonus Sociale';
+                tdata.iconName = 'standard:customer_lifecycle_analytics';
+                retObj.tables.add(tdata);
+            } else if(type == 'raiFee'){
+                TableMetaData tdata = new TableMetaData();
+                tdata.columns = new List<ColumnObj>();
+                tdata = (TableMetaData)JSON.deserialize(raiFeeColumns, TableMetaData.class);
+                tdata.tableTitle = 'Canone RAI';
+                tdata.iconName = 'standard:expense';
+                retObj.tables.add(tdata);
+            }
+            
         } catch (Exception e) {
             //throw new AuraHandledException(e.getMessage());
         }
-        return tdata;
+        return retObj;
     }
     
     // Action method
@@ -54,8 +78,13 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
         return result;
     }
 
+    public class ReturnedObj {
+        @AuraEnabled public List<TableMetaData> tables;
+    }
+
     public class TableMetaData {
         @AuraEnabled public String tableTitle;
+        @AuraEnabled public String iconName;
         @AuraEnabled public List<ColumnObj> columns;
     }
 
@@ -64,7 +93,7 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
         @AuraEnabled public String label;
     }
 
-    public static String s = '{ "columns": [{ "label": "POD/PDR", "fieldName": "POD"},'+
+    public static String cmorColumns1 = '{ "columns": [{ "label": "POD/PDR", "fieldName": "POD"},'+
     '{ "label": "Impianto", "fieldName": "ANLAGE"},'+
     '{ "label": "Numero business partner", "fieldName": "PARTNER"},'+
     '{ "label": "Contratto", "fieldName": "CONTRATTO"},'+
@@ -77,5 +106,42 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
     '{ "label": "Società", "fieldName": "SERVICEID"},'+
     '{ "label": "Importo Cmor stornato", "fieldName": "CMOR_STORNATO"},'+
     '{ "label": "Importo Cmor rettificato", "fieldName": "CMOR_RETT"}]}';
+
+    public static String cmorColumns2 = '{ "columns": [{ "label": "Stato Richiesta Indennizzo", "fieldName": "status"},'+
+    '{ "label": "N. conto contrattuale", "fieldName": "VKONT"},'+
+    '{ "label": "Numero business partner", "fieldName": "GPART"},'+
+    '{ "label": "Contratto", "fieldName": "VERTRAG"},'+
+    '{ "label": "Codice POD/PDR", "fieldName": "POD"},'+
+    '{ "label": "IMPORTO CMOR", "fieldName": "IMPORTO_CMOR"},'+
+    '{ "label": "IMPORTO CMOR PREGRESSO ", "fieldName": "CMOR_1"},'+
+    '{ "label": "codice gestore", "fieldName": "ID_ESTERNO"},'+
+    '{ "label": "invio richiesta", "fieldName": "DATA_RICHIESTA"},'+
+    '{ "label": "data ultima modifica", "fieldName": "DATA_FLUSSO"},'+
+    '{ "label": "Data switch out", "fieldName": "DATA_SWITCH"},'+
+    '{ "label": "Settore merceologico", "fieldName": "SPARTE"},'+
+    '{ "label": "Società", "fieldName": "SERVICEID"}]}';
+
+    public static String raiFeeColumns = '{ "columns": [{ "label": "Stato Pratica", "fieldName": "statoPratica"},'+
+    '{ "label": "Società", "fieldName": "societa"},'+
+    '{ "label": "B.partner", "fieldName": "bpartner"},'+
+    '{ "label": "Pod", "fieldName": "pod"},'+
+    '{ "label": "Contratto", "fieldName": "contratto"},'+
+    '{ "label": "Mese di riferimento", "fieldName": "meseRiferimento"},'+
+    '{ "label": "Id.addebito", "fieldName": "idAddebito"},'+
+    '{ "label": "Periodo Riferimento", "fieldName": "periodoRiferimento"},'+
+    '{ "label": "Num.Documento", "fieldName": "numDocumento"},'+
+    '{ "label": "Importo Rata", "fieldName": "importoRata"},'+
+    '{ "label": "Data scadenza Rata", "fieldName": "dataScadenzaRata"}]}';
+
+    public static String socialBonusColumns = '{ "columns": [{ "label": "BP", "fieldName": "BP"},'+
+    '{ "label": "POD", "fieldName": "POD"},'+
+    '{ "label": "CONTRATTO", "fieldName": "CONTRATTO"},'+
+    '{ "label": "data attivazione contratto", "fieldName": "dataAttivazione"},'+
+    '{ "label": "data cessazione contratto", "fieldName": "dataCessazione"},'+
+    '{ "label": "Decodifica Società", "fieldName": "decodificaSocieta"},'+
+    '{ "label": "Data Attivazione Bonus", "fieldName": "dataAttivazioneBonus"},'+
+    '{ "label": "Data Cessazione Bonus", "fieldName": "dataCessazioneBonus"},'+
+    '{ "label": "Tipo Compensazione Sap", "fieldName": "tipoCompensazioneSap"},'+
+    '{ "label": "Descrizione Tipo Compensazione", "fieldName": "descrizioneTipo"}]}';
 
 }
