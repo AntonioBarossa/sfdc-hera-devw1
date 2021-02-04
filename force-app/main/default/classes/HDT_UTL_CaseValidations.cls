@@ -26,6 +26,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String result;
 
+        System.debug(caseType);
+
+        System.debug(getFieldValue(fields, 'Type'));
+
         if(caseType != getFieldValue(fields, 'Type')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile modificare tipo processo'));
