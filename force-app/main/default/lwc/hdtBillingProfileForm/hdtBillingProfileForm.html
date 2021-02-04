@@ -22,6 +22,21 @@
                                         <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={field} key={field} field-name={field} variant="label-stacked"></lightning-input-field>
                                     </template>
                                 </div>
+                                <template if:true={tipologiaIntestatarioFields}>
+                                    <div class="slds-grid slds-wrap slds-m-top_small">
+                                        <template for:each={tipologiaIntestatarioFields} for:item="tipologiaIntestatarioField">
+                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
+                                        </template>
+                                    </div>
+                                </template>
+                                <template if:true={isfatturazioneElettronicaVisible}>
+                                    <div class="slds-text-heading_small slds-m-top_small">Fatturazione elettronica</div>
+                                    <div class="slds-grid slds-wrap slds-m-top_small">
+                                        <template for:each={fatturazioneElettronicaFields} for:item="fatturazioneElettronicaField">
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={fatturazioneElettronicaField} key={fatturazioneElettronicaField} field-name={fatturazioneElettronicaField} variant="label-stacked"></lightning-input-field>
+                                        </template>
+                                    </div>
+                                </template>
                             </template>
 
                         </lightning-record-edit-form>

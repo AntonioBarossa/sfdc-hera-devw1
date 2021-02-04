@@ -1,13 +1,18 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getFormFields from '@salesforce/apex/HDT_LC_BillingProfileForm.getFormFields';
 import createBillingProfile from '@salesforce/apex/HDT_LC_BillingProfileForm.createBillingProfile';
+import getAccountOwnerInfo from '@salesforce/apex/HDT_LC_BillingProfileForm.getAccountOwnerInfo';
+import getLegalAccount from '@salesforce/apex/HDT_LC_BillingProfileForm.getLegalAccount';
 
 export default class hdtBillingProfileForm extends LightningElement {
 
     @api accountId;
     loading = false;
-    fields;
+    @track fields = [];
+    @track fatturazioneElettronicaFields = [];
+    isfatturazioneElettronicaVisible = false;
+    @track tipologiaIntestatarioFields = [];
     dataToSubmit = {};
 
     handleCancelEvent(){
@@ -16,20 +21,38 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     handlePaymentMethodSelect(event){
         this.loading = true;
+        this.fatturazioneElettronicaFields = [];
+        this.tipologiaIntestatarioFields = [];
         this.dataToSubmit[event.target.fieldName] = event.target.value;
         this.template.querySelector('[data-id="modal-body"]').classList.remove('modal-body-height');
 
         getFormFields({paymentMethod: event.target.value, accountId: this.accountId}).then(data =>{
             this.loading = false;
-            this.fields = data;
-            console.log(JSON.parse(JSON.stringify(data)));
+            this.fields = data.choosenFields;
+
+            if(data.fatturazioneElettronica !== undefined){
+                this.fatturazioneElettronicaFields = data.fatturazioneElettronica;
+                this.isfatturazioneElettronicaVisible = true;
+            }
+
+            if (data.tipologiaIntestatario !== undefined) {
+                data.tipologiaIntestatario.forEach(el => {
+                    this.tipologiaIntestatarioFields.push({
+                        fieldName: el,
+                        visibility: (el === 'BankAccountSignatoryFiscalCode__c' || el === 'BankAccountSignatoryFirstName__c' || el === 'BankAccountSignatoryLastName__c' || el === 'OtherPayer__c' || el === 'LegalAgent__c') ? false : true,
+                        disabled: (el === 'BankAccountSignatoryFiscalCode__c' || el === 'BankAccountSignatoryFirstName__c' || el === 'BankAccountSignatoryLastName__c') ? true : false,
+                        value: ''
+                    });
+                });
+            }
             
         }).catch(error => {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
-                variant: 'error'
+                variant: 'error',
+                mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
             console.log('Errore: ',error.body.message);
@@ -37,9 +60,137 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     }
 
+    enableTipologiaIntestatario(){
+        let indexCode = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryFiscalCode__c');
+        let indexFirstName = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryFirstName__c');
+        let indexLastName = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryLastName__c');
+        this.tipologiaIntestatarioFields[indexCode].visibility = true;
+        this.tipologiaIntestatarioFields[indexFirstName].visibility = true;
+        this.tipologiaIntestatarioFields[indexLastName].visibility = true;
+
+        return {
+            indexCode: indexCode,
+            indexFirstName: indexFirstName,
+            indexLastName: indexLastName
+        }
+    }
+
+    resetTipologiaIntestatario(){
+        let indexCode = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryFiscalCode__c');
+        let indexFirstName = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryFirstName__c');
+        let indexLastName = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryLastName__c');
+        this.tipologiaIntestatarioFields[indexCode].visibility = false;
+        this.tipologiaIntestatarioFields[indexFirstName].visibility = false;
+        this.tipologiaIntestatarioFields[indexLastName].visibility = false;
+        this.tipologiaIntestatarioFields[indexCode].value = '';
+        this.tipologiaIntestatarioFields[indexFirstName].value = '';
+        this.tipologiaIntestatarioFields[indexLastName].value = '';
+
+        this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = '';
+        this.dataToSubmit['BankAccountSignatoryFirstName__c'] = '';
+        this.dataToSubmit['BankAccountSignatoryLastName__c'] = '';
+
+        let indexLegalAgent = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'LegalAgent__c');
+        this.tipologiaIntestatarioFields[indexLegalAgent].visibility = false;
+        this.dataToSubmit['LegalAgent__c'] = '';
+
+        let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'OtherPayer__c');
+        this.tipologiaIntestatarioFields[indexOtherPayer].visibility = false;
+        this.dataToSubmit['OtherPayer__c'] = '';
+    }
+
     handleCollectFieldsData(event){
         this.dataToSubmit[event.target.fieldName] = event.target.value;
-        console.log(this.dataToSubmit);
+
+        if (event.target.fieldName === 'SignatoryType__c') {
+            this.resetTipologiaIntestatario();
+            switch (event.target.value) {
+                case 'Stesso Sottoscrittore':
+                    getAccountOwnerInfo({accountId: this.accountId}).then(data =>{
+                        this.loading = false;
+                        
+                        let tipologiaIndexes = this.enableTipologiaIntestatario();
+                        this.tipologiaIntestatarioFields[tipologiaIndexes.indexCode].value = data.FiscalCode__c;
+                        this.tipologiaIntestatarioFields[tipologiaIndexes.indexFirstName].value = data.FirstName__c;
+                        this.tipologiaIntestatarioFields[tipologiaIndexes.indexLastName].value = data.LastName__c;
+    
+                        this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = data.FiscalCode__c;
+                        this.dataToSubmit['BankAccountSignatoryFirstName__c'] = data.FirstName__c;
+                        this.dataToSubmit['BankAccountSignatoryLastName__c'] = data.LastName__c;
+                    }).catch(error => {
+                        this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: error.body.message,
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                        this.dispatchEvent(toastErrorMessage);
+                        console.log('Errore: ',error.body.message);
+                    });
+    
+                    break;
+                case 'Legale Rappresentante':
+                    let indexLegalAgent = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'LegalAgent__c');
+                    this.tipologiaIntestatarioFields[indexLegalAgent].visibility = true;
+                    break;
+                case 'Pagatore Alternativo':
+                    let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'OtherPayer__c');
+                    this.tipologiaIntestatarioFields[indexOtherPayer].visibility = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (event.target.fieldName === 'LegalAgent__c') {
+            getLegalAccount({contactId: event.target.value}).then(data =>{
+                this.loading = false;
+                let tipologiaIndexes = this.enableTipologiaIntestatario();
+                this.tipologiaIntestatarioFields[tipologiaIndexes.indexCode].value = data.FiscalCode__c;
+                this.tipologiaIntestatarioFields[tipologiaIndexes.indexFirstName].value = data.FirstName;
+                this.tipologiaIntestatarioFields[tipologiaIndexes.indexLastName].value = data.LastName;
+                
+                this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = data.FiscalCode__c;
+                this.dataToSubmit['BankAccountSignatoryFirstName__c'] = data.FirstName;
+                this.dataToSubmit['BankAccountSignatoryLastName__c'] = data.LastName;
+            }).catch(error => {
+                this.loading = false;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                console.log('Errore: ',error.body.message);
+            });
+        }
+
+        if (event.target.fieldName === 'OtherPayer__c') {
+            getAccountOwnerInfo({accountId: event.target.value}).then(data =>{
+                this.loading = false;
+                let tipologiaIndexes = this.enableTipologiaIntestatario();
+                this.tipologiaIntestatarioFields[tipologiaIndexes.indexCode].value = data.FiscalCode__c;
+                this.tipologiaIntestatarioFields[tipologiaIndexes.indexFirstName].value = data.FirstName__c;
+                this.tipologiaIntestatarioFields[tipologiaIndexes.indexLastName].value = data.LastName__c;
+
+                this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = data.FiscalCode__c;
+                this.dataToSubmit['BankAccountSignatoryFirstName__c'] = data.FirstName__c;
+                this.dataToSubmit['BankAccountSignatoryLastName__c'] = data.LastName__c;
+            }).catch(error => {
+                this.loading = false;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                console.log('Errore: ',error.body.message);
+            });
+        }
+
     }
 
     validFields() {
