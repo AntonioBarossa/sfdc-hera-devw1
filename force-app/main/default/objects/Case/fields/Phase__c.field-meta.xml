@@ -253,6 +253,36 @@
                 <label>Esito KO</label>
             </value>
             <value>
+                <fullName>Avvenuta Riduzione Potenza</fullName>
+                <default>false</default>
+                <label>Avvenuta Riduzione Potenza</label>
+            </value>
+            <value>
+                <fullName>Presenza Atti Autorizzativi</fullName>
+                <default>false</default>
+                <label>Presenza Atti Autorizzativi</label>
+            </value>
+            <value>
+                <fullName>Data Esecuzione Prevista</fullName>
+                <default>false</default>
+                <label>Data Esecuzione Prevista</label>
+            </value>
+            <value>
+                <fullName>Inviato al SII</fullName>
+                <default>false</default>
+                <label>Inviato al SII</label>
+            </value>
+            <value>
+                <fullName>Esito OK da SII</fullName>
+                <default>false</default>
+                <label>Esito OK da SII</label>
+            </value>
+            <value>
+                <fullName>Esito KO da SII</fullName>
+                <default>false</default>
+                <label>Esito KO da SII</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
