@@ -100,4 +100,80 @@ public inherited sharing class HDT_QR_QuoteLine {
              WITH SECURITY_ENFORCED
         ];
     }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 17/11/2020
+    * @description Get records by quoteId and Product.Name "POD"
+    * @param String quoteId - SBQQ__Quote__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getRecordsByQuoteIdAndProductPod(String quoteId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            ServicePoint__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__Product__r.Name = 'POD'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 17/11/2020
+    * @description Get records by saleId and Product.Name "POD"
+    * @param String saleId - Sale__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getActiveRecordsBySaleIdAndProductPod(String saleId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            AND SBQQ__Product__r.Name = 'POD'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 02/02/2021
+    * @description Get records that are displayed on "Configura Prodotti" section of Selling Wizard
+    * @param String saleId - Sale__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getActiveRecords(String saleId){
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__c,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            ServicePoint__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

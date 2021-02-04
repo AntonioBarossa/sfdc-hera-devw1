@@ -922,147 +922,31 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Assistenza Sociale</fullName>
+            <fullName>Agevolazioni non Energy indirette</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Bolletta Fuga H2O</fullName>
+            <fullName>Bonus integrativo solo per non Energy</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Calamità Naturali</fullName>
+            <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio Banca</fullName>
+            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio Conto</fullName>
+            <fullName>Mancata erogazione Bonus con domanda di attivazione%2Frinnovo</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio da Click%26Pay</fullName>
+            <fullName>Permanenza condizioni di disagio</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio modalità di pagamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cessazione Contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiusura Conto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente paga un acconto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Delibera 655 2016</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disagio Economico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disagio Economico %28Bonus Sociale%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disguido Hera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disoccupato%2FCassintegrato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Doc%2E ricevuto dopo scadenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Domiciliazione non attiva</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errata Domiciliazione%2Fnon richiesta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Evasione%2FElusione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura Plurim_TLR_Tur %2B 3%2E5%25</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura SD</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FatturaPlurim_EE %28noD1%29_GAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FatturaPlurim_EE SME ML</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FatturaPlurim_Gas%3E5000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fatturazione bloccata plurim</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Incongruenza sui sistemi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Informazione su doppio pagamento%2Fincasso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Malfunzione Gruppo di misura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Piano Rate errato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Piano d%27autorità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico Rate non ricevute</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rinuncia piano rate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazione doppio pagamento non registrato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TARI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TCP Comune no Int</fullName>
+            <fullName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1450,6 +1334,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
@@ -1486,6 +1378,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta Domiciliazione</fullName>
             <default>false</default>
         </values>
@@ -1502,7 +1398,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sospensione Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Fornitura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1551,6 +1463,10 @@
         </values>
         <values>
             <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
     </picklistValues>

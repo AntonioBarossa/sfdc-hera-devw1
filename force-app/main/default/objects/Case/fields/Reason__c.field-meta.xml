@@ -195,9 +195,38 @@
                 <label>TCP Comune no Int</label>
             </value>
             <value>
+                <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
+                <default>false</default>
+                <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</label>
+            </value>
+            <value>
+                <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
+                <default>false</default>
+                <label>Cessazione utilizzo apparecchiatura elettromedicale</label>
+            </value>
+            <value>
+                <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</fullName>
+                <default>false</default>
+                <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo</label>
+            </value>
+            <value>
+                <fullName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</fullName>
+                <default>false</default>
+                <label>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</label>
+            </value>
+            <value>
+                <fullName>Permanenza condizioni di disagio</fullName>
+                <default>false</default>
+                <label>Permanenza condizioni di disagio</label>
+            </value>
+            <value>
+                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <default>false</default>
+                <label>Bonus integrativo solo per non Energy</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Agevolazioni non Energy indirette</label>
             </value>
             <value>
@@ -213,12 +242,6 @@
                 <label>Bolletta Periodica</label>
             </value>
             <value>
-                <fullName>Bonus integrativo solo per non Energy</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Bonus integrativo solo per non Energy</label>
-            </value>
-            <value>
                 <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -231,30 +254,44 @@
                 <label>Malfunzionamento</label>
             </value>
             <value>
-                <fullName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Mancata erogazione Bonus con domanda di attivazione/rinnovo</label>
-            </value>
-            <value>
-                <fullName>Permanenza condizioni di disagio</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Permanenza condizioni di disagio</label>
-            </value>
-            <value>
                 <fullName>Prima Bolletta</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Prima Bolletta</label>
             </value>
-            <value>
-                <fullName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</label>
-            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
+            <valueName>Plico Rate non ricevute</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
+            <valueName>Rinuncia piano rate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
+            <valueName>Piano Rate errato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
+            <valueName>Segnalazione doppio pagamento non registrato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
+            <valueName>Informazione su doppio pagamento/incasso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
+            <valueName>Chiusura Conto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
+            <valueName>Cambio modalità di pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
+            <valueName>Cessazione Contratto</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <valueName>Cambio Conto</valueName>
@@ -350,38 +387,6 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>TCP Comune no Int</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
-            <valueName>Plico Rate non ricevute</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
-            <valueName>Rinuncia piano rate</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
-            <valueName>Piano Rate errato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
-            <valueName>Segnalazione doppio pagamento non registrato</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Doppi Pagamenti/Incassi</controllingFieldValue>
-            <valueName>Informazione su doppio pagamento/incasso</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
-            <valueName>Chiusura Conto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
-            <valueName>Cambio modalità di pagamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Revoca Domiciliazione</controllingFieldValue>
-            <valueName>Cessazione Contratto</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

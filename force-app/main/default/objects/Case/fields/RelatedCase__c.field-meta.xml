@@ -4,7 +4,7 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <description>Lookup per linkare un altro Case correlato al Case di partenza. Utilizzata al momento solo dal processo Inversione Contatore.</description>
     <externalId>false</externalId>
-    <label>Case</label>
+    <label>Case Correlato</label>
     <referenceTo>Case</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>
