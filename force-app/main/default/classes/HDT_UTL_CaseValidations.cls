@@ -16,6 +16,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validatePagamenti(fields, caseType);
 
+        } else if (caseType == 'Inversione del Contatore') {
+            result = validateInversioneContatore(recordId, fields, caseType);
         }
 
         return result;
@@ -42,6 +44,28 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         return result;
 
+    }
+
+    public String validateInversioneContatore(String caseId, String fields, string caseType) {
+
+        String result;
+
+        String relatedCaseId = getFieldValue(fields, 'RelatedCase__c');
+
+        Case currentCase = [SELECT Id, CommodityFormula__c, ServicePoint__r.ServicePointCode__c FROM Case WHERE Id = :caseId];
+        Case relatedCase = [SELECT Id, CommodityFormula__c, ServicePoint__r.ServicePointCode__c FROM Case WHERE Id = :relatedCaseId];
+
+        System.debug('Related case commodity:' + relatedCase.CommodityFormula__c);
+
+        if (!relatedCase.CommodityFormula__c.equalsIgnoreCase(currentCase.CommodityFormula__c)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Servizio incompatibile. Case attuale: ' + currentCase.CommodityFormula__c + ', Case correlato: ' + relatedCase.CommodityFormula__c));
+        } else if (relatedCase.ServicePoint__r.ServicePointCode__c.equalsIgnoreCase(currentCase.ServicePoint__r.ServicePointCode__c)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è possibile correlare due processi di Inversione Contatore sullo stesso impianto'));
+        } else {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+
+        return result;
     }
 
 
