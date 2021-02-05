@@ -116,9 +116,9 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);
-        quoteSrv.updateRecords(quoteList);
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
+        quoteSrv.updateRecords(quoteList);
     }
 
     /**

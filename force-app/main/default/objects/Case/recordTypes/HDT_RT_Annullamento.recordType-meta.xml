@@ -1462,6 +1462,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inversione del Contatore</fullName>
             <default>false</default>
         </values>
@@ -1514,6 +1522,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta Domiciliazione</fullName>
             <default>false</default>
         </values>
@@ -1534,6 +1546,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
             <default>false</default>
         </values>
@@ -1543,6 +1567,10 @@
         </values>
         <values>
             <fullName>Sospensione Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Fornitura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1603,6 +1631,10 @@
         </values>
         <values>
             <fullName>Verifica Titolarità POD%2FPDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
     </picklistValues>
