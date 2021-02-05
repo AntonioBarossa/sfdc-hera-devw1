@@ -56,30 +56,22 @@ public with sharing class HDT_LC_GenericRecordSelection {
             for (SObject singleObject : firstObjectList) {
                 for (String field : fieldsList) {
                     key += singleObject.get(field) + '-';
-                    System.debug('key: ' + key);
                 }
     
                 fieldsMap.put(String.valueOf(key), singleObject.Id);
-                System.debug('fieldsMap: ' + fieldsMap);
 
                 objectsMap.put(singleObject.Id, singleObject);
                 key = '';
             }
     
             List<Id> distinctRecordIds = fieldsMap.values();
-            System.debug('distinctRecordIds: ' + distinctRecordIds);
-            System.debug('objectsMap: ' + objectsMap);
 
             List<sObject> outputRecords = new List<SObject>();
             for (Id recordId : distinctRecordIds) {
-                System.debug('recordId: ' + recordId);
                 outputRecords.add(objectsMap.get(recordId));
-                System.debug('outputRecords: ' + outputRecords);
 
             }
     
-            System.debug('outputRecords: ' + outputRecords);
-
             results.add(outputRecords);
             
         } catch(Exception e){
