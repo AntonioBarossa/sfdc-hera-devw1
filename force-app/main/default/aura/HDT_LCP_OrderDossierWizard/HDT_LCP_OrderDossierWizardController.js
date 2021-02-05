@@ -75,6 +75,10 @@
         }
     },
 
+    handleOrderRefreshEvent: function(component,event,helper){
+        helper.getOrderParentRecord(component);
+    },
+
     closeModal : function(component,event,helper){
         component.set("v.openModale",false); 
     },

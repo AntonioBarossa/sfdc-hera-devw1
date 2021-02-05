@@ -39,14 +39,14 @@
     <!-- Dati firma -->
     <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
-            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}"></c:hdtOrderDossierWizardSignature>
+            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}"></c:hdtOrderDossierWizardSignature>
         </div>
     </aura:if>
 
     <!-- Gestione Ordini -->
-    <aura:if isTrue="{!v.orderParentId}">
+    <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
-            <c:hdtOrderDossierWizardTable orderParentId="{!v.orderParentId}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
+            <c:hdtOrderDossierWizardTable orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
         </div>
     </aura:if>
 

@@ -107,6 +107,12 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     //     update ordVen;
     //     return ordVen.account__c;
     // }
+    
+    @AuraEnabled
+    public static Order getOrderParent(String orderParentId){
+        orderSrv.checkReadAccess('AccountId,Account.Name,Account.VATNumber__c,Account.FiscalCode__c,Account.BillingAddress,Account.ShippingAddress,Name,RecordType.DeveloperName,SystemModstamp,Status,ContractSigned__c,SignedDate__c,SignatureMethod__c,DocSendingMethod__c,Sale__c,CreatedDate,Step__c');
+        return orderQr.getRecordById(orderParentId);
+    }
 
     @AuraEnabled
     public static boolean saveProsegui(String orderParentId){

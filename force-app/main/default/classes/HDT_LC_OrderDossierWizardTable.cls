@@ -40,4 +40,29 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         return mapResponse;
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 05/02/2021
+    * @description Handle next action on signature section
+    * @param Order orderUpdates
+    */
+    @AuraEnabled
+    public static void next(Order orderUpdates){
+        orderUpdates.Step__c = 3;
+        orderSrv.updateRecord(orderUpdates);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 05/02/2021
+    * @description Handle "modifica" action on signature section
+    * @param String orderParentId
+    */
+    @AuraEnabled
+    public static void edit(String orderParentId){
+        orderSrv.updateRecord(new Order(
+            Id = orderParentId,
+            Step__c = 2
+        ));
+    }
 }
