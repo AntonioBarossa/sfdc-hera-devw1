@@ -51,26 +51,6 @@
     </aura:if>
 
     <!-- Actions buttons -->
-    <lightning:card>
-        <footer class="slds-clearfix slds-p-right_medium">
-            <ul class="slds-button-group-list slds-float_right">
-             <!--   <li>
-                    <lightning:button variant="destructive"
-                                      iconName="utility:cancel_file_request" onclick="{!c.cancel}">
-                        Cancel</lightning:button>
-                </li> -->
-                <li>
-                    <lightning:button variant="neutral" onclick="{!c.saveDraft}"
-                                      iconName="standard:drafts">
-                        Save Draft</lightning:button>
-                </li>
-                <li><!--5-->
-                    <lightning:button variant="brand" onclick="{!c.save}"
-                                      iconName="utility:save">
-                        Save</lightning:button>
-                </li>
-            </ul>
-        </footer>
-    </lightning:card>
+    <c:hdtOrderDossierWizardActions></c:hdtOrderDossierWizardActions>
 
 </aura:component>
