@@ -1,0 +1,68 @@
+<template>
+    <div if:true={showSignatureInfo} class="slds-grid">
+        <div class="slds-col slds-size_1-of-3">
+            <lightning-combobox
+                    name="progress"
+                    label="Modalità di firma"
+                    value=""
+                    placeholder="Seleziona una Modalità"
+                    options={modalitaFirma}
+                    onchange={handleChange} 
+                    data-id="modalitaFirma"
+                    required></lightning-combobox>
+            <lightning-input 
+                type="email" 
+                label="Indirizzo Email" 
+                value="alpha@beta.com"></lightning-input>
+        </div>
+        <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
+        </div>
+        <div class="slds-col slds-size_1-of-3">
+            <lightning-combobox
+                    name="progress"
+                    label="Modalità di invio documentazione"
+                    value=""
+                    placeholder="Seleziona una Modalità"
+                    options={modalitaSpedizione}
+                    onchange={handleChange}
+                    data-id="invioDocumentazione"
+                    required></lightning-combobox>
+            <lightning-input type="tel" label="Cellulare" name="phone3" value="3386564219" pattern="[0-9]{10}"></lightning-input>
+
+        </div>
+    </div>
+     <div class="slds-grid">
+        <div class="slds-col slds-size_4-of-5">
+            <lightning-layout vertical-align="end">
+        <lightning-layout-item  flexibility="auto">
+            <lightning-input 
+            type="text" 
+            label="Indirizzo di recapito"
+            value="VIA Roma 1, Milano MI, 20100 ITALIA"
+            data-id="email"
+            disabled></lightning-input>          
+            </lightning-layout-item>
+        
+        <lightning-layout-item >
+            <lightning-button-icon 
+                icon-name="standard:address" 
+                variant="brand" 
+                class="slds-m-left_xx-small"
+                data-id="indirizzoRecapito"></lightning-button-icon>
+        </lightning-layout-item>
+    </lightning-layout>
+        </div>
+     </div>
+
+    <div if:true={showPreview} class="slds-p-top_small">
+    <lightning-button
+        label="Preview documentazione"
+        title="Approve"
+        onclick={handlePreview}
+        icon-name="utility:download"
+        accesskey="p"
+        >
+    </lightning-button>
+    <lightning-helptext class="slds-m-left_xx-small" content="Stampa del documento senza archiviazione e/o invio al cliente. La preview del documento è uno step obbligatorio per il proseguo del processo."></lightning-helptext>
+    </div>
+</template>
