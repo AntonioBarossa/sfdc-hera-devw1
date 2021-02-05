@@ -1,5 +1,26 @@
 <aura:component implements="lightning:availableForFlowScreens,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
     
+    <aura:html tag="style">
+        .slds-button{
+        	display: none;
+        }
+        .slds-button_icon{
+        	display: none;
+        }
+        .slds-modal__close{
+        	display: none;
+        }
+        .closeIcon{
+        	display: none;
+        }
+        .slds-button_icon-bare{
+        	display: none;
+        }
+        .slds-button_icon-inverse{
+        	display: none;
+        }
+    </aura:html>
+
     <aura:attribute name="recordId" type="String" access="global" />
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
