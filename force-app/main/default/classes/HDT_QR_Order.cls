@@ -119,7 +119,9 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.InvoicingStreetName__c,
             BillingProfile__r.InvoicingStreetNumber__c,
             BillingProfile__r.InvoicingStreetNumberExtension__c,
-            OrderNumber
+            OrderNumber,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

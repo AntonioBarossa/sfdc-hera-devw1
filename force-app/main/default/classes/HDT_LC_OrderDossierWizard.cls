@@ -34,6 +34,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         
         //Get Orders
         List<Order> listOrder = orderQr.getRecordBySale(saleId);
+
+        //Store orders Id
+        List<Id> listOrdersId = new List<Id>();
         
         //Get OrderDossier record type
         String recordTypeIdOrderDossier = orderSrv.getRecordTypeIdOrderDossier();
@@ -62,11 +65,22 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                 orderSrv.createRecord(parentOrderNew);
                 
                 for(Order o : listOrder){
-                    o.ParentOrder__c = parentOrderNew.Id;
+                    listOrdersId.add(o.Id);
                 }
 
+
+
                 if(listOrder != null && !listOrder.isEmpty()){
-                    orderSrv.updateRecords(listOrder);
+                    List<Order> ordersToUpdate = new List<Order>();
+                    List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+                    for (OrderItem orderItem : orderItemsList) {
+                        ordersToUpdate.add(new Order(
+                            Id = orderItem.OrderId,
+                            ServicePoint__c = orderItem.ServicePoint__c,
+                            ParentOrder__c = parentOrderNew.Id
+                        ));
+                    }
+                    orderSrv.updateRecords(ordersToUpdate);
                 }
 
                 parentOrder = orderQr.getRecordById(parentOrderNew.Id);
