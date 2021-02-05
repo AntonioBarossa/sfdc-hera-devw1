@@ -54,7 +54,8 @@ public inherited sharing class HDT_QR_Order {
             ContractSigned__c,
             SignedDate__c,
             SignatureMethod__c,
-            DocSendingMethod__c
+            DocSendingMethod__c,
+            CreatedDate
             FROM Order 
             WHERE Sale__c = :saleId
             AND RecordTypeId = :recordTypeId
@@ -86,7 +87,8 @@ public inherited sharing class HDT_QR_Order {
             SignedDate__c,
             SignatureMethod__c,
             DocSendingMethod__c,
-            Sale__c
+            Sale__c,
+            CreatedDate
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
