@@ -60,7 +60,7 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     }
 
-    enableTipologiaIntestatario(){
+    setTipologiaIntestatario(params){
         let indexCode = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryFiscalCode__c');
         let indexFirstName = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryFirstName__c');
         let indexLastName = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'BankAccountSignatoryLastName__c');
@@ -68,11 +68,14 @@ export default class hdtBillingProfileForm extends LightningElement {
         this.tipologiaIntestatarioFields[indexFirstName].visibility = true;
         this.tipologiaIntestatarioFields[indexLastName].visibility = true;
 
-        return {
-            indexCode: indexCode,
-            indexFirstName: indexFirstName,
-            indexLastName: indexLastName
-        }
+        this.tipologiaIntestatarioFields[indexCode].value = params.fiscalCode;
+        this.tipologiaIntestatarioFields[indexFirstName].value = params.firstName;
+        this.tipologiaIntestatarioFields[indexLastName].value = params.lastName;
+
+        this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = params.fiscalCode;
+        this.dataToSubmit['BankAccountSignatoryFirstName__c'] = params.firstName;
+        this.dataToSubmit['BankAccountSignatoryLastName__c'] = params.lastName;
+
     }
 
     resetTipologiaIntestatario(){
@@ -109,14 +112,11 @@ export default class hdtBillingProfileForm extends LightningElement {
                     getAccountOwnerInfo({accountId: this.accountId}).then(data =>{
                         this.loading = false;
                         
-                        let tipologiaIndexes = this.enableTipologiaIntestatario();
-                        this.tipologiaIntestatarioFields[tipologiaIndexes.indexCode].value = data.FiscalCode__c;
-                        this.tipologiaIntestatarioFields[tipologiaIndexes.indexFirstName].value = data.FirstName__c;
-                        this.tipologiaIntestatarioFields[tipologiaIndexes.indexLastName].value = data.LastName__c;
-    
-                        this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = data.FiscalCode__c;
-                        this.dataToSubmit['BankAccountSignatoryFirstName__c'] = data.FirstName__c;
-                        this.dataToSubmit['BankAccountSignatoryLastName__c'] = data.LastName__c;
+                        this.setTipologiaIntestatario({
+                            fiscalCode: data.FiscalCode__c,
+                            firstName: data.FirstName__c,
+                            lastName: data.LastName__c
+                        });
                     }).catch(error => {
                         this.loading = false;
                         const toastErrorMessage = new ShowToastEvent({
@@ -146,14 +146,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         if (event.target.fieldName === 'LegalAgent__c') {
             getLegalAccount({contactId: event.target.value}).then(data =>{
                 this.loading = false;
-                let tipologiaIndexes = this.enableTipologiaIntestatario();
-                this.tipologiaIntestatarioFields[tipologiaIndexes.indexCode].value = data.FiscalCode__c;
-                this.tipologiaIntestatarioFields[tipologiaIndexes.indexFirstName].value = data.FirstName;
-                this.tipologiaIntestatarioFields[tipologiaIndexes.indexLastName].value = data.LastName;
-                
-                this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = data.FiscalCode__c;
-                this.dataToSubmit['BankAccountSignatoryFirstName__c'] = data.FirstName;
-                this.dataToSubmit['BankAccountSignatoryLastName__c'] = data.LastName;
+
+                this.setTipologiaIntestatario({
+                    fiscalCode: data.FiscalCode__c,
+                    firstName: data.FirstName,
+                    lastName: data.LastName
+                });
+
             }).catch(error => {
                 this.loading = false;
                 const toastErrorMessage = new ShowToastEvent({
@@ -170,14 +169,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         if (event.target.fieldName === 'OtherPayer__c') {
             getAccountOwnerInfo({accountId: event.target.value}).then(data =>{
                 this.loading = false;
-                let tipologiaIndexes = this.enableTipologiaIntestatario();
-                this.tipologiaIntestatarioFields[tipologiaIndexes.indexCode].value = data.FiscalCode__c;
-                this.tipologiaIntestatarioFields[tipologiaIndexes.indexFirstName].value = data.FirstName__c;
-                this.tipologiaIntestatarioFields[tipologiaIndexes.indexLastName].value = data.LastName__c;
 
-                this.dataToSubmit['BankAccountSignatoryFiscalCode__c'] = data.FiscalCode__c;
-                this.dataToSubmit['BankAccountSignatoryFirstName__c'] = data.FirstName__c;
-                this.dataToSubmit['BankAccountSignatoryLastName__c'] = data.LastName__c;
+                this.setTipologiaIntestatario({
+                    fiscalCode: data.FiscalCode__c,
+                    firstName: data.FirstName__c,
+                    lastName: data.LastName__c
+                });
+
             }).catch(error => {
                 this.loading = false;
                 const toastErrorMessage = new ShowToastEvent({

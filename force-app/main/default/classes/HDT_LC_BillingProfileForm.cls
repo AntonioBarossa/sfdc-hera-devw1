@@ -54,10 +54,10 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         List<String> tipologiaIntestatario = new List<String>{
             'SignatoryType__c',
             'OtherPayer__c',
+            'LegalAgent__c',
             'BankAccountSignatoryFiscalCode__c',
             'BankAccountSignatoryFirstName__c',
-            'BankAccountSignatoryLastName__c',
-            'LegalAgent__c'
+            'BankAccountSignatoryLastName__c'
         };
 
         List<String> fieldsToCheck = new List<String>();
