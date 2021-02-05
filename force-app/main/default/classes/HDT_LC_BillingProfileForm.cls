@@ -39,7 +39,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'IbanCAB__c',
             'IbanCodeNumber__c',
             'SignatoryType__c',
-            'OtherPayer_c__c',
+            'OtherPayer__c',
             'BankAccountSignatoryFiscalCode__c',
             'BankAccountSignatoryFirstName__c',
             'BankAccountSignatoryLastName__c'
@@ -68,9 +68,9 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             }
         }
 
-        accountSrv.checkReadAccess('RecordType.Name');
-        Account currentAccount = accountQr.getRecordById(accountId, 'RecordType.Name');
-        if (currentAccount.RecordType.Name == 'HDT_RT_Business') {
+        accountSrv.checkReadAccess('RecordType.DeveloperName');
+        Account currentAccount = accountQr.getRecordById(accountId, 'RecordType.DeveloperName ');
+        if (currentAccount.RecordType.DeveloperName  == 'HDT_RT_Business') {
             resultSet.addAll(fatturazioneElettronica);
         }
 

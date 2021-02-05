@@ -44,6 +44,64 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillingErrorArgument__c</picklist>
+        <values>
+            <fullName>CMOR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commissioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Deposito cauzionale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diritti fissi contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eventi eccezionali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interessi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Potenza%2FCalibro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spese Accessorie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spese sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima rata piatta Ferrara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storno per dati fiscali errati</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>BillingFrequency__c</picklist>
+        <values>
+            <fullName>Bimestrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mensile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
             <fullName>G1%2C6</fullName>
@@ -271,47 +329,59 @@
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
         <values>
-            <fullName>AG02</fullName>
+            <fullName>Annullamento ACG per errata trasmissione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RC02</fullName>
+            <fullName>Annullamento RC per disattivazione della fornitura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RC04</fullName>
+            <fullName>Annullamento VSG per errata trasmissione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RG03</fullName>
+            <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SG02</fullName>
+            <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SG04</fullName>
+            <fullName>Revoca risoluzione per errata trasmissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca risoluzione per pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per errata trasmissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per esercizio del diritto di ripensamento da parte del cliente finale Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca switching per pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca voltura per pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione contrattuale per contratto non richiesto</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>SW02</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SW03</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SW07</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VG02</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VS02</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -463,6 +533,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ConsumptionsCorrectionType__c</picklist>
+        <values>
+            <fullName>Errore Stima Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Lettura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CustomerPaymentAgreements__c</picklist>
+        <values>
+            <fullName>Non pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
             <fullName>In Compartecipazione</fullName>
@@ -537,6 +629,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OperationType__c</picklist>
+        <values>
+            <fullName>Separazione CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Separazione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione CA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione bolletta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Origin</picklist>
         <values>
             <fullName>Email</fullName>
@@ -595,10 +706,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
@@ -631,14 +738,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Inviata a SAP</fullName>
             <default>false</default>
         </values>
@@ -664,6 +763,17 @@
         <values>
             <fullName>Medium</fullName>
             <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ReadType__c</picklist>
+        <values>
+            <fullName>Reale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stimata</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
@@ -1168,6 +1278,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Question</fullName>
             <default>false</default>
         </values>
@@ -1176,11 +1302,63 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta Domiciliazione</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripristino Fornitura Interrotta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore - Cavi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Votive Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Variazione Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Tensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
     </picklistValues>

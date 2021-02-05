@@ -35,6 +35,32 @@ public inherited sharing class HDT_QR_Quote {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records to show in "Configura Prodotti" section on wizard
+     * @param String Sale__c.Id
+     * @return List<SBQQ__Quote__c>
+     */
+    public List<SBQQ__Quote__c> getActiveRecords(String saleId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Opportunity2__r.Name,
+            SBQQ__Type__c,
+            SBQQ__Status__c,
+            SBQQ__Ordered__c,
+            SBQQ__LineItemsGrouped__c,
+            SBQQ__OrderByQuoteLineGroup__c
+            FROM SBQQ__Quote__c
+            WHERE Sale__c = :saleId
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+            ORDER BY CreatedDate ASC
+        ];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get record by Id
      * @param String quoteId
      * @return SBQQ__Quote__c
@@ -97,7 +123,7 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__OrderByQuoteLineGroup__c
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
-            AND SBQQ__Status__c != 'Rejected'
+            AND SBQQ__Status__c != 'Rifiutata'
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];
@@ -116,7 +142,7 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Status__c
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
-            AND SBQQ__Status__c != 'Rejected'
+            AND SBQQ__Status__c != 'Rifiutata'
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];

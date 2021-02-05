@@ -23,14 +23,17 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
         console.log('this.selectedBillingProfile.PaymentMethod__c: ', this.selectedBillingProfile.PaymentMethod__c);
 
-        getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: this.selectedBillingProfile.PaymentMethod__c}).then(data =>{
+        let paymentMethodRaw = this.selectedBillingProfile.PaymentMethod__c;
+        let paymentMethodToSend = paymentMethodRaw.includes("Bollettino") ? 'Bollettino' : this.selectedBillingProfile.PaymentMethod__c;
+
+        getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: paymentMethodToSend}).then(data =>{
             this.loading = false;
             
             if(data.length == 0){
                 
                 this.handleCancelEvent();
                 const event = ShowToastEvent({
-                    title: 'Sucesso',
+                    title: '',
                     message:  'Nessun record trovato',
                     variant: 'warn'
                 });

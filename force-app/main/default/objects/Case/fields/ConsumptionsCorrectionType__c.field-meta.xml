@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>XMLType_c__c</fullName>
-    <description>Dati per fatturazione elettronica</description>
+    <fullName>ConsumptionsCorrectionType__c</fullName>
+    <description>Picklist per distinguere i due possibili sotto-processi per il processo &quot;Rettifica Consumi&quot;.</description>
     <externalId>false</externalId>
-    <label>Tipo XML</label>
+    <label>Tipo di Rettifica Consumi</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -13,14 +14,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Dettaglio</fullName>
+                <fullName>Errore di Lettura</fullName>
                 <default>false</default>
-                <label>Dettaglio</label>
+                <label>Errore di Lettura</label>
             </value>
             <value>
-                <fullName>Sintetico</fullName>
+                <fullName>Errore Stima Consumi</fullName>
                 <default>false</default>
-                <label>Sintetico</label>
+                <label>Errore Stima Consumi</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RelatedCase__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup per linkare un altro Case correlato al Case di partenza. Utilizzata al momento solo dal processo Inversione Contatore.</description>
+    <externalId>false</externalId>
+    <label>Case Correlato</label>
+    <referenceTo>Case</referenceTo>
+    <relationshipLabel>Cases</relationshipLabel>
+    <relationshipName>Cases</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

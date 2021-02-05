@@ -1,5 +1,4 @@
 import { LightningElement, api, track } from 'lwc';
-import objectToList from '@salesforce/apex/HDT_UTL_ServicePoint.objectToList';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 
 export default class hdtTargetObjectAddressFields extends LightningElement {
@@ -8,25 +7,166 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api wrapObjectInput= [];
     @api wrapAddressObject;
     @api fieldsDataReq;
-    @api fieldsaddressobject;
     @api selectedservicepoint;
     @api servicePointRetrievedData;
     hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
     verifyDisabledOnUpdate = true;
+    verifyFieldsAddressDisabled= true;
+    @api recordtype;
+    @api checkBoxFieldValue;
+    @api textFieldValue;
+    @api theRecord = {};
+    @api stato;
+    @api provincia;
+    @api comune;
+    @api cap;
+    @api via;
+    @api civico;
+    @api estensCivico;
+    @api codComuneSAP;
+    @api codStradarioSAP;
+    @api flagForzato ;
+    @api flagVerifiacto ;
+
+@api
+handleAddressValues(servicePointRetrievedData){
+    console.log('handleAddressValues START - servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
+    Object.keys(servicePointRetrievedData).forEach(key=>{
+        switch(key){
+            case 'Stato':
+                this.stato = servicePointRetrievedData[key] ;
+            break;
+            case 'Provincia':
+                this.provincia= servicePointRetrievedData[key] ;
+            break;
+            case 'Comune':
+                this.comune= servicePointRetrievedData[key] ;
+            break;
+            case 'CAP':
+                this.cap = servicePointRetrievedData[key] ;
+            break;
+            case 'Via':
+                this.via = servicePointRetrievedData[key] ;
+            break;
+            case 'Civico':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.civico = servicePointRetrievedData[key] ;
+            break;
+            case 'EstensCivico':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.estensCivico = servicePointRetrievedData[key] ;
+            break;
+            case 'CodiceComuneSAP':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.codComuneSAP = servicePointRetrievedData[key] ;
+            break;
+            case 'CodiceViaStradarioSAP':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.codStradarioSAP = servicePointRetrievedData[key] ;
+            break;
+            /*case 'FlagForzato':
+                this.flagForzato = servicePointRetrievedData[key] ;
+            break;*/
+            case 'FlagVerificato':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+
+                this.flagVerifiacto = servicePointRetrievedData[key] ;
+            break;
+        }
+
+    });
+    console.log('handleAddressValues END ');
+}
+
+
+@api
+handleCheckBoxChange(event){
+    console.log('event detail : ******++'+ JSON.stringify(event.target.name));
+    
+        this.checkBoxFieldValue = event.target.checked;
+        this.theRecord[event.target.name] = event.target.checked;
+        console.log(event.target.name + ' now is set to ' + event.target.checked); 
+        switch(event.target.name){
+            case 'Flag Forzato':
+                this.flagForzato = event.target.checked;
+                console.log(JSON.stringify(this.flagForzato));
+                break;
+            case 'Flag Verificato':
+                this.flagVerifiacto =  event.target.checked;
+        }
+
+
+        
+        console.log('theRecord *********'+ JSON.stringify(this.theRecord));
+}
+@api
+handleTextChange(event){
+    console.log('event detail : ******++'+ JSON.stringify(event.target.value));
+        this.textFieldValue = event.target.value;
+        this.theRecord[event.target.name] = event.target.value;
+        console.log(event.target.name + ' now is set to ' + event.target.value);
+        console.log('theRecord *********'+ JSON.stringify(this.theRecord));
+        switch(event.target.name){
+            case 'Civico':
+                this.civico = event.target.value;
+                break;
+            case 'Comune':
+                this.comune =  event.target.value;
+            case 'Stato':
+                this.stato = event.target.value;
+                break;
+            case 'Provincia':
+                this.provincia = event.target.value;
+                break;
+            case 'Via':
+                this.via= event.target.value;
+                break;
+            case 'CAP':
+                this.cap= event.target.value;
+                break;
+            case 'Estens.Civico':
+                this.estensCivico = event.target.value;
+                console.log('estensione civico'+ JSON.stringify(event.target.value));
+                break;
+            case 'Codice Comune SAP':
+                this.codComuneSAP = event.target.value;
+                console.log('codComSAP'+ JSON.stringify(this.estensCivico));
+                break;
+            case 'Codice Via Stradario SAP':
+                this.codStradarioSAP = event.target.value;
+                console.log('codStradario'+ JSON.stringify(this.estensCivico));
+                break;
+        }
+        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
+        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+
+}
+
+@api
+    handleAddressFields(){
+        console.log('saveAddressField - wrapAddressObject START '+ JSON.stringify(this.theRecord));
+        return this.theRecord;
+
+    }
+
+    @api
+disabledverifyFieldsAddressDisabled(){
+    this.verifyFieldsAddressDisabled= false;
+}
 
     @api
     toObjectAddressInit(data){
 
         let fieldsDataObject = [];
-        console.log('');
+ 
         Object.keys(data).forEach(keys=> {
         
                 fieldsDataObject.push(
                     {
                         fieldname: keys,
                         required : false,
-                        value: '',
+                        value: data[keys],
                         disabled: false
                     }
                 ) 
@@ -39,39 +179,57 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api
     connectedCallback()
     {
+       /* let bool = false;
         console.log('connectedCallback - selectedServicePoint**********'+ JSON.stringify(this.selectedservicepoint));
-
+        for (var key in this.selectedservicepoint) {
+            console.log('key ***********'+ JSON.stringify(key))
+            if (key === 'Service Point'){
+                console.log('key ********'+ JSON.stringify(this.selectedservicepoint[key]))
+                getServicePointToContract({s:this.selectedservicepoint[key]}).then(data=>{
+                    this.wrapAddressObject = this.toObjectAddressInit(data);
+                    console.log('wrapAddressObject on getServicePointToContract' + JSON.stringify(this.wrapAddressObject));
+                });
+                bool=true;
+                console.log('Service Point check *********');
+                break;
+            }
+ 
+        }
+        if(bool == false){
             getInstanceWrapAddressObject({s:this.selectedservicepoint}).then(data => {
                 console.log('connectedCallback - getInstanceWrapAddressObject - on selectedservicepoint'+ JSON.stringify(data));
                 this.wrapAddressObject = this.toObjectAddressInit(data);
-                
                 console.log('wrapAddressObject********************' + JSON.stringify(this.wrapAddressObject));
                 //this.toObjectAddress();
                 
             });
-      
-        console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ this.fieldsaddressobject);
+        }*/
+        
+        console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
     }
+
 
     @api
     getInstanceWrapObject(servicePointRetrievedData){
         console.log('getInstanceWrapObject - START');
         console.log('getInstanceWrapObject - servicePointRetrievedData' +JSON.stringify(servicePointRetrievedData));
         getInstanceWrapAddressObject({s:servicePointRetrievedData}).then(data => {
-            
+            this.handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
-            this.wrapAddressObject = this.toObjectAddressInit(data);
+            //this.wrapAddressObject = this.toObjectAddressInit(data);
+
             console.log('getInstanceWrapObject - wrapAddressObject' + JSON.stringify(this.wrapAddressObject));
             //this.toObjectAddress();
             
         });
+
         console.log('getInstanceWrapObject - END');
     }
 
     /**
      * Get availability of verify address button
      */
-    get verifyFieldsAddressDisabled(){
+    /*get verifyFieldsAddressDisabled(){
         let result = true;
 
         if(
@@ -90,7 +248,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         }
         
         return result;
-    }
+    }*/
 
     @api
     stampWrapObject(){
@@ -112,27 +270,6 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
         };
         console.log('hdtTargetObjectAddressFields - objectToMap END');
         return wrapObjectInput;
-
-       /* objectToList({wrap: wrapAddressObject}).then(data=>{
-            for(let i = 0; i < data.length; i++){
-                console.log('arrivo qui'+ data[i]);
-               //inserting new key value pair inside map
-               this.wrapObjectInput.set(data[i], obj[data[i]]);
-            };
-            console.log('hdtTargetObjectAddressFields - objectToMap END');
-            return wrapObjectInput;
-        }).catch(error=>{
-            this.loading= false;
-            console.log(error.body.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title:'errore',
-                message: '',
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
-        });*/
-
-
     }
 
     @api
@@ -161,6 +298,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
      * @param {*} event 
      */
     handleFieldsDataChange(event){
+        this.disabledverifyFieldsAddressDisabled();
 
         this.submitedAddressFields[event.target.fieldName] = event.target.value;
         

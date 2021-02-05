@@ -3,19 +3,19 @@
     <groupingStringEnum>OrderStatusCode</groupingStringEnum>
     <sorted>false</sorted>
     <standardValue>
-        <fullName>Bozza</fullName>
+        <fullName>Draft</fullName>
         <default>false</default>
         <label>Bozza</label>
         <groupingString>Draft</groupingString>
     </standardValue>
     <standardValue>
-        <fullName>In lavorazione</fullName>
+        <fullName>In Lavorazione</fullName>
         <default>false</default>
-        <label>In lavorazione</label>
+        <label>In Lavorazione</label>
         <groupingString>Draft</groupingString>
     </standardValue>
     <standardValue>
-        <fullName>Chiuso</fullName>
+        <fullName>Activated</fullName>
         <default>false</default>
         <label>Chiuso</label>
         <groupingString>Activated</groupingString>

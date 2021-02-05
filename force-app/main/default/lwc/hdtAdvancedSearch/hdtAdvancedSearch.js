@@ -3,6 +3,8 @@ import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServiceP
 import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import getContractFromRow from '@salesforce/apex/HDT_QR_Contract.getContractFromRow';
+
 
 export default class HdtAdvancedSearch extends LightningElement {
 
@@ -22,12 +24,19 @@ export default class HdtAdvancedSearch extends LightningElement {
     totalPage = 0;
     customSetting = null;
     confirmButtonDisabled = true;
+
+    @api servicePointRetrievedData;
+
     rowToSend;
     @api maxRowSelected=false;
     @api disabledinput;
     @api accountid;
-    apiSearchButtonStatus=true;
+
+    apiSearchButtonStatus= true;
     apiSearchInputValue=null;
+    @api targetObject
+    @api outputContract=[];
+
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -76,6 +85,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
+
         }
     }
 
@@ -89,6 +99,9 @@ export default class HdtAdvancedSearch extends LightningElement {
     searchAction(event) {
         this.submitButtonStatus = true;
         this.apiSearchButtonStatus = true;
+
+        console.log('event value: '+ event.target.value);
+
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
@@ -125,6 +138,9 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
+
+        console.log('tableData********'+ JSON.stringify(this.tableData));
+
     }
 
     nextPage() {
@@ -157,6 +173,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     submitContract(event){
+
         event.preventDefault();
         this.preloading = true;
         console.log('executing query search', this.accountid);
@@ -174,9 +191,12 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.tableData = data;
             }
         });
+        
     }
 
     /**
+     * 
+
      * Calling Apex callWebService method
      * TODO this method is not finished yet need webserivce.
      */
@@ -204,6 +224,9 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     submitSearch(event) {
         event.preventDefault();
+
+        console.log('event value submitSearch() '+ event.target.value);
+
         this.preloading = true;
         let qty = this.queryType;
         getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
@@ -230,6 +253,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
+
     }
      /**
      * Get selected record from table
@@ -240,7 +264,17 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.preloading = false;
-        console.log('selectedRows: ', JSON.parse(JSON.stringify(selectedRows)));
+
+        console.log('rowToSend: ', JSON.parse(JSON.stringify(this.rowToSend)));
+
+        let contractNumber = this.rowToSend['Contract Number'];
+        console.log('rowToSend for Contract'+ JSON.stringify(contractNumber));
+        
+        getContractFromRow({cNumber:contractNumber,accountId:this.AccountId}).then(data=>{
+            this.outputContract= data;
+            console.log('outputContract *******'+ JSON.stringify(this.outputContract));
+        });
+
     }
 
     /**
@@ -249,10 +283,19 @@ export default class HdtAdvancedSearch extends LightningElement {
     handleConfirm(){
         this.preloading = true;
         this.closeModal();
-        this.dispatchEvent(new CustomEvent('servicepointselection', {
-            detail: this.rowToSend
-        }));
+
+            this.dispatchEvent(new CustomEvent('servicepointselection', {
+                detail: this.rowToSend
+            }));       
         this.confirmButtonDisabled = true;
         this.preloading = false;
+
     }
+
+@api
+    getTargetObject(targetObject){
+        this.targetObject = targetObject;
+    }
+    
+
 }
