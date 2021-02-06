@@ -47,7 +47,34 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
         return result;
     }
 
-    columnsDocumenti = [];
+    get columnsDocumenti(){
+        return [
+            {fieldName: 'CustomerName__c', // This field should have the actual URL in it.
+             type: 'url', 
+             sortable: "false",
+             label: 'Numero Ordine',
+             typeAttributes: {
+                 label: {
+                     fieldName: 'OrderNumber' 
+                     // whatever field contains the actual label of the link
+                 },
+                 target: '_parent', 
+                 tooltip: 'Open the customer page'
+             }},
+            {label: 'POD/PDR', fieldName: 'pod', type: 'text'},
+            {label: 'Status', fieldName: 'Status', type: 'text'},
+            {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
+            {type:  'button',typeAttributes:{
+                    iconName: 'utility:edit',
+                    label: 'Avvia Processo', 
+                    name: 'editRecord', 
+                    title: 'Avvia Processo', 
+                    disabled: this.disabledInput,
+                    value: 'Avvia Processo'
+                }
+            }
+        ];
+    };
 
     setTableData(){
         this.loading = true;
@@ -94,36 +121,9 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
             }
         }));
 
-
     }
 
     connectedCallback(){
-        this.columnsDocumenti = [
-            {fieldName: 'CustomerName__c', // This field should have the actual URL in it.
-             type: 'url', 
-             sortable: "false",
-             label: 'Numero Ordine',
-             typeAttributes: {
-                 label: {
-                     fieldName: 'OrderNumber' 
-                     // whatever field contains the actual label of the link
-                 },
-                 target: '_parent', 
-                 tooltip: 'Open the customer page'
-             }},
-            {label: 'POD/PDR', fieldName: 'pod', type: 'text'},
-            {label: 'Status', fieldName: 'Status', type: 'text'},
-            {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
-            {type:  'button',typeAttributes:{
-                    iconName: 'utility:edit',
-                    label: 'Avvia Processo', 
-                    name: 'editRecord', 
-                    title: 'Avvia Processo', 
-                    disabled: this.disabledInput,
-                    value: 'Avvia Processo'
-                }
-            }
-        ];
         this.setTableData();
     }
 
