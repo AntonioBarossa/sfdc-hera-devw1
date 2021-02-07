@@ -180,6 +180,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         return this.currentPage + 1;
     }
 
+    
     onselected(value){
         this.queryType = value.detail;
         this.apiSearchButtonStatus= true;

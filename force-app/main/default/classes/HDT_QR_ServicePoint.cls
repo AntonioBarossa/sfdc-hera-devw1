@@ -8,7 +8,7 @@
 public inherited sharing class HDT_QR_ServicePoint {
 
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
-	String fieldSP =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name';
+	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name';
 	/*
 	 * Query for Getting All Account Service Points
 	 */
@@ -16,7 +16,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		system.debug('accountId : '+ accountId);
 		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name');
 		List<ServicePoint__c> listSP = new List<ServicePoint__c>();
-		return listSP= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 
 	/*
@@ -24,14 +24,14 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 */
 	public  List<ServicePoint__c> getAccountServicePointsWithFilter(String accountid,String additionalFilter) {
 		system.debug('getAccountServicePointsWithFilter START');
-		contractSrv.checkReadAccess(fieldSP);
-        String query = 'SELECT '+fieldSP+' FROM ServicePoint__c WHERE Account__c =: accountid '+additionalFilter;
+		contractSrv.checkReadAccess(fieldSp);
+        String query = 'SELECT '+fieldSp+' FROM ServicePoint__c WHERE Account__c =: accountid '+additionalFilter;
 		//List<ServicePoint__c> listSP = [SELECT Id, Account__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
-		List<ServicePoint__c> listSP = Database.query(query);
-		system.debug('listSP : ************' + listSP);
+		List<ServicePoint__c> listSp = Database.query(query);
+		system.debug('listSP : ************' + listSp);
 		system.debug('getAccountServicePointsWithFilter END');
 
-		return listSP;
+		return listSp;
 	}
     
     
@@ -56,13 +56,13 @@ public inherited sharing class HDT_QR_ServicePoint {
 		system.debug('getRecordByCode HDT_QR_ServicePoint START');
 		contractSrv.checkReadAccess(fields);
 		string queryContract = 'SELECT Id, Name, ServicePoint__c,ContractNumber FROM Contract WHERE ContractNumber =:code LIMIT 1';
-		List<Contract> Contracts = Database.query(queryContract);
-		system.debug('List contracts'+Contracts.toString());
+		List<Contract> contracts = Database.query(queryContract);
+		system.debug('List contracts'+contracts.toString());
 		String spCode ;
 		if(!Contracts.isEmpty()){
-			system.debug('entra qui'+Contracts.toString());
-			system.debug('entra qui'+Contracts.get(0).servicePoint__c);
-			spCode= Contracts.get(0).servicePoint__c;
+			system.debug('entra qui'+contracts.toString());
+			system.debug('entra qui'+contracts.get(0).servicePoint__c);
+			spCode= contracts.get(0).servicePoint__c;
 
 		}
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
@@ -82,13 +82,13 @@ public inherited sharing class HDT_QR_ServicePoint {
 		system.debug('getRecordByCode HDT_QR_ServicePoint START');
 		contractSrv.checkReadAccess(fields);
 		string queryContract = 'SELECT Id, Name, ServicePoint__c,ContractNumber FROM Contract WHERE ContractNumber =:code' +additionalFilter +'LIMIT 1';
-		List<Contract> Contracts = Database.query(queryContract);
-		system.debug('List contracts'+Contracts.toString());
+		List<Contract> contracts = Database.query(queryContract);
+		system.debug('List contracts'+contracts.toString());
 		String spCode ;
-		if(!Contracts.isEmpty()){
-			system.debug('entra qui'+Contracts.toString());
-			system.debug('entra qui'+Contracts.get(0).servicePoint__c);
-			spCode= Contracts.get(0).servicePoint__c;
+		if(!contracts.isEmpty()){
+			system.debug('entra qui'+contracts.toString());
+			system.debug('entra qui'+contracts.get(0).servicePoint__c);
+			spCode= contracts.get(0).servicePoint__c;
 
 		}
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();

@@ -197,7 +197,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 	public static List<Map<String,String>> getForniture(String accountid,String additionalFilter) {
 		system.debug('getForniture START');
 		system.debug('additionalFilter' + additionalFilter);
-
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 		List<SBQQ__Subscription__c> subscriptions = getAccountSubscriptions(accountid);
 
@@ -210,7 +209,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 			servicePoints = servicePointQr.getAccountServicePointsWithFilter(accountid,additionalFilter);
 		}
 		system.debug('data get acc : ' + servicePoints);
-        List<Map<String,String>> customSP = new List<Map<String,String>>();
+        List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
             Map<String,String> row = new Map<String, String>();
             row.put('Account Titolare Name',sp.Account__r.Name);
@@ -218,11 +217,11 @@ public with sharing class HDT_LC_AdvancedSearch {
             row.put('Matricola Contatore',sp.MeterSN__c);
 			row.put('Indirizzo',sp.SupplyAddress__c);
 			row.put('Distributore Name',sp.Distributor__r.Name);
-			customSP.add(row);
+			customSp.add(row);
 		}
 		system.debug('getForniture END');
 
-		return customSP;
+		return customSp;
 	}
 
 

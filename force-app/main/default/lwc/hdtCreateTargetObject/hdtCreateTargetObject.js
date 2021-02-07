@@ -14,7 +14,6 @@ export default class hdtCreateTargetObject extends LightningElement {
 
     showCreateTargetObjectModal = false;
     showRecordTypeSelectionModal = false;
-
     get modalStatus(){
         if(this.selectedservicepoint != undefined){
 
