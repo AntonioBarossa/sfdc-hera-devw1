@@ -43,6 +43,7 @@ export default class hdtSupplySelection extends LightningElement {
                 }
                 if(data.FornitureCliente__c == 'SI'){
                     this.showButtonForniture = true;
+                    
                     this.showCreateTargetObjectMod= true;
 
                     this.additionalFilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';

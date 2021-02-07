@@ -1,6 +1,7 @@
 public with sharing class HDT_QR_FiltriProcessi {
-    private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     
+    private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
+
     public HDT_QR_FiltriProcessi() {
 
     }

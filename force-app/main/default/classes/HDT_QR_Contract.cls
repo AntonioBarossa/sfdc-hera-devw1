@@ -54,7 +54,6 @@ public inherited sharing class HDT_QR_Contract {
         String query = 'SELECT ContractNumber, Status, Account.Name, AccountId FROM Contract WHERE AccountId =: accountid '+additionalFilter+' WITH SECURITY_ENFORCED';
 		List<Contract> listCon = Database.query(query);
         system.debug('getAccountContractsWithFilter END' + listCon);
-
 		return listCon;
 	}
 
