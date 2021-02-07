@@ -15,7 +15,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public  List<ServicePoint__c> getAccountServicePoints(String accountid) {
 		system.debug('accountId : '+ accountId);
 		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name');
-		List<ServicePoint__c> listSP = new List<ServicePoint__c>();
+		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
 		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 
