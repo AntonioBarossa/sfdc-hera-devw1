@@ -45,4 +45,26 @@ public inherited sharing class HDT_QR_Contract {
     return c ;
  }
 
+  	/*
+	 * Query for Getting All Account Contracts
+	 */
+	public List<Contract> getAccountContractsWithFilter(String accountid,String additionalFilter) {
+        system.debug('getAccountContractsWithFilter START');
+        contractSrv.checkReadAccess('ContractNumber, Status, Account.Name, AccountId');
+        String query = 'SELECT ContractNumber, Status, Account.Name, AccountId FROM Contract WHERE AccountId =: accountid '+additionalFilter+' WITH SECURITY_ENFORCED';
+		List<Contract> listCon = Database.query(query);
+        system.debug('getAccountContractsWithFilter END' + listCon);
+
+		return listCon;
+	}
+
+
+ 	/*
+	 * Query for Getting All Account Contracts
+	 */
+	public List<Contract> getAccountContracts(String accountid) {
+        contractSrv.checkReadAccess('ContractNumber, Status, Account.Name, AccountId');
+		return [SELECT ContractNumber, Status, Account.Name, AccountId FROM Contract WHERE AccountId =: accountid  WITH SECURITY_ENFORCED];
+	}
+
 }

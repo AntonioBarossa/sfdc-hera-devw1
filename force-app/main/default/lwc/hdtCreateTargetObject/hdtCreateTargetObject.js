@@ -19,7 +19,7 @@ export default class hdtCreateTargetObject extends LightningElement {
         if(this.selectedservicepoint != undefined){
 
 
-            if(this.showCreateTargetObjectModal == false && this.targetobject == 'Fornitura'){
+            if(this.showCreateTargetObjectModal == false){
 
                 this.showCreateTargetObjectModal = true;
             }

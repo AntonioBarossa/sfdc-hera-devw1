@@ -110,7 +110,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 fieldsDataObject.push(
                     {
                         fieldname: element,
-                        required : fieldsDataReq.includes(element),
+                        required : fieldsDataReq['ServicePointCode__c'],
                         value: this.servicePointRetrievedData[element],
                         disabled: element == 'ServicePointCode__c' ? true : false
                     }
@@ -119,7 +119,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 fieldsDataObject.push(
                     {
                         fieldname: element,
-                        required : fieldsDataReq.includes(element),
+                        required : fieldsDataReq['ServicePointCode__c'],
                         value: '',
                         disabled: false
                     }
@@ -158,8 +158,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     manageFields(){
         //get main data fields
+        
         this.fieldsData = this.toArray(this.fieldsDataRaw);
+        console.log('datareqRaw *********************'+ JSON.stringify(this.fieldsDataReqRaw));
         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
+        console.log('datareq *********************'+ JSON.stringify(this.fieldsDataReq ));
         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
         //get address fields
@@ -175,30 +178,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     connectedCallback(){
         this.loading = true;
         
-        /*getRecordTypeName(this.selectedservicepoint['Service Point']).then(data=>{
-            console.log('getRecordTypeName ******************+ START');
-            console.log('getRecordTypeName data'+ JSON.stringify(data));
-            this.objectApiName.keys(data).forEach(keys=>{
-                this.recordtype.push(
-                    {
-                        label: data[keys],
-                        value: keys
-                        
-                    }
-                ) 
-            });
-
-        });*/
         console.log('hdtTargetObjectForm - connectedCallback - recordtype: ', JSON.stringify(this.recordtype));
         getCustomSettings().then(data => {
             //get data fields based on recordtype label
-            switch(this.recordtype.DeveloperName){
-                case 'HDT_RT_Ele':
+            switch(this.recordtype.label){
+                case 'Punto Elettrico':
                     this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldEle__c  : (data.FieldEle__c == null || data.FieldEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldEle__c ) );
                     //this.fieldsDataRaw +=','+ data.FieldEle__c;
                     this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredEle__c  : (data.FieldRequiredEle__c == null || data.FieldRequiredEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredEle__c ) );
                     break;
-                case 'HDT_RT_Gas':
+                case 'Punto Gas':
                     this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c  : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldGas__c ) );
                     //this.fieldsDataRaw = undefined || null  ? this.fieldsDataRaw += data.FieldGas__c :  this.fieldsDataRaw +=','+ data.FieldGas__c;
                    // this.fieldsDataRaw += data.FieldGas__c;
@@ -217,7 +206,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 getServicePoint({code:this.selectedservicepoint['Codice Punto'],fields: queryFields.join()}).then(data =>{
                     
                     this.servicePointRetrievedData = data[0];
-                    console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData));
+                    console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData.RecordType.DeveloperName));
                     switch(this.servicePointRetrievedData.RecordType.DeveloperName){
                         case 'HDT_RT_Ele':
                             this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c  : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c ) );
@@ -478,7 +467,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Handle new record creation
      */
     save(){
-
+        console.log('save');
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         
         this.validationChecks();
@@ -525,7 +514,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     /*get saveButtonName(){
         if(this.selectedservicepoint != undefined){
-            return 'Conferma';
+            return '';
         } else {
             return 'Salva';
         }
