@@ -1,8 +1,8 @@
 import { LightningElement, track, api } from 'lwc';
-import offerConfiguratorHelper from './hdtOfferConfiguratorHelper';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 import saveNewOfferConfigured from '@salesforce/apex/HDT_LC_OfferConfiguratorController.saveNewOfferConfigured';
+import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
 
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
     @track dataRows = [];
@@ -11,6 +11,11 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     @track spinnerObj = {
         spinner: false,
         spincss: ''
+    };
+
+    errorObj = {
+        showError: false,
+        errorString:''
     };
 
     field1 = 'AAAAA';
@@ -23,61 +28,20 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     
 
-    // eslint-disable-next-line @lwc/lwc/no-async-await
-    async connectedCallback() {
+    connectedCallback() {
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'loadingdata slds-text-heading_small';
 
-        const data = await offerConfiguratorHelper();
-
-        /*var i;
-        for(i=0; i<data.length; i++){
-            console.log(' save row [' + (i+1) +']: ' +
-                data[i].amount.label + '; Id: ' + data[i].amount.id + '; checkUser: ' + data[i].checkUser
-            );
-        }*/
-
-        setTimeout(() => {
-            this.dataRows = data;
-            this.spinnerObj.spinner = false;
-        }, 3000);
+        this.getMatrixData();
 
     }
 
     handleSetvaluetoparent(event){
         let element = this.dataRows.find(ele  => ele.id === event.detail.rowId);
+        var field = event.detail.fieldName;
 
-        switch (event.detail.fieldName) {
-            case 'amount':
-                console.log('# Amount -> ' + element.amount.label);
-                element.amount.label = event.detail.label;
-                element.amount.id = event.detail.recId;
-                break;
-            case 'grInfo':
-                console.log('# grInfo -> ' + element.grInfo.label);
-                element.grInfo.label = event.detail.label;
-                element.grInfo.id = event.detail.recId;
-                break;
-            case 'price':
-                console.log('# price -> ' + element.price.label);
-                element.price.label = event.detail.label;
-                element.price.id = event.detail.recId;
-                break;
-            case 'discount':
-                console.log('# discount -> ' + element.discount.label);
-                element.discount.label = event.detail.label;
-                element.discount.id = event.detail.recId;
-                break;
-            case 'value':
-                console.log('# value -> ' + element.value.label);
-                element.value.label = event.detail.label;
-                element.value.id = event.detail.recId;
-                break;
-            case 'stringValue':
-                console.log('# stringValue -> ' + element.stringValue.label);
-                element.stringValue.label = event.detail.label;
-                element.stringValue.id = event.detail.recId;    
-        }
+        element[field].id = event.detail.recId;
+        element[field].label = event.detail.label;
 
         //check row value and get error in case
         //put error to row
@@ -115,21 +79,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     goBackToRecord(){
         console.log('# goBackToRecord -> ' + this.productid);
 
-        var i;
-        for(i=0; i<this.dataRows.length; i++){
-            this.dataRows[i].amount.label = '';
-            this.dataRows[i].amount.id = '';
-            this.dataRows[i].grInfo.label = '';
-            this.dataRows[i].grInfo.id = '';
-            this.dataRows[i].price.label = '';
-            this.dataRows[i].price.id = '';
-            this.dataRows[i].discount.label = '';
-            this.dataRows[i].discount.id = '';
-            this.dataRows[i].value.label = '';
-            this.dataRows[i].value.id = '';
-            this.dataRows[i].stringValue.label = '';
-            this.dataRows[i].stringValue.id = '';
-        }
+        this.dataRows = [];
 
         console.log('# gotothepage #');
 
@@ -144,6 +94,61 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     }
 
+    getMatrixData(){
+        console.log('# get data from apex #');
+        getOfferMatrix({id: 'tecOffId'})
+        .then(result => {
+            console.log('# save success #');
+            console.log('# resp -> ' + result.success);
+
+            var toastObj = {
+                title: '',
+                message: '',
+                variant: ''
+            };
+
+            if(result.success){
+                toastObj.title = 'Successo';
+                toastObj.message = result.message;
+                toastObj.variant = 'success';
+                this.dataRows = result.rowList;
+            } else {
+                toastObj.title = 'Attenzione';
+                toastObj.message = result.message;
+                toastObj.variant = 'warning';
+                this.errorObj = {
+                    showError: true,
+                    errorString: result.message
+                };
+            }
+
+            this.spinnerObj.spinner = false;
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: toastObj.title,
+                    message: toastObj.message,
+                    variant: toastObj.variant
+                }),
+            );
+
+        })
+        .catch(error => {
+            console.log('# Retrieve data error #');
+            console.log('# resp -> ' + result.message);
+
+            this.error = error;
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Error while retrieve Records',
+                    message: error.message,
+                    variant: 'error',
+                }),
+            );
+
+        });
+    }
+
     saveAction(event){
         console.log('# Save offert configured #');
         /*var i;
@@ -155,7 +160,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
 
-        //this.sendToApex();
+        this.sendToApex();
 
         setTimeout(() => {
             this.dispatchEvent(

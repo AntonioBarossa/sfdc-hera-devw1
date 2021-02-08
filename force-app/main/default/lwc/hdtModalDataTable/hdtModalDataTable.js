@@ -1,5 +1,6 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import fetchDataHelper from './hdtFetchDataHelper';
+import getTableData from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTableData';
 
 const firstRow = [
     {
@@ -106,8 +107,12 @@ export default class HdtModalDataTable extends LightningElement {
     modalHeader;
     iconHeader;
 
+    @wire (getTableData, {searchTerm: 'searchTerm'}) newData;
+
     // eslint-disable-next-line @lwc/lwc/no-async-await
     async connectedCallback() {
+
+        console.log('@@@ ' + this.newData);
 
         switch (this.fieldName) {
             case 'amount':
