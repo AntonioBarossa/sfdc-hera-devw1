@@ -28,7 +28,7 @@ jobs:
         ./sfdx-cli/install
  # Runs a set of commands using the runners shell
     - name: 'Decrypt file'
-      run: openssl enc -nosalt -aes-256-cbc -d -in assets/server.key.enc -out server.key -base64 -K ${{secrets.DECRYPTION_KEY_NEW}} -iv ${{secrets.DECRYPTION_IV_NEW}}
+      run: openssl enc -nosalt -aes-256-cbc -d -in assets/server2.key.enc -out server.key -base64 -K ${{secrets.DECRYPTION_KEY_NEW}} -iv ${{secrets.DECRYPTION_IV_NEW}}
     - name: 'Authorize'
       run: |
         echo username value ${{ secrets.USERNAME_DEVW1_NEW }}
