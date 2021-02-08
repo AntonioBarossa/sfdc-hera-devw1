@@ -22,6 +22,7 @@ export default class hdtSupplySelection extends LightningElement {
      * Show create button when process is undefined
      */
     connectedCallback(){
+ 
 
         console.log('connectedCallback START');
         console.log('targetObject 2*****'+ JSON.stringify(this.targetObject));
@@ -33,29 +34,55 @@ export default class hdtSupplySelection extends LightningElement {
         }else{
             getCustomMetadata({processType:this.processType}).then(data =>{
                 console.log('data custom metadata '+JSON.stringify(data));
-                
+                let statusSplit=[];
+                let TipoServizioSplit=[];
+
+
                 if(data.ContrattiCliente__c =='SI'){
-                    //cambia stato bottone contratti cliente 
-                    this.showButtonContract= true;
-                    this.additionalFilter= 'AND status =\''+data.StatoContratto__c+'\'';
-                    console.log('entra in contratti si');
-                    
+                    statusSplit = data.StatoContratto__c.split(",");
+                    console.log('statusSplit *****'+JSON.stringify(statusSplit));
+
                 }
                 if(data.FornitureCliente__c == 'SI'){
-                    this.showButtonForniture = true;
-                    
-                    this.showCreateTargetObjectMod= true;
-
-                    this.additionalFilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
-                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalFilter));
-                    //cambia stato bottone forniture cliente 
-                    console.log('entra in forniture si');
+                    TipoServizioSplit = data.TipoServizio__c.split(",");
+                    console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
                 }
+
+               if(statusSplit.length > 1){
+                
+                    this.showButtonContract= true;
+                    this.additionalFilter= 'AND (status =\''+statusSplit[0]+'\''+'OR status = \''+statusSplit[1]+'\')';
+                    console.log('entra in contratti si');
+                
+               }
+               else if(statusSplit.length > 0)
+               {
+
+                    this.showButtonContract= true;
+                    this.additionalFilter= 'AND status =\''+data.StatoContratto__c+'\'';           
+
+               }
+                if(TipoServizioSplit.length >1){
+
+                        this.showButtonForniture = true;
+                        this.showCreateTargetObjectMod= true;
+                        this.additionalFilter='AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalFilter));
+                    
+                }
+                else if(TipoServizioSplit.length >0)
+                {     
+               
+                        this.showButtonForniture = true;
+                        this.showCreateTargetObjectMod= true;
+                        this.additionalFilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
+                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalFilter));
+                    
+                }
+
+
             });
-            //richiamare classe di query del custom metadata passandogli il processType
-            //if(contrattiClienti__c == si) abiliti pulsante contratti cliente
-            //if(fornitureclienti == si) abiliti pulsante forniture clienti
-            //valorizzare additionalfilter coi valori recuperati dalla query
+
         }
         
         console.log('connectedCallback END');

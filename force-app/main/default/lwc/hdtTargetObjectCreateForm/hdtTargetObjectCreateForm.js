@@ -103,7 +103,13 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     toObject(fieldsData, fieldsDataReq){
 
         let fieldsDataObject = [];
+        let mapFieldReq = new Map() ;
+        var fieldReqParse = fieldsDataReq.toString();
+        let fieldReq = fieldReqParse.split(",");
+        mapFieldReq.set(fieldReq[0],true);
+        console.log('mapFieldReq*****************'+JSON.stringify(mapFieldReq.get('ServicePointCode__c')));
 
+        console.log('fieldsDataReq lenght***************'+JSON.stringify(fieldReq));
         fieldsData.forEach(element => {
             
            if(this.selectedservicepoint != undefined){
@@ -111,7 +117,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 fieldsDataObject.push(
                     {
                         fieldname: element,
-                        required : fieldsDataReq['ServicePointCode__c'],
+                        required : mapFieldReq.get(element),
                         value: this.servicePointRetrievedData[element],
                         disabled: element == 'ServicePointCode__c' ? true : false
                     }
@@ -120,7 +126,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 fieldsDataObject.push(
                     {
                         fieldname: element,
-                        required : fieldsDataReq['ServicePointCode__c'],
+                        required : mapFieldReq.get(element),
                         value: '',
                         disabled: false
                     }
