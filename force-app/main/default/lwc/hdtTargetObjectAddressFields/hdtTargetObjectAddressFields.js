@@ -1,5 +1,4 @@
 import { LightningElement, api, track } from 'lwc';
-import getServicePointToContract from '@salesforce/apex/HDT_UTL_ServicePoint.getServicePointToContract';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
 export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
@@ -181,31 +180,7 @@ disabledverifyFieldsAddressDisabled(){
 @api
     connectedCallback()
     {
-       /* let bool = false;
-        console.log('connectedCallback - selectedServicePoint**********'+ JSON.stringify(this.selectedservicepoint));
-        for (var key in this.selectedservicepoint) {
-            console.log('key ***********'+ JSON.stringify(key))
-            if (key === 'Service Point'){
-                console.log('key ********'+ JSON.stringify(this.selectedservicepoint[key]))
-                getServicePointToContract({s:this.selectedservicepoint[key]}).then(data=>{
-                    this.wrapAddressObject = this.toObjectAddressInit(data);
-                    console.log('wrapAddressObject on getServicePointToContract' + JSON.stringify(this.wrapAddressObject));
-                });
-                bool=true;
-                console.log('Service Point check *********');
-                break;
-            }
- 
-        }
-        if(bool == false){
-            getInstanceWrapAddressObject({s:this.selectedservicepoint}).then(data => {
-                console.log('connectedCallback - getInstanceWrapAddressObject - on selectedservicepoint'+ JSON.stringify(data));
-                this.wrapAddressObject = this.toObjectAddressInit(data);
-                console.log('wrapAddressObject********************' + JSON.stringify(this.wrapAddressObject));
-                //this.toObjectAddress();
-                
-            });
-        }*/
+
         
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
     }
