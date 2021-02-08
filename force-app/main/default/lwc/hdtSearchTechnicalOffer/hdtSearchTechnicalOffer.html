@@ -1,0 +1,85 @@
+<template>
+
+    <lightning-card title="Ricerca Offerta Tecnica" icon-name="standard:proposition" >
+
+        <div if:true={spinnerObj.spinner} class="progress">
+            <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+        <p slot="actions" >
+            <lightning-button-group>
+                <lightning-button label="Cerca" onclick={searchClick} icon-name="utility:search" title="search"  class="slds-m-left_x-small" ></lightning-button>
+                <lightning-button label="Clona" onclick={cloneData} icon-name="utility:copy" ></lightning-button>
+                <lightning-button label="Chiudi" onclick={closeSearch} icon-name="utility:delete" variant="destructive" ></lightning-button>
+            </lightning-button-group>
+        </p>
+
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_1-of-2">
+                    <div class="slds-form slds-m-top_x-large " >
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content="Nome Offerta...Select the right choice"></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-01">Nome offerta</label>
+
+                            <div class="slds-form-element__control slds-m-top_medium">
+                                <c-hdt-custom-lookup   
+                                    unique-key={item.code}
+                                    value-id={item.selectedId}
+                                    obj-name="TecnicalOffer__c"
+                                    search-by="Name"
+                                    set-as-key="Id"
+                                    icon-name="custom:custom57"
+                                    label-name="labelName"
+                                    onvalueselect={handleSelection}
+                                    placeholder="Seleziona offerta..."
+                                ></c-hdt-custom-lookup>
+                            </div>
+                            <!--<c-search-lookup
+                                object-name="TecnicalOffert__c"
+                                field-name="Name"
+                                select-record-id={selid}
+                                select-record-name={selectRecordName}
+                                icon-name = "action:record"
+                                onselected={handleSelection}>
+                            </c-search-lookup>-->
+                        </div>
+                        <!--<div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Nome Offerta</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input onchange={setOffertName} value={searchObj.offertName} type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content={helpTxt2}></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input onchange={setVersion} value={searchObj.version} type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Codice Offerta</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input onchange={setOffertCode} value={searchObj.offertCode} type="text" label=" "></lightning-input>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 300px;">
+                <lightning-datatable
+                        key-field="id"
+                        data={data}
+                        columns={columns}
+                        hide-checkbox-column
+                ></lightning-datatable>
+            </div>
+        </div>
+    </lightning-card>
+</template>

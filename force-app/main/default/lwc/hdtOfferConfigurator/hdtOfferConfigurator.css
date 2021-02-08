@@ -1,0 +1,46 @@
+.lgc-bg {
+    /*background-color: rgb(242, 242, 242);*/
+    background-color: rgb(236, 235, 234, 1);
+    border-color: rgb(201, 199, 197, 1)
+}
+
+.not-allowed {
+    cursor: not-allowed;
+}
+
+.alertRow{
+    background-color: rgb(241, 65, 59, 0.74);
+}
+
+table
+{
+    table-layout: fixed;
+}
+
+.firstcol{
+    width: 20%;
+}
+
+.alertcol{
+    width: 5%;
+}
+
+.savingdata::after {
+    position: absolute;
+    content: 'Attendi, stiamo salvando l\'offerta';
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    /*font-weight: bold;
+    font-size: large;*/
+}
+
+.loadingdata::after {
+    position: absolute;
+    content: 'Attendi, stiamo caricando i dati';
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    /*font-weight: bold;
+    font-size: large;*/
+}

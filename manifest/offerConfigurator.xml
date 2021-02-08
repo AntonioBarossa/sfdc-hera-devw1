@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>HDT_LC_OfferConfiguratorController</members>
+		<name>ApexClass</name>
+	</types>
+	<types>
+		<members>hdtModalDataTable</members>
+		<members>hdtOfferConfigurator</members>
+		<members>hdtPill</members>
+		<members>hdtWelcomeMatModal</members>
+		<members>hdtSearchTechnicalOffer</members>
+		<members>hdtCreateNewTechnicalOffer</members>
+		<name>LightningComponentBundle</name>
+	</types>	
+	<types>
+		<members>HDT_LCP_CreateNewTechnicalOffer</members>
+		<members>HDT_LCP_OpenTechnicalOffer</members>
+		<members>HDT_LCP_OpenTechnicalOfferModal</members>
+		<name>AuraDefinitionBundle</name>
+	</types>
+	<types>
+		<members>Product2.HDT_TechnicalOffer</members>
+		<name>QuickAction</name>
+	</types>	
+	<version>50.0</version>
+</Package>

@@ -1,0 +1,5 @@
+<aura:component>
+    <aura:attribute name="recordId" type="string" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
+    <c:hdtCreateNewTechnicalOffer productid="{!v.recordId}" ></c:hdtCreateNewTechnicalOffer>
+</aura:component>	

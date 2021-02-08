@@ -1,0 +1,272 @@
+<template>
+
+    <lightning-card title="Configurazione Offerta Tecnica" icon-name="standard:proposition" >
+        
+        <div if:true={spinnerObj.spinner} class="progress">
+            <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+        <p slot="actions" >
+            <lightning-button-group>
+                <lightning-button label="Save" onclick={saveAction} icon-name="utility:save"></lightning-button>
+                <!--<lightning-button label="Bozza" icon-name="utility:copy"></lightning-button>-->
+                <lightning-button label="Chiudi" onclick={goBackToRecord} variant="destructive" icon-name="utility:delete"></lightning-button>
+            </lightning-button-group>
+        </p>
+        <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <div class="slds-form slds-m-top_x-large " >
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Off. commerciale</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input disabled value={field1} type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content={helpTxt2}></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input disabled value={field2} type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Cat. tariffa (Rate category)</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input disabled value={field3} type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-col">
+                    <!--<div class="slds-form slds-m-top_x-large slds-m-bottom_x-large" >
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content="Nr Fattura...Select the right choice"></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Mercato</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input value="Small Medium Enterprise" type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content="Nr Bollettino...Select the right choice"></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Chiave rif.</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input  value="235" type="text" label=" " ></lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-form-element_horizontal">
+                            <lightning-helptext content="Data emissione...Select the right choice"></lightning-helptext>
+                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Tipo processo</label>
+                            <div class="slds-form-element__control">
+                                <lightning-input  value="" type="text" label=" "></lightning-input>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+
+            <div class="slds-m-top_small slds-m-bottom_xxx_small slds-m-left_x-small slds-m-right_x-small" >
+            <table class="slds-table slds-table_cell-buffer slds-max-medium-table_stacked-horizontal slds-table_bordered" >    
+                <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered">-->
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="firstcol" scope="col" >
+                                <div class="slds-truncate" title="Definizione" >Definizione</div>
+                            </th>
+                            <th class="alertcol" scope="col">
+                                <div class="slds-truncate" title=""></div>
+                            </th>                        
+                            <th class="" scope="col" >
+                                <div class="slds-truncate" title="Ins. Utente" >Ins. Utente</div>
+                            </th>                                         
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Tariffa">Tariffa</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="GR. Info">GR. Info</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Prezzo">Prezzo</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Sconto">Sconto</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Valore">Valore</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Stringa">Stringa</div>
+                            </th>
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Nome Tecn.">Nome Tecn.</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={dataRows} for:item="d">
+                            <tr class="slds-hint-parent" key={d.id} data-id={d.id}>
+                                <td class="firstcol" data-label="Definizione">
+                                    <div class="slds-truncate" title="EE Valore PRZ indice data att">{d.definition}</div>
+                                </td>
+                                <td class="alertcol" data-label="triangle">
+                                    <div title="trinagle" class="slds-truncate slds-form-element__control">
+                                        <lightning-icon size="xx-small" variant="warning" icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
+                                    </div>
+                                </td>
+                                <td data-label="Ins. Utente">
+                                    <div title="Ins. Utente" class="slds-truncate slds-form-element__control slds-grow slds-align_absolute-center">
+                                        <!--<input type="checkbox" class="slds-input" value="" style="width: 12px;"/>-->
+                                        <lightning-input
+                                                        type="checkbox"
+                                                        label=" "
+                                                        name={d.checkUser}
+                                                        data-id={d.id}
+                                                        variant="label-hidden"
+                                                        onchange={handleChange}
+                                        ></lightning-input>
+                                    </div>
+                                </td>                                                                       
+                                <td data-label="Tariffa">
+                                    <!--<div title="Tariffa" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.amount.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="amount"
+                                                icon="standard:quotes"
+                                                pill-obj={d.amount}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.amount.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                </td>
+                                <td data-label="GR. Info">
+                                    <!--<div title="GR. Info" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.grInfo.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="grInfo"
+                                                icon="standard:announcement"
+                                                pill-obj={d.grInfo}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.grInfo.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                </td>
+                                <td data-label="Prezzo">
+                                    <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.price.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="price"
+                                                icon="standard:variable"
+                                                pill-obj={d.price}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.price.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                </td>
+                                <td data-label="Sconto">
+                                    <!--<div title="Sconto" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.discount.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="discount"
+                                                icon="standard:opportunity"
+                                                pill-obj={d.discount}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.discount.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                </td>
+                                <td data-label="Valore">
+                                    <!--<div title="Valore" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.value.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="value"
+                                                icon="standard:topic2"
+                                                pill-obj={d.value}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.value.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                </td>
+                                <td data-label="Stringa">
+                                    <!--<div title="Stringa" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.stringValue.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="stringValue"
+                                                icon="standard:quick_text"
+                                                pill-obj={d.stringValue}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.stringValue.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                    <!--<div title="Stringa" class="slds-truncate slds-form-element__control slds-grow">
+                                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right" role="none">
+                                            <input type="text" class="slds-input" value=""  disabled />
+                                            <div>
+                                                <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right iconheight">
+                                                    <lightning-icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" icon-name="utility:search" size="x-small" alternative-text="icon" ></lightning-icon>
+                                                </span> 
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                </td>
+                                <td data-label="Nome Tecn">
+                                    <div class="slds-truncate" title="EFP_CT_MI">{d.tecName}</div>
+                                </td>
+                            </tr>
+                        </template>                                      
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <p slot="footer">
+            <lightning-button-icon icon-name="utility:chevronleft"  alternative-text="Settings" title="Settings"></lightning-button-icon>
+            &nbsp;1/10&nbsp;
+            <lightning-button-icon icon-name="utility:chevronright"  alternative-text="Settings" title="Settings"></lightning-button-icon>       
+        </p>
+        
+    </lightning-card>
+
+</template>

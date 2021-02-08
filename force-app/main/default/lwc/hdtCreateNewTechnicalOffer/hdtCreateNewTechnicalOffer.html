@@ -1,0 +1,18 @@
+<template>
+    <template if:true={showWelcom} >
+        <c-hdt-welcome-mat-modal 
+            onclosemodal={closeModal}
+            oncreatenew={createNew}
+            onsearch={search}
+        ></c-hdt-welcome-mat-modal>
+    </template>
+
+    <template if:true={showSearchOffer} >
+        <c-hdt-search-technical-offer onclosesearch={closeSearch}></c-hdt-search-technical-offer>
+    </template>
+
+    <template if:true={showCreateOffer} >
+        <c-hdt-offer-configurator productid={productid} ></c-hdt-offer-configurator>
+    </template>
+
+</template>
