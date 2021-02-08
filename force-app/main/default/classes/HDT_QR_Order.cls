@@ -80,6 +80,8 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.FirstName__c,
+            Account.LastName__c,
             Name,
             RecordType.DeveloperName,
             SystemModstamp,
@@ -90,7 +92,10 @@ public inherited sharing class HDT_QR_Order {
             DocSendingMethod__c,
             Sale__c,
             CreatedDate,
-            Step__c
+            Step__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            OrderNumber
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

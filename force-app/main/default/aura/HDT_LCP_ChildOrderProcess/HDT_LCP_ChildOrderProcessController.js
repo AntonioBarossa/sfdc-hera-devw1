@@ -9,6 +9,10 @@
         helper.setCheckbox(component,event,helper);
     },
 
+    handleRefreshOrderChild : function(component, event, helper){
+        helper.refreshOrderChild(component,event,helper);
+    },
+
     save : function(component,event,helper){
         helper.saveOp(component,event,helper);
     },

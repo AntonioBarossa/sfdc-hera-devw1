@@ -17,6 +17,7 @@
                     console.log("SUCSSES1",response.getReturnValue());
                     let results = response.getReturnValue();
                     let ord = results.order;
+                    component.set("v.order", results.order);
                     let orderItem = results.orderItem;
                     if(orderItem && orderItem.Service_Point__c !== undefined) {
                         component.set('v.orderPod',orderItem.Service_Point__r.ServicePointCode__c);
@@ -33,6 +34,26 @@
             });
             $A.enqueueAction(action);
         
+    },
+
+    refreshOrderChild : function (component, event, helper){
+        var action = component.get('c.refreshOrderChild');
+        action.setParams({
+            "orderId" : component.get('v.orderId'),
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            component.set('v.loading', false);
+                if (state === "SUCCESS") {                
+                    console.log("SUCSSES1",response.getReturnValue());
+                    let result = response.getReturnValue();
+                    component.set("v.order", result);
+                }
+                else {
+                    console.log("Failed with state: " + state);
+                }
+            });
+            $A.enqueueAction(action);
     },
     
     setCheckbox : function (component, event, helper){

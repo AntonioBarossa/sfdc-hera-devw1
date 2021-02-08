@@ -78,4 +78,16 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         // orderSrv.updateRecord(ord);
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Refresh order
+    * @param String orderId
+    * @return Order
+    */
+    @AuraEnabled
+    public static Order refreshOrderChild(String orderId){
+        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status');
+        return orderQr.getRecordById(orderId);
+    }
+
 }
