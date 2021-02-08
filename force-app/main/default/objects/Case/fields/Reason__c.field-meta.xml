@@ -230,6 +230,36 @@
                 <label>Agevolazioni non Energy indirette</label>
             </value>
             <value>
+                <fullName>Portabilità dei dati</fullName>
+                <default>false</default>
+                <label>Portabilità dei dati</label>
+            </value>
+            <value>
+                <fullName>Cancellazione dei dati</fullName>
+                <default>false</default>
+                <label>Cancellazione dei dati</label>
+            </value>
+            <value>
+                <fullName>Rettifica dati personali</fullName>
+                <default>false</default>
+                <label>Rettifica dati personali</label>
+            </value>
+            <value>
+                <fullName>Accesso dei dati</fullName>
+                <default>false</default>
+                <label>Accesso dei dati</label>
+            </value>
+            <value>
+                <fullName>Limitazione dei dati</fullName>
+                <default>false</default>
+                <label>Limitazione dei dati</label>
+            </value>
+            <value>
+                <fullName>Opposizione</fullName>
+                <default>false</default>
+                <label>Opposizione</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

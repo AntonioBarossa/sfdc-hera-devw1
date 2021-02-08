@@ -33,6 +33,11 @@
                 <default>false</default>
                 <label>Separazione bolletta</label>
             </value>
+            <value>
+                <fullName>Unificazione BP</fullName>
+                <default>false</default>
+                <label>Unificazione BP</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
