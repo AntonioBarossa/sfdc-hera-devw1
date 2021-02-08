@@ -17,6 +17,7 @@ public inherited sharing class HDT_QR_Contract {
     * @return List<Contract>
     */
     public List<Contract> getActiveRecordsByAccountId(String accountId){
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status'); 
         return [
             SELECT
             Name,

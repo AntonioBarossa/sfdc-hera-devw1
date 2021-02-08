@@ -6,7 +6,7 @@
  */
 
 public inherited sharing class HDT_QR_ServicePoint {
-
+	
 	private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
 	String fieldSp =  'Id, Account__c, Account__r.Name, CommoditySector__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name';
 	/*
@@ -146,5 +146,34 @@ public inherited sharing class HDT_QR_ServicePoint {
 				' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode '+ additionalFilter;
 		List<ServicePoint__c> servicePoints = Database.query(query);
 		return servicePoints;
+	}
+
+
+		/*
+	 * Query for Getting All Account Contracts
+	 */
+	public List<Contract> getAccountContracts(String accountid) {
+		contractSrv.checkReadAccess('ContractNumber, Status, Account.Name, AccountId');
+		return [SELECT ContractNumber, Status, Account.Name, AccountId FROM Contract WHERE AccountId =: accountid  WITH SECURITY_ENFORCED];
+	}
+
+		/*
+	 * Query for Getting All Account Subscriptions
+	 */
+	public List<SBQQ__Subscription__c> getAccountSubscriptions(String accountid) {
+		contractSrv.checkReadAccess(' Name, SBQQ__Contract__r.ContractNumber, SBQQ__Account__c, SBQQ__Account__r.Name, ServicePoint__r.ServicePointCode__c');
+		//List<ServicePoint__c> servicePoints = [ SELECT ServicePointCode__c ,(SELECT Name,SBQQ__Contract__r.ContractNumber FROM Subscriptions__r) FROM ServicePoint__c ];
+		return [SELECT Name, SBQQ__Contract__r.ContractNumber, SBQQ__Account__c, SBQQ__Account__r.Name, ServicePoint__r.ServicePointCode__c FROM SBQQ__Subscription__c WHERE SBQQ__Account__c =: accountid WITH SECURITY_ENFORCED];
+	}
+
+
+
+
+	/*
+	 * Getting Custom Settimg 'CS_SelezioneFornitura'
+	 */
+	public CS_SelezioneFornitura__c getCustomSetting() {
+		contractSrv.checkReadAccess('Max_Record__c, OutputServicePoint__c');
+		return [SELECT Max_Record__c, OutputServicePoint__c FROM CS_SelezioneFornitura__c][0];
 	}
 }

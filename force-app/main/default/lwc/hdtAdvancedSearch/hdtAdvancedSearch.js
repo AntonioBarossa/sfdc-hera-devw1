@@ -216,7 +216,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         console.log('executing query search', this.accountid);
         console.log('additionlFilter**********************************'+this.additionalfilter)
-        //aggiungere parametro additionalFilter a getForn
+        
         getForniture({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {

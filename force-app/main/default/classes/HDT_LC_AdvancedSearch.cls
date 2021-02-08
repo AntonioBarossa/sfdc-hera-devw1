@@ -2,10 +2,10 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	private static List<ServicePoint__c> servicePoints;
 	private static Map<String, String> servicePointFields = getservicePointObjectFields();
-	private static CS_SelezioneFornitura__c customSetting = getCustomSetting();
 	private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
 	private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 	private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+	private static CS_SelezioneFornitura__c customSetting = servicePointQr.getCustomSetting();
 
 
 
@@ -100,7 +100,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 //aggiungi parametro additionalFilter
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String,String>> getContracts(String accountid,String additionalFilter) {
-		List<SBQQ__Subscription__c> subscriptions = getAccountSubscriptions(accountid);
+		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 		List<Contract> contracts  = new List<Contract>();
 		//if additionalFilter vuoto chiami getAccountContracts
 		if(additionalFilter== null ||additionalFilter== ''){
@@ -113,7 +113,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		
         Map<String, String> mapSubscriptions = new Map<String, String>();
 		for (SBQQ__Subscription__c subscription : subscriptions) {
-			mapSubscriptions.put(subscription.SBQQ__Contract__c, subscription.Service_Point__r.ServicePointCode__c);
+			mapSubscriptions.put(subscription.SBQQ__Contract__c, subscription.ServicePoint__r.ServicePointCode__c);
 		}
         List<Map<String,String>> customContracts = new List<Map<String,String>>();
 		for (Contract contract : contracts) {
@@ -145,20 +145,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 		}
 	}
 
-	/*
-	 * Getting Custom Settimg 'CS_SelezioneFornitura'
-	 */
-	static CS_SelezioneFornitura__c getCustomSetting() {
-		return [SELECT Max_Record__c, OutputServicePoint__c FROM CS_SelezioneFornitura__c][0];
-	}
 
-/**
- * Getting Custom metadata type HDT_FiltriProcessiSelFornitura__mdt
- */
-	static HDT_FiltriProcessiSelFornitura__mdt getProcessi(){
-		string query = 'SELECT Id, DeveloperName, MasterLabel, Language, NamespacePrefix, Label, QualifiedApiName, ContrattiCliente__c, Disalimentabile__c, StatoContratto__c, StatoFornitura__c, TipoProcesso__c, TipoServizio__c, FornitureCliente__c FROM HDT_FiltriProcessiSelFornitura__mdt';
-		return database.query(query);
-	}
+
+
 
 	/*
 	 * Getting All get ServicePoint Fields as Map
@@ -174,23 +163,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 		return fields;
 	}
 
-	/*
-	 * Query for Getting All Account Subscriptions
-	 */
-	static List<SBQQ__Subscription__c> getAccountSubscriptions(String accountid) {
-		//List<ServicePoint__c> servicePoints = [ SELECT ServicePointCode__c ,(SELECT Name,SBQQ__Contract__r.ContractNumber FROM Subscriptions__r) FROM ServicePoint__c ];
-		return [SELECT Name, SBQQ__Contract__r.ContractNumber, SBQQ__Account__c, SBQQ__Account__r.Name, Service_Point__r.ServicePointCode__c FROM SBQQ__Subscription__c WHERE SBQQ__Account__c =: accountid WITH SECURITY_ENFORCED];
-	}
 
-	/*
-	 * Query for Getting All Account Contracts
-	 */
-	static List<Contract> getAccountContracts(String accountid) {
-		HDT_FiltriProcessiSelFornitura__mdt processi = new HDT_FiltriProcessiSelFornitura__mdt();
-		processi = getProcessi();
-		system.debug('get value of custom metdata type'+ processi);
-		return [SELECT ContractNumber, Status, Account.Name, AccountId FROM Contract WHERE AccountId =: accountid  WITH SECURITY_ENFORCED];
-	}
+
+
 
 
 	@AuraEnabled(cacheable = true)
@@ -198,7 +173,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		system.debug('getForniture START');
 		system.debug('additionalFilter' + additionalFilter);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
-		List<SBQQ__Subscription__c> subscriptions = getAccountSubscriptions(accountid);
+		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 
 		if(additionalFilter == null || additionalFilter== ''){
 			system.debug('entra in additionalFilter == null');
@@ -225,17 +200,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 	}
 
 
-			/*
-	 * Query for Getting All Account Service Points
-	 */
-	static List<ServicePoint__c> getAccountServicePoints(String accountid) {
-		system.debug('getAccountServicePoints START');
-		HDT_FiltriProcessiSelFornitura__mdt processi = new HDT_FiltriProcessiSelFornitura__mdt();
-		processi = getProcessi();
-		system.debug('get value of custom metdata type'+ processi.tipoServizio__c);
 
-		system.debug('getAccountServicePoints END');
-		return [SELECT Id, Account__c, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__c,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid AND recordType.Name=: processi.tipoServizio__c WITH SECURITY_ENFORCED];
-	}
 
 }
