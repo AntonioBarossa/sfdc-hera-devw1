@@ -30,11 +30,11 @@
     <picklistValues>
         <picklist>Disconnectable__c</picklist>
         <values>
-            <fullName>NO</fullName>
+            <fullName>No</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SI</fullName>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

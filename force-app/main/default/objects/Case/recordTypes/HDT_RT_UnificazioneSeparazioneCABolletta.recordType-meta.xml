@@ -44,6 +44,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillSendingMethod__c</picklist>
+        <values>
+            <fullName>Bolletta per e-mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolletta per e-mail %2B Carta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cartaceo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio tramite PEC</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>BillingErrorArgument__c</picklist>
         <values>
             <fullName>CMOR</fullName>
@@ -544,6 +567,337 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CustomerMarking__c</picklist>
+        <values>
+            <fullName>AAS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACEL-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANTENORE ENERGY-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANTENORE ENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amga-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amga-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BE POWER-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BENACO-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BENACO-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BLU RANTON-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BLU RANTON-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMV E e I - Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMV E e I - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGETICA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGETICA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIA SOCIALE-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIA SOCIALE-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIECHIARE-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIECHIARE-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYGAS ITA - Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYGAS ITA - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYPOLIS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYPOLIS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERMES-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERMES-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ETRURIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ETRURIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enegan-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enegan-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURA TR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURA TR-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURENERGY-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GENESI-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GENESI-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GRAN SASSO-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GRAN SASSO-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GREEN EN-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GREEN EN-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITALIANGAS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITALIANGAS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIRENAS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIRENAS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LUCEEG IT SERV-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LUCEEG IT SERV-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MOODS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MOODS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOIENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOIENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NWGENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NWGENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMNIA EN-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMNIA EN-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONOVA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONOVA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PIUENERGIA SPA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PIUENERGIA SPA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOP ENERGY-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOP ENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UNION-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UNION-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CustomerPaymentAgreements__c</picklist>
         <values>
             <fullName>Non pagato</fullName>
@@ -636,6 +990,10 @@
         </values>
         <values>
             <fullName>Separazione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione BP</fullName>
             <default>false</default>
         </values>
         <values>
