@@ -1,0 +1,60 @@
+<template>
+
+    <div class="slds-col slds-size_1-of-3">
+
+        <lightning-combobox
+        name="CaliberClass"
+        label="Classe Contatore Richiesta"
+        value={caliberClassValue}
+        placeholder="Seleziona Classe Contatore Richiesta"
+        options={caliberClassOptions}
+        onchange={handleChange} >
+        </lightning-combobox>
+
+    </div>
+
+
+    <div class="slds-col slds-size_1-of-3">
+
+        <lightning-input type="number" 
+        label="Portata Impianto(KWh)"
+        step=".01" 
+        value={systemCapacity}
+        name="SystemCapacity" 
+        onchange={handleChange}>
+        </lightning-input>
+
+    </div>
+
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+
+        </div>
+        <div class="actionsRight">
+
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" name="save" label="Avanti" onclick={handleClick}>
+                </lightning-button>
+
+ 
+                <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="draft" label="Salva In Bozza" onclick={handleClick}>
+                </lightning-button>
+           
+
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="previous" label="Indietro" onclick={handleClick}>
+                </lightning-button>
+
+       
+                <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                    variant="destructive" type="button" name="cancel" label="Annulla">
+                </lightning-button>
+
+        </div>
+    </div>
+
+    
+</template>

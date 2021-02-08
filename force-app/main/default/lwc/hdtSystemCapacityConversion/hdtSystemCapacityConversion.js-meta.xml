@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel> System Capacity Conversion Flow </masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="outcomeCaliberClass" type="String" label="Outcome Capacity" description="System Capacity in KWh" role="outputOnly"/>
+            <property name="outcomeSystemCapacity" type="String" label="Outcome Capacity" description="System Capacity in KWh" role="outputOnly"/>
+            <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
+            <property name="defaultCaliberClass" type="String" label="Default Caliber Class" description="Default value for CaliberRequested__c" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
