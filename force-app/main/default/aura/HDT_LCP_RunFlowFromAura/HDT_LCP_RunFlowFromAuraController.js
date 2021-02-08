@@ -5,6 +5,7 @@
         var myPageRef = component.get("v.pageReference");
         var caseId = myPageRef.state.c__recordid;
         var flowName = myPageRef.state.c__flowName;
+        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
         var accId = myPageRef.state.c__accid;
 
         var processType = myPageRef.state.c__processType;
@@ -18,6 +19,7 @@
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
         console.log('# flowName -> ' + flowName);
+        console.log('# resumeFromDraft -> ' + resumeFromDraft);
         console.log('# accId -> ' + accId);
         console.log('# processType -> ' + processType);
         console.log('# recordTypeName -> ' + recordTypeName);
@@ -79,6 +81,10 @@
                 inputVariables.push({ name : 'recordToCancell', type : 'String', value : recordToCancell });
         if(sObjectRecordToCancell != null)
                 inputVariables.push({ name : 'sObjectRecordToCancell', type : 'String', value : sObjectRecordToCancell });
+
+        if(resumeFromDraft != null && resumeFromDraft === 'true'){
+            inputVariables.push({ name : 'ResumeFromDraft', type : 'Boolean', value : resumeFromDraft });
+        }
         
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));

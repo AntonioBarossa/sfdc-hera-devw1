@@ -4,6 +4,7 @@
         var myPageRef = component.get("v.pageReference");
         var caseId = myPageRef.state.c__id;
         var flowName = myPageRef.state.c__flowName;
+        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
         var accId = myPageRef.state.c__accid;
 
         var processType = myPageRef.state.c__processType;
@@ -16,6 +17,7 @@
         console.log('# accId -> ' + accId);
         console.log('# caseId -> ' + caseId);
         console.log('# flowName -> ' + flowName);
+        console.log('# resumeFromDraft -> ' + resumeFromDraft);
         console.log('# processType -> ' + processType);
         console.log('# recordTypeName -> ' + recordTypeName);
         //console.log('# cluster -> ' + cluster);
@@ -59,6 +61,7 @@
                         c__recordid: caseId,
                         c__accid: accId,
                         c__flowName: flowName,
+                        c__resumeFromDraft: resumeFromDraft,
                         c__processType: processType,
                         c__recordTypeName: recordTypeName,
                         c__recordToCancell: recordToCancell,
