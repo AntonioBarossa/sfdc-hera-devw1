@@ -10,14 +10,16 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api disabledinput;
     @api showCreateTargetObjectButton;
 
-    @track recordType = {label:'',value: ''};
+    @track recordType = {label:'',value: '', DeveloperName: ''};
+
     showCreateTargetObjectModal = false;
     showRecordTypeSelectionModal = false;
-
     get modalStatus(){
         if(this.selectedservicepoint != undefined){
 
+
             if(this.showCreateTargetObjectModal == false){
+
                 this.showCreateTargetObjectModal = true;
             }
         }
@@ -68,6 +70,7 @@ export default class hdtCreateTargetObject extends LightningElement {
      */
     getRecordType(recordType){
         this.recordType = recordType;
+        console.log('hdtCreateTargetObject - getRecordType: ', JSON.stringify(this.recordType));
     }
 
     /**
@@ -75,6 +78,9 @@ export default class hdtCreateTargetObject extends LightningElement {
      * @param {*} event 
      */
     handleNext(event){
+
+        console.log('handleNext'+ JSON.stringify(event.detail));
+
         this.closeRecordTypeSelection();
         this.getRecordType(event.detail);
         this.openCreateRecordForm();

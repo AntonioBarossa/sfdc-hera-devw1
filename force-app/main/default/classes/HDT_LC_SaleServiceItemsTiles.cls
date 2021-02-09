@@ -19,15 +19,25 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
      * @return List<SaleServiceItems__c>
      */
     @AuraEnabled
-    public static List<List<SaleServiceItem__c>> getTiles(String saleId){
+    public static Map<String,List<List<SObject>>> getTiles(String saleId){
 
-        opportunityService.checkReadAccess('Name');
-        saleServiceItemSRV.checkReadAccess('Opportunity__c,Opportunity__r.Sale__c,Opportunity__r.Name,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.SupplyCity__c');
+        opportunityService.checkReadAccess('Name, CreatedDate');
+        saleServiceItemSRV.checkReadAccess('Opportunity__c,Opportunity__r.Sale__c,Opportunity__r.Name,Opportunity__r.CreatedDate,Quote__c,Quote__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.SupplyCity__c');
 
-        List<Opportunity> opps = opportunityQuery.getRecordsBySaleFilterStageName(saleId, 'Id,Name', 'Closed Lost');
+        List<Opportunity> opps = opportunityQuery.getRecordsBySaleFilterStageNameNotVas(saleId, 'Id,Name,CreatedDate', 'Closed Lost');
         List<SaleServiceItem__c> items = saleServiceItemQuery.getRecordsBySaleId(saleId);
+        List<List<SaleServiceItem__c>> saleServiceItemsTiles = itemsService.groupRecordsByOpportunity(opps, items);
 
-        return itemsService.groupRecordsByOpportunity(opps, items);
+        opportunityService.checkReadAccess('Name,SBQQ__PrimaryQuote__r.OrderReference__c,SBQQ__PrimaryQuote__r.OrderReference__r.Name,SBQQ__PrimaryQuote__r.OrderReference__r.OrderNumber,SBQQ__PrimaryQuote__r.ContractReference__c,SBQQ__PrimaryQuote__r.ContractReference__r.ContractNumber,SBQQ__PrimaryQuote__r.SupplyCity__c,CreatedDate');
+        List<Opportunity> oppsVasList = opportunityQuery.getRecordsBySaleFilteredVas(saleId);
+        List<List<Opportunity>> vasTiles = new List<List<Opportunity>>();
+        vasTiles.add(oppsVasList);
+
+        Map<String,List<List<SObject>>> results = new Map<String,List<List<SObject>>>();
+        results.put('saleServiceItemsTiles', saleServiceItemsTiles);
+        results.put('vasTiles', vasTiles);
+
+        return results;
 
     }
 

@@ -15,7 +15,8 @@ public inherited sharing class HDT_QR_OrderItem {
     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
         return [
-            SELECT 
+            SELECT
+            ServicePoint__c,
             ServicePoint__r.Name,
             ServicePoint__r.ServicePointCode__c,
             OrderId,

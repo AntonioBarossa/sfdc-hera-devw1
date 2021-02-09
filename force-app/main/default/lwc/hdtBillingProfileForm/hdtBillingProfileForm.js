@@ -60,13 +60,13 @@ export default class hdtBillingProfileForm extends LightningElement {
                         }
                         break;
                     case 'InvoiceEmailAddress__c':
-                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                        if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
                             isValid = false;
                             field.reportValidity();
                         }
                         break;
                     case 'InvoiceCertifiedEmailAddress__c':
-                        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                        if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
                             isValid = false;
                             field.reportValidity();
                         }
@@ -110,6 +110,14 @@ export default class hdtBillingProfileForm extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessage);
             });
+        } else {
+            console.log('Error: Check input validity!');
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Check input validity',
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
         }
 
     }

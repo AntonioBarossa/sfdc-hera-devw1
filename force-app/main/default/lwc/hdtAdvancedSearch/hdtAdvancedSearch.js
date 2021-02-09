@@ -3,6 +3,8 @@ import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServiceP
 import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
+
 
 export default class HdtAdvancedSearch extends LightningElement {
 
@@ -22,12 +24,19 @@ export default class HdtAdvancedSearch extends LightningElement {
     totalPage = 0;
     customSetting = null;
     confirmButtonDisabled = true;
+    @api servicePointRetrievedData;
+    @api additionalfilter;
     rowToSend;
     @api maxRowSelected=false;
     @api disabledinput;
     @api accountid;
-    apiSearchButtonStatus=true;
+    @api processtype;
+    apiSearchButtonStatus= true;
     apiSearchInputValue=null;
+    @api targetobject;
+    @api outputContract=[];
+    @api showbuttoncontract ;
+    @api showbuttonforniture ;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -35,12 +44,25 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     connectedCallback() {
+        console.log('targetObject'+ JSON.stringify(this.targetobject));
+        console.log('processType'+ JSON.stringify(this.processtype));
+        if(this.processtype ==='Modifica'){
+            console.log('entra qui Modifica***************');
+            this.submitFornitura();
+        }
+        else if(this.processtype==='Cessazioni'){
+            console.log('entra qui Cessazioni***************');
+
+            this.submitContract();
+        }
+
         if (this.maxRowSelected ===false){
             this.maxRowSelected= 1
         }else {
             this.maxRowSelected = this.originalData.length
         }
     }
+
 
     /**
      * Filter Data-Table
@@ -76,6 +98,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
+
         }
     }
 
@@ -89,6 +112,9 @@ export default class HdtAdvancedSearch extends LightningElement {
     searchAction(event) {
         this.submitButtonStatus = true;
         this.apiSearchButtonStatus = true;
+
+        console.log('event value: '+ event.target.value);
+
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
@@ -125,6 +151,9 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
+
+        console.log('tableData********'+ JSON.stringify(this.tableData));
+
     }
 
     nextPage() {
@@ -151,16 +180,44 @@ export default class HdtAdvancedSearch extends LightningElement {
         return this.currentPage + 1;
     }
 
+    
     onselected(value){
         this.queryType = value.detail;
         this.apiSearchButtonStatus= true;
     }
 
-    submitContract(event){
-        event.preventDefault();
+
+@api
+    submitContract(){
         this.preloading = true;
         console.log('executing query search', this.accountid);
-        getContracts({accountid:this.accountid}).then(data =>{
+        console.log('additionalFilter************:'+JSON.stringify(this.additionalfilter));
+        //aggiungere parametro additionalFilter a getContracts
+            getContracts({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
+                this.preloading = false;
+                if (data.length > 0) {
+                    this.originalData = JSON.parse(JSON.stringify(data));
+                    this.createTable(data);
+                    this.formatTableHeaderColumns(data);
+                    this.submitButtonStatus = true;
+                    this.openmodel = true;
+                    this.isLoaded = true;
+                } else {
+                    this.alert('Dati tabela','Nessun record trovato','warn')
+                    this.tableData = data;
+                }
+            });
+       
+        
+    }
+
+@api
+    submitFornitura(){
+        this.preloading = true;
+        console.log('executing query search', this.accountid);
+        console.log('additionlFilter**********************************'+this.additionalfilter)
+        
+        getForniture({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -177,6 +234,8 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     /**
+     * 
+
      * Calling Apex callWebService method
      * TODO this method is not finished yet need webserivce.
      */
@@ -204,9 +263,13 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     submitSearch(event) {
         event.preventDefault();
+
+        console.log('event value submitSearch() '+ event.target.value);
+
         this.preloading = true;
         let qty = this.queryType;
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalFilter}).then(data => {
+            console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -230,17 +293,19 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
+
     }
      /**
      * Get selected record from table
      */
     getSelectedServicePoint(event){
+        console.log('getSelectedServicePoint START');
         this.preloading = true;
         let selectedRows = event.detail.selectedRows;
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.preloading = false;
-        console.log('selectedRows: ', JSON.parse(JSON.stringify(selectedRows)));
+        console.log('getSelectedServicePoint END');
     }
 
     /**
@@ -249,10 +314,19 @@ export default class HdtAdvancedSearch extends LightningElement {
     handleConfirm(){
         this.preloading = true;
         this.closeModal();
-        this.dispatchEvent(new CustomEvent('servicepointselection', {
-            detail: this.rowToSend
-        }));
+
+            this.dispatchEvent(new CustomEvent('servicepointselection', {
+                detail: this.rowToSend
+            }));       
         this.confirmButtonDisabled = true;
         this.preloading = false;
+
     }
+
+@api
+    getTargetObject(targetObject){
+        this.targetObject = targetObject;
+    }
+    
+
 }

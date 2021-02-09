@@ -48,6 +48,8 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
             this.childOrdersList = data.childOrdersList;// let orderList = results.orderList;
             this.orderItemList = data.orderItemList;
 
+            console.log('orderItemList: ', JSON.parse(JSON.stringify(this.orderItemList)));
+
             this.childOrdersList.forEach(ord => {
                 if(ord.RecordType){
                     ord.recordtypename = ord.RecordType.Name;
@@ -55,8 +57,8 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                 ord.pod = '';
                 ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
                 this.orderItemList.forEach( ordItem => {
-                    if(ordItem.OrderId == ord.Id && ordItem.Service_Point__c !== undefined){
-                        ord.pod = ordItem.Service_Point__r.ServicePointCode__c;
+                    if(ordItem.OrderId == ord.Id && ordItem.ServicePoint__c !== undefined){
+                        ord.pod = ordItem.ServicePoint__r.ServicePointCode__c;
                     }
                 });
 
