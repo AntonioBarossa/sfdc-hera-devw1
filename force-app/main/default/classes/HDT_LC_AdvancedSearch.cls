@@ -2,9 +2,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	private static List<ServicePoint__c> servicePoints;
 	private static Map<String, String> servicePointFields = getservicePointObjectFields();
-	private static CS_SelezioneFornitura__c customSetting = getCustomSetting();
 	private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
 	private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+	private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+	private static CS_SelezioneFornitura__c customSetting = servicePointQr.getCustomSetting();
+
 
 
 	/*
@@ -12,28 +14,48 @@ public with sharing class HDT_LC_AdvancedSearch {
 	 */
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType) {
+															 String queryType,String additionalFilter) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
+		system.debug('queryType' + queryType);
 
 		switch on queryType {
 			when 'serialnumber' {
 				Integer.valueOf(parameter);
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
-				servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumber(parameter, customSetting.OutputServicePoint__c));
+				if(additionalFilter==''||additionalFilter== null){
+					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumber(parameter, customSetting.OutputServicePoint__c));
+				}else{
+					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumberWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
+					//else chiami getRecordFromCodeWithFilter(accountId,additionalFilter) 
+				}
+
 			}
 			when 'pod' {
 				if (parameter.length() < 14 || parameter.length() > 14) {
 					throw new AuraHandledException('La lunghezza dei caratteri è sbagliata');
 				}
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
-				servicePoints.addAll(servicePointQr.getServicePointsByCode(parameter, customSetting.OutputServicePoint__c));
+				if(additionalFilter==''||additionalFilter== null){
+					servicePoints.addAll(servicePointQr.getServicePointsByCode(parameter, customSetting.OutputServicePoint__c));
+				}else {
+					servicePoints.addAll(servicePointQr.getServicePointsByCodeWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
+					//else chiami getRecordFromCodeWithFilter(accountId,additionalFilter) 
+				}
 			}
 			when 'contract' {
-				if (parameter.length() < 10 || parameter.length() > 10) {
+				if (parameter.length() < 8 || parameter.length() > 8) {
 					throw new AuraHandledException('La lunghezza dei caratteri è sbagliata');
 				}
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
-				servicePoints.addAll(servicePointQr.getServicePointsByCode(parameter, customSetting.OutputServicePoint__c));
+				//if additionalFilter vuoto chiami getRecordFromCode
+				if(additionalFilter==''||additionalFilter== null){
+					servicePoints.addAll(servicePointQr.getRecordFromCode(parameter, customSetting.OutputServicePoint__c));
+				}else {
+					servicePoints.addAll(servicePointQr.getRecordFromCodeWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
+
+					//else chiami getRecordFromCodeWithFilter(accountId,additionalFilter) 
+
+				}
 			}
 			when else {
 			}
@@ -74,10 +96,21 @@ public with sharing class HDT_LC_AdvancedSearch {
 		return servicePointFields;
 	}
 
+
+//aggiungi parametro additionalFilter
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String,String>> getContracts(String accountid) {
-		List<SBQQ__Subscription__c> subscriptions = getAccountSubscriptions(accountid);
-        List<Contract> contracts = getAccountContracts(accountid);
+	public static List<Map<String,String>> getContracts(String accountid,String additionalFilter) {
+		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
+		List<Contract> contracts  = new List<Contract>();
+		//if additionalFilter vuoto chiami getAccountContracts
+		if(additionalFilter== null ||additionalFilter== ''){
+			contracts = contractQr.getAccountContracts(accountid);
+		}else{
+			contracts = contractQr.getAccountContractsWithFilter(accountId,additionalFilter); 
+			//else chiami getAccountContractWithFilter(accountId,additionalFilter) 
+		}
+		
+		
         Map<String, String> mapSubscriptions = new Map<String, String>();
 		for (SBQQ__Subscription__c subscription : subscriptions) {
 			mapSubscriptions.put(subscription.SBQQ__Contract__c, subscription.ServicePoint__r.ServicePointCode__c);
@@ -93,6 +126,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 		}
 		return customContracts;
 	}
+
 
 	/**
 	 * TODO , Call the Webservice
@@ -111,12 +145,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 		}
 	}
 
-	/*
-	 * Getting Custom Settimg 'CS_SelezioneFornitura'
-	 */
-	static CS_SelezioneFornitura__c getCustomSetting() {
-		return [SELECT Max_Record__c, OutputServicePoint__c FROM CS_SelezioneFornitura__c][0];
-	}
+
+
+
 
 	/*
 	 * Getting All get ServicePoint Fields as Map
@@ -132,18 +163,43 @@ public with sharing class HDT_LC_AdvancedSearch {
 		return fields;
 	}
 
-	/*
-	 * Query for Getting All Account Subscriptions
-	 */
-	static List<SBQQ__Subscription__c> getAccountSubscriptions(String accountid) {
-		//List<ServicePoint__c> servicePoints = [ SELECT ServicePointCode__c ,(SELECT Name,SBQQ__Contract__r.ContractNumber FROM Subscriptions__r) FROM ServicePoint__c ];
-		return [SELECT Name, SBQQ__Contract__r.ContractNumber, SBQQ__Account__c, SBQQ__Account__r.Name, ServicePoint__r.ServicePointCode__c FROM SBQQ__Subscription__c WHERE SBQQ__Account__c =: accountid WITH SECURITY_ENFORCED];
+
+
+
+
+
+	@AuraEnabled(cacheable = true)
+	public static List<Map<String,String>> getForniture(String accountid,String additionalFilter) {
+		system.debug('getForniture START');
+		system.debug('additionalFilter' + additionalFilter);
+		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
+		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
+
+		if(additionalFilter == null || additionalFilter== ''){
+			system.debug('entra in additionalFilter == null');
+			servicePoints = servicePointQr.getAccountServicePoints(accountid);
+		}else{
+			system.debug('entra in additionalFilter != null');
+
+			servicePoints = servicePointQr.getAccountServicePointsWithFilter(accountid,additionalFilter);
+		}
+		system.debug('data get acc : ' + servicePoints);
+        List<Map<String,String>> customSp = new List<Map<String,String>>();
+		for (ServicePoint__c sp : servicePoints) {
+            Map<String,String> row = new Map<String, String>();
+            row.put('Account Titolare Name',sp.Account__r.Name);
+            row.put('Codice Punto',sp.ServicePointCode__c);
+            row.put('Matricola Contatore',sp.MeterSN__c);
+			row.put('Indirizzo',sp.SupplyAddress__c);
+			row.put('Distributore Name',sp.Distributor__r.Name);
+			customSp.add(row);
+		}
+		system.debug('getForniture END');
+
+		return customSp;
 	}
 
-	/*
-	 * Query for Getting All Account Contracts
-	 */
-	static List<Contract> getAccountContracts(String accountid) {
-		return [SELECT ContractNumber, Status, Account.Name, AccountId FROM Contract WHERE AccountId =: accountid WITH SECURITY_ENFORCED];
-	}
+
+
+
 }
