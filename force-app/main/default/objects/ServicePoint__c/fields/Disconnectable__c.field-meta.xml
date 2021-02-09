@@ -12,14 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>SI</fullName>
+                <fullName>Si</fullName>
                 <default>false</default>
-                <label>SI</label>
+                <label>Si</label>
             </value>
             <value>
-                <fullName>NO</fullName>
+                <fullName>No</fullName>
                 <default>false</default>
-                <label>NO</label>
+                <label>No</label>
             </value>
         </valueSetDefinition>
     </valueSet>
