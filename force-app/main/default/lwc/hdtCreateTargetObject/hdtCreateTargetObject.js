@@ -14,12 +14,11 @@ export default class hdtCreateTargetObject extends LightningElement {
 
     showCreateTargetObjectModal = false;
     showRecordTypeSelectionModal = false;
-
     get modalStatus(){
         if(this.selectedservicepoint != undefined){
 
 
-            if(this.showCreateTargetObjectModal == false && this.targetobject == 'Fornitura'){
+            if(this.showCreateTargetObjectModal == false){
 
                 this.showCreateTargetObjectModal = true;
             }
