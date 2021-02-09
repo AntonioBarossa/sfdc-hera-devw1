@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>BillingAddressFormula__c</fullName>
+    <description>Formula che raggruppa i campi principali dell&apos;indirizzo</description>
+    <externalId>false</externalId>
+    <formula>BillingStreetName__c &amp;&apos; &apos;&amp; BillingStreetNumber__c &amp;&apos;&apos;&amp; BillingStreetNumberExtension__c &amp;&apos;, &apos;&amp; BillingCity &amp;&apos; &apos;&amp; BillingState &amp;&apos;, &apos;&amp; BillingPostalCode &amp;&apos; &apos;&amp; BillingCountry</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Indirizzo</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
