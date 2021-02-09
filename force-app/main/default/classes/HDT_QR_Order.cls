@@ -83,6 +83,7 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Name,
+            RecordType.Name,
             RecordType.DeveloperName,
             SystemModstamp,
             Status,
@@ -95,6 +96,7 @@ public inherited sharing class HDT_QR_Order {
             Step__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.RecordType.DeveloperName,
             OrderNumber
             FROM Order 
             WHERE Id = :orderId

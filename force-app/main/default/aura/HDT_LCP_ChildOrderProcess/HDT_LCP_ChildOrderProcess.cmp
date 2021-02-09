@@ -29,10 +29,8 @@
     
     <br/>
 
-    <aura:if isTrue="{! not(v.recordtypeOrder=='Generic')}"> 
-        <lightning:card title="{! 'Processo di ' + v.recordtypeOrder}">
-                   
-        </lightning:card>
+    <aura:if isTrue="{!v.order}">
+        <c:hdtChildOrderProcessDetails order="{!v.order}"></c:hdtChildOrderProcessDetails>
     </aura:if>
 
 </aura:component>	
