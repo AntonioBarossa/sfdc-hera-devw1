@@ -1,13 +1,12 @@
 public class HDT_LC_OfferConfiguratorController {
 
-    @AuraEnabled
-    public static Object getTableData(String searchTerm){
+    @AuraEnabled(cacheable=true)
+    public static String getTableData(String searchTerm){
         System.debug('# getTableData -> ' + searchTerm);
-        List<String> sl = new List<String>();
-        sl.add('1');
-        sl.add('1');
-        sl.add('1');
-        return sl;
+
+        StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'DataHelper' LIMIT 1];
+
+        return sr.Body.toString();
     }
 
     @AuraEnabled

@@ -132,7 +132,11 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
 
     handleSelection(event){
         console.log('# handleSelection #');
-        console.log('# -> ' + event.detail.currentRecId);
-        console.log('# -> ' + event.detail.selectName);
+        console.log('# -> ' + event.detail.selectedId);
+        console.log('# -> ' + event.detail.code);
+        console.log('# -> ' + event.detail.selectedObj);
+        this.item.selectedId = event.detail.selectedId;
+        this.item.name = event.detail.code;
+        this.item.code = event.detail.selectedObj;
     }
 }

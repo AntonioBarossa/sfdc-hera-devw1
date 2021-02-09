@@ -1,5 +1,4 @@
 import { LightningElement, track, api, wire } from 'lwc';
-import fetchDataHelper from './hdtFetchDataHelper';
 import getTableData from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTableData';
 
 const firstRow = [
@@ -107,13 +106,8 @@ export default class HdtModalDataTable extends LightningElement {
     modalHeader;
     iconHeader;
 
-    @wire (getTableData, {searchTerm: 'searchTerm'}) newData;
-
-    // eslint-disable-next-line @lwc/lwc/no-async-await
-    async connectedCallback() {
-
-        console.log('@@@ ' + this.newData);
-
+    connectedCallback() {
+        this.spinner = true;
         switch (this.fieldName) {
             case 'amount':
                 this.modalHeader = 'Seleziona la tariffa';
@@ -141,9 +135,30 @@ export default class HdtModalDataTable extends LightningElement {
         }
 
         this.iconHeader = this.icon;
-        const data = await fetchDataHelper({objectType: this.fieldName});
-        this.data = data;
-        this.spinner = false;
+        this.backendCall();
+        
+    }
+
+    backendCall(){
+        console.log('# getTableData #');
+
+        getTableData({searchTerm: this.fieldName})
+            .then(result => {
+                console.log('# call result #');
+
+                if(result){
+                    console.log('# success #');
+                    var obj = JSON.parse(result);
+                    this.data = obj[this.fieldName];
+                    this.spinner = false;
+                } else {
+
+                }
+               
+            }).catch(error => {
+                console.log('# error # ' + error);
+            });
+
     }
 
     closeModal(event){

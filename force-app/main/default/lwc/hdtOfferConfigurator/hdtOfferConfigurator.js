@@ -62,7 +62,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     checkRowValues(rowElement) {
         console.log('# checkRowValues #');
         var retError = {
-            success: true,
+            success: false,
             message: 'nothing to declare'
         };
         return retError;
@@ -151,85 +151,91 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     saveAction(event){
         console.log('# Save offert configured #');
-        /*var i;
-        for(i=0; i<this.dataRows.length; i++){
-            console.log(' save row [' + (i+1) +']: ' +
-                this.dataRows[i].amount.label + '; Id: ' + this.dataRows[i].amount.id + '; checkUser: ' + this.dataRows[i].checkUser
-            );
-        }*/
+
+        var start = new Date();
+        var t0 = start.getSeconds();
+
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
 
-        this.sendToApex();
+        var obj = this.sendToApex();
 
-        setTimeout(() => {
+        var end = new Date();
+        var t1 = end.getSeconds();
+        var diff = t1-t0;
+        
+        if(diff<1){
+            console.log('# setTimeout #');
+            setTimeout(() => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: obj.title,
+                        message: obj.message,
+                        variant: obj.variant,
+                    })
+                );
+        
+                if(obj.success){
+                    this.spinnerObj.spinner = false;
+                    this.goBackToRecord();
+                } else {
+        
+                }
+            }, 2000);
+        } else {
+            console.log('# no time out #');
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: 'Successo!',
-                    message: 'Offerta salvata correttamente',
-                    variant: 'success'
-                }),
+                    title: obj.title,
+                    message: obj.message,
+                    variant: obj.variant,
+                })
             );
-            this.spinnerObj.spinner = false;
-            this.goBackToRecord();
-            
-        }, 3000);
+    
+            if(obj.success){
+                this.spinnerObj.spinner = false;
+                this.goBackToRecord();
+            } else {
+    
+            }
+        }
 
     }
 
     sendToApex(){
         console.log('# sendToApex #');
+
+        var toastObj = {success: true, title: '', message: '', variant: ''};
+
         saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows)})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
 
-            var toastObj = {
-                title: '',
-                message: '',
-                variant: ''
-            };
-
             if(result.success){
+                toastObj.success = true;
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
             } else {
+                toastObj.success = false;
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
-                toastObj.variant = 'warning';                    
+                toastObj.variant = 'warning';                  
             }
-
-            this.error = undefined;
-
-            setTimeout(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: toastObj.title,
-                        message: toastObj.message,
-                        variant: toastObj.variant
-                    }),
-                );
             
-            }, 5000);
-
         })
         .catch(error => {
             console.log('# save error #');
             console.log('# resp -> ' + result.message);
 
-            this.error = error;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error while saving Record',
-                    message: error.message,
-                    variant: 'error',
-                }),
-            );
-            setTimeout(() => {
-                
-            }, 5000);
+            toastObj.success = false;
+            toastObj.title = 'Attenzione';
+            toastObj.message = result.message;
+            toastObj.variant = 'warning'; 
+
         });
+        return toastObj;
     }
 
 }
