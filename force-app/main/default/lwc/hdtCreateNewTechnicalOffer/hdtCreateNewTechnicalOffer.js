@@ -15,14 +15,21 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     closeModal(event){
         console.log('### Parent closeModal ###');
         console.log('### return to-> ' + this.productid);
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.productid,
-                objectApiName: 'Product2',
-                actionName: 'view'
-            }
+
+        const goback = new CustomEvent('goback', {
+            detail: {prodId: this.productid}
         });
+        // Fire the custom event
+        this.dispatchEvent(goback);
+
+        //this[NavigationMixin.Navigate]({
+        //    type: 'standard__recordPage',
+        //    attributes: {
+        //        recordId: this.productid,
+        //        objectApiName: 'Product2',
+        //        actionName: 'view'
+        //    }
+        //});
         //this.showWelcom = false;
     }
 

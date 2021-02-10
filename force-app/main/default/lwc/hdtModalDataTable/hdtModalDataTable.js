@@ -102,6 +102,7 @@ export default class HdtModalDataTable extends LightningElement {
     @api rowId;
     @api fieldName;
     @api icon;
+    @track error = {show: false, message: ''};
     @track spinner = true;
     modalHeader;
     iconHeader;
@@ -150,13 +151,17 @@ export default class HdtModalDataTable extends LightningElement {
                     console.log('# success #');
                     var obj = JSON.parse(result);
                     this.data = obj[this.fieldName];
-                    this.spinner = false;
+                    console.log(this.data);
                 } else {
-
+                    this.error.show = true;
+                    this.error.message = 'Backend error';                    
                 }
+                this.spinner = false;
                
             }).catch(error => {
-                console.log('# error # ' + error);
+                this.error.show = true;
+                this.error.message = error.body.message;
+                this.spinner = false;
             });
 
     }
@@ -175,9 +180,6 @@ export default class HdtModalDataTable extends LightningElement {
         this.data = [];
         const row = event.detail.row;
         this.record = row;
-
-        console.log('modal: rowId -> ' + this.rowId + ', fieldName -> ' + this.fieldName);
-        console.log('modal: recId -> ' + this.record.Id + ', col11 -> ' + this.record.col11);
 
         const selectedEvent = new CustomEvent("setvalue", {
             detail:  {rowId: this.rowId, fieldName: this.fieldName, recId: this.record.Id, label: this.record.col1, icon: this.iconHeader}

@@ -9,7 +9,15 @@
             </header>
 
             <lightning-card  title={modalHeader} icon-name={iconHeader}>
-                <div class="slds-card__body slds-card__body_inner">
+
+                <div if:true={error.show} class="slds-card__body slds-card__body_inner">
+                    <div class="slds-box">
+                        <div class="slds-text-color_error">ATTENZIONE</div>
+                        <div class="slds-text-heading_large">{error.message}</div>
+                    </div>
+                </div>
+
+                <div if:false={error.show} class="slds-card__body slds-card__body_inner">
                     <template if:true={spinner} >
                         <div class="slds-align_absolute-center">
                             <lightning-spinner alternative-text="Caricamento" size="large"></lightning-spinner>
@@ -29,12 +37,12 @@
                         </div>
                     </template>
                 </div> 
-                <p slot="footer">
-                    <!--<lightning-button-group>
+                <!--<p slot="footer">
+                    <lightning-button-group>
                         <lightning-button label="Conferma"></lightning-button>
                         <lightning-button label="Annulla"></lightning-button>
-                    </lightning-button-group>-->
-                </p>
+                    </lightning-button-group>
+                </p>-->
             </lightning-card>
 
         </div>

@@ -2,6 +2,7 @@
 	initHelperMethod : function(component, event, helper) {
 		console.log('# open from quick action #');
 
+		var workspaceAPI = component.find("workspace");
 		var productId = component.get('v.recordId');
         var action = component.get("c.getExistingOffer");
         action.setParams({
@@ -25,14 +26,42 @@
 				}
 
 				$A.get("e.force:closeQuickAction").fire();
-				var evt = $A.get("e.force:navigateToComponent");
-				evt.setParams({
-					componentDef : redirectToComponent,
-					componentAttributes: {
-						recordId : productId
-					}
+
+
+				workspaceAPI.openTab({
+					pageReference: {
+						type: "standard__component",
+						attributes: {
+							componentName: 'c__HDT_LCP_CreateNewTechnicalOffer'
+						},
+						state: {
+							c__recordId: productId
+						}
+					},
+					focus: true
+				}).then(function(response) {
+					workspaceAPI.setTabLabel({
+						tabId: response,
+						label: "Conf"
+					 });
+					workspaceAPI.setTabIcon({
+						tabId: response,
+						icon: 'custom:custom83'
+					});
+				}).catch(function(error) {
+					console.log(error);
 				});
-				evt.fire();
+
+
+
+				//var evt = $A.get("e.force:navigateToComponent");
+				//evt.setParams({
+				//	componentDef : redirectToComponent,
+				//	componentAttributes: {
+				//		recordId : productId
+				//	}
+				//});
+				//evt.fire();
 
 			} else {
 				console.log('something goes wrong!');
