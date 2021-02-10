@@ -6,7 +6,7 @@
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
         </div>
 
-        <p slot="actions" >
+        <p if:false={error.show} slot="actions" >
             <lightning-button-group>
                 <lightning-button label="Cerca" onclick={searchClick} icon-name="utility:search" title="search"  class="slds-m-left_x-small" ></lightning-button>
                 <lightning-button label="Clona" onclick={cloneData} icon-name="utility:copy" ></lightning-button>
@@ -14,7 +14,11 @@
             </lightning-button-group>
         </p>
 
-        <div class="slds-card__body slds-card__body_inner">
+        <p if:true={error.show} slot="actions" >
+            <lightning-button label="Indietro" onclick={back} variant="destructive" ></lightning-button>
+        </p>
+
+        <div if:false={error.show} class="slds-card__body slds-card__body_inner">
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_1-of-4">
                     <div class="slds-form slds-m-top_medium slds-m-bottom_medium" >
@@ -29,12 +33,14 @@
                                     obj-name="TecnicalOffer__c"
                                     search-by="Name"
                                     set-as-key="Id"
+                                    detail-fields={detailFields}
                                     icon-name="custom:custom57"
                                     label-name="labelName"
                                     onvalueselect={handleSelection}
                                     placeholder="Seleziona offerta..."
                                 ></c-hdt-custom-lookup>
                             </div>
+                            <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
                         </div>
                         <!--<div class="slds-form-element slds-form-element_horizontal">
                             <lightning-helptext content={helpTxt1} ></lightning-helptext>
@@ -63,7 +69,7 @@
                 </div>
             </div>
 
-            <div style="height: 300px;">
+            <div if:true={showTable} class="slds-box  slds-box_xx-small" style="height: 300px;">
                 <lightning-datatable
                         key-field="id"
                         data={data}
@@ -71,6 +77,19 @@
                         hide-checkbox-column
                 ></lightning-datatable>
             </div>
+
+            <!--<div class="slds-box">
+                <p>This is a regular-sized box.</p>
+            </div>-->
+
         </div>
+
+        <div if:true={error.show} class="slds-card__body slds-card__body_inner">
+            <div class="slds-box">
+                <div class="slds-text-color_error">ATTENZIONE</div>
+                <div class="slds-text-heading_large">{error.message}</div>
+            </div>
+        </div>
+
     </lightning-card>
 </template>

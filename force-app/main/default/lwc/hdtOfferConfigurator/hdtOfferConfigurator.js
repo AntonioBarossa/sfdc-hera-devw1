@@ -62,7 +62,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     checkRowValues(rowElement) {
         console.log('# checkRowValues #');
         var retError = {
-            success: false,
+            success: true,
             message: 'nothing to declare'
         };
         return retError;
@@ -134,18 +134,9 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         })
         .catch(error => {
-            console.log('# Retrieve data error #');
-            console.log('# resp -> ' + result.message);
-
-            this.error = error;
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Error while retrieve Records',
-                    message: error.message,
-                    variant: 'error',
-                }),
-            );
-
+            this.errorObj.showError = true;
+            this.errorObj.errorString = error.body.message;
+            this.spinnerObj.spinner = false;
         });
     }
 
@@ -226,16 +217,23 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             
         })
         .catch(error => {
-            console.log('# save error #');
-            console.log('# resp -> ' + result.message);
+            this.errorObj.showError = true;
+            this.errorObj.errorString = error.body.message;
+            this.spinnerObj.spinner = false;
 
             toastObj.success = false;
             toastObj.title = 'Attenzione';
-            toastObj.message = result.message;
+            toastObj.message = error.body.message;
             toastObj.variant = 'warning'; 
 
         });
         return toastObj;
+    }
+
+    back(event){
+        console.log('back');
+        this.errorObj.showError = false;
+        console.log('back');
     }
 
 }

@@ -1,4 +1,6 @@
 import { LightningElement, track } from 'lwc';
+import getRecords from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords';
+import cloneRecord from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.cloneRecord';
 
 const columns = [
     { label: 'Definizione', fieldName: 'definition' },
@@ -12,49 +14,14 @@ const columns = [
     { label: 'Nome Tecn.', fieldName: 'tecName'}   
 ];
 
-const offertData = [
-        {
-            id: '1',
-            definition: 'EE Valore PRZ indice data att',
-            checkUser: false,
-            amount: '',
-            grInfo: '',
-            price: '',
-            discount: '',
-            value: '',
-            stringValue: '',
-            tecName: 'EFP_CT_MI'
-        },
-        {
-            id: '2',
-            definition: 'EE Percentuale Adeg. Indice',
-            checkUser: false,
-            amount: '',
-            grInfo: '',
-            price: '',
-            discount: '',
-            value: '',
-            stringValue: '',
-            tecName: 'ES_ADG_CT'
-        },
-        {
-            id: '3',
-            definition: 'EE Prezzo personalizzato Mono',
-            checkUser: true,
-            amount: 'value1',
-            grInfo: 'value2',
-            price: 'value3',
-            discount: 'value4',
-            value: 'value5',
-            stringValue: 'value6',
-            tecName: 'EP_PERS_MO'
-        }          
-
-];
-
 export default class HdtSearchTechnicalOffer extends LightningElement {
     data = [];
     columns = columns;
+    detailFields = ['Version__c', 'OffertCode__c'];
+    showTable = false;
+
+    @track result = {show: false, message: ''};
+    @track error = {show: false, message: ''};
 
     @track item = {
         selectedId: '',
@@ -76,7 +43,7 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
         offertCode: ''
     }
 
-    setOffertName(event){
+    /*setOffertName(event){
         console.log('### setOffertName ###');
         this.searchObj.offertName = event.target.value;
     }
@@ -89,32 +56,79 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
     setOffertCode(event){
         console.log('### setOffertCode ###');
         this.searchObj.offertCode = event.target.value;
-    }
+    }*/
 
     searchClick(event){
         console.log('### searchClick ###');
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'loadingdata slds-text-heading_small';
-        console.log('### search these fields -> ' + this.searchObj.offertName);
-        console.log('### search these fields -> ' + this.searchObj.version);
-        console.log('### search these fields -> ' + this.searchObj.offertCode);
-        
-        setTimeout(() => {
-            this.data = offertData;
-            this.spinnerObj.spinner = false;
-        }, 3000);
+        this.handleSearch(this.item.selectedId);
+    }
 
+    handleSearch(recId){
+        console.log('# handleSearch #');
+
+        getRecords({recordId: recId})
+            .then(result => {
+                console.log('# call result #');
+
+                if(result){
+                    console.log('# success #');
+                    var obj = JSON.parse(result);
+                    this.data = obj.offerData;
+
+                    if(this.data.length===0){
+                        this.result.show = true;
+                        this.showTable = false;
+                        this.result.message = 'Non è stato trovato nessuna configurazione';
+                    }
+
+                    this.spinnerObj.spinner = false;
+                    this.showTable = true;
+                } else {
+                    this.error.show = true;
+                    this.error.message = 'An error occurred!';
+                    this.spinnerObj.spinner = false;
+                }
+               
+            }).catch(error => {
+                this.error.show = true;
+                this.error.message = error.body.message;
+                this.spinnerObj.spinner = false;
+            });
     }
 
     cloneData(event){
         console.log('### cloneData ###');
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
+        this.handleClone(this.item.selectedId);
         
         setTimeout(() => {
-            this.spinnerObj.spinner = false;
-        }, 3000);
+
+        }, 2000);
         
+    }
+
+    handleClone(recId){
+        console.log('# handleClone #');
+ 
+        cloneRecord({recordId: recId})
+            .then(result => {
+                console.log('# call result #');
+
+                if(result){
+                    console.log('# success #');
+                } else {
+                    this.error.show = true;
+                    this.error.message = 'An error occurred!';
+                }
+                this.spinnerObj.spinner = false;
+            }).catch(error => {
+                this.error.show = true;
+                this.error.message = error.body.message;
+                this.spinnerObj.spinner = false;
+            });
     }
 
     closeSearch(event){
@@ -132,11 +146,13 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
 
     handleSelection(event){
         console.log('# handleSelection #');
-        console.log('# -> ' + event.detail.selectedId);
-        console.log('# -> ' + event.detail.code);
-        console.log('# -> ' + event.detail.selectedObj);
+        console.log('# set -> ' + event.detail.selectedId + ' - ' + event.detail.code + '- ' + event.detail.selectedObj);
         this.item.selectedId = event.detail.selectedId;
         this.item.name = event.detail.code;
         this.item.code = event.detail.selectedObj;
+    }
+
+    back(event){
+        this.error.show = false;
     }
 }

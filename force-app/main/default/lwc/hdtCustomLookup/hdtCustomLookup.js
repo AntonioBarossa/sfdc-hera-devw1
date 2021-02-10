@@ -20,6 +20,7 @@ export default class LookupLwc extends LightningElement {
     @api placeholder;
     @api searchBy;
     @api setAsKey;
+    @api detailFields;
     objLabelName;
     searchTerm;
     @track valueObj;
@@ -34,6 +35,11 @@ export default class LookupLwc extends LightningElement {
 
     connectedCallback() {
         console.log("objName", this.objName);
+        
+        if(this.detailFields===undefined){
+            this.detailFields = [];
+        }
+
         if(FIELDS.length === 0){
             FIELDS.push(this.objName + '.' + this.searchBy);
             FIELDS.push(this.objName + '.' + this.setAsKey);
@@ -61,7 +67,7 @@ export default class LookupLwc extends LightningElement {
         console.log("# Rendered: ", this.objName);
     }
 
-    @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', searchBy: '$searchBy', setAsKey: '$setAsKey'})
+    @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', searchBy: '$searchBy', setAsKey: '$setAsKey', detailFields: '$detailFields'})
     wiredRecords({ error, data }) {
         if (data) {
             this.record = data;

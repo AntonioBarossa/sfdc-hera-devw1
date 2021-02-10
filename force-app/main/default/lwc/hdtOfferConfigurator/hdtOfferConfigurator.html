@@ -8,10 +8,13 @@
 
         <template if:true={errorObj.showError} >
             <p slot="actions" >
-                <lightning-button label="Torna indietro" onclick={goBackToRecord} variant="destructive" icon-name="utility:delete"></lightning-button>
+                <lightning-button label="Torna indietro" onclick={back} variant="destructive" ></lightning-button>
             </p>
             <div class="slds-card__body slds-card__body_inner">
-                {errorObj.errorString}
+                <div class="slds-box">
+                    <div class="slds-text-color_error">ATTENZIONE</div>
+                    <div class="slds-text-heading_large">{errorObj.errorString}</div>
+                </div>
             </div>
         </template>
 
@@ -81,9 +84,9 @@
                         </div>-->
                     </div>
                 </div>
-
-                <div class="slds-m-top_small slds-m-bottom_xxx_small slds-m-left_x-small slds-m-right_x-small" >
-                <table class="slds-table slds-table_cell-buffer slds-max-medium-table_stacked-horizontal slds-table_bordered" >    
+                <!--slds-m-top_small slds-m-bottom_xxx_small slds-m-left_x-small slds-m-right_x-small-->
+                <div class="slds-box slds-box_xx-small slds-m-top_medium" >
+                    <table class="slds-table slds-table_cell-buffer slds-max-medium-table_stacked-horizontal slds-table_bordered" >    
                     <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered">-->
                         <thead>
                             <tr class="slds-line-height_reset">

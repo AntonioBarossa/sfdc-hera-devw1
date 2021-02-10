@@ -56,8 +56,7 @@ public class HDT_LC_OfferConfiguratorController {
             matrixTable.rowList = (List<MatrixSingleRow>)JSON.deserialize(sr.Body.toString(), List<MatrixSingleRow>.class);
 
         } catch (Exception e){
-            matrixTable.success = false;
-            matrixTable.message = '# Error -> ' + e.getMessage() + ', at line [' + String.valueOf(e.getLineNumber()) + ']';
+            throw new AuraHandledException('# Error -> ' + e.getMessage() + ', at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
         
         return matrixTable;
@@ -81,13 +80,36 @@ public class HDT_LC_OfferConfiguratorController {
             responseObj.message = 'nothing to declare';
 
         } catch (Exception ex){
-            responseObj.success = false;
-            responseObj.message = ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber());
-            return responseObj;
+            throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
         }
         
         return responseObj;
 
+    }
+
+    @AuraEnabled
+    public static String getTechnicalOfferRecords(String recordId){
+        String result = '';
+        try{
+            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'offerData' LIMIT 1];
+            result = sr.Body.toString();
+        } catch (Exception e){
+            throw new AuraHandledException(e.getMessage());
+        } 
+        return result;
+    }
+
+    @AuraEnabled
+    public static String cloneRecord(String recordId){
+        String result = '';
+        try{
+            //Account a = new Account();
+            //a.Id = '';
+            //insert a;
+        } catch (Exception e){
+            throw new AuraHandledException(e.getMessage());
+        } 
+        return result;
     }
 
     public class ResponseObj {
