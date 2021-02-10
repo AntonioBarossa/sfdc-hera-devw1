@@ -7,7 +7,7 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="fieldsAddressObject" type="String" label="Address Object" description="address object" role="inputOnly"/>
+            <property name="objectapiname" type="String" label="Object API Name" description="object api name" role="inputOnly"/>
 <!--             <property name="processType" type="String" label="Process Type" description="process type passed by the flow" role="inputOnly"/>
             <property name="accountId" type="String" label="Account Id" description="account id" role="inputOnly"/>
             <property name="targetObject" type="String" label="targetObject" description="targetObject" role="inputOnly"/>

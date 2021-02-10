@@ -11,7 +11,7 @@ export default class HdtTargetObjectAddressFieldsFlow extends LightningElement {
     @api saveButton;
     @api cancelButton;
     @api labelSaveButton; */
-    @api fieldsAddressObject;
+    @api objectapiname;
 
 /*     handleServicePointSelection(event){
         this.selectedServicePointFlow = event.detail["Codice Punto"];
