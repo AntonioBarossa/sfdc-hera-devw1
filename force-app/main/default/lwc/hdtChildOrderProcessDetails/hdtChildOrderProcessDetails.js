@@ -7,22 +7,41 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     title = '';
     isVisible = false;
     loading = false;
+    moduleButtonVisibility = false;
+    moduleButtonLabel = 'Modulo informativo';
+    isAccountResidential;
+
+    handleModuleButtonVisibility(){
+        if (this.order !== undefined &&
+            (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione')
+            && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas') {
+            this.moduleButtonVisibility = true;
+        }
+    };
+
+    handleModuleButtonLabel(){
+        if (this.order !== undefined 
+            &&  this.order.ServicePoint__r.MeterClass__c === 'G10 Pareti def.') {
+            this.moduleButtonLabel = 'Modulo B12';
+        }
+    }
 
     typeVisibility(type){
         let result = true;
 
-        switch (type) {
-            case 'ele':
-                result = this.order.ServicePoint__c.RecordType.DeveloperName === 'HDT_RT_Ele';
-                break;
-            case 'gas':
-                result = this.order.ServicePoint__c.RecordType.DeveloperName === 'HDT_RT_Gas';
-                break
-            default:
-                result = true;
-                break;
+        if(this.order.RecordType.DeveloperName !== undefined ){
+            switch (type) {
+                case 'ele':
+                    result = this.order.ServicePoint__c.RecordType.DeveloperName === 'HDT_RT_Ele';
+                    break;
+                case 'gas':
+                    result = this.order.ServicePoint__c.RecordType.DeveloperName === 'HDT_RT_Gas';
+                    break
+                default:
+                    result = true;
+                    break;
+            }
         }
-
         return result;
     }
 
@@ -47,608 +66,859 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         });
     }
 
-    connectedCallback(){
-        console.log('hdtChildOrderProcessDetails: ', JSON.parse(JSON.stringify(this.order)));
-        this.isVisible = this.order.RecordType.DeveloperName !== 'HDT_RT_Default' ? true : false;
-        this.title = 'Processo di ' + this.order.RecordType.Name;
+    applyCreditCheckLogic(fieldName){
+        if(this.order.RecordType.DeveloperName !== undefined ){
+            switch (this.order.RecordType.DeveloperName) {
+                case 'HDT_RT_Subentro':
+                    if (fieldName === 'IncomingCreditCheck__c') {
+                        return 'OK';
+                    }
+                    else if (fieldName === 'OutgoingCreditCheckResult__c') {
+                        return 'OK';
+                    }
+                    break;
+                case 'HDT_RT_Attivazione':
+                    if (fieldName === 'OutgoingCreditCheckResult__c') {
+                        return 'OK';
+                    }
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+    }
 
+    handleFields(){
         this.fields = {
+            clienteUscente: {
+                label: 'Cliente Uscente',
+                objectApiName: 'Account',
+                recordId: this.order.ServicePoint__r.Account__c,
+                processVisibility: this.order.ServicePoint__r.Account__c !== this.order.AccountId,
+                data: [
+                    {
+                        'label': 'Nome',
+                        'apiname': 'FirstName__c',
+                        // 'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Cognome',
+                        'apiname': 'LastName__c',
+                        // 'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Codice Fiscale',
+                        'apiname': 'FiscalCode__c',
+                        // 'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    }
+                ]
+            },
             creditCheck: {
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: '', //(Subentro, Prima attivazione, Prima attivazione con modifica)
                 data: [
                     {
                         'label': 'Esito credit Check Entrante',
                         'apiname': 'IncomingCreditCheck__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': this.applyCreditCheckLogic('IncomingCreditCheck__c'),
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Esito credit Check Uscente',
                         'apiname': 'OutgoingCreditCheckResult__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Descrizione esito',
                         'apiname': 'CreditCheckDescription__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
-            dettaglioCommodity: {
+            dettaglioImpianto: {
+                objectApiName: 'ServicePoint__c',
+                recordId: this.order.ServicePoint__c,
+                processVisibility: '',
                data: [
                 {
                     'label': 'POD/PdR',
                     'apiname': 'ServicePointCode__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Disalimentabilità',
                     'apiname': 'Disconnectable__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Categoria disalimentabilità',
                     'apiname': 'DisconnectibilityType__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Tipo Impianto',
                     'apiname': 'ImplantType__c',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Potenza disponibile',
                     'apiname': 'PowerAvailable__c',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Potenza impegnata',
                     'apiname': 'PowerContractual__c',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Tensione',
                     'apiname': 'VoltageLevel__c',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Uso energia',
                     'apiname': 'undefined1',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Distributore',
                     'apiname': 'Distributor__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Recapito telefonico',
                     'apiname': 'DisconnectibilityPhone__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Provenienza',
                     'apiname': 'MarketOrigin__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Categoria uso',
                     'apiname': 'UseCategory__c',
                     // 'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Classe prelievo',
                     'apiname': 'WithdrawalClass__c',
                     // 'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Classe Contatore',
                     'apiname': 'MeterClass__c',
                     // 'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Potenzialità massima richiesta',
                     'apiname': 'undefined2',
                     // 'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': false
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Misuratore',
                     'apiname': 'MeterSN__c',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Tipo Mercato',
                     'apiname': 'CommoditySector__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Consumi Anno',
                     'apiname': 'AnnualConsumption__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Residente all\'indirizzo di Fornitura',
                     'apiname': 'Resident__c',
                     // 'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Località/Codice REMI',
                     'apiname': 'RemiCode__c',
                     // 'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'Tipo di connessione',
                     'apiname': 'SupplyType__c',
                     // 'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': true
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
                 }
                ]
             },
             indirizzoFornitura: {
+                objectApiName: 'ServicePoint__c',
+                recordId: this.order.ServicePoint__c,
+                processVisibility: '',
                 data: [
                     {
                         'label': 'Comune',
                         'apiname': 'SupplyCity__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Via',
                         'apiname': 'SupplyStreet__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Civico',
                         'apiname': 'SupplyStreetNumber__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Localita',
                         'apiname': 'SupplyPlace__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Provincia',
                         'apiname': 'SupplyProvince__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Cap',
                         'apiname': 'SupplyPostalCode__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Nazione',
                         'apiname': 'SupplyCountry__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Codice Istat',
                         'apiname': 'undefined3',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
             indirizzoResidenza: {
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: '',
                 data: [
                     {
                         'label': 'Comune',
-                        'apiname': 'ShippingCity',
+                        'apiname': 'BillingCity',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Via',
-                        'apiname': 'ShippingStreet',
+                        'apiname': 'BillingStreetName__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Civico',
-                        'apiname': 'ShippingStreetNumber__c',
+                        'apiname': 'BillingStreetNumber__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Localita',
-                        'apiname': 'ShippingPlace__c',
+                        'apiname': 'BillingPlace__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Provincia',
-                        'apiname': 'ShippingProvince__c',
+                        'apiname': 'BillingState',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Cap',
-                        'apiname': 'ShippingPostalCode',
+                        'apiname': 'BillingPostalCode',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Nazione',
-                        'apiname': 'ShippingState',
+                        'apiname': 'BillingCountry',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Codice Istat',
                         'apiname': 'undefined4',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
             indirizzoSedeLegale: {
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: '',
                 data: [
                     {
                         'label': 'Comune',
-                        'apiname': 'ShippingCity',
+                        'apiname': 'BillingCity',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Via',
-                        'apiname': 'ShippingStreet',
+                        'apiname': 'BillingStreetName__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Civico',
-                        'apiname': 'ShippingStreetNumber__c',
+                        'apiname': 'BillingStreetNumber__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Localita',
-                        'apiname': 'ShippingPlace__c',
+                        'apiname': 'BillingPlace__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Provincia',
-                        'apiname': 'ShippingProvince__c',
+                        'apiname': 'BillingState',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Cap',
-                        'apiname': 'ShippingPostalCode',
+                        'apiname': 'BillingPostalCode',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Nazione',
-                        'apiname': 'ShippingState',
+                        'apiname': 'BillingCountry',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Codice Istat',
-                        'apiname': 'undefined5',
+                        'apiname': 'undefined4',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
             fatturazione: {
+                objectApiName: 'BillingProfile__c',
+                recordId: this.order.BillingProfile__c,
+                processVisibility: '',
                 data: [
                     {
                         'label': 'Modalità Invio Bolletta',
                         'apiname': 'BillSendingMethod__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Email Invio Bolletta',
                         'apiname': 'InvoiceEmailAddress__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Email PEC invio Bolletta',
                         'apiname': 'InvoiceCertifiedEmailAddress__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Destinatario Divergente',
                         'apiname': 'DivergentSubject__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Comune',
                         'apiname': 'undefined6',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Stato ',
                         'apiname': 'InvoicingCountry__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Provincia',
                         'apiname': 'InvoicingProvince__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Nome Via',
                         'apiname': 'InvoicingStreetName__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Civico',
                         'apiname': 'InvoicingStreetNumber__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'CAP',
                         'apiname': 'InvoicingPostalCode__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Codice ISTAT',
                         'apiname': 'InvoicingCityCode__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
             fatturazioneElettronicaClienteNonResidenziale: {
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: '',
                 data:[
                     {
                         'label': 'Codice Destinatario',
                         'apiname': 'SubjectCode__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'PEC Fatturazione Elettronica',
                         'apiname': 'InvoiceCertifiedEmailAddress__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Modalità invio Fatturazione',
                         'apiname': 'ElectronicInvoicingMethod__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Tipo invio fattura XML',
                         'apiname': 'XMLType__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'CIG',
                         'apiname': 'CIG__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'CUP',
                         'apiname': 'CUP__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
             metodoPagamento: {
+                objectApiName: 'BillingProfile__c',
+                recordId: this.order.BillingProfile__c,
+                processVisibility: '',
                 data: [
                     {
                         'label': 'Modalità di Pagamento',
                         'apiname': 'PaymentMethod__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'IBAN Estero',
                         'apiname': 'IbanIsForeign__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Numeri di Controllo',
                         'apiname': 'IbanCIN_IBAN__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'CIN',
                         'apiname': 'IbanCIN__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'ABI',
                         'apiname': 'IbanABI__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'CAB',
                         'apiname': 'IbanCAB__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Numero conto corrente',
                         'apiname': 'IbanCodeNumber__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Tipologia Intestatario',
                         'apiname': 'SignatoryType__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Codice Fiscale intestatario c/c',
                         'apiname': 'BankAccountSignatoryFiscalCode__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Nome Intestatario c/c',
                         'apiname': 'BankAccountSignatoryFirstName__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Cognome Intestario c/c',
                         'apiname': 'BankAccountSignatoryLastName__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Contact di riferimento',
                         'apiname': 'undefined8',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'ID Billing profile',
                         'apiname': 'Id',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': false,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             },
             metodoFirmaCanaleInvio: {
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: '',
                 data: [
                     {
                         'label': 'Metodo firma',
                         'apiname': 'SignatureMethod__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     },
                     {
                         'label': 'Invio doc',
                         'apiname': 'DocSendingMethod__c',
                         // 'typeVisibility': this.typeVisibility('both'),
                         'required': true,
-                        'disabled': true
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
                     }
                 ]
             }
         };
+    }
+
+    connectedCallback(){
+        console.log('hdtChildOrderProcessDetails: ', JSON.parse(JSON.stringify(this.order)));
+        this.title = 'Processo di ' + this.order.RecordType.Name;
+        this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
+        this.handleModuleButtonVisibility();
+        this.handleModuleButtonLabel();
+        this.handleFields();
+        this.applyCreditCheckLogic();
     }
 }

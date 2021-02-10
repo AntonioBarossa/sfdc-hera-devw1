@@ -30,7 +30,9 @@
     <br/>
 
     <aura:if isTrue="{!v.order}">
-        <c:hdtChildOrderProcessDetails order="{!v.order}"></c:hdtChildOrderProcessDetails>
+        <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
+            <c:hdtChildOrderProcessDetails order="{!v.order}"></c:hdtChildOrderProcessDetails>
+        </aura:if>
     </aura:if>
 
 </aura:component>	

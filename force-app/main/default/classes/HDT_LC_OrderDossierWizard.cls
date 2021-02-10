@@ -72,15 +72,24 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                 }
 
                 if(listOrder != null && !listOrder.isEmpty()){
+                    Map<String, Order> ordersToUpdateMap = new Map<String, Order>();
                     List<Order> ordersToUpdate = new List<Order>();
+                    orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
                     for (OrderItem orderItem : orderItemsList) {
-                        ordersToUpdate.add(new Order(
+                        ordersToUpdateMap.put(orderItem.OrderId, new Order(
                             Id = orderItem.OrderId,
                             ServicePoint__c = orderItem.ServicePoint__c,
                             ParentOrder__c = parentOrderNew.Id,
                             RecordTypeId = recordTypeIdDefault
                         ));
+                    }
+                    orderItemSrv.checkReadAccess('OrderId,BillingProfile__c');
+                    List<OrderItem> orderItemsListWithBillingProfile = orderItemQr.getRecordsWithBillingProfile(listOrdersId);
+                    for (OrderItem orderItem : orderItemsListWithBillingProfile) {
+                        Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
+                        orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c;
+                        ordersToUpdate.add(orderToUpdate);
                     }
                     orderSrv.updateRecords(ordersToUpdate);
                 }

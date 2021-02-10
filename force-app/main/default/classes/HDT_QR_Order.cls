@@ -82,6 +82,7 @@ public inherited sharing class HDT_QR_Order {
             Account.ShippingAddress,
             Account.FirstName__c,
             Account.LastName__c,
+            Account.RecordType.Developername,
             Name,
             RecordType.Name,
             RecordType.DeveloperName,
@@ -97,6 +98,9 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             ServicePoint__r.RecordType.DeveloperName,
+            ServicePoint__r.Account__c,
+            ServicePoint__r.MeterClass__c,
+            BillingProfile__c,
             OrderNumber
             FROM Order 
             WHERE Id = :orderId

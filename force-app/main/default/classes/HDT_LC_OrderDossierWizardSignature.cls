@@ -43,8 +43,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
     */
     @AuraEnabled
     public static void next(Order orderUpdates){
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderUpdates.Id);
+        List<Order> ordersToUpdate = new List<Order>();
+        Map<String,Object> objMap = orderUpdates.getPopulatedFieldsAsMap();
+
+        for (Order childOrder : childOrders) {
+            Order childOrderToUpdate = new Order(
+                Id = childOrder.Id
+            );
+
+            for (String key : objMap.keySet()) {
+                if (key != 'Id') {
+                    childOrderToUpdate.put(key, objMap.get(key));
+                }
+            }
+
+            system.debug('childOrderToUpdate: ' + childOrderToUpdate);
+            ordersToUpdate.add(childOrderToUpdate);
+        }
         orderUpdates.Step__c = 2;
-        orderSrv.updateRecord(orderUpdates);
+        ordersToUpdate.add(orderUpdates);
+
+        system.debug('childOrdersToUpdate before update: ' + ordersToUpdate);
+        orderSrv.updateRecords(ordersToUpdate);
+        system.debug('childOrdersToUpdate after update: ' + ordersToUpdate);
     }
 
     /**

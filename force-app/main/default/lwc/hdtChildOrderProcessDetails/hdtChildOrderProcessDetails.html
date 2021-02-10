@@ -1,103 +1,116 @@
 <template>
     <template if:true={order}>
-        <template if:true={isVisible}>
-            <lightning-card title={title}>
-                <lightning-layout>
-                    <lightning-layout-item padding="horizontal-large" size="12">
-                        <lightning-accordion allow-multiple-sections-open>
-                            <lightning-accordion-section name="Credit Check" label="Credit Check">
-                                <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.creditCheck.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-                            
-                            <lightning-accordion-section name="Dettaglio Commodity" label="Dettaglio Commodity">
-                                <lightning-record-edit-form record-id={order.ServicePoint__c} object-api-name="ServicePoint__c">    
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.dettaglioCommodity.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Indirizzo di fornitura" label="Indirizzo di fornitura">
-                                <lightning-record-edit-form record-id={order.ServicePoint__c} object-api-name="ServicePoint__c">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.indirizzoFornitura.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Indirizzo di residenza" label="Indirizzo di residenza">
-                                <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.indirizzoResidenza.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Indirizzo sede legale" label="Indirizzo sede legale">
-                                <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.indirizzoSedeLegale.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Fatturazione" label="Fatturazione">
-                                <lightning-record-edit-form record-id={order.BillingProfile__c} object-api-name="BillingProfile__c">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.fatturazione.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Fatturazione elettronica cliente non residenziale" label="Fatturazione elettronica cliente non residenziale">
-                                <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.fatturazioneElettronicaClienteNonResidenziale.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Metodo di pagamento" label="Metodo di pagamento">
-                                <lightning-record-edit-form record-id={order.BillingProfile__c} object-api-name="BillingProfile__c">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.metodoPagamento.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-        
-                            <lightning-accordion-section name="Metodo firma e canale di invio" label="Metodo firma e canale di invio">
-                                <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
-                                    <div class="slds-grid slds-wrap slds-m-top_small">
-                                        <template for:each={fields.metodoFirmaCanaleInvio.data} for:item="field">
-                                            <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
-                                        </template>
-                                    </div>
-                                </lightning-record-edit-form>
-                            </lightning-accordion-section>
-                        </lightning-accordion>
-                    </lightning-layout-item>
-                </lightning-layout>
-            </lightning-card>
-        </template>
+        <lightning-card title={title}>
+            <div if:true={moduleButtonVisibility} class="slds-clearfix slds-p-horizontal_small">
+                <div class="slds-float_right">
+                    <lightning-button label={moduleButtonLabel} variant="brand"></lightning-button>
+                </div>
+            </div>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-large" size="12">
+                    <lightning-accordion allow-multiple-sections-open>
+                        <lightning-accordion-section if:true={fields.clienteUscente.processVisibility} name={fields.clienteUscente.label} label={fields.clienteUscente.label}>
+                            <lightning-record-edit-form record-id={fields.clienteUscente.recordId} object-api-name={fields.clienteUscente.objectApiName}>
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.clienteUscente.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+
+                        <lightning-accordion-section name="Credit Check" label="Credit Check">
+                            <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.creditCheck.data} for:item="field">
+                                        <lightning-input-field value={field.value} disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+                        
+                        <lightning-accordion-section name="Dettaglio Impianto" label="Dettaglio Impianto">
+                            <lightning-record-edit-form record-id={order.ServicePoint__c} object-api-name="ServicePoint__c">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.dettaglioImpianto.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section name="Indirizzo di fornitura" label="Indirizzo di fornitura">
+                            <lightning-record-edit-form record-id={order.ServicePoint__c} object-api-name="ServicePoint__c">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.indirizzoFornitura.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section if:true={isAccountResidential} name="Indirizzo di residenza" label="Indirizzo di residenza">
+                            <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.indirizzoResidenza.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section if:false={isAccountResidential} name="Indirizzo sede legale" label="Indirizzo sede legale">
+                            <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.indirizzoSedeLegale.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section name="Fatturazione" label="Fatturazione">
+                            <lightning-record-edit-form record-id={order.BillingProfile__c} object-api-name="BillingProfile__c">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.fatturazione.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section name="Fatturazione elettronica cliente non residenziale" label="Fatturazione elettronica cliente non residenziale">
+                            <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.fatturazioneElettronicaClienteNonResidenziale.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section name="Metodo di pagamento" label="Metodo di pagamento">
+                            <lightning-record-edit-form record-id={order.BillingProfile__c} object-api-name="BillingProfile__c">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.metodoPagamento.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+    
+                        <lightning-accordion-section name="Metodo firma e canale di invio" label="Metodo firma e canale di invio">
+                            <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+                                <div class="slds-grid slds-wrap slds-m-top_small">
+                                    <template for:each={fields.metodoFirmaCanaleInvio.data} for:item="field">
+                                        <lightning-input-field disabled={field.disabled} required={field.required} class="slds-size_1-of-3 fieldsData" data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                </div>
+                            </lightning-record-edit-form>
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-card>
     </template>
 </template>
