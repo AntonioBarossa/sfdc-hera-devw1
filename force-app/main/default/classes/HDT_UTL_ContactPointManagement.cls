@@ -1,5 +1,4 @@
 public inherited sharing class HDT_UTL_ContactPointManagement {
-
     
     @InvocableMethod 
     public static void updateContactPoint(List<HDT_UTL_ContactPointManagementFlowInputs> flowInputs) {
@@ -18,7 +17,7 @@ public inherited sharing class HDT_UTL_ContactPointManagement {
             String newMobilePhone = flowInputs[0].newMobilePhone;
             String newEmail = flowInputs[0].newEmail;
 
-            Contact currentContact = [SELECT Id, IndividualId, Email, Phone, MobilePhone FROM Contact WHERE Id =: contactId];
+            Contact currentContact = [SELECT Id, IndividualId, Email, Phone, MobilePhone FROM Contact WHERE Id =: contactId WITH SECURITY_ENFORCED LIMIT 1];
 
             // Disattivazione ContactPointEmail
             if (String.isNotBlank(currentContact.Email) && String.isBlank(newEmail)) {
@@ -26,12 +25,22 @@ public inherited sharing class HDT_UTL_ContactPointManagement {
             }
 
             // Aggiornamento Email
-            if (String.isNotBlank(currentContact.Email) && String.isNotBlank(newEmail) && !newEmail.equals(currentContact.Email)) {
+            if (String.isNotBlank(currentContact.Email) && String.isNotBlank(newEmail) /* && !newEmail.equals(currentContact.Email) */) {
 
-                List<Individual> individuals = [SELECT Id, (SELECT Id, EmailAddress FROM ContactPointEmails WHERE EmailAddress =: newEmail) FROM Individual WHERE Id =: currentContact.IndividualId];
+                List<ContactPointEmail> toBeUpdated = new List<ContactPointEmail>();
+                Individual contactIndividual = [SELECT Id, (SELECT Id, IsPrimary, EmailAddress FROM ContactPointEmails WHERE Type__c = 'E-mail Anagrafica') FROM Individual WHERE Id =: currentContact.IndividualId WITH SECURITY_ENFORCED LIMIT 1];
                 // TODO: handle empty variable individuals
-                List<ContactPointEmail> emails = individuals[0].ContactPointEmails;
-                if (emails.isEmpty()) {
+                List<ContactPointEmail> existingContactPoints = contactIndividual.ContactPointEmails;
+
+                for (ContactPointEmail cpe :existingContactPoints) {
+                    if (cpe.EmailAddress.equals(newEmail) && !cpe.IsPrimary) {
+                        q.IsPrimary = True;
+                        toBeUpdated.add(cpe);
+                    } else {
+
+                    }
+                }
+/*                 if (emails.isEmpty()) {
                     System.debug('HDT_UTL_ContactPointManagement: creating new ContactPointEmail for email: ' + newEmail);
 
                     ContactPointEmail newCpe = new ContactPointEmail();
@@ -42,7 +51,7 @@ public inherited sharing class HDT_UTL_ContactPointManagement {
                 } else {
                     // TODO
                 }
-                
+                 */
                 //System.debug('HDT_UTL_ContactPointManagement: daje ' + i[0].getSObjects('ContactPointEmails'));
 
             }
