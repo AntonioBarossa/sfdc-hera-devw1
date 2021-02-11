@@ -22,4 +22,13 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
         }
 
     }
+
+    handleGoBack(){
+
+        const navigateBackEvent = new FlowNavigationBackEvent();
+
+        this.dispatchEvent(navigateBackEvent);
+
+    }
+
 }
