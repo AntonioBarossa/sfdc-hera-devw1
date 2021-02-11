@@ -1,6 +1,5 @@
 public with sharing class HDT_LC_ContactSelection {
 
-
     @AuraEnabled(cacheable = false)
     public static String getListRecords(String accountId){
         String recordListString;
@@ -15,7 +14,7 @@ public with sharing class HDT_LC_ContactSelection {
                 contactIds.add(acr.ContactId);
             }
 
-            List<Contact> contactsList = [SELECT Id, Name from Contact WHERE ID IN :contactIds];
+            List<Contact> contactsList = [SELECT Id, Name, Phone, MobilePhone, Email, Fax from Contact WHERE ID IN :contactIds];
 
             recordList.add(contactsList);
 
