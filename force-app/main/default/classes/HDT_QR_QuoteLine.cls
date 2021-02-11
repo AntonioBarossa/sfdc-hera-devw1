@@ -120,7 +120,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             ServicePoint__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
-            AND SBQQ__Product__r.Name = 'POD'
+            AND SBQQ__Product__r.Name IN ('POD','PDR')
             WITH SECURITY_ENFORCED
         ];
 
@@ -147,7 +147,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
-            AND SBQQ__Product__r.Name = 'POD'
+            AND SBQQ__Product__r.Name IN ('POD','PDR')
             WITH SECURITY_ENFORCED
         ];
 
