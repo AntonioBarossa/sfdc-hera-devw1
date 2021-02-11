@@ -250,6 +250,36 @@
                 <default>false</default>
                 <label>Web-MMS</label>
             </value>
+            <value>
+                <fullName>Webform callback</fullName>
+                <default>false</default>
+                <label>Webform callback</label>
+            </value>
+            <value>
+                <fullName>Webform winback</fullName>
+                <default>false</default>
+                <label>Webform winback</label>
+            </value>
+            <value>
+                <fullName>Evento  </fullName>
+                <default>false</default>
+                <label>Evento  </label>
+            </value>
+            <value>
+                <fullName>lista fornitore esterno</fullName>
+                <default>false</default>
+                <label>lista fornitore esterno</label>
+            </value>
+            <value>
+                <fullName>SOL</fullName>
+                <default>false</default>
+                <label>SOL</label>
+            </value>
+            <value>
+                <fullName>post-sales</fullName>
+                <default>false</default>
+                <label>post-sales</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
