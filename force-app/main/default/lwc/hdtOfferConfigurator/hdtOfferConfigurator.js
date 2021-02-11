@@ -1,8 +1,11 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 import saveNewOfferConfigured from '@salesforce/apex/HDT_LC_OfferConfiguratorController.saveNewOfferConfigured';
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
+import { getRecord } from 'lightning/uiRecordApi';
+
+const FIELDS = ['Name'];
 
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
     @track dataRows = [];
@@ -23,15 +26,29 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         errorString:''
     };
 
-    field1 = 'AAAAA';
-    field2 = 'AAAAA';
-    field3 = 'EE - Libero ven. Fuori rete con Lim';
+    field1;
+    field2;
+    field3;
+    field4;
     helpTxt1 = 'This field1 indicate that...';
     helpTxt2 = 'This field2 indicate that...';
     helpTxt3 = 'This field3 indicate that...';
     error;
 
-    
+    @wire(getRecord, { recordId: '$productid', fields: ['Product2.Version__c', 'Product2.Template__c', 'Product2.RateCategory__r.Name', 'Product2.ProductCode'] })
+    wiredOptions({ error, data }) {
+        if (data) {
+            this.field1 = data.fields.Template__c.value;
+            this.field2 = data.fields.Version__c.value;
+            this.field3 = data.fields.RateCategory__r.value.fields.Name.value;
+            this.field4 = data.fields.ProductCode.value;
+            console.log(JSON.stringify(data));    
+        } else if (error) {
+            this.error = error;
+            this.record = undefined;
+            console.log("# error: ", this.error);
+        }
+    }
 
     connectedCallback() {
         this.spinnerObj.spinner = true;
