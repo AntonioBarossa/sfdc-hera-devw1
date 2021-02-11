@@ -8,11 +8,11 @@
     </template>
 
     <template if:true={showSearchOffer} >
-        <c-hdt-search-technical-offer onclosesearch={closeSearch}></c-hdt-search-technical-offer>
+        <c-hdt-search-technical-offer ongoback={closeSearch}></c-hdt-search-technical-offer>
     </template>
 
     <template if:true={showCreateOffer} >
-        <c-hdt-offer-configurator productid={productid} ></c-hdt-offer-configurator>
+        <c-hdt-offer-configurator productid={productid} ongoback={closeModal} ></c-hdt-offer-configurator>
     </template>
 
 </template>

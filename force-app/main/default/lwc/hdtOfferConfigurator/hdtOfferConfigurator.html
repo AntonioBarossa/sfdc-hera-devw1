@@ -1,5 +1,14 @@
 <template>
 
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
     <lightning-card title="Configurazione Offerta Tecnica" icon-name="standard:proposition" >
         
         <div if:true={spinnerObj.spinner} class="progress">
@@ -21,9 +30,9 @@
         <template if:false={errorObj.showError} >
             <p slot="actions" >
                 <lightning-button-group>
-                    <lightning-button label="Save" onclick={saveAction} icon-name="utility:save"></lightning-button>
+                    <lightning-button label="Save" name="saveAction" onclick={openConfirmation} icon-name="utility:save"></lightning-button>
                     <!--<lightning-button label="Bozza" icon-name="utility:copy"></lightning-button>-->
-                    <lightning-button label="Chiudi" onclick={goBackToRecord} variant="destructive" icon-name="utility:delete"></lightning-button>
+                    <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="destructive" icon-name="utility:delete"></lightning-button>
                 </lightning-button-group>
             </p>
             <div class="slds-card__body slds-card__body_inner">

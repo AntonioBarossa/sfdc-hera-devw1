@@ -136,12 +136,12 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
         this.searchObj.offertName = '';
         this.searchObj.version = '';
         this.searchObj.offertCode = '';
-        const closesearchEvent = new CustomEvent("closesearch", {
-            detail:  ''
+        const goback = new CustomEvent("goback", {
+            detail:  {prodId: this.productid}
         });
 
         // Dispatches the event.
-        this.dispatchEvent(closesearchEvent);
+        this.dispatchEvent(goback);
     }
 
     handleSelection(event){

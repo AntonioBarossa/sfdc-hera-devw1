@@ -12,7 +12,12 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         spinner: false,
         spincss: ''
     };
-
+    @track modalObj = {
+        isVisible: false,
+        header: '',
+        body: '',
+        operation: ''
+    }
     errorObj = {
         showError: false,
         errorString:''
@@ -83,14 +88,21 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         console.log('# gotothepage #');
 
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.productid,
-                objectApiName: 'Product2',
-                actionName: 'view'
-            }
+        const goback = new CustomEvent("goback", {
+            detail:  {prodId: this.productid}
         });
+
+        // Dispatches the event.
+        this.dispatchEvent(goback);
+
+        //this[NavigationMixin.Navigate]({
+        //    type: 'standard__recordPage',
+        //    attributes: {
+        //        recordId: this.productid,
+        //        objectApiName: 'Product2',
+        //        actionName: 'view'
+        //    }
+        //});
 
     }
 
@@ -234,6 +246,47 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         console.log('back');
         this.errorObj.showError = false;
         console.log('back');
+    }
+
+    openConfirmation(event){
+        try {
+            switch (event.target.name) {
+                case 'saveAction':
+                    this.modalObj.header = 'Salva la configurazione';
+                    this.modalObj.body = 'Vuoi confermare il salvataggio?';
+                    break;
+                case 'goBackToRecord':
+                    this.modalObj.header = 'Chiudi il configuratore';
+                    this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
+            }
+
+            this.modalObj.isVisible = true;
+            this.modalObj.operation = event.target.name;
+
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
+
+    buttonHandler(event){
+        try {
+            this[event.target.name](event);
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+            this.errorObj.showError = true;
+            this.errorObj.errorString = e.message;
+        }
+    }
+
+    modalResponse(event){
+        if(event.detail.decision === 'conf'){
+            this[event.detail.operation](event);
+        }
+        this.modalObj.isVisible = false;
     }
 
 }

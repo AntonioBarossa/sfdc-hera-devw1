@@ -50,15 +50,15 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         this.showSearchOffer = false;
         
         console.log('### return to-> ' + this.productid);
-
-        this[NavigationMixin.Navigate]({
-            type: 'standard__recordPage',
-            attributes: {
-                recordId: this.productid,
-                objectApiName: 'Product2',
-                actionName: 'view'
-            }
-        });
+        this.closeModal();
+        //this[NavigationMixin.Navigate]({
+        //    type: 'standard__recordPage',
+        //    attributes: {
+        //        recordId: this.productid,
+        //        objectApiName: 'Product2',
+        //        actionName: 'view'
+        //    }
+        //});
 
     }
 

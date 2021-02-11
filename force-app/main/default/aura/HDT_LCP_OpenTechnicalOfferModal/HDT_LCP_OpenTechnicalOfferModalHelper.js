@@ -18,11 +18,11 @@
 				if(returnObj.data.offerIsPresent){
 					//call component for edit existing offer, using lwc
 					console.log('# offer Id: ' + returnObj.data.tecnicalOfferId);
-					redirectToComponent = 'c:HDT_LCP_OpenTechnicalOffer';
+					redirectToComponent = 'c__HDT_LCP_OpenTechnicalOffer';
 				} else {
 					//call component for create new offer
 					console.log('## I have to call a aura cmp');
-					redirectToComponent = 'c:HDT_LCP_CreateNewTechnicalOffer';
+					redirectToComponent = 'c__HDT_LCP_CreateNewTechnicalOffer';
 				}
 
 				$A.get("e.force:closeQuickAction").fire();
@@ -32,23 +32,25 @@
 					pageReference: {
 						type: "standard__component",
 						attributes: {
-							componentName: 'c__HDT_LCP_CreateNewTechnicalOffer'
+							componentName: redirectToComponent
 						},
 						state: {
 							c__recordId: productId
 						}
 					},
 					focus: true
-				}).then(function(response) {
+				})
+				.then(function(response) {
 					workspaceAPI.setTabLabel({
 						tabId: response,
-						label: "Conf"
+						label: "Configura offerta"
 					 });
 					workspaceAPI.setTabIcon({
 						tabId: response,
-						icon: 'custom:custom83'
+						icon: 'utility:variation_attribute_setup'
 					});
-				}).catch(function(error) {
+				})
+				.catch(function(error) {
 					console.log(error);
 				});
 

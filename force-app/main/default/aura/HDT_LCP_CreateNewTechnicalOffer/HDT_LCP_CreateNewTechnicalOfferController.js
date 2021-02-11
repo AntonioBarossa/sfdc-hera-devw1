@@ -7,6 +7,24 @@
         var recordid = component.get("v.pageReference").state.c__recordId;
         //console.log('### isUrlAddressable -> ' + recordid);
         component.set('v.recordId', recordid);
+
+        //var workspaceAPI = component.find("workspace");
+        //workspaceAPI.getFocusedTabInfo().then(function(response) {
+        //    var focusedTabId = response.tabId;
+        //    //workspaceAPI.setTabLabel({
+        //    //    tabId: focusedTabId,
+        //    //    label: "Configurazione"
+        //    //});
+        //    workspaceAPI.setTabIcon({
+        //                tabId: focusedTabId,
+        //                icon: "custom:custom83",
+        //                iconAlt: "Edit Tab"
+        //    });
+        //})
+        //.catch(function(error) {
+        //    console.log(error);
+        //});
+
 	},
 
     goback : function(component, event, helper) {
