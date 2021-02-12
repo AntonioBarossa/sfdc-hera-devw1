@@ -35,4 +35,8 @@
         </aura:if>
     </aura:if>
 
+    <aura:if isTrue="{!v.order}">
+        <c:hdtChildOrderProcessActions order="{!v.order}"></c:hdtChildOrderProcessActions>
+    </aura:if>
+
 </aura:component>	

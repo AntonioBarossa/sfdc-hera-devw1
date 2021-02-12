@@ -1,0 +1,28 @@
+<template>
+
+    <template if:true={order}>
+        <div class="slds-card slds-clearfix slds-p-around_small">
+            <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
+            <ul class="slds-button-group-list slds-float_right">
+                <li>
+                    <lightning-button onclick={handleCancel} disabled={disabledCancel} icon-name="utility:cancel_file_request" variant="destructive" label="Annulla" title="Cancel action"></lightning-button>
+                </li>
+                <li>
+                    <lightning-button onclick={handleSaveDraft} disabled={disabledSaveDraft} icon-name="standard:drafts" variant="neutral" label="Salva in bozza" title="Save Draft action"></lightning-button>
+                </li>
+                <li>
+                    <lightning-button onclick={handleSave} disabled={disabledSave} icon-name="utility:save" variant="success" label="Conferma" title="Save action"></lightning-button>
+                </li>
+            </ul>
+            <c-hdt-confirmation-dialog title={dialogTitle}
+                           message={dialogMessage}
+                           confirm-label='Si'
+                           cancel-label='No'
+                           visible={isDialogVisible}
+                           name="deleteTileConfimation"
+                           onclick={handleDialogResponse}>
+            </c-hdt-confirmation-dialog>
+        </div>
+    </template>
+
+</template>
