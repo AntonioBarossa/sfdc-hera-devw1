@@ -98,7 +98,7 @@
     <picklistValues>
         <picklist>PreviousTrader__c</picklist>
         <values>
-            <fullName>Valori non  ancora forniti dal BSN</fullName>
+            <fullName>TBD</fullName>
             <default>false</default>
         </values>
     </picklistValues>

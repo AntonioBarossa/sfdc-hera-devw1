@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Valori non  ancora forniti dal BSN</fullName>
+                <fullName>TBD</fullName>
                 <default>false</default>
-                <label>Valori non  ancora forniti dal BSN</label>
+                <label>TBD</label>
             </value>
         </valueSetDefinition>
     </valueSet>
