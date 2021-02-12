@@ -96,6 +96,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PreviousTrader__c</picklist>
+        <values>
+            <fullName>Valori non  ancora forniti dal BSN</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SBQQ__ContractingMethod__c</picklist>
         <values>
             <fullName>By Subscription End Date</fullName>

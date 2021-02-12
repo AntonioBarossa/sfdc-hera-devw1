@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ConnectionType__c</fullName>
+    <fullName>UseTypeEnergy__c</fullName>
     <externalId>false</externalId>
-    <label>Tipo di connessione</label>
-    <required>true</required>
-    <trackHistory>false</trackHistory>
+    <label>Uso energia</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_ConnectionType</valueSetName>
+        <valueSetName>HDT_UseTypeEnergy</valueSetName>
     </valueSet>
 </CustomField>
