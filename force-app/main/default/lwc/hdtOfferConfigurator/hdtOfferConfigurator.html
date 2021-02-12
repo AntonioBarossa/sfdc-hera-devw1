@@ -43,7 +43,7 @@
                                 <lightning-helptext content={helpTxt1} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
                                 <div class="slds-form-element__control">
-                                    <lightning-input disabled value={field1} type="text" label=" "></lightning-input>
+                                    <lightning-input disabled value={product.template} type="text" label=" "></lightning-input>
                                 </div>
                             </div>
 
@@ -51,7 +51,7 @@
                                 <lightning-helptext content={helpTxt2}></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
                                 <div class="slds-form-element__control">
-                                    <lightning-input disabled value={field2} type="text" label=" "></lightning-input>
+                                    <lightning-input disabled value={product.version} type="text" label=" "></lightning-input>
                                 </div>
                             </div>
 
@@ -64,7 +64,7 @@
                                 <lightning-helptext content={helpTxt3} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Cat. tariffa (Rate category)</label>
                                 <div class="slds-form-element__control">
-                                    <lightning-input disabled value={field3} type="text" label=" "></lightning-input>
+                                    <lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>
                                 </div>
                             </div>
 
@@ -72,7 +72,7 @@
                                 <lightning-helptext content={helpTxt3} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
                                 <div class="slds-form-element__control">
-                                    <lightning-input disabled value={field4} type="text" label=" "></lightning-input>
+                                    <lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>
                                 </div>
                             </div>
                         </div>
@@ -109,33 +109,43 @@
                     <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered">-->
                         <thead>
                             <tr class="slds-line-height_reset">
+                            <!-- # COLUMN 1 # -->    
                                 <th class="firstcol" scope="col" >
                                     <div class="slds-truncate" title="Definizione" >Definizione</div>
                                 </th>
+                            <!-- # COLUMN 2 # -->    
                                 <th class="alertcol" scope="col">
                                     <div class="slds-truncate" title=""></div>
-                                </th>                        
+                                </th>
+                            <!-- # COLUMN 3 # -->                       
                                 <th class="" scope="col" >
                                     <div class="slds-truncate" title="Ins. Utente" >Ins. Utente</div>
-                                </th>                                         
+                                </th>
+                            <!-- # COLUMN 4 # -->                                           
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Tariffa">Tariffa</div>
                                 </th>
+                            <!-- # COLUMN 5 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="GR. Info">GR. Info</div>
                                 </th>
+                            <!-- # COLUMN 6 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Prezzo">Prezzo</div>
                                 </th>
+                            <!-- # COLUMN 7 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Sconto">Sconto</div>
                                 </th>
+                            <!-- # COLUMN 8 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Valore">Valore</div>
                                 </th>
+                            <!-- # COLUMN 9 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Stringa">Stringa</div>
                                 </th>
+                            <!-- # COLUMN 10 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Nome Tecn.">Nome Tecn.</div>
                                 </th>
@@ -144,14 +154,20 @@
                         <tbody>
                             <template for:each={dataRows} for:item="d">
                                 <tr class="slds-hint-parent" key={d.id} data-id={d.id}>
+
+                                <!-- # COLUMN 1 # -->
                                     <td class="firstcol" data-label="Definizione">
                                         <div class="slds-truncate" title="EE Valore PRZ indice data att">{d.definition}</div>
                                     </td>
+
+                                <!-- # COLUMN 2 # -->    
                                     <td class="alertcol" data-label="triangle">
                                         <div title="trinagle" class="slds-truncate slds-form-element__control">
                                             <lightning-icon size="xx-small" variant="warning" icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
                                         </div>
                                     </td>
+                                
+                                <!-- # COLUMN 3 # -->    
                                     <td data-label="Ins. Utente">
                                         <div title="Ins. Utente" class="slds-truncate slds-form-element__control slds-grow slds-align_absolute-center">
                                             <!--<input type="checkbox" class="slds-input" value="" style="width: 12px;"/>-->
@@ -164,7 +180,9 @@
                                                             onchange={handleChange}
                                             ></lightning-input>
                                         </div>
-                                    </td>                                                                       
+                                    </td>
+                                    
+                                <!-- # COLUMN 4 # -->    
                                     <td data-label="Tariffa">
                                         <!--<div title="Tariffa" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.amount.enabled} >
@@ -183,24 +201,28 @@
                                             </template>
                                         <!--</div>-->
                                     </td>
+
+                                <!-- # COLUMN 5 # -->    
                                     <td data-label="GR. Info">
                                         <!--<div title="GR. Info" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.grInfo.enabled} >
+                                            <template if:true={d.infoGroup.enabled} >
                                                 <c-hdt-pill
                                                     data-id={d.id}
                                                     row-id={d.id}
-                                                    field-name="grInfo"
+                                                    field-name="infoGroup"
                                                     icon="standard:announcement"
-                                                    pill-obj={d.grInfo}
+                                                    pill-obj={d.infoGroup}
                                                     onsetvaluetoparent={handleSetvaluetoparent}
                                                 ></c-hdt-pill>
                                             </template>
-                                            <template if:false={d.grInfo.enabled} >
+                                            <template if:false={d.infoGroup.enabled} >
                                                 <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
                                                 <!--<input type="text" class="slds-input" value="" disabled />-->
                                             </template>
                                         <!--</div>-->
                                     </td>
+
+                                <!-- # COLUMN 6 # -->    
                                     <td data-label="Prezzo">
                                         <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.price.enabled} >
@@ -219,6 +241,8 @@
                                             </template>
                                         <!--</div>-->
                                     </td>
+
+                                <!-- # COLUMN 7 # -->    
                                     <td data-label="Sconto">
                                         <!--<div title="Sconto" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.discount.enabled} >
@@ -237,6 +261,8 @@
                                             </template>
                                         <!--</div>-->
                                     </td>
+
+                                <!-- # COLUMN 8 # -->    
                                     <td data-label="Valore">
                                         <!--<div title="Valore" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.value.enabled} >
@@ -255,6 +281,8 @@
                                             </template>
                                         <!--</div>-->
                                     </td>
+
+                                <!-- # COL 9 # -->    
                                     <td data-label="Stringa">
                                         <!--<div title="Stringa" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.stringValue.enabled} >
@@ -283,6 +311,8 @@
                                             </div>
                                         </div>-->
                                     </td>
+                                 
+                                <!-- # COL 10 # -->     
                                     <td data-label="Nome Tecn">
                                         <div class="slds-truncate" title="EFP_CT_MI">{d.tecName}</div>
                                     </td>

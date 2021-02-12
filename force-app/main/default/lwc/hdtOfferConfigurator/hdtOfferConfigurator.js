@@ -5,8 +5,6 @@ import saveNewOfferConfigured from '@salesforce/apex/HDT_LC_OfferConfiguratorCon
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
 import { getRecord } from 'lightning/uiRecordApi';
 
-const FIELDS = ['Name'];
-
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
     @track dataRows = [];
     @track selection;
@@ -26,10 +24,14 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         errorString:''
     };
 
-    field1;
-    field2;
-    field3;
-    field4;
+    product = {
+        productId: '',
+        template: '',
+        version: '',
+        rateCategory: '',
+        productCode: ''
+    };
+
     helpTxt1 = 'This field1 indicate that...';
     helpTxt2 = 'This field2 indicate that...';
     helpTxt3 = 'This field3 indicate that...';
@@ -38,11 +40,12 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Version__c', 'Product2.Template__c', 'Product2.RateCategory__r.Name', 'Product2.ProductCode'] })
     wiredOptions({ error, data }) {
         if (data) {
-            this.field1 = data.fields.Template__c.value;
-            this.field2 = data.fields.Version__c.value;
-            this.field3 = data.fields.RateCategory__r.value.fields.Name.value;
-            this.field4 = data.fields.ProductCode.value;
-            console.log(JSON.stringify(data));    
+            this.product.template = data.fields.Template__c.value;
+            this.product.version = data.fields.Version__c.value;
+            this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
+            this.product.productCode = data.fields.ProductCode.value;
+            //this.getMatrixData();
+            //console.log(JSON.stringify(data));    
         } else if (error) {
             this.error = error;
             this.record = undefined;
@@ -125,7 +128,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     getMatrixData(){
         console.log('# get data from apex #');
-        getOfferMatrix({id: 'tecOffId'})
+
+        //this.product.productId = this.productid;
+
+        getOfferMatrix({productId: this.productid})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);

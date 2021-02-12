@@ -114,7 +114,7 @@ export default class HdtModalDataTable extends LightningElement {
                 this.modalHeader = 'Seleziona la tariffa';
                 this.columns = firstRow.concat(amountColumns);
                 break;
-            case 'grInfo':
+            case 'infoGroup':
                 this.modalHeader = 'Seleziona la GR INFO';
                 this.columns = firstRow.concat(grInfoColumns);
                 break;
