@@ -93,7 +93,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FaxNumber__c</field>
+                <field>FAX__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

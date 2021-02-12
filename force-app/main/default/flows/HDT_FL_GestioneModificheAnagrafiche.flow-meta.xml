@@ -350,7 +350,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FaxNumber__c</field>
+            <field>FAX__c</field>
             <value>
                 <elementReference>Get_Target_Contact.Fax</elementReference>
             </value>
@@ -676,7 +676,7 @@
         <inputAssignments>
             <field>Fax</field>
             <value>
-                <elementReference>Refresh_Case.FaxNumber__c</elementReference>
+                <elementReference>Refresh_Case.FAX__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
