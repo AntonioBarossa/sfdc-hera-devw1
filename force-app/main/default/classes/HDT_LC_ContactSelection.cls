@@ -8,13 +8,13 @@ public with sharing class HDT_LC_ContactSelection {
 
             List<List<sObject>> recordList = new List<List<sObject>>();
 
-            List<AccountContactRelation> relationList = [SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId];
+            List<AccountContactRelation> relationList = [SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId WITH SECURITY_ENFORCED];
             List<Id> contactIds = new List<Id>();
             for (AccountContactRelation acr : relationList) {
                 contactIds.add(acr.ContactId);
             }
 
-            List<Contact> contactsList = [SELECT Id, Name, Phone, MobilePhone, Email, Fax from Contact WHERE ID IN :contactIds];
+            List<Contact> contactsList = [SELECT Id, Name, Phone, MobilePhone, Email, Fax from Contact WHERE ID IN :contactIds WITH SECURITY_ENFORCED];
 
             recordList.add(contactsList);
 
