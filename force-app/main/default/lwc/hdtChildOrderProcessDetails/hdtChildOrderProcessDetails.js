@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
     @api order;
@@ -11,20 +12,45 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     isAccountResidential;
     choosenSection = '';
     activeSections = [];
+    availableSteps = [];
+    loading = false;
+    showModuloInformativo = false;
+    showDelibera40 = false;
+    showInviaModulistica = false;
 
-    handleModuleButtonVisibility(){
-        if (this.order !== undefined &&
-            (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione')
+    handleShowModuloInformativo(){
+        if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+            || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+            || this.order.RecordType.DeveloperName === 'HDT_RT_RiattivazioniNonMorose')
             && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas') {
-            this.moduleButtonVisibility = true;
+            this.showModuloInformativo = true;
         }
     };
 
-    handleModuleButtonLabel(){
-        if (this.order !== undefined 
-            &&  this.order.ServicePoint__r.MeterClass__c === 'G10 Pareti def.') {
-            this.moduleButtonLabel = 'Modulo B12';
+    handleShowDelibera40(){
+        if ((this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+            || this.order.RecordType.DeveloperName === 'HDT_RT_RiattivazioniNonMorose')
+            && this.order.Deliberation__c === 'In Delibera'
+            && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas') {
+            this.showDelibera40 = true;
         }
+    }
+
+    handleShowInviaModulistica(){
+
+        if(this.order.ServicePoint__r.MeterClass__c !== undefined){
+            let meterClass = this.order.ServicePoint__r.MeterClass__c;
+            let meterNum = meterClass.match(/\d+/)[0];
+
+            if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
+                || this.order.RecordType.DeveloperName === 'HDT_RT_RiattivazioniNonMorose')
+                && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas'
+                &&  meterNum >= 10) {
+                this.showInviaModulistica = true;
+            }
+        }
+
     }
 
     typeVisibility(type){
@@ -91,27 +117,79 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     getFirstStepName(){
-        const availableStep = this.fields.filter(section => section.processVisibility === true);
-        return availableStep[0].name;
+        this.availableSteps = this.fields.filter(section => section.processVisibility === true);
+
+        if (this.order.Step__c === 2) {
+            return this.availableSteps[0].name;
+        } else {
+            let currentStep = this.availableSteps.filter(section => section.step === this.order.Step__c);
+            console.log('getFirstStepName: ', currentStep);
+            return currentStep[0].name;
+        }
     }
 
     handleNext(event){
+        this.loading = true;
+
         console.log('handle Click Event Data: ', event.currentTarget.value);
-        this.choosenSection = event.currentTarget.value;
-        this.activeSections = [this.choosenSection];
+        let currentSectionName = event.currentTarget.value;
+        let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
+        let nextSectionStep = this.availableSteps[currentSectionIndex + 1].step
+
+        updateProcessStep({order: this.order, step: nextSectionStep}).then(data =>{
+            this.loading = false;
+            this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
+            this.activeSections = [this.choosenSection];
+
+        }).catch(error => {
+            this.loading = false;
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+
     }
+
     handleSectionToggle(event) {
         this.activeSections = [this.choosenSection];
-        // this.activeSections = event.detail.openSections;
     }
+
     handlePrevious(event){
-        this.choosenSection = event.currentTarget.value;
-        this.activeSections = [this.choosenSection];
+        this.loading = true;
+        console.log('handle Click Event Data: ', event.currentTarget.value);
+        let currentSectionName = event.currentTarget.value;
+        let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
+
+        let previousSectionStep = this.availableSteps[currentSectionIndex - 1].step
+
+        updateProcessStep({order: this.order, step: previousSectionStep}).then(data =>{
+            this.loading = false;
+            this.choosenSection = this.availableSteps[currentSectionIndex - 1].name;
+            this.activeSections = [this.choosenSection];
+
+        }).catch(error => {
+            this.loading = false;
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+
     }
 
     handleFields(){
         this.fields = [
             {
+                firstStep: true,
                 step: 3,
                 label: 'Cliente Uscente',
                 name: 'clienteUscente',
@@ -213,6 +291,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 label: 'Dettaglio impianto',
                 name: 'dettaglioImpianto',
                 objectApiName: 'ServicePoint__c',
+                diffObjApi: 'Order',
+                diffRecordId: this.order.Id,
                 recordId: this.order.ServicePoint__c,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
@@ -229,65 +309,38 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Disalimentabilità',
-                    'apiname': 'Disconnectable__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Categoria disalimentabilità',
-                    'apiname': 'DisconnectibilityType__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
                     'label': 'Tipo Impianto',
                     'apiname': 'ImplantType__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Potenza disponibile',
-                    'apiname': 'PowerAvailable__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Potenza impegnata',
-                    'apiname': 'PowerContractual__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Tensione',
-                    'apiname': 'VoltageLevel__c',
-                    'typeVisibility': this.typeVisibility('ele'),
+                    'label': 'Consumi Anno',
+                    'apiname': 'AnnualConsumption__c',
+                    'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Uso energia',
-                    'apiname': 'undefined1',
-                    'typeVisibility': this.typeVisibility('ele'),
+                    'label': 'Setore merceologico',
+                    'apiname': 'CommoditySector__c',
+                    'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Mercato di provenienza',
+                    'apiname': 'MarketOrigin__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -301,20 +354,74 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Recapito telefonico',
-                    'apiname': 'DisconnectibilityPhone__c',
-                    'typeVisibility': this.typeVisibility('both'),
+                    'label': 'Potenza disponibile',
+                    'apiname': 'PowerAvailable__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Potenza impegnata',
+                    'apiname': 'PowerContractual__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Potenzialità massima richiesta',
+                    'apiname': 'MaxRequiredPotential__c',
+                    'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Provenienza',
-                    'apiname': 'MarketOrigin__c',
-                    'typeVisibility': this.typeVisibility('both'),
+                    'label': 'Tensione',
+                    'apiname': 'VoltageLevel__c',
+                    'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
                     'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Disalimentabilità', //1
+                    'apiname': 'Disconnectable__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Categoria disalimentabilità', //2
+                    'apiname': 'DisconnectibilityType__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Recapito telefonico',
+                    'apiname': 'DisconnectibilityPhone__c', //3
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Uso energia',
+                    'apiname': 'UseTypeEnergy__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -332,7 +439,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'WithdrawalClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -341,16 +448,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MeterClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Potenzialità massima richiesta',
-                    'apiname': 'MaxRequiredPotential__c',
-                    'typeVisibility': this.typeVisibility('gas'),
-                    'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -359,24 +457,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MeterSN__c',
                     'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Tipo Mercato',
-                    'apiname': 'CommoditySector__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Consumi Anno',
-                    'apiname': 'AnnualConsumption__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -400,14 +480,38 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Tipo di connessione',
-                    'apiname': 'SupplyType__c',
+                    'label': 'ConnectionMandate__c',
+                    'apiname': 'ConnectionMandate__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
-                    'disabled': true,
+                    'required': false,
+                    'disabled': false,
                     'value': '',
-                    'processVisibility': ''
-                }
+                    'processVisibility': '',
+                    'diffObjApi': 'Order',
+                    'diffRecordId': this.order.Id
+                },
+                {
+                    'label': 'SelfCertificationConnection__c',
+                    'apiname': 'SelfCertificationConnection__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': '',
+                    'diffObjApi': 'Order',
+                    'diffRecordId': this.order.Id
+                },
+                {
+                    'label': 'ConnectionType__c',
+                    'apiname': 'ConnectionType__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': '',
+                    'diffObjApi': 'Order',
+                    'diffRecordId': this.order.Id
+                },
                ]
             },
             {
@@ -696,8 +800,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 step: 9,
                 label: 'Fatturazione elettronica',
                 name: 'fatturazioneElettronicaClienteNonResidenziale',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
+                objectApiName: 'BillingProfile__c',
+                recordId: this.order.BillingProfile__c,
                 processVisibility: (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
@@ -882,6 +986,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
+                lastStep: true,
                 step: 11,
                 label: 'Metodo firma canale invio',
                 name: 'metodoFirmaCanaleInvio',
@@ -920,8 +1025,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('hdtChildOrderProcessDetails: ', JSON.parse(JSON.stringify(this.order)));
         this.title = 'Processo di ' + this.order.RecordType.Name;
         this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
-        this.handleModuleButtonVisibility();
-        this.handleModuleButtonLabel();
+        this.handleShowModuloInformativo();
+        this.handleShowDelibera40();
+        this.handleShowInviaModulistica();
         this.handleFields();
         this.applyCreditCheckLogic();
         this.choosenSection = this.getFirstStepName();

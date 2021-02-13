@@ -39,9 +39,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @description Handle actions on "Avanti" click
      * @param orderId
      * @param String selectedProcess - selected process for child order
+     * @param String deliberate
      */
     @AuraEnabled
-    public static void next(String orderId, String selectedProcess){
+    public static void next(String orderId, String selectedProcess, String deliberate){
 
         String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcess);
 
@@ -49,7 +50,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             Id = orderId,
             RecordTypeId = recordTypeId,
             Status = 'In lavorazione',
-            Step__c = 2
+            Step__c = 2,
+            Deliberation__c = deliberate
         ));
     }
 }

@@ -11,6 +11,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     selectedProcess = '';
     compatibilita = false;
     loaded = true;
+    deliberation = '';
+    showDeliberation = false;
+    disabledDeliberation = false;
     
     get value(){
         let result = '';
@@ -32,6 +35,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
             {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
         ];
+    }
+
+    handleShowDeliberation(selectedProcess){
+        this.showDeliberation = (selectedProcess === 'HDT_RT_Attivazione' || selectedProcess === 'HDT_RT_RiattivazioniNonMorose');
+        this.disabledDeliberation = this.order.Deliberation__c !== '';
     }
 
     get disabledNext(){
@@ -57,19 +65,52 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         return result;
     }
 
+    handleDeliberateSelection(event){
+        this.deliberation = event.currentTarget.value;
+    }
+
     applySelectionLogic(selectedProcess){
         console.log('applySelectionLogic: ', selectedProcess);
+
+        // this.handleShowDeliberation(selectedProcess);
+
         if(selectedProcess === 'HDT_RT_Attivazione')
         {
-            this.precheck = false;
+            // this.precheck = false;
+            // this.compatibilita = true;
+            // this.causale = 'E necessario effettuare un subentro';
+
+            this.precheck = true;
             this.compatibilita = true;
-            this.causale = 'E necessario effettuare un subentro';
+            this.causale = '';
+
+            this.showDeliberation = true;
+            this.disabledDeliberation = this.order.Step__c !== undefined;
+        }
+        else if(selectedProcess === 'HDT_RT_RiattivazioniNonMorose'){
+            this.showDeliberation = true;
+            this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess === 'HDT_RT_Subentro')
         {
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess === 'HDT_RT_SwitchIn')
+        {
+            this.precheck = false;
+            this.compatibilita = false;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess === 'HDT_RT_AttivazioneConModifica')
+        {
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
         }
     }
 
@@ -79,8 +120,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     handleNext(){
+        console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
         this.loaded = false;
-        next({orderId: this.order.Id, selectedProcess: this.selectedProcess}).then(data =>{
+        next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
