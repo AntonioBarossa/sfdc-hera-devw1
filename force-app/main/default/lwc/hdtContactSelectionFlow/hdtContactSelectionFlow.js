@@ -1,5 +1,5 @@
 import { LightningElement,api,track } from 'lwc';
-import getConfiguration from '@salesforce/apex/HDT_LC_GenericRecordSelection.getConfiguration';
+//import getConfiguration from '@salesforce/apex/HDT_LC_GenericRecordSelection.getConfiguration';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -16,7 +16,7 @@ export default class HdtContactSelectionFlow extends LightningElement {
     @track showSelector;
     @track columns;
 
-    getConfiguration(){
+/*     getConfiguration(){
         getConfiguration({
             search: this.selectionType
             })
@@ -43,11 +43,13 @@ export default class HdtContactSelectionFlow extends LightningElement {
             .catch(error => {
                 console.log('error ' + JSON.stringify(error));
             });
-    }
+    } */
 
     connectedCallback(){
-        this.showSelector = false;
-        this.getConfiguration();
+        //this.showSelector = false;
+        //this.getConfiguration();
+        this.showSelector = true;
+        this.maxRow = 1;
     }
 
     handleRecordSelection(event){
