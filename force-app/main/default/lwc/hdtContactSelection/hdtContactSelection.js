@@ -66,9 +66,10 @@ export default class HdtContactSelection extends LightningElement {
         //this.columns = JSON.parse(this.columns);
         this.columns = [
             { label: 'Nome Contatto', fieldName: 'Name', type: 'text' },
-            { label: 'Email', fieldName: 'Email', type: 'email' },
             { label: 'Telefono', fieldName: 'Phone', type: 'phone' },
             { label: 'Cellulare', fieldName: 'MobilePhone', type: 'phone' },
+            { label: 'Email', fieldName: 'Email', type: 'email' },
+            { label: 'PEC', fieldName: 'PEC__c', type: 'email' },
             { label: 'Fax', fieldName: 'Fax', type: 'phone' }
         ];
         this.getListRecords();
