@@ -1,9 +1,11 @@
-public inherited sharing class  HDT_TRH_Case  {
+public class  HDT_TRH_Case extends HDT_TRH_TriggerHandler {
+	
+    public override void beforeInsert(){}
+ 	public override void beforeDelete(){}
+ 	public override void afterDelete(){}
+  	public override void afterUndelete(){}
     
-    public void onBeforeInsert() {
-    }
-
-    public void onBeforeUpdate(){
+    public override void beforeUpdate(){
         //Checks Phase Transition
         ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                 .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
@@ -11,10 +13,10 @@ public inherited sharing class  HDT_TRH_Case  {
         //Checks Mandatory Activity
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
-        
+
     }
 
-    public void onAfterUpdate() {
+    public override void afterUpdate() {
         //Execute creation Activities 
         ((wrts_prcgvr.Interfaces_1_0.IActivityUtils) wrts_prcgvr.VersionManager.newClassInstance('ActivityUtils'))
                 .bulkSaveActivityContext(null);
@@ -22,10 +24,10 @@ public inherited sharing class  HDT_TRH_Case  {
         //Handles callout (update only)
         ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
                 .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
-        
+
     }
 
-    public void onAfterInsert(){   
+    public override void afterInsert(){   
         wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt ObjectCompatibility =
             (wrts_prcgvr.Interfaces_1_0.IObjectCompatibilityInt) wrts_prcgvr.VersionManager.newClassInstance('ObjectCompatibility');
 

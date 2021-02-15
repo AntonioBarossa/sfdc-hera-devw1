@@ -3,7 +3,7 @@
     <fullName>ConnectionType__c</fullName>
     <externalId>false</externalId>
     <label>Tipo di connessione</label>
-    <required>false</required>
+    <required>true</required>
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
