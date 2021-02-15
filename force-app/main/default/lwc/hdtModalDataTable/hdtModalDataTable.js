@@ -110,7 +110,8 @@ export default class HdtModalDataTable extends LightningElement {
     connectedCallback() {
         this.spinner = true;
         switch (this.fieldName) {
-            case 'amount':
+
+            case 'rateType':
                 this.modalHeader = 'Seleziona la tariffa';
                 this.columns = firstRow.concat(amountColumns);
                 break;
@@ -118,21 +119,10 @@ export default class HdtModalDataTable extends LightningElement {
                 this.modalHeader = 'Seleziona la GR INFO';
                 this.columns = firstRow.concat(grInfoColumns);
                 break;
-            case 'price':
+            case 'priceCode':
                 this.modalHeader = 'Seleziona il prezzo';
                 this.columns = firstRow.concat(priceColumns);
-                break;
-            case 'discount':
-                this.modalHeader = 'Seleziona lo sconto';
-                this.columns = firstRow.concat(discountColumns);
-                break;
-            case 'value':
-                this.modalHeader = 'Seleziona il valore';
-                this.columns = firstRow.concat(valueColumns);
-                break;
-            case 'stringValue':
-                this.modalHeader = 'Seleziona la stringa';
-                this.columns = firstRow.concat(stringValueColumns);  
+
         }
 
         this.iconHeader = this.icon;

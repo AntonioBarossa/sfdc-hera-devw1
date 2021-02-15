@@ -24,7 +24,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         errorString:''
     };
 
-    product = {
+    @track product = {
         productId: '',
         template: '',
         version: '',
@@ -39,11 +39,20 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Version__c', 'Product2.Template__c', 'Product2.RateCategory__r.Name', 'Product2.ProductCode'] })
     wiredOptions({ error, data }) {
-        if (data) {
-            this.product.template = data.fields.Template__c.value;
-            this.product.version = data.fields.Version__c.value;
-            this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
-            this.product.productCode = data.fields.ProductCode.value;
+        if(data){
+            try {
+                this.product.template = data.fields.Template__c.value;
+                this.product.version = data.fields.Version__c.value;
+                this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
+                this.product.productCode = data.fields.ProductCode.value;
+            } catch(e){
+                this.errorObj.showError = true;
+                this.errorObj.errorString = '[' + e.message + '[' + 'Valore non trovato -> Version__c, Template__c, RateCategory__r.Name, ProductCode';
+                console.error('# Name => ' + e.name );
+                console.error('# Message => ' + e.message );
+                console.error('# Stack => ' + e.stack );
+            }
+
             //this.getMatrixData();
             //console.log(JSON.stringify(data));    
         } else if (error) {
@@ -61,11 +70,32 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     }
 
+    setParam(event){
+        var fieldName = event.currentTarget.name;
+        var rowId =  event.currentTarget.dataset.rowId;
+        var value = event.target.value;
+        var type = event.currentTarget.type;
+        console.log('# rowId -> ' + rowId + ' - type: ' + type + ' - fieldName -> ' + fieldName);
+        console.log('# - value -> ' + value);
+        let element = this.dataRows.find(ele  => ele.id === rowId);
+
+        if(type == 'checkbox'){
+            var rowId = event.currentTarget.getAttribute('data-id');
+            var checked = event.currentTarget.name;
+            let element = this.dataRows.find(ele  => ele.id === rowId);
+            //is not a boolean here --> element.checkUser = !checked;
+
+        }
+
+        element[fieldName].value = value;
+
+    }
+
     handleSetvaluetoparent(event){
         let element = this.dataRows.find(ele  => ele.id === event.detail.rowId);
         var field = event.detail.fieldName;
 
-        element[field].id = event.detail.recId;
+        element[field].value = event.detail.recId;
         element[field].label = event.detail.label;
 
         //check row value and get error in case
@@ -98,7 +128,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         var rowId = event.currentTarget.getAttribute('data-id');
         var checked = event.currentTarget.name;
         let element = this.dataRows.find(ele  => ele.id === rowId);
-        element.checkUser = !checked;
+        //is not a boolean here --> element.checkUser = !checked;
     }
 
     goBackToRecord(){
@@ -233,7 +263,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         var toastObj = {success: true, title: '', message: '', variant: ''};
 
-        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows)})
+        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
@@ -265,6 +295,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         return toastObj;
     }
 
+    saveAndSend(event){
+        console.log('# Save and Send to SAP #');
+    }
+
     back(event){
         console.log('back');
         this.errorObj.showError = false;
@@ -276,11 +310,15 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             switch (event.target.name) {
                 case 'saveAction':
                     this.modalObj.header = 'Salva la configurazione';
-                    this.modalObj.body = 'Vuoi confermare il salvataggio?';
+                    this.modalObj.body = 'La configurazione verrà salvata solo su Salesforce. Vuoi confermare?';
                     break;
                 case 'goBackToRecord':
                     this.modalObj.header = 'Chiudi il configuratore';
                     this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
+                    break;
+                case 'saveAndSend':
+                    this.modalObj.header = 'Salva ed invia la configurazione';
+                    this.modalObj.body = 'La configurazione verrà salvata ed inviata a SAP. Vuoi confermare?';
             }
 
             this.modalObj.isVisible = true;

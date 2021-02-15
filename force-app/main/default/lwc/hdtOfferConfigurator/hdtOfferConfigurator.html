@@ -30,8 +30,8 @@
         <template if:false={errorObj.showError} >
             <p slot="actions" >
                 <lightning-button-group>
-                    <lightning-button label="Save" name="saveAction" onclick={openConfirmation} icon-name="utility:save"></lightning-button>
-                    <!--<lightning-button label="Bozza" icon-name="utility:copy"></lightning-button>-->
+                    <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} icon-name="utility:save"></lightning-button>
+                    <lightning-button label="Salva ed invia" name="saveAndSend" onclick={openConfirmation} icon-name="utility:send"></lightning-button>
                     <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="destructive" icon-name="utility:delete"></lightning-button>
                 </lightning-button-group>
             </p>
@@ -111,7 +111,7 @@
                             <tr class="slds-line-height_reset">
                             <!-- # COLUMN 1 # -->    
                                 <th class="firstcol" scope="col" >
-                                    <div class="slds-truncate" title="Definizione" >Definizione</div>
+                                    <div class="slds-truncate" title="Operando" >Operando</div>
                                 </th>
                             <!-- # COLUMN 2 # -->    
                                 <th class="alertcol" scope="col">
@@ -119,45 +119,45 @@
                                 </th>
                             <!-- # COLUMN 3 # -->                       
                                 <th class="" scope="col" >
-                                    <div class="slds-truncate" title="Ins. Utente" >Ins. Utente</div>
+                                    <div class="slds-truncate" title="Data Inizio" >Data inizio</div>
                                 </th>
                             <!-- # COLUMN 4 # -->                                           
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Tariffa">Tariffa</div>
+                                    <div class="slds-truncate" title="Data fine">Data fine</div>
                                 </th>
                             <!-- # COLUMN 5 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="GR. Info">GR. Info</div>
+                                    <div class="slds-truncate" title="Tipo tariffa">Tipo tariffa</div>
                                 </th>
                             <!-- # COLUMN 6 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Prezzo">Prezzo</div>
+                                    <div class="slds-truncate" title="Gruppo info">Gruppo info</div>
                                 </th>
                             <!-- # COLUMN 7 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Sconto">Sconto</div>
+                                    <div class="slds-truncate" title="Valore numerico">Valore numerico</div>
                                 </th>
                             <!-- # COLUMN 8 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Valore">Valore</div>
+                                    <div class="slds-truncate" title="Flag">Flag</div>
                                 </th>
                             <!-- # COLUMN 9 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Stringa">Stringa</div>
+                                    <div class="slds-truncate" title="Codice prezzo">Codice prezzo</div>
                                 </th>
                             <!-- # COLUMN 10 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Nome Tecn.">Nome Tecn.</div>
+                                    <div class="slds-truncate" title="Stringa testuale">Stringa testuale</div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <template for:each={dataRows} for:item="d">
                                 <tr class="slds-hint-parent" key={d.id} data-id={d.id}>
-
+                                 
                                 <!-- # COLUMN 1 # -->
-                                    <td class="firstcol" data-label="Definizione">
-                                        <div class="slds-truncate" title="EE Valore PRZ indice data att">{d.definition}</div>
+                                    <td class="firstcol" data-label="Operando">
+                                        <div class="slds-truncate" title="Operando">{d.tecName}</div>
                                     </td>
 
                                 <!-- # COLUMN 2 # -->    
@@ -166,44 +166,69 @@
                                             <lightning-icon size="xx-small" variant="warning" icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
                                         </div>
                                     </td>
-                                
-                                <!-- # COLUMN 3 # -->    
-                                    <td data-label="Ins. Utente">
-                                        <div title="Ins. Utente" class="slds-truncate slds-form-element__control slds-grow slds-align_absolute-center">
-                                            <!--<input type="checkbox" class="slds-input" value="" style="width: 12px;"/>-->
-                                            <lightning-input
-                                                            type="checkbox"
-                                                            label=" "
-                                                            name={d.checkUser}
-                                                            data-id={d.id}
-                                                            variant="label-hidden"
-                                                            onchange={handleChange}
-                                            ></lightning-input>
-                                        </div>
-                                    </td>
-                                    
-                                <!-- # COLUMN 4 # -->    
-                                    <td data-label="Tariffa">
+
+                                <!-- # COLUMN 3 # -->     
+                                    <td data-label="Data inizio">
                                         <!--<div title="Tariffa" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.amount.enabled} >
+                                        <template if:true={d.startDate.enabled} >
+                                            <lightning-input
+                                                data-row-id={d.id}
+                                                type="date"
+                                                name="startDate"
+                                                label="startDate"
+                                                variant="label-hidden"
+                                                onchange={setParam}
+                                            ></lightning-input>
+                                        </template>
+                                        <template if:false={d.startDate.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                        <!--</div>-->
+                                    </td>
+
+                                <!-- # COLUMN 4 # -->     
+                                    <td data-label="Data fine">
+                                        <!--<div title="Tariffa" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.endDate.enabled} >
+                                            <lightning-input
+                                                data-row-id={d.id}
+                                                type="date"
+                                                name="endDate"
+                                                label="endDate"
+                                                variant="label-hidden"
+                                                onchange={setParam}
+                                            ></lightning-input>
+                                        </template>
+                                        <template if:false={d.endDate.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                        <!--</div>-->
+                                    </td>
+
+                                <!-- # COLUMN 5 # -->    
+                                    <td data-label="Tipo tariffa">
+                                        <!--<div title="Tariffa" class="slds-truncate slds-form-element__control slds-grow">-->
+                                            <template if:true={d.rateType.enabled} >
                                                 <c-hdt-pill
                                                     data-id={d.id}
                                                     row-id={d.id}
-                                                    field-name="amount"
+                                                    field-name="rateType"
                                                     icon="standard:quotes"
-                                                    pill-obj={d.amount}
+                                                    pill-obj={d.rateType}
                                                     onsetvaluetoparent={handleSetvaluetoparent}
                                                 ></c-hdt-pill>
                                             </template>
-                                            <template if:false={d.amount.enabled} >
+                                            <template if:false={d.rateType.enabled} >
                                                 <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
                                                 <!--<input type="text" class="slds-input" value="" disabled />-->
                                             </template>
                                         <!--</div>-->
                                     </td>
 
-                                <!-- # COLUMN 5 # -->    
-                                    <td data-label="GR. Info">
+                               <!-- # COLUMN 6 # -->    
+                                    <td data-label="Gruppo info">
                                         <!--<div title="GR. Info" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.infoGroup.enabled} >
                                                 <c-hdt-pill
@@ -222,40 +247,21 @@
                                         <!--</div>-->
                                     </td>
 
-                                <!-- # COLUMN 6 # -->    
-                                    <td data-label="Prezzo">
-                                        <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.price.enabled} >
-                                                <c-hdt-pill
-                                                    data-id={d.id}
-                                                    row-id={d.id}
-                                                    field-name="price"
-                                                    icon="standard:variable"
-                                                    pill-obj={d.price}
-                                                    onsetvaluetoparent={handleSetvaluetoparent}
-                                                ></c-hdt-pill>
-                                            </template>
-                                            <template if:false={d.price.enabled} >
-                                                <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                                <!--<input type="text" class="slds-input" value="" disabled />-->
-                                            </template>
-                                        <!--</div>-->
-                                    </td>
-
                                 <!-- # COLUMN 7 # -->    
-                                    <td data-label="Sconto">
-                                        <!--<div title="Sconto" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.discount.enabled} >
-                                                <c-hdt-pill
-                                                    data-id={d.id}
-                                                    row-id={d.id}
-                                                    field-name="discount"
-                                                    icon="standard:opportunity"
-                                                    pill-obj={d.discount}
-                                                    onsetvaluetoparent={handleSetvaluetoparent}
-                                                ></c-hdt-pill>
+                                    <td data-label="Valore numerico">
+                                        <!--<div title="Valore" class="slds-truncate slds-form-element__control slds-grow">-->
+                                            <template if:true={d.numValue.enabled} >
+                                                <lightning-input
+                                                    data-row-id={d.id}
+                                                    type="number"
+                                                    name="numValue"
+                                                    label="numValue"
+                                                    variant="label-hidden"
+                                                    step="0.01"
+                                                    onchange={setParam}
+                                                ></lightning-input>
                                             </template>
-                                            <template if:false={d.discount.enabled} >
+                                            <template if:false={d.numValue.enabled} >
                                                 <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
                                                 <!--<input type="text" class="slds-input" value="" disabled />-->
                                             </template>
@@ -263,37 +269,54 @@
                                     </td>
 
                                 <!-- # COLUMN 8 # -->    
-                                    <td data-label="Valore">
-                                        <!--<div title="Valore" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.value.enabled} >
+                                    <td data-label="Flag">
+                                        <div if:true={d.flag.enabled} title="flag" class="slds-truncate slds-form-element__control slds-grow slds-align_absolute-center">
+                                            <!--<input type="checkbox" class="slds-input" value="" style="width: 12px;"/>-->
+                                            <lightning-input
+                                                    data-row-id={d.id}
+                                                    type="checkbox"
+                                                    label=" "
+                                                    name="flag"
+                                                    data-id={d.id}
+                                                    variant="label-hidden"
+                                                    onclick={setParam}
+                                            ></lightning-input>
+                                        </div>
+                                        <template if:false={d.flag.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    </td>
+
+                                <!-- # COLUMN 9 # -->    
+                                    <td data-label="Codice prezzo">
+                                        <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
+                                            <template if:true={d.priceCode.enabled} >
                                                 <c-hdt-pill
                                                     data-id={d.id}
                                                     row-id={d.id}
-                                                    field-name="value"
-                                                    icon="standard:topic2"
-                                                    pill-obj={d.value}
+                                                    field-name="priceCode"
+                                                    icon="standard:variable"
+                                                    pill-obj={d.priceCode}
                                                     onsetvaluetoparent={handleSetvaluetoparent}
                                                 ></c-hdt-pill>
                                             </template>
-                                            <template if:false={d.value.enabled} >
+                                            <template if:false={d.priceCode.enabled} >
                                                 <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
                                                 <!--<input type="text" class="slds-input" value="" disabled />-->
                                             </template>
                                         <!--</div>-->
                                     </td>
 
-                                <!-- # COL 9 # -->    
-                                    <td data-label="Stringa">
+                                <!-- # COLUMN 10 # -->    
+                                    <td data-label="stringValue">
                                         <!--<div title="Stringa" class="slds-truncate slds-form-element__control slds-grow">-->
                                             <template if:true={d.stringValue.enabled} >
-                                                <c-hdt-pill
-                                                    data-id={d.id}
-                                                    row-id={d.id}
-                                                    field-name="stringValue"
-                                                    icon="standard:quick_text"
-                                                    pill-obj={d.stringValue}
-                                                    onsetvaluetoparent={handleSetvaluetoparent}
-                                                ></c-hdt-pill>
+                                                <lightning-input
+                                                    type="text"
+                                                    label="Enter some text"
+                                                    variant="label-hidden"
+                                                ></lightning-input>
                                             </template>
                                             <template if:false={d.stringValue.enabled} >
                                                 <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
@@ -311,11 +334,7 @@
                                             </div>
                                         </div>-->
                                     </td>
-                                 
-                                <!-- # COL 10 # -->     
-                                    <td data-label="Nome Tecn">
-                                        <div class="slds-truncate" title="EFP_CT_MI">{d.tecName}</div>
-                                    </td>
+
                                 </tr>
                             </template>                                      
                         </tbody>
@@ -323,11 +342,11 @@
                 </div>
             </div>
 
-            <p slot="footer">
+            <!--<p slot="footer">
                 <lightning-button-icon icon-name="utility:chevronleft"  alternative-text="Settings" title="Settings"></lightning-button-icon>
                 &nbsp;1/10&nbsp;
                 <lightning-button-icon icon-name="utility:chevronright"  alternative-text="Settings" title="Settings"></lightning-button-icon>       
-            </p>
+            </p>-->
         </template>
     </lightning-card>
 
