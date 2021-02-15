@@ -119,8 +119,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         this.applySelectionLogic(this.selectedProcess);
     }
 
-    handleNext(){
-        console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
+    goToNextStep(){
         this.loaded = false;
         next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation}).then(data =>{
             this.loaded = true;
@@ -137,6 +136,27 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    handleNext(){
+        console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
+
+        if (this.showDeliberation === true) {
+            if (this.deliberation !== '') {
+                this.goToNextStep();
+            } else {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Devi compilare il campo delibera.',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
+        } else {
+            this.goToNextStep();
+        }
+
     }
 
     connectedCallback(){

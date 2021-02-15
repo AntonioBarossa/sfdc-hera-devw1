@@ -118,6 +118,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     getFirstStepName(){
         this.availableSteps = this.fields.filter(section => section.processVisibility === true);
+        this.availableSteps[0].firstStep = true;
+        this.availableSteps[this.availableSteps.length - 1].lastStep = true;
 
         if (this.order.Step__c === 2) {
             return this.availableSteps[0].name;
@@ -189,7 +191,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleFields(){
         this.fields = [
             {
-                firstStep: true,
                 step: 3,
                 label: 'Cliente Uscente',
                 name: 'clienteUscente',

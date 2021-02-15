@@ -52,6 +52,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND PaymentMode__c = :paymentMethod
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
     }
@@ -74,6 +75,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND PaymentMode__c != null
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
     }

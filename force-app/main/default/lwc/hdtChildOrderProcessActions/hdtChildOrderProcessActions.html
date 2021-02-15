@@ -2,6 +2,9 @@
 
     <template if:true={order}>
         <div class="slds-card slds-clearfix slds-p-around_small">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+            </template>
             <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
             <ul class="slds-button-group-list slds-float_right">
                 <li>

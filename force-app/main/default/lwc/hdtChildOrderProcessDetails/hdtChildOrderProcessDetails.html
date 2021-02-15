@@ -13,7 +13,7 @@
 
                     <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleSectionToggle}>
                         
-                        <template for:each={fields} for:item="section">
+                        <template for:each={availableSteps} for:item="section">
 
                             <lightning-accordion-section key={section.step} if:true={section.processVisibility} name={section.name} label={section.label}>
                                 

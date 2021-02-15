@@ -49,7 +49,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         orderSrv.updateRecord(new Order(
             Id = orderId,
             RecordTypeId = recordTypeId,
-            Status = 'In lavorazione',
             Step__c = 2,
             Deliberation__c = deliberate
         ));

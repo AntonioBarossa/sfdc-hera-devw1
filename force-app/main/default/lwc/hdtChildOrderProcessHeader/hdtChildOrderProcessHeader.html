@@ -5,11 +5,11 @@
                 <lightning-layout-item padding="horizontal-large" size="12">
                     <div class="slds-page-header__col-details">
                         <ul class="slds-page-header__detail-row">
-                            <li class="slds-page-header__detail-block">
+                            <li if:true={isAccountResidential} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Account Name">Nome</div>
                                 <div class="slds-truncate" title="Account Name">{order.Account.FirstName__c}</div>
                             </li>
-                            <li class="slds-page-header__detail-block">
+                            <li if:true={isAccountResidential} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Account Name">Cognome</div>
                                 <div class="slds-truncate" title="Account Name">{order.Account.LastName__c}</div>
                             </li>
@@ -19,11 +19,11 @@
                                 </div>
                                 <div class="slds-truncate" title="Codice Fiscale">{order.Account.FiscalCode__c}</div>
                             </li>
-                            <li class="slds-page-header__detail-block">
+                            <li if:false={isAccountResidential} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
                                 <div class="slds-truncate" title="Partita Iva">{order.Account.VATNumber__c}</div>
                             </li>
-                            <li class="slds-page-header__detail-block">
+                            <li if:false={isAccountResidential} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Account Name">Ragione sociale</div>
                                 <div class="slds-truncate" title="Ragione sociale">{order.Account.Name}</div>
                             </li>

@@ -6,6 +6,7 @@
             <lightning-spinner alternative-text="Loading"></lightning-spinner>
         </template>
         
+        <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
         <div class="slds-p-around_large">
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_4-of-12">
@@ -23,9 +24,9 @@
                 </div>
                 <div class="slds-col slds-size_2-of-12"></div>
                 <template if:true={showDeliberation}>
-                    <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
-                        <lightning-input-field disabled={disabledDeliberation} onchange={handleDeliberateSelection} class="slds-col slds-size_6-of-12" data-id="Deliberation__c" data-name="Deliberation__c" record-id={order.Id} field-name="Deliberation__c" variant="label-stacked"></lightning-input-field>
-                    </lightning-record-edit-form>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning-input-field disabled={disabledDeliberation} onchange={handleDeliberateSelection} data-id="Deliberation__c" data-name="Deliberation__c" record-id={order.Id} field-name="Deliberation__c" variant="label-stacked"></lightning-input-field>
+                        </div>
                 </template>
             </div>
             <br/>
@@ -64,6 +65,7 @@
             </template>
             <br/>
         </div>
+        </lightning-record-edit-form>
         <div class="slds-clearfix slds-p-around_small">
             <div class="slds-float_right">
                 <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>

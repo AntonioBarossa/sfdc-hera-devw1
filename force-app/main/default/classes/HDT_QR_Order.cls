@@ -102,6 +102,8 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.MeterClass__c,
             BillingProfile__c,
             Deliberation__c,
+            ParentOrder__c,
+            ParentOrder__r.Status,
             OrderNumber
             FROM Order 
             WHERE Id = :orderId
