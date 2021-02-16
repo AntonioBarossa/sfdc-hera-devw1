@@ -4,84 +4,146 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         System.debug('# saveTechnicalOffer controller helper #');
         System.debug('# offerList size -> ' + offerList.size());
 
-        List<sObject> objects = new List<sObject>();
-        String extId = String.valueOf(datetime.now().getTime());
-        TecnicalOffer__c tecOff;
+        List<String> errorMessage = new List<String>();
+
+        Savepoint sp = Database.setSavepoint();
+
+        TecnicalOffer__c tecOff = new TecnicalOffer__c();
+        tecOff.Name = 'TechnicalOffer';
+        tecOff.ProductId__c = productId;
+        
+        try{
+            insert tecOff;
+        } catch (Exception e){
+            return tecOff;
+        }
+
         List<TecnicalOfferItem__c> itemList = new List<TecnicalOfferItem__c>();
         TecnicalOfferItem__c tecOffItem;
+
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine : offerList){
             System.debug('# ' + 
             '[id = ' + offerLine.id + '] - ' +
-            '[tecName = ' + offerLine.tecName + '] - ' +
-            '[startDate = ' + offerLine.startDate.value + '] - ' +
-            '[endDate = ' + offerLine.endDate.value + '] - ' +
+            '[M = ' + offerLine.m + '] - ' +
+            '[V = ' + offerLine.v + '] - ' +
+            //'[startDate = ' + offerLine.startDate.value + '] - ' +
+            //'[endDate = ' + offerLine.endDate.value + '] - ' +
             '[rateType = ' + offerLine.rateType.value + '] - ' +
             '[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
             '[numValue = ' + offerLine.numValue.value + '] - ' +
             '[flag = ' + offerLine.flag.value + '] - ' +
             '[priceCode = ' + offerLine.priceCode.value + '] - ' +
-            '[stringValue = ' + offerLine.stringValue.value + ']');
+            '[stringValue = ' + offerLine.stringValue.value + ']' + 
+            '[tecName = ' + offerLine.tecName + ']'
+            );
 
             tecOffItem = new TecnicalOfferItem__c();
             tecOffItem.RowId__c = offerLine.id;
             tecOffItem.Type__c = offerLine.type;
+            tecOffItem.Definition__c = offerLine.definition;
+            tecOffItem.V__c = offerLine.v;
+            tecOffItem.M__c = offerLine.m;
             tecOffItem.Operand__c = offerLine.tecName;
-            tecOffItem.Duration__c = offerLine.startDate.value;
-            tecOffItem.Delay__c = offerLine.endDate.value;
+            //tecOffItem.Duration__c = offerLine.startDate.value;
+            //tecOffItem.Delay__c = offerLine.endDate.value;
             tecOffItem.FareType__c = offerLine.rateType.value;
             tecOffItem.InfoGroup__c = offerLine.infoGroup.value;
             tecOffItem.NumericValue__c = offerLine.numValue.value;
             tecOffItem.Flag__c = true;//offerLine.flag.value;
             tecOffItem.PriceCode__c = offerLine.priceCode.value;
             tecOffItem.StringValue__c = offerLine.stringValue.value;
-            //tecOffItem.TecnicalOfferId__c = tecOff.Id;
-
-            //this record is used to link quote line item to quote
-            TecnicalOffer__c objReference = new TecnicalOffer__c();
-            objReference.ExtId__c = extId;
-            tecOffItem.TecnicalOfferId__r = objReference;
-            objects.add(tecOffItem);
+            tecOffItem.TecnicalOfferId__c = tecOff.Id;
+            itemList.add(tecOffItem);
         }
 
-        tecOff = new TecnicalOffer__c();
-        tecOff.extId__c = extId;
-        tecOff.Name = 'TechnicalOffer';
-        tecOff.ProductId__c = productId;
-        objects.add(tecOff);
-
-        //insert tecOff;
-
-        //use this example
-        /*
-
-        List<Database.SaveResult> updateResults = Database.update(recordRetrieved, false);
-        CheckResponse crUpdate;
-        joUpdate.CheckResponseList = new List<CheckResponse>();
-        for (Integer i=0;i<updateResults.size();i++) {
-            if (!updateResults.get(i).isSuccess()) {
-                Database.Error error = updateResults.get(i).getErrors().get(0);
-                System.debug('### Error ### ' + error.getMessage());
-                crUpdate = new CheckResponse();
-                crUpdate.success = false;
-                crUpdate.objId = recordRetrieved.get(i).Id;
-                crUpdate.objName = recordMap.get(recordRetrieved.get(i).Id);
-                crUpdate.errorMessage = error.getMessage();
-                joUpdate.CheckResponseList.add(crUpdate);
+        List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+        
+        for (Database.SaveResult sr : insertResults) {
+            if (!sr.isSuccess()) {
+                // Operation failed
+                String errorString = '';               
+                for(Database.Error err : sr.getErrors()) {
+                    errorString += 'The following error has occurred: ';                    
+                    errorString += err.getStatusCode() + ': ' + err.getMessage();
+                    errorString += ' on field: ' + err.getFields();
+                    errorMessage.add(errorString);
+                }
             }
         }
 
-        if(joUpdate.CheckResponseList.size() > 0){
-            joUpdate.returnToUrl = pageRef.getUrl();
-            errorPageRef.getParameters().put('errorMessageJson', JSON.serialize(joUpdate));
+
+        if(errorMessage.size() > 0){
             Database.rollback(sp);
-            return errorPageRef;
+        }
+        
+        return tecOff;
+
+    }
+
+    public static TecnicalOffer__c queryTechnicalOfferRecord(Id recId){
+        TecnicalOffer__c techOff = [
+            SELECT Id, Name, (
+                    SELECT Id,RowId__c,Type__c,Operand__c,Duration__c,Delay__c, Definition__c, M__c, V__c,
+                           FareType__c,InfoGroup__c,NumericValue__c,Flag__c,PriceCode__c,StringValue__c,TecnicalOfferId__c
+                    FROM TechnicalOfferItems__r
+                )
+            FROM TecnicalOffer__c
+            WHERE Id =: recId
+            LIMIT 1
+        ];
+        return techOff;
+    }
+    
+    public static Id cloneRecordHandler(String recIdToClone, String productId){
+
+        List<String> errorMessage = new List<String>();
+        TecnicalOffer__c newTechOff = new TecnicalOffer__c();
+        Savepoint sp = Database.setSavepoint();
+
+        TecnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
+
+        newTechOff = recToClone.clone(false, true, false, false);
+        newTechOff.Name = 'Cloned';
+        newTechOff.ProductId__c = productId;
+
+        System.debug('# clone this -> ' + newTechOff);
+
+        try{
+            insert newTechOff;
+        } catch (Exception e){
+            return newTechOff.Id;
         }
 
-        */
+        List<TecnicalOfferItem__c> newItemsList = new List<TecnicalOfferItem__c>();
+        TecnicalOfferItem__c newItem;
+        for(TecnicalOfferItem__c item : recToClone.TechnicalOfferItems__r){
+            newItem = new TecnicalOfferItem__c();
+            newItem = item.clone(false, true, false, false);
+            newItem.TecnicalOfferId__c = newTechOff.Id;
+            newItemsList.add(newItem);
+        }
+
+        List<Database.SaveResult> insertResults = Database.insert(newItemsList, false);
+        
+        for (Database.SaveResult sr : insertResults) {
+            if (!sr.isSuccess()) {
+                // Operation failed
+                String errorString = '';               
+                for(Database.Error err : sr.getErrors()) {
+                    errorString += 'The following error has occurred: ';                    
+                    errorString += err.getStatusCode() + ': ' + err.getMessage();
+                    errorString += ' on field: ' + err.getFields();
+                    errorMessage.add(errorString);
+                }
+            }
+        }
 
 
+        if(errorMessage.size() > 0){
+            Database.rollback(sp);
+        }
 
-        return tecOff;
+        return newTechOff.Id;
 
     }
 

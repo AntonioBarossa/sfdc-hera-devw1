@@ -14,7 +14,7 @@ export default class LookupLwc extends LightningElement {
     @api iconName;
     @api labelName;
     @api readOnly = false;
-    @api filter = '';
+    @api filter;
     @api showLabel = false;
     @api uniqueKey;
     @api placeholder;
@@ -38,6 +38,10 @@ export default class LookupLwc extends LightningElement {
         
         if(this.detailFields===undefined){
             this.detailFields = [];
+        }
+
+        if(this.filter===undefined){
+            this.filter = '';
         }
 
         if(FIELDS.length === 0){

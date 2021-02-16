@@ -55,9 +55,12 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
     public class HDT_WRP_MatrixSingleRow {
         @auraEnabled public String id;
         @auraEnabled public String tecName;
+        @auraEnabled public String definition;
         @auraEnabled public String type;
-        @auraEnabled public HDT_WRP_RowDetail startDate;
-        @auraEnabled public HDT_WRP_RowDetail endDate;
+        @auraEnabled public Boolean m;
+        @auraEnabled public Boolean v;
+        //@auraEnabled public HDT_WRP_RowDetail startDate;
+        //@auraEnabled public HDT_WRP_RowDetail endDate;
         @auraEnabled public HDT_WRP_RowDetail rateType;
         @auraEnabled public HDT_WRP_RowDetail infoGroup;
         @auraEnabled public HDT_WRP_RowDetail numValue;

@@ -37,6 +37,11 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     helpTxt3 = 'This field3 indicate that...';
     error;
 
+    @track options = [
+        {label: 'M', value: 'm', checked: '0'},
+        {label: 'V', value: 'v', checked: '1'}
+    ];
+
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Version__c', 'Product2.Template__c', 'Product2.RateCategory__r.Name', 'Product2.ProductCode'] })
     wiredOptions({ error, data }) {
         if(data){
@@ -177,6 +182,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
                 this.dataRows = result.rowList;
+
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
@@ -348,6 +354,23 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             this[event.detail.operation](event);
         }
         this.modalObj.isVisible = false;
+    }
+
+    radioselect(event){
+        console.log('# ' + event.detail.rowId + ' - ' + event.detail.value);
+        var rowId = event.detail.rowId;
+        let element = this.dataRows.find(ele  => ele.id === rowId);
+
+        switch (event.detail.value) {
+            case 'm':
+                element.m = true;
+                element.v = false;
+                break;
+            case 'v':
+                element.m = false;
+                element.v = true;
+        }
+
     }
 
 }

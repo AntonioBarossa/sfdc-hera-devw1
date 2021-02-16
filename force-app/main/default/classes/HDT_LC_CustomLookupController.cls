@@ -7,6 +7,8 @@ public class HDT_LC_CustomLookupController {
         String myQuery = null;
         List<ObjDetail> objList = new List<ObjDetail>();
 
+        System.debug('# Filter -> ' + filter);
+
         myQuery = 'SELECT ' + setAsKey + ',' + searchBy + ' ';
 
         if(enableDetails){
@@ -15,16 +17,32 @@ public class HDT_LC_CustomLookupController {
 
         myQuery += 'FROM ' + myObject + ' ';
 
-        if(filter != null && filter != ''){
-            myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\' AND ' + filter + ' LIMIT 5'; 
+        //if(filter != null && filter != ''){
+        //    myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\' AND ' + filter + ' LIMIT 5'; 
+        //} else {
+        //    if(searchTerm == null || searchTerm == ''){
+        //        myQuery += 'WHERE LastViewedDate != NULL ORDER BY LastViewedDate DESC LIMIT 5'; 
+        //    } else {
+        //        myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\' LIMIT 5';
+        //    }
+        //}
+        
+        if(String.isEmpty(filter)){
+        //if(searchTerm == null || searchTerm == ''){
+            myQuery += 'WHERE LastViewedDate != NULL';
+            if(!String.isEmpty(filter)){
+                myQuery += ' AND ' + filter;
+            }
+            myQuery += ' ORDER BY LastViewedDate DESC';
         } else {
-            if(searchTerm == null || searchTerm == ''){
-                myQuery += 'WHERE LastViewedDate != NULL ORDER BY LastViewedDate DESC LIMIT 5'; 
-            } else {
-                myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\' LIMIT 5';
+            myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\'';
+            if(!String.isEmpty(filter)){
+                myQuery += ' AND ' + filter;
             }
         }
-        
+
+        myQuery += ' LIMIT 5';
+
         List<sObject> lookUpList = database.query(myQuery);
 
         if(lookUpList.size()>0){

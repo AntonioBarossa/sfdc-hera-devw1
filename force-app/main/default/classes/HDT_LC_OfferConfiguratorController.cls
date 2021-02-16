@@ -69,7 +69,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 Product2 product = [SELECT Id, Template__c, RateCategory__r.Name FROM Product2 WHERE Id =: productId LIMIT 1];
                 
                 List<OperandTemplate__c> operands = [
-                    SELECT Id, Operands__c, ContractTemplate__c, Typology__c, UnitPrice__c
+                    SELECT Id, Operands__c, ContractTemplate__c, Typology__c, UnitPrice__c, Definition__c
                     FROM OperandTemplate__c
                     WHERE ContractTemplate__c =: product.Template__c
                 ];
@@ -81,18 +81,48 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     singleRow = new HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow();
 
                     singleRow.Id = String.valueOf(n);
-                    singleRow.tecName = operands[n].Operands__c;
+                    singleRow.definition = operands[n].Definition__c;
                     singleRow.type = operands[n].Typology__c;
-                    singleRow.startDate = rowDetailMap.get('startDate');
-                    singleRow.endDate = rowDetailMap.get('endDate');
+                    singleRow.m = false;
+                    singleRow.v = true;
+                    //singleRow.startDate = rowDetailMap.get('startDate');
+                    //singleRow.endDate = rowDetailMap.get('endDate');
                     singleRow.rateType = rowDetailMap.get('rateType');
                     singleRow.infoGroup = rowDetailMap.get('infoGroup');
                     singleRow.numValue = rowDetailMap.get('numValue');
                     singleRow.flag = rowDetailMap.get('flag');
                     singleRow.priceCode = rowDetailMap.get('priceCode');
-                    singleRow.stringValue = rowDetailMap.get('stringValue');//TextString
+                    singleRow.stringValue = rowDetailMap.get('stringValue');
+                    singleRow.tecName = operands[n].Operands__c;
                     matrixTable.rowList.add(singleRow);
                 }
+
+                if(false){
+                    Id techOffId = 'a2z1x000000DbqgAAC';
+                    TecnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(techOffId);
+                    Map<String, TecnicalOfferItem__c> itemsMap = new Map<String, TecnicalOfferItem__c>();
+                    for(TecnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
+                        itemsMap.put(item.Operand__c, item);
+                    }
+
+                    for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow item : matrixTable.rowList){
+                        TecnicalOfferItem__c tempItem = itemsMap.get(item.tecName);
+                        
+                        singleRow.Id = (String)tempItem.get('RowId__c');
+                        singleRow.definition = (String)tempItem.get('Definition__c');
+                        singleRow.type = (String)tempItem.get('Type__c');
+                        singleRow.m = (Boolean)tempItem.get('M__c');
+                        singleRow.v = (Boolean)tempItem.get('V__c');
+                        singleRow.rateType.value = (String)tempItem.get('FareType__c');
+                        singleRow.infoGroup.value = (String)tempItem.get('InfoGroup__c');
+                        singleRow.numValue.value = (String)tempItem.get('NumericValue__c');
+                        //singleRow.flag.value = (String)tempItem.get('Flag__c');
+                        singleRow.priceCode.value = (String)tempItem.get('PriceCode__c');
+                        singleRow.stringValue.value = (String)tempItem.get('StringValue__c');
+                    }                    
+                }
+
+
             }
 
             matrixTable.success = true;
@@ -119,6 +149,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             TecnicalOffer__c tecOff = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
 
+            if(tecOff.Id != null){
+                //send this tech off to SAP
+                HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP();
+            }
+
             responseObj.success = true;
             responseObj.message = 'nothing to declare';
 
@@ -131,28 +166,35 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static String getTechnicalOfferRecords(String recordId){
-        String result = '';
+    public static List<TecnicalOfferItem__c> getTechnicalOfferRecords(String recordId){
+        TecnicalOffer__c recToView;
         try{
-            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'offerData' LIMIT 1];
-            result = sr.Body.toString();
+            recToView = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(recordId);
+            
+            //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'offerData' LIMIT 1];
+            //result = sr.Body.toString();
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
-        return result;
+        return recToView.TechnicalOfferItems__r;
     }
 
     @AuraEnabled
-    public static String cloneRecord(String recordId){
-        String result = '';
+    public static String cloneRecord(String recIdToClone, String productId){
+        
+        System.debug('# recIdToClone -> ' + recIdToClone + ' - ' + productId);
+
+
         try{
+            //Use clone sObject Apex method
             //Account a = new Account();
             //a.Id = '';
             //insert a;
+            HDT_LC_OfferConfiguratorCtrlHelper.cloneRecordHandler(recIdToClone, productId);
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
-        return result;
+        return 'ok';
     }
 
 }

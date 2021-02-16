@@ -1,5 +1,14 @@
 <template>
 
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
     <lightning-card title="Ricerca Offerta Tecnica" icon-name="standard:proposition" >
 
         <div if:true={spinnerObj.spinner} class="progress">
@@ -9,8 +18,8 @@
         <p if:false={error.show} slot="actions" >
             <lightning-button-group>
                 <lightning-button label="Cerca" onclick={searchClick} icon-name="utility:search" title="search"  class="slds-m-left_x-small" ></lightning-button>
-                <lightning-button label="Clona" onclick={cloneData} icon-name="utility:copy" ></lightning-button>
-                <lightning-button label="Chiudi" onclick={closeSearch} icon-name="utility:delete" variant="destructive" ></lightning-button>
+                <lightning-button label="Clona" name="cloneData" onclick={openConfirmation} icon-name="utility:copy" variant="success"></lightning-button>
+                <lightning-button label="Chiudi" name="closeSearch" onclick={openConfirmation} icon-name="utility:delete" variant="destructive" ></lightning-button>
             </lightning-button-group>
         </p>
 
@@ -34,6 +43,7 @@
                                     search-by="Name"
                                     set-as-key="Id"
                                     detail-fields={detailFields}
+                                    filter={filter}
                                     icon-name="custom:custom57"
                                     label-name="labelName"
                                     onvalueselect={handleSelection}

@@ -1,25 +1,29 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import getRecords from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords';
 import cloneRecord from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.cloneRecord';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const columns = [
-    { label: 'Definizione', fieldName: 'definition' },
-    { label: 'Ins.Utente', fieldName: 'checkUser'},
-    { label: 'Tariffa', fieldName: 'amount'},
-    { label: 'GR Info', fieldName: 'grInfo'},
-    { label: 'Prezzo', fieldName: 'price'},
-    { label: 'Sconto', fieldName: 'discount' },
-    { label: 'Valore', fieldName: 'value'},
-    { label: 'Stringa', fieldName: 'stringValue'},
-    { label: 'Nome Tecn.', fieldName: 'tecName'}   
+    { label: 'Definizione', fieldName: 'Definition__c' },
+    { label: 'V', fieldName: 'M__c', type: 'boolean'},
+    { label: 'M', fieldName: 'V__c', type: 'boolean' },
+    { label: 'Tipo tariffa', fieldName: 'FareType__c'},
+    { label: 'Gruppo info', fieldName: 'InfoGroup__c'},
+    { label: 'Valore numerico', fieldName: 'NumericValue__c'},
+    { label: 'Flag', fieldName: 'Flag__c', type: 'boolean'},
+    { label: 'Codice prezzo', fieldName: 'PriceCode__c'},
+    { label: 'Stringa testuale', fieldName: 'StringValue__c'},
+    { label: 'Nome Tecn.', fieldName: 'Operand__c'}   
 ];
 
 export default class HdtSearchTechnicalOffer extends LightningElement {
     data = [];
     columns = columns;
     detailFields = ['Version__c', 'OffertCode__c'];
+    filter = 'productId__r.Template__c=\'ZELE_DOMES\'';
     showTable = false;
 
+    @api productid;
     @track result = {show: false, message: ''};
     @track error = {show: false, message: ''};
 
@@ -43,6 +47,13 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
         offertCode: ''
     }
 
+    @track modalObj = {
+        isVisible: false,
+        header: '',
+        body: '',
+        operation: ''
+    }
+
     /*setOffertName(event){
         console.log('### setOffertName ###');
         this.searchObj.offertName = event.target.value;
@@ -60,6 +71,18 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
 
     searchClick(event){
         console.log('### searchClick ###');
+
+        if(this.item.selectedId == undefined || this.item.selectedId == ''){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Fai attenzione',
+                    message: 'Non hai selezionato nessuna offerta da cercare',
+                    variant: 'warning'
+                }),
+            );
+            return;
+        }
+
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'loadingdata slds-text-heading_small';
         this.handleSearch(this.item.selectedId);
@@ -74,8 +97,8 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
 
                 if(result){
                     console.log('# success #');
-                    var obj = JSON.parse(result);
-                    this.data = obj.offerData;
+                    //var obj = JSON.parse(result);
+                    this.data = result;//obj.offerData;
 
                     if(this.data.length===0){
                         this.result.show = true;
@@ -113,7 +136,7 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
     handleClone(recId){
         console.log('# handleClone #');
  
-        cloneRecord({recordId: recId})
+        cloneRecord({recIdToClone: recId, productId: this.productid})
             .then(result => {
                 console.log('# call result #');
 
@@ -155,4 +178,46 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
     back(event){
         this.error.show = false;
     }
+
+    modalResponse(event){
+        if(event.detail.decision === 'conf'){
+            this[event.detail.operation](event);
+        }
+        this.modalObj.isVisible = false;
+    }
+
+    openConfirmation(event){
+        try {
+            switch (event.target.name) {
+                case 'cloneData':
+
+                    if(this.item.selectedId == undefined || this.item.selectedId == ''){
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Fai attenzione',
+                                message: 'Non hai selezionato nessuna offerta da clonare',
+                                variant: 'warning'
+                            }),
+                        );
+                        return;
+                    }
+
+                    this.modalObj.header = 'Clonare la configurazione';
+                    this.modalObj.body = 'Questa configurazione verrà clonata. Vuoi confermare?';
+                    break;
+                case 'closeSearch':
+                    this.modalObj.header = 'Chiudi la ricerca';
+                    this.modalObj.body = 'Vuoi procedere?';
+            }
+
+            this.modalObj.isVisible = true;
+            this.modalObj.operation = event.target.name;
+
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
+
 }

@@ -2,6 +2,8 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
 		<members>HDT_LC_OfferConfiguratorController</members>
+		<members>HDT_LC_OfferConfiguratorCtrlHelper</members>
+		<members>HDT_WRP_TechnicalOffer</members>
 		<members>HDT_LC_CustomLookupController</members>
 		<name>ApexClass</name>
 	</types>
@@ -12,6 +14,7 @@
 		<members>hdtWelcomeMatModal</members>
 		<members>hdtSearchTechnicalOffer</members>
 		<members>hdtCreateNewTechnicalOffer</members>
+		<members>hdtRadioGroup</members>
 		<name>LightningComponentBundle</name>
 	</types>	
 	<types>
