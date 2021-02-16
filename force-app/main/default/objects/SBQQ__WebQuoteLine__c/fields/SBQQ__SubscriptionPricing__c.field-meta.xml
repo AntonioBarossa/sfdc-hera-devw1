@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>SBQQ__SubscriptionPricing__c</fullName>
     <deprecated>false</deprecated>
-    <description>Determines how the subscription on this line item is priced. Blank value means this line contains product that&apos;s not a subscription.</description>
+    <description>Method of calculating the subscription price. A blank value indicates that the line item isn&apos;t a subscription product.</description>
     <externalId>false</externalId>
     <inlineHelpText>Determines how the subscription price is calculated. If this is blank, the line items is not a subscription product.</inlineHelpText>
     <label>Subscription Pricing</label>
