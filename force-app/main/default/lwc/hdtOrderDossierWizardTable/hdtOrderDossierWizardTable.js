@@ -68,14 +68,15 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                     iconName: 'utility:edit',
                     label: 'Avvia Processo', 
                     name: 'editRecord', 
-                    title: 'Avvia Processo', 
-                    disabled: this.disabledInput,
+                    title: 'Avvia Processo',
+                    disabled: {fieldName :'disabledActionButton'},
                     value: 'Avvia Processo'
                 }
             }
         ];
     };
 
+    @api
     setTableData(){
         this.loading = true;
         getTableData({orderParentId: this.orderParentRecord.Id}).then(data =>{
@@ -92,6 +93,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                 ord.pod = '';
                 ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
                 ord.pod = ord.ServicePoint__r.ServicePointCode__c;
+                ord.disabledActionButton = this.disabledInput || ord.Step__c === 20;
 
             });
 

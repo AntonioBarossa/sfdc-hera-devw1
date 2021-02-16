@@ -10,8 +10,12 @@
     <aura:attribute name="openModale" type="Boolean" default="false"/>
     <aura:attribute name="recordtypeOrder" type="String"/>
     <aura:attribute name="orderParentId" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="venditaId" type="String"/>
     <aura:attribute name='causale' type='String' default=""/>
     <aura:attribute name="loading" type='Boolean' default="false"/>
+    <lightning:navigation aura:id="navService" />
+    <lightning:workspaceAPI aura:id="workspace"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
 
@@ -31,12 +35,12 @@
 
     <aura:if isTrue="{!v.order}">
         <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
-            <c:hdtChildOrderProcessDetails order="{!v.order}"></c:hdtChildOrderProcessDetails>
+            <c:hdtChildOrderProcessDetails order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}"></c:hdtChildOrderProcessDetails>
         </aura:if>
     </aura:if>
 
     <aura:if isTrue="{!v.order}">
-        <c:hdtChildOrderProcessActions order="{!v.order}"></c:hdtChildOrderProcessActions>
+        <c:hdtChildOrderProcessActions order="{!v.order}" onsaveevent="{!c.handleSaveEvent}"></c:hdtChildOrderProcessActions>
     </aura:if>
 
 </aura:component>	

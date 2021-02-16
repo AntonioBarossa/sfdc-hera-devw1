@@ -7,13 +7,16 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     loading = false;
     
     get disabledSave(){
-        return (this.order.Step__c <= 2 || this.order.Step__c === undefined);
+        return false;
+        // return (this.order.Step__c <= 2 || this.order.Step__c === undefined);
     }
 
     handleSave(){
         this.loading = true;
         save({order: this.order}).then(data =>{
             this.loading = false;
+
+            this.dispatchEvent(new CustomEvent('saveevent'));
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

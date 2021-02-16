@@ -39,20 +39,20 @@
     <!-- Dati firma -->
     <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
-            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}"></c:hdtOrderDossierWizardSignature>
+            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtOrderDossierWizardSignature>
         </div>
     </aura:if>
 
     <!-- Gestione Ordini -->
     <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
-            <c:hdtOrderDossierWizardTable orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
+            <c:hdtOrderDossierWizardTable aura:id="hdtOrderDossierWizardTable" orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
         </div>
     </aura:if>
 
     <!-- Actions buttons -->
     <aura:if isTrue="{!v.orderParentRecord}">
-        <c:hdtOrderDossierWizardActions orderParentRecord="{!v.orderParentRecord}"></c:hdtOrderDossierWizardActions>
+        <c:hdtOrderDossierWizardActions orderParentRecord="{!v.orderParentRecord}" onsaveevent="{!c.handleSaveEvent}"></c:hdtOrderDossierWizardActions>
     </aura:if>
 
 </aura:component>

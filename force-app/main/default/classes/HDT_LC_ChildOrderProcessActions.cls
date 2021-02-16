@@ -73,7 +73,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
         orderSrv.updateRecord(orderToUpdate);
 
-        if (order.ParentOrder__r.Status == 'Bozza') {
+        if (order.ParentOrder__r.Status == 'Draft') {
             // order parent status = in lavorazione, phase = in lavorazione
             Order orderParentToUpdate = new Order(
                 Id = order.ParentOrder__c,

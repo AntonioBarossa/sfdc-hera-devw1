@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
 
@@ -17,6 +17,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     showModuloInformativo = false;
     showDelibera40 = false;
     showInviaModulistica = false;
+    @track sectionDataToSubmit = {};
+
+    handleSectionDataToSubmitCollection(event){
+        console.log('handleSectionDataToSubmitCollection fieldName: ', event.target.fieldName);
+        console.log('handleSectionDataToSubmitCollection value: ', event.target.value);
+        this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
+        console.log('this.sectionDataToSubmit: ', JSON.parse(JSON.stringify(this.sectionDataToSubmit)));
+    }
 
     handleShowModuloInformativo(){
         if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
@@ -133,27 +141,59 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleNext(event){
         this.loading = true;
 
-        console.log('handle Click Event Data: ', event.currentTarget.value);
         let currentSectionName = event.currentTarget.value;
+        let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
+        let currentObjectApiName = currentSection[0].objectApiName;
+        let currentRecordId = currentSection[0].recordId;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
         let nextSectionStep = this.availableSteps[currentSectionIndex + 1].step
+        console.log('currentSectionName: ', currentSectionName);
+        console.log('currentSection: ', currentSection);
+        console.log('currentObjectApiName: ', currentObjectApiName);
+        console.log('currentRecordId: ', currentRecordId);
+        this.sectionDataToSubmit['Id'] = currentRecordId;
 
-        updateProcessStep({order: this.order, step: nextSectionStep}).then(data =>{
-            this.loading = false;
-            this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
-            this.activeSections = [this.choosenSection];
+        console.log('handleNext: ', JSON.parse(JSON.stringify(this.sectionDataToSubmit)));
 
-        }).catch(error => {
-            this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
-                mode: 'sticky'
+        if (Object.keys(this.sectionDataToSubmit).length > 1) {
+            updateProcessStep({order: this.order, step: nextSectionStep, objectApiName: currentObjectApiName, objectToUpdate: this.sectionDataToSubmit}).then(data =>{
+                this.loading = false;
+                this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
+                this.activeSections = [this.choosenSection];
+                this.sectionDataToSubmit = {};
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
             });
-            this.dispatchEvent(toastErrorMessage);
-        });
+        } else {
+            updateProcessStep({order: this.order, step: nextSectionStep}).then(data =>{
+                this.loading = false;
+                this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
+                this.activeSections = [this.choosenSection];
+                this.sectionDataToSubmit = {};
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
 
     }
 
@@ -173,6 +213,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.loading = false;
             this.choosenSection = this.availableSteps[currentSectionIndex - 1].name;
             this.activeSections = [this.choosenSection];
+            this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
         }).catch(error => {
             this.loading = false;

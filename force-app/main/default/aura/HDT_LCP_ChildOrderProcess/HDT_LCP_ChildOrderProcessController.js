@@ -19,5 +19,12 @@
 
     nextStep : function(component,event,helper){
         component.set("v.recordtypeOrder",component.get("v.selectedValue"));
+    },
+
+    handleSaveEvent : function(component, event, helper){
+        var orderParentId = component.get("v.orderParentId");
+        var accountId = component.get("v.accountId");
+        var venditaId = component.get("v.venditaId");
+        helper.redirectToComponent(component,accountId,venditaId,orderParentId);
     }
 })

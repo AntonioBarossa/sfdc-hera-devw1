@@ -1,13 +1,16 @@
 <template>
     <template if:true={orderParentRecord}>
         <div class="slds-card slds-clearfix slds-p-around_small">
+            <template if:true={loading}>
+                <lightning-spinner alternative-text="Loading"></lightning-spinner>
+            </template>
             <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
             <ul class="slds-button-group-list slds-float_right">
                 <li>
-                    <lightning-button onclick={handleCancel} disabled={disabledCancel} icon-name="utility:cancel_file_request" variant="destructive" label="Annulla" title="Cancel action"></lightning-button>
+                    <lightning-button onclick={handleCancel} icon-name="utility:cancel_file_request" variant="destructive" label="Annulla" title="Cancel action"></lightning-button>
                 </li>
                 <li>
-                    <lightning-button onclick={handleSave} disabled={disabledSave} icon-name="utility:save" variant="success" label="Stampa" title="Save action"></lightning-button>
+                    <lightning-button onclick={handleSave} disabled={isSaveButtonDisabled} icon-name="utility:save" variant="success" label="Stampa" title="Save action"></lightning-button>
                 </li>
             </ul>
             <c-hdt-confirmation-dialog title={dialogTitle}

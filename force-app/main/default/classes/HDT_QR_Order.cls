@@ -50,6 +50,7 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.RecordType.DeveloperName,
             Status,
             ContractSigned__c,
             SignedDate__c,
@@ -104,7 +105,8 @@ public inherited sharing class HDT_QR_Order {
             Deliberation__c,
             ParentOrder__c,
             ParentOrder__r.Status,
-            OrderNumber
+            OrderNumber,
+            Phase__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -139,7 +141,14 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.InvoicingStreetNumberExtension__c,
             OrderNumber,
             ServicePoint__c,
-            ServicePoint__r.ServicePointCode__c
+            ServicePoint__r.ServicePointCode__c,
+            Step__c,
+            CiRappresentateLegale__c,
+            CiCliente__c,
+            PreventivoRapido__c,
+            VisuraCamerale__c,
+            Istanza326__c,
+            DocLegge80__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

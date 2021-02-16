@@ -149,17 +149,4 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         return check;
     }
 
-    @AuraEnabled
-    public static void saveDraftController(String orderParentId){
-        
-        Boolean check = true;
-
-        Order orderParent = new Order(
-            Id = orderParentId,
-            Status = 'Draft'
-        );
-
-        orderSrv.updateRecord(orderParent);
-    }
-
 }

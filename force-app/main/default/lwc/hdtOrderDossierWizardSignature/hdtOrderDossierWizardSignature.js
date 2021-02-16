@@ -106,6 +106,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         next({orderUpdates: this.dataToSubmit}).then(data =>{
             this.loading = false;
             this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+            this.dispatchEvent(new CustomEvent('tablerefresh'));
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
@@ -123,6 +124,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         edit({orderParentId:this.orderParentRecord.Id}).then(data =>{
             this.loading = false;
             this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+            this.dispatchEvent(new CustomEvent('tablerefresh'));
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);

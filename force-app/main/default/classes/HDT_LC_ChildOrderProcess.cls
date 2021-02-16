@@ -38,6 +38,8 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         mapResponse.put('orderItem',ordItem);
         mapResponse.put('order',ord);
+        mapResponse.put('accountId',ord.AccountId);
+        mapResponse.put('venditaId',ord.Sale__c);
         return mapResponse;
     }
     
