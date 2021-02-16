@@ -4,7 +4,7 @@
     <description>Partita IVA del cliente</description>
     <externalId>false</externalId>
     <label>Partita IVA</label>
-    <length>11</length>
+    <length>30</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

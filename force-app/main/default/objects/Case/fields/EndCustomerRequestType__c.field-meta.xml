@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EndCustomerRequestType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo di richiesta Cliente Finale</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Reclamo scritto</fullName>
+                <default>false</default>
+                <label>Reclamo scritto</label>
+            </value>
+            <value>
+                <fullName>Richiesta info</fullName>
+                <default>false</default>
+                <label>Richiesta info</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
