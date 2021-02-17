@@ -39,38 +39,20 @@
     <!-- Dati firma -->
     <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
-            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}"></c:hdtOrderDossierWizardSignature>
+            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtOrderDossierWizardSignature>
         </div>
     </aura:if>
 
     <!-- Gestione Ordini -->
-    <aura:if isTrue="{!v.orderParentId}">
+    <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
-            <c:hdtOrderDossierWizardTable orderParentId="{!v.orderParentId}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
+            <c:hdtOrderDossierWizardTable aura:id="hdtOrderDossierWizardTable" orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
         </div>
     </aura:if>
 
     <!-- Actions buttons -->
-    <lightning:card>
-        <footer class="slds-clearfix slds-p-right_medium">
-            <ul class="slds-button-group-list slds-float_right">
-             <!--   <li>
-                    <lightning:button variant="destructive"
-                                      iconName="utility:cancel_file_request" onclick="{!c.cancel}">
-                        Cancel</lightning:button>
-                </li> -->
-                <li>
-                    <lightning:button variant="neutral" onclick="{!c.saveDraft}"
-                                      iconName="standard:drafts">
-                        Save Draft</lightning:button>
-                </li>
-                <li><!--5-->
-                    <lightning:button variant="brand" onclick="{!c.save}"
-                                      iconName="utility:save">
-                        Save</lightning:button>
-                </li>
-            </ul>
-        </footer>
-    </lightning:card>
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <c:hdtOrderDossierWizardActions orderParentRecord="{!v.orderParentRecord}" onsaveevent="{!c.handleSaveEvent}"></c:hdtOrderDossierWizardActions>
+    </aura:if>
 
 </aura:component>

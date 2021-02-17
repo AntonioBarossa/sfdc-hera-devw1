@@ -50,11 +50,14 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.RecordType.DeveloperName,
             Status,
             ContractSigned__c,
             SignedDate__c,
             SignatureMethod__c,
-            DocSendingMethod__c
+            DocSendingMethod__c,
+            CreatedDate,
+            Step__c
             FROM Order 
             WHERE Sale__c = :saleId
             AND RecordTypeId = :recordTypeId
@@ -78,7 +81,11 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.FirstName__c,
+            Account.LastName__c,
+            Account.RecordType.Developername,
             Name,
+            RecordType.Name,
             RecordType.DeveloperName,
             SystemModstamp,
             Status,
@@ -86,7 +93,20 @@ public inherited sharing class HDT_QR_Order {
             SignedDate__c,
             SignatureMethod__c,
             DocSendingMethod__c,
-            Sale__c
+            Sale__c,
+            CreatedDate,
+            Step__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.RecordType.DeveloperName,
+            ServicePoint__r.Account__c,
+            ServicePoint__r.MeterClass__c,
+            BillingProfile__c,
+            Deliberation__c,
+            ParentOrder__c,
+            ParentOrder__r.Status,
+            OrderNumber,
+            Phase__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -119,7 +139,16 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.InvoicingStreetName__c,
             BillingProfile__r.InvoicingStreetNumber__c,
             BillingProfile__r.InvoicingStreetNumberExtension__c,
-            OrderNumber
+            OrderNumber,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            Step__c,
+            CiRappresentateLegale__c,
+            CiCliente__c,
+            PreventivoRapido__c,
+            VisuraCamerale__c,
+            Istanza326__c,
+            DocLegge80__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

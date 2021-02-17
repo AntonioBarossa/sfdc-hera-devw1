@@ -75,19 +75,22 @@
         }
     },
 
+    handleOrderRefreshEvent: function(component,event,helper){
+        helper.getOrderParentRecord(component);
+    },
+
     closeModal : function(component,event,helper){
         component.set("v.openModale",false); 
     },
 
-    // cancel: function(component, event, helper) {
-    //     helper.cancelVendite(component);
-    // },
-
-    saveDraft: function(component, event, helper) {
-        helper.saveDraftHelper(component);
+    handleTableRefreshEvent : function(component,event,helper){
+        var tableCmp = component.find("hdtOrderDossierWizardTable");
+        tableCmp.setTableData();
     },
 
-    save: function(component, event, helper){
-      	helper.saveOption(component);
+    handleSaveEvent : function(component, event, helper){
+        var objectId = component.get("v.orderParentId");
+        var objectApiname = 'Order';
+        helper.redirectToSObjectSubtabFix(component,objectId,objectApiname);
     }
 })
