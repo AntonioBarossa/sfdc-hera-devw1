@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Temporanea</fullName>
+        <default>false</default>
+        <label>Temporanea</label>
+    </customValue>
+    <customValue>
+        <fullName>Permanente</fullName>
+        <default>false</default>
+        <label>Permanente</label>
+    </customValue>
+    <customValue>
+        <fullName>Temporanea permanente</fullName>
+        <default>false</default>
+        <label>Temporanea permanente</label>
+    </customValue>
+    <description>Temporanea
+Permanente</description>
+    <masterLabel>Tipologia Connessione</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>AAS Associazione</fullName>
+        <default>false</default>
+        <label>AAS Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>AAS Azienda</fullName>
+        <default>false</default>
+        <label>AAS Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>AAS Condominio</fullName>
+        <default>false</default>
+        <label>AAS Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>AAS Ditta individuale</fullName>
+        <default>false</default>
+        <label>AAS Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>AAS Parti comuni</fullName>
+        <default>false</default>
+        <label>AAS Parti comuni</label>
+    </customValue>
+    <customValue>
+        <fullName>AAS Persona fisica</fullName>
+        <default>false</default>
+        <label>AAS Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEL-Altro</fullName>
+        <default>false</default>
+        <label>ACEL-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEL-Persona fisica</fullName>
+        <default>false</default>
+        <label>ACEL-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>Amga-Altro</fullName>
+        <default>false</default>
+        <label>Amga-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>Amga-Persona fisica</fullName>
+        <default>false</default>
+        <label>Amga-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ANTENORE ENERGY-Altro</fullName>
+        <default>false</default>
+        <label>ANTENORE ENERGY-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ANTENORE ENERGY-Persona fisica</fullName>
+        <default>false</default>
+        <label>ANTENORE ENERGY-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>Associazione</fullName>
+        <default>false</default>
+        <label>Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Azienda</fullName>
+        <default>false</default>
+        <label>Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>BENACO-Altro</fullName>
+        <default>false</default>
+        <label>BENACO-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>BENACO-Persona fisica</fullName>
+        <default>false</default>
+        <label>BENACO-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>BE POWER-Altro</fullName>
+        <default>false</default>
+        <label>BE POWER-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>BE POWER-Persona fisica</fullName>
+        <default>false</default>
+        <label>BE POWER-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>BLU RANTON-Altro</fullName>
+        <default>false</default>
+        <label>BLU RANTON-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>BLU RANTON-Persona fisica</fullName>
+        <default>false</default>
+        <label>BLU RANTON-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>CMV E e I - Altro</fullName>
+        <default>false</default>
+        <label>CMV E e I - Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>CMV E e I - Persona fisica</fullName>
+        <default>false</default>
+        <label>CMV E e I - Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>Condominio</fullName>
+        <default>false</default>
+        <label>Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>Ditta individuale</fullName>
+        <default>false</default>
+        <label>Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>Enegan-Altro</fullName>
+        <default>false</default>
+        <label>Enegan-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>Enegan-Persona fisica</fullName>
+        <default>false</default>
+        <label>Enegan-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGETICA-Altro</fullName>
+        <default>false</default>
+        <label>ENERGETICA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGETICA-Persona fisica</fullName>
+        <default>false</default>
+        <label>ENERGETICA-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA SOCIALE-Altro</fullName>
+        <default>false</default>
+        <label>ENERGIA SOCIALE-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA SOCIALE-Persona fisica</fullName>
+        <default>false</default>
+        <label>ENERGIA SOCIALE-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIECHIARE-Altro</fullName>
+        <default>false</default>
+        <label>ENERGIECHIARE-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIECHIARE-Persona fisica</fullName>
+        <default>false</default>
+        <label>ENERGIECHIARE-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGYGAS ITA - Altro</fullName>
+        <default>false</default>
+        <label>ENERGYGAS ITA - Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGYGAS ITA - Persona fisica</fullName>
+        <default>false</default>
+        <label>ENERGYGAS ITA - Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGYPOLIS-Altro</fullName>
+        <default>false</default>
+        <label>ENERGYPOLIS-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGYPOLIS-Persona fisica</fullName>
+        <default>false</default>
+        <label>ENERGYPOLIS-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ERMES-Altro</fullName>
+        <default>false</default>
+        <label>ERMES-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ERMES-Persona fisica</fullName>
+        <default>false</default>
+        <label>ERMES-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEnergy-Altro</fullName>
+        <default>false</default>
+        <label>EstEnergy-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEnergy-Persona fisica</fullName>
+        <default>false</default>
+        <label>EstEnergy-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ETRURIA-Altro</fullName>
+        <default>false</default>
+        <label>ETRURIA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ETRURIA-Persona fisica</fullName>
+        <default>false</default>
+        <label>ETRURIA-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURA TR-Altro</fullName>
+        <default>false</default>
+        <label>FUTURA TR-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURA TR-Persona fisica</fullName>
+        <default>false</default>
+        <label>FUTURA TR-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURENERGY-Altro</fullName>
+        <default>false</default>
+        <label>FUTURENERGY-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURENERGY-Persona fisica</fullName>
+        <default>false</default>
+        <label>FUTURENERGY-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>GENESI-Altro</fullName>
+        <default>false</default>
+        <label>GENESI-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>GENESI-Persona fisica</fullName>
+        <default>false</default>
+        <label>GENESI-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>GRAN SASSO-Altro</fullName>
+        <default>false</default>
+        <label>GRAN SASSO-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>GRAN SASSO-Persona fisica</fullName>
+        <default>false</default>
+        <label>GRAN SASSO-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>GREEN EN-Altro</fullName>
+        <default>false</default>
+        <label>GREEN EN-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>GREEN EN-Persona fisica</fullName>
+        <default>false</default>
+        <label>GREEN EN-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALIANGAS-Altro</fullName>
+        <default>false</default>
+        <label>ITALIANGAS-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALIANGAS-Persona fisica</fullName>
+        <default>false</default>
+        <label>ITALIANGAS-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>LIRENAS-Altro</fullName>
+        <default>false</default>
+        <label>LIRENAS-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>LIRENAS-Persona fisica</fullName>
+        <default>false</default>
+        <label>LIRENAS-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>LUCEEG IT SERV-Altro</fullName>
+        <default>false</default>
+        <label>LUCEEG IT SERV-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>LUCEEG IT SERV-Persona fisica</fullName>
+        <default>false</default>
+        <label>LUCEEG IT SERV-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Associazione</fullName>
+        <default>false</default>
+        <label>MMS Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Azienda</fullName>
+        <default>false</default>
+        <label>MMS Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Condominio</fullName>
+        <default>false</default>
+        <label>MMS Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Ditta individuale</fullName>
+        <default>false</default>
+        <label>MMS Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Parti comuni</fullName>
+        <default>false</default>
+        <label>MMS Parti comuni</label>
+    </customValue>
+    <customValue>
+        <fullName>MMS Persona fisica</fullName>
+        <default>false</default>
+        <label>MMS Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>MOODS-Altro</fullName>
+        <default>false</default>
+        <label>MOODS-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>MOODS-Persona fisica</fullName>
+        <default>false</default>
+        <label>MOODS-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>NOIENERGIA-Altro</fullName>
+        <default>false</default>
+        <label>NOIENERGIA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>NOIENERGIA-Persona fisica</fullName>
+        <default>false</default>
+        <label>NOIENERGIA-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>NWGENERGIA-Altro</fullName>
+        <default>false</default>
+        <label>NWGENERGIA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>NWGENERGIA-Persona fisica</fullName>
+        <default>false</default>
+        <label>NWGENERGIA-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>OMNIA EN-Altro</fullName>
+        <default>false</default>
+        <label>OMNIA EN-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>OMNIA EN-Persona fisica</fullName>
+        <default>false</default>
+        <label>OMNIA EN-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>ONOVA-Altro</fullName>
+        <default>false</default>
+        <label>ONOVA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>ONOVA-Persona fisica</fullName>
+        <default>false</default>
+        <label>ONOVA-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>Parti comuni</fullName>
+        <default>false</default>
+        <label>Parti comuni</label>
+    </customValue>
+    <customValue>
+        <fullName>Persona fisica</fullName>
+        <default>false</default>
+        <label>Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>PIUENERGIA SPA-Altro</fullName>
+        <default>false</default>
+        <label>PIUENERGIA SPA-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>PIUENERGIA SPA-Persona fisica</fullName>
+        <default>false</default>
+        <label>PIUENERGIA SPA-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>TOP ENERGY-Altro</fullName>
+        <default>false</default>
+        <label>TOP ENERGY-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>TOP ENERGY-Persona fisica</fullName>
+        <default>false</default>
+        <label>TOP ENERGY-Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>UNION-Altro</fullName>
+        <default>false</default>
+        <label>UNION-Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>UNION-Persona fisica</fullName>
+        <default>false</default>
+        <label>UNION-Persona fisica</label>
+    </customValue>
+    <description>Rappresenta una segmentazione del cliente</description>
+    <masterLabel>Marcatura Cliente</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,18 @@
+<template>
+    <lightning-card title="Selezione Fornitura">
+        <lightning-layout horizontal-align="start">
+           <lightning-layout-item padding="around-small" size="9" ></lightning-layout-item>
+            <lightning-layout-item padding="around-small" style="margin-left: -50px;" size="3" >
+            <div if:true={showCreateTargetObjectMod}>
+                <c-hdt-create-target-object  disabledinput={disabledInput} show-create-target-object-button={showCreateTargetObjectButton} sale={saleRecord} onnewservicepoint={handleNewServicePoint} onconfirmservicepoint={handleConfirmServicePoint} selectedservicepoint={selectedServicePoint}  accountid={accountId}></c-hdt-create-target-object>
+            </div>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item  padding="around-small" size="12" >
+                <c-hdt-advanced-search disabledinput={disabledInput} onservicepointselection={handleServicePointSelection} additionalfilter={additionalFilter} showbuttoncontract={showButtonContract} showbuttonforniture={showButtonForniture} processtype={processType} targetobject={targetObject} accountid={accountId} ></c-hdt-advanced-search>
+            </lightning-layout-item>
+        </lightning-layout>
+        <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>
+    </lightning-card>
+</template>

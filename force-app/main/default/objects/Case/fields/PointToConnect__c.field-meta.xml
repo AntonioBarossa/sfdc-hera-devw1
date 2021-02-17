@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PointToConnect__c</fullName>
+    <description>Campo numerico che indica il numero di punti da connettere per i processi di Nuovo attacco, Nuovo impianto</description>
+    <externalId>false</externalId>
+    <label>Numero punti da connettere</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

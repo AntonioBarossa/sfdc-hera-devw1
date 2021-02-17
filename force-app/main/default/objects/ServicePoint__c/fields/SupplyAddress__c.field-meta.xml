@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SupplyAddress__c</fullName>
+    <description>Concatenazione campi indirizzo. Può visualizzare fino a 1300 caratteri</description>
+    <externalId>false</externalId>
+    <formula>SupplyStreet__c &amp;&apos; &apos;&amp; SupplyStreetNumber__c &amp;&apos; &apos;&amp; SupplyStreetNumberExtension__c &amp;&apos;, &apos;&amp; SupplyPlace__c &amp; SupplyCity__c &amp;&apos; &apos;&amp; SupplyProvince__c &amp;&apos;, &apos;&amp; SupplyPostalCode__c &amp;&apos; &apos;&amp; SupplyCountry__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Indirizzo [Fornitura]</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

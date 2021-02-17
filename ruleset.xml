@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0" 
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        name="Default ruleset" 
+        xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description>Default ruleset</description>
+
+    <rule ref="category/apex/security.xml/ApexOpenRedirect" />
+    <rule ref="category/apex/security.xml/ApexCRUDViolation" />
+    <rule ref="category/apex/security.xml/ApexInsecureEndpoint" />
+    <rule ref="category/apex/errorprone.xml/ApexCSRF" />
+    <rule ref="category/apex/security.xml/ApexXSSFromEscapeFalse" />
+    <rule ref="category/apex/security.xml/ApexXSSFromURLParam" />
+    <rule ref="category/apex/security.xml/ApexInsecureEndpoint" />
+    <rule ref="category/apex/security.xml/ApexBadCrypto" />
+    <!--<rule ref="category/apex/security.xml/ApexSOQLInjection" /> -->
+    <rule ref="category/apex/security.xml/ApexSharingViolations" />
+
+    <rule ref="category/apex/bestpractices.xml/AvoidLogicInTrigger" /> 
+    <rule ref="category/apex/performance.xml/AvoidDmlStatementsInLoops" />
+    <rule ref="category/apex/performance.xml/AvoidSoqlInLoops" />
+    <rule ref="category/apex/performance.xml/AvoidSoslInLoops" />
+    <rule ref="category/apex/errorprone.xml/AvoidHardcodingId" />
+
+    <rule ref="category/apex/codestyle.xml/ClassNamingConventions">
+        <properties>
+            <property name="testClassPattern" value="(HDT_[A-Z]+_([A-Z][a-z]+)+)" />
+            <property name="abstractClassPattern" value="(HDT_[A-Z]+_([A-Z][a-z]+)+)" />
+            <property name="classPattern" value="(HDT_[A-Z]+_([A-Z][a-z]+)+)" />
+            <property name="interfacePattern" value="(HDT_[A-Z]+_([A-Z][a-z]+)+)" />
+            <property name="enumPattern" value="(HDT_[A-Z]+_([A-Z][a-z]+)+)" />
+        </properties>
+    </rule>
+    <rule ref="category/apex/codestyle.xml/MethodNamingConventions">
+        <properties>
+            <property name="testPattern" value="[a-z]+([A-Z]{1,2}[a-z0-9]+)*" />
+            <property name="staticPattern" value="[a-z]+([A-Z]{1,2}[a-z0-9]+)*" />
+            <property name="instancePattern" value="[a-z]+([A-Z]{1,2}[a-z0-9]+)*" />
+        </properties>
+    </rule>
+    <rule ref="category/apex/codestyle.xml/LocalVariableNamingConventions">
+        <properties>
+            <property name="finalLocalPattern" value="(wrts_prcgvr*)|([A-Z]+)" />
+            <property name="localPattern" value="(ObjectCompatibility)|(wrts_prcgvr*)|([a-z]+([A-Z]{1,2}[a-z0-9]+)*)" />
+        </properties>
+    </rule>
+</ruleset>

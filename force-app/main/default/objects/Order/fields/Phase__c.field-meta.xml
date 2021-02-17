@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Phase__c</fullName>
+    <externalId>false</externalId>
+    <label>Phase</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>IR010</fullName>
+                <default>false</default>
+                <label>IR010</label>
+            </value>
+            <value>
+                <fullName>IR020</fullName>
+                <default>false</default>
+                <label>IR020</label>
+            </value>
+            <value>
+                <fullName>BL010</fullName>
+                <default>false</default>
+                <label>BL010</label>
+            </value>
+            <value>
+                <fullName>RC010</fullName>
+                <default>false</default>
+                <label>RC010</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NotCancellable__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag indicante una pratica non più annullabile</description>
+    <externalId>false</externalId>
+    <label>Non Annullabile?</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
