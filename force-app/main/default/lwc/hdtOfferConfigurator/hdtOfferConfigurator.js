@@ -243,7 +243,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                     this.spinnerObj.spinner = false;
                     this.goBackToRecord();
                 } else {
-        
+                    this.spinnerObj.spinner = false;
                 }
             }, 2000);
         } else {

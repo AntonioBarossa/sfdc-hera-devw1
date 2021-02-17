@@ -23,9 +23,10 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         public String productCode;
     }
 
-    public class HDT_WRP_ResponseObj {
+    public class HDT_WRP_SaveResponse {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
+        @AuraEnabled public String techOffId;
         @AuraEnabled public Boolean dataError;
         @AuraEnabled public List<HDT_WRP_LineError> errorData;
     }

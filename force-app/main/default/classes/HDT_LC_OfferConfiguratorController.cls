@@ -136,32 +136,57 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_ResponseObj saveNewOfferConfigured(String offerJson, String productId){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String offerJson, String productId){
         System.debug('# saveNewOfferConfigured #');
         //System.debug(offerJson);
 
-        HDT_WRP_TechnicalOffer.HDT_WRP_ResponseObj responseObj = new HDT_WRP_TechnicalOffer.HDT_WRP_ResponseObj();
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
         try{
 
             List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
 
-            TecnicalOffer__c tecOff = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
+            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
 
-            if(tecOff.Id != null){
+            if(saveResponse.techOffId != null){
                 //send this tech off to SAP
                 HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP();
             }
 
-            responseObj.success = true;
-            responseObj.message = 'nothing to declare';
+            if(!saveResponse.success){
+                System.debug('# on controller #');
+                for(HDT_WRP_TechnicalOffer.HDT_WRP_LineError le : saveResponse.errorData){
+                    System.debug('# ' + le);
+                }
+            }
+
 
         } catch (Exception ex){
             throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
         }
         
-        return responseObj;
+        return saveResponse;
 
+    }
+
+    @AuraEnabled
+    public static String cloneRecord(String recIdToClone, String productId){
+        
+        System.debug('# recIdToClone -> ' + recIdToClone + ' - ' + productId);
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
+
+        try{
+            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.cloneRecordHandler(recIdToClone, productId);
+            if(!saveResponse.success){
+                System.debug('# on clone controller #');
+                for(HDT_WRP_TechnicalOffer.HDT_WRP_LineError le : saveResponse.errorData){
+                    System.debug('# ' + le);
+                }
+            }
+        } catch (Exception e){
+            throw new AuraHandledException(e.getMessage());
+        } 
+        return saveResponse.techOffId;
     }
 
     @AuraEnabled
@@ -176,24 +201,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             throw new AuraHandledException(e.getMessage());
         } 
         return recToView.TechnicalOfferItems__r;
-    }
-
-    @AuraEnabled
-    public static String cloneRecord(String recIdToClone, String productId){
-        
-        System.debug('# recIdToClone -> ' + recIdToClone + ' - ' + productId);
-        Id techOff;
-
-        try{
-            //Use clone sObject Apex method
-            //Account a = new Account();
-            //a.Id = '';
-            //insert a;
-            techOff = HDT_LC_OfferConfiguratorCtrlHelper.cloneRecordHandler(recIdToClone, productId);
-        } catch (Exception e){
-            throw new AuraHandledException(e.getMessage());
-        } 
-        return techOff;
     }
 
 }

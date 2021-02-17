@@ -1,10 +1,10 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static TecnicalOffer__c saveTechnicalOffer(List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String productId) {
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String productId) {
         System.debug('# saveTechnicalOffer controller helper #');
         System.debug('# offerList size -> ' + offerList.size());
 
-        List<String> errorMessage = new List<String>();
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
         Savepoint sp = Database.setSavepoint();
 
@@ -17,7 +17,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         try{
             insert tecOff;
         } catch (Exception e){
-            return tecOff;
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.dataError = false;
+            return saveResponse;
         }
 
         List<TecnicalOfferItem__c> itemList = new List<TecnicalOfferItem__c>();
@@ -29,28 +32,42 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             itemList.add(tecOffItem);
         }
 
-        List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+        saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+        saveResponse.errorData = databaseInsert(itemList, saveResponse.errorData);
+
+        if(saveResponse.errorData.size() > 0){
+            Database.rollback(sp);
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: insert failed';
+        } else {
+            saveResponse.success = true;
+            saveResponse.techOffId = tecOff.Id;
+        }
         
-        for (Database.SaveResult sr : insertResults) {
+        return saveResponse;
+
+    }
+
+    public static List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> databaseInsert(List<TecnicalOfferItem__c> itemList, List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> errorData){
+
+        List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+
+        for(Integer n=0; n<insertResults.size(); n++){
+            Database.SaveResult sr = insertResults[n];
+
             if (!sr.isSuccess()) {
                 // Operation failed
-                String errorString = '';               
+                String errorString = '';
+                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
                 for(Database.Error err : sr.getErrors()) {
-                    errorString += 'The following error has occurred: ';                    
-                    errorString += err.getStatusCode() + ': ' + err.getMessage();
-                    errorString += ' on field: ' + err.getFields();
-                    errorMessage.add(errorString);
+                    lineError.rowId = itemList[n].RowId__c;
+                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
                 }
+                errorData.add(lineError);
             }
         }
-
-
-        if(errorMessage.size() > 0){
-            Database.rollback(sp);
-        }
-        
-        return tecOff;
-
+   
+        return errorData;
     }
 
     public static TecnicalOfferItem__c convertWrapperToObject(TecnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine){
@@ -101,9 +118,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return techOff;
     }
     
-    public static Id cloneRecordHandler(String recIdToClone, String productId){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse cloneRecordHandler(String recIdToClone, String productId){
 
-        List<String> errorMessage = new List<String>();
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
+
         TecnicalOffer__c newTechOff = new TecnicalOffer__c();
         Savepoint sp = Database.setSavepoint();
 
@@ -118,7 +136,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         try{
             insert newTechOff;
         } catch (Exception e){
-            return newTechOff.Id;
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.dataError = false;
+            return saveResponse;
         }
 
         List<TecnicalOfferItem__c> newItemsList = new List<TecnicalOfferItem__c>();
@@ -130,27 +151,19 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             newItemsList.add(newItem);
         }
 
-        List<Database.SaveResult> insertResults = Database.insert(newItemsList, false);
-        
-        for (Database.SaveResult sr : insertResults) {
-            if (!sr.isSuccess()) {
-                // Operation failed
-                String errorString = '';               
-                for(Database.Error err : sr.getErrors()) {
-                    errorString += 'The following error has occurred: ';                    
-                    errorString += err.getStatusCode() + ': ' + err.getMessage();
-                    errorString += ' on field: ' + err.getFields();
-                    errorMessage.add(errorString);
-                }
-            }
-        }
+        saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+        saveResponse.errorData = databaseInsert(newItemsList, saveResponse.errorData);
 
-
-        if(errorMessage.size() > 0){
+        if(saveResponse.errorData.size() > 0){
             Database.rollback(sp);
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: insert failed';
+        } else {
+            saveResponse.success = true;
+            saveResponse.techOffId = newTechOff.Id;
         }
 
-        return newTechOff.Id;
+        return saveResponse;
 
     }
 
