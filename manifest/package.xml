@@ -4,6 +4,15 @@
   <members>*</members>
   <name>ApexClass</name>
 </types>
+ <types>
+  <members>OrderStatus</members>
+  <members>CaseOrigin</members>
+  <members>CasePriority</members>
+  <members>CaseReason</members>
+  <members>CaseStatus</members>
+  <members>CaseType</members>
+  <name>StandardValueSet</name>
+</types>
 <types>
   <members>*</members>
   <name>ApprovalProcess</name>
