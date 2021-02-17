@@ -1,0 +1,258 @@
+import { LightningElement, api, track } from 'lwc';
+import {refreshApex} from '@salesforce/apex';
+
+export default class HdtSelfReadingRegister extends LightningElement {
+
+
+    @api rowNumber;
+    @api commodity;
+    advanceError;
+
+    registerObjEle = [{id: 1, label:"Tipo Lettura ", type: "text", value: null, disabled:true},
+    {id: 2, label:"Data Lettura ", type: "date", value: null, disabled:true},
+    {id: 3, label:"Fascia ", type: "text", value: null, disabled:true},
+    {id: 4, label:"Matricola ", type: "text", value: null, disabled:true},
+    {id: 5, label:"Lettura ", type: "number", value: null, disabled:true},
+    {id: 6, label:"Lettura da Cliente ", type: "number", value: null, disabled:false}];
+
+    registerObjGas = [{id:1, label:"Tipo ", type: "text", value: null, disabled:true},
+    {id:2, label:"Mat. ", type: "text", value: null, disabled:true},
+    {id:3, label:"Fascia ", type: "text", value: null, disabled:true},
+    {id:4, label:"Registro", type: "text", value: null, disabled:true},
+    {id:5, label:"Data Lettura", type: "date", value: null, disabled:true},
+    {id:6, label:"Lettura", type: "number", value: null, disabled:true},
+    {id:7, label:"Unita di Misura", type: "text", value: null, disabled:true},
+    {id:8, label:"Lettura da Cliente ", type: "number", value: null, disabled:false}];
+
+    @track registerObj = [];
+
+    @track registerRet = [];
+    
+
+
+
+    connectedCallback(){
+
+        this.registerObj = this.commodity === 'Energia Elettrica' ? this.registerObjEle : this.registerObjGas;
+
+        console.log(this.rowNumber);
+
+        if(this.commodity === 'Energia Elettrica'){
+
+            for(let i=0; i<Object.keys(this.registerObj).length; ++i){
+
+                this.registerObj[i].label += this.rowNumber;
+
+            }
+        } else if(this.commodity === 'Gas'){
+
+            for(let i=0; i<Object.keys(this.registerObj).length; ++i){
+
+                if(this.registerObj[i].label.includes("Tipo") 
+                || this.registerObj[i].label.includes("Mat.")
+                || this.registerObj[i].label.includes("Fascia")
+                || this.registerObj[i].label.includes("Lettura da Cliente")){
+
+                    this.registerObj[i].label += this.rowNumber;
+
+                }
+
+            }
+
+        }
+
+
+
+    }
+
+    @api
+    checkDate(readingCustomerDate){
+
+        console.log('Method Called Correctly');
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        //today = dd + '/' + mm + '/' + yyyy;
+        today = yyyy + '-' + mm + '-' + dd;
+
+        var index = this.registerObj.findIndex(p => p.label.includes("Data Lettura"));
+
+        if(Date.parse(readingCustomerDate) > Date.parse(today)){
+
+            this.advanceError = 'Impossibile inserire una data futura!';
+
+        } else if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
+
+            this.advanceError = 'Impossibile inserire una data futura!'
+
+        } else {
+
+            this.advanceError = undefined;
+
+        }
+
+        return this.advanceError;
+
+    }
+
+    @api
+    handleLastReading(jsonReading){
+
+        console.log('Method Called Correctly');
+
+        var readingObj = JSON.parse(jsonReading);
+
+        console.log(readingObj);
+
+        var indexIn = readingObj.findIndex(p => p.register == this.rowNumber);
+
+        console.log(indexIn);
+
+        if(indexIn == -1){
+
+            var indexCustomerReading = this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"));
+
+            this.registerObj[indexCustomerReading].disabled = true;
+
+        } else{
+
+        for(const property in readingObj[indexIn]){
+
+                console.log(property);
+
+                var indexOut = this.registerObj.findIndex(p => {
+
+                    if(property == "Lettura"){
+
+                        return this.commodity === "Energia Elettrica" ? p.label == property+' '+this.rowNumber 
+                        : this.commodity === "Gas" ? p.label == property 
+                        : null;
+
+                    } else{
+
+                        return p.label.includes(property);
+
+                    }
+                    
+                
+                });
+
+                console.log("indexOut "+indexOut);
+
+                if(indexOut >= 0){
+
+                    console.log(readingObj[indexIn][property]);
+
+                    this.registerObj[indexOut].value = readingObj[indexIn][property];
+
+                    console.log(this.registerObj);
+                
+                }          
+            }
+        }
+    }
+
+    @api
+    handleSave(){
+
+        this.registerObj.forEach(element => {
+
+            if(element.disabled == false && element.value == null){
+
+                this.advanceError = 'Impossibile procedere: Lettura da Cliente deve essere valorizzata';
+
+            } 
+
+        });
+
+        console.log(this.advanceError);
+
+        if(this.advanceError != undefined){
+
+            return this.advanceError;
+
+        } else{
+
+            console.log('Filling the Array');
+
+            console.log(this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value);
+
+            this.registerRet = 
+                {id: this.rowNumber, 
+                redingType:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
+                readingDate:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Data"))].value,
+                band:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
+                meterCode:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
+                reading:this.registerObj[
+                    this.registerObj.findIndex(p => this.commodity === 'Energia Elettrica' ? p.label == 'Lettura ' + this.rowNumber 
+                    : this.commodity === 'Gas' ? p.label == 'Lettura' : 0)
+                    ].value,
+                readingCustomer:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
+                register:this.commodity === 'Gas' ? 
+                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
+                    : null,
+                unitMeasure:this.commodity === 'Gas' ?
+                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
+                    : null
+                };
+
+                console.log(this.registerRet);
+
+                return this.registerRet;
+
+        }
+
+
+    }
+
+
+    handleChange(event){
+
+        console.log(event.target.label);
+
+        console.log(event.target.value);
+
+        if(event.target.label.includes("Lettura da Cliente")){
+            
+            var indexReading = this.registerObj.findIndex(p => {
+
+                return this.commodity === "Energia Elettrica" ? p.label == 'Lettura '+this.rowNumber 
+                : this.commodity === "Gas" ? p.label == 'Lettura'
+                : null;
+
+            });
+
+            if(event.target.value <= this.registerObj[indexReading].value){
+
+                //this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
+
+                this.advanceError = 'Impossibile inserire lettura inferiore o uguale all\'ultima lettura';
+
+                event.target.setCustomValidity(this.advanceError);
+
+            }else if(event.target.value > 99999999999){
+
+                this.advanceError = 'Valore lettura troppo elevato';
+
+                event.target.setCustomValidity(this.advanceError);
+
+            } else {
+
+                this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value = event.target.value; 
+
+                this.advanceError = undefined;
+
+                event.target.setCustomValidity("");
+
+            }
+
+            event.target.reportValidity();
+
+        }
+
+    }
+
+}
