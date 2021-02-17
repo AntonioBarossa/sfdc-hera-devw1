@@ -18,7 +18,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         System.debug('### recordId -> ' + productId);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer respObj = new HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer();
-        List<TecnicalOffer__c> tecOffList = new List<TecnicalOffer__c>();
+        List<TechnicalOffer__c> tecOffList = new List<TechnicalOffer__c>();
 
         try{
             respObj.success = true;
@@ -27,8 +27,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             tecOffList = [
                 SELECT Id
-                FROM TecnicalOffer__c
-                WHERE ProductId__c =: productId
+                FROM TechnicalOffer__c
+                WHERE Product__c =: productId
                 WITH SECURITY_ENFORCED
             ];
 
@@ -98,14 +98,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 }
 
                 if(false){
-                    TecnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord('a2z1x000000DbrAAAS');
-                    Map<String, TecnicalOfferItem__c> itemsMap = new Map<String, TecnicalOfferItem__c>();
-                    for(TecnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
+                    TechnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord('a2z1x000000DbrAAAS');
+                    Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
+                    for(TechnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
                         itemsMap.put(item.Operand__c, item);
                     }
 
                     for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow item : matrixTable.rowList){
-                        TecnicalOfferItem__c tempItem = itemsMap.get(item.tecName);
+                        TechnicalOfferItem__c tempItem = itemsMap.get(item.tecName);
                         
                         singleRow.Id = tempItem.RowId__c;
                         singleRow.definition = tempItem.Definition__c;
@@ -190,8 +190,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static List<TecnicalOfferItem__c> getTechnicalOfferRecords(String recordId){
-        TecnicalOffer__c recToView;
+    public static List<TechnicalOfferItem__c> getTechnicalOfferRecords(String recordId){
+        TechnicalOffer__c recToView;
         try{
             recToView = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(recordId);
             

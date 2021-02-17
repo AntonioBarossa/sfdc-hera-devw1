@@ -4,6 +4,7 @@
 import lookUp from '@salesforce/apex/HDT_LC_CustomLookupController.lookUp';
 import { getRecord } from 'lightning/uiRecordApi';
 import { api, LightningElement, track, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const FIELDS = [];
 
@@ -78,6 +79,17 @@ export default class LookupLwc extends LightningElement {
             this.error = undefined;
             this.options = this.record;
             //console.log("# lookup result: ", JSON.stringify(this.options));
+
+            if(this.options.length===0){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Nessune risultato trovato',
+                        variant: 'warning'
+                    }),
+                );
+            }
+
         } else if (error) {
             this.error = error;
             this.record = undefined;

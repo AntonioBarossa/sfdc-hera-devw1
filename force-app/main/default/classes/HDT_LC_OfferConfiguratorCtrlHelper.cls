@@ -10,9 +10,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         Product2 pr = [SELECT Id, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
 
-        TecnicalOffer__c tecOff = new TecnicalOffer__c();
+        TechnicalOffer__c tecOff = new TechnicalOffer__c();
         tecOff.Name = pr.ProductCode;
-        tecOff.ProductId__c = productId;
+        tecOff.Product__c = productId;
         
         try{
             insert tecOff;
@@ -23,12 +23,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return saveResponse;
         }
 
-        List<TecnicalOfferItem__c> itemList = new List<TecnicalOfferItem__c>();
-        TecnicalOfferItem__c tecOffItem;
+        List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
+        TechnicalOfferItem__c tecOffItem;
 
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine : offerList){
             tecOffItem = convertWrapperToObject(tecOffItem, offerLine);
-            tecOffItem.TecnicalOfferId__c = tecOff.Id;
+            tecOffItem.TechnicalOffer__c = tecOff.Id;
             itemList.add(tecOffItem);
         }
 
@@ -48,7 +48,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
-    public static List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> databaseInsert(List<TecnicalOfferItem__c> itemList, List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> errorData){
+    public static List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> databaseInsert(List<TechnicalOfferItem__c> itemList, List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> errorData){
 
         List<Database.SaveResult> insertResults = Database.insert(itemList, false);
 
@@ -70,7 +70,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return errorData;
     }
 
-    public static TecnicalOfferItem__c convertWrapperToObject(TecnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine){
+    public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine){
         System.debug('# ' + 
         '[id = ' + offerLine.id + '] - ' +
         '[M = ' + offerLine.m + '] - ' +
@@ -86,7 +86,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         '[tecName = ' + offerLine.tecName + ']'
         );
         
-        tecOffItem = new TecnicalOfferItem__c();
+        tecOffItem = new TechnicalOfferItem__c();
         tecOffItem.RowId__c = offerLine.id;
         tecOffItem.Type__c = offerLine.type;
         tecOffItem.Definition__c = offerLine.definition;
@@ -104,14 +104,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return tecOffItem;
     }
 
-    public static TecnicalOffer__c queryTechnicalOfferRecord(Id recId){
-        TecnicalOffer__c techOff = [
+    public static TechnicalOffer__c queryTechnicalOfferRecord(Id recId){
+        TechnicalOffer__c techOff = [
             SELECT Id, Name, (
                     SELECT Id,RowId__c,Type__c,Operand__c,Duration__c,Delay__c, Definition__c, M__c, V__c,
-                           FareType__c,InfoGroup__c,NumericValue__c,Flag__c,PriceCode__c,StringValue__c,TecnicalOfferId__c
+                           FareType__c,InfoGroup__c,NumericValue__c,Flag__c,PriceCode__c,StringValue__c,TechnicalOffer__c
                     FROM TechnicalOfferItems__r
                 )
-            FROM TecnicalOffer__c
+            FROM TechnicalOffer__c
             WHERE Id =: recId
             LIMIT 1
         ];
@@ -122,14 +122,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
-        TecnicalOffer__c newTechOff = new TecnicalOffer__c();
+        TechnicalOffer__c newTechOff = new TechnicalOffer__c();
         Savepoint sp = Database.setSavepoint();
 
-        TecnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
+        TechnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
 
         newTechOff = recToClone.clone(false, true, false, false);
         newTechOff.Name += '_Clone';
-        newTechOff.ProductId__c = productId;
+        newTechOff.Product__c = productId;
 
         System.debug('# clone this -> ' + newTechOff);
 
@@ -142,12 +142,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return saveResponse;
         }
 
-        List<TecnicalOfferItem__c> newItemsList = new List<TecnicalOfferItem__c>();
-        TecnicalOfferItem__c newItem;
-        for(TecnicalOfferItem__c item : recToClone.TechnicalOfferItems__r){
-            newItem = new TecnicalOfferItem__c();
+        List<TechnicalOfferItem__c> newItemsList = new List<TechnicalOfferItem__c>();
+        TechnicalOfferItem__c newItem;
+        for(TechnicalOfferItem__c item : recToClone.TechnicalOfferItems__r){
+            newItem = new TechnicalOfferItem__c();
             newItem = item.clone(false, true, false, false);
-            newItem.TecnicalOfferId__c = newTechOff.Id;
+            newItem.TechnicalOffer__c = newTechOff.Id;
             newItemsList.add(newItem);
         }
 

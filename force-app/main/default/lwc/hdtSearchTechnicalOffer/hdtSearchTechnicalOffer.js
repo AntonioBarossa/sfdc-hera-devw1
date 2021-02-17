@@ -20,11 +20,12 @@ const columns = [
 export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningElement) {
     data = [];
     columns = columns;
-    detailFields = ['Version__c', 'OffertCode__c'];
-    filter = 'productId__r.Template__c=\'ZELE_DOMES\'';
+    detailFields = ['Version__c', 'OfferCode__c'];
+    filter;
     showTable = false;
 
     @api productid;
+    @api template;
     @track result = {show: false, message: ''};
     @track error = {show: false, message: ''};
 
@@ -53,6 +54,10 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
         header: '',
         body: '',
         operation: ''
+    }
+
+    connectedCallback(){
+        this.filter = 'Product__r.Template__c=\''+ this.template +'\'';
     }
 
     /*setOffertName(event){
@@ -144,7 +149,7 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'TecnicalOffer__c');
+                    this.goToRecord(result, 'TechnicalOffer__c');
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';

@@ -1,5 +1,6 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, wire, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtCreateNewTechnicalOffer extends NavigationMixin(LightningElement) {
 
@@ -7,6 +8,20 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     showSearchOffer = false;
     showCreateOffer = false;
     @api productid;
+    template;
+
+    @wire(getRecord, { recordId: '$productid', fields: ['Product2.Template__c'] })
+    wiredProduct({ error, data }) {
+        if (data) {
+            console.log('#### template -> ' + data.fields.Template__c.value);
+            this.template =  data.fields.Template__c.value;
+        } else if (error) {
+            for(var key in error){
+                console.log('# Error -> ' + key + ' - ' + error[key]);
+            }
+            
+        }
+    }
 
     handleClick(event){
         console.log('### productid -> ' + this.productid);
