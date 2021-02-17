@@ -10,7 +10,6 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>UseTypeEnergy__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_ConnectionType</valueSetName>
     </valueSet>
