@@ -1126,11 +1126,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>BillingProfile__c.OtherPayer_c__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>BillingProfile__c.PaymentConditions__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1172,11 +1167,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>BillingProfile__c.SubjectCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>BillingProfile__c.XMLType_c__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10079,10 +10069,6 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>EditEvent</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>EditKnowledge</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
