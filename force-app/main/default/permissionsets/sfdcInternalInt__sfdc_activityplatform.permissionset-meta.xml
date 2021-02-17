@@ -4773,7 +4773,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.Billing_Profile__c</field>
+        <field>SBQQ__QuoteLine__c.BillingProfile__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
