@@ -150,15 +150,17 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         // Dispatches the event.
         this.dispatchEvent(goback);
 
-        //this[NavigationMixin.Navigate]({
-        //    type: 'standard__recordPage',
-        //    attributes: {
-        //        recordId: this.productid,
-        //        objectApiName: 'Product2',
-        //        actionName: 'view'
-        //    }
-        //});
+    }
 
+    goToRecord(recId, objName){
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recId,
+                objectApiName: objName,
+                actionName: 'view'
+            }
+        });
     }
 
     getMatrixData(){

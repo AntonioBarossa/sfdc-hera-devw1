@@ -1,4 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 import getRecords from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getTechnicalOfferRecords';
 import cloneRecord from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.cloneRecord';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -16,7 +17,7 @@ const columns = [
     { label: 'Nome Tecn.', fieldName: 'Operand__c'}   
 ];
 
-export default class HdtSearchTechnicalOffer extends LightningElement {
+export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningElement) {
     data = [];
     columns = columns;
     detailFields = ['Version__c', 'OffertCode__c'];
@@ -142,6 +143,8 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
 
                 if(result){
                     console.log('# success #');
+                    console.log('# Offer cloned id -> ' + result);
+                    this.goToRecord(result, 'TecnicalOffer__c');
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';
@@ -152,6 +155,17 @@ export default class HdtSearchTechnicalOffer extends LightningElement {
                 this.error.message = error.body.message;
                 this.spinnerObj.spinner = false;
             });
+    }
+
+    goToRecord(recId, objName){
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recId,
+                objectApiName: objName,
+                actionName: 'view'
+            }
+        });
     }
 
     closeSearch(event){

@@ -8,8 +8,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         Savepoint sp = Database.setSavepoint();
 
+        Product2 pr = [SELECT Id, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
+
         TecnicalOffer__c tecOff = new TecnicalOffer__c();
-        tecOff.Name = 'TechnicalOffer';
+        tecOff.Name = pr.ProductCode;
         tecOff.ProductId__c = productId;
         
         try{
@@ -22,36 +24,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TecnicalOfferItem__c tecOffItem;
 
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine : offerList){
-            System.debug('# ' + 
-            '[id = ' + offerLine.id + '] - ' +
-            '[M = ' + offerLine.m + '] - ' +
-            '[V = ' + offerLine.v + '] - ' +
-            //'[startDate = ' + offerLine.startDate.value + '] - ' +
-            //'[endDate = ' + offerLine.endDate.value + '] - ' +
-            '[rateType = ' + offerLine.rateType.value + '] - ' +
-            '[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
-            '[numValue = ' + offerLine.numValue.value + '] - ' +
-            '[flag = ' + offerLine.flag.value + '] - ' +
-            '[priceCode = ' + offerLine.priceCode.value + '] - ' +
-            '[stringValue = ' + offerLine.stringValue.value + ']' + 
-            '[tecName = ' + offerLine.tecName + ']'
-            );
-
-            tecOffItem = new TecnicalOfferItem__c();
-            tecOffItem.RowId__c = offerLine.id;
-            tecOffItem.Type__c = offerLine.type;
-            tecOffItem.Definition__c = offerLine.definition;
-            tecOffItem.V__c = offerLine.v;
-            tecOffItem.M__c = offerLine.m;
-            tecOffItem.Operand__c = offerLine.tecName;
-            //tecOffItem.Duration__c = offerLine.startDate.value;
-            //tecOffItem.Delay__c = offerLine.endDate.value;
-            tecOffItem.FareType__c = offerLine.rateType.value;
-            tecOffItem.InfoGroup__c = offerLine.infoGroup.value;
-            tecOffItem.NumericValue__c = offerLine.numValue.value;
-            tecOffItem.Flag__c = true;//offerLine.flag.value;
-            tecOffItem.PriceCode__c = offerLine.priceCode.value;
-            tecOffItem.StringValue__c = offerLine.stringValue.value;
+            tecOffItem = convertWrapperToObject(tecOffItem, offerLine);
             tecOffItem.TecnicalOfferId__c = tecOff.Id;
             itemList.add(tecOffItem);
         }
@@ -80,6 +53,40 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
+    public static TecnicalOfferItem__c convertWrapperToObject(TecnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine){
+        System.debug('# ' + 
+        '[id = ' + offerLine.id + '] - ' +
+        '[M = ' + offerLine.m + '] - ' +
+        '[V = ' + offerLine.v + '] - ' +
+        //'[startDate = ' + offerLine.startDate.value + '] - ' +
+        //'[endDate = ' + offerLine.endDate.value + '] - ' +
+        '[rateType = ' + offerLine.rateType.value + '] - ' +
+        '[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
+        '[numValue = ' + offerLine.numValue.value + '] - ' +
+        '[flag = ' + offerLine.flag.value + '] - ' +
+        '[priceCode = ' + offerLine.priceCode.value + '] - ' +
+        '[stringValue = ' + offerLine.stringValue.value + ']' + 
+        '[tecName = ' + offerLine.tecName + ']'
+        );
+        
+        tecOffItem = new TecnicalOfferItem__c();
+        tecOffItem.RowId__c = offerLine.id;
+        tecOffItem.Type__c = offerLine.type;
+        tecOffItem.Definition__c = offerLine.definition;
+        tecOffItem.V__c = offerLine.v;
+        tecOffItem.M__c = offerLine.m;
+        tecOffItem.Operand__c = offerLine.tecName;
+        //tecOffItem.Duration__c = offerLine.startDate.value;
+        //tecOffItem.Delay__c = offerLine.endDate.value;
+        tecOffItem.FareType__c = offerLine.rateType.value;
+        tecOffItem.InfoGroup__c = offerLine.infoGroup.value;
+        tecOffItem.NumericValue__c = offerLine.numValue.value;
+        tecOffItem.Flag__c = true;//offerLine.flag.value;
+        tecOffItem.PriceCode__c = offerLine.priceCode.value;
+        tecOffItem.StringValue__c = offerLine.stringValue.value;
+        return tecOffItem;
+    }
+
     public static TecnicalOffer__c queryTechnicalOfferRecord(Id recId){
         TecnicalOffer__c techOff = [
             SELECT Id, Name, (
@@ -103,7 +110,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TecnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
 
         newTechOff = recToClone.clone(false, true, false, false);
-        newTechOff.Name = 'Cloned';
+        newTechOff.Name += '_Clone';
         newTechOff.ProductId__c = productId;
 
         System.debug('# clone this -> ' + newTechOff);
