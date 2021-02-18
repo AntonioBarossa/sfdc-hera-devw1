@@ -49,9 +49,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable getOfferMatrix(String productId){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable getOfferMatrix(String productId, String technicalOfferId){
 
-        Boolean isMock = false;
+        //Boolean isMock = false;
         HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable matrixTable = new HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable();
 
         try{
@@ -60,10 +60,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             //HDT_WRP_TechnicalOffer.HDT_WRP_ProductObj prodObj = (HDT_WRP_TechnicalOffer.HDT_WRP_ProductObj)JSON.deserialize(productObj, HDT_WRP_TechnicalOffer.HDT_WRP_ProductObj.class);
             //System.debug('# Product obj -> ' + prodObj);
 
-            if(isMock){
-                StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'MatrixDataInput' LIMIT 1];
-                matrixTable.rowList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(sr.Body.toString(), List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
-            } else {
+            //if(isMock){
+            //    StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'MatrixDataInput' LIMIT 1];
+            //    matrixTable.rowList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(sr.Body.toString(), List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
+            //} else {
                 Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> complexMap = HDT_LC_OfferConfiguratorCtrlHelper.crateComplexMatrix();
     
                 Product2 product = [SELECT Id, Template__c, RateCategory__r.Name FROM Product2 WHERE Id =: productId LIMIT 1];
@@ -75,7 +75,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 ];
 
                 HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow singleRow;
-                //for(OperandTemplate__c singleOperand : operands){
+
                 for(Integer n=0; n<operands.size(); n++){    
                     Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail> rowDetailMap = complexMap.get(operands[n].Typology__c);
                     singleRow = new HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow();
@@ -85,8 +85,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     singleRow.type = operands[n].Typology__c;
                     singleRow.m = false;
                     singleRow.v = true;
-                    //singleRow.startDate = rowDetailMap.get('startDate');
-                    //singleRow.endDate = rowDetailMap.get('endDate');
                     singleRow.rateType = rowDetailMap.get('rateType');
                     singleRow.infoGroup = rowDetailMap.get('infoGroup');
                     singleRow.numValue = rowDetailMap.get('numValue');
@@ -97,40 +95,31 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     matrixTable.rowList.add(singleRow);
                 }
 
-                if(false){
-                    TechnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord('a2z1x000000DbrAAAS');
+                if(!String.isEmpty(technicalOfferId)){
+                    TechnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(technicalOfferId);
                     Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
                     for(TechnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
-                        itemsMap.put(item.Operand__c, item);
+                        itemsMap.put(item.RowId__c, item);
                     }
 
-                    for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow item : matrixTable.rowList){
-                        TechnicalOfferItem__c tempItem = itemsMap.get(item.tecName);
-                        
-                        singleRow.Id = tempItem.RowId__c;
-                        singleRow.definition = tempItem.Definition__c;
-                        singleRow.type = tempItem.Type__c;
-                        singleRow.m = tempItem.M__c;
-                        singleRow.v = tempItem.V__c;
-                        singleRow.rateType.value = tempItem.FareType__c;
-                        singleRow.infoGroup.value = tempItem.InfoGroup__c;
-                        singleRow.numValue.value = tempItem.NumericValue__c;
-                        //singleRow.flag.value = (String)tempItem.get('Flag__c');
-                        singleRow.priceCode.value = tempItem.PriceCode__c;
-                        singleRow.stringValue.value = tempItem.StringValue__c;
+                    TechnicalOfferItem__c tempItem;
+                    for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
+                        tempItem = itemsMap.get(setSingleRow.Id);
+                        setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
                     }                    
                 }
 
-
-            }
+            //}
 
             matrixTable.success = true;
             matrixTable.message = 'Everything is ok';
+
 
         } catch (Exception e){
             System.debug('# ERROR -> ' + e.getMessage() + String.valueOf(e.getLineNumber()));
             throw new AuraHandledException('# Error -> ' + e.getMessage() + ', at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
+
         
         return matrixTable;
     }

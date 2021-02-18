@@ -15,10 +15,12 @@
 			
 			if(returnObj.success){
 				var redirectToComponent = '';
+				var technicalOfferId = '';
 				if(returnObj.data.offerIsPresent){
 					//call component for edit existing offer, using lwc
 					console.log('# offer Id: ' + returnObj.data.tecnicalOfferId);
 					redirectToComponent = 'c__HDT_LCP_OpenTechnicalOffer';
+					technicalOfferId = returnObj.data.tecnicalOfferId;
 				} else {
 					//call component for create new offer
 					console.log('## I have to call a aura cmp');
@@ -35,7 +37,8 @@
 							componentName: redirectToComponent
 						},
 						state: {
-							c__recordId: productId
+							c__recordId: productId,
+							c__technicalOfferId: technicalOfferId
 						}
 					},
 					focus: true

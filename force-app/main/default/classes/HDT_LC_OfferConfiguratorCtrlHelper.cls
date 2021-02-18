@@ -8,10 +8,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
+        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
 
         TechnicalOffer__c tecOff = new TechnicalOffer__c();
-        tecOff.Name = pr.ProductCode;
+        tecOff.Name = '[Offerta] - ' + pr.Name;
         tecOff.Product__c = productId;
         
         try{
@@ -70,13 +70,29 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return errorData;
     }
 
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow convertObjectToWrapper(TechnicalOfferItem__c tempItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow){
+        setSingleRow.Id = tempItem.RowId__c;
+        setSingleRow.definition = tempItem.Definition__c;
+        setSingleRow.type = tempItem.Type__c;
+        setSingleRow.m = tempItem.M__c;
+        setSingleRow.v = tempItem.V__c;
+        setSingleRow.rateType.label = tempItem.FareType__c;
+        setSingleRow.rateType.value = tempItem.FareTypeValue__c;
+        setSingleRow.infoGroup.label = tempItem.InfoGroup__c;
+        setSingleRow.infoGroup.value = tempItem.InfoGroupValue__c;
+        setSingleRow.numValue.value = tempItem.NumericValue__c;
+        //singleRow.flag.value = (String)tempItem.get('Flag__c');
+        setSingleRow.priceCode.label = tempItem.PriceCode__c;
+        setSingleRow.priceCode.value = tempItem.PriceCodeValue__c;
+        setSingleRow.stringValue.label = tempItem.StringValue__c;
+        return setSingleRow;
+    }
+
     public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine){
-        System.debug('# ' + 
+        /*System.debug('# ' + 
         '[id = ' + offerLine.id + '] - ' +
         '[M = ' + offerLine.m + '] - ' +
         '[V = ' + offerLine.v + '] - ' +
-        //'[startDate = ' + offerLine.startDate.value + '] - ' +
-        //'[endDate = ' + offerLine.endDate.value + '] - ' +
         '[rateType = ' + offerLine.rateType.value + '] - ' +
         '[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
         '[numValue = ' + offerLine.numValue.value + '] - ' +
@@ -84,7 +100,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         '[priceCode = ' + offerLine.priceCode.value + '] - ' +
         '[stringValue = ' + offerLine.stringValue.value + ']' + 
         '[tecName = ' + offerLine.tecName + ']'
-        );
+        );*/
         
         tecOffItem = new TechnicalOfferItem__c();
         tecOffItem.RowId__c = offerLine.id;
@@ -93,13 +109,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.V__c = offerLine.v;
         tecOffItem.M__c = offerLine.m;
         tecOffItem.Operand__c = offerLine.tecName;
-        //tecOffItem.Duration__c = offerLine.startDate.value;
-        //tecOffItem.Delay__c = offerLine.endDate.value;
-        tecOffItem.FareType__c = offerLine.rateType.value;
-        tecOffItem.InfoGroup__c = offerLine.infoGroup.value;
+        tecOffItem.FareType__c = offerLine.rateType.label;//label
+        tecOffItem.FareTypeValue__c = offerLine.rateType.value;//value
+        tecOffItem.InfoGroup__c = offerLine.infoGroup.label;//label
+        tecOffItem.InfoGroupValue__c = offerLine.infoGroup.value;//value
         tecOffItem.NumericValue__c = offerLine.numValue.value;
         tecOffItem.Flag__c = true;//offerLine.flag.value;
-        tecOffItem.PriceCode__c = offerLine.priceCode.value;
+        tecOffItem.PriceCode__c = offerLine.priceCode.label;//label
+        tecOffItem.PriceCodeValue__c = offerLine.infoGroup.value;//value
         tecOffItem.StringValue__c = offerLine.stringValue.value;
         return tecOffItem;
     }
@@ -107,9 +124,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     public static TechnicalOffer__c queryTechnicalOfferRecord(Id recId){
         TechnicalOffer__c techOff = [
             SELECT Id, Name, (
-                    SELECT Id,RowId__c,Type__c,Operand__c,Duration__c,Delay__c, Definition__c, M__c, V__c,
-                           FareType__c,InfoGroup__c,NumericValue__c,Flag__c,PriceCode__c,StringValue__c,TechnicalOffer__c
-                    FROM TechnicalOfferItems__r
+                    SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
+                           FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
+                    FROM TechnicalOfferItems__r ORDER BY RowId__c
                 )
             FROM TechnicalOffer__c
             WHERE Id =: recId
@@ -125,10 +142,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TechnicalOffer__c newTechOff = new TechnicalOffer__c();
         Savepoint sp = Database.setSavepoint();
 
+        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
+
         TechnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
 
         newTechOff = recToClone.clone(false, true, false, false);
-        newTechOff.Name += '_Clone';
+        newTechOff.Name = '[Offerta] - ' + pr.Name;
         newTechOff.Product__c = productId;
 
         System.debug('# clone this -> ' + newTechOff);

@@ -4,9 +4,12 @@
         var i = component.get('v.recordId');
         console.log('# recId -> ' + i);
         component.set('v.recIdLWC', i);*/
-        var recordid = component.get("v.pageReference").state.c__recordId;
-        //console.log('### isUrlAddressable -> ' + recordid);
+        var pageReference = component.get("v.pageReference");
+        var recordid = pageReference.state.c__recordId;
+        var technicalOfferId = pageReference.state.c__technicalOfferId;
+
         component.set('v.recordId', recordid);
+        component.set('v.technicalOfferId', technicalOfferId);
 
         //var workspaceAPI = component.find("workspace");
         //workspaceAPI.getFocusedTabInfo().then(function(response) {

@@ -15,6 +15,7 @@
 		<members>hdtSearchTechnicalOffer</members>
 		<members>hdtCreateNewTechnicalOffer</members>
 		<members>hdtRadioGroup</members>
+		<members>hdtCustomIllustration</members>
 		<name>LightningComponentBundle</name>
 	</types>	
 	<types>
@@ -46,6 +47,9 @@
 		<members>TechnicalOfferItem__c.TechnicalOffer__c</members>
 		<members>TechnicalOfferItem__c.Type__c</members>
 		<members>TechnicalOfferItem__c.V__c</members>
+		<members>TechnicalOfferItem__c.FareTypeValue__c</members>
+		<members>TechnicalOfferItem__c.InfoGroupValue__c</members>
+		<members>TechnicalOfferItem__c.PriceCodeValue__c</members>
 		<members>TechnicalOffer__c.OfferCode__c</members>
 		<members>TechnicalOffer__c.Product__c</members>
 		<members>TechnicalOffer__c.Version__c</members>
@@ -65,5 +69,9 @@
 		<members>TechnicalOffer__c-Technical Offer Layout</members>
 		<name>Layout</name>
 	</types>
+	<types>
+		<members>Product2.HighlightsPanelFields</members>
+		<name>CompactLayout</name>
+	</types>	
 	<version>50.0</version>
 </Package>

@@ -55,6 +55,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         List<String> sl = new List<String>();
         sl.add('Offerta commerciale');
         sl.add('VAS Prodotto');
+        sl.add('VAS Servizio');
         
         Id currentId = String.valueOf(quote.get('Id'));
         SBQQ__Quote__c myQuote= [
@@ -113,6 +114,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         List<String> sl = new List<String>();
         sl.add('Offerta commerciale');
         sl.add('VAS Prodotto');
+        sl.add('VAS Servizio');
         
         Id currentId = String.valueOf(quote.get('Id'));
         SBQQ__Quote__c myQuote= [
@@ -198,6 +200,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         List<String> sl = new List<String>();
         sl.add('Offerta commerciale');
         sl.add('VAS Prodotto');
+        sl.add('VAS Servizio');
         
         //*** start ciro modification ***
         Id currentId = String.valueOf(quote.get('Id'));

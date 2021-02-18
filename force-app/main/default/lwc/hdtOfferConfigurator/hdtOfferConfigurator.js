@@ -9,6 +9,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     @track dataRows = [];
     @track selection;
     @api productid;
+    @api technicalofferid;
     @track spinnerObj = {
         spinner: false,
         spincss: ''
@@ -167,8 +168,9 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         console.log('# get data from apex #');
 
         //this.product.productId = this.productid;
+        console.log('# technicalofferid -> ' + this.technicalofferid);
 
-        getOfferMatrix({productId: this.productid})
+        getOfferMatrix({productId: this.productid, technicalOfferId: this.technicalofferid})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);

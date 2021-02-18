@@ -28,78 +28,132 @@
         </p>
 
         <div if:false={error.show} class="slds-card__body slds-card__body_inner">
-            <div class="slds-grid slds-gutters">
-                <div class="slds-col slds-size_1-of-4">
-                    <div class="slds-form slds-m-top_medium slds-m-bottom_medium" >
-                        <div class="slds-form-element"><!--slds-form-element_horizontal-->
-                            <lightning-helptext content="Nome Offerta...Select the right choice"></lightning-helptext>
-                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-01">Nome offerta</label>
+            
+            <lightning-record-view-form record-id={productid} object-api-name="Product2" >
+        
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+                        <div class="slds-form slds-m-top_x-large " >
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
+                                <div class="slds-form-element__control">
+                                    <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
+                                    <div class="slds-box slds-box_x-small" >
+                                        <!--<div class="slds-text-body_regular">{product.template}</div>-->
+                                        <lightning-output-field field-name="Template__c" variant="label-hidden" ></lightning-output-field>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="slds-form-element__control slds-m-top_medium">
-                                <c-hdt-custom-lookup   
-                                    unique-key={item.code}
-                                    value-id={item.selectedId}
-                                    obj-name="TechnicalOffer__c"
-                                    search-by="Name"
-                                    set-as-key="Id"
-                                    detail-fields={detailFields}
-                                    filter={filter}
-                                    icon-name="custom:custom57"
-                                    label-name="labelName"
-                                    onvalueselect={handleSelection}
-                                    placeholder="Seleziona offerta..."
-                                ></c-hdt-custom-lookup>
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <lightning-helptext content={helpTxt2}></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
+                                <div class="slds-form-element__control">
+                                    <!--<lightning-input disabled value={product.version} type="text" label=" "></lightning-input>-->
+                                    <div class="slds-box slds-box_x-small" >
+                                        <lightning-output-field field-name="Version__c" variant="label-hidden" ></lightning-output-field>
+                                    </div>
+                                </div>
                             </div>
-                            <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
-                        </div>
-                        <!--<div class="slds-form-element slds-form-element_horizontal">
-                            <lightning-helptext content={helpTxt1} ></lightning-helptext>
-                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Nome Offerta</label>
-                            <div class="slds-form-element__control">
-                                <lightning-input onchange={setOffertName} value={searchObj.offertName} type="text" label=" "></lightning-input>
-                            </div>
-                        </div>
 
-                        <div class="slds-form-element slds-form-element_horizontal">
-                            <lightning-helptext content={helpTxt2}></lightning-helptext>
-                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
-                            <div class="slds-form-element__control">
-                                <lightning-input onchange={setVersion} value={searchObj.version} type="text" label=" "></lightning-input>
+                        </div>
+                    </div>
+
+                    <div class="slds-col">
+                        <div class="slds-form slds-m-top_x-large " >
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Template</label>
+                                <div class="slds-form-element__control">
+                                    <!--<lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>-->
+                                    <div class="slds-box slds-box_x-small" >
+                                        <lightning-output-field field-name="RateCategory__c" variant="label-hidden" ></lightning-output-field>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element slds-form-element_horizontal">
+                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
+                                <div class="slds-form-element__control">
+                                    <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
+                                    <div class="slds-box slds-box_x-small" >
+                                        <lightning-output-field field-name="ProductCode" variant="label-hidden" ></lightning-output-field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                </div>            
 
-                        <div class="slds-form-element slds-form-element_horizontal">
-                            <lightning-helptext content={helpTxt3} ></lightning-helptext>
-                            <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Codice Offerta</label>
-                            <div class="slds-form-element__control">
-                                <lightning-input onchange={setOffertCode} value={searchObj.offertCode} type="text" label=" "></lightning-input>
+            </lightning-record-view-form>
+
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                  <span class="slds-truncate slds-p-horizontal_small" title="Cerca">Cerca un'offerta tecnica esistente</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-4">
+                            <div class="slds-form slds-m-top_medium slds-m-bottom_medium" >
+                                <div class="slds-form-element"><!--slds-form-element_horizontal-->
+                                    <lightning-helptext content="Nome Offerta...Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-01">Nome offerta</label>
+        
+                                    <div class="slds-form-element__control slds-m-top_medium">
+                                        <c-hdt-custom-lookup   
+                                            unique-key={item.code}
+                                            value-id={item.selectedId}
+                                            obj-name="TechnicalOffer__c"
+                                            search-by="Name"
+                                            set-as-key="Id"
+                                            detail-fields={detailFields}
+                                            filter={filter}
+                                            icon-name="custom:custom57"
+                                            label-name="labelName"
+                                            onvalueselect={handleSelection}
+                                            placeholder="Seleziona offerta..."
+                                        ></c-hdt-custom-lookup>
+                                    </div>
+                                    <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
+                                </div>
                             </div>
-                        </div>-->
+                        </div>
+                    </div>
+                    
+                    <div if:false={showTable} class="slds-box" >
+                        <c-hdt-custom-illustration message="I risultati verranno mostrati qui" ></c-hdt-custom-illustration>
+                    </div>
+        
+                    <div if:true={showTable} class="slds-box  slds-box_xx-small" >
+                        <lightning-datatable
+                                key-field="id"
+                                data={data}
+                                columns={columns}
+                                hide-checkbox-column
+                        ></lightning-datatable>
+                    </div>
+        
+                    <!--<div class="slds-box">
+                        <p>This is a regular-sized box.</p>
+                    </div>-->
+        
+                </div>
+        
+                <div if:true={error.show} class="slds-card__body slds-card__body_inner">
+                    <div class="slds-box">
+                        <div class="slds-text-color_error">ATTENZIONE</div>
+                        <div class="slds-text-heading_large">{error.message}</div>
                     </div>
                 </div>
-            </div>
 
-            <div if:true={showTable} class="slds-box  slds-box_xx-small" style="height: 300px;">
-                <lightning-datatable
-                        key-field="id"
-                        data={data}
-                        columns={columns}
-                        hide-checkbox-column
-                ></lightning-datatable>
-            </div>
 
-            <!--<div class="slds-box">
-                <p>This is a regular-sized box.</p>
-            </div>-->
+                </div>
+              </div>
 
-        </div>
 
-        <div if:true={error.show} class="slds-card__body slds-card__body_inner">
-            <div class="slds-box">
-                <div class="slds-text-color_error">ATTENZIONE</div>
-                <div class="slds-text-heading_large">{error.message}</div>
-            </div>
-        </div>
 
     </lightning-card>
 </template>

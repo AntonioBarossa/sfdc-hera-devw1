@@ -1,6 +1,7 @@
 <aura:component implements="lightning:isUrlAddressable" >
     <lightning:workspaceAPI aura:id="workspace"/>
     <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="technicalOfferId" type="string" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
-    <c:hdtOfferConfigurator productid="{!v.recordId}" ongoback="{!c.goback}" ></c:hdtOfferConfigurator>
+    <c:hdtOfferConfigurator productid="{!v.recordId}" technicalofferid="{!v.technicalOfferId}" ongoback="{!c.goback}" ></c:hdtOfferConfigurator>
 </aura:component>	

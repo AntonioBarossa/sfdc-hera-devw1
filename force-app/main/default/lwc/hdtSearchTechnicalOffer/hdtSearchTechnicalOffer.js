@@ -6,8 +6,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const columns = [
     { label: 'Definizione', fieldName: 'Definition__c' },
-    { label: 'V', fieldName: 'M__c', type: 'boolean'},
-    { label: 'M', fieldName: 'V__c', type: 'boolean' },
+    { label: 'M', fieldName: 'M__c', type: 'boolean'},
+    { label: 'V', fieldName: 'V__c', type: 'boolean' },
     { label: 'Tipo tariffa', fieldName: 'FareType__c'},
     { label: 'Gruppo info', fieldName: 'InfoGroup__c'},
     { label: 'Valore numerico', fieldName: 'NumericValue__c'},
@@ -55,6 +55,14 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
         body: '',
         operation: ''
     }
+
+    @track product = {
+        productId: '',
+        template: 'TEMPLATE',
+        version: 'VERSION',
+        rateCategory: 'CATEGORY',
+        productCode: 'PRODUCT CODE'
+    };
 
     connectedCallback(){
         this.filter = 'Product__r.Template__c=\''+ this.template +'\'';
