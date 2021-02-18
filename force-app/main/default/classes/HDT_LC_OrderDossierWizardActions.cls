@@ -53,13 +53,50 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                 Phase__c = 'Plico validato Firmato'
             ));
 
-            system.debug('HDT_LC_OrderDossierWizardActions - save: orderParent.ContractSigned__c is true');
         }
 
         orderSrv.updateRecords(ordersToUpdate);
 
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 17/02/2021
+    * @description Handle "Annulla" action
+    * @param Order orderParent
+    */
+    @AuraEnabled
+    public static void cancel(Order orderParent){
+        
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
+        List<Order> ordersToUpdate = new List<Order>();
+
+        //update child orders
+        for (Order childOrder : childOrders) {
+            ordersToUpdate.add(new Order(
+                Id = childOrder.Id,
+                Status = 'Annullato',
+                Phase__c = 'Annullato'
+            ));
+        }
+
+        //update parent order
+        ordersToUpdate.add(new Order(
+            Id = orderParent.Id,
+            Status = 'Annullato',
+            Phase__c = 'Annullato'
+        ));
+
+        orderSrv.updateRecords(ordersToUpdate);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 16/02/2021
+    * @description Check order required documents
+    * @param Order ord
+    * @return Boolean
+    */
     public static Boolean checkRequiredDocs(Order ord){
 
         Boolean check;

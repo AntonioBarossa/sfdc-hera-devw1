@@ -13,7 +13,13 @@
     <aura:attribute name="accountId" type="String"/>
     <aura:attribute name="venditaId" type="String"/>
     <aura:attribute name='causale' type='String' default=""/>
+    <aura:attribute name="lastStepNumber" type='Integer' default="3"/>
     <aura:attribute name="loading" type='Boolean' default="false"/>
+    <aura:attribute name="draftObjectApiName" type='String' default=""/>
+    <aura:attribute name="draftObject" type='Map' />
+    <aura:attribute name="diffDraftObjectApiName" type='String' default=""/>
+    <aura:attribute name="diffFields" type='Map' />
+    <aura:attribute name="test" type='String' default="test"/>
     <lightning:navigation aura:id="navService" />
     <lightning:workspaceAPI aura:id="workspace"/>
 
@@ -35,12 +41,12 @@
 
     <aura:if isTrue="{!v.order}">
         <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
-            <c:hdtChildOrderProcessDetails order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}"></c:hdtChildOrderProcessDetails>
+            <c:hdtChildOrderProcessDetails order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
         </aura:if>
     </aura:if>
 
     <aura:if isTrue="{!v.order}">
-        <c:hdtChildOrderProcessActions order="{!v.order}" onsaveevent="{!c.handleSaveEvent}"></c:hdtChildOrderProcessActions>
+        <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
     </aura:if>
 
 </aura:component>	

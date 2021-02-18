@@ -52,7 +52,7 @@
 
     <!-- Actions buttons -->
     <aura:if isTrue="{!v.orderParentRecord}">
-        <c:hdtOrderDossierWizardActions orderParentRecord="{!v.orderParentRecord}" onsaveevent="{!c.handleSaveEvent}"></c:hdtOrderDossierWizardActions>
+        <c:hdtOrderDossierWizardActions orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}"></c:hdtOrderDossierWizardActions>
     </aura:if>
 
 </aura:component>

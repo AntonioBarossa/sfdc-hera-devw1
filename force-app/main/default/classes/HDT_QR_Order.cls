@@ -44,8 +44,11 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Name,
+            OrderNumber,
             AccountId,
             Account.Name,
+            Account.FirstName__c,
+            Account.LastName__c,
             Account.VATNumber__c,
             Account.FiscalCode__c,
             Account.BillingAddress,
@@ -57,7 +60,8 @@ public inherited sharing class HDT_QR_Order {
             SignatureMethod__c,
             DocSendingMethod__c,
             CreatedDate,
-            Step__c
+            Step__c,
+            Phase__c
             FROM Order 
             WHERE Sale__c = :saleId
             AND RecordTypeId = :recordTypeId
@@ -148,10 +152,12 @@ public inherited sharing class HDT_QR_Order {
             PreventivoRapido__c,
             VisuraCamerale__c,
             Istanza326__c,
-            DocLegge80__c
+            DocLegge80__c,
+            Phase__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
             WITH SECURITY_ENFORCED
         ];
     }

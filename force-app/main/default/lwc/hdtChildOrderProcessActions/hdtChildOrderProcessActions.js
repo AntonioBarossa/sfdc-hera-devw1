@@ -1,14 +1,22 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
+import saveDraft from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.saveDraft';
+import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
 
 export default class hdtChildOrderProcessActions extends LightningElement {
     @api order;
+    @api lastStepNumber;
+    @api draftObject;
+    @api draftObjectApiName;
+    @api diffDraftObjectApiName;
+    @api diffFields;
     loading = false;
     
     get disabledSave(){
-        return false;
-        // return (this.order.Step__c <= 2 || this.order.Step__c === undefined);
+        console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
+        console.log('this.order.Step__c disabledSave: ', this.order.Step__c);
+        return (this.order.Step__c !== this.lastStepNumber);
     }
 
     handleSave(){
@@ -16,11 +24,139 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         save({order: this.order}).then(data =>{
             this.loading = false;
 
-            this.dispatchEvent(new CustomEvent('saveevent'));
+            this.dispatchEvent(new CustomEvent('redirecttoparent'));
 
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Processo confermato con successo',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+
+        }).catch(error => {
+            this.loading = false;
+            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    handleSaveDraft(){
+        // console.log('handleSaveDraft: ' + this.draftObjectApiName + ' ' + JSON.stringify(this.draftObject));
+        console.log('handleSaveDraft: ' + this.draftObjectApiName);
+        console.log('handleSaveDraft: ' + JSON.stringify(this.draftObject));
+        console.log('handleSaveDraft Diff: ' + this.diffDraftObjectApiName + ' ' + JSON.stringify(this.diffFields));
+        
+        if ( this.draftObject != null && this.diffFields == null) {
+
+            this.loading = true;
+            saveDraft({objectApiName: this.draftObjectApiName, objectToUpdate: this.draftObject}).then(data =>{
+                this.loading = false;
+    
+                this.dispatchEvent(new CustomEvent('redirecttoparent'));
+    
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Processo salvato in bozza',
+                    variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+
+        } else if( this.diffFields != null && this.draftObject == null ) {
+
+            this.loading = true;
+            saveDraft({objectApiName:this.diffDraftObjectApiName, objectToUpdate: this.diffFields}).then(data =>{
+                this.loading = false;
+    
+                this.dispatchEvent(new CustomEvent('redirecttoparent'));
+    
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Processo salvato in bozza',
+                    variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+
+        } else if(this.draftObject != null && this.diffFields != null){
+
+            this.loading = true;
+            saveDraft({
+                objectApiName: this.draftObjectApiName,
+                objectToUpdate: this.draftObject,
+                diffObjectApiName: this.diffDraftObjectApiName,
+                diffObjectToUpdate: this.diffFields
+
+                }).then(data =>{
+                this.loading = false;
+    
+                this.dispatchEvent(new CustomEvent('redirecttoparent'));
+    
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'Processo salvato in bozza',
+                    variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+
+        } else {
+            console.log('hdtChildOrderProcessActions - handleSaveDraft - draftObject has no data');
+            this.dispatchEvent(new CustomEvent('redirecttoparent'));
+        }
+
+        
+    }
+
+    handleCancel(){
+        this.loading = true;
+        cancel({order: this.order}).then(data =>{
+            this.loading = false;
+
+            this.dispatchEvent(new CustomEvent('redirecttoparent'));
+
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Processo annullato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);

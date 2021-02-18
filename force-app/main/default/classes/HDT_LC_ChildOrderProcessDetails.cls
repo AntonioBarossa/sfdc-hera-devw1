@@ -23,8 +23,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     @AuraEnabled
     public static void updateProcessStep(Order order, Decimal step, String objectApiName, SObject objectToUpdate){
 
-        system.debug('objectToUpdate: ' + objectToUpdate);
-
         if (objectToUpdate != null) {
             switch on objectApiName {
                 when  'Account'{

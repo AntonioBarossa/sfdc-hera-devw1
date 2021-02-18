@@ -7,6 +7,9 @@
 public inherited sharing class HDT_LC_ChildOrderProcessActions {
     
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
+    private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -83,5 +86,92 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             orderSrv.updateRecord(orderParentToUpdate);
         }
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @date 17/02/2021
+     * @param String objectApiName
+     * @param SObject objectToUpdate
+     * @description Save child order as draft
+     */
+    @AuraEnabled
+    public static void saveDraft(String objectApiName, SObject objectToUpdate){
+        
+        if (objectToUpdate != null) {
+            switch on objectApiName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)objectToUpdate);
+                }
+                when 'Order' {
+                    orderSrv.updateRecord((Order)objectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)objectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)objectToUpdate);
+                }
+            }
+        }
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @date 17/02/2021
+     * @param String objectApiName
+     * @param SObject objectToUpdate
+     * @param String diffObjectApiName
+     * @param SObject diffObjectToUpdate
+     * @description Save child order as draft with diff fields
+     */
+    @AuraEnabled
+    public static void saveDraft(String objectApiName, SObject objectToUpdate, String diffObjectApiName, SObject diffObjectToUpdate){
+        
+        switch on objectApiName {
+            when  'Account'{
+                accountSrv.updateRecord((Account)objectToUpdate);
+            }
+            when 'Order' {
+                orderSrv.updateRecord((Order)objectToUpdate);
+            }
+            when 'ServicePoint__c' {
+                servicePointSrv.updateRecord((ServicePoint__c)objectToUpdate);
+            }
+            when 'BillingProfile__c' {
+                billingProfileSrv.updateRecord((BillingProfile__c)objectToUpdate);
+            }
+        }
+
+        switch on diffObjectApiName {
+            when  'Account'{
+                accountSrv.updateRecord((Account)diffObjectToUpdate);
+            }
+            when 'Order' {
+                system.debug('******** '+diffObjectToUpdate);
+                orderSrv.updateRecord((Order)diffObjectToUpdate);
+            }
+            when 'ServicePoint__c' {
+                servicePointSrv.updateRecord((ServicePoint__c)diffObjectToUpdate);
+            }
+            when 'BillingProfile__c' {
+                billingProfileSrv.updateRecord((BillingProfile__c)diffObjectToUpdate);
+            }
+        }
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @date 17/02/2021
+     * @param Order order
+     * @description Execute child order process cancel actions
+     */
+    @AuraEnabled
+    public static void cancel(Order order){
+        orderSrv.updateRecord(new Order(
+            Id = order.Id,
+            Status = 'Annullato',
+            Phase__c = 'Annullato'
+        ));
     }
 }

@@ -88,7 +88,7 @@
         tableCmp.setTableData();
     },
 
-    handleSaveEvent : function(component, event, helper){
+    redirectToOrderRecordPage : function(component, event, helper){
         var objectId = component.get("v.orderParentId");
         var objectApiname = 'Order';
         helper.redirectToSObjectSubtabFix(component,objectId,objectApiname);
