@@ -9,7 +9,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
         List<HDT_UTL_SelfReadingObject> resultReading = new List<HDT_UTL_SelfReadingObject>();
 
-        List<Reading__c> listReading = new List<Reading__c>();
+        //List<Reading__c> listReading = new List<Reading__c>();
 
         List<Object> listJson = (List<Object>) JSON.deserializeUntyped(fields);
 
@@ -31,7 +31,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
         }
 
-        for(HDT_UTL_SelfReadingObject readObj : resultReading){
+        /*for(HDT_UTL_SelfReadingObject readObj : resultReading){
 
             if(relatedObj == 'Case'){
                 listReading.add(new Reading__c(
@@ -58,9 +58,9 @@ public inherited sharing class HDT_LC_SelfReading {
 
 
             }
-        }
+        }*/
 
-        System.debug(listReading);
+        //System.debug(listReading);
 
     
 
