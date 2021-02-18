@@ -16,6 +16,7 @@ public inherited sharing class HDT_QR_BillingProfile {
 
         return [
             SELECT
+            Name,
             PaymentMethod__c,
             InvoicingCountry__c,
             BillSendingMethod__c,

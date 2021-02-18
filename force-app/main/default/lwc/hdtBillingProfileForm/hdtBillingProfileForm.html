@@ -19,7 +19,12 @@
                             <template if:true={fields}>    
                                 <div class="slds-grid slds-wrap slds-m-top_small">
                                     <template for:each={fields} for:item="field">
-                                        <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={field} key={field} field-name={field} variant="label-stacked"></lightning-input-field>
+                                        <template if:true={field.value}>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" if:true={field.visibility} value={field.value} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                                        </template>
+                                        <template if:false={field.value}>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" if:true={field.visibility} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                                        </template>
                                     </template>
                                 </div>
                                 <template if:true={tipologiaIntestatarioFields}>

@@ -26,16 +26,22 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         Map<String,List<String>> resultMap = new Map<String,List<String>>();
 
         List<String> bollettionoPostale = new List<String>{
+            'BillSendingMethod__c',
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
-            'BillSendingMethod__c',
+            'SendCertifiedEmailConsentDate__c',
             'DivergentSubject__c'
         };
 
         List<String> rid = new List<String>{
+            'BillSendingMethod__c',
+            'XMLType__c',
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
+            'SendCertifiedEmailConsentDate__c',
             'IbanIsForeign__c',
+            'IBAN__c',
+            'IbanCIN_IBAN__c',
             'IbanCIN__c',
             'IbanABI__c',
             'IbanCAB__c',
@@ -43,8 +49,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         };
 
         List<String> fatturazioneElettronica = new List<String>{
+            'ElectronicInvoicingMethod__c',
             'SubjectCode__c',
-            'InvoiceCertifiedEmailAddress__c',
             'SubjectCodeStartDate__c',
             'SubjectCodeEndDate__c',
             'CIG__c',
