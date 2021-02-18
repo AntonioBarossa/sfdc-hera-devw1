@@ -4,7 +4,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     public static String getTableData(String searchTerm){
         String result = '';
         try{
-            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'DataHelper' LIMIT 1];
+            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'DataHelper' WITH SECURITY_ENFORCED LIMIT 1];
             result = sr.Body.toString();
 
         } catch (Exception e){
@@ -72,6 +72,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     SELECT Id, Operands__c, ContractTemplate__c, Typology__c, UnitPrice__c, Definition__c
                     FROM OperandTemplate__c
                     WHERE ContractTemplate__c =: product.Template__c
+                    WITH SECURITY_ENFORCED
                 ];
 
                 HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow singleRow;

@@ -63,15 +63,22 @@
 	</types>
 	<types>
 		<members>Technical_Offer_Page1</members>
+		<members>Product_Record_Page1</members>
 		<name>FlexiPage</name>
 	</types>
 	<types>
 		<members>TechnicalOffer__c-Technical Offer Layout</members>
+		<members>TechnicalOfferItem__c-Technical Offer Item Layout</members>
 		<name>Layout</name>
 	</types>
 	<types>
 		<members>Product2.HighlightsPanelFields</members>
 		<name>CompactLayout</name>
-	</types>	
+	</types>
+	<types>
+		<members>MatrixConfiguration</members>
+		<members>DataHelper</name>
+		<name>StaticResource</name>
+	</types>		
 	<version>50.0</version>
 </Package>

@@ -8,7 +8,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
+        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
 
         TechnicalOffer__c tecOff = new TechnicalOffer__c();
         tecOff.Name = '[Offerta] - ' + pr.Name;
@@ -130,6 +130,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 )
             FROM TechnicalOffer__c
             WHERE Id =: recId
+            WITH SECURITY_ENFORCED
             LIMIT 1
         ];
         return techOff;
@@ -142,7 +143,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TechnicalOffer__c newTechOff = new TechnicalOffer__c();
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId LIMIT 1];
+        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
 
         TechnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
 
@@ -192,7 +193,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     public static Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> crateComplexMatrix(){
 
-        StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'MatrixConfiguration' LIMIT 1];
+        StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'MatrixConfiguration'  WITH SECURITY_ENFORCED LIMIT 1];
         HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData matrixObj = (HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData)JSON.deserialize(sr.Body.toString(), HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData.class);
         
         Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> operandMap = new Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>>();
