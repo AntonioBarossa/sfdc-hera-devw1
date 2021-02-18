@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Oggetto di configurazione per lafunzionalità di configurazione offerta tecnica</description>
+    <description>Oggetto di configurazione per la determinazione dei rate category  legate a quelle dell&apos;oggetto &quot;Lista Group 2&quot; delle tariffe nella funzionalità di configurazione offerta tecnica</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -155,13 +155,13 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Riga Offerta Tecnica</label>
+    <label>Lista Gruppo Info 3</label>
     <nameField>
-        <displayFormat>TO-{00000000}</displayFormat>
-        <label>TechnicalOfferItem Name</label>
+        <displayFormat>TIG-{00000000}</displayFormat>
+        <label>Lista Gruppo Info 3 Name</label>
         <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Technical Offer Items</pluralLabel>
+    <pluralLabel>Lista Gruppi Info3</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
