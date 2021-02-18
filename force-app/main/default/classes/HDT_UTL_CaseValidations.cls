@@ -20,7 +20,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = validatePagamenti(fields, caseType);
 
         } else if (caseType == 'Variazione Anagrafica Cliente' && currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
-            result = validateModificaDatiContatto(fields);
+            if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
+                result = validateModificaDatiContatto(fields);
+            } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
+                result = validateModificaDatiRecapito(fields);
+            }
         }
 
         return result;
@@ -63,6 +67,37 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         }
+
+        return result;
+    }
+
+    private String validateModificaDatiRecapito(String fields) {
+        String result;
+
+        String pecInvioBolletta = getFieldValue(fields, 'InvoiceCertifiedEmailAddress__c');
+        String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
+        String modInvioFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoicingMethod__c');
+        String codiceUfficio = getFieldValue(fields, 'OfficeSubjectCode__c');
+        String pecFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoiceCertifiedEmailAddress__c');
+        String tipoXml = getFieldValue(fields, 'XMLType__c');
+
+        
+
+/*         String newEmail = getFieldValue(fields, 'Email__c');
+        String newMobile = getFieldValue(fields, 'Mobile__c');
+        String newPhone = getFieldValue(fields, 'PhoneNumber__c');
+        System.debug('validateModificaDatiContatto: ' + newEmail + ' - ' + newPhone + ' - ' + newMobile);
+
+        Boolean noEmail = String.isBlank(newEmail) || newEmail.equalsIgnoreCase('null');
+        Boolean noMobile = String.isBlank(newMobile) || newMobile.equalsIgnoreCase('null');
+        Boolean noPhone = String.isBlank(newPhone) || newPhone.equalsIgnoreCase('null');
+        System.debug('validateModificaDatiContatto: ' + noEmail + ' - ' + noMobile + ' - ' + noPhone);
+
+        if (noEmail && noMobile && noPhone) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire almeno un riferimento telefonico o un indirizzo Email.'));
+        } else {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        } */
 
         return result;
     }
