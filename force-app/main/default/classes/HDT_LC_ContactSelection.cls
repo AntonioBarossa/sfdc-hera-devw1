@@ -8,6 +8,7 @@ public with sharing class HDT_LC_ContactSelection {
 
             List<List<sObject>> recordList = new List<List<sObject>>();
 
+            // TODO: escludere contatti particolari, es. contatti SOL o Amministratore.
             List<AccountContactRelation> relationList = [SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId WITH SECURITY_ENFORCED];
             List<Id> contactIds = new List<Id>();
             for (AccountContactRelation acr : relationList) {
