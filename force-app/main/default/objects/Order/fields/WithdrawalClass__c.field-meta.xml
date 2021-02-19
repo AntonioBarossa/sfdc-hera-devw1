@@ -2,9 +2,9 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>WithdrawalClass__c</fullName>
     <externalId>false</externalId>
-    <label>Classe di prelievo</label>
+    <label>Classe Profilo Prelievo</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
