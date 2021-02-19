@@ -1,7 +1,30 @@
 public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
     @AuraEnabled
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion getExistingCriterion() {
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj getTreeObj(String regionCode){
+
+        HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj treeObj;
+
+        try{
+            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
+
+            treeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj.class);
+
+            treeObj.success = true;
+            treeObj.message = '';
+
+            System.debug('# result -> ' +  treeObj.regionList[0].provinceList);
+
+        } catch (Exception e){
+            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            throw new AuraHandledException(e.getMessage());
+        } 
+        return treeObj;
+
+    }
+
+    @AuraEnabled
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion getExistingCriteria() {
         HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion recObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_Criterion();
 
         try{

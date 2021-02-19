@@ -4,7 +4,7 @@
 
 		var workspaceAPI = component.find("workspace");
 		var productId = component.get('v.recordId');
-        var action = component.get("c.getExistingCriterion");
+        var action = component.get("c.getExistingCriteria");
         action.setParams({
             productId: productId
         });

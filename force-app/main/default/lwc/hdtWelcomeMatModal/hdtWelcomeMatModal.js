@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 
 export default class HdtWelcomeMatModal extends LightningElement {
 
+    @api iconName;
     @api mainTitleLabel;
     @api newTitleLabel;
     @api searchTitleLabel;
