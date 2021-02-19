@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>WithdrawalClass__c</fullName>
+    <fullName>PaymentMode__c</fullName>
     <externalId>false</externalId>
-    <label>Classe di prelievo</label>
+    <label>Modalità di Pagamento</label>
     <required>false</required>
-    <trackTrending>false</trackTrending>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_WithdrawalClass</valueSetName>
+        <valueSetName>HDT_PaymentMode</valueSetName>
     </valueSet>
 </CustomField>
