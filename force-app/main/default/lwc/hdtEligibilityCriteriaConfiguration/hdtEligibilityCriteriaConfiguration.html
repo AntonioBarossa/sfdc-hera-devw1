@@ -1,0 +1,178 @@
+<template>
+
+    <lightning-card variant="narrow" icon-name="standard:sales_path">
+        
+        <div if:true={spinnerObj.spinner} >
+            <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+        <h1 slot="title">Eleggibilità</h1>
+        
+        <div class="slds-grid slds-wrap slds-m-around_small">
+            <div class="slds-col slds-size_3-of-7 slds-m-top_small">
+
+                <div class="slds-text-heading_small">
+                    Provincia di fornitura
+                </div>
+
+                <lightning-input
+                    data-id="userinput"
+                    label="Provincia"
+                    name="searchProvince"
+                    onchange={searchField}
+                    value=""
+                    variant="label-hidden"
+                ></lightning-input>
+            </div>
+            <div class="slds-col slds-size_4-of-7 slds-m-top_small">
+                <!--<span>2</span>-->
+            </div>
+
+            <div class="slds-col slds-size_3-of-7 slds-m-top_small">
+                <div class="slds-text-heading_small">
+                    Comuni di fornitura
+                    <lightning-helptext content="Puoi ricercare per nome e cap"></lightning-helptext>
+                </div>
+
+                <div class="slds-m-bottom_small">
+                    <lightning-input
+                        name="enter-search"
+                        label="Comuni eleggibili"
+                        type="search"
+                        variant="label-hidden"
+                        onchange={handleOnchange}
+                    ></lightning-input>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-7 slds-m-top_small">
+                <!--<span>2</span>-->
+            </div>
+            <div class="slds-col slds-size_3-of-7 slds-m-top_small">
+                <div class="slds-text-heading_small">
+                    Comuni di fornitura rimossi
+                </div>
+            </div>
+            <div class="slds-col slds-size_3-of-7 slds-m-top_small">
+                <div class="slds-box slds-box_xx-small" style="height: 300px;">
+                    <div class="slds-scrollable_y" style="height:100%;">
+                        <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+                            <thead class="slds-assistive-text">
+                                <tr class="slds-line-height_reset">
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Name">Comune</div>
+                                </th>
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="ZipCode">CAP</div>
+                                </th>                                
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <template iterator:it={dataToView}>
+                                    <tr key={it.value.id} class="slds-hint-parent">
+                                        <th data-label={it.value.label} scope="row">
+                                            <div class="slds-truncate" title={it.value.label}>
+                                                <div class="slds-truncate" title={it.value.label}>{it.value.label}</div>
+                                            </div>
+                                        </th>
+                                        <th data-label={it.value.value} scope="row">
+                                            <div class="slds-truncate" title={it.value.value}>
+                                                <div class="slds-truncate" title={it.value.value}>{it.value.value}</div>
+                                            </div>                                            
+                                        </th>
+                                        <td data-label={it.value.id}>
+                                            <lightning-button-icon
+                                                data-id={it.value.id}
+                                                data-label={it.value.label}
+                                                data-value={it.value.value}
+                                                onclick={removeItem}
+                                                icon-name="utility:delete"
+                                                variant="bare"
+                                                alternative-text="Rimuovi"
+                                                class="slds-m-left_xx-small"
+                                                title="Rimuovi"
+                                            ></lightning-button-icon>
+                                        </td>
+                                    </tr>
+                                </template>
+
+                            </tbody>
+                        </table>                
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-7 slds-m-top_small">
+                <!--<span>2</span>-->
+            </div>
+            <div class="slds-col slds-size_3-of-7 slds-m-top_small">
+                <div class="slds-box slds-box_xx-small" style="height: 300px;">
+                    <template if:true={showTable}>
+                        <div class="slds-scrollable_y" style="height:100%;">
+                            <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+                                <thead class="slds-assistive-text">
+                                    <tr class="slds-line-height_reset">
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Action">Action</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="Comune">Comune</div>
+                                        </th>
+                                        <th class="" scope="col">
+                                            <div class="slds-truncate" title="ZipCode">CAP</div>
+                                        </th>                                         
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <template iterator:it={dataRemoved}>
+                                        <tr key={it.value.id} class="slds-hint-parent">
+
+                                            <td data-label={it.value.label}>
+                                                <lightning-button-icon
+                                                    data-id={it.value.id}
+                                                    data-label={it.value.label}
+                                                    data-value={it.value.value}
+                                                    onclick={restoreItem}
+                                                    icon-name="utility:chevronleft"
+                                                    variant="bare"
+                                                    alternative-text="Ripristina"
+                                                    class="slds-m-left_xx-small"
+                                                    title="Ripristina"
+                                                ></lightning-button-icon>
+                                            </td>
+                                            <th data-label={it.value.label} scope="row">
+                                                <div class="slds-truncate" title={it.value.label}>
+                                                    <div class="slds-truncate" title={it.value.label}>{it.value.label}</div>
+                                                </div>
+                                            </th>
+                                            <th data-label={it.value.value} scope="row">
+                                                <div class="slds-truncate" title={it.value.value}>
+                                                    <div class="slds-truncate" title={it.value.value}>{it.value.value}</div>
+                                                </div>                                            
+                                            </th>
+                                        </tr>
+                                    </template>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>     
+
+                </div>
+            </div>
+        </div>
+        
+        <div slot="actions">
+            <lightning-button label="Salva" onclick={saveAction} icon-name="utility:save"></lightning-button>
+        </div>
+
+        <!--<div slot="footer">
+            <h6>This is the footer</h6>
+        </div>-->
+
+    </lightning-card>
+
+</template>

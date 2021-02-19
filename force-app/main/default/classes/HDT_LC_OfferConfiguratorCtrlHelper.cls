@@ -71,7 +71,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     }
 
     public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow convertObjectToWrapper(TechnicalOfferItem__c tempItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow){
-        setSingleRow.Id = tempItem.RowId__c;
+        //setSingleRow.Id = tempItem.RowId__c;
+        setSingleRow.Id = tempItem.Id;
         setSingleRow.definition = tempItem.Definition__c;
         setSingleRow.type = tempItem.Type__c;
         setSingleRow.m = tempItem.M__c;
@@ -197,8 +198,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData matrixObj = (HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData)JSON.deserialize(sr.Body.toString(), HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData.class);
         
         Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> operandMap = new Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>>();
+        Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail> fieldDetailMap;
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixConfig op : matrixObj.data){
-            Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail> fieldDetailMap = new Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>();
+            fieldDetailMap = new Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>();
             HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail cd;
 
             for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixDetail s : op.fields){

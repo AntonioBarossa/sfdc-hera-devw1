@@ -1,6 +1,10 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class HdtWelcomeMatModal extends LightningElement {
+
+    @api mainTitleLabel;
+    @api newTitleLabel;
+    @api searchTitleLabel;
 
     closeModal(event){
         console.log('### closeModal ###');

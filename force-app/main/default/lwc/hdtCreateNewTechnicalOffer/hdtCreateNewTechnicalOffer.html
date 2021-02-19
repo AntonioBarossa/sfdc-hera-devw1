@@ -1,6 +1,9 @@
 <template>
     <template if:true={showWelcom} >
-        <c-hdt-welcome-mat-modal 
+        <c-hdt-welcome-mat-modal
+            main-title-label="Offerta Tecnica"
+            new-title-label="Crea una nuova offerta"
+            search-title-label="Cerca e copia un'offerta"
             onclosemodal={closeModal}
             oncreatenew={createNew}
             onsearch={search}
