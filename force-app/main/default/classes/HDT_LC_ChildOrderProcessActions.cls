@@ -23,8 +23,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
-        orderToUpdate.Phase__c = 'Da Inviare'; //FIELD_CUSTOM_VALIDATION_EXCEPTION, [ERR:CL-0470601] The transition from IR010 to Da Inviare is not allowed
+        orderToUpdate.Phase__c = 'Da Inviare';
         orderToUpdate.Step__c = 20;
+        orderToUpdate.WizardCompletedDate__c = Date.today();
         
         switch on order.RecordType.DeveloperName {
             when 'HDT_RT_Subentro' { // only for HDT_RT_Residenziale
@@ -33,6 +34,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.CiCliente__c = 'Richiesto';
                     // Documenti relativi alla Legge 80.
                     orderToUpdate.DocLegge80__c = 'Richiesto';
+                }
+            }
+            when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                    // Carta d’identità;
+                    orderToUpdate.CiCliente__c = 'Richiesto';
+
+                    if (order.VolturaThirdTrader__c) {
+                        orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    }
+
                 }
             }
             when 'HDT_RT_Attivazione' {

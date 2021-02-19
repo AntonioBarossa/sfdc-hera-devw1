@@ -109,6 +109,8 @@ public inherited sharing class HDT_QR_Order {
             Deliberation__c,
             ParentOrder__c,
             ParentOrder__r.Status,
+            ParentOrder__r.ContractSigned__c,
+            ParentOrder__r.SignedDate__c,
             OrderNumber,
             Phase__c
             FROM Order 
@@ -153,6 +155,7 @@ public inherited sharing class HDT_QR_Order {
             VisuraCamerale__c,
             Istanza326__c,
             DocLegge80__c,
+            AutorizationVolturaThirdTrader__c,
             Phase__c
             FROM
             Order

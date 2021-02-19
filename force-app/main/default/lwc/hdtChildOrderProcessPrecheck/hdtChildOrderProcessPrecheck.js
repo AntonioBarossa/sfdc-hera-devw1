@@ -32,7 +32,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
             // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
             {"label":"Subentro","value":"HDT_RT_Subentro"},
-            // {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
+            {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
             // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
         ];
     }
@@ -100,8 +100,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         else if(selectedProcess === 'HDT_RT_SwitchIn')
         {
-            this.precheck = false;
-            this.compatibilita = false;
+            // this.precheck = false;
+            this.precheck = true;
+            // this.compatibilita = false;
+            this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }

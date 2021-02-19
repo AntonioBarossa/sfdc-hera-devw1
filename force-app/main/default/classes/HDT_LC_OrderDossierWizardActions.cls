@@ -27,7 +27,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             for (Order childOrder : childOrders) {
                 ordersToUpdate.add(new Order(
                     Id = childOrder.Id,
-                    Phase__c = checkRequiredDocs(childOrder) ? 'Comunicazione verso Heroku OK': 'In attesa validazione'
+                    Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
 
@@ -43,7 +43,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             for (Order childOrder : childOrders) {
                 ordersToUpdate.add(new Order(
                     Id = childOrder.Id,
-                    Phase__c = checkRequiredDocs(childOrder) ? 'Comunicazione verso Heroku OK': 'In attesa validazione'
+                    Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
 
@@ -101,7 +101,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         Boolean check;
 
-        if(ord.CiRappresentateLegale__c != null ||  ord.CiCliente__c != null || ord.PreventivoRapido__c != null || ord.VisuraCamerale__c != null || ord.Istanza326__c != null || ord.DocLegge80__c != null)
+        if(ord.AutorizationVolturaThirdTrader__c != null || ord.CiRappresentateLegale__c != null ||  ord.CiCliente__c != null || ord.PreventivoRapido__c != null || ord.VisuraCamerale__c != null || ord.Istanza326__c != null || ord.DocLegge80__c != null)
         {
            	check = true;
             if(ord.CiRappresentateLegale__c != null && !'Validato'.EqualsIgnoreCase(ord.CiRappresentateLegale__c)){
@@ -122,7 +122,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             if(ord.DocLegge80__c != null && !'Validato'.EqualsIgnoreCase(ord.DocLegge80__c)){
                 check = false;
             }
-        } else if(ord.CiRappresentateLegale__c == null &&  ord.CiCliente__c == null && ord.PreventivoRapido__c == null && ord.VisuraCamerale__c == null && ord.Istanza326__c == null && ord.DocLegge80__c == null) {
+            if(ord.AutorizationVolturaThirdTrader__c != null && !'Validato'.EqualsIgnoreCase(ord.AutorizationVolturaThirdTrader__c)){
+                check = false;
+            }
+        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CiRappresentateLegale__c == null &&  ord.CiCliente__c == null && ord.PreventivoRapido__c == null && ord.VisuraCamerale__c == null && ord.Istanza326__c == null && ord.DocLegge80__c == null) {
             check = true;
         }
 

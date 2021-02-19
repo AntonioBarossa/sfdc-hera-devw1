@@ -6,8 +6,8 @@
                 <lightning-layout-item padding="horizontal-large" size="12">
                     <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
                         <div class="slds-grid slds-wrap slds-m-top_small">
-                            <lightning-input-field disabled={disabledInput} data-id="checkbox" onchange={handleDataCollection} class="slds-size_1-of-2" field-name="ContractSigned__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled={disabledInput} if:true={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignedDate__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} data-id="ContractSigned__c" onchange={handleDataCollection} class="slds-size_1-of-2" field-name="ContractSigned__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignedDate__c" variant="label-stacked"></lightning-input-field>
                         </div>
                         <template if:true={areInputsVisible}>
                             <div class="slds-grid slds-wrap slds-m-top_small">
