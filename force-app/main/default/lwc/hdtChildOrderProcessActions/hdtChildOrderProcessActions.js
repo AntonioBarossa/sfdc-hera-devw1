@@ -12,6 +12,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api diffDraftObjectApiName;
     @api diffFields;
     loading = false;
+    isDialogVisible = false;
     
     get disabledSave(){
         console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
@@ -147,9 +148,9 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         
     }
 
-    handleCancel(){
+    callCancel(cancellationReason){
         this.loading = true;
-        cancel({order: this.order}).then(data =>{
+        cancel({order: this.order, cancellationReason: cancellationReason}).then(data =>{
             this.loading = false;
 
             this.dispatchEvent(new CustomEvent('redirecttoparent'));
@@ -172,5 +173,19 @@ export default class hdtChildOrderProcessActions extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    handleCancel(){
+        this.isDialogVisible = true;
+    }
+
+    handleDialogResponse(event){
+        if(event.detail.status == true){
+
+            this.callCancel(event.detail.choice);
+
+        } else {
+            this.isDialogVisible = false;
+        }
     }
 }

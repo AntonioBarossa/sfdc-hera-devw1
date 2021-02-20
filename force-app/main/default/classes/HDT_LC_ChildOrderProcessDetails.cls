@@ -21,7 +21,27 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @param SObject objectToUpdate
     */
     @AuraEnabled
-    public static void updateProcessStep(Order order, Decimal step, String objectApiName, SObject objectToUpdate){
+    public static void updateProcessStep(Order order, Decimal step, String objectApiName, SObject objectToUpdate, SObject diffObjectToUpdate){
+
+        if (diffObjectToUpdate != null) {
+            Schema.SObjectType diffSobjectType = diffObjectToUpdate.Id.getSObjectType();
+            String diffSobjectName = diffSobjectType.getDescribe().getName();
+            switch on diffSobjectName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)diffObjectToUpdate);
+                }
+                when 'Order' {
+                    system.debug('extraFields: ' + diffObjectToUpdate);
+                    orderSrv.updateRecord((Order)diffObjectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)diffObjectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)diffObjectToUpdate);
+                }
+            }
+        }
 
         if (objectToUpdate != null) {
             switch on objectApiName {
@@ -56,7 +76,27 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @param SObject objectToUpdate
     */
     @AuraEnabled
-    public static void updateProcessStepWithExtraFields(Order order, Decimal step, SObject extraFields, String objectApiName, SObject objectToUpdate){
+    public static void updateProcessStepWithExtraFields(Order order, Decimal step, SObject extraFields, String objectApiName, SObject objectToUpdate, SObject diffObjectToUpdate){
+
+        if (diffObjectToUpdate != null) {
+            Schema.SObjectType diffSobjectType = diffObjectToUpdate.Id.getSObjectType();
+            String diffSobjectName = diffSobjectType.getDescribe().getName();
+            switch on diffSobjectName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)diffObjectToUpdate);
+                }
+                when 'Order' {
+                    system.debug('extraFields: ' + diffObjectToUpdate);
+                    orderSrv.updateRecord((Order)diffObjectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)diffObjectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)diffObjectToUpdate);
+                }
+            }
+        }
 
         if (extraFields != null) {
             Schema.SObjectType sobjectType = extraFields.Id.getSObjectType();

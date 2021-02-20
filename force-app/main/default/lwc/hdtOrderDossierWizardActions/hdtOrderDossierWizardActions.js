@@ -10,6 +10,7 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
     currentStep = 2;
     loading = false;
     isSaveButtonDisabled = false;
+    isDialogVisible = false;
 
     getSaveButtonStatus(){
         this.loading = true;
@@ -58,9 +59,9 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
         });
     }
 
-    handleCancel(){
+    callCancel(cancellationReason){
         this.loading = true;
-        cancel({orderParent: this.orderParentRecord}).then(data =>{
+        cancel({orderParent: this.orderParentRecord, cancellationReason: cancellationReason}).then(data =>{
             this.loading = false;
 
             this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
@@ -83,6 +84,20 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    handleCancel(){
+        this.isDialogVisible = true;
+    }
+
+    handleDialogResponse(event){
+        if(event.detail.status == true){
+
+            this.callCancel(event.detail.choice);
+
+        } else {
+            this.isDialogVisible = false;
+        }
     }
 
     connectedCallback(){

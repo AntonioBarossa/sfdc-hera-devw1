@@ -45,6 +45,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                     }
 
+                    if (order.WaiverRightAfterthought__c == 'Si') {
+                        orderToUpdate.DateSentToSII__c = Date.today();
+                    } else {
+                        orderToUpdate.MaxAfterthoughtDate__c = Date.today();
+                    }
+
+                } else {
+                    orderToUpdate.DateSentToSII__c = Date.today();
                 }
             }
             when 'HDT_RT_Attivazione' {
@@ -176,14 +184,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @date 17/02/2021
      * @param Order order
+     * @param String cancellationReason
      * @description Execute child order process cancel actions
      */
     @AuraEnabled
-    public static void cancel(Order order){
+    public static void cancel(Order order, String cancellationReason){
         orderSrv.updateRecord(new Order(
             Id = order.Id,
             Status = 'Annullato',
-            Phase__c = 'Annullato'
+            Phase__c = 'Annullato',
+            CancellationReason__c = cancellationReason
         ));
     }
 }

@@ -64,9 +64,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     * @date 17/02/2021
     * @description Handle "Annulla" action
     * @param Order orderParent
+    * @param String cancellationReason
     */
     @AuraEnabled
-    public static void cancel(Order orderParent){
+    public static void cancel(Order orderParent, String cancellationReason){
         
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -76,7 +77,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             ordersToUpdate.add(new Order(
                 Id = childOrder.Id,
                 Status = 'Annullato',
-                Phase__c = 'Annullato'
+                Phase__c = 'Annullato',
+                CancellationReason__c = cancellationReason
             ));
         }
 
@@ -84,7 +86,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         ordersToUpdate.add(new Order(
             Id = orderParent.Id,
             Status = 'Annullato',
-            Phase__c = 'Annullato'
+            Phase__c = 'Annullato',
+            CancellationReason__c = cancellationReason
         ));
 
         orderSrv.updateRecords(ordersToUpdate);

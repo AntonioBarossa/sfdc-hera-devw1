@@ -27,8 +27,31 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     fields = {};
     extraFieldsToSubmit = {}; //fields that are updated before step is advanced
 
+    get requestOptions(){ return [ //Used to set value for RequestOption__c field
+        {"label":"Domestici residenti-D2","value":"Domestici residenti-D2"},
+        {"label":"Domestici-TD","value":"Domestici-TD"},
+        {"label":"Domestici potenza > 3 Kw-D3","value":"Domestici potenza > 3 Kw-D3"},
+        {"label":"AEEG Op BTA3 >3 <=6 kW-E_BTA3","value":"AEEG Op BTA3 >3 <=6 kW-E_BTA3"},
+        {"label":"AEEG Op BTA4 >6 <=10 kW-E_BTA4","value":"AEEG Op BTA4 >6 <=10 kW-E_BTA4"}
+    ]};
+
+    get previousTraderOptions(){ return [ //Used to set value for PreviousTrader__c field
+        {"label":"ENEL ENERGIA SPA-10V0000006","value":"ENEL ENERGIA SPA-10V0000006"},
+        {"label":"EDISON PER VOI -10V0000017","value":"EDISON PER VOI -10V0000017"},
+        {"label":"ENI GAS & POWER-10V0000012","value":"ENI GAS & POWER-10V0000012"}
+    ]};
+
     handleSectionDataToSubmitCollection(event){
-        this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
+        
+        if(event.target.fieldName !== undefined){
+            this.sectionDataToSubmit[event.target.fieldName] = event.target.value;
+        }
+
+        if(event.target.name !== undefined){
+            this.sectionDataToSubmit[event.target.name] = event.target.value;
+        }
+
+        console.log(JSON.stringify(this.sectionDataToSubmit));
 
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
@@ -45,7 +68,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let currentSection = this.availableSteps.filter(section => section.name === this.choosenSection);
 
         this.sectionDiffDataToSubmit['Id'] = currentSection[0].diffRecordId;
-        this.sectionDiffDataToSubmit[event.target.fieldName] = event.target.value;
+
+        if(event.target.fieldName !== undefined){
+            this.sectionDiffDataToSubmit[event.target.fieldName] = event.target.value;
+        }
+
+        if(event.target.name !== undefined){
+            this.sectionDiffDataToSubmit[event.target.name] = event.target.value;
+        }
 
         console.log('********'+JSON.stringify(this.sectionDiffDataToSubmit));
 
@@ -209,29 +239,58 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     updateProcessStepSimple(currentSectionIndex, nextSectionStep){
-        updateProcessStep({order: this.order, step: nextSectionStep}).then(data =>{
-            this.loading = false;
-            this.currentSection = this.availableSteps[currentSectionIndex + 1];
-            this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
-            this.activeSections = [this.choosenSection];
 
-            this.currentSectionObjectApi = this.availableSteps[currentSectionIndex + 1].objectApiName;
-            this.currentSectionRecordId = this.availableSteps[currentSectionIndex + 1].recordId;
-
-            this.sectionDataToSubmit = {};
-            this.dispatchEvent(new CustomEvent('refreshorderchild'));
-
-        }).catch(error => {
-            this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error',
-                mode: 'sticky'
+        if(Object.keys(this.sectionDiffDataToSubmit).length > 1){
+            updateProcessStepWithExtraFields({order: this.order, step: nextSectionStep, extraFields: this.sectionDiffDataToSubmit}).then(data =>{
+                this.loading = false;
+                this.currentSection = this.availableSteps[currentSectionIndex + 1];
+                this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
+                this.activeSections = [this.choosenSection];
+    
+                this.currentSectionObjectApi = this.availableSteps[currentSectionIndex + 1].objectApiName;
+                this.currentSectionRecordId = this.availableSteps[currentSectionIndex + 1].recordId;
+    
+                this.sectionDataToSubmit = {};
+                this.extraFieldsToSubmit = {};
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
             });
-            this.dispatchEvent(toastErrorMessage);
-        });
+
+        } else {
+            updateProcessStep({order: this.order, step: nextSectionStep}).then(data =>{
+                this.loading = false;
+                this.currentSection = this.availableSteps[currentSectionIndex + 1];
+                this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
+                this.activeSections = [this.choosenSection];
+    
+                this.currentSectionObjectApi = this.availableSteps[currentSectionIndex + 1].objectApiName;
+                this.currentSectionRecordId = this.availableSteps[currentSectionIndex + 1].recordId;
+    
+                this.sectionDataToSubmit = {};
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+    
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
     }
 
     updateProcessWithDataToSubmit(currentSectionIndex, nextSectionStep){
@@ -261,7 +320,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     updateProcessWithExtraFieldsSimple(currentSectionIndex, nextSectionStep){
-        updateProcessStepWithExtraFields({order: this.order, step: nextSectionStep, extraFields: this.extraFieldsToSubmit}).then(data =>{
+
+        let paramsObject = {};
+
+        if(Object.keys(this.sectionDiffDataToSubmit).length > 1){
+            paramsObject = {order: this.order, step: nextSectionStep, extraFields: this.extraFieldsToSubmit, diffObjectToUpdate: this.sectionDiffDataToSubmit};
+        } else {
+            paramsObject = {order: this.order, step: nextSectionStep, extraFields: this.extraFieldsToSubmit};
+        }
+
+        updateProcessStepWithExtraFields(paramsObject).then(data =>{
             this.loading = false;
             this.currentSection = this.availableSteps[currentSectionIndex + 1];
             this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
@@ -288,7 +356,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     updateProcessWithDataToSubmitAndExtraFields(currentSectionIndex, nextSectionStep){
-        updateProcessStepWithExtraFields({order: this.order, step: nextSectionStep, extraFields: this.extraFieldsToSubmit, objectApiName: this.currentSection.objectApiName, objectToUpdate: this.sectionDataToSubmit}).then(data =>{
+
+        let paramsObject = {};
+
+        if(Object.keys(this.sectionDiffDataToSubmit).length > 1){
+            paramsObject = {order: this.order, step: nextSectionStep, extraFields: this.extraFieldsToSubmit, objectApiName: this.currentSection.objectApiName, objectToUpdate: this.sectionDataToSubmit, diffObjectToUpdate: this.sectionDiffDataToSubmit};
+        } else {
+            paramsObject = {order: this.order, step: nextSectionStep, extraFields: this.extraFieldsToSubmit, objectApiName: this.currentSection.objectApiName, objectToUpdate: this.sectionDataToSubmit};
+        }
+
+        updateProcessStepWithExtraFields(paramsObject).then(data =>{
             this.loading = false;
             this.currentSection = this.availableSteps[currentSectionIndex + 1];
             this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
@@ -567,7 +644,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'C.F. Precdente intestatario',
-                        'apiname': 'PreviousHolderFiscalCode__c	',
+                        'apiname': 'PreviousHolderFiscalCode__c',
                         'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
                         'required': false,
                         'disabled': false,
@@ -862,6 +939,32 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': false,
                     'value': '',
                     'processVisibility': '',
+                    'diffObjApi': 'Order',
+                    'diffRecordId': this.order.Id
+                },
+                {
+                    'label': 'Opzione richiesta',
+                    'apiname': 'RequestOption__c',
+                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
+                    'required': false,
+                    'disabled': false,
+                    'value': this.order.RequestOption__c,
+                    'processVisibility': '',
+                    'isMockPicklist': true,
+                    'mockOptions': this.requestOptions,
+                    'diffObjApi': 'Order',
+                    'diffRecordId': this.order.Id
+                },
+                {
+                    'label': 'Società uscente',
+                    'apiname': 'PreviousTrader__c',
+                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
+                    'required': false,
+                    'disabled': false,
+                    'value': this.order.PreviousTrader__c,
+                    'processVisibility': '',
+                    'isMockPicklist': true,
+                    'mockOptions': this.previousTraderOptions,
                     'diffObjApi': 'Order',
                     'diffRecordId': this.order.Id
                 },

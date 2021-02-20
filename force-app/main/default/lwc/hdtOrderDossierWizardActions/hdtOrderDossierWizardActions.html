@@ -13,14 +13,17 @@
                     <lightning-button onclick={handleSave} disabled={isSaveButtonDisabled} icon-name="utility:save" variant="success" label="Stampa" title="Save action"></lightning-button>
                 </li>
             </ul>
-            <c-hdt-confirmation-dialog title={dialogTitle}
-                        message={dialogMessage}
-                        confirm-label='Si'
-                        cancel-label='No'
-                        visible={isDialogVisible}
-                        name="deleteTileConfimation"
-                        onclick={handleDialogResponse}>
-            </c-hdt-confirmation-dialog>
+            <c-hdt-confirmation-dialog-dropdown
+                           object-api-name="Order"
+                           picklist-api-name="CancellationReason__c"
+                           title="Cancella Ordine"
+                           message="Scegli una causale per procedere: "
+                           confirm-label='Si'
+                           cancel-label='No'
+                           visible={isDialogVisible}
+                           name="deleteQuoteConfimation"
+                           onclick={handleDialogResponse}>
+            </c-hdt-confirmation-dialog-dropdown>
         </div>
     </template>
 </template>
