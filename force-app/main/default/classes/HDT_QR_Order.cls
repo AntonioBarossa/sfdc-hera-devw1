@@ -44,8 +44,11 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Name,
+            OrderNumber,
             AccountId,
             Account.Name,
+            Account.FirstName__c,
+            Account.LastName__c,
             Account.VATNumber__c,
             Account.FiscalCode__c,
             Account.BillingAddress,
@@ -57,7 +60,8 @@ public inherited sharing class HDT_QR_Order {
             SignatureMethod__c,
             DocSendingMethod__c,
             CreatedDate,
-            Step__c
+            Step__c,
+            Phase__c
             FROM Order 
             WHERE Sale__c = :saleId
             AND RecordTypeId = :recordTypeId
@@ -105,8 +109,12 @@ public inherited sharing class HDT_QR_Order {
             Deliberation__c,
             ParentOrder__c,
             ParentOrder__r.Status,
+            ParentOrder__r.ContractSigned__c,
+            ParentOrder__r.SignedDate__c,
             OrderNumber,
-            Phase__c
+            Phase__c/*, EVRIS: COMMENTATO POICHE' CAMPO NON DISPONIBILE SULLA NOSTRA ORG
+            RequestOption__c,
+            PreviousTrader__c*/
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -142,13 +150,61 @@ public inherited sharing class HDT_QR_Order {
             OrderNumber,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
-            Step__c//,
-            //CiRappresentateLegale__c,
-            //CiCliente__c,
-            //PreventivoRapido__c,
-            //VisuraCamerale__c,
-            //Istanza326__c,
-            //DocLegge80__c
+            Step__c,
+            /*CiRappresentateLegale__c,
+            CiCliente__c,
+            PreventivoRapido__c,
+            VisuraCamerale__c,
+            Istanza326__c,
+            DocLegge80__c,
+            AutorizationVolturaThirdTrader__c,*/
+            Phase__c
+            FROM
+            Order
+            WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 20/02/2020
+    * @description Get child records by parent order Id without status filtering
+    * @param String parentOrderId
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersByParentIdAllStatus(String parentOrderId){
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Name,
+            Recordtypeid,
+            Recordtype.Name,
+            Recordtype.DeveloperName,
+            Status,
+            BillingProfile__c,
+            BillingProfile__r.InvoicingCityCode__c,
+            BillingProfile__r.InvoicingCountry__c,
+            BillingProfile__r.InvoicingPlace__c,
+            BillingProfile__r.InvoicingPostalCode__c,
+            BillingProfile__r.InvoicingProvince__c,
+            BillingProfile__r.InvoicingStreetName__c,
+            BillingProfile__r.InvoicingStreetNumber__c,
+            BillingProfile__r.InvoicingStreetNumberExtension__c,
+            OrderNumber,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            Step__c,
+            /*CiRappresentateLegale__c,
+            CiCliente__c,
+            PreventivoRapido__c,
+            VisuraCamerale__c,
+            Istanza326__c,
+            DocLegge80__c,
+            AutorizationVolturaThirdTrader__c,*/
+            Phase__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

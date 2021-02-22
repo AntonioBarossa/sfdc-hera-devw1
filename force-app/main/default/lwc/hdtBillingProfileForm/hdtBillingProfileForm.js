@@ -28,7 +28,33 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         getFormFields({paymentMethod: event.target.value, accountId: this.accountId}).then(data =>{
             this.loading = false;
-            this.fields = data.choosenFields;
+            // this.fields = data.choosenFields;
+            
+            this.fields = [];
+            if(data.choosenFields !== undefined){
+                data.choosenFields.forEach(el => {
+                    let value = '';
+
+                    switch (el) {
+                        case 'XMLType__c':
+                            value = 'Sintetico';
+                            console.log('XMLType__c default: ', value);
+
+                            break;
+                    
+                        default:
+                            break;
+                    }
+
+
+                    this.fields.push({
+                        fieldName: el,
+                        visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
+                        disabled: false,
+                        value: value
+                    });
+                });
+            }
 
             if(data.fatturazioneElettronica !== undefined){
                 this.fatturazioneElettronicaFields = data.fatturazioneElettronica;
@@ -50,12 +76,13 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.loading = false;
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: error.body.message,
+                // message: error.body.message,
+                message: 'Error',
                 variant: 'error',
                 mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
-            console.log('Errore: ',error.body.message);
+            // console.log('Errore: ',error.body.message);
         });
 
     }
@@ -121,12 +148,13 @@ export default class hdtBillingProfileForm extends LightningElement {
                         this.loading = false;
                         const toastErrorMessage = new ShowToastEvent({
                             title: 'Errore',
-                            message: error.body.message,
+                            // message: error.body.message,
+                            message: 'Error',
                             variant: 'error',
                             mode: 'sticky'
                         });
                         this.dispatchEvent(toastErrorMessage);
-                        console.log('Errore: ',error.body.message);
+                        // console.log('Errore: ',error.body.message);
                     });
     
                     break;
@@ -157,12 +185,13 @@ export default class hdtBillingProfileForm extends LightningElement {
                 this.loading = false;
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    message: error.body.message,
+                    // message: error.body.message,
+                    message: 'Error',
                     variant: 'error',
                     mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
-                console.log('Errore: ',error.body.message);
+                // console.log('Errore: ',error.body.message);
             });
         }
 
@@ -180,13 +209,28 @@ export default class hdtBillingProfileForm extends LightningElement {
                 this.loading = false;
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    message: error.body.message,
+                    // message: error.body.message,
+                    message: 'Error',
                     variant: 'error',
                     mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
-                console.log('Errore: ',error.body.message);
+                // console.log('Errore: ',error.body.message);
             });
+        }
+
+        if (event.target.fieldName === 'BillSendingMethod__c') {
+            this.fields[this.fields.findIndex(el => el.fieldName === 'InvoiceCertifiedEmailAddress__c')].visibility = event.target.value === 'Invio tramite PEC';
+            this.fields[this.fields.findIndex(el => el.fieldName === 'SendCertifiedEmailConsentDate__c')].visibility = event.target.value === 'Invio tramite PEC';
+        }
+
+        if(event.target.fieldName === 'IbanIsForeign__c'){
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCIN_IBAN__c')].visibility = !event.target.value;
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCIN__c')].visibility = !event.target.value;
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanABI__c')].visibility = !event.target.value;
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCAB__c')].visibility = !event.target.value;
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCodeNumber__c')].visibility = !event.target.value;
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].visibility = event.target.value;
         }
 
     }
@@ -254,7 +298,8 @@ export default class hdtBillingProfileForm extends LightningElement {
     
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    message: error.body.message,
+                    // message: error.body.message,
+                    message: 'Error',
                     variant: 'error'
                 });
                 this.dispatchEvent(toastErrorMessage);

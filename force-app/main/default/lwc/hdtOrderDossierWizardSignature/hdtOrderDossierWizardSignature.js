@@ -103,20 +103,41 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     handleNext(){
         this.loading = true;
         this.dataToSubmit['Id'] = this.orderParentRecord.Id;
-        next({orderUpdates: this.dataToSubmit}).then(data =>{
+
+        let validErrorMessage = ''
+
+        if(this.template.querySelector("[data-id='ContractSigned__c']").value && this.template.querySelector("[data-id='SignedDate__c']").value === null){
+            validErrorMessage = 'Popolare il campo Data Firma';
+        }
+
+        if(validErrorMessage === ''){
+            next({orderUpdates: this.dataToSubmit}).then(data =>{
+                this.loading = false;
+                this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                this.dispatchEvent(new CustomEvent('tablerefresh'));
+            }).catch(error => {
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        } else {
             this.loading = false;
-            this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-            this.dispatchEvent(new CustomEvent('tablerefresh'));
-        }).catch(error => {
-            this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            console.log(validErrorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
-                variant: 'error'
+                message: validErrorMessage,
+                variant: 'error',
+                mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
-        });
+        }
+
     }
 
     handleEdit(){

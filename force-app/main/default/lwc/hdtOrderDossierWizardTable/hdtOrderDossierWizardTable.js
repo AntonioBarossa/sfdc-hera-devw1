@@ -63,6 +63,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
              }},
             {label: 'POD/PDR', fieldName: 'pod', type: 'text'},
             {label: 'Status', fieldName: 'Status', type: 'text'},
+            {label: 'Phase', fieldName: 'Phase__c', type: 'text'},
             {label: 'Tipologia', fieldName: 'recordtypename', type: 'text'},
             {type:  'button',typeAttributes:{
                     iconName: 'utility:edit',
@@ -93,9 +94,11 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                 ord.pod = '';
                 ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
                 ord.pod = ord.ServicePoint__r.ServicePointCode__c;
-                ord.disabledActionButton = this.disabledInput || ord.Step__c === 20;
+                ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
 
             });
+
+            console.log('this.childOrdersList: ', JSON.parse(JSON.stringify(this.childOrdersList)));
 
         }).catch(error => {
             this.loaded = true;

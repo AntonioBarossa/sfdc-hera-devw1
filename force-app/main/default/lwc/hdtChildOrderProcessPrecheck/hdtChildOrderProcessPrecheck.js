@@ -30,13 +30,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         return [
             {"label":"Attivazione","value":"HDT_RT_Attivazione"},
             {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
-            {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
+            // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
             {"label":"Subentro","value":"HDT_RT_Subentro"},
             {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
             {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"},
             //INIZIO SVILUPPI VOLTURA EVERIS
             {"label":"Voltura","value":"HDT_RT_Voltura"}
             //FINE SVILUPPI VOLTURA EVERIS
+            // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
         ];
     }
 
@@ -87,11 +88,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.compatibilita = true;
             this.causale = '';
 
-            this.showDeliberation = true;
+            this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess === 'HDT_RT_RiattivazioniNonMorose'){
-            this.showDeliberation = true;
+            this.showDeliberation = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
             this.disabledDeliberation = this.order.Step__c !== undefined;
         }
         else if(selectedProcess === 'HDT_RT_Subentro')
@@ -103,8 +104,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         else if(selectedProcess === 'HDT_RT_SwitchIn')
         {
-            this.precheck = false;
-            this.compatibilita = false;
+            // this.precheck = false;
+            this.precheck = true;
+            // this.compatibilita = false;
+            this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
