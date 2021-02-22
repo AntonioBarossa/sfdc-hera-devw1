@@ -53,6 +53,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
                 } else {
                     orderToUpdate.DateSentToSII__c = Date.today();
+
+                    if (order.VolturaThirdTrader__c) {
+                        orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    }
+
+                    orderToUpdate.CiRappresentateLegale__c = 'Richiesto';
                 }
             }
             when 'HDT_RT_Attivazione' {

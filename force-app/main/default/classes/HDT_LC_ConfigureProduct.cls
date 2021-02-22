@@ -29,7 +29,7 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         List<Map<String,List<SObject>>> resultsList = new List<Map<String,List<SObject>>>();
 
         quoteSrv.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c');
-        quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
+        quoteLineSrv.checkReadAccess('Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
         List<SBQQ__Quote__c> quoteList = quoteQr.getActiveRecords(saleId);
         List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getRecordsBySale(saleId);

@@ -275,6 +275,9 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     }
 
+    handleWrapAddressObject(event){
+        console.log('handleWrapAddressObject: ', JSON.stringify(event.detail.wrapAddressObject));
+    }
 
     handleSaveEvent(){
         if(this.validFields()){

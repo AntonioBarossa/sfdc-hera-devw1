@@ -45,6 +45,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Name,
             OrderNumber,
+            RecordTypeId,
             AccountId,
             Account.Name,
             Account.FirstName__c,
@@ -89,6 +90,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.RecordType.Developername,
             Name,
+            RecordTypeId,
             RecordType.Name,
             RecordType.DeveloperName,
             SystemModstamp,

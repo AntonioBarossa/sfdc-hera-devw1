@@ -50,7 +50,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico validato Firmato'
+                Phase__c = 'Plico Firmato da validare'
             ));
 
         }
