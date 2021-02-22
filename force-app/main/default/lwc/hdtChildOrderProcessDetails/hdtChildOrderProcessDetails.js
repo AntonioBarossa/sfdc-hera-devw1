@@ -1,6 +1,13 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
+//INIZIO SVILUPPI EVERIS
+import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
+import { updateRecord } from 'lightning/uiRecordApi';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+
+import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
+//FINE SVILUPPI EVERIS
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
     @api order;
@@ -18,6 +25,134 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     showDelibera40 = false;
     showInviaModulistica = false;
     @track sectionDataToSubmit = {};
+
+    //INIZIO SVILUPPI EVERIS
+
+    availableVoltureSection;
+
+    activeVoltureSection = [];
+
+    voltureField = [];
+
+    outputFieldObj = {};
+    
+    goReading = false;
+
+    @track isRetroactive = false;
+
+    @track isReading = false;
+
+    handleVoltureToggle(){}
+
+    handleVoltureChange(event){
+
+        console.log(event.target.value);
+
+        if(event.target.fieldName === 'RetroactiveDate__c' && (event.target.value != null)){
+
+            this.isRetroactive = true;
+
+            console.log(this.isRetroactive);
+
+        } else if(event.target.fieldName === 'RetroactiveDate__c' && (event.target.value == null)){
+
+            this.isRetroactive = false;
+
+            console.log(this.isRetroactive);
+
+
+        }
+
+        if(!event.target.disabled){
+            
+            this.outputFieldObj[event.target.fieldName] = event.target.value;
+
+        }
+
+    }
+
+    handelVoltureReading(event){
+
+        this.loading = true;
+
+        let currentVoltureSectionName = 'reading';
+
+        let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name == currentVoltureSectionName);
+
+        console.log('Detail Name: ' +event.detail.name);
+
+        if(event.detail.name === 'previous'){
+
+            this.activeVoltureSection = this.availableVoltureSection[currentVoltureSectionIndex -1].name;
+
+            this.loading = false;
+
+            this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+        } else{
+
+            this.isReading = true;
+
+            updateOrder({fields: JSON.stringify(this.outputFieldObj), recordId: this.order.Id, 
+                isRetroactive: this.isRetroactive, isReading: this.isReading,
+                readingCustomerDate: event.detail.readingDate, completed:false})
+            .then(result =>{
+
+                console.log(result)
+
+                this.activeVoltureSection = this.availableVoltureSection[currentVoltureSectionIndex +1].name;
+    
+                this.loading = false;
+
+                this.outputFieldObj = {};
+
+                this.refreshValues(this.order.Id);
+    
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+
+            }).catch(error => {
+
+                this.loading = false;
+                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                    variant: 'error',
+                });
+                this.dispatchEvent(toastErrorMessage);
+
+            });
+
+        }
+
+    }
+
+    @wire(getRecord, { recordId: '$order.Id', fields: RETROACTIVE_DATE })
+    wiredCase({error, data}){
+        if(data){
+
+            this.isRetroactive = getFieldValue(data, RETROACTIVE_DATE) != null ? true : false;
+
+            console.log('Wired Retroactive ' +this.isRetroactive)
+
+        }else if(error){
+
+            console.log(error);
+
+        }    
+
+    }
+
+
+    refreshValues(recordId){
+
+        updateRecord({fields: { Id: recordId }});
+
+    }
+
+    //FINE SVILUPPI EVERIS
+
 
     handleSectionDataToSubmitCollection(event){
         console.log('handleSectionDataToSubmitCollection fieldName: ', event.target.fieldName);
@@ -119,12 +254,38 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     break;
                 default:
                     break;
+                
             }
             
         }
     }
 
     getFirstStepName(){
+        //INIZIO SVILUPPI EVERIS
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+            console.log('Condizione Verificata');
+
+            this.activeVoltureSection = this.voltureField[this.voltureField.findIndex(p => p.section == 1)].name;
+
+            this.availableVoltureSection = this.voltureField.filter(section => section.active === true);
+
+            this.availableVoltureSection[0].firstStep = true;
+
+            this.availableVoltureSection[this.availableVoltureSection.length - 1].lastStep = true;
+
+            console.log('Sezioni Attive '+this.activeVoltureSection);
+
+            return;
+
+        }
+
+
+        //FINE SVILUPPI EVERIS
+
+
+
         this.availableSteps = this.fields.filter(section => section.processVisibility === true);
         this.availableSteps[0].firstStep = true;
         this.availableSteps[this.availableSteps.length - 1].lastStep = true;
@@ -140,6 +301,83 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleNext(event){
         this.loading = true;
+
+        this.goReading = event.target.name === 'goReading' ? true : false;
+
+        //INIZIO SVILUPPI EVERIS
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+            let currentVoltureSectionName = event.currentTarget.value;
+    
+            let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name == currentVoltureSectionName);
+
+            let nextVoltureSection = currentVoltureSectionName === 'retroactiveDate' ? 
+            (this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'reading' 
+            && event.target.name === 'goReading'
+            ? this.availableVoltureSection[currentVoltureSectionIndex + 1].name 
+            : this.availableVoltureSection[currentVoltureSectionIndex + 2].name)
+            : this.availableVoltureSection[currentVoltureSectionIndex + 1].name;
+
+            if(Object.keys(this.outputFieldObj).length > 0 || currentVoltureSectionName === 'reading'){
+
+                console.log('here');
+
+                console.log(this.outputFieldObj);
+
+                console.log(JSON.stringify(this.outputFieldObj));
+
+                updateOrder({fields: JSON.stringify(this.outputFieldObj), recordId: this.order.Id, 
+                    isRetroactive: this.isRetroactive, isReading: this.isReading, completed:false})
+                .then(result =>{
+
+                    console.log(result)
+
+                    this.activeVoltureSection = nextVoltureSection;
+        
+                    this.loading = false;
+
+                    this.showReadingButton = this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'retroactiveDate'
+                    ? true : false;
+
+                    this.outputFieldObj = {};
+
+                    this.refreshValues(this.order.Id);
+        
+                    this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+
+                }).catch(error => {
+
+                    this.loading = false;
+                    console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: (error.body.message !== undefined) ? error.body.message : error.message,
+                        variant: 'error',
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+
+                });
+
+            } else {
+
+                this.activeVoltureSection = nextVoltureSection;
+        
+                this.loading = false;
+
+                this.outputFieldObj = {};
+    
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+            }
+
+
+
+
+        }
+
+
+        //FINE SVILUPPI EVERIS
 
         let currentSectionName = event.currentTarget.value;
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
@@ -205,6 +443,31 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         console.log('handle Click Event Data: ', event.currentTarget.value);
         let currentSectionName = event.currentTarget.value;
+
+        //INIZIO SVILUPPI EVERIS
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+            let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name === currentSectionName);
+
+            let previousVoltureSection = currentSectionName === 'processVariable' ?
+            (this.availableVoltureSection[currentVoltureSectionIndex - 1].name === 'reading' && this.goReading
+            ? this.availableVoltureSection[currentVoltureSectionIndex - 1].name 
+            : this.availableVoltureSection[currentVoltureSectionIndex - 2].name)
+            : this.availableVoltureSection[currentVoltureSectionIndex - 1].name;
+
+            console.log('Previous Section '+previousVoltureSection);
+
+            this.activeVoltureSection = previousVoltureSection;
+            
+            console.log(this.activeVoltureSection);
+
+            this.loading = false;
+        
+            this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+        }
+        //FINE SVILUPPI EVERIS
+
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
 
         let previousSectionStep = this.availableSteps[currentSectionIndex - 1].step
@@ -230,6 +493,214 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleFields(){
+
+    //INIZIO SVILUPPI EVERIS        
+        this.voltureField =[
+            {
+
+                section: 1,
+                label: 'Credit Check',
+                name: 'creditCheck',
+                reading: false,
+                readingButton: false,
+                inputField: false,
+                active: true,
+                data:
+                [
+                    {
+                        label: 'Esito Credit Check Uscente',
+                        apiname: 'OutgoingCreditCheck',
+                        value: 'OK',
+                        type: 'text',
+                        disabled: true,
+                        required:false
+                    },
+                    {
+                        label: 'Esito Credit Check Entrante',
+                        apiname: 'OutgoingCreditCheck',
+                        value: 'OK',
+                        type: 'text',
+                        disabled: true,
+                        required:false
+                    },
+                    {
+                        label: 'Descrizione Esito',
+                        apiname: 'CreditCheckDescription',
+                        value: 'OK',
+                        type: 'text',
+                        disabled: true,
+                        required:false
+                    }
+                ]
+
+
+            },
+            {
+
+                section: 2,
+                label: 'Data Retroattiva',
+                name: 'retroactiveDate',
+                reading: false,
+                readingButton: true,
+                inputField: true,
+                recordId:this.order.Id,
+                objectApiName:'Order',
+                active: true,
+                data:
+                [
+                    {
+                        label: 'Data Retroattiva',
+                        apiname: 'RetroactiveDate__c',
+                        type: 'Date',
+                        value: null,
+                        disabled: false
+                    }
+                ]
+
+            },
+            {
+
+                section: 3,
+                label: 'Autolettura',
+                name: 'reading',
+                reading: true,
+                readingButton: false,
+                inputField: false,
+                active: true
+
+            },
+            {
+                section: 4,
+                label: 'Variabili di Processo',
+                name: 'processVariable',
+                reading:false,
+                readingButton: false,
+                inputField:true,
+                recordId:this.order.Id,
+                objectApiName:'Order',
+                active:true,
+                data:
+                [
+                    {
+                        apiname: 'VoltureType__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: 'AnnualConsumption__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: 'SignedDate__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: 'DeliveryAddress__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: 'WithdrawalClass__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: 'PaymentMode__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: 'BillSendMode__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: '',
+                        required: true,
+                        disabled: false
+
+                    },
+                    {
+                        apiname: 'Volture__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'AccountId',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'PhoneNumber__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'Email__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'Market__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'SupplyType__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'Implant__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'ClientCategory__c',
+                        required: false,
+                        disabled: true
+                    }
+                ]
+            },
+            {
+                section: 5,
+                label: 'Cliente Uscente',
+                name: 'exitingCustomer',
+                reading:false,
+                readingButton: false,
+                inputField:true,
+                recordId:this.order.ServicePoint__r.Account__c,
+                objectApiName:'Account',
+                active:true,
+                data:
+                [
+                    {
+                        apiname: 'Name',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'FiscalCode__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'VATNumber__c',
+                        required: false,
+                        disabled: true
+                    }
+                ]
+            }
+
+    
+    
+    ];
+
+
+    //FINE SVILUPPI EVERIS
+    
         this.fields = [
             {
                 step: 3,

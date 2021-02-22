@@ -1,20 +1,92 @@
 public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
-    public static String updateSelfReading(String fields, 
-    String readingCustomerDate, 
-    String relatedObj, 
-    String recordId,
-    String commodity){
+    public static String updateSelfReading(String fields, String commodity){
 
-        List<HDT_UTL_SelfReadingObject> resultReading = new List<HDT_UTL_SelfReadingObject>();
+        Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
+
+        HDT_UTL_DatabaseService.insertSObject(obj);
+
+        //Map<String, Object> objMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
+
+        //System.debug(objMap);
+
+        return null;
+
+    }
+
+    @AuraEnabled
+    public static string updateOrder(String fields, String recordId, 
+    Boolean isRetroactive, 
+    Boolean isReading, 
+    Date readingCustomerDate,
+    Boolean completed){
+
+        Order obj = new Order();
+
+        if(fields != null){
+
+            obj = (Order)JSON.deserialize(fields, Order.class);
+
+        }
+
+        obj.Id = recordId;
+
+        if(!completed){
+
+            if(readingCustomerDate != null){
+
+                obj.ReadingCustomerDate__c = readingCustomerDate;
+
+            }
+
+            if(isRetroactive){
+
+                obj.Volture__c = 'Retroattiva';
+
+            } else if(isReading){
+
+                obj.Volture__c = 'Con Autolettura';
+
+            } else {
+
+                obj.Volture__c = 'Standard';
+
+            }
+
+        } else {
+
+            obj.Phase__c = 'Accettazione Voltura';
+
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(obj);
+
+        return null;
+
+
+    }
+
+
+    @AuraEnabled
+    public static string getRecordTypeId(String commodity){
+
+        String recordTypeName = commodity == 'Gas' ? 'HDT_RT_LetturaGas' : 'HDT_RT_LetturaEle';
+    
+        RecordType rtId = [SELECT Id FROM RecordType WHERE DeveloperName = :recordTypeName WITH SECURITY_ENFORCED];
+
+        return rtId.Id;
+
+    }
+
+        //List<HDT_UTL_SelfReadingObject> resultReading = new List<HDT_UTL_SelfReadingObject>();
 
         //List<Reading__c> listReading = new List<Reading__c>();
 
-        List<Object> listJson = (List<Object>) JSON.deserializeUntyped(fields);
+        //List<Object> listJson = (List<Object>) JSON.deserializeUntyped(fields);
 
 
-        for(Object singleObj : listJson){
+        /*for(Object singleObj : listJson){
 
             Map<String, Object> mapObj = (Map<String, Object>) singleObj;
 
@@ -68,12 +140,10 @@ public inherited sharing class HDT_LC_SelfReading {
 
 
 
-        return null;
-
-    }
 
 
-    public class HDT_UTL_SelfReadingObject{
+
+    /*public class HDT_UTL_SelfReadingObject{
 
         public String id;
 
@@ -117,7 +187,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
         }
 
-    }
+    }*/
 
 
 }

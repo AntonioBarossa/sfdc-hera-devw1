@@ -142,13 +142,13 @@ public inherited sharing class HDT_QR_Order {
             OrderNumber,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
-            Step__c,
-            CiRappresentateLegale__c,
-            CiCliente__c,
-            PreventivoRapido__c,
-            VisuraCamerale__c,
-            Istanza326__c,
-            DocLegge80__c
+            Step__c//,
+            //CiRappresentateLegale__c,
+            //CiCliente__c,
+            //PreventivoRapido__c,
+            //VisuraCamerale__c,
+            //Istanza326__c,
+            //DocLegge80__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

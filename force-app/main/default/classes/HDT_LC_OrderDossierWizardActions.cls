@@ -62,9 +62,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
     public static Boolean checkRequiredDocs(Order ord){
 
-        Boolean check;
+        Boolean check = true;
 
-        if(ord.CiRappresentateLegale__c != null ||  ord.CiCliente__c != null || ord.PreventivoRapido__c != null || ord.VisuraCamerale__c != null || ord.Istanza326__c != null || ord.DocLegge80__c != null)
+        /*if(ord.CiRappresentateLegale__c != null ||  ord.CiCliente__c != null || ord.PreventivoRapido__c != null || ord.VisuraCamerale__c != null || ord.Istanza326__c != null || ord.DocLegge80__c != null)
         {
            	check = true;
             if(ord.CiRappresentateLegale__c != null && !'Validato'.EqualsIgnoreCase(ord.CiRappresentateLegale__c)){
@@ -87,7 +87,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         } else if(ord.CiRappresentateLegale__c == null &&  ord.CiCliente__c == null && ord.PreventivoRapido__c == null && ord.VisuraCamerale__c == null && ord.Istanza326__c == null && ord.DocLegge80__c == null) {
             check = true;
-        }
+        }*/
 
         return check;
     }

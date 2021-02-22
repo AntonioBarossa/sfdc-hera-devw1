@@ -1,6 +1,9 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
+//INIZIO SVILUPPI EVERIS
+import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
+//FINE SVILUPPI EVERIS
 
 export default class hdtChildOrderProcessActions extends LightningElement {
     @api order;
@@ -11,8 +14,45 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         // return (this.order.Step__c <= 2 || this.order.Step__c === undefined);
     }
 
+    //INIZIO SVILUPPI EVERIS
+
+    handleSaveDraft(){
+        this.loading = true;
+
+        setTimeout(result => {
+            
+            this.loading = false;
+
+            this.dispatchEvent(new CustomEvent('saveevent'));
+
+          }, 400);
+
+        this.dispatchEvent(new CustomEvent('saveevent'));
+
+
+    }
+    //FINE SVILUPPI EVERIS
+
     handleSave(){
         this.loading = true;
+        //INIZIO SVILUPPI EVERIS
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+            
+            updateOrder({recordId: this.order.Id, completed:true})
+            .then(result => {
+
+                console.log(result);
+
+                this.loading = false; 
+
+                this.dispatchEvent(new CustomEvent('saveevent'));
+
+                return;
+
+            })
+
+        }
+        //FINE SVILUPPI EVERIS
         save({order: this.order}).then(data =>{
             this.loading = false;
 

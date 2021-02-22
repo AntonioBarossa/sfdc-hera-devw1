@@ -1,5 +1,6 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
 import updateSelfReading from '@salesforce/apex/HDT_LC_SelfReading.updateSelfReading';
+import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId';
 
 //fare metodo per showtoast
 
@@ -7,11 +8,17 @@ export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
 
+    @api recordId;
+
+    @api object;
+
+    recordKey;
+
     selfReadingObj = [];
 
     rowObj = []
 
-    outputObj = [];
+    outputObj = {};
 
     rowNumber;
 
@@ -21,11 +28,23 @@ export default class HdtSelfReading extends LightningElement {
 
     advanceError = undefined;
 
+    recordTypeId;
+
+    isSaved = false;
+
+    @api isVolture;
+
+    @api isRetroactive;
+
     errorAdvanceMessage = 'Impossibile salvare autolettura. Si prega di correggere gli errori';
 
     @track readingCustomerDate;
 
     connectedCallback(){
+
+        this.recordKey = this.object === 'Order' ? 
+            (this.commodity === 'Energia Elettrica' ? 'OrderEle__c' : 'OrderGas__c') : 
+            (this.commodity === 'Energia Elettrica' ? 'CaseEle__c' : 'CaseGas__c');
 
         this.rowNumber = this.commodity === 'Energia Elettrica' ? 9 : this.commodity === 'Gas' ? 2 : 0;
 
@@ -43,10 +62,21 @@ export default class HdtSelfReading extends LightningElement {
 
             console.log('loop gas');
 
-            this.rowObj = [...this.rowObj,{id:1, number: "Misuratore"},{id:2, number: "Correttore"}];
+            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore"},{id:'Corrector', number: "Correttore"}];
 
 
         }
+
+        getRecordTypeId({commodity:this.commodity})
+        .then(result =>{
+
+            this.recordTypeId = result;
+
+        }).catch(errror =>{
+
+            console.log(error);
+
+        });
 
 
     }
@@ -108,7 +138,20 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
-    handleSaveButton(){
+    handleSaveButton(event){
+
+        console.log(event.target.name);
+
+        if(event.target.name === 'previous'){
+
+            let dispObj = {name: event.target.name};
+
+            this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+
+            return;
+
+        }
+
 
         if(this.advanceError != undefined){
 
@@ -144,7 +187,13 @@ export default class HdtSelfReading extends LightningElement {
 
                 console.log(result);
 
-                this.outputObj.push(result);
+                for(const [key,value] of Object.entries(result)){
+
+                    this.outputObj[`${key}`] = value;
+
+                }
+
+                console.log('OutputObj '+this.outputObj);
 
             });
 
@@ -161,20 +210,60 @@ export default class HdtSelfReading extends LightningElement {
             }
         }
 
+        this.outputObj['ReadingDate__c'] = this.readingCustomerDate;
+
+        this.outputObj[`${this.recordKey}`] = this.recordId;
+
+        this.outputObj['Name'] = 'Lettura ' + this.currentDateTime();
+
+        this.outputObj['RecordTypeId'] = this.recordTypeId;
+
+        //this.outputObj[`${commodity === 'Energia Elettrica' ? 'OrderElectricEnergy__c' : 'OrderGas__c'}`] = this.recordId
+
         console.log(JSON.stringify(this.outputObj));
 
-        updateSelfReading({fields : JSON.stringify(this.outputObj), 
-            readingCustomerDate:String(this.readingCustomerDate),
-            commodity:this.commodity})
-        .then(result => { console.log(result) })
-        .catch(error => { console.log(error) });
+        if(!this.isSaved){
 
+            updateSelfReading({fields : JSON.stringify(this.outputObj), 
+                readingCustomerDate:String(this.readingCustomerDate),
+                commodity:this.commodity})
+            .then(result => { 
+                
+                console.log(result) 
+
+                let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+
+                console.log('Event Name '+dispObj.name)
+                
+                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+
+                this.isSaved = true;
+            
+            })
+            .catch(error => { console.log(error) });
+
+        } else {
+
+            let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+
+            this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+
+        }
 
 
     }
 
+    currentDateTime(){
 
-    /*reverseDate(inputDate){
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        return date+' '+time;
+
+    }
+
+
+    reverseDate(inputDate){
 
         var date = new Date(inputDate);
 
@@ -187,7 +276,7 @@ export default class HdtSelfReading extends LightningElement {
         return date;
 
 
-    }*/
+    }
 
 
 

@@ -5,8 +5,13 @@
         let accountId = pageRef.state.c__accountId;
         component.set("v.saleId",saleId);
 
+        console.log('Order Parent Check '+pageRef.state.c__orderParent)
+
         if (pageRef.state.c__orderParent !== undefined) {
             let orderParentId = pageRef.state.c__orderParent;
+
+            console.log('Order Parent Id: '+orderParentId);
+
             component.set("v.orderParentId",orderParentId);
             component.set("v.check", true);
         } else {

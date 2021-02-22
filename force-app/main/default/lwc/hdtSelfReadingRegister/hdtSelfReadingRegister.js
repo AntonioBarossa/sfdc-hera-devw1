@@ -1,11 +1,13 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import {refreshApex} from '@salesforce/apex';
+
 
 export default class HdtSelfReadingRegister extends LightningElement {
 
 
-    @api rowNumber;
+    @api rowObj;
     @api commodity;
+    @api isRetroactive;
     advanceError;
 
     registerObjEle = [{id: 1, label:"Tipo Lettura ", type: "text", value: null, disabled:true},
@@ -35,13 +37,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         this.registerObj = this.commodity === 'Energia Elettrica' ? this.registerObjEle : this.registerObjGas;
 
-        console.log(this.rowNumber);
+        console.log(this.rowObj.number);
 
         if(this.commodity === 'Energia Elettrica'){
 
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
 
-                this.registerObj[i].label += this.rowNumber;
+                this.registerObj[i].label += this.rowObj.number;
 
             }
         } else if(this.commodity === 'Gas'){
@@ -53,7 +55,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 || this.registerObj[i].label.includes("Fascia")
                 || this.registerObj[i].label.includes("Lettura da Cliente")){
 
-                    this.registerObj[i].label += this.rowNumber;
+                    this.registerObj[i].label += this.rowObj.number;
 
                 }
 
@@ -65,32 +67,39 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
     }
 
+
     @api
     checkDate(readingCustomerDate){
 
         console.log('Method Called Correctly');
 
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
+        console.log('isRetroactive? '+this.isRetroactive);
 
-        //today = dd + '/' + mm + '/' + yyyy;
-        today = yyyy + '-' + mm + '-' + dd;
+        if(!this.isRetroactive){
 
-        var index = this.registerObj.findIndex(p => p.label.includes("Data Lettura"));
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
 
-        if(Date.parse(readingCustomerDate) > Date.parse(today)){
+            //today = dd + '/' + mm + '/' + yyyy;
+            today = yyyy + '-' + mm + '-' + dd;
 
-            this.advanceError = 'Impossibile inserire una data futura!';
+            var index = this.registerObj.findIndex(p => p.label.includes("Data Lettura"));
 
-        } else if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
+            if(Date.parse(readingCustomerDate) > Date.parse(today)){
 
-            this.advanceError = 'Impossibile inserire una data futura!'
+                this.advanceError = 'Impossibile inserire una data futura!';
 
-        } else {
+            } else if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
 
-            this.advanceError = undefined;
+                this.advanceError = 'Impossibile inserire una data precedente o uguale all\'ultima lettura!'
+
+            } else {
+
+                this.advanceError = undefined;
+
+            }
 
         }
 
@@ -107,7 +116,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log(readingObj);
 
-        var indexIn = readingObj.findIndex(p => p.register == this.rowNumber);
+        var indexIn = readingObj.findIndex(p => p.register == this.rowObj.number);
 
         console.log(indexIn);
 
@@ -127,7 +136,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
                     if(property == "Lettura"){
 
-                        return this.commodity === "Energia Elettrica" ? p.label == property+' '+this.rowNumber 
+                        return this.commodity === "Energia Elettrica" ? p.label == property+' '+this.rowObj.number 
                         : this.commodity === "Gas" ? p.label == property 
                         : null;
 
@@ -178,9 +187,21 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             console.log('Filling the Array');
 
-            console.log(this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value);
-
             this.registerRet = 
+                {
+                    ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
+                    ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
+                    ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
+                    ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
+                    ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
+                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
+                    : null,
+                    ['ReadingUnit'+this.rowObj.id+'__c']:this.commodity === 'Gas' ?
+                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
+                    : null
+                };
+
+            /*this.registerRet = 
                 {id: this.rowNumber, 
                 redingType:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
                 readingDate:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Data"))].value,
@@ -197,7 +218,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 unitMeasure:this.commodity === 'Gas' ?
                     this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
                     : null
-                };
+                };*/
 
                 console.log(this.registerRet);
 
@@ -215,11 +236,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log(event.target.value);
 
-        if(event.target.label.includes("Lettura da Cliente")){
+        console.log('isRetroactive? '+this.isRetroactive);
+
+        if(event.target.label.includes("Lettura da Cliente") && !this.isRetroactive){
             
             var indexReading = this.registerObj.findIndex(p => {
 
-                return this.commodity === "Energia Elettrica" ? p.label == 'Lettura '+this.rowNumber 
+                return this.commodity === "Energia Elettrica" ? p.label == 'Lettura '+this.rowObj.number
                 : this.commodity === "Gas" ? p.label == 'Lettura'
                 : null;
 
@@ -249,9 +272,18 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             }
 
-            event.target.reportValidity();
+        } else {
+
+            this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value = event.target.value; 
+
+            this.advanceError = undefined;
+
+            event.target.setCustomValidity("");
 
         }
+
+        event.target.reportValidity();
+
 
     }
 

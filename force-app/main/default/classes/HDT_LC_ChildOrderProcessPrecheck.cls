@@ -42,7 +42,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(String orderId, String selectedProcess, String deliberate){
+    public static void next(String orderId, String selectedProcess, Boolean deliberate){
 
         String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcess);
 

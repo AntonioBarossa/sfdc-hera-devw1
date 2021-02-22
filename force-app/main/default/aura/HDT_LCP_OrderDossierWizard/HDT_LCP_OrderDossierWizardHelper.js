@@ -6,9 +6,12 @@
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
+            console.log("result status" +state)
                 if (state === "SUCCESS") {
 
                     let results = response.getReturnValue();
+
+                    console.log('currency data is:' + JSON.stringify(results));
                     
         			component.set("v.parentOrderName", results.orderParentName);
                     component.set("v.orderParentId", results.orderParent);
