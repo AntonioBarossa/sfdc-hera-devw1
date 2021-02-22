@@ -29,11 +29,11 @@ public class HDT_LC_CustomLookupController {
         
         if(String.isEmpty(filter)){
         //if(searchTerm == null || searchTerm == ''){
-            myQuery += 'WHERE LastViewedDate != NULL';
+            myQuery += 'WHERE LastModifiedDate != NULL';
             if(!String.isEmpty(filter)){
                 myQuery += ' AND ' + filter;
             }
-            myQuery += ' ORDER BY LastViewedDate DESC';
+            myQuery += ' ORDER BY LastModifiedDate DESC';
         } else {
             myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\'';
             if(!String.isEmpty(filter)){

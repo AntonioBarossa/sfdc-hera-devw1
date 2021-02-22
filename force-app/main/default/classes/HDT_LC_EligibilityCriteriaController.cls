@@ -1,25 +1,79 @@
 public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
     @AuraEnabled
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj getTreeObj(String regionCode){
+    public static Boolean cloneEligibilityCriteriaRecord(String recIdToClone, String productId){
+        Boolean result;
+        try{
+            result = true;
+        } catch (Exception e){
+            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            throw new AuraHandledException(e.getMessage());
+        } 
+        return result;
+    }
 
-        HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj treeObj;
+    @AuraEnabled
+    public static List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem> getEligibilityCriteriaRecord(String recordId){
+
+        List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem> treeItemList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
+
+        try{
+
+            HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj;
+            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
+            CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+
+
+            HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
+            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province provinceItem : CityZipCodeObj.regionList[0].provinceList){
+                treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
+                treeItem.label = provinceItem.label + ' (' + provinceItem.value + ')';
+                treeItem.name = provinceItem.value;
+                treeItem.expanded = false;
+                treeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
+
+                HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeItem;
+                for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : provinceItem.cityList_A){
+                    nestedTreeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
+                    nestedTreeItem.label = cityItem.label + ' (' + cityItem.value + ')';
+                    nestedTreeItem.name = cityItem.value;
+                    nestedTreeItem.expanded = false;
+                    nestedTreeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
+                    treeItem.items.add(nestedTreeItem);
+                }
+                treeItemList.add(treeItem);
+            }
+
+        } catch (Exception e){
+            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+            throw new AuraHandledException(e.getMessage());
+        }
+
+        System.debug(JSON.serialize(treeItemList));
+
+        return treeItemList;
+    }
+
+    @AuraEnabled
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getCityZipCodeObj(String regionCode){
+
+        HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj;
 
         try{
             StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
 
-            treeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObj.class);
+            CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
 
-            treeObj.success = true;
-            treeObj.message = '';
+            CityZipCodeObj.success = true;
+            CityZipCodeObj.message = '';
 
-            System.debug('# result -> ' +  treeObj.regionList[0].provinceList);
+            System.debug('# result -> ' +  CityZipCodeObj.regionList[0].provinceList);
 
         } catch (Exception e){
             System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         } 
-        return treeObj;
+        return CityZipCodeObj;
 
     }
 
@@ -40,51 +94,45 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     }
 
     @AuraEnabled
-    public static ResponseObject saveCityEligibility(String productId, String dataReceived) {
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveCityEligibility(String productId, String dataReceived) {
 
         System.debug('### productId ' + productId);
         System.debug('### dataReceived: ' + dataReceived);
 
-        ResponseObject resp = new ResponseObject();
+        HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
 
         try{
 
-            List<DataReceived> dataList = (List<DataReceived>)JSON.deserialize(dataReceived, List<DataReceived>.class);
-            //List<CityEligible__c> cityList = new List<CityEligible__c>();
+            List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList = (List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>)JSON.deserialize(dataReceived, List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>.class);
 
-            //CityEligible__c c;
-            //for(DataReceived d : dataList){
-            //    System.debug('# ' + d.id + ' - ' + d.label + ' - ' + d.value);
-            //    c = new CityEligible__c();
-            //    c.Name = d.label;
-            //    c.ZipCode__c = d.value;
-            //    c.Product2Id__c = productId;
-            //    cityList.add(c);
-            //}
+            System.debug('# provinceList size -> ' + provinceList.size());
 
-            //insert cityList;
+            EligibilityCriteria__c criteria = new EligibilityCriteria__c();
+            criteria.Product__c = productId;
+            insert criteria;
 
-            resp.success = true;
-            resp.message = '';
+            List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
+            EligibleMunicipality__c muni;
+            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv : provinceList){
+                muni = new EligibleMunicipality__c();
+                muni.EligibilityCriteria__c = criteria.Id;
+                muni.Name = 'EMR';
+                muni.AreaCode__c =  'EMR';
+                muni.JSON_Code__c = JSON.serialize(singleProv.cityList_R);
+                muniList.add(muni);
+            }
+
+            insert muniList;
+
+            saveResponse.success = true;
+            saveResponse.message = '';
 
         } catch (Exception ex){
-            resp.success = false;
-            resp.message = ex.getMessage() + '; at line [' + String.valueOf(ex.getLineNumber()) + ']';
+            saveResponse.success = false;
+            saveResponse.message = ex.getMessage() + '; at line [' + String.valueOf(ex.getLineNumber()) + ']';
         }
 
-        return resp;
-    }
-
-    public class ResponseObject {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-    }
-
-
-    public class DataReceived {
-        public String id;
-        public String label;
-        public String value;
+        return saveResponse;
     }
 
 }

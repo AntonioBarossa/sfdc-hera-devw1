@@ -1,20 +1,19 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import saveCityEligibility from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.saveCityEligibility';
-import getTreeObj from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getTreeObj';
-
-const dataRemoved = [];
+import getCityZipCodeObj from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getCityZipCodeObj';
 
 export default class HdtEligibilityCriteriaConfiguration extends LightningElement {
 
     @api productid;
     storeData = [];
     @track dataToView = [];
-    @track dataRemoved = dataRemoved;
-    showTable = false;
+    @track dataRemoved = [];
+    showTable = true;
     showAvailableItems = false;
     queryTerm;
     provinceOptions;
+    currentProvinceId;
 
     @track spinnerObj = {
         spinner: false,
@@ -32,9 +31,9 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
     getDataFromApex(){
         console.log('# get data from apex #');
 
-        getTreeObj({regionCode: 'EMR'})
+        getCityZipCodeObj({regionCode: 'EMR'})
         .then(result => {
-            console.log('# getTreeObj success #');
+            console.log('# getCityZipCodeObj success #');
             console.log('# resp -> ' + result.success);
 
             var toastObj = {
@@ -71,12 +70,13 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
 
     handleProvinceChange(event) {
         var provId = event.detail.value;
+        this.currentProvinceId = provId;
         console.log('# --> provId ' + provId);
         this.dataToView = [];
         this.storeData = [];
         let foundProvince = this.provinceOptions.find(ele  => ele.value === provId);
-        this.dataToView = foundProvince.cityList;
-        this.storeData = foundProvince.cityList;
+        this.dataToView = foundProvince.cityList_A;
+        this.dataRemoved = foundProvince.cityList_R;
         this.showAvailableItems = true;
     }
 
@@ -130,12 +130,6 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         var index = this.dataToView.indexOf(element);
         this.dataToView.splice(index, 1);
 
-        //find and remove item from stored list
-        let storedEle = this.storeData.find(ele  => ele.value === itemId);
-        var storedIdex = this.storeData.indexOf(storedEle);
-        this.storeData.splice(storedIdex, 1);
-
-        //insert item removed to removed items list
         var itemRemoved = { label: itemLabel, value: itemValue, id: itemId};
         this.dataRemoved.push(itemRemoved);
 
@@ -159,7 +153,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         this.dataRemoved.splice(a, 1);
 
         //check if the item is already stored, todo -> "migliorare"
-        let alreadyStored = this.storeData.find(ele  => ele.label === itemId);
+        let alreadyStored = this.storeData.find(ele  => ele.value === itemValue);
         console.log('@@@ ' + alreadyStored);
         if(alreadyStored == null || alreadyStored == undefined){
             this.storeData.push(itemRemoved);
@@ -192,7 +186,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
 
     saveAction(){
         console.log('# saveAction #');
-        console.log('# cityLenght -> ' + this.storeData.length);
+        console.log('# provinceOptions -> ' + JSON.stringify(this.provinceOptions));
 
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
@@ -201,7 +195,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
             console.log('# ' + this.storeData[i].label + ' - ' + this.storeData[i].value);
         }*/
 
-        saveCityEligibility({productId: this.productid, dataReceived: JSON.stringify(this.storeData)})
+        saveCityEligibility({productId: this.productid, dataReceived: JSON.stringify(this.provinceOptions)})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
