@@ -20,7 +20,7 @@ const columns = [
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
     data = [];
     columns = columns;
-    detailFields = ['Version__c'];
+    detailFields = ['Version__c', 'ProductCode__c'];
     filter;
     showTable = false;
 

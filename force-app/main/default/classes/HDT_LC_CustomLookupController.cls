@@ -43,6 +43,8 @@ public class HDT_LC_CustomLookupController {
 
         myQuery += ' LIMIT 5';
 
+        System.debug('# myQuery -> ' + myQuery);
+
         List<sObject> lookUpList = database.query(myQuery);
 
         if(lookUpList.size()>0){
@@ -79,7 +81,9 @@ public class HDT_LC_CustomLookupController {
         Map<String, String> fieldMap = new Map<String, String>();
         Map<String, Schema.SObjectField> accountFieldMap = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap();
         for(String s : fieldsName){
-            fieldMap.put(s, accountFieldMap.get(s).getDescribe().getLabel());
+            if(s.containsNone('.')){
+                fieldMap.put(s, accountFieldMap.get(s).getDescribe().getLabel());
+            }
         }
         return fieldMap;
     }

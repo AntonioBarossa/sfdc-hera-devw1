@@ -107,7 +107,7 @@
                                             unique-key={item.code}
                                             value-id={item.selectedId}
                                             obj-name="EligibilityCriteria__c"
-                                            search-by="Name"
+                                            search-by="ProductName__c"
                                             set-as-key="Id"
                                             detail-fields={detailFields}
                                             icon-name="custom:custom57"
@@ -120,6 +120,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="slds-col slds-size_1-of-4">
+                            <lightning-record-view-form
+                                    record-id={item.selectedId}
+                                    object-api-name="EligibilityCriteria__c"
+                                    density="compact ">
+                                <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
+                                    <lightning-output-field field-name="ProductName__c"></lightning-output-field>
+                                    <lightning-output-field field-name="ProductCode__c"></lightning-output-field>
+                                    <lightning-output-field field-name="Version__c"></lightning-output-field>
+                                </div>
+                            </lightning-record-view-form>
+                        </div>
+
                     </div>
                     
                     <div if:false={showTable} class="slds-box" >

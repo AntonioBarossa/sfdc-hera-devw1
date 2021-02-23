@@ -14,6 +14,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
     queryTerm;
     provinceOptions;
     currentProvinceId;
+    @track searchList = [];
 
     @track spinnerObj = {
         spinner: false,
@@ -46,6 +47,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
+
                 this.provinceOptions = result.regionList[0].provinceList;
 
             } else {
@@ -75,8 +77,9 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         this.dataToView = [];
         this.storeData = [];
         let foundProvince = this.provinceOptions.find(ele  => ele.value === provId);
-        this.dataToView = foundProvince.cityList_A;
-        this.dataRemoved = foundProvince.cityList_R;
+        //this.storeData = foundProvince.cityAvailable;//+++
+        this.dataToView = foundProvince.cityAvailable;
+        this.dataRemoved = foundProvince.cityRemoved;
         this.showAvailableItems = true;
     }
 
@@ -186,7 +189,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
 
     saveAction(){
         console.log('# saveAction #');
-        console.log('# provinceOptions -> ' + JSON.stringify(this.provinceOptions));
+        //console.log('# provinceOptions -> ' + JSON.stringify(this.provinceOptions));
 
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';

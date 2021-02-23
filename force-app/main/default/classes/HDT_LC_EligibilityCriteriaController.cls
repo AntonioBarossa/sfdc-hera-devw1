@@ -15,25 +15,36 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     @AuraEnabled
     public static List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem> getEligibilityCriteriaRecord(String recordId){
 
+        System.debug('# search this criteria > ' + recordId);
+
         List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem> treeItemList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
 
         try{
 
-            HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj;
-            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
-            CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+            List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
+            muniList = [
+                SELECT Id, Name, AreaCode__c, JSON_Code__c
+                FROM EligibleMunicipality__c
+                WHERE EligibilityCriteria__c =: recordId
+            ];
 
+            //HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj;
+            //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
+            //CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
 
             HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
-            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province provinceItem : CityZipCodeObj.regionList[0].provinceList){
+            for(EligibleMunicipality__c muni : muniList){
+
+                HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv  = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+
                 treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                treeItem.label = provinceItem.label + ' (' + provinceItem.value + ')';
-                treeItem.name = provinceItem.value;
+                treeItem.label = singleProv.label + ' (' + singleProv.value + ')';
+                treeItem.name = singleProv.value;
                 treeItem.expanded = false;
                 treeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
 
                 HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeItem;
-                for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : provinceItem.cityList_A){
+                for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : singleProv.cityAvailable){
                     nestedTreeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
                     nestedTreeItem.label = cityItem.label + ' (' + cityItem.value + ')';
                     nestedTreeItem.name = cityItem.value;
@@ -116,9 +127,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv : provinceList){
                 muni = new EligibleMunicipality__c();
                 muni.EligibilityCriteria__c = criteria.Id;
-                muni.Name = 'EMR';
-                muni.AreaCode__c =  'EMR';
-                muni.JSON_Code__c = JSON.serialize(singleProv.cityList_R);
+                muni.Name = singleProv.label;
+                muni.AreaCode__c =  singleProv.value;
+                //muni.JSON_Code_Available__c = JSON.serialize(singleProv.cityAvailable);
+                muni.JSON_Code__c = JSON.serialize(singleProv);
                 muniList.add(muni);
             }
 

@@ -48,6 +48,7 @@ export default class LookupLwc extends LightningElement {
         if(FIELDS.length === 0){
             FIELDS.push(this.objName + '.' + this.searchBy);
             FIELDS.push(this.objName + '.' + this.setAsKey);
+            FIELDS.push(this.objName + '.Name');
         }
         console.log("FIELDS", FIELDS);
     }
@@ -98,9 +99,10 @@ export default class LookupLwc extends LightningElement {
     }
 
     //To get preselected or selected record
-    @wire(getRecord, { recordId: '$valueId', fields: FIELDS })
+    /*@wire(getRecord, { recordId: '$valueId', fields: FIELDS })
     wiredOptions({ error, data }) {
         if (data) {
+            console.log("# record: ", JSON.stringify(data));
             this.record = data;
             this.error = undefined;
             this.valueObj = this.record.fields.Name.value;
@@ -111,7 +113,7 @@ export default class LookupLwc extends LightningElement {
             this.record = undefined;
             console.log("# error: ", this.error);
         }
-    }
+    }*/
 
     //when valueId changes
     valueChange() {
@@ -145,6 +147,9 @@ export default class LookupLwc extends LightningElement {
             detail: { selectedId: selectedObj.id, code: selectedObj.code, name: selectedObj.name }
         });
         this.dispatchEvent(valueSelectedEvent);
+
+        this.valueObj = selectedObj.name;
+        this.isValue = true;
 
         if(this.blurTimeout) {
             clearTimeout(this.blurTimeout);

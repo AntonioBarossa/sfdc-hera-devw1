@@ -22,8 +22,8 @@ public inherited sharing class HDT_WRP_EligibilityCriteria {
 	public class HDT_WRP_Province {
 		@AuraEnabled public String label;
 		@AuraEnabled public String value;
-		@AuraEnabled public List<HDT_WRP_City> cityList_A;
-        @AuraEnabled public List<HDT_WRP_City> cityList_R;
+		@AuraEnabled public List<HDT_WRP_City> cityAvailable;
+        @AuraEnabled public List<HDT_WRP_City> cityRemoved;
 	}
 
     public class HDT_WRP_City {
