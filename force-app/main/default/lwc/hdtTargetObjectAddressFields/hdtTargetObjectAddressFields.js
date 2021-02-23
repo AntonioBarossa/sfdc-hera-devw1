@@ -140,10 +140,6 @@ handleTextChange(event){
         this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
         console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
 
-        this.dispatchEvent(new CustomEvent('emitwrapaddressobject', {detail: {
-            wrapAddressObject: this.wrapAddressObject
-        }}));
-
 }
 
 @api

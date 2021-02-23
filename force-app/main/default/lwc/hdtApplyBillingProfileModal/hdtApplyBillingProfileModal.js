@@ -47,7 +47,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
                 data.forEach(el => {
                     quoteBundleArray.push({
-                        "Id"                   :el.Id,
+                        "Id"                   :el.SBQQ__RequiredBy__c,
                         "Name"                 :el.SBQQ__RequiredBy__r.Name,
                         "ProductName"          :el.SBQQ__RequiredBy__r.SBQQ__Product__r.Name,
                         "ServicePointCode"     :el.ServicePoint__r.ServicePointCode__c

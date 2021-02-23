@@ -13,7 +13,9 @@ export default class hdtBillingProfileForm extends LightningElement {
     @track fatturazioneElettronicaFields = [];
     isfatturazioneElettronicaVisible = false;
     @track tipologiaIntestatarioFields = [];
+    wrapAddressObject = {};
     dataToSubmit = {};
+    saveErrorMessage = '';
 
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
@@ -250,20 +252,21 @@ export default class hdtBillingProfileForm extends LightningElement {
                         if(field.value == null){
                             isValid = false;
                             field.reportValidity();
+                            this.saveErrorMessage = 'Devi scegliere un metodo di pagamento';
                         }
                         break;
-                    case 'InvoiceEmailAddress__c':
-                        if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
-                            isValid = false;
-                            field.reportValidity();
-                        }
-                        break;
-                    case 'InvoiceCertifiedEmailAddress__c':
-                        if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
-                            isValid = false;
-                            field.reportValidity();
-                        }
-                        break;
+                    // case 'InvoiceEmailAddress__c':
+                    //     if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                    //         isValid = false;
+                    //         field.reportValidity();
+                    //     }
+                    //     break;
+                    // case 'InvoiceCertifiedEmailAddress__c':
+                    //     if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
+                    //         isValid = false;
+                    //         field.reportValidity();
+                    //     }
+                    //     break;
                 }
 
             });
@@ -275,14 +278,39 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     }
 
-    handleWrapAddressObject(event){
-        console.log('handleWrapAddressObject: ', JSON.stringify(event.detail.wrapAddressObject));
+    handleWrapAddressObject(){
+
+        this.wrapAddressObject = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+
+        if(this.dataToSubmit['InvoicingStreetName__c'] != this.wrapAddressObject['Via']){
+            this.dataToSubmit['InvoicingStreetName__c'] = this.wrapAddressObject['Via'];
+        }
+        if(this.dataToSubmit['InvoicingCity__c'] != this.wrapAddressObject['Comune']){
+            this.dataToSubmit['InvoicingCity__c'] = this.wrapAddressObject['Comune'];
+        }
+        if(this.dataToSubmit['InvoicingPostalCode__c'] != this.wrapAddressObject['CAP']){
+            this.dataToSubmit['InvoicingPostalCode__c'] = this.wrapAddressObject['CAP'];
+        }
+        if(this.dataToSubmit['InvoicingCountry__c'] != this.wrapAddressObject['Stato']){
+            this.dataToSubmit['InvoicingCountry__c'] = this.wrapAddressObject['Stato'];
+        }
+        if(this.dataToSubmit['InvoicingProvince__c'] != this.wrapAddressObject['Provincia']){
+            this.dataToSubmit['InvoicingProvince__c'] = this.wrapAddressObject['Provincia'];
+        }
+        if(this.dataToSubmit['InvoicingStreetNumberExtension__c'] != this.wrapAddressObject['Estens.Civico']){
+            this.dataToSubmit['InvoicingStreetNumberExtension__c'] = this.wrapAddressObject['Estens.Civico'];
+        }
+        if(this.dataToSubmit['InvoicingStreetNumber__c'] != this.wrapAddressObject['Civico']){
+            this.dataToSubmit['InvoicingStreetNumber__c'] = this.wrapAddressObject['Civico'];
+        }
+
     }
 
     handleSaveEvent(){
         if(this.validFields()){
 
             this.dataToSubmit['Account__c'] = this.accountId;
+            this.handleWrapAddressObject();
 
             this.loading = true;
             createBillingProfile({billingProfile: this.dataToSubmit}).then(data =>{
@@ -308,13 +336,14 @@ export default class hdtBillingProfileForm extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             });
         } else {
-            console.log('Error: Check input validity!');
-            const toastErrorMessage = new ShowToastEvent({
+            console.log(this.saveErrorMessage);
+            const saveToastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: 'Check input validity',
-                variant: 'error'
+                message: this.saveErrorMessage,
+                variant: 'error',
+                mode: 'sticky'
             });
-            this.dispatchEvent(toastErrorMessage);
+            this.dispatchEvent(saveToastErrorMessage);
         }
 
     }

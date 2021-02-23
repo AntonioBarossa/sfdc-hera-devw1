@@ -47,6 +47,7 @@ public inherited sharing class HDT_QR_QuoteLine {
         return [
             SELECT
             Id,
+            SBQQ__RequiredBy__c,
             SBQQ__RequiredBy__r.Name,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
