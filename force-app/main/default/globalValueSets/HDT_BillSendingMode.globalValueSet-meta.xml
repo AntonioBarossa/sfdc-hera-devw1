@@ -11,6 +11,6 @@
         <label>Posta</label>
     </customValue>
     <description>Email, Posta</description>
-    <masterLabel>Modalita Invio Bolletta</masterLabel>
+    <masterLabel>Modalita Invio Bolletta (CPQ)</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

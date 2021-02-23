@@ -5,6 +5,20 @@
     <description>Lookup per linkare un altro Case correlato al Case di partenza. Utilizzata al momento solo dal processo Inversione Contatore.</description>
     <externalId>false</externalId>
     <label>Case Correlato</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>Case.Type</field>
+            <operation>equals</operation>
+            <valueField>$Source.Type</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Case.Id</field>
+            <operation>notEqual</operation>
+            <valueField>$Source.Id</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>Case</referenceTo>
     <relationshipLabel>Cases</relationshipLabel>
     <relationshipName>Cases</relationshipName>
