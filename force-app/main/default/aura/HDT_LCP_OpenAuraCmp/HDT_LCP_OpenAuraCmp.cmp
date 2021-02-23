@@ -2,6 +2,8 @@
     
     <!--common-->
     <aura:attribute name="flowName" type="String" />
+    <!-- da valorizzare a true solo se il flow di processo deve distinguere se si sta riprendendo un Case in bozza (es. sulle Modifiche Anagrafiche) -->
+    <aura:attribute name="resumeFromDraft" type="Boolean" default="false"/>
 
     <!-- case id - richiamato dal processo -->
     <aura:attribute name="id" type="String" />
