@@ -38,13 +38,25 @@
                                     </div>
         
                                     <div class="slds-m-bottom_medium">
-                                        <lightning-input
-                                            name="enter-search"
-                                            label="Comuni di fornitura"
-                                            type="search"
-                                            field-level-help="Puoi ricercare per nome e cap"
-                                            onchange={handleOnchange}
-                                        ></lightning-input>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-3">
+                                                <lightning-input
+                                                    name="enter-search"
+                                                    label="Comuni di fornitura"
+                                                    type="search"
+                                                    field-level-help="Puoi ricercare per nome e cap"
+                                                    onchange={handleOnchange}
+                                                ></lightning-input>
+                                            </div>
+                                            <div class="slds-col slds-size_1-of-3 slds-m-top_large">
+                                                <button
+                                                    disabled={disabled}
+                                                    name="equal"
+                                                    onclick={changeOperator}
+                                                    class="slds-button slds-button_neutral slds-button_stretch" 
+                                                >{buttonLabel}</button>
+                                            </div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -57,12 +69,81 @@
                                     <!-- AVAILABLE ITEMS -->
                                     <div class="slds-box slds-box_xx-small" style="height: 300px;">
 
-                                        <template if:false={showAvailableItems} >
+                                        <template if:true={showEmptyImmage} >
                                             <c-hdt-custom-illustration
                                                 message="Valori disponibli"
                                                 style-class="slds-text-body_regular"
                                             ></c-hdt-custom-illustration>
                                         </template>
+
+                                        <!-- Nothing to disaplay here -->
+                                        <template if:true={showSearchTable} >
+                                            <div class="slds-scrollable_y" style="height:85%;">
+                                                <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+                                                    <thead class="slds-assistive-text">
+                                                        <tr class="slds-line-height_reset">
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Name">Comune</div>
+                                                        </th>
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="ZipCode">CAP</div>
+                                                        </th>                                
+                                                        <th class="" scope="col">
+                                                            <div class="slds-truncate" title="Action">Action</div>
+                                                        </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <template iterator:it={searchTable}>
+                                                            <tr key={it.value.value} class="slds-hint-parent">
+                                                                <th data-label={it.value.label} scope="row">
+                                                                    <div class="slds-truncate" title={it.value.label}>
+                                                                        <div class="slds-truncate" title={it.value.label}>{it.value.label}</div>
+                                                                    </div>
+                                                                </th>
+                                                                <th data-label={it.value.value} scope="row">
+                                                                    <div class="slds-truncate" title={it.value.value}>
+                                                                        <div class="slds-truncate" title={it.value.value}>{it.value.value}</div>
+                                                                    </div>                                            
+                                                                </th>
+                                                                <td data-label={it.value.value}>
+                                                                    <lightning-button-icon
+                                                                        name="searchTable"
+                                                                        data-id={it.value.value}
+                                                                        data-label={it.value.label}
+                                                                        data-value={it.value.value}
+                                                                        onclick={removeItem}
+                                                                        icon-name="utility:delete"
+                                                                        variant="bare"
+                                                                        alternative-text="Rimuovi"
+                                                                        class="slds-m-left_xx-small"
+                                                                        title="Rimuovi"
+                                                                    ></lightning-button-icon>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <button
+                                                class="slds-button slds-button_destructive slds-button_stretch slds-m-top_x-small"
+                                                onclick={removeAllItems}>
+                                                Rimuovi tutti
+                                            </button>
+                                            
+                                            <!--<lightning-button
+                                                variant="destructive"
+                                                label="Rimuovi tutti"
+                                                title="RemoveAll"
+                                                onclick={removeAllItems}
+                                                icon-name="utility:delete"
+                                                icon-position="right"
+                                                class="slds-m-left_x-small"
+                                            ></lightning-button>-->
+                                        </template>
+                                        <!-- Nothing to disaplay here -->
 
                                         <div if:true={showAvailableItems} class="slds-scrollable_y" style="height:100%;">
                                             <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
@@ -95,6 +176,7 @@
                                                             </th>
                                                             <td data-label={it.value.value}>
                                                                 <lightning-button-icon
+                                                                    name="dataToView"
                                                                     data-id={it.value.value}
                                                                     data-label={it.value.label}
                                                                     data-value={it.value.value}

@@ -27,6 +27,13 @@
             <lightning-button label="Indietro" onclick={back} variant="destructive" ></lightning-button>
         </p>
 
+        <div if:true={error.show} class="slds-card__body slds-card__body_inner">
+            <div class="slds-box">
+                <div class="slds-text-color_error">ATTENZIONE</div>
+                <div class="slds-text-heading_large">{error.message}</div>
+            </div>
+        </div>
+
         <div if:false={error.show} class="slds-card__body slds-card__body_inner">
             
             <lightning-record-view-form record-id={productid} object-api-name="Product2" >
@@ -36,12 +43,12 @@
                         <div class="slds-form slds-m-top_x-large " >
                             <div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxt1} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Nome Prodotto</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
                                     <div class="slds-box slds-box_x-small" >
                                         <!--<div class="slds-text-body_regular">{product.template}</div>-->
-                                        <lightning-output-field field-name="Template__c" variant="label-hidden" ></lightning-output-field>
+                                        <lightning-output-field field-name="Name" variant="label-hidden" ></lightning-output-field>
                                     </div>
                                 </div>
                             </div>
@@ -62,16 +69,15 @@
 
                     <div class="slds-col slds-size_1-of-3">
                         <div class="slds-form slds-m-top_x-large " >
-                            <div class="slds-form-element slds-form-element_horizontal">
+                            <!--<div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxt3} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Template</label>
                                 <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>-->
                                     <div class="slds-box slds-box_x-small" >
                                         <lightning-output-field field-name="RateCategory__c" variant="label-hidden" ></lightning-output-field>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxt3} ></lightning-helptext>
@@ -96,7 +102,8 @@
                 <div aria-hidden="false" class="slds-section__content">
 
                     <div class="slds-grid slds-gutters">
-                        <div class="slds-col slds-size_1-of-4">
+                        <div class="slds-col slds-size_1-of-6">
+
                             <div class="slds-form slds-m-top_medium slds-m-bottom_medium" >
                                 <div class="slds-form-element"><!--slds-form-element_horizontal-->
                                     <lightning-helptext content="Nome Offerta...Select the right choice"></lightning-helptext>
@@ -117,58 +124,42 @@
                                         ></c-hdt-custom-lookup>
                                     </div>
                                     <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
+
+                                    <lightning-record-view-form
+                                            record-id={item.selectedId}
+                                            object-api-name="EligibilityCriteria__c"
+                                            density="compact ">
+                                        <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
+                                            <lightning-output-field field-name="ProductName__c"></lightning-output-field>
+                                            <lightning-output-field field-name="ProductCode__c"></lightning-output-field>
+                                            <lightning-output-field field-name="Version__c"></lightning-output-field>
+                                        </div>
+                                    </lightning-record-view-form>
+
                                 </div>
                             </div>
+
                         </div>
 
-                        <div class="slds-col slds-size_1-of-4">
-                            <lightning-record-view-form
-                                    record-id={item.selectedId}
-                                    object-api-name="EligibilityCriteria__c"
-                                    density="compact ">
-                                <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
-                                    <lightning-output-field field-name="ProductName__c"></lightning-output-field>
-                                    <lightning-output-field field-name="ProductCode__c"></lightning-output-field>
-                                    <lightning-output-field field-name="Version__c"></lightning-output-field>
-                                </div>
-                            </lightning-record-view-form>
+                        <div if:false={showTable} class="slds-col slds-size_5-of-6 slds-box" >
+                            <c-hdt-custom-illustration
+                                message="I risultati verranno mostrati qui"
+                                style-class="slds-text-heading_large"
+                            ></c-hdt-custom-illustration>
                         </div>
-
-                    </div>
-                    
-                    <div if:false={showTable} class="slds-box" >
-                        <c-hdt-custom-illustration
-                            message="I risultati verranno mostrati qui"
-                            style-class="slds-text-heading_large"
-                        ></c-hdt-custom-illustration>
-                    </div>
-        
-                    <div if:true={showTable} >
-
-                        <div class="slds-grid slds-gutters">
-                            <div class="slds-col slds-size_1-of-6 slds-box slds-box_small slds-m-left_small">
-                                <div class="slds-scrollable_y" style="height:500px;">
-                                    <lightning-tree items={data} header="Comuni eleggibili"></lightning-tree>
-                                </div>
+                        
+                        <div if:true={showTable} class="slds-col slds-size_1-of-6 slds-box slds-box_x-small">
+                            <div class="slds-scrollable_y" style="height:500px;">
+                                <lightning-tree items={data} header="Comuni eleggibili"></lightning-tree>
                             </div>
                         </div>
-
-                    </div>
-        
-                </div>
-        
-                <div if:true={error.show} class="slds-card__body slds-card__body_inner">
-                    <div class="slds-box">
-                        <div class="slds-text-color_error">ATTENZIONE</div>
-                        <div class="slds-text-heading_large">{error.message}</div>
-                    </div>
-                </div>
-
+                    </div>    
 
                 </div>
-              </div>
 
+            </div>
 
+        </div>
 
     </lightning-card>
 </template>
