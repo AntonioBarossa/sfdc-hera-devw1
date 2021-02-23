@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>--Provvisorio--</fullName>
+        <default>false</default>
+        <label>--Provvisorio--</label>
+    </customValue>
+    <description>Tipologia Classificazione Problema Articolo</description>
+    <masterLabel>Classificazione Problema Articolo</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
