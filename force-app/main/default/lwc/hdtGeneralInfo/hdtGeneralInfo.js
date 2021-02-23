@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateSale from '@salesforce/apex/HDT_LC_GeneralInfo.updateSale';
 import getCurrentUserName from '@salesforce/apex/HDT_LC_GeneralInfo.getCurrentUserName';
+import SBQQ__TermDiscountSchedule__c from '@salesforce/schema/Product2.SBQQ__TermDiscountSchedule__c';
 
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
@@ -27,6 +28,10 @@ export default class HdtGeneralInfo extends LightningElement {
     initDataToSubmit(){
         this.dataToSubmit['Id'] = this.saleRecord.Id;
         this.dataToSubmit['CurrentStep__c'] = this.nextStep;
+    }
+
+    handleEmitCampaignIdEvent(event){
+        this.dataToSubmit['Campaign__c'] = event.detail.campaignId;
     }
 
     updateSaleRecord(saleData){

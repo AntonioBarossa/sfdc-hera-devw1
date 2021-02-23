@@ -23,12 +23,17 @@
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CampaignCode__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Agency__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CampaignRef__c" variant="label-stacked"></lightning-input-field>
                         </div>
                     </lightning-record-edit-form>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-large" size="12">
+                    <div class="slds-text-heading_small slds-m-bottom_small">Selezione campagna</div>
+                    <c-hdt-campaigns-popover campaign-type="sale" object-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent}></c-hdt-campaigns-popover>
                 </lightning-layout-item>
             </lightning-layout>
             <div class="slds-clearfix slds-p-around_small">
