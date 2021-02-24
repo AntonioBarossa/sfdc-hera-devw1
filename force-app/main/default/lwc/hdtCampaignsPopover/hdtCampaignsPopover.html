@@ -1,14 +1,16 @@
 <template>
-    <template if:true={allCampaigns}>
+    <template if:true={listResults}>
         <!-- Lighning datatable-->
         <template if:true={isSale}>
-            <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
-                onrowselection={handleRowSelection} data-selected-campaign={selectedCampaignId}>
-            </lightning-datatable>
+            <div>
+                <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
+                    onrowselection={handleRowSelection} max-row-selection=1>
+                </lightning-datatable>
+            </div>
         </template>
     </template>
     <!-- End Lighning datatable-->
-    <template if:true={isLayout}>
+    <template if:false={isSale}>
         <div class="slds-page-header slds-page-header_record-home">
             <!-- Header -->
             <div class="slds-page-header__row">
@@ -35,8 +37,8 @@
             <div class="slds-page-header__row slds-page-header__row_gutters">
                 <div class="slds-page-header__col-details">
                     <div class="slds-page-header__detail-row dblock">
-                        <template if:true={allCampaigns}>
-                            <template if:true={isLayout} for:each={allCampaigns} for:item="campaign">
+                        <template if:true={listResults}>
+                            <template for:each={allCampaigns} for:item="campaign">
                                 <div class="slds-m-around_xx-small" key={campaign.Id}>
                                     <article class="slds-tile" key={campaign.Id}>
                                         <div onmouseout={closePopover} data-id={campaign.Id}>

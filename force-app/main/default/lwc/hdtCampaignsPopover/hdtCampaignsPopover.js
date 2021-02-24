@@ -15,40 +15,44 @@ export default class PopoverContainer extends LightningElement {
     @track allCampaigns = [];
     @track rowdata;
     @track isSale = false;
-    @track isLayout = !this.isSale;
     @track selectedCampaignId = null;
     @track campaignsNumber = 0;
-    @wire(getAllCampaigns, {id: '$entityId', objectName: '$objectName'}) campaigns({ error, data }) {
+    @track listResults = false;
+    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectName' }) campaigns({ error, data }) {
         if (error) {
             console.log(error);
         } else if (data) {
-            data.forEach(item => {
-                this.allCampaigns.push(item.Campaign);
-                this.campaignsNumber++;
-            });
-            this.rowdata = this.allCampaigns;
-            console.log(JSON.stringify(this.rowdata));
+            if (data.length !== 0) {
+                data.forEach(item => {
+                    this.allCampaigns.push(item.Campaign);
+                    this.campaignsNumber++;
+                });
+                this.rowdata = this.allCampaigns;
+                this.listResults = true;
+                
+                //send visibility to parent component
+                this.dispatchEvent(new CustomEvent('emitvisibility', {
+                    detail: {
+                        isVisible: this.listResults
+                    }
+                }));
+            }
         }
     }
     columns = columns;
     connectedCallback() {
         this.isSale = this.campaignType == "sale" ? true : false;
-        this.isLayout = !this.isSale;
     }
 
     handleRowSelection(event) {
-        //handle single-selection
-        var el = this.template.querySelector('lightning-datatable[data-id="campaignsDT"]');
-        if (el.selectedRows.length > 1) {
-            event.preventDefault();
-            el.selectedRows = el.selectedRows.slice(1);
-        }
-        this.selectedCampaignId = el.selectedRows[0];
+        this.selectedCampaignId = event.target.selectedRows[0];
 
-        console.log(this.selectedCampaignId);
-        this.dispatchEvent(new CustomEvent('emitcampaignid', {detail:{
-            campaignId: this.selectedCampaignId
-        }}));
+        //send selectedCampaignId to parent component
+        this.dispatchEvent(new CustomEvent('emitcampaignid', {
+            detail: {
+                campaignId: this.selectedCampaignId
+            }
+        }));
     }
 
     openPopover(e) {

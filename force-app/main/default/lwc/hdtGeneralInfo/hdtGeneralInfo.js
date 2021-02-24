@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateSale from '@salesforce/apex/HDT_LC_GeneralInfo.updateSale';
 import getCurrentUserName from '@salesforce/apex/HDT_LC_GeneralInfo.getCurrentUserName';
@@ -14,6 +14,11 @@ export default class HdtGeneralInfo extends LightningElement {
     currentStep = 1;
     nextStep = 2;
     currentUserName = '';
+    @track isCampaignTableVisible = false;
+
+    get isCampaignVisible(){
+        return this.isCampaignTableVisible || this.saleRecord.Campaign__c !== undefined;
+    }
 
     toggle(){
         this.disabledInput = !this.disabledInput;
@@ -32,6 +37,10 @@ export default class HdtGeneralInfo extends LightningElement {
 
     handleEmitCampaignIdEvent(event){
         this.dataToSubmit['Campaign__c'] = event.detail.campaignId;
+    }
+
+    handleCampaignVisibility(event){
+        this.isCampaignTableVisible = event.detail.isVisible;
     }
 
     updateSaleRecord(saleData){

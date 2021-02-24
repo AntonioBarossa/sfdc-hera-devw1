@@ -1,6 +1,8 @@
 import { LightningElement, api, track } from 'lwc';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import getCustomSettingFieldsRequiredEle from '@salesforce/apex/HDT_QR_ServicePoint.getCustomSettingFieldsRequiredEle';
+import getCustomSettingFieldsRequiredGas from '@salesforce/apex/HDT_QR_ServicePoint.getCustomSettingFieldsRequiredGas';
 
 export default class hdtCreateTargetObject extends LightningElement {
     @api accountid;
@@ -9,6 +11,8 @@ export default class hdtCreateTargetObject extends LightningElement {
     @api sale;
     @api disabledinput;
     @api showCreateTargetObjectButton;
+    @api rowSplitEle = [];
+    @api rowSplitGas = [];
 
     @track recordType = {label:'',value: '', DeveloperName: ''};
 
@@ -26,6 +30,22 @@ export default class hdtCreateTargetObject extends LightningElement {
         return this.showCreateTargetObjectModal;
     }
 
+    connectedCallback(){
+        console.log('targetObject***'+ JSON.stringify(this.targetobject));
+        console.log('recordType***'+ JSON.stringify(this.recordType));
+
+        getCustomSettingFieldsRequiredEle().then(data=>{
+            this.rowSplitEle = data.FieldRequiredEle__c.split(",");
+            console.log('rowSplitEle****'+ JSON.stringify(this.rowSplitEle));
+        });
+        getCustomSettingFieldsRequiredGas().then(data=>{
+
+            this.rowSplitGas = data.FieldRequiredGas__c.split(",");
+            console.log('rowSplitGas****'+ JSON.stringify(this.rowSplitGas));
+        });
+        console.log('connect to hdtCreateTragetObject');
+    }
+    
     /**
      * Open record type selection modal on record create init
      */
