@@ -77,6 +77,37 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         });
     }
 
+    checkboxHandler(event){
+        
+        var rowValue = event.currentTarget.dataset.id
+        console.log('# checkboxHandler > ' + rowValue + ' - ' + event.target.checked);
+
+        event.cancelBubble = true;
+        event.stopPropagation();
+
+    }
+
+    handleRowAction(event) {
+        var e = event.currentTarget.dataset.id;
+        console.log('# Select row -> ' + e);
+
+        this.provinceOptions.forEach(li => {
+            this.template.querySelector('[data-id="' + li.value + '"]').style.background = '#ffffff';
+        });
+
+        //get id row and mark as selected        
+        let element = this.template.querySelector('[data-id="' + e + '"]');
+        element.style.background = ' #ecebea';
+
+        //get second level list and put in html
+        let foundRow = this.provinceOptions.find(ele  => ele.value === e);
+        this.dataToView = foundRow.cityAvailable;
+        this.dataRemoved = foundRow.cityRemoved;
+        this.showEmptyImmage = false;
+        this.showAvailableItems = true;
+        this.showSearchTable = false;
+    }
+
     handleProvinceChange(event) {
         var provId = event.detail.value;
         this.currentProvinceId = provId;

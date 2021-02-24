@@ -23,19 +23,72 @@
                         </h3>
                         <div aria-hidden="false" class="slds-section__content">
 
+
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col slds-size_3-of-7">
 
-                                    <div class="slds-m-bottom_medium">
-                                        <lightning-combobox
-                                            name="provinceCode"
-                                            label="Provincia di fornitura"
-                                            value={value}
-                                            placeholder="Seleziona la Provincia"
-                                            options={provinceOptions}
-                                            onchange={handleProvinceChange}
-                                        ></lightning-combobox>
+                                    <div class="slds-m-bottom_medium slds-scrollable_y slds-box slds-box_xx-small" >
+
+                                        <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+                                            <thead class="slds-assistive-text">
+                                                <tr class="slds-line-height_reset">
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="checkbox">Select</div>
+                                                </th>
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="ProvinceName">Provincia</div>
+                                                </th>                                
+                                                <th class="" scope="col">
+                                                    <div class="slds-truncate" title="Code">Codice</div>
+                                                </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+    
+                                                <template iterator:it={provinceOptions}>
+                                                    <tr key={it.value.value} data-id={it.value.value} class="slds-hint-parent" onclick={handleRowAction} >
+                                                        <th data-label={it.value.value} scope="row">
+
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <span class="slds-checkbox slds-checkbox_standalone">
+                                                                        <input type="checkbox" data-id={it.value.value} name="label" value={it.value.value} checked onclick={checkboxHandler} />
+                                                                        <span class="slds-checkbox_faux"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<lightning-input
+                                                                data-id={it.value.value}
+                                                                type="checkbox"
+                                                                label="selceProvince"
+                                                                variant="label-hidden"
+                                                                name={it.value.value}
+                                                                onclick={checkboxHandler}
+                                                            ></lightning-input>-->
+                                                        </th>
+                                                        <th data-label={it.value.label} scope="row">
+                                                            <div class="slds-truncate" title={it.value.label}>
+                                                                <div class="slds-truncate" title={it.value.label}>{it.value.label}</div>
+                                                            </div>                                            
+                                                        </th>
+                                                        <td data-label={it.value.value}>
+                                                            <div class="slds-truncate" title={it.value.value}>
+                                                                <div class="slds-truncate" title={it.value.value}>{it.value.value}</div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+    
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
+                            </div>
+
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_3-of-7">
         
                                     <div class="slds-m-bottom_medium">
                                         <div class="slds-grid slds-gutters">
