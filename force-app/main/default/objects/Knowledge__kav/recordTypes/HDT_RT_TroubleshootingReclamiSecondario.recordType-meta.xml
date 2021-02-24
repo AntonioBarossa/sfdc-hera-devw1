@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_TroubleshootingReclamiSecondario</fullName>
+    <active>true</active>
+    <description>Articolo troubleshooting reclami secondario</description>
+    <label>Troubleshooting Reclami Secondario</label>
+    <picklistValues>
+        <picklist>CommercialDocumentationType__c</picklist>
+        <values>
+            <fullName>--Provvisorio--</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FirstLevelClassification__c</picklist>
+        <values>
+            <fullName>--Provvisorio--</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FormationDocumentationType__c</picklist>
+        <values>
+            <fullName>--Provvisorio--</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ProblemType__c</picklist>
+        <values>
+            <fullName>--Provvisorio--</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SalesCompany__c</picklist>
+        <values>
+            <fullName>--Provvisorio--</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SecondLevelClassification__c</picklist>
+        <values>
+            <fullName>--Provvisorio--</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FlowDiagram__c</fullName>
+    <description>Campo dove si può inserire immagine del flusso da seguire durante la gestione del reclamo</description>
+    <externalId>false</externalId>
+    <label>Diagramma Flusso</label>
+    <length>32768</length>
+    <type>Html</type>
+    <visibleLines>25</visibleLines>
+</CustomField>
