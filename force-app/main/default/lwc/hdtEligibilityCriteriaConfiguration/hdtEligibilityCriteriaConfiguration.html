@@ -19,7 +19,7 @@
 
                     <div class="slds-section slds-is-open">
                         <h3 class="slds-section__title slds-theme_shade">
-                            <span class="slds-truncate slds-p-horizontal_small" title="Comuni eleggibili">Comuni eleggibili</span>
+                            <span class="slds-truncate slds-p-horizontal_small" title="Comuni eleggibili">Province eleggibili</span>
                         </h3>
                         <div aria-hidden="false" class="slds-section__content">
 
@@ -49,10 +49,20 @@
                                                     <tr key={it.value.value} data-id={it.value.value} class="slds-hint-parent" onclick={handleRowAction} >
                                                         <th data-label={it.value.value} scope="row">
 
+                                                            <!--<lightning-button-icon-stateful
+                                                                data-id={it.value.value}
+                                                                icon-name="utility:check"
+                                                                size="xx-small"
+                                                                selected={it.value.isEnabled}
+                                                                onclick={handleLikeButtonSizeClick}
+                                                                alternative-text="check"
+                                                                data-button-number={it.value.value}
+                                                            ></lightning-button-icon-stateful>-->
+
                                                             <div class="slds-form-element">
                                                                 <div class="slds-form-element__control">
                                                                     <span class="slds-checkbox slds-checkbox_standalone">
-                                                                        <input type="checkbox" data-id={it.value.value} name="label" value={it.value.value} checked onclick={checkboxHandler} />
+                                                                        <input type="checkbox" data-id={it.value.value} checked name="label" value={it.value.value} onclick={checkboxHandler} />
                                                                         <span class="slds-checkbox_faux"></span>
                                                                     </span>
                                                                 </div>
@@ -90,29 +100,52 @@
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col slds-size_3-of-7">
         
-                                    <div class="slds-m-bottom_medium">
-                                        <div class="slds-grid slds-gutters">
-                                            <div class="slds-col slds-size_2-of-3">
-                                                <lightning-input
-                                                    name="enter-search"
-                                                    label="Comuni di fornitura"
-                                                    type="search"
-                                                    field-level-help="Puoi ricercare per nome e cap"
-                                                    onchange={handleOnchange}
-                                                ></lightning-input>
+                                    <div class="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small" title="Comuni eleggibili">Comuni eleggibili</span>
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+
+                                            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input
+                                                        name="enter-search"
+                                                        label="Comuni di fornitura"
+                                                        type="search"
+                                                        disabled
+                                                        field-level-help="Puoi ricercare per nome e cap"
+                                                        onchange={handleOnchange}
+                                                    ></lightning-input>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-3 slds-m-top_large">
+                                                    <button
+                                                        disabled={disabled}
+                                                        data-id="operator"
+                                                        name="equal"
+                                                        onclick={changeOperator}
+                                                        class="slds-button slds-button_neutral slds-button_stretch" 
+                                                    >{buttonLabel}</button>
+                                                </div>
                                             </div>
-                                            <div class="slds-col slds-size_1-of-3 slds-m-top_large">
-                                                <button
-                                                    disabled={disabled}
-                                                    name="equal"
-                                                    onclick={changeOperator}
-                                                    class="slds-button slds-button_neutral slds-button_stretch" 
-                                                >{buttonLabel}</button>
-                                            </div>
+
                                         </div>
                                     </div>
 
                                 </div>
+
+                                <div class="slds-col slds-size_1-of-7"></div>
+
+                                <div class="slds-col slds-size_3-of-7">
+                                    <div class="slds-section slds-is-open">
+                                        <h3 class="slds-section__title slds-theme_shade">
+                                            <span class="slds-truncate slds-p-horizontal_small" title="Comuni non eleggibili">Comuni non eleggibili</span>
+                                        </h3>
+                                        <div aria-hidden="false" class="slds-section__content">
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             <!-- CREATE 3 COLUMNS -->
@@ -124,7 +157,7 @@
 
                                         <template if:true={showEmptyImmage} >
                                             <c-hdt-custom-illustration
-                                                message="Valori disponibli"
+                                                message="Nessun dato"
                                                 style-class="slds-text-body_regular"
                                             ></c-hdt-custom-illustration>
                                         </template>
@@ -258,15 +291,15 @@
                                     <!-- REMOVED ITEMS -->
                                     <div class="slds-box slds-box_xx-small" style="height: 300px;">
 
-                                        <template if:false={showTable} >
+                                        <template if:false={showRemovedTable} >
                                             <c-hdt-custom-illustration
-                                                message="Valori da rimuovere"
+                                                message="Nessun dato"
                                                 style-class="slds-text-body_regular"
                                             ></c-hdt-custom-illustration>
                                         </template>
 
-                                        <template if:true={showTable}>
-                                            <div class="slds-scrollable_y" style="height:100%;">
+                                        <template if:true={showRemovedTable}>
+                                            <div class="slds-scrollable_y" style="height:85%;">
                                                 <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
                                                     <thead class="slds-assistive-text">
                                                         <tr class="slds-line-height_reset">
@@ -315,6 +348,11 @@
                                                     </tbody>
                                                 </table>
                                             </div>
+                                            <button
+                                                class="slds-button slds-button_outline-brand slds-button_stretch slds-m-top_x-small"
+                                                onclick={restoreAllItem}>
+                                                Ripristina tutti
+                                            </button>
                                         </template>     
         
                                     </div>
@@ -325,10 +363,6 @@
                         </div>
                     </div>
 
-                </div>
-
-                <div class="slds-col slds-size_1-of-2">
-                    <!-- Nothing to disaplay here -->
                 </div>
 
             </div>

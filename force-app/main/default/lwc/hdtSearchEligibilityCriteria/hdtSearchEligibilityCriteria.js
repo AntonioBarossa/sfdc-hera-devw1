@@ -141,7 +141,7 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'TechnicalOffer__c');
+                    this.goToRecord(result, 'EligibilityCriteria__c');
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';

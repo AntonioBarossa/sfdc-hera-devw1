@@ -1,15 +1,25 @@
 public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
     @AuraEnabled
-    public static Boolean cloneEligibilityCriteriaRecord(String recIdToClone, String productId){
-        Boolean result;
+    public static String cloneEligibilityCriteriaRecord(String recIdToClone, String productId){
+        
+        HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
+
         try{
-            result = true;
+            saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.cloneEligibilityCriteriaHelper(recIdToClone, productId);
+
+            if(!saveResponse.success){
+                System.debug('# on clone controller #');
+                for(HDT_WRP_EligibilityCriteria.HDT_WRP_LineError le : saveResponse.errorData){
+                    System.debug('# ' + le);
+                }
+            }
+
         } catch (Exception e){
             System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         } 
-        return result;
+        return saveResponse.criteriaId;
     }
 
     @AuraEnabled
@@ -105,7 +115,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveCityEligibility(String productId, String dataReceived) {
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteria(String productId, String dataReceived) {
 
         System.debug('### productId ' + productId);
         System.debug('### dataReceived: ' + dataReceived);
@@ -118,26 +128,14 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
             System.debug('# provinceList size -> ' + provinceList.size());
 
-            EligibilityCriteria__c criteria = new EligibilityCriteria__c();
-            criteria.Product__c = productId;
-            insert criteria;
+            saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.saveEligibilityCriteriaHelper(provinceList, productId);
 
-            List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
-            EligibleMunicipality__c muni;
-            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv : provinceList){
-                muni = new EligibleMunicipality__c();
-                muni.EligibilityCriteria__c = criteria.Id;
-                muni.Name = singleProv.label;
-                muni.AreaCode__c =  singleProv.value;
-                //muni.JSON_Code_Available__c = JSON.serialize(singleProv.cityAvailable);
-                muni.JSON_Code__c = JSON.serialize(singleProv);
-                muniList.add(muni);
+            if(!saveResponse.success){
+                System.debug('# on controller #');
+                for(HDT_WRP_EligibilityCriteria.HDT_WRP_LineError le : saveResponse.errorData){
+                    System.debug('# ' + le);
+                }
             }
-
-            insert muniList;
-
-            saveResponse.success = true;
-            saveResponse.message = '';
 
         } catch (Exception ex){
             saveResponse.success = false;

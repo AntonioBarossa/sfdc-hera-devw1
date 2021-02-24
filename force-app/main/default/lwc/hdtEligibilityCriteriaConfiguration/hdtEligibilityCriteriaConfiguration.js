@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-import saveCityEligibility from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.saveCityEligibility';
+import saveEligibilityCriteria from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.saveEligibilityCriteria';
 import getCityZipCodeObj from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getCityZipCodeObj';
 
 export default class HdtEligibilityCriteriaConfiguration extends LightningElement {
@@ -9,7 +9,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
     storeData = [];
     @track dataToView = [];
     @track dataRemoved = [];
-    showTable = true;
+    showRemovedTable = false;
     buttonLabel = 'uguale a';
     operator = 'equal';
     showEmptyImmage = true;
@@ -18,7 +18,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
     queryTerm;
     provinceOptions;
     currentProvinceId;
-    disabled = '';
+    disabled = 'dis';
 
     @track searchTable = [];
     //enableSearch = false;
@@ -77,10 +77,36 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         });
     }
 
+    handleLikeButtonSizeClick(event) {
+        var rowValue = event.target.dataset.buttonNumber;
+        this.provinceOptions.forEach(po => {
+            if(po.value===rowValue){
+                po.isEnabled = !po.isEnabled;
+                console.log('# > ' + po.isEnabled);
+            }
+        });
+
+        //this[`likeStateSize${buttonNumber}`] = !this[
+        //    `likeStateSize${buttonNumber}`
+        //];
+//
+        //console.log(this.likeStateSize01);
+
+    }
+
     checkboxHandler(event){
         
         var rowValue = event.currentTarget.dataset.id
-        console.log('# checkboxHandler > ' + rowValue + ' - ' + event.target.checked);
+        //this.provinceOptions.forEach(po => {
+        //    if(po.value===rowValue){
+        //        po.isEnabled = event.target.checked;
+        //    }
+        //});
+
+        let foundRow = this.provinceOptions.find(ele  => ele.value === rowValue);
+        foundRow.isEnabled = event.target.checked;
+
+        console.log('# isEnabled > ' + rowValue + ' - ' + foundRow.isEnabled);
 
         event.cancelBubble = true;
         event.stopPropagation();
@@ -90,6 +116,21 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
     handleRowAction(event) {
         var e = event.currentTarget.dataset.id;
         console.log('# Select row -> ' + e);
+
+        if(!this.showAvailableItems){
+            console.log('# enable inpunt search #');
+            this.template.querySelectorAll('lightning-input').forEach(li => {
+                if(li.name==='enter-search'){
+                    li.disabled = false;
+                    this.disabled = '';
+                }
+            });
+
+            let operatorButton = this.template.querySelector('button');
+            if(operatorButton.dataset.id==='operator'){
+                operatorButton.disabled = false;
+            }
+        }
 
         this.provinceOptions.forEach(li => {
             this.template.querySelector('[data-id="' + li.value + '"]').style.background = '#ffffff';
@@ -106,9 +147,16 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         this.showEmptyImmage = false;
         this.showAvailableItems = true;
         this.showSearchTable = false;
+
+        if(this.dataRemoved.length>0){
+            this.showRemovedTable = true;
+        } else {
+            this.showRemovedTable = false;
+        }
+
     }
 
-    handleProvinceChange(event) {
+    /*handleProvinceChange(event) {
         var provId = event.detail.value;
         this.currentProvinceId = provId;
         console.log('# --> provId ' + provId);
@@ -121,15 +169,15 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         this.showEmptyImmage = false;
         this.showAvailableItems = true;
         this.showSearchTable = false;
-    }
+    }*/
     
     changeOperator(event){
         if(event.target.name === 'equal'){
-            this.buttonLabel = 'diverso da';
+            this.buttonLabel = 'diverso';
             event.target.name = 'notequal';
             this.operator = 'notequal';
         } else {
-            this.buttonLabel = 'uguale a';
+            this.buttonLabel = 'uguale';
             event.target.name = 'equal';
             this.operator = 'equal';
         }
@@ -211,14 +259,6 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         }
     }*/
 
-    searchField(event) {
-        console.log('# searchField #');
-    }
-
-    searchCity(event){
-        console.log('# searchCity #');
-    }
-
     removeAllItems(event){
         console.log('# removeAllItems #');
 
@@ -234,6 +274,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
 
         this.showAvailableItems = true;
         this.showSearchTable = false;
+        this.showRemovedTable = true;
     }
 
     removeItem(event){
@@ -260,9 +301,9 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
 
         var itemRemoved = { label: itemLabel, value: itemValue, id: itemId};
         this.dataRemoved.push(itemRemoved);
-
-        //if(!this.showTable){
-        //    this.showTable = true;
+        this.showRemovedTable = true;
+        //if(!this.showRemovedTable){
+        //    this.showRemovedTable = true;
         //}
     }
 
@@ -296,6 +337,12 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
             this.dataToView.sort(this.compare);
         }
 
+
+        
+    }
+
+    restoreAllItem(event){
+        console.log('# restoreAllItem #');
     }
 
     compare(a, b) {
@@ -323,7 +370,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
             console.log('# ' + this.storeData[i].label + ' - ' + this.storeData[i].value);
         }*/
 
-        saveCityEligibility({productId: this.productid, dataReceived: JSON.stringify(this.provinceOptions)})
+        saveEligibilityCriteria({productId: this.productid, dataReceived: JSON.stringify(this.provinceOptions)})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
