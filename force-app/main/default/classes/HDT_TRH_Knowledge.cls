@@ -1,4 +1,4 @@
-public class HDT_TRH_Knowledge {
+public inherited sharing class HDT_TRH_Knowledge {
     public void myUpdateMethodToPublish() {
         //Approval.UnlockResult ur = Approval.unlock(article.Id);
         //KbManagement.PublishingService.scheduleForPublication(article.KnowledgeArticleId, article.ToPublishDate__c);
