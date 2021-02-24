@@ -53,7 +53,9 @@ public inherited sharing class HDT_QR_QuoteLine {
             ServicePoint__r.ServicePointCode__c,
             SBQQ__RequiredBy__r.SBQQ__Product__r.Name,
             SBQQ__Quote__r.Name,
-            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            SBQQ__RequiredBy__r.BillingProfile__c,
+            SBQQ__RequiredBy__r.BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Product__r.Name IN ('POD', 'PDR')

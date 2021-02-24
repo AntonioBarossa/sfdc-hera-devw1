@@ -30,7 +30,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
             'SendCertifiedEmailConsentDate__c',
-            'DivergentSubject__c'
+            'DivergentSubject__c',
+            'CreateContractAccount__c'
         };
 
         List<String> rid = new List<String>{
@@ -45,7 +46,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'IbanCIN__c',
             'IbanABI__c',
             'IbanCAB__c',
-            'IbanCodeNumber__c'
+            'IbanCodeNumber__c',
+            'CreateContractAccount__c'
         };
 
         List<String> fatturazioneElettronica = new List<String>{

@@ -14,6 +14,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
     columns = [
         {label: 'Nome', fieldName: 'Name', type: 'text'},
+        {label: 'Billing Profile', fieldName: 'BillingProfile', type: 'text'},
         {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
         {label: 'POD/PDR', fieldName: 'ServicePointCode', type: 'text'}
     ];
@@ -48,6 +49,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                     quoteBundleArray.push({
                         "Id"                   :el.SBQQ__RequiredBy__c,
                         "Name"                 :el.SBQQ__RequiredBy__r.Name,
+                        "BillingProfile"       :el.SBQQ__RequiredBy__r.BillingProfile__c !== undefined ? el.SBQQ__RequiredBy__r.BillingProfile__r.Name : '',
                         "ProductName"          :el.SBQQ__RequiredBy__r.SBQQ__Product__r.Name,
                         "ServicePointCode"     :el.ServicePoint__r.ServicePointCode__c
                     });
