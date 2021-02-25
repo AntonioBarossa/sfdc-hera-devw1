@@ -288,6 +288,51 @@
                 <label>Sospeso parere interno</label>
             </value>
             <value>
+                <fullName>Attesa check preliminari</fullName>
+                <default>false</default>
+                <label>Attesa check preliminari</label>
+            </value>
+            <value>
+                <fullName>Check preliminari KO</fullName>
+                <default>false</default>
+                <label>Check preliminari KO</label>
+            </value>
+            <value>
+                <fullName>Check preliminari OK</fullName>
+                <default>false</default>
+                <label>Check preliminari OK</label>
+            </value>
+            <value>
+                <fullName>Da inviare a SAP</fullName>
+                <default>false</default>
+                <label>Da inviare a SAP</label>
+            </value>
+            <value>
+                <fullName>Esito KO da SAP simulato</fullName>
+                <default>false</default>
+                <label>Esito KO da SAP simulato</label>
+            </value>
+            <value>
+                <fullName>Esito KO pre-MDM</fullName>
+                <default>false</default>
+                <label>Esito KO pre-MDM</label>
+            </value>
+            <value>
+                <fullName>Validazione KO da DL</fullName>
+                <default>false</default>
+                <label>Validazione KO da DL</label>
+            </value>
+            <value>
+                <fullName>Validazione OK da DL</fullName>
+                <default>false</default>
+                <label>Validazione OK da DL</label>
+            </value>
+            <value>
+                <fullName>Validazione OK DL simulata</fullName>
+                <default>false</default>
+                <label>Validazione OK DL simulata</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
