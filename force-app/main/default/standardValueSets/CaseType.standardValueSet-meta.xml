@@ -326,4 +326,14 @@
         <default>false</default>
         <label>Disassociazione Utente Web</label>
     </standardValue>
+    <standardValue>
+        <fullName>Autolettura da cliente</fullName>
+        <default>false</default>
+        <label>Autolettura da cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autolettura da processo</fullName>
+        <default>false</default>
+        <label>Autolettura da processo</label>
+    </standardValue>
 </StandardValueSet>

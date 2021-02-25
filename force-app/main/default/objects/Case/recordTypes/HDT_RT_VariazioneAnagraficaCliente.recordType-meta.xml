@@ -2916,6 +2916,37 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>Cambio Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Intest%2FIndirizzo Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Dati Fiscali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Dati di Contatto%C2%A0%C2%A0</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Dati di Recapito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Dati di Recapito Votiva Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Gruppo IVA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SupplyType__c</picklist>
         <values>
             <fullName>A-Domestico</fullName>
