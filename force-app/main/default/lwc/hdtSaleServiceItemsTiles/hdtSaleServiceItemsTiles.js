@@ -63,7 +63,6 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
             this.tilesData = tilesArray;
 
             this.tilesData = this.tilesData.sort((a, b) => (a.CreatedDate > b.CreatedDate) ? 1 : -1);
-            console.log('this.tilesData: ', JSON.parse(JSON.stringify(this.tilesData)));
 
             this.showTilesInList = this.tilesData.length > 4 ? true : false;
 

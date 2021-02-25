@@ -31,6 +31,7 @@ export default class hdtSupplySelection extends LightningElement {
             console.log('showCreateTargetObjectButton true')
             this.showCreateTargetObjectButton = true;
             this.showCreateTargetObjectMod= true;
+            console.log('showButtonContract: ', this.showButtonContract);
         }else{
             getCustomMetadata({processType:this.processType}).then(data =>{
                 console.log('data custom metadata '+JSON.stringify(data));
