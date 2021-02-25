@@ -13,9 +13,10 @@ public inherited sharing class HDT_QR_SaleServiceItem {
      * @param String saleId
      * @param String ServicePoint__r.SupplyCity__c
      * @param String ServicePoint__r.RecordType.DeveloperName
+     * @param String ServicePoint__r.MarketOrigin__c
      * @return List<SaleServiceItem__c>
      */
-    public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type){
+    public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type, String marketOrigin){
 
         return [SELECT Id,
         Opportunity__c,
@@ -25,11 +26,13 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.SupplyCity__c,
         ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.MarketOrigin__c,
         Opportunity__r.Sale__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
         AND ServicePoint__r.SupplyCity__c = :city
         AND ServicePoint__r.RecordType.DeveloperName = :type
+        AND ServicePoint__r.MarketOrigin__c = :marketOrigin
         AND Opportunity__r.StageName NOT IN ('Closed Lost')
         WITH SECURITY_ENFORCED];
     }
@@ -54,7 +57,8 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.ServicePointCode__c,
         ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
-        ServicePoint__r.SupplyCity__c
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
         WITH SECURITY_ENFORCED

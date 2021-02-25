@@ -30,8 +30,9 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
                     "Name"         :el[0].Opportunity__r.Name,
                     "Type"         :el[0].ServicePoint__r.RecordType.Name,
                     "City"         :el[0].ServicePoint__r.SupplyCity__c,
+                    "MarketOrigin" :el[0].ServicePoint__r.MarketOrigin__c,
                     "ServicePoints":el,
-                    "CreatedDate": el[0].Opportunity__r.CreatedDate
+                    "CreatedDate"  : el[0].Opportunity__r.CreatedDate
                 });
             });
 
@@ -62,6 +63,7 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
             this.tilesData = tilesArray;
 
             this.tilesData = this.tilesData.sort((a, b) => (a.CreatedDate > b.CreatedDate) ? 1 : -1);
+            console.log('this.tilesData: ', JSON.parse(JSON.stringify(this.tilesData)));
 
             this.showTilesInList = this.tilesData.length > 4 ? true : false;
 
