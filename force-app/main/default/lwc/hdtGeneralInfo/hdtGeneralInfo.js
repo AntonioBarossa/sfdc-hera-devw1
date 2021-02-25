@@ -30,14 +30,20 @@ export default class HdtGeneralInfo extends LightningElement {
         this.dataToSubmit[event.target.fieldName] = event.target.value;
 
         if(event.target.fieldName === 'SalesContact__c'){
-            this.loading = true;
+            this.saleContactRoles = '';
             getSaleContactRole({accountId: this.saleRecord.Account__c, contactId: event.target.value}).then(data =>{
-                this.loading = false;
-                this.saleContactRoles = data[0].Roles;
-                this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
-                this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
+
+                if(data[0].Roles !== undefined){
+                    this.saleContactRoles = data[0].Roles;
+                    this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
+                    this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
+                } else {
+                    this.saleContactRoles = '';
+                    this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
+                    this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
+                }
+
             }).catch(error => {
-                this.loading = false;
                 console.log(error.body.message);
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',

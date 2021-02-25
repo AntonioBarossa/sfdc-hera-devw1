@@ -8,6 +8,7 @@
 public inherited sharing class HDT_LC_BillingProfileForm {
 
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+    private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
@@ -40,14 +41,15 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'InvoiceEmailAddress__c',
             'InvoiceCertifiedEmailAddress__c',
             'SendCertifiedEmailConsentDate__c',
+            'CreateContractAccount__c',
             'IbanIsForeign__c',
             'IBAN__c',
+            'IbanCountry__c',
             'IbanCIN_IBAN__c',
             'IbanCIN__c',
             'IbanABI__c',
             'IbanCAB__c',
-            'IbanCodeNumber__c',
-            'CreateContractAccount__c'
+            'IbanCodeNumber__c'
         };
 
         List<String> fatturazioneElettronica = new List<String>{
@@ -128,5 +130,16 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     public static Contact getLegalAccount(String contactId){
         contactSrv.checkReadAccess('FirstName,LastName,FiscalCode__c');
         return contactQr.getRecordById(contactId);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get Billing Profile clone
+     * @param String billingProfileId
+     * @return BillingProfile__c
+     */
+    @AuraEnabled
+    public static BillingProfile__c getCloneBillingProfile(String billingProfileId){
+        return billingProfileQr.getRecordById(billingProfileId);
     }
 }

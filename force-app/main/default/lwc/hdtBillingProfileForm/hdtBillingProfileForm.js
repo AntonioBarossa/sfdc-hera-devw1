@@ -4,10 +4,12 @@ import getFormFields from '@salesforce/apex/HDT_LC_BillingProfileForm.getFormFie
 import createBillingProfile from '@salesforce/apex/HDT_LC_BillingProfileForm.createBillingProfile';
 import getAccountOwnerInfo from '@salesforce/apex/HDT_LC_BillingProfileForm.getAccountOwnerInfo';
 import getLegalAccount from '@salesforce/apex/HDT_LC_BillingProfileForm.getLegalAccount';
+import getCloneBillingProfile from '@salesforce/apex/HDT_LC_BillingProfileForm.getCloneBillingProfile';
 
 export default class hdtBillingProfileForm extends LightningElement {
 
     @api accountId;
+    @api recordId;
     loading = false;
     @track fields = [];
     @track fatturazioneElettronicaFields = [];
@@ -16,19 +18,14 @@ export default class hdtBillingProfileForm extends LightningElement {
     wrapAddressObject = {};
     dataToSubmit = {};
     saveErrorMessage = '';
+    cloneObject = {};
 
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
     }
 
-    handlePaymentMethodSelect(event){
-        this.loading = true;
-        this.fatturazioneElettronicaFields = [];
-        this.tipologiaIntestatarioFields = [];
-        this.dataToSubmit[event.target.fieldName] = event.target.value;
-        this.template.querySelector('[data-id="modal-body"]').classList.remove('modal-body-height');
-
-        getFormFields({paymentMethod: event.target.value, accountId: this.accountId}).then(data =>{
+    handleGetFormFields(paymentMethod){
+        getFormFields({paymentMethod: paymentMethod, accountId: this.accountId}).then(data =>{
             this.loading = false;
             // this.fields = data.choosenFields;
             
@@ -36,12 +33,17 @@ export default class hdtBillingProfileForm extends LightningElement {
             if(data.choosenFields !== undefined){
                 data.choosenFields.forEach(el => {
                     let value = '';
+                    let disable = false;
 
                     switch (el) {
                         case 'XMLType__c':
                             value = 'Sintetico';
                             console.log('XMLType__c default: ', value);
 
+                            break;
+                        case 'IbanCountry__c':
+                            value = 'IT';
+                            disable = true;
                             break;
                     
                         default:
@@ -52,9 +54,10 @@ export default class hdtBillingProfileForm extends LightningElement {
                     this.fields.push({
                         fieldName: el,
                         visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
-                        disabled: false,
+                        disabled: disable,
                         value: value
                     });
+                    value = '';
                 });
             }
 
@@ -86,7 +89,15 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             // console.log('Errore: ',error.body.message);
         });
+    }
 
+    handlePaymentMethodSelect(event){
+        this.loading = true;
+        this.fatturazioneElettronicaFields = [];
+        this.tipologiaIntestatarioFields = [];
+        this.dataToSubmit[event.target.fieldName] = event.target.value;
+        this.template.querySelector('[data-id="modal-body"]').classList.remove('modal-body-height');
+        this.handleGetFormFields(event.target.value);
     }
 
     setTipologiaIntestatario(params){
@@ -131,12 +142,8 @@ export default class hdtBillingProfileForm extends LightningElement {
         this.dataToSubmit['OtherPayer__c'] = '';
     }
 
-    handleCollectFieldsData(event){
-        this.dataToSubmit[event.target.fieldName] = event.target.value;
-
-        if (event.target.fieldName === 'SignatoryType__c') {
-            this.resetTipologiaIntestatario();
-            switch (event.target.value) {
+    tipologiaIntestatarioInit(fieldValue){
+            switch (fieldValue) {
                 case 'Stesso Sottoscrittore':
                     getAccountOwnerInfo({accountId: this.accountId}).then(data =>{
                         this.loading = false;
@@ -150,13 +157,13 @@ export default class hdtBillingProfileForm extends LightningElement {
                         this.loading = false;
                         const toastErrorMessage = new ShowToastEvent({
                             title: 'Errore',
-                            // message: error.body.message,
+                            message: 'Error',
                             message: 'Error',
                             variant: 'error',
                             mode: 'sticky'
                         });
                         this.dispatchEvent(toastErrorMessage);
-                        // console.log('Errore: ',error.body.message);
+                        console.log('Errore - tipologiaIntestatarioInit: ', JSON.stringify(error));
                     });
     
                     break;
@@ -171,6 +178,14 @@ export default class hdtBillingProfileForm extends LightningElement {
                 default:
                     break;
             }
+    }
+
+    handleCollectFieldsData(event){
+        this.dataToSubmit[event.target.fieldName] = event.target.value;
+
+        if (event.target.fieldName === 'SignatoryType__c') {
+            this.resetTipologiaIntestatario();
+            this.tipologiaIntestatarioInit(event.target.value);
         }
 
         if (event.target.fieldName === 'LegalAgent__c') {
@@ -187,13 +202,13 @@ export default class hdtBillingProfileForm extends LightningElement {
                 this.loading = false;
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    // message: error.body.message,
+                    message: error.body.message,
                     message: 'Error',
                     variant: 'error',
                     mode: 'sticky'
                 });
                 this.dispatchEvent(toastErrorMessage);
-                // console.log('Errore: ',error.body.message);
+                console.log('Errore - handleCollectFieldsData: ', error.body.message);
             });
         }
 
@@ -232,7 +247,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.fields[this.fields.findIndex(el => el.fieldName === 'IbanABI__c')].visibility = !event.target.value;
             this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCAB__c')].visibility = !event.target.value;
             this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCodeNumber__c')].visibility = !event.target.value;
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IbanCountry__c')].visibility = !event.target.value;
             this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].visibility = event.target.value;
+
+            this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value = ' ';
+
+            console.log('IBAN__c value on toggle: ', this.fields[this.fields.findIndex(el => el.fieldName === 'IBAN__c')].value);
         }
 
     }
@@ -282,6 +302,8 @@ export default class hdtBillingProfileForm extends LightningElement {
 
         this.wrapAddressObject = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
 
+        console.log('handleWrapAddressObject: ', JSON.stringify(this.wrapAddressObject));
+
         if(this.dataToSubmit['InvoicingStreetName__c'] != this.wrapAddressObject['Via']){
             this.dataToSubmit['InvoicingStreetName__c'] = this.wrapAddressObject['Via'];
         }
@@ -306,15 +328,84 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     }
 
+    handleWrapAddressObjectReverse(){
+
+        if(this.cloneObject['InvoicingStreetName__c'] != undefined){
+            this.wrapAddressObject['Via'] = this.cloneObject['InvoicingStreetName__c'];
+        }
+        if(this.cloneObject['InvoicingCity__c'] != undefined){
+            this.wrapAddressObject['Comune'] = this.cloneObject['InvoicingCity__c'];
+        }
+        if(this.cloneObject['InvoicingPostalCode__c'] != undefined){
+            this.wrapAddressObject['CAP'] = this.cloneObject['InvoicingPostalCode__c'];
+        }
+        if(this.cloneObject['InvoicingCountry__c'] != undefined){
+            this.wrapAddressObject['Stato'] = this.cloneObject['InvoicingCountry__c'];
+        }
+        if(this.cloneObject['InvoicingProvince__c'] != undefined){
+            this.wrapAddressObject['Provincia'] = this.cloneObject['InvoicingProvince__c'];
+        }
+        if(this.dataToSubmit['InvoicingStreetNumberExtension__c'] != undefined){
+            this.wrapAddressObject['Estens.Civico'] = this.cloneObject['InvoicingStreetNumberExtension__c'];
+        }
+        if(this.cloneObject['InvoicingStreetNumber__c'] != undefined){
+            this.wrapAddressObject['Civico'] = this.cloneObject['InvoicingStreetNumber__c'];
+        }
+
+        this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObject);
+
+    }
+
+    getClone(){
+        
+        this.loading = true;
+        getCloneBillingProfile({billingProfileId: this.recordId}).then(data =>{
+            this.loading = false;
+            console.log('getClone: ', JSON.parse(JSON.stringify(data)));
+            this.cloneObject = data;
+            this.dataToSubmit = this.cloneObject;
+            delete this.dataToSubmit.Id;
+            this.handleGetFormFields(this.cloneObject.PaymentMethod__c);
+            this.handleWrapAddressObjectReverse();
+
+            console.log('data.SignatoryType__c: ', this.cloneObject.SignatoryType__c);
+
+            // if(this.cloneObject.SignatoryType__c !== undefined){
+            //     // this.resetTipologiaIntestatario();
+            //     // this.tipologiaIntestatarioInit(data.SignatoryType__c);
+            //     // this.template.querySelector('[data-name="SignatoryType__c"]').value = data.SignatoryType__c;
+            //     // let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'SignatoryType__c');
+            //     // this.tipologiaIntestatarioFields[indexOtherPayer].value = data.SignatoryType__c;
+            // }
+
+        }).catch(error => {
+            this.loading = false;
+
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                message: 'Error',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
     handleSaveEvent(){
         if(this.validFields()){
 
             this.dataToSubmit['Account__c'] = this.accountId;
-            this.handleWrapAddressObject();
+
+            // if(Object.keys(this.wrapAddressObject).length === 0){
+                console.log('save address:');
+                this.handleWrapAddressObject();
+            // }
 
             this.loading = true;
             createBillingProfile({billingProfile: this.dataToSubmit}).then(data =>{
                 this.loading = false;
+                this.recordId = '';
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Metodo di pagamento creato con successo',
@@ -346,5 +437,11 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.dispatchEvent(saveToastErrorMessage);
         }
 
+    }
+
+    connectedCallback(){
+        if(this.recordId !== undefined && this.recordId !== ''){
+            this.getClone();
+        }
     }
 }

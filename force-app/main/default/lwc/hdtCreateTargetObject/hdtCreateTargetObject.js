@@ -31,6 +31,7 @@ export default class hdtCreateTargetObject extends LightningElement {
     }
 
     connectedCallback(){
+        console.log('****************************************this.disabledinput'+ this.disabledinput);
         console.log('targetObject***'+ JSON.stringify(this.targetobject));
         console.log('recordType***'+ JSON.stringify(this.recordType));
 

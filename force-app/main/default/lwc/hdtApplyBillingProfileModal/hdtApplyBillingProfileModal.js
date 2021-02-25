@@ -35,7 +35,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                 this.handleCancelEvent();
                 const event = ShowToastEvent({
                     title: '',
-                    message:  'Nessun record trovato',
+                    message:  'Nessun Prodotto selezionato è compatibile con questo metodo di pagamento',
                     variant: 'warn'
                 });
                 dispatchEvent(event);

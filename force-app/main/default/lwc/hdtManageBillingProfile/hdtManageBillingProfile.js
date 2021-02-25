@@ -16,7 +16,7 @@ export default class hdtManageBillingProfile extends LightningElement {
         {label: 'Billing Profile Name', fieldName: 'Name', type: 'text'},
         {label: 'Indirizzo di Fatturazione', fieldName: 'InvoicingAddressFormula__c', type: 'text'},
         {label: 'Modalità invio bolletta', fieldName: 'BillSendingMethod__c', type: 'text'},
-        {label: 'IBAN', fieldName: 'IBAN__c', type: 'text'}
+        {label: 'IBAN', fieldName: 'FormulaIBAN__c', type: 'text'}
     ];
 
     @api
@@ -24,6 +24,7 @@ export default class hdtManageBillingProfile extends LightningElement {
         this.loading = true;
         getBillingProfileList({accountId: this.accountId}).then(data =>{
             this.loading = false;
+            console.log(JSON.stringify(data));
             
             if(data.length == 0){
                 this.emptyTable = true;
@@ -49,6 +50,7 @@ export default class hdtManageBillingProfile extends LightningElement {
     }
 
     getSelectedBillingProfile(event){
+        console.log(JSON.stringify(this.billingProfileData));
         let selectedRows = event.detail.selectedRows;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.dispatchEvent(new CustomEvent('selectedbillingprofile', {detail: this.rowToSend}));

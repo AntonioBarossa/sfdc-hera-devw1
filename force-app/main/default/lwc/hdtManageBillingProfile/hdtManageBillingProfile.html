@@ -1,12 +1,12 @@
 <template>
-    <div class="slds-p-horizontal_xx-large slds-m-vertical_large">
+    <div class="slds-p-horizontal_small slds-m-vertical_large">
         <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
         <template if:true={billingProfileData}>
             
             <template if:true={disabledInput}>
                 <lightning-datatable
                     if:false={emptyTable}
-                    key-field="id"
+                    key-field="Id"
                     data={billingProfileData}
                     columns={columns}
                     max-row-selection=1
@@ -17,7 +17,7 @@
             <template if:false={disabledInput}>
                 <lightning-datatable
                     if:false={emptyTable}
-                    key-field="id"
+                    key-field="Id"
                     data={billingProfileData}
                     columns={columns}
                     max-row-selection=1
