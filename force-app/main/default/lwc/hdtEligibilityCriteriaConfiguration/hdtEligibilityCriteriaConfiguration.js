@@ -16,7 +16,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
     showAvailableItems = false;
     showSearchTable = false;
     queryTerm;
-    provinceOptions;
+    @track provinceOptions;
     currentProvinceId;
     disabled = 'dis';
 
@@ -77,20 +77,13 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         });
     }
 
-    handleLikeButtonSizeClick(event) {
-        var rowValue = event.target.dataset.buttonNumber;
-        this.provinceOptions.forEach(po => {
-            if(po.value===rowValue){
-                po.isEnabled = !po.isEnabled;
-                console.log('# > ' + po.isEnabled);
-            }
-        });
+    headerCheckbox(event){
+        console.log('# headerCheckbox > ');
 
-        //this[`likeStateSize${buttonNumber}`] = !this[
-        //    `likeStateSize${buttonNumber}`
-        //];
-//
-        //console.log(this.likeStateSize01);
+        this.provinceOptions.forEach(po => {
+            po.isEnabled = false;
+        }); 
+
 
     }
 
@@ -361,14 +354,13 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
 
     saveAction(){
         console.log('# saveAction #');
-        //console.log('# provinceOptions -> ' + JSON.stringify(this.provinceOptions));
 
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
 
-        /*for(var i=0; i<this.storeData.length; i++){
-            console.log('# ' + this.storeData[i].label + ' - ' + this.storeData[i].value);
-        }*/
+        for(var i=0; i<this.provinceOptions.length; i++){
+            this.provinceOptions[i].cityRemoved = [];
+        }
 
         saveEligibilityCriteria({productId: this.productid, dataReceived: JSON.stringify(this.provinceOptions)})
         .then(result => {

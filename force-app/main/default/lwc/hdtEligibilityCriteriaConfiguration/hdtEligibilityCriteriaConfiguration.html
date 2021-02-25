@@ -29,18 +29,29 @@
 
                                     <div class="slds-m-bottom_medium slds-scrollable_y slds-box slds-box_xx-small" >
 
-                                        <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
-                                            <thead class="slds-assistive-text">
-                                                <tr class="slds-line-height_reset">
-                                                <th class="" scope="col">
-                                                    <div class="slds-truncate" title="checkbox">Select</div>
-                                                </th>
-                                                <th class="" scope="col">
-                                                    <div class="slds-truncate" title="ProvinceName">Provincia</div>
-                                                </th>                                
-                                                <th class="" scope="col">
-                                                    <div class="slds-truncate" title="Code">Codice</div>
-                                                </th>
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                            <thead >
+                                                <tr class="slds-line-height_reset" >
+                                                    <th class="headerackground" scope="col">
+                                                        <div class="slds-truncate" title="checkbox">
+
+                                                            <div class="slds-form-element">
+                                                                <div class="slds-form-element__control">
+                                                                    <span class="slds-checkbox slds-checkbox_standalone">
+                                                                        <input type="checkbox" checked name="checkedHeaderCheckbox" onclick={headerCheckbox} />
+                                                                        <span class="slds-checkbox_faux"></span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </th>
+                                                    <th class="headerackground" scope="col">
+                                                        <div class="slds-truncate" title="ProvinceName">Provincia</div>
+                                                    </th>                                
+                                                    <th class="headerackground" scope="col">
+                                                        <div class="slds-truncate" title="Code">Codice</div>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -49,33 +60,16 @@
                                                     <tr key={it.value.value} data-id={it.value.value} class="slds-hint-parent" onclick={handleRowAction} >
                                                         <th data-label={it.value.value} scope="row">
 
-                                                            <!--<lightning-button-icon-stateful
-                                                                data-id={it.value.value}
-                                                                icon-name="utility:check"
-                                                                size="xx-small"
-                                                                selected={it.value.isEnabled}
-                                                                onclick={handleLikeButtonSizeClick}
-                                                                alternative-text="check"
-                                                                data-button-number={it.value.value}
-                                                            ></lightning-button-icon-stateful>-->
-
                                                             <div class="slds-form-element">
                                                                 <div class="slds-form-element__control">
                                                                     <span class="slds-checkbox slds-checkbox_standalone">
-                                                                        <input type="checkbox" data-id={it.value.value} checked name="label" value={it.value.value} onclick={checkboxHandler} />
+                                                                        <input if:true={it.value.isEnabled} type="checkbox" data-id={it.value.value} checked name="label" value={it.value.value} onclick={checkboxHandler} />
+                                                                        <input if:false={it.value.isEnabled} type="checkbox" data-id={it.value.value} name="label" value={it.value.value} onclick={checkboxHandler} />
                                                                         <span class="slds-checkbox_faux"></span>
                                                                     </span>
                                                                 </div>
                                                             </div>
 
-                                                            <!--<lightning-input
-                                                                data-id={it.value.value}
-                                                                type="checkbox"
-                                                                label="selceProvince"
-                                                                variant="label-hidden"
-                                                                name={it.value.value}
-                                                                onclick={checkboxHandler}
-                                                            ></lightning-input>-->
                                                         </th>
                                                         <th data-label={it.value.label} scope="row">
                                                             <div class="slds-truncate" title={it.value.label}>

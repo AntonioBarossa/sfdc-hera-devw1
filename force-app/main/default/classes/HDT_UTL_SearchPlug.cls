@@ -51,34 +51,27 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 		*** end ciro modification ***
 		*/
         
-        //*** start ciro modification ***
-        List<String> sl = new List<String>();
-        sl.add('Offerta commerciale');
-        sl.add('VAS Prodotto');
-        sl.add('VAS Servizio');
-        
+        //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
+
         SBQQ__Quote__c myQuote= [
-            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
-            FROM SBQQ__Quote__c where Id =: currentId
+            SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c
+            FROM SBQQ__Quote__c
+            WHERE Id =: currentId
             WITH SECURITY_ENFORCED
         ];
+
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote.SupplyCity__c);
+
         additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
-        additionalFilter +=' AND Product2.Family IN :sl';
-	    //additionalFilter +=' AND (Product2.Family = \'Offerta commerciale\')';
-        //additionalFilter +=' AND (Product2.Family = \'VAS Prodotto\')';
-        //additionalFilter += ' AND Product2.Comune__c = \''+ myQuote.Comune_Fornitura__c+'\'';
-        //additionalFilter +=' AND (NOT Product2.Family like \'Bonus%\') and (NOT Product2.Family like \'Contri%\')';
-        //additionalFilter +=' AND (NOT Product2.Family like \'Opzione VAS%\') AND (NOT Product2.Family like \'Scont%VAS%\')';
-        additionalFilter +=' AND Product2.Status__c=\'Vendibile\'';
-		additionalFilter +=' AND Product2.IsActive = true';
-		//*** end ciro modification ***
+        additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
         System.debug('Additional Filter: '+ additionalFilter);
         return additionalFilter;
-        
-        //return NULL;
+
     }
+
     global List<PriceBookEntry> search(SObject quote, Map<String,Object> fieldValuesMap){
         System.debug('METHOD CALLED: search');
 
@@ -109,36 +102,24 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }
         }
         
-        //*** start ciro modification ***
-        
-        List<String> sl = new List<String>();
-        sl.add('Offerta commerciale');
-        sl.add('VAS Prodotto');
-        sl.add('VAS Servizio');
-        
+        //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
+
         SBQQ__Quote__c myQuote= [
-            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
-            FROM SBQQ__Quote__c where Id =: currentId
+            SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c
+            FROM SBQQ__Quote__c
+            WHERE Id =: currentId
             WITH SECURITY_ENFORCED
         ];
 
-        whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
-		whereClause += ' AND Product2.Family IN :sl';
-        //whereClause +=' AND (Product2.Family = \'Offerta commerciale\')';
-        //whereClause +=' AND (Product2.Family = \'VAS Prodotto\')';
-		whereClause +=' AND Product2.Status__c=\'Vendibile\'';
-		whereClause +=' AND Product2.IsActive = true';
-		
-        //whereClause += ' AND Product2.Comune__c = \''+ myQuote.Comune_Fornitura__c+'\'';
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote.SupplyCity__c);
 
-        //modifica montors
-        //whereClause += ' AND Product2Id IN (SELECT Product2Id__c FROM CityEligible__c WHERE Name = \'' + myQuote.Comune_Fornitura__c + '\')';
-        //whereClause +=' AND (NOT Product2.Family like \'Bonus%\') and (NOT Product2.Family like \'Contri%\')';
-        //whereClause +=' AND (NOT Product2.Family like \'Opzione VAS%\') AND (NOT Product2.Family like \'Scont%VAS%\')';
-        //whereClause +=' AND Product2.Status__c=\'Vendibile\'';
-        //*** end ciro modification ***
-        System.debug('Query Ciro '+ whereClause);
+        whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        whereClause += ' AND Product2Id IN :eligibleProductsId';
+        //*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
+
+        System.debug('# whereClause -> ' + whereClause);
+
         //BUILD THE QUERY
         String query = selectClause + ' FROM PriceBookEntry WHERE ' + whereClause;
 
@@ -159,7 +140,9 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     }
     global String getInputDefaultValue(SObject quote, String input){
         System.debug('METHOD CALLED: getInputDefaultValue ' + input);
+
         Id currentId = String.valueOf(quote.get('Id'));
+
         SBQQ__Quote__c myQuote= [
             SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
             FROM SBQQ__Quote__c where Id =: currentId
@@ -197,30 +180,72 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 		*** end ciro modification ***
 		*/
         
-        List<String> sl = new List<String>();
-        sl.add('Offerta commerciale');
-        sl.add('VAS Prodotto');
-        sl.add('VAS Servizio');
-        
-        //*** start ciro modification ***
+        //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
         SBQQ__Quote__c myQuote= [
-            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
-            FROM SBQQ__Quote__c where Id =: currentId
+            SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c
+            FROM SBQQ__Quote__c
+            WHERE Id =: currentId
             WITH SECURITY_ENFORCED
         ];
+
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote.SupplyCity__c);
+
         additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
-        additionalFilter += ' AND Product2.Family :IN sl';
-		//additionalFilter +=' AND (Product2.Family = \'Offerta commerciale\')';
-        //additionalFilter +=' AND (Product2.Family = \'VAS Prodotto\')';
-        /*additionalFilter += ' AND Product2.Comune__c = \''+ myQuote.Comune_Fornitura__c+'\'';
-        additionalFilter +=' AND (NOT Product2.Family like \'Bonus%\') and (NOT Product2.Family like \'Contri%\')';
-        additionalFilter +=' AND (NOT Product2.Family like \'Opzione VAS%\') AND (NOT Product2.Family like \'Scont%VAS%\')';*/
-        additionalFilter +=' AND Product2.Status__c=\'Vendibile\'';
-		additionalFilter +=' AND Product2.IsActive = true';
-		//*** end ciro modification ***
+        additionalFilter += ' AND Product2Id IN :eligibleProductsId';
+		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
         System.debug('Additional Filter Suggest: '+ additionalFilter);
         return additionalFilter;
     }
+
+    public static Set<Id> getEligibleProducts(String cityCode){
+
+        Set<Id> idList = new Set<Id>();
+        List<String> familyList = getFamilyList();
+
+        List<List<SObject>> searchList = [
+            FIND :cityCode
+            IN ALL FIELDS
+            RETURNING
+                    EligibleMunicipality__c(EligibilityCriteria__r.Product__c
+                                            WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
+                                            AND EligibilityCriteria__r.Product__r.IsActive = true
+                                            AND EligibilityCriteria__r.Product__r.Family IN :familyList
+                                            )
+        ];
+
+        List<EligibleMunicipality__c> eligibleMunicipality = ((List<EligibleMunicipality__c>)searchlist[0]);
+
+        for(EligibleMunicipality__c e : eligibleMunicipality){
+            System.debug('# > Prod id: ' + e.EligibilityCriteria__r.Product__c);
+            idList.add(e.EligibilityCriteria__r.Product__c);
+        }
+
+        List<Product2> prodWithoutCriteria = new List<Product2>();
+        prodWithoutCriteria = [
+            SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
+            FROM Product2
+            WHERE Status__c = 'Vendibile' AND IsActive = true AND Family IN :familyList
+            WITH SECURITY_ENFORCED
+        ];
+
+        for(Product2 p : prodWithoutCriteria){
+            if(p.EligibilitiesCriteria__r.size() == 0){
+                idList.add(p.Id);
+            }
+        }
+
+        return idList;
+
+    }
+
+    public static List<String> getFamilyList(){
+        List<String> sl = new List<String>();
+        sl.add('Offerta commerciale');
+        sl.add('VAS Prodotto');
+        sl.add('VAS Servizio');
+        return sl;
+    }
+
 }

@@ -7,6 +7,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         Savepoint sp = Database.setSavepoint();
 
         EligibilityCriteria__c criteria = new EligibilityCriteria__c();
+        criteria.Regions__c = 'EMR';
         criteria.Product__c = productId;
 
         try{
@@ -26,7 +27,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                 muni.EligibilityCriteria__c = criteria.Id;
                 muni.Name = singleProv.label;
                 muni.AreaCode__c =  singleProv.value;
-                //muni.JSON_Code_Available__c = JSON.serialize(singleProv.cityAvailable);
+                //singleProv.cityRemoved = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_City>();
                 muni.JSON_Code__c = JSON.serialize(singleProv);
                 muniList.add(muni);
             }
