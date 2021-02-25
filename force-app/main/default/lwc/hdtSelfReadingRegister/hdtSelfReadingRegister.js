@@ -169,7 +169,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         this.registerObj.forEach(element => {
 
-            if(element.disabled == false && element.value == null){
+            if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
 
                 this.advanceError = 'Impossibile procedere: Lettura da Cliente deve essere valorizzata';
 
@@ -248,7 +248,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             });
 
-            if(event.target.value <= this.registerObj[indexReading].value){
+            if(parseInt(event.target.value) <= parseInt(this.registerObj[indexReading].value)){
 
                 //this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
 

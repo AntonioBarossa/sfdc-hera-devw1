@@ -104,8 +104,18 @@
             console.log("Begin Redirect_2_: " + JSON.stringify(response));
             var focusedTabId = response.parentTabId;
             var focusedTab = response.tabId;
+
+            //INIZIO SVILUPPI EVERIS
+
+            workspaceAPI.closeTab({tabId: focusedTab}).then(function(){
+
+                $A.get('e.force:refreshView').fire();
+           
+            });
+
             
-            workspaceAPI.openTab({//Subtab({
+            
+            /*workspaceAPI.openSubtab({//Subtab({ NON SEMBRA ESSERE NECESSARIO APRIRE UN NUOVO TAB
                 parentTabId: focusedTabId,
                 pageReference: {
                     type: 'standard__component',
@@ -124,7 +134,9 @@
             })
             .catch(function(error) {
                 console.log('******' + error);
-            });
+            });*/
+
+            //FINE SVILUPPI EVERIS
         
         })
         .catch(function(error) {

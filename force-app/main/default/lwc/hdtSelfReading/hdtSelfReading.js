@@ -1,6 +1,8 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import updateSelfReading from '@salesforce/apex/HDT_LC_SelfReading.updateSelfReading';
 import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId';
+import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 //fare metodo per showtoast
 
@@ -11,6 +13,22 @@ export default class HdtSelfReading extends LightningElement {
     @api recordId;
 
     @api object;
+
+    @api isVolture;
+
+    @api isRetroactive;
+
+    @api availableActions = [];
+
+    @api saveDraft;
+
+    @api cancelCase;
+
+    @api nextLabel;
+
+    @api nextVariant;
+    
+    @api isDraft;
 
     recordKey;
 
@@ -31,10 +49,6 @@ export default class HdtSelfReading extends LightningElement {
     recordTypeId;
 
     isSaved = false;
-
-    @api isVolture;
-
-    @api isRetroactive;
 
     errorAdvanceMessage = 'Impossibile salvare autolettura. Si prega di correggere gli errori';
 
@@ -138,11 +152,11 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
-    handleSaveButton(event){
+    handleSaveButton(event){    
 
         console.log(event.target.name);
 
-        if(event.target.name === 'previous'){
+        if(this.isVolture && event.target.name === 'previous'){
 
             let dispObj = {name: event.target.name};
 
@@ -163,6 +177,8 @@ export default class HdtSelfReading extends LightningElement {
 
             this.errorAdvanceMessage = 'Impossibile procedere: Valorizzare Data Lettura Cliente';
 
+            this.showToastMessage(this.errorAdvanceMessage);
+
             console.log(this.errorAdvanceMessage);
 
             return;
@@ -177,9 +193,11 @@ export default class HdtSelfReading extends LightningElement {
 
                     this.errorAdvanceMessage = result;
 
-                    console.log(this.errorAdvanceMessage);
+                    console.log('Error '+this.errorAdvanceMessage);
 
                     this.outputObj = [];
+
+                    this.showToastMessage(this.errorAdvanceMessage);
 
                     throw BreakException;
 
@@ -249,6 +267,68 @@ export default class HdtSelfReading extends LightningElement {
             this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
 
         }
+
+
+    }
+
+    handleNavigation(action){
+
+        if(action === 'next' || action === 'draft'){
+
+            this.saveDraft = action === 'draft'; 
+
+            if(this.availableActions.find(action => action === 'NEXT')){
+
+                this.handleSaveButton();
+
+                const navigateNextEvent = new FlowNavigationNextEvent();
+    
+                this.dispatchEvent(navigateNextEvent);
+    
+            } else {
+
+                this.handleSaveButton();
+    
+                const navigateFinish = new FlowNavigationFinishEvent();
+    
+                this.dispatchEvent(navigateFinish);
+            }
+
+        } else if(action === 'previous'){
+
+            const navigateBackEvent = new FlowNavigationBackEvent();
+
+            this.dispatchEvent(navigateBackEvent);
+    
+        } else if(action === 'cancel'){
+
+            this.cancelCase = true;
+
+            if(this.availableActions.find(action => action === 'NEXT')){
+
+                const navigateNextEvent = new FlowNavigationNextEvent();
+    
+                this.dispatchEvent(navigateNextEvent);
+    
+            } else {
+    
+                const navigateFinish = new FlowNavigationFinishEvent();
+    
+                this.dispatchEvent(navigateFinish);
+            }
+
+        }
+
+    }
+
+    showToastMessage(errorMessage){
+
+        const toastErrorMessage = new ShowToastEvent({
+            title: 'Errore',
+            message: errorMessage,
+            variant: 'error',
+        });
+        this.dispatchEvent(toastErrorMessage);
 
 
     }

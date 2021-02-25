@@ -183,10 +183,12 @@
                 onclick={handleSaveButton}
             ></lightning-button>
 
-            <lightning-button if:false={isVolture}
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="brand" name="save" label="Salva" onclick={handleSaveButton}>
-            </lightning-button>
+            <c-hdt-flow-navigation-button if:false={isVolture} 
+            next-label={nextLabel} 
+            next-variant={nextVariant} 
+            is-draft={isDraft}>
+            </c-hdt-flow-navigation-button>
+
         </div>
     </div>
 

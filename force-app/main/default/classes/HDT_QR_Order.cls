@@ -102,6 +102,9 @@ public inherited sharing class HDT_QR_Order {
             Step__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
+            //INIZIO SVILUPPI EVERIS
+            ServicePoint__r.CommoditySector__c,
+            //FINE SVILUPPI EVERIS
             ServicePoint__r.RecordType.DeveloperName,
             ServicePoint__r.Account__c,
             ServicePoint__r.MeterClass__c,

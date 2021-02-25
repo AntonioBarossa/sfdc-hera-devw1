@@ -56,6 +56,8 @@ public inherited sharing class HDT_LC_SelfReading {
 
         } else {
 
+            obj.Step__c = 20;
+
             obj.Phase__c = 'Accettazione Voltura';
 
         }

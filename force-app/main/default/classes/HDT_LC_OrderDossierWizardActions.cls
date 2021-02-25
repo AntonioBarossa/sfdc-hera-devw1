@@ -20,7 +20,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
+
+        //INIZIO SVILUPPI EVERIS
+
+        Integer count = 0;
         
+        for(Order childOrder : childOrders){
+
+            if(childOrder.Phase__c == 'Accettazione Voltura'){
+
+                ++count;
+
+            }
+
+        }
+
+        if(count == childOrders.size()){
+
+            return;
+
+        }
+
+        //FINE SVILUPPI EVERIS
+
+
         if (orderParent.ContractSigned__c == false) {
 
             //update child orders

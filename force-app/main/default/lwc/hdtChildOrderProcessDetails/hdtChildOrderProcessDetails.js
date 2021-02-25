@@ -156,6 +156,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             this.isRetroactive = getFieldValue(data, RETROACTIVE_DATE) != null ? true : false;
 
+            this.outputFieldObj['RetroactiveDate__c'] = getFieldValue(data, RETROACTIVE_DATE);
+
+            console.log('Commodity ' +this.order.ServicePoint__r.CommoditySector__c);
+
             console.log('Wired Retroactive ' +this.isRetroactive)
 
         }else if(error){
@@ -711,7 +715,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             
                         this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
-
                     }).catch(error => {
 
                         this.loading = false;
@@ -734,6 +737,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.outputFieldObj = {};
         
                     this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+                }
+
+                if(this.availableVoltureSection[currentVoltureSectionIndex + 1].lastStep){
+
+                    this.dispatchEvent(new CustomEvent('emitlaststep', {detail: {lastStepNumber: 1}}));
 
                 }
 
