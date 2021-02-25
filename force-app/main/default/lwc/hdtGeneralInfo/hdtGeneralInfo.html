@@ -4,12 +4,6 @@
             <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
             <lightning-layout>
                 <lightning-layout-item padding="horizontal-large" size="12">
-                    <lightning-record-edit-form record-id={saleRecord.Account__c} object-api-name="Account">
-                        <div class="slds-grid slds-wrap slds-m-top_small">
-                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="CompanyOwner__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="OwnerId" variant="label-stacked"></lightning-input-field>
-                        </div>
-                    </lightning-record-edit-form>
                     <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
                         <div class="slds-grid slds-wrap slds-m-top_small">
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Channel__c" variant="label-stacked"></lightning-input-field>
