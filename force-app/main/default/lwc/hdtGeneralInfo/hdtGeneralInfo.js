@@ -2,8 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateSale from '@salesforce/apex/HDT_LC_GeneralInfo.updateSale';
 import getCurrentUserName from '@salesforce/apex/HDT_LC_GeneralInfo.getCurrentUserName';
-import SBQQ__TermDiscountSchedule__c from '@salesforce/schema/Product2.SBQQ__TermDiscountSchedule__c';
-
+import getSaleContactRole from '@salesforce/apex/HDT_LC_GeneralInfo.getSaleContactRole';
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
     disabledInput = false;
@@ -14,6 +13,7 @@ export default class HdtGeneralInfo extends LightningElement {
     currentStep = 1;
     nextStep = 2;
     currentUserName = '';
+    saleContactRoles = '';
     @track isCampaignTableVisible = false;
 
     get isCampaignVisible(){
@@ -28,6 +28,26 @@ export default class HdtGeneralInfo extends LightningElement {
 
     handleDataCollection(event){
         this.dataToSubmit[event.target.fieldName] = event.target.value;
+
+        if(event.target.fieldName === 'SalesContact__c'){
+            this.loading = true;
+            getSaleContactRole({accountId: this.saleRecord.Account__c, contactId: event.target.value}).then(data =>{
+                this.loading = false;
+                this.saleContactRoles = data[0].Roles;
+                this.template.querySelector('[data-name="SalesContactRole__c"]').value = this.saleContactRoles;
+                this.dataToSubmit['SalesContactRole__c'] = this.saleContactRoles;
+            }).catch(error => {
+                this.loading = false;
+                console.log(error.body.message);
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: error.body.message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            });
+        }
     }
 
     initDataToSubmit(){
