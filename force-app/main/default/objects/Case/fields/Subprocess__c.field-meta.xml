@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Subprocess__c</fullName>
-    <defaultValue>false</defaultValue>
     <description>Nome del sottoprocesso per Case che accorpano più processi.</description>
     <externalId>false</externalId>
     <label>Sottoprocesso</label>
+    <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Checkbox</type>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Modifica Dati Fiscali</fullName>
+                <default>false</default>
+                <label>Modifica Dati Fiscali</label>
+            </value>
+            <value>
+                <fullName>Variazione Gruppo IVA</fullName>
+                <default>false</default>
+                <label>Variazione Gruppo IVA</label>
+            </value>
+            <value>
+                <fullName>Modifica Dati di Recapito</fullName>
+                <default>false</default>
+                <label>Modifica Dati di Recapito</label>
+            </value>
+            <value>
+                <fullName>Modifica Dati di Recapito Votiva Modena</fullName>
+                <default>false</default>
+                <label>Modifica Dati di Recapito Votiva Modena</label>
+            </value>
+            <value>
+                <fullName>Modifica Dati di Contatto  </fullName>
+                <default>false</default>
+                <label>Modifica Dati di Contatto  </label>
+            </value>
+            <value>
+                <fullName>Cambio Amministratore</fullName>
+                <default>false</default>
+                <label>Cambio Amministratore</label>
+            </value>
+            <value>
+                <fullName>Cambio Intest/Indirizzo Amministratore</fullName>
+                <default>false</default>
+                <label>Cambio Intest/Indirizzo Amministratore</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

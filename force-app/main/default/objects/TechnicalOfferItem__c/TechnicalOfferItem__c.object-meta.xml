@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Oggetto di configurazione per lafunzionalità di configurazione offerta tecnica</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,10 +155,11 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Technical Offer Item</label>
+    <label>Riga Offerta Tecnica</label>
     <nameField>
+        <displayFormat>TO-{00000000}</displayFormat>
         <label>TechnicalOfferItem Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Technical Offer Items</pluralLabel>
     <searchLayouts/>
