@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    
+    <apiVersion>50.0</apiVersion>
+    
+    
+    <isExposed>true</isExposed>
+    
+    
+    <targets>
+        
+        
+        <target>lightning__FlowScreen</target>
+        
+        
+    </targets>
+    
+    
+    <targetConfigs>
+        
+        
+        <targetConfig targets="lightning__FlowScreen">
+            
+            
+            <property name="commodity" type="String" label="Commodity" description="Selected commodity for the current process" role="inputOnly"/>
+            
+            <property name="recordId" type="String" label="Record Id" description="Record Id of the parent Object" role="inputOnly"/>
+            
+            <property name="object" type="String" label="Object" description="The parent Object of the Reading" role="inputOnly"/>
+            
+            <property name="nextLabel" type="String" label="Next Label" description="The Label of the Next Button" role="inputOnly"/>
+            
+            <property name="nextVariant" type="String" label="Next variant" description="The variant of the next button" default="brand" role="inputOnly"/>
+            
+            <property name="isVolture" type="Boolean" label="Is Volture?" description="Discriminates if the process is a Volture" role="inputOnly"/>
+            
+            <property name="isDraft" type="Boolean" label="Is Draft?" description="Discriminates if the case is in Draft" role="inputOnly"/>
+            
+            <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
+            
+            <property name="cancelCase" type="Boolean" label="Is Volture?" description="If true call the cancellation flow" role="outputOnly"/>
+            
+
+        </targetConfig>
+        
+        
+    </targetConfigs>
+    
+    
+</LightningComponentBundle>

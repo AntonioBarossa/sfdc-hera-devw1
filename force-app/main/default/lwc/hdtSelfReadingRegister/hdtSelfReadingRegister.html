@@ -1,0 +1,16 @@
+<template>
+
+   <template for:each={registerObj} for:item="register">
+
+      <lightning-input key={register.id} 
+      type={register.type}
+      label={register.label}
+      value={register.value}
+      disabled={register.disabled}
+      onchange={handleChange}>
+      </lightning-input>
+
+   </template>
+
+
+</template>
