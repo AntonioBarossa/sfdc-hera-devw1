@@ -117,7 +117,10 @@ public inherited sharing class HDT_QR_Order {
             OrderNumber,
             Phase__c,
             RequestOption__c,
-            PreviousTrader__c
+            WaiverRightAfterthought__c,
+            MaxAfterthoughtDate__c,
+            PreviousTrader__c,
+            VolturaThirdTrader__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -161,6 +164,7 @@ public inherited sharing class HDT_QR_Order {
             Istanza326__c,
             DocLegge80__c,
             AutorizationVolturaThirdTrader__c,
+            VolturaThirdTrader__c,
             Phase__c
             FROM
             Order

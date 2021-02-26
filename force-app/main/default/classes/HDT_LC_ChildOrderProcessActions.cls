@@ -48,7 +48,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     if (order.WaiverRightAfterthought__c == 'Si') {
                         orderToUpdate.DateSentToSII__c = Date.today();
                     } else {
-                        orderToUpdate.MaxAfterthoughtDate__c = Date.today();
+                        Date maxAfterthoughtDate = order.MaxAfterthoughtDate__c;
+                        orderToUpdate.DateSentToSII__c = maxAfterthoughtDate.addDays(1);
                     }
 
                 } else {
