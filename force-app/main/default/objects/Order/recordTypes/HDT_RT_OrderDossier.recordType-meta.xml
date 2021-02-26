@@ -121,7 +121,15 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BL010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
@@ -133,7 +141,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
