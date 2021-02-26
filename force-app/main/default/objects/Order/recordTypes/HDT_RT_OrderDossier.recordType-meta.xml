@@ -143,25 +143,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>QuickQuote__c</picklist>
-        <values>
-            <fullName>Non Validato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sollecitato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validato</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>RecessSent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -169,17 +150,6 @@
         </values>
         <values>
             <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>RequestPhase__c</picklist>
-        <values>
-            <fullName>Monofase</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trifase</fullName>
             <default>false</default>
         </values>
     </picklistValues>
