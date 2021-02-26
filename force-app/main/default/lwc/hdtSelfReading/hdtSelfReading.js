@@ -50,7 +50,7 @@ export default class HdtSelfReading extends LightningElement {
 
     isSaved = false;
 
-    errorAdvanceMessage = 'Impossibile salvare autolettura. Si prega di correggere gli errori';
+    errorAdvanceMessage = '';
 
     @track readingCustomerDate;
 
@@ -154,9 +154,9 @@ export default class HdtSelfReading extends LightningElement {
 
     handleSaveButton(event){    
 
-        console.log(event.target.name);
+        console.log('handleSaveButton ' + event);
 
-        if(this.isVolture && event.target.name === 'previous'){
+        if(this.isVolture && event != undefined && event.target.name === 'previous'){
 
             let dispObj = {name: event.target.name};
 
@@ -181,7 +181,7 @@ export default class HdtSelfReading extends LightningElement {
 
             console.log(this.errorAdvanceMessage);
 
-            return;
+            throw BreakException;
 
         } else {
 
@@ -271,15 +271,25 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
-    handleNavigation(action){
+    handleNavigation(event){
 
-        if(action === 'next' || action === 'draft'){
+        const action = event.detail;
+        console.log('handleNavigation ' + action);
+
+        if(action === 'next' || action === 'draft' || action === 'save'){
 
             this.saveDraft = action === 'draft'; 
 
             if(this.availableActions.find(action => action === 'NEXT')){
 
-                this.handleSaveButton();
+                try {
+                    this.handleSaveButton();
+                } catch (e) {
+                    console.log('handleNavigation catch' + e);
+                    this.showToastMessage(this.errorAdvanceMessage);
+                    this.errorAdvanceMessage = '';
+                    return;
+                }
 
                 const navigateNextEvent = new FlowNavigationNextEvent();
     
@@ -287,8 +297,15 @@ export default class HdtSelfReading extends LightningElement {
     
             } else {
 
-                this.handleSaveButton();
-    
+                try {
+                    this.handleSaveButton();
+                } catch (e) {
+                    console.log('handleNavigation catch' + e);
+                    this.showToastMessage(this.errorAdvanceMessage);
+                    this.errorAdvanceMessage = '';
+                    return;
+                }
+                    
                 const navigateFinish = new FlowNavigationFinishEvent();
     
                 this.dispatchEvent(navigateFinish);
