@@ -111,6 +111,7 @@ public inherited sharing class HDT_QR_Order {
             Deliberation__c,
             ParentOrder__c,
             ParentOrder__r.Status,
+            ParentOrder__r.Phase__c,
             ParentOrder__r.ContractSigned__c,
             ParentOrder__r.SignedDate__c,
             OrderNumber,
