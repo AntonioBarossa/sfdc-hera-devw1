@@ -398,7 +398,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.evr_CaseContenitoreReiterazione__c</elementReference>
+                <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -466,7 +466,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.evr_CaseContenitoreReiterazione__c</elementReference>
+                <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -500,7 +500,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.evr_CaseContenitoreReiterazione__c</elementReference>
+                <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
         <filters>
@@ -534,7 +534,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>$Record.evr_CaseContenitoreReiterazione__c</elementReference>
+                <elementReference>$Record.ParentId</elementReference>
             </value>
         </filters>
         <filters>
