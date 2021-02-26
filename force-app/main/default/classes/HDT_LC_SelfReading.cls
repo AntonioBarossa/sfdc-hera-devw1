@@ -3,9 +3,9 @@ public inherited sharing class HDT_LC_SelfReading {
     @AuraEnabled
     public static String updateSelfReading(String fields, String commodity){
 
-        //Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
+        Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
 
-        //HDT_UTL_DatabaseService.insertSObject(obj);
+        HDT_UTL_DatabaseService.insertSObject(obj);
 
         //Map<String, Object> objMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
 
