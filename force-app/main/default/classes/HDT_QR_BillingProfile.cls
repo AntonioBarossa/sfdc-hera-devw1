@@ -71,8 +71,8 @@ public inherited sharing class HDT_QR_BillingProfile {
             PaymentMethod__c,
             InvoicingAddressFormula__c,
             BillSendingMethod__c,
-            IBAN__c,
-            FormulaIBAN__c
+            IBAN__c
+            // FormulaIBAN__c
             FROM BillingProfile__c
             WHERE Account__c = :accountId
             WITH SECURITY_ENFORCED
