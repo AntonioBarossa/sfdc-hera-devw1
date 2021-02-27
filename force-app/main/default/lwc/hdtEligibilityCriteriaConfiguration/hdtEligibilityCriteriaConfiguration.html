@@ -1,5 +1,14 @@
 <template>
 
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
     <lightning-card title="Eleggibilità" variant="narrow" icon-name="standard:sales_path">
         
         <div if:true={spinnerObj.spinner} >
@@ -7,7 +16,10 @@
         </div>
 
         <div slot="actions">
-            <lightning-button label="Salva" onclick={saveAction} icon-name="utility:save"></lightning-button>
+            <lightning-button-group>
+                <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} icon-name="utility:save"></lightning-button>
+                <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="destructive" icon-name="utility:delete"></lightning-button>
+            </lightning-button-group>
         </div>
         
         <div class="slds-card__body slds-card__body_inner">
@@ -33,18 +45,16 @@
                                             <thead >
                                                 <tr class="slds-line-height_reset" >
                                                     <th class="headerackground" scope="col">
-                                                        <div class="slds-truncate" title="checkbox">
 
-                                                            <div class="slds-form-element">
-                                                                <div class="slds-form-element__control">
-                                                                    <span class="slds-checkbox slds-checkbox_standalone">
-                                                                        <input type="checkbox" checked name="checkedHeaderCheckbox" onclick={headerCheckbox} />
-                                                                        <span class="slds-checkbox_faux"></span>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
+                                                        <lightning-input
+                                                            name="headerCheckbox"
+                                                            type="checkbox"
+                                                            label="checkboxHeader"
+                                                            variant="label-hidden"
+                                                            checked
+                                                            onchange={checkboxHeaderHandler}
+                                                        ></lightning-input>
 
-                                                        </div>
                                                     </th>
                                                     <th class="headerackground" scope="col">
                                                         <div class="slds-truncate" title="ProvinceName">Provincia</div>
@@ -59,6 +69,16 @@
                                                 <template iterator:it={provinceOptions}>
                                                     <tr key={it.value.value} data-id={it.value.value} class="slds-hint-parent" onclick={handleRowAction} >
                                                         <th data-label={it.value.value} scope="row">
+
+                                                            <!--<lightning-input
+                                                                data-rowid={it.value.value}
+                                                                name={it.value.value}
+                                                                type="checkbox"
+                                                                label={it.value.label}
+                                                                variant="label-hidden"
+                                                                checked
+                                                                onchange={checkboxHandler}
+                                                            ></lightning-input>-->
 
                                                             <div class="slds-form-element">
                                                                 <div class="slds-form-element__control">
@@ -103,12 +123,12 @@
                                             <div class="slds-grid slds-gutters slds-m-bottom_medium">
                                                 <div class="slds-col slds-size_2-of-3">
                                                     <lightning-input
-                                                        name="enter-search"
+                                                        name="searchAvailable"
                                                         label="Comuni di fornitura"
                                                         type="search"
                                                         disabled
-                                                        field-level-help="Puoi ricercare per nome e cap"
-                                                        onchange={handleOnchange}
+                                                        field-level-help="Puoi ricercare per nome"
+                                                        onchange={handleSearch}
                                                     ></lightning-input>
                                                 </div>
                                                 <div class="slds-col slds-size_1-of-3 slds-m-top_large">
@@ -135,6 +155,27 @@
                                             <span class="slds-truncate slds-p-horizontal_small" title="Comuni non eleggibili">Comuni non eleggibili</span>
                                         </h3>
                                         <div aria-hidden="false" class="slds-section__content">
+                                            <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                                                <div class="slds-col slds-size_2-of-3">
+                                                    <lightning-input
+                                                        name="searchRemoved"
+                                                        label="Comuni di fornitura"
+                                                        type="search"
+                                                        disabled
+                                                        field-level-help="Puoi ricercare per nome"
+                                                        onchange={handleSearch}
+                                                    ></lightning-input>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-3 slds-m-top_large">
+                                                    <button
+                                                        disabled={disabledR}
+                                                        data-id="operatorR"
+                                                        name="equal"
+                                                        onclick={changeOperator}
+                                                        class="slds-button slds-button_neutral slds-button_stretch" 
+                                                    >{buttonLabelR}</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -149,6 +190,7 @@
                                     <!-- AVAILABLE ITEMS -->
                                     <div class="slds-box slds-box_xx-small" style="height: 300px;">
 
+                                        <!-- Display image for emty data -->
                                         <template if:true={showEmptyImmage} >
                                             <c-hdt-custom-illustration
                                                 message="Nessun dato"
@@ -156,7 +198,7 @@
                                             ></c-hdt-custom-illustration>
                                         </template>
 
-                                        <!-- Nothing to disaplay here -->
+                                        <!-- Display search result items -->
                                         <template if:true={showSearchTable} >
                                             <div class="slds-scrollable_y" style="height:85%;">
                                                 <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
@@ -207,11 +249,11 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <button
+                                            <!--<button
                                                 class="slds-button slds-button_destructive slds-button_stretch slds-m-top_x-small"
                                                 onclick={removeAllItems}>
                                                 Rimuovi tutti
-                                            </button>
+                                            </button>-->
                                             
                                             <!--<lightning-button
                                                 variant="destructive"
@@ -223,9 +265,9 @@
                                                 class="slds-m-left_x-small"
                                             ></lightning-button>-->
                                         </template>
-                                        <!-- Nothing to disaplay here -->
 
-                                        <div if:true={showAvailableItems} class="slds-scrollable_y" style="height:100%;">
+                                        <!-- Display all available items -->
+                                        <div if:true={showAvailableItems} class="slds-scrollable_y" style="height:85%;">
                                             <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
                                                 <thead class="slds-assistive-text">
                                                     <tr class="slds-line-height_reset">
@@ -274,6 +316,14 @@
                                                 </tbody>
                                             </table>                
                                         </div>
+
+                                        <button
+                                            if:false={showEmptyImmage}
+                                            class="slds-button slds-button_destructive slds-button_stretch slds-m-top_x-small"
+                                            onclick={removeAllItems}>
+                                            Rimuovi tutti
+                                        </button>
+
                                     </div>
 
                                 </div>
@@ -285,13 +335,83 @@
                                     <!-- REMOVED ITEMS -->
                                     <div class="slds-box slds-box_xx-small" style="height: 300px;">
 
-                                        <template if:false={showRemovedTable} >
+                                        <!-- Display image for emty data -->
+                                        <template if:true={showEmptyRemovedImmage} >
                                             <c-hdt-custom-illustration
                                                 message="Nessun dato"
                                                 style-class="slds-text-body_regular"
                                             ></c-hdt-custom-illustration>
                                         </template>
 
+                                        <!-- Display search result items -->
+                                        <template if:true={showSearchRemovedTable} >
+                                            <div class="slds-scrollable_y" style="height:85%;">
+                                                <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
+                                                    <thead class="slds-assistive-text">
+                                                        <tr class="slds-line-height_reset">
+                                                            <th class="" scope="col">
+                                                                <div class="slds-truncate" title="Action">Action</div>
+                                                            </th>
+                                                            <th class="" scope="col">
+                                                                <div class="slds-truncate" title="Name">Comune</div>
+                                                            </th>
+                                                            <th class="" scope="col">
+                                                                <div class="slds-truncate" title="ZipCode">CAP</div>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <template iterator:it={searchRemovedTable}>
+                                                            <tr key={it.value.value} class="slds-hint-parent">
+                                                                <td data-label={it.value.value}>
+                                                                    <lightning-button-icon
+                                                                        data-id={it.value.value}
+                                                                        data-label={it.value.label}
+                                                                        data-value={it.value.value}
+                                                                        name="searchRemovedTable"
+                                                                        onclick={restoreItem}
+                                                                        icon-name="utility:chevronleft"
+                                                                        variant="bare"
+                                                                        alternative-text="Ripristina"
+                                                                        class="slds-m-left_xx-small"
+                                                                        title="Ripristina"
+                                                                    ></lightning-button-icon>
+                                                                </td>
+                                                                <th data-label={it.value.label} scope="row">
+                                                                    <div class="slds-truncate" title={it.value.label}>
+                                                                        <div class="slds-truncate" title={it.value.label}>{it.value.label}</div>
+                                                                    </div>
+                                                                </th>
+                                                                <th data-label={it.value.value} scope="row">
+                                                                    <div class="slds-truncate" title={it.value.value}>
+                                                                        <div class="slds-truncate" title={it.value.value}>{it.value.value}</div>
+                                                                    </div>                                            
+                                                                </th>
+                                                            </tr>
+                                                        </template>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--<button
+                                                class="slds-button slds-button_destructive slds-button_stretch slds-m-top_x-small"
+                                                onclick={removeAllItems}>
+                                                Rimuovi tutti
+                                            </button>-->
+                                            
+                                            <!--<lightning-button
+                                                variant="destructive"
+                                                label="Rimuovi tutti"
+                                                title="RemoveAll"
+                                                onclick={removeAllItems}
+                                                icon-name="utility:delete"
+                                                icon-position="right"
+                                                class="slds-m-left_x-small"
+                                            ></lightning-button>-->
+                                        </template>
+
+                                        <!-- Display all removed items -->
                                         <template if:true={showRemovedTable}>
                                             <div class="slds-scrollable_y" style="height:85%;">
                                                 <table class="slds-table slds-table_cell-buffer slds-table_header-hidden slds-table_bordered">
@@ -318,6 +438,7 @@
                                                                         data-id={it.value.value}
                                                                         data-label={it.value.label}
                                                                         data-value={it.value.value}
+                                                                        name="dataRemoved"
                                                                         onclick={restoreItem}
                                                                         icon-name="utility:chevronleft"
                                                                         variant="bare"
@@ -342,13 +463,15 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <button
-                                                class="slds-button slds-button_outline-brand slds-button_stretch slds-m-top_x-small"
-                                                onclick={restoreAllItem}>
-                                                Ripristina tutti
-                                            </button>
                                         </template>     
         
+                                        <button
+                                            if:false={showEmptyRemovedImmage}
+                                            class="slds-button slds-button_outline-brand slds-button_stretch slds-m-top_x-small"
+                                            onclick={restoreAllItem}>
+                                            Ripristina tutti
+                                        </button>
+
                                     </div>
 
                                 </div>

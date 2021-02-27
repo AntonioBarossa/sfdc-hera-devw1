@@ -125,4 +125,38 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return errorData;
     }
 
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj){
+
+        try{
+            List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
+            muniList = [
+                SELECT Id, Name, AreaCode__c, JSON_Code__c
+                FROM EligibleMunicipality__c
+                WHERE EligibilityCriteria__c =: eligibilityId
+                WITH SECURITY_ENFORCED
+            ];
+            
+            
+            CityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Region singleRegion = new HDT_WRP_EligibilityCriteria.HDT_WRP_Region();
+            singleRegion.regionName = 'EmiliaRomagna';
+            singleRegion.regionCode = 'EMR';
+            singleRegion.provinceList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>();
+
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
+            for(EligibleMunicipality__c muni : muniList){
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+                singleRegion.provinceList.add(singleProv);
+            }
+            CityZipCodeObj.regionList.add(singleRegion);
+
+        } catch (Exception e){
+            CityZipCodeObj.success = false;
+            CityZipCodeObj.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+        }
+
+        return CityZipCodeObj;
+
+    }
+
 }    

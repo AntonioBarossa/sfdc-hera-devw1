@@ -20,7 +20,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         body: '',
         operation: ''
     }
-    errorObj = {
+    @track errorObj = {
         showError: false,
         errorString:''
     };
@@ -51,12 +51,16 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 this.product.version = data.fields.Version__c.value;
                 this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
                 this.product.productCode = data.fields.ProductCode.value;
+                for(var i in this.product){
+                    console.log('# >>> ' + i + ': ' + this.product[i]);
+                }
+
             } catch(e){
                 this.errorObj.showError = true;
                 this.errorObj.errorString = '[' + e.message + '[' + 'Valore non trovato -> Version__c, Template__c, RateCategory__r.Name, ProductCode';
-                console.error('# Name => ' + e.name );
-                console.error('# Message => ' + e.message );
-                console.error('# Stack => ' + e.stack );
+                console.log('# Name => ' + e.name );
+                console.log('# Message => ' + e.message );
+                console.log('# Stack => ' + e.stack );
             }
 
             //this.getMatrixData();
@@ -150,6 +154,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         // Dispatches the event.
         this.dispatchEvent(goback);
+
+        this.goToRecord(this.productid, 'Product2');
 
     }
 
@@ -312,7 +318,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     back(event){
         console.log('back');
         this.errorObj.showError = false;
-        console.log('back');
+        //this.productid = '';
+        this.goBackToRecord();
     }
 
     openConfirmation(event){

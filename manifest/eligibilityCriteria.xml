@@ -6,6 +6,7 @@
 	</types>
 	<types>
 		<members>HDT_LC_EligibilityCriteriaController</members>
+		<members>HDT_LC_EligibilityCriteriaCtrlHelper</members>
 		<members>HDT_WRP_EligibilityCriteria</members>
 		<name>ApexClass</name>
 	</types>

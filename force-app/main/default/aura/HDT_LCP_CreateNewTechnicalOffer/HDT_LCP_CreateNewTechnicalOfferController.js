@@ -5,7 +5,7 @@
         console.log('# recId -> ' + i);
         component.set('v.recIdLWC', i);*/
         var recordid = component.get("v.pageReference").state.c__recordId;
-        //console.log('### isUrlAddressable -> ' + recordid);
+        console.log('### isUrlAddressable -> ' + recordid);
         component.set('v.recordId', recordid);
 
         //var workspaceAPI = component.find("workspace");
@@ -28,18 +28,22 @@
 	},
 
     goback : function(component, event, helper) {
-        console.log('# close this aura #');
-        var prodId = event.getParam('prodId');
-        console.log('#  # ' + prodId);
-        
-        var workspaceAPI = component.find("workspace");
+        //component.set('v.recordId', '');
+        //component.destroy();
+        //console.log('# close this aura #');
+        //var prodId = event.getParam('prodId');
+        //console.log('#  # ' + prodId);
+
+        $A.get('e.force:refreshView').fire();
+
+        /*var workspaceAPI = component.find("workspace");
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             var focusedTabId = response.tabId;
             workspaceAPI.closeTab({tabId: focusedTabId});
         })
         .catch(function(error) {
             console.log(error);
-        });
+        });*/
 
     }
 

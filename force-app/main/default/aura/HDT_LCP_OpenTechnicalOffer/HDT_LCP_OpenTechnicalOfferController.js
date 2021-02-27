@@ -31,20 +31,22 @@
         //});
 
 	},
-    
+
     goback : function(component, event, helper) {
-        console.log('# close this aura #');
-        var prodId = event.getParam('prodId');
-        console.log('#  # ' + prodId);
-        
-        var workspaceAPI = component.find("workspace");
+        //component.set('v.recordId', '');
+        //console.log('# close this aura #');
+        //var prodId = event.getParam('prodId');
+        //console.log('#  # ' + prodId);
+        //component.destroy();
+        $A.get('e.force:refreshView').fire();
+        /*var workspaceAPI = component.find("workspace");
         workspaceAPI.getFocusedTabInfo().then(function(response) {
             var focusedTabId = response.tabId;
             workspaceAPI.closeTab({tabId: focusedTabId});
         })
         .catch(function(error) {
             console.log(error);
-        });
+        });*/
 
     }
 

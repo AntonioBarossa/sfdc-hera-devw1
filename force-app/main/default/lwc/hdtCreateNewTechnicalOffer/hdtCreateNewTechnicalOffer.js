@@ -10,6 +10,10 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     @api productid;
     template;
 
+    connectedCallback(){
+        console.log('#### productid on lwc -> ' + this.productid);
+    }
+
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Template__c'] })
     wiredProduct({ error, data }) {
         if (data) {
@@ -37,14 +41,14 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         // Fire the custom event
         this.dispatchEvent(goback);
 
-        //this[NavigationMixin.Navigate]({
-        //    type: 'standard__recordPage',
-        //    attributes: {
-        //        recordId: this.productid,
-        //        objectApiName: 'Product2',
-        //        actionName: 'view'
-        //    }
-        //});
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: this.productid,
+                objectApiName: 'Product2',
+                actionName: 'view'
+            }
+        });
         //this.showWelcom = false;
     }
 

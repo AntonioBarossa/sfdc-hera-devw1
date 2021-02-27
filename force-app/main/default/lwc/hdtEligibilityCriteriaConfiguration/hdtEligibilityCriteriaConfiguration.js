@@ -2,44 +2,69 @@ import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import saveEligibilityCriteria from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.saveEligibilityCriteria';
 import getCityZipCodeObj from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getCityZipCodeObj';
+import { NavigationMixin } from 'lightning/navigation';
 
-export default class HdtEligibilityCriteriaConfiguration extends LightningElement {
+export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin(LightningElement) {
 
     @api productid;
-    storeData = [];
-    @track dataToView = [];
-    @track dataRemoved = [];
-    showRemovedTable = false;
+    @api eligibilityId;
     buttonLabel = 'uguale a';
     operator = 'equal';
-    showEmptyImmage = true;
-    showAvailableItems = false;
-    showSearchTable = false;
-    queryTerm;
-    @track provinceOptions;
-    currentProvinceId;
     disabled = 'dis';
+    queryTerm;
 
-    @track searchTable = [];
-    //enableSearch = false;
+    buttonLabelR = 'uguale a';
+    operatorR = 'equal';
+    disabledR = 'dis';
+    queryTermR;
+    //currentProvinceId;
+    
+    @track modalObj = {
+        isVisible: false,
+        header: '',
+        body: '',
+        operation: ''
+    }
 
     @track spinnerObj = {
         spinner: false,
         spincss: ''
     };
 
+    //Tables
+    @track dataToView = [];
+    @track searchTable = [];
+    @track dataRemoved = [];
+    @track searchRemovedTable = [];
+    //provinceOptions;// --> used with lightning-input
+    @track provinceOptions;// --> used with input
+
+    //Boolean to manage show table/image
+    showRemovedTable = false;
+    showEmptyImmage = true;
+    showAvailableItems = false;
+    showSearchTable = false;
+    showEmptyRemovedImmage = true;
+    showSearchRemovedTable = false;
+
+
     connectedCallback(){
+        console.log('>>> eligibilityId > ' + this.eligibilityId);
         this.getDataFromApex();
-        //for(var i=0; i<allData.length; i++){
-        //    this.dataToView.push(allData[i]);
-        //    this.storeData.push(allData[i]);
-        //}
+    }
+
+    renderedCallback(){
+        this.handleShowTables();
+    }
+
+    handleShowTables(){
+
     }
 
     getDataFromApex(){
         console.log('# get data from apex #');
 
-        getCityZipCodeObj({regionCode: 'EMR'})
+        getCityZipCodeObj({regionCode: 'EMR', eligibilityId: this.eligibilityId})
         .then(result => {
             console.log('# getCityZipCodeObj success #');
             console.log('# resp -> ' + result.success);
@@ -77,32 +102,34 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         });
     }
 
-    headerCheckbox(event){
-        console.log('# headerCheckbox > ');
+    checkboxHeaderHandler(event){
+        var headerChecked = event.target.checked;
+        console.log('# headerCheckbox ' + headerChecked);
 
-        this.provinceOptions.forEach(po => {
-            po.isEnabled = false;
-        }); 
-
+        if(headerChecked){
+            this.provinceOptions.forEach(po => {
+                po.isEnabled = true;
+            });
+        } else {
+            this.provinceOptions.forEach(po => {
+                po.isEnabled = false;
+            });
+        }
 
     }
 
     checkboxHandler(event){
-        
+
+        //used with input checkbox
         var rowValue = event.currentTarget.dataset.id
-        //this.provinceOptions.forEach(po => {
-        //    if(po.value===rowValue){
-        //        po.isEnabled = event.target.checked;
-        //    }
-        //});
 
         let foundRow = this.provinceOptions.find(ele  => ele.value === rowValue);
         foundRow.isEnabled = event.target.checked;
 
         console.log('# isEnabled > ' + rowValue + ' - ' + foundRow.isEnabled);
 
-        event.cancelBubble = true;
-        event.stopPropagation();
+        //event.cancelBubble = true;
+        //event.stopPropagation();
 
     }
 
@@ -113,7 +140,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         if(!this.showAvailableItems){
             console.log('# enable inpunt search #');
             this.template.querySelectorAll('lightning-input').forEach(li => {
-                if(li.name==='enter-search'){
+                if(li.name==='searchAvailable'){
                     li.disabled = false;
                     this.disabled = '';
                 }
@@ -137,137 +164,172 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         let foundRow = this.provinceOptions.find(ele  => ele.value === e);
         this.dataToView = foundRow.cityAvailable;
         this.dataRemoved = foundRow.cityRemoved;
+        
         this.showEmptyImmage = false;
         this.showAvailableItems = true;
         this.showSearchTable = false;
+
+        this.searchRemovedTable = false;
 
         if(this.dataRemoved.length>0){
             this.showRemovedTable = true;
+            this.showEmptyRemovedImmage = false;
         } else {
             this.showRemovedTable = false;
+            this.showEmptyRemovedImmage = true;
         }
 
     }
 
-    /*handleProvinceChange(event) {
-        var provId = event.detail.value;
-        this.currentProvinceId = provId;
-        console.log('# --> provId ' + provId);
-        this.dataToView = [];
-        this.storeData = [];
-        let foundProvince = this.provinceOptions.find(ele  => ele.value === provId);
-        //this.storeData = foundProvince.cityAvailable;//+++
-        this.dataToView = foundProvince.cityAvailable;
-        this.dataRemoved = foundProvince.cityRemoved;
-        this.showEmptyImmage = false;
-        this.showAvailableItems = true;
-        this.showSearchTable = false;
-    }*/
-    
     changeOperator(event){
+        var operatorType = event.currentTarget.dataset.id;
+
+        console.log('>>> ' + operatorType + ' - ' + event.target.name);
+
         if(event.target.name === 'equal'){
-            this.buttonLabel = 'diverso';
-            event.target.name = 'notequal';
-            this.operator = 'notequal';
+            if(operatorType==='operatorR'){
+                this.buttonLabelR = 'diverso';
+                event.target.name = 'notequal';
+                this.operatorR = 'notequal';
+            } else if(operatorType==='operator'){
+                this.buttonLabel = 'diverso';
+                event.target.name = 'notequal';
+                this.operator = 'notequal';
+            }
         } else {
-            this.buttonLabel = 'uguale';
-            event.target.name = 'equal';
-            this.operator = 'equal';
+            if(operatorType==='operatorR'){
+                this.buttonLabelR = 'uguale';
+                event.target.name = 'equal';
+                this.operatorR = 'equal';
+            } else if(operatorType==='operator'){            
+                this.buttonLabel = 'uguale';
+                event.target.name = 'equal';
+                this.operator = 'equal';
+            }
         }
     }
 
-    handleOnchange(event) {
-        console.log('# handleOnchange #');
-        console.log('# this.operator > ' + this.operator);
+    handleSearch(event) {
+        console.log('# handleSearch #');
+
+        var searchType = event.target.name;
+        console.log('# searchType >> ' + searchType);
+
+        var currentOperator = '';
+        var resultTable = '';
+        var searchFrom = '';
+
+        switch (searchType) {
+            case 'searchAvailable':
+                currentOperator = this.operator;
+                resultTable = 'searchTable';
+                searchFrom = 'dataToView';
+                this.disabled = 'dis';
+                this.showEmptyImmage = false;
+                this.showAvailableItems = false;
+                this.showSearchTable = true;
+                break;
+            case 'searchRemoved':
+                currentOperator = this.operatorR;
+                resultTable = 'searchRemovedTable';
+                searchFrom = 'dataRemoved';
+                this.showRemovedTable = false;
+                this.showEmptyRemovedImmage = false;
+                this.showSearchRemovedTable = true;
+        }
+
+        console.log('# this.operator > ' + currentOperator);
 
         this.queryTerm = event.target.value;
         console.log('# search -> ' + this.queryTerm);
 
-        this.disabled = 'dis';
-        this.showEmptyImmage = false;
-        this.showAvailableItems = false;
-        this.showSearchTable = true;
-
+        
         if(this.queryTerm != null && this.queryTerm != '' && this.queryTerm != undefined){
             
             var lowerTerm = this.queryTerm.toLowerCase();
             console.log('# find: ' + lowerTerm );
 
-            this.searchTable = [];
-            for(var i=0; i<this.dataToView.length; i++){
-                var currentLabel = this.dataToView[i].label.toLowerCase();
-                var cap = this.dataToView[i].value;
+            this[resultTable] = [];
+            for(var i=0; i<this[searchFrom].length; i++){
+                var currentLabel = this[searchFrom][i].label.toLowerCase();
+                var cap = this[searchFrom][i].value;
 
-                if(this.operator === 'equal'){
+                if(currentOperator === 'equal'){
                     if(currentLabel.startsWith(lowerTerm) || cap.startsWith(this.queryTerm)){
-                        this.searchTable.push(this.dataToView[i]);
+                        this[resultTable].push(this[searchFrom][i]);
                     }
                 } else {
                     if(!currentLabel.includes(lowerTerm)){
-                        this.searchTable.push(this.dataToView[i]);
+                        this[resultTable].push(this[searchFrom][i]);
                     }                    
                 }
 
             }
 
         } else {
-            this.searchTable = [];
-            this.disabled = '';
-            this.showEmptyImmage = false;
-            this.showAvailableItems = true;
-            this.showSearchTable = false;
+            this[resultTable] = [];
 
-            //for(var i=0; i<this.dataToView.length; i++){
-            //    this.searchTable.push(this.dataToView[i]);
-            //}
+            switch (searchType) {
+                case 'searchAvailable':
+                    this.disabled = '';
+                    this.showEmptyImmage = false;
+                    this.showAvailableItems = true;
+                    this.showSearchTable = false;
+                    break;
+                case 'searchRemoved':
+                    this.showEmptyRemovedImmage = false;
+                    this.showRemovedTable = true;
+                    this.showSearchRemovedTable = false;
+            }
+
         }
     }
-
-    /*handleOnchange(event) {
-        console.log('# handleOnchange #');
-
-        this.queryTerm = event.target.value;
-        console.log('# search -> ' + this.queryTerm);
-
-        if(this.queryTerm != null && this.queryTerm != '' && this.queryTerm != undefined){
-            
-            var lowerTerm = this.queryTerm.toLowerCase();
-            console.log('# find: ' + lowerTerm );
-
-            this.dataToView = [];
-            for(var i=0; i<this.storeData.length; i++){
-                var currentLabel = this.storeData[i].label.toLowerCase();
-                var cap = this.storeData[i].value;
-
-                if(currentLabel.startsWith(lowerTerm) || cap.startsWith(this.queryTerm)){
-                    this.dataToView.push(this.storeData[i]);
-                }
-            }
-
-        } else {
-            this.dataToView = [];
-            for(var i=0; i<this.storeData.length; i++){
-                this.dataToView.push(this.storeData[i]);
-            }
-        }
-    }*/
 
     removeAllItems(event){
         console.log('# removeAllItems #');
 
-        this.searchTable.forEach((i) => {
-            //find and remove item from filtered list
-            let element = this.dataToView.find(ele  => ele.value === i.value);
-            var index = this.dataToView.indexOf(element);
-            this.dataToView.splice(index, 1);
+        //Remove from search table
+        if(this.showSearchTable){
+            console.log('# Remove from SearchTable');
+            this.searchTable.forEach((i) => {
+                //find and remove item from filtered list
+                let element = this.dataToView.find(ele  => ele.value === i.value);
+                var index = this.dataToView.indexOf(element);
+                this.dataToView.splice(index, 1);
+    
+                var itemRemoved = { label: i.label, value: i.value, id: i.id};
+                this.dataRemoved.push(itemRemoved);
+            });
+    
+            this.showAvailableItems = true;
+            this.showSearchTable = false;
+            this.showRemovedTable = true;
+            this.showEmptyRemovedImmage = false;
+        } else if(this.showAvailableItems){
+            console.log('# Remove from AvailableItems');
+            this.dataToView.forEach((i) => {    
+                var itemRemoved = { label: i.label, value: i.value, id: i.id};
+                this.dataRemoved.push(itemRemoved);
+            });
+            this.dataToView.splice(0, this.dataToView.length);
+            this.showAvailableItems = false;
+            this.showSearchTable = false;
+            this.showRemovedTable = true;
+            this.showEmptyImmage = true;
+        }
 
-            var itemRemoved = { label: i.label, value: i.value, id: i.id};
-            this.dataRemoved.push(itemRemoved);
-        });
+        if(this.dataRemoved.length>0){
+            this.showRemovedTable = true;
+            this.showEmptyRemovedImmage = false;
+            this.template.querySelectorAll('lightning-input').forEach(li => {
+                if(li.name==='searchRemoved'){
+                    li.disabled = false;
+                    this.disabledR = '';
+                }
+            });
+        }
 
-        this.showAvailableItems = true;
-        this.showSearchTable = false;
-        this.showRemovedTable = true;
+
     }
 
     removeItem(event){
@@ -295,9 +357,18 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         var itemRemoved = { label: itemLabel, value: itemValue, id: itemId};
         this.dataRemoved.push(itemRemoved);
         this.showRemovedTable = true;
-        //if(!this.showRemovedTable){
-        //    this.showRemovedTable = true;
-        //}
+
+        if(this.dataRemoved.length>0){
+            this.showRemovedTable = true;
+            this.showEmptyRemovedImmage = false;
+            this.template.querySelectorAll('lightning-input').forEach(li => {
+                if(li.name==='searchRemoved'){
+                    li.disabled = false;
+                    this.disabledR = '';
+                }
+            });
+        }
+
     }
 
     restoreItem(event){
@@ -306,7 +377,7 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         var itemId = event.currentTarget.getAttribute('data-id');
         var itemLabel = event.currentTarget.getAttribute('data-label');
         var itemValue = event.currentTarget.getAttribute('data-value');
-        console.log('# To restore ' + itemId + '; ' + itemLabel + '; ' + itemValue);
+        console.log('# To restore >> ' + itemId + '; ' + itemLabel + '; ' + itemValue);
 
         var itemRemoved = { label: itemLabel, value: itemValue, id: itemId};
 
@@ -314,12 +385,13 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         var a = this.dataRemoved.indexOf(element);
         this.dataRemoved.splice(a, 1);
 
-        //check if the item is already stored, todo -> "migliorare"
-        let alreadyStored = this.storeData.find(ele  => ele.value === itemValue);
-        console.log('@@@ ' + alreadyStored);
-        if(alreadyStored == null || alreadyStored == undefined){
-            this.storeData.push(itemRemoved);
-            this.storeData.sort(this.compare);
+        var tableType = event.target.name;
+        console.log('# tableType > ' + tableType);
+
+        if(tableType != null && tableType != '' && tableType != undefined && tableType === 'searchRemovedTable'){
+            let element = this.searchRemovedTable.find(ele  => ele.value === itemId);
+            var a = this.searchRemovedTable.indexOf(element);
+            this.searchRemovedTable.splice(a, 1);
         }
 
         //check if the item is already present, todo -> "migliorare"
@@ -330,7 +402,14 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
             this.dataToView.sort(this.compare);
         }
 
+        if(this.dataToView.length>0){
+            this.showAvailableItems = true;
+            this.showEmptyImmage = false;
+        }
 
+        if(this.dataRemoved.length===0){
+            this.showRemovedTable = false;
+        }
         
     }
 
@@ -351,6 +430,12 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
         return comparison;
     }
 
+    modalResponse(event){
+        if(event.detail.decision === 'conf'){
+            this[event.detail.operation](event);
+        }
+        this.modalObj.isVisible = false;
+    }
 
     saveAction(){
         console.log('# saveAction #');
@@ -394,7 +479,8 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
                     }),
                 );
                 this.spinnerObj.spinner = false;
-            }, 5000);
+                this.goBackToRecord();
+            }, 2000);
 
         })
         .catch(error => {
@@ -409,10 +495,57 @@ export default class HdtEligibilityCriteriaConfiguration extends LightningElemen
                     variant: 'error',
                 }),
             );
-            setTimeout(() => {
-                
-            }, 1000);
         });
+    }
+
+    openConfirmation(event){
+        try {
+            switch (event.target.name) {
+                case 'saveAction':
+                    this.modalObj.header = 'Salva il criterio';
+                    this.modalObj.body = 'Questa configurazione verrà salvata su Salesforce. Vuoi confermare?';
+                    break;
+                case 'goBackToRecord':
+                    this.modalObj.header = 'Chiudi la configurazione';
+                    this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
+
+            }
+
+            this.modalObj.isVisible = true;
+            this.modalObj.operation = event.target.name;
+
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
+
+    goBackToRecord(){
+        console.log('# goBackToRecord -> ' + this.productid);
+
+        this.dataToView = [];
+        this.searchTable = [];
+        this.dataRemoved = [];
+        this.searchRemovedTable = [];
+        this.provinceOptions = [];
+
+        const goback = new CustomEvent("goback", {
+            detail: {prodId: this.productid}
+        });
+
+        // Dispatches the event.
+        this.dispatchEvent(goback);
+
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: this.productid,
+                objectApiName: 'Product2',
+                actionName: 'view'
+            }
+        });
+
     }
 
 }

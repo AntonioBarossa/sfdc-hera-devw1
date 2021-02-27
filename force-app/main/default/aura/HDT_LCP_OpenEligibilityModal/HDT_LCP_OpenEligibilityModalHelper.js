@@ -2,8 +2,13 @@
 	initHelperMethod : function(component, event, helper) {
 		console.log('# open from quick action #');
 
-		var workspaceAPI = component.find("workspace");
+		//var workspaceAPI = component.find("workspace");
+
+        var navService = component.find("navService");
+		$A.get("e.force:closeQuickAction").fire();
+
 		var productId = component.get('v.recordId');
+		console.log('# productId >> ' + productId);
         var action = component.get("c.getExistingCriteria");
         action.setParams({
             productId: productId
@@ -27,7 +32,20 @@
 					redirectToComponent = 'c__HDT_LCP_CreateNewEligibilityCriteria';
 				}
 
-				workspaceAPI.openTab({
+				var pageReference = {
+					type: 'standard__component',
+					attributes: {
+						componentName: redirectToComponent
+					},
+					state : {
+						c__recordId : productId,
+						c__eligibilityId: eligibilityId
+					}
+				};
+				
+				 navService.navigate(pageReference);
+
+				/*workspaceAPI.openTab({
 					pageReference: {
 						type: "standard__component",
 						attributes: {
@@ -51,10 +69,11 @@
 					}).then(function(response){
                         $A.get("e.force:closeQuickAction").fire();
                     });
+					$A.get("e.force:closeQuickAction").fire();
 				})
 				.catch(function(error) {
 					console.log(error);
-				});
+				});*/
 
 			} else {
 				console.log('something goes wrong!');

@@ -2,8 +2,14 @@
 	initHelperMethod : function(component, event, helper) {
 		console.log('# open from quick action #');
 
-		var workspaceAPI = component.find("workspace");
+        var navService = component.find("navService");
+		$A.get("e.force:closeQuickAction").fire();
+
+		//var workspaceAPI = component.find("workspace");
 		var productId = component.get('v.recordId');
+
+		console.log('# productId from quick action > ' + productId);
+
         var action = component.get("c.getExistingOffer");
         action.setParams({
             productId: productId
@@ -27,10 +33,23 @@
 					redirectToComponent = 'c__HDT_LCP_CreateNewTechnicalOffer';
 				}
 
-				$A.get("e.force:closeQuickAction").fire();
+				
 
+				var pageReference = {
+					type: 'standard__component',
+					attributes: {
+						componentName: redirectToComponent
+					},
+					state : {
+						c__recordId : productId,
+						c__technicalOfferId: technicalOfferId
+					}
+				};
+				
+				 navService.navigate(pageReference);
+				 
 
-				workspaceAPI.openTab({
+				/*workspaceAPI.openTab({
 					pageReference: {
 						type: "standard__component",
 						attributes: {
@@ -44,18 +63,18 @@
 					focus: true
 				})
 				.then(function(response) {
-					workspaceAPI.setTabLabel({
-						tabId: response,
-						label: "Configura offerta"
-					 });
-					workspaceAPI.setTabIcon({
-						tabId: response,
-						icon: 'utility:variation_attribute_setup'
-					});
+					//workspaceAPI.setTabLabel({
+					//	tabId: response,
+					//	label: "Configura offerta"
+					// });
+					//workspaceAPI.setTabIcon({
+					//	tabId: response,
+					//	icon: 'utility:variation_attribute_setup'
+					//});
 				})
 				.catch(function(error) {
 					console.log(error);
-				});
+				});*/
 
 
 

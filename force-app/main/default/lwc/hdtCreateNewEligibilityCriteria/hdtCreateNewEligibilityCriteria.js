@@ -4,11 +4,23 @@ import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(LightningElement) {
 
+    @api productid;
+    @api eligibilityId;
     showWelcom = true;
     showSearchOffer = false;
     showCreateOffer = false;
-    @api productid;
     template;
+
+    connectedCallback(){
+        console.log('#### productid > ' + this.productid + ' - ' + this.eligibilityId);
+
+        if(this.eligibilityId != null && this.eligibilityId != '' && this.eligibilityId != undefined){
+            this.showWelcom = false;
+            this.showSearchOffer = false;
+            this.showCreateOffer = true;
+        }
+
+    }
 
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Template__c'] })
     wiredProduct({ error, data }) {
@@ -36,6 +48,8 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
         });
         // Fire the custom event
         this.dispatchEvent(goback);
+        this.eligibilityId = '';
+        this.goToRecord(this.productid, 'Product2');
 
     }
 
@@ -56,8 +70,21 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
         this.showSearchOffer = false;
         
         console.log('### return to-> ' + this.productid);
-        this.closeModal();
+        //this.closeModal();
+        this.eligibilityId = '';
+        this.goToRecord(this.productid, 'Product2');
 
+    }
+
+    goToRecord(recId, objName){
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: recId,
+                objectApiName: objName,
+                actionName: 'view'
+            }
+        });
     }
 
 }

@@ -192,6 +192,7 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
 
         // Dispatches the event.
         this.dispatchEvent(goback);
+        this.goToRecord(this.productid, 'Product2');
     }
 
     handleSelection(event){

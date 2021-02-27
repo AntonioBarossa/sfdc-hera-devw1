@@ -1,5 +1,7 @@
 <aura:component controller="HDT_LC_OfferConfiguratorController" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
-    <lightning:workspaceAPI aura:id="workspace" />    
+    <!--<lightning:workspaceAPI aura:id="workspace" />-->
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>      
     <aura:attribute name="recordId" type="String" />
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
 
