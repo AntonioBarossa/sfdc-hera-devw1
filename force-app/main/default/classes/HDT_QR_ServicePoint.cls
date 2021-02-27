@@ -213,7 +213,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 */
 	public CS_SelezioneFornitura__c getCustomSetting() {
 		contractSrv.checkReadAccess('Max_Record__c, OutputServicePoint__c');
-		return [SELECT Output_Contract__c,Max_Record__c, OutputServicePoint__c FROM CS_SelezioneFornitura__c][0];
+		return [SELECT Output_Contract__c,Max_Record__c, OutputServicePoint__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED][0];
 	}
 
 		/*
@@ -222,7 +222,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	@AuraEnabled
 	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredEle() {
 		contractSrv.checkReadAccess('FieldRequiredEle__c');
-		return [SELECT FieldRequiredEle__c FROM CS_SelezioneFornitura__c];
+		return [SELECT FieldRequiredEle__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
 	}
 
 			/*
@@ -231,6 +231,6 @@ public inherited sharing class HDT_QR_ServicePoint {
 	@AuraEnabled
 	public static CS_SelezioneFornitura__c getCustomSettingFieldsRequiredGas() {
 		contractSrv.checkReadAccess(' FieldRequiredGas__c');
-		return [SELECT FieldRequiredGas__c FROM CS_SelezioneFornitura__c];
+		return [SELECT FieldRequiredGas__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
 	}
 }
