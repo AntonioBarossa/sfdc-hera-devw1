@@ -1,6 +1,6 @@
 public inherited sharing class HDT_LC_DocumentValidation {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
-	private static HDT_SRV_Order orderSRV = new HDT_SRV_Order();
+	private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     @AuraEnabled
     public static Boolean isValidPhase(String recordId){
         Order ord = orderQr.getRecordById(recordId);
@@ -42,7 +42,7 @@ public inherited sharing class HDT_LC_DocumentValidation {
             ord.Phase__c = 'Documentazione Validata';
         }
         System.debug('************:'+ord);
-        orderSRV.updateRecord(ord);
+        orderSrv.updateRecord(ord);
         //update ord;
         //return true;
         //Order ord = orderQr.getRecordById(recordId);
