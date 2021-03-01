@@ -56,6 +56,8 @@ export default class HdtSelfReading extends LightningElement {
 
     connectedCallback(){
 
+        this.readingCustomerDate = this.sysdate();
+
         this.recordKey = this.object === 'Order' ? 
             (this.commodity === 'Energia Elettrica' ? 'OrderEle__c' : 'OrderGas__c') : 
             (this.commodity === 'Energia Elettrica' ? 'CaseEle__c' : 'CaseGas__c');
@@ -361,6 +363,11 @@ export default class HdtSelfReading extends LightningElement {
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         return date+' '+time;
 
+    }
+
+    sysdate(){
+        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
 
