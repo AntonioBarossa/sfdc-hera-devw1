@@ -88,13 +88,13 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 toastObj.variant = 'warning';
             }
 
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: toastObj.title,
-                    message: toastObj.message,
-                    variant: toastObj.variant
-                }),
-            );
+            //this.dispatchEvent(
+            //    new ShowToastEvent({
+            //        title: toastObj.title,
+            //        message: toastObj.message,
+            //        variant: toastObj.variant
+            //    }),
+            //);
 
         })
         .catch(error => {

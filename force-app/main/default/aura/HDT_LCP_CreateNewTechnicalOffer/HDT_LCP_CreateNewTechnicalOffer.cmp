@@ -1,6 +1,7 @@
 <aura:component implements="lightning:isUrlAddressable,lightning:hasPageReference" >
 
     <aura:attribute name="recordId" type="string" />
+    <!--<aura:attribute name="loaded" type="Boolean" default="false" />-->
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
@@ -8,7 +9,15 @@
     
     <!--
     <c:hdtCreateNewTechnicalOffer productid="{!v.recordId}" ongoback="{!c.goback}" ></c:hdtCreateNewTechnicalOffer>
-    -->
+    
+
+    <div class="spinnerHolder">
+        <aura:if isTrue="{!v.loaded}">
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" />
+            </aura:set>
+        </aura:if>
+    </div>-->
 
     {!v.body}
 

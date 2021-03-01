@@ -7,12 +7,14 @@
 
         //dinamically create component
         $A.createComponent(
-            'c:hdtCreateNewTechnicalOffer', {productid: recordid},
+            'c:hdtCreateNewTechnicalOffer',
+            {productid: recordid, "ongoback": component.getReference("c.goback")},
             function(lwcCmp, status, errorMessage) {
                 if (status === "SUCCESS") {
                     var body = component.get("v.body");
                     body.push(lwcCmp);
                     component.set("v.body", body);
+                    //component.set('v.loaded', !component.get('v.loaded'));
                 }
                 else if (status === "INCOMPLETE") {
                     console.log("No response from server or client is offline.");
@@ -26,7 +28,8 @@
 	},
 
     goback : function(component, event, helper) {
-        $A.get('e.force:refreshView').fire();
+        console.log('### goback #####');
+        //$A.get('e.force:refreshView').fire();
     },
 
     update : function (component, event, helper) {
