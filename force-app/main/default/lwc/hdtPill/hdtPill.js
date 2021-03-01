@@ -13,8 +13,7 @@ export default class HdtPill extends LightningElement {
     connectedCallback(){
 
         this.pillIcon = this.icon;
-
-        if(this.pillObj.label != ''){
+        if(this.pillObj.label != '' && this.pillObj.label != undefined){
             //console.log('>>> ' + this.pillObj.label);
             this.pillLabel = this.pillObj.label;
             this.showPill = true;

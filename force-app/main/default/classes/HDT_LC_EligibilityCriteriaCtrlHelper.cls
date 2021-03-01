@@ -127,6 +127,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj){
 
+        System.debug('# getExistingEligibleMunicipalities > ' + eligibilityId);
+        CityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
         try{
             List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
             muniList = [
@@ -145,15 +147,19 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
             for(EligibleMunicipality__c muni : muniList){
+                singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
                 singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
                 singleRegion.provinceList.add(singleProv);
             }
             CityZipCodeObj.regionList.add(singleRegion);
-
+            CityZipCodeObj.success = true;
+            CityZipCodeObj.message = '';
         } catch (Exception e){
             CityZipCodeObj.success = false;
             CityZipCodeObj.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
         }
+
+        system.debug(JSON.serialize(CityZipCodeObj));
 
         return CityZipCodeObj;
 

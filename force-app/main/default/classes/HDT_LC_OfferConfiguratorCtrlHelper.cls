@@ -72,7 +72,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow convertObjectToWrapper(TechnicalOfferItem__c tempItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow){
         //setSingleRow.Id = tempItem.RowId__c;
-        setSingleRow.Id = tempItem.Id;
+        //setSingleRow.Id = tempItem.Id;
         setSingleRow.definition = tempItem.Definition__c;
         setSingleRow.type = tempItem.Type__c;
         setSingleRow.m = tempItem.M__c;

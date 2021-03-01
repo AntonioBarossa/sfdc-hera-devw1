@@ -7,6 +7,7 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
 
     @api productid;
     //@api eligibilityId;
+    eligibilityId;
     showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
@@ -61,6 +62,7 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
             }
 
             if(result.eligibilityId != null && result.eligibilityId != '' && result.eligibilityId != undefined){
+                this.eligibilityId = result.eligibilityId;
                 this.showCreateOffer = true;
             } else {
                 this.showWelcom = true;                

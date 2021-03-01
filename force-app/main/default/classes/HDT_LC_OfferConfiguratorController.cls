@@ -86,12 +86,31 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     singleRow.type = operands[n].Typology__c;
                     singleRow.m = false;
                     singleRow.v = true;
-                    singleRow.rateType = rowDetailMap.get('rateType');
-                    singleRow.infoGroup = rowDetailMap.get('infoGroup');
-                    singleRow.numValue = rowDetailMap.get('numValue');
-                    singleRow.flag = rowDetailMap.get('flag');
-                    singleRow.priceCode = rowDetailMap.get('priceCode');
-                    singleRow.stringValue = rowDetailMap.get('stringValue');
+
+                    singleRow.rateType = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                    singleRow.rateType.relatedTo = rowDetailMap.get('rateType').relatedTo;
+                    singleRow.rateType.enabled = rowDetailMap.get('rateType').enabled;
+
+                    singleRow.infoGroup  = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                    singleRow.infoGroup.relatedTo = rowDetailMap.get('infoGroup').relatedTo;
+                    singleRow.infoGroup.enabled = rowDetailMap.get('infoGroup').enabled;
+                    
+                    singleRow.numValue = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                    singleRow.numValue.relatedTo = rowDetailMap.get('numValue').relatedTo;
+                    singleRow.numValue.enabled = rowDetailMap.get('numValue').enabled;
+                    
+                    singleRow.flag = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                    singleRow.flag.relatedTo = rowDetailMap.get('flag').relatedTo;
+                    singleRow.flag.enabled = rowDetailMap.get('flag').enabled;
+
+                    singleRow.priceCode = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                    singleRow.priceCode.relatedTo = rowDetailMap.get('priceCode').relatedTo;
+                    singleRow.priceCode.enabled = rowDetailMap.get('priceCode').enabled;
+
+                    singleRow.stringValue = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                    singleRow.stringValue.relatedTo = rowDetailMap.get('stringValue').relatedTo;
+                    singleRow.stringValue.enabled = rowDetailMap.get('stringValue').enabled;
+
                     singleRow.tecName = operands[n].Operands__c;
                     matrixTable.rowList.add(singleRow);
                 }
@@ -100,14 +119,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     TechnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(technicalOfferId);
                     Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
                     for(TechnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
-                        itemsMap.put(item.Operand__c, item);
+                        itemsMap.put(item.RowId__c, item);
                     }
 
                     TechnicalOfferItem__c tempItem;
                     for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
-                        tempItem = itemsMap.get(setSingleRow.tecName);
+                        tempItem = itemsMap.get(setSingleRow.id);
                         setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
-                    }                    
+                    }    
+
                 }
 
             //}
@@ -122,6 +142,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         }
 
         
+        for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
+            System.debug('>>> ' + setSingleRow.Id+ ' - ' + setSingleRow.numValue.value);
+        }
+
         return matrixTable;
     }
 
@@ -191,6 +215,37 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             throw new AuraHandledException(e.getMessage());
         } 
         return recToView.TechnicalOfferItems__r;
+    }
+
+    @AuraEnabled
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse deleteOfferMatrix(String productId, String technicalOfferId){
+        System.debug('# deleteOfferMatrix #');
+
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
+
+        try{
+
+            List<TechnicalOffer__c> techOffList = new List<TechnicalOffer__c>();
+            techOffList = [
+                SELECT Id
+                FROM TechnicalOffer__c
+                WHERE Id =: technicalOfferId AND Product__c = :productId
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+
+            if(techOffList.size()>0){
+                delete techOffList;
+                saveResponse.success = true;
+            }
+
+        } catch (Exception ex){
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: ' + ex.getMessage() + '; at line [' + String.valueOf(ex.getLineNumber()) + ']';
+            throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
+        }
+        
+        return saveResponse;
     }
 
 }

@@ -178,7 +178,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         getOfferMatrix({productId: this.productid, technicalOfferId: this.technicalofferid})
         .then(result => {
-            console.log('# save success #');
+            this.dataRows = [];
+            console.log('# getOfferMatrix success #');
             console.log('# resp -> ' + result.success);
 
             var toastObj = {
@@ -186,13 +187,13 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 message: '',
                 variant: ''
             };
-
+            
             if(result.success){
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
                 this.dataRows = result.rowList;
-
+                
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
@@ -205,13 +206,13 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
             this.spinnerObj.spinner = false;
 
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: toastObj.title,
-                    message: toastObj.message,
-                    variant: toastObj.variant
-                }),
-            );
+            //this.dispatchEvent(
+            //    new ShowToastEvent({
+            //        title: toastObj.title,
+            //        message: toastObj.message,
+            //        variant: toastObj.variant
+            //    }),
+            //);
 
         })
         .catch(error => {

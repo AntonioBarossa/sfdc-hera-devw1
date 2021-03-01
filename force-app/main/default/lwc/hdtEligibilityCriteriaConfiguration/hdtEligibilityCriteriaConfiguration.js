@@ -79,7 +79,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
-
+                this.provinceOptions = [];
                 this.provinceOptions = result.regionList[0].provinceList;
 
             } else {
