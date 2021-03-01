@@ -8,6 +8,15 @@ export default class hdtApplyPaymentMethod extends LightningElement {
     @api selectedBillingProfile;
     @api disabledInput;
 
+    get isApplyButtonDisabledFinal(){
+
+        if(this.disabledInput){
+            return true;
+        } else {
+            return this.buttonDisabled;
+        }
+    }
+
     @api
     enableApply(){
         this.buttonDisabled = false;

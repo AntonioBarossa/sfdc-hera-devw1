@@ -6,7 +6,9 @@
 
 public inherited sharing class HDT_SRV_Account {
 
+    private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
+    private static final String UPDATEPERMISSION = 'update';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -26,5 +28,27 @@ public inherited sharing class HDT_SRV_Account {
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has update permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkUpdateAccess(String fields){
+        checkAccessInit(fields, UPDATEPERMISSION);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update Account
+     * @param Account account
+     */
+    public void updateRecord(Account account){
+
+        List<String> fields = helperMethods.getObjAttrList(account);
+        checkUpdateAccess(String.join(fields, ','));
+        HDT_UTL_DatabaseService.updateSObject(account);
+
     }
 }
