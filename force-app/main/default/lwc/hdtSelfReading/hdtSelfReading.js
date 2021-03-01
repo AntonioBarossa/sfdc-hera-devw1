@@ -152,6 +152,7 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
+    // event è definito solo per la voltura (this.isVolture) 
     handleSaveButton(event){    
 
         console.log('handleSaveButton ' + event);
@@ -249,11 +250,13 @@ export default class HdtSelfReading extends LightningElement {
                 
                 console.log(result) 
 
-                /*let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+                if (this.isVolture) {
+                    let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
 
-                console.log('Event Name '+dispObj.name)
-                
-                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));*/
+                    console.log('Event Name '+dispObj.name);
+
+                    this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+                }
 
                 this.isSaved = true;
             
@@ -262,13 +265,12 @@ export default class HdtSelfReading extends LightningElement {
 
         } else {
 
-            /*let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+            if (this.isVolture) {
+                let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
 
-            this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));*/
-
+                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+            }
         }
-
-
     }
 
     handleNavigation(event){

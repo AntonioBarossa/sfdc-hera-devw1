@@ -11,9 +11,8 @@ export default class HdtFlowNavigationButton extends LightningElement {
 
     handleClick(event){
 
-        console.log('HdtFlowNavigationButton!!');
+        console.log('hdtFlowNavigationButton: ' + event.target.name);
         this.dispatchEvent(new CustomEvent('navigation', {detail: event.target.name}));
-
 
     }
 
