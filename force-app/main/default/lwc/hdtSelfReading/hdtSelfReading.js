@@ -4,8 +4,6 @@ import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-//fare metodo per showtoast
-
 export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
@@ -51,6 +49,8 @@ export default class HdtSelfReading extends LightningElement {
     isSaved = false;
 
     errorAdvanceMessage = '';
+
+    lastReadingsChecked = false;
 
     @track readingCustomerDate;
 
@@ -153,6 +153,8 @@ export default class HdtSelfReading extends LightningElement {
 
         }
 
+        this.lastReadingsChecked = true;
+
     }
 
     // event è definito solo per la voltura (this.isVolture) 
@@ -187,6 +189,14 @@ export default class HdtSelfReading extends LightningElement {
 
             throw BreakException;
 
+        } else if(!this.isVolture && !this.lastReadingsChecked){
+            this.errorAdvanceMessage = 'Premere il pulsante Verifica Ultima Lettura ed inserire le letture del cliente.';
+
+            this.showToastMessage(this.errorAdvanceMessage);
+
+            console.log(this.errorAdvanceMessage);
+
+            throw BreakException;
         } else {
 
             try{this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
@@ -356,13 +366,14 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
+    // Genera la sysdate in formato DD/MM/YYYY HH:MM
     currentDateTime(){
+        const today = new Date();
+        const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const timeOptions = { hour12: false, hour: '2-digit', minute:'2-digit' };
 
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        return date+' '+time;
-
+        // Usiamo en-GB per forzare il formato con gli slash (DD/MM/YYYY)
+        return today.toLocaleString('en-GB', dateOptions) + ' ' + today.toLocaleTimeString('en-GB', timeOptions);
     }
 
     sysdate(){
