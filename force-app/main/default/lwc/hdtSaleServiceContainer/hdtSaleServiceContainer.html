@@ -6,7 +6,9 @@
                 <c-hdt-supply-selection disabled-input={disabledInput} onnewservicepoint={handleNewServicePoint} onconfirmservicepoint={handleConfirmServicePointEvent} process-type="" account-id={accountId} target-object="Fornitura" addititional-param=""></c-hdt-supply-selection>
             </div>
             <div class="slds-col slds-size_1-of-12">
-                <c-hdt-sale-vas if:true={saleRecord} disabled-input={disabledInput} sale={saleRecord} account-id={saleRecord.Account__c} oncreatevas={refreshTileData}></c-hdt-sale-vas>
+                <div class="slds-float_right slds-m-top_xx-large slds-p-horizontal_small">
+                    <c-hdt-sale-vas if:true={saleRecord} disabled-input={disabledInput} sale={saleRecord} account-id={saleRecord.Account__c} oncreatevas={refreshTileData}></c-hdt-sale-vas>
+                </div>
             </div>
         </div>
         <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>

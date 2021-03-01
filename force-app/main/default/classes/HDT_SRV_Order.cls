@@ -115,6 +115,25 @@ public inherited sharing class HDT_SRV_Order {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 06/02/2021
+    * @description Get record type ID for 'HDT_RT_Default'
+    * @param String
+    * @return String
+    */
+    public String getRecordTypeIdDefault(){
+        List<Schema.RecordTypeInfo> recordTypes = Order.SObjectType.getDescribe().getRecordTypeInfos();
+        String recordTypeIdDefault = '';
+        for (Schema.RecordTypeInfo recordType : recordTypes) {
+            if (recordType.getDeveloperName() == 'HDT_RT_Default') {
+                recordTypeIdDefault = recordType.getRecordTypeId();
+            }
+        }
+
+        return recordTypeIdDefault;
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 11/01/2021
     * @description Get record type ID by developerName
     * @param String

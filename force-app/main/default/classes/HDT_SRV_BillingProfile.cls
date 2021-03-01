@@ -10,6 +10,7 @@ public inherited sharing class HDT_SRV_BillingProfile {
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
+    private static final String UPDATEPERMISSION = 'update';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -41,6 +42,15 @@ public inherited sharing class HDT_SRV_BillingProfile {
     }
 
     /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has update permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkUpdateAccess(String fields){
+        checkAccessInit(fields, UPDATEPERMISSION);
+    }
+
+    /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create BillingProfile__c record
      * @param BillingProfile__c
@@ -54,5 +64,18 @@ public inherited sharing class HDT_SRV_BillingProfile {
         HDT_UTL_DatabaseService.insertSObject(billingProfile);
 
         return billingProfile;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update BillingProfile__c
+     * @param BillingProfile__c billingProfile
+     */
+    public void updateRecord(BillingProfile__c billingProfile){
+
+        List<String> fields = helperMethods.getObjAttrList(billingProfile);
+        checkUpdateAccess(String.join(fields, ','));
+        HDT_UTL_DatabaseService.updateSObject(billingProfile);
+
     }
 }
