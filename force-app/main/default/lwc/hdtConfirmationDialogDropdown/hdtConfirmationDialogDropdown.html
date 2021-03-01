@@ -8,7 +8,7 @@
                     </header>
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                         <p>{message}</p>
-                        <lightning-record-edit-form object-api-name={objectApiName}>
+                        <lightning-record-edit-form object-api-name={objectApiName} record-type-id={recordTypeId}>
                             <lightning-input-field onchange={handleDropdownChoice} field-name={picklistApiName}></lightning-input-field>
                         </lightning-record-edit-form>
                     </div>

@@ -123,7 +123,7 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__OrderByQuoteLineGroup__c
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
-            AND SBQQ__Status__c != 'Rifiutata'
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];
@@ -142,7 +142,7 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Status__c
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
-            AND SBQQ__Status__c != 'Rifiutata'
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];

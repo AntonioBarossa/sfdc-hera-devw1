@@ -72,6 +72,8 @@ export default class hdtConfigureProduct extends LightningElement {
             let quotesArray = [];
             let count = 0;
 
+            console.log('getQuotesData: ', JSON.parse(JSON.stringify(data)));
+
             data.forEach(el => {
                 quotesArray.push({
                     "Count"                :++count,
