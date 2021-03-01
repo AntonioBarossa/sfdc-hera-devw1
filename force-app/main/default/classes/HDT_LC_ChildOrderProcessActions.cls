@@ -49,7 +49,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.DateSentToSII__c = Date.today();
                     } else {
                         Date maxAfterthoughtDate = order.MaxAfterthoughtDate__c;
-                        orderToUpdate.DateSentToSII__c = maxAfterthoughtDate.addDays(1);
+
+                        if(maxAfterthoughtDate != null){
+                            orderToUpdate.DateSentToSII__c = maxAfterthoughtDate.addDays(1);
+                        }
                     }
 
                 } else {
