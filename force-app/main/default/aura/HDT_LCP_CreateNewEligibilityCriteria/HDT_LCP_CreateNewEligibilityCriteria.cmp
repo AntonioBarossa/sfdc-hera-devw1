@@ -1,8 +1,20 @@
 <aura:component implements="lightning:isUrlAddressable" >
-     <!--<lightning:workspaceAPI aura:id="workspace"/>-->
+
     <aura:attribute name="recordId" type="string" />
     <aura:attribute name="eligibilityId" type="string" />
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
     <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
-    <c:hdtCreateNewEligibilityCriteria productid="{!v.recordId}" eligibilityId="{!v.eligibilityId}" ongoback="{!c.goback}" ></c:hdtCreateNewEligibilityCriteria>
+    <aura:handler event="aura:locationChange" action="{!c.update}"/>
+
+    <!--
+    <c:hdtCreateNewEligibilityCriteria
+        productid="{!v.recordId}"
+        eligibilityId="{!v.eligibilityId}"
+        ongoback="{!c.goback}"
+        ></c:hdtCreateNewEligibilityCriteria>
+    -->
+    
+    {!v.body}
+
 </aura:component>

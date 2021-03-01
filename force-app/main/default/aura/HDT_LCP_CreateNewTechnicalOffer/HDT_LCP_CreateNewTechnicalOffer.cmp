@@ -1,9 +1,15 @@
 <aura:component implements="lightning:isUrlAddressable,lightning:hasPageReference" >
-    <!--<lightning:workspaceAPI aura:id="workspace"/>-->
+
     <aura:attribute name="recordId" type="string" />
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
+    <aura:handler event="aura:locationChange" action="{!c.update}"/>
     
+    <!--
     <c:hdtCreateNewTechnicalOffer productid="{!v.recordId}" ongoback="{!c.goback}" ></c:hdtCreateNewTechnicalOffer>
+    -->
+
+    {!v.body}
 
 </aura:component>	

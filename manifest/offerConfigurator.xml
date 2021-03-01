@@ -20,7 +20,7 @@
 	</types>	
 	<types>
 		<members>HDT_LCP_CreateNewTechnicalOffer</members>
-		<members>HDT_LCP_OpenTechnicalOffer</members>
+		<!--<members>HDT_LCP_OpenTechnicalOffer</members>-->
 		<members>HDT_LCP_OpenTechnicalOfferModal</members>
 		<name>AuraDefinitionBundle</name>
 	</types>

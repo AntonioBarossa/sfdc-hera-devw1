@@ -1,50 +1,37 @@
 ({
 	doInit : function(component, event, helper) {
-		/*console.log('# ----- #');
-        var i = component.get('v.recordId');
-        console.log('# recId -> ' + i);
-        component.set('v.recIdLWC', i);*/
+
         var recordid = component.get("v.pageReference").state.c__recordId;
         console.log('### isUrlAddressable -> ' + recordid);
-        component.set('v.recordId', recordid);
+        //component.set('v.recordId', recordid);
 
-        //var workspaceAPI = component.find("workspace");
-        //workspaceAPI.getFocusedTabInfo().then(function(response) {
-        //    var focusedTabId = response.tabId;
-        //    //workspaceAPI.setTabLabel({
-        //    //    tabId: focusedTabId,
-        //    //    label: "Configurazione"
-        //    //});
-        //    workspaceAPI.setTabIcon({
-        //                tabId: focusedTabId,
-        //                icon: "custom:custom83",
-        //                iconAlt: "Edit Tab"
-        //    });
-        //})
-        //.catch(function(error) {
-        //    console.log(error);
-        //});
+        //dinamically create component
+        $A.createComponent(
+            'c:hdtCreateNewTechnicalOffer', {productid: recordid},
+            function(lwcCmp, status, errorMessage) {
+                if (status === "SUCCESS") {
+                    var body = component.get("v.body");
+                    body.push(lwcCmp);
+                    component.set("v.body", body);
+                }
+                else if (status === "INCOMPLETE") {
+                    console.log("No response from server or client is offline.");
+                }
+                else if (status === "ERROR") {
+                    console.error("Error: " + errorMessage);
+                }
+            }
+          );
 
 	},
 
     goback : function(component, event, helper) {
-        //component.set('v.recordId', '');
-        //component.destroy();
-        //console.log('# close this aura #');
-        //var prodId = event.getParam('prodId');
-        //console.log('#  # ' + prodId);
-
         $A.get('e.force:refreshView').fire();
+    },
 
-        /*var workspaceAPI = component.find("workspace");
-        workspaceAPI.getFocusedTabInfo().then(function(response) {
-            var focusedTabId = response.tabId;
-            workspaceAPI.closeTab({tabId: focusedTabId});
-        })
-        .catch(function(error) {
-            console.log(error);
-        });*/
-
+    update : function (component, event, helper) {
+        console.log('>>>>>>>>>>> page change -> delete component');
+        component.set("v.body", []);
     }
 
 })
