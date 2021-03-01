@@ -8,6 +8,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api rowObj;
     @api commodity;
     @api isRetroactive;
+    @api isVolture;
     advanceError;
 
     registerObjEle = [{id: 1, label:"Tipo Lettura ", type: "text", value: null, disabled:true},
@@ -63,7 +64,14 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         }
 
-
+        // Per l'autolettura il tasto Verifica Ultima Lettura è obbligatorio, quindi inizialmente disabilitiamo tutto. 
+        if (!this.isVolture) {
+            for(let i=0; i<Object.keys(this.registerObj).length; ++i){
+                if (this.registerObj[i].label.includes("Lettura da Cliente")) {
+                    this.registerObj[i].disabled = true;
+                }
+            }
+        }
 
     }
 
@@ -127,8 +135,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
             this.registerObj[indexCustomerReading].disabled = true;
 
         } else{
+            if (!this.isVolture) {
+                var indexCustomerReading = this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"));
+                this.registerObj[indexCustomerReading].disabled = false;
+            }
 
-        for(const property in readingObj[indexIn]){
+            for(const property in readingObj[indexIn]){
 
                 console.log(property);
 
