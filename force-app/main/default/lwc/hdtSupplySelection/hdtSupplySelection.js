@@ -143,6 +143,10 @@ export default class hdtSupplySelection extends LightningElement {
             console.log('outputContract *******'+ JSON.stringify(this.outputContract));
         });
 
+        //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
+        this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
+            detail: event.detail
+        }));
     }
 
     /**
