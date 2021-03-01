@@ -52,10 +52,6 @@
                 <field>ElectronicInvoicingMethod__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ElectronicInvoiceCertifiedEmailAddress__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>FormulaIBAN__c</field>
             </layoutItems>
