@@ -167,65 +167,69 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api
     handleSave(){
 
-        this.registerObj.forEach(element => {
+        try {
+            this.registerObj.forEach(element => {
 
-            if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
-
-                this.advanceError = 'Impossibile procedere: Lettura da Cliente deve essere valorizzata';
-
-            } 
-
-        });
-
-        console.log(this.advanceError);
-
-        if(this.advanceError != undefined){
-
-            return this.advanceError;
-
-        } else{
-
-            console.log('Filling the Array');
-
-            this.registerRet = 
-                {
-                    ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
-                    ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
-                    ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
-                    ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
-                    ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
-                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
-                    : null,
-                    ['ReadingUnit'+this.rowObj.id+'__c']:this.commodity === 'Gas' ?
-                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
-                    : null
-                };
-
-            /*this.registerRet = 
-                {id: this.rowNumber, 
-                redingType:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
-                readingDate:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Data"))].value,
-                band:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
-                meterCode:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
-                reading:this.registerObj[
-                    this.registerObj.findIndex(p => this.commodity === 'Energia Elettrica' ? p.label == 'Lettura ' + this.rowNumber 
-                    : this.commodity === 'Gas' ? p.label == 'Lettura' : 0)
-                    ].value,
-                readingCustomer:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
-                register:this.commodity === 'Gas' ? 
-                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
-                    : null,
-                unitMeasure:this.commodity === 'Gas' ?
-                    this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
-                    : null
-                };*/
-
-                console.log(this.registerRet);
-
-                return this.registerRet;
-
+                if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+    
+                    this.advanceError = 'Impossibile procedere: Lettura da Cliente deve essere valorizzata';
+    
+                } 
+    
+            });
+    
+            console.log('advanceError: ' + this.advanceError);
+    
+            if(this.advanceError != undefined){
+    
+                return this.advanceError;
+    
+            } else{
+    
+                console.log('Filling the Array: ' + this.registerObj + ' - ' + this.rowObj);
+    
+                this.registerRet = 
+                    {
+                        ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
+                        ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
+                        ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
+                        ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
+                        ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
+                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
+                        : null,
+                        ['ReadingUnit'+this.rowObj.id+'__c']:this.commodity === 'Gas' ?
+                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
+                        : null
+                    };
+    
+                /*this.registerRet = 
+                    {id: this.rowNumber, 
+                    redingType:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
+                    readingDate:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Data"))].value,
+                    band:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
+                    meterCode:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
+                    reading:this.registerObj[
+                        this.registerObj.findIndex(p => this.commodity === 'Energia Elettrica' ? p.label == 'Lettura ' + this.rowNumber 
+                        : this.commodity === 'Gas' ? p.label == 'Lettura' : 0)
+                        ].value,
+                    readingCustomer:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
+                    register:this.commodity === 'Gas' ? 
+                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
+                        : null,
+                    unitMeasure:this.commodity === 'Gas' ?
+                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
+                        : null
+                    };*/
+    
+                    console.log('Array filled with: ' + this.registerRet + ' keys: ' + Object.keys(this.registerRet));
+    
+                    return this.registerRet;
+    
+            }
+        } catch (e) {
+            console.log('exception ' + e);
+            throw e;
         }
-
 
     }
 

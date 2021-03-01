@@ -155,7 +155,7 @@ export default class HdtSelfReading extends LightningElement {
     // event è definito solo per la voltura (this.isVolture) 
     handleSaveButton(event){    
 
-        console.log('handleSaveButton ' + event);
+        console.log('handleSaveButton ' + event + ' is saved?' + this.isSaved);
 
         if(this.isVolture && event != undefined && event.target.name === 'previous'){
 
@@ -196,7 +196,7 @@ export default class HdtSelfReading extends LightningElement {
 
                     console.log('Error '+this.errorAdvanceMessage);
 
-                    this.outputObj = [];
+                    this.outputObj = {};
 
                     this.showToastMessage(this.errorAdvanceMessage);
 
@@ -220,7 +220,8 @@ export default class HdtSelfReading extends LightningElement {
 
             if (e !== BreakException){
 
-                this.outputObj = [];
+                console.log('exception: ' + e);
+                this.outputObj = {};
 
                 throw e;
 
@@ -239,7 +240,7 @@ export default class HdtSelfReading extends LightningElement {
 
         //this.outputObj[`${commodity === 'Energia Elettrica' ? 'OrderElectricEnergy__c' : 'OrderGas__c'}`] = this.recordId
 
-        console.log(JSON.stringify(this.outputObj));
+        console.log('stringify: ' + JSON.stringify(this.outputObj));
 
         if(!this.isSaved){
 

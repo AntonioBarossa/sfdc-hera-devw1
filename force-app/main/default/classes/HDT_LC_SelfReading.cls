@@ -5,7 +5,8 @@ public inherited sharing class HDT_LC_SelfReading {
 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
 
-        HDT_UTL_DatabaseService.insertSObject(obj);
+        Boolean result = HDT_UTL_DatabaseService.insertSObject(obj);
+        System.debug('HDT_LC_SelfReading: insert result: ' + result);
 
         //Map<String, Object> objMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
 
