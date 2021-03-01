@@ -100,12 +100,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                     TechnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(technicalOfferId);
                     Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
                     for(TechnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
-                        itemsMap.put(item.RowId__c, item);
+                        itemsMap.put(item.Operand__c, item);
                     }
 
                     TechnicalOfferItem__c tempItem;
                     for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow : matrixTable.rowList){
-                        tempItem = itemsMap.get(setSingleRow.Id);
+                        tempItem = itemsMap.get(setSingleRow.tecName);
                         setSingleRow = HDT_LC_OfferConfiguratorCtrlHelper.convertObjectToWrapper(tempItem, setSingleRow);
                     }                    
                 }

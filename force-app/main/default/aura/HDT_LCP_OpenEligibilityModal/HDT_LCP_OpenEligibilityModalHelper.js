@@ -2,6 +2,28 @@
 	initHelperMethod : function(component, event, helper) {
 		console.log('# open from quick action #');
 
+        var navService = component.find("navService");
+		var productId = component.get('v.recordId');
+		console.log('# productId >> ' + productId);
+
+		var pageReference = {
+			type: 'standard__component',
+			attributes: {
+				componentName: 'c__HDT_LCP_CreateNewEligibilityCriteria'
+			},
+			state : {
+				c__recordId : productId
+			}
+		};
+		
+		navService.navigate(pageReference);
+		$A.get("e.force:closeQuickAction").fire();
+
+	},
+
+	initHelperMethod2 : function(component, event, helper) {
+		console.log('# open from quick action #');
+
 		//var workspaceAPI = component.find("workspace");
 
         var navService = component.find("navService");

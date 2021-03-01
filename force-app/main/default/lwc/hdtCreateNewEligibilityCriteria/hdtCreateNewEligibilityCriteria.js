@@ -1,24 +1,25 @@
 import { LightningElement, wire, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
+import getExistingCriteria from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getExistingCriteria';
 
 export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(LightningElement) {
 
     @api productid;
-    @api eligibilityId;
-    showWelcom = true;
+    //@api eligibilityId;
+    showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
     template;
 
     connectedCallback(){
         console.log('#### productid > ' + this.productid + ' - ' + this.eligibilityId);
-
-        if(this.eligibilityId != null && this.eligibilityId != '' && this.eligibilityId != undefined){
-            this.showWelcom = false;
-            this.showSearchOffer = false;
-            this.showCreateOffer = true;
-        }
+        this.getEligibilityId();
+        //if(this.eligibilityId != null && this.eligibilityId != '' && this.eligibilityId != undefined){
+        //    this.showWelcom = false;
+        //    this.showSearchOffer = false;
+        //    this.showCreateOffer = true;
+        //}
 
     }
 
@@ -33,6 +34,42 @@ export default class HdtCreateNewEligibilityCriteria extends NavigationMixin(Lig
             }
             
         }
+    }
+
+    getEligibilityId(){
+        console.log('# getEligibilityId #');
+
+        //this.spinnerObj.spinner = true;
+        //this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
+
+        getExistingCriteria({productId: this.productid})
+        .then(result => {
+            console.log('# getEligibilityId success #');
+            console.log('# resp -> ' + result.success);
+
+            var toastObj = {
+                title: '',
+                message: '',
+                variant: ''
+            };
+
+            if(result.success){
+                console.log('# getEligibilityId success #');
+                console.log('# result.recIsPresent > ' + result.recIsPresent + ' - result.eligibilityId > ' + result.eligibilityId);
+            } else {
+                console.log('# getEligibilityId not success #');
+            }
+
+            if(result.eligibilityId != null && result.eligibilityId != '' && result.eligibilityId != undefined){
+                this.showCreateOffer = true;
+            } else {
+                this.showWelcom = true;                
+            }
+
+        }).catch(error => {
+            console.log('# getEligibilityId error #');
+            console.log('# resp -> ' + result.message);
+        });
     }
 
     handleClick(event){

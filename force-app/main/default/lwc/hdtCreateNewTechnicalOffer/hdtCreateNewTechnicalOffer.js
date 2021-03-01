@@ -1,17 +1,20 @@
-import { LightningElement, wire, api } from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord } from 'lightning/uiRecordApi';
+import getExistingOffer from '@salesforce/apex/HDT_LC_OfferConfiguratorController.getExistingOffer';
 
 export default class HdtCreateNewTechnicalOffer extends NavigationMixin(LightningElement) {
 
-    showWelcom = true;
+    showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
     @api productid;
+    @track technicalOfferId;
     template;
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
+        this.getExistingOfferId();
     }
 
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Template__c'] })
@@ -25,6 +28,43 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
             }
             
         }
+    }
+
+    getExistingOfferId(){
+        console.log('# getExistingOfferId #');
+
+        //this.spinnerObj.spinner = true;
+        //this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
+
+        getExistingOffer({productId: this.productid})
+        .then(result => {
+            console.log('# getExistingOfferId success #');
+            console.log('# resp -> ' + result.success);
+
+            var toastObj = {
+                title: '',
+                message: '',
+                variant: ''
+            };
+
+            if(result.success){
+                console.log('# tecnicalOfferId success #');
+                console.log('# result.offerIsPresent > ' + result.data.offerIsPresent + ' - result.tecnicalOfferId > ' + result.data.tecnicalOfferId);
+            } else {
+                console.log('# tecnicalOfferId not success #');
+            }
+
+            if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
+                this.technicalOfferId = result.data.tecnicalOfferId;
+                this.showCreateOffer = true;
+            } else {
+                this.showWelcom = true;                
+            }
+
+        }).catch(error => {
+            console.log('# tecnicalOfferId error #');
+            console.log('# resp -> ' + result.message);
+        });
     }
 
     handleClick(event){
