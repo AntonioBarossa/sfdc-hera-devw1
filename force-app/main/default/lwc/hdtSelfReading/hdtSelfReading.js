@@ -28,6 +28,8 @@ export default class HdtSelfReading extends LightningElement {
     
     @api isDraft;
 
+    @api readingCustomerDate;
+
     recordKey;
 
     selfReadingObj = [];
@@ -51,8 +53,6 @@ export default class HdtSelfReading extends LightningElement {
     errorAdvanceMessage = '';
 
     lastReadingsChecked = false;
-
-    @track readingCustomerDate;
 
     connectedCallback(){
 

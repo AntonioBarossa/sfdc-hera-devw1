@@ -43,6 +43,7 @@
             
             <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>
             
+            <property name="readingCustomerDate" type="Date" label="Reading Customer Date" description="Date of reading provided by customer" role="outputOnly"/>
 
         </targetConfig>
         
