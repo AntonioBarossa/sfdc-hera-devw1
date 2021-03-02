@@ -1,0 +1,30 @@
+<template>
+    
+    <div class="slds-section slds-is-open">
+        <h3 class="slds-section__title slds-theme_shade">
+            <span class="slds-truncate slds-p-horizontal_small" title="Altri parametri">Altri parametri</span>
+        </h3>
+        <div aria-hidden="false" class="slds-section__content">
+
+            <div class="slds-form" role="list">
+                <template iterator:it={fields}>
+                    <div class="slds-form__row" key={it.value.row}>
+                      <template iterator:it={it.value.innerList} >
+                        <div class="slds-form__item" role="listitem" key={it.value}>
+                          <div class="slds-form-element slds-form-element_stacked slds-is-editing">
+                            <label class="slds-form-element__label" for={it.value}>
+                              <abbr class="slds-required" title="required">* </abbr>{it.value}</label>
+                            <div class="slds-form-element__control">
+                              <input type="text" id={it.value} required="" class="slds-input" />
+                            </div>
+                          </div>
+                        </div>
+                      </template>
+                    </div>
+                </template>
+              </div>
+
+        </div>
+    </div>
+
+</template>

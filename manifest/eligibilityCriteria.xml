@@ -19,6 +19,7 @@
 		<members>hdtEligibilityCriteriaConfiguration</members>
 		<members>hdtCreateNewEligibilityCriteria</members>
 		<members>hdtSearchEligibilityCriteria</name>
+		<members>hdtEligibilityCriteriaParameters</name>
 		<name>LightningComponentBundle</name>
 	</types>
 	<version>50.0</version>

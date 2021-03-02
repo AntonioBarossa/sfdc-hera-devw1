@@ -200,4 +200,17 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     }
 
+    public static void updateEligibilityCriteria(Id product2Id, Boolean asChild){
+
+        try{
+            Product2 prod = new Product2();
+            prod.Id = product2Id;
+            prod.EligibilityCriteria__c = asChild;
+            update prod;
+        } catch (Exception e){
+            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+        }
+
+    }
+
 }

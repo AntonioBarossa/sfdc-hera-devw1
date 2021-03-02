@@ -161,6 +161,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
 
             saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
+            HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, true);
 
             if(saveResponse.techOffId != null){
                 //send this tech off to SAP
@@ -237,6 +238,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(techOffList.size()>0){
                 saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.deleteTechnicalOfferHelper(techOffList, saveResponse);
+                HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, false);
             }
 
         } catch (Exception ex){

@@ -168,6 +168,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             System.debug('# provinceList size -> ' + provinceList.size());
 
             saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.saveEligibilityCriteriaHelper(provinceList, productId);
+            HDT_LC_EligibilityCriteriaCtrlHelper.updateEligibilityCriteria(productId, true);
 
             if(!saveResponse.success){
                 System.debug('# on controller #');
@@ -204,6 +205,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
             if(criteriaListToDelete.size()>0){
                 saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.deleteEligibilityCriteriaHelper(criteriaListToDelete, saveResponse);
+                HDT_LC_EligibilityCriteriaCtrlHelper.updateEligibilityCriteria(productId, false);
             }
 
         } catch (Exception ex){
