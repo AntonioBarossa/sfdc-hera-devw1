@@ -165,4 +165,39 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     }
 
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse deleteEligibilityCriteriaHelper(List<EligibilityCriteria__c> criteriaListToDelete, HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse){
+
+        saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
+        saveResponse.errorData = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError>();
+        Savepoint sp = Database.setSavepoint();
+
+        List<Database.DeleteResult> deleteResults = Database.delete(criteriaListToDelete, false);
+
+        for(Integer n=0; n<deleteResults.size(); n++){
+            Database.DeleteResult dr = deleteResults[n];
+
+            if (!dr.isSuccess()) {
+                // Operation failed
+                String errorString = '';
+                HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
+                for(Database.Error err : dr.getErrors()) {
+                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                }
+                saveResponse.errorData.add(lineError);
+            }
+        }
+
+        if(saveResponse.errorData.size() > 0){
+            Database.rollback(sp);
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: delete failed';
+        } else {
+            saveResponse.success = true;
+            saveResponse.message = 'Criterio eliminato correttamente';
+        }
+
+        return saveResponse;
+
+    }
+
 }

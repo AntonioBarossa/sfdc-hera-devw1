@@ -2,12 +2,14 @@ import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import saveEligibilityCriteria from '@salesforce/apex/HDT_LC_EligibilityCriteriaController.saveEligibilityCriteria';
 import getCityZipCodeObj from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.getCityZipCodeObj';
+import deleteEligibilityCriteria from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.deleteEligibilityCriteria';
 import { NavigationMixin } from 'lightning/navigation';
 
 export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin(LightningElement) {
 
     @api productid;
     @api eligibilityId;
+    showDelete = false;
     buttonLabel = 'uguale a';
     operator = 'equal';
     disabled = 'dis';
@@ -63,6 +65,9 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
 
     getDataFromApex(){
         console.log('# get data from apex #');
+
+        this.showDelete = (this.eligibilityId != null && this.eligibilityId != '' && this.eligibilityId != undefined) ? true : false;
+        console.log('>>> showDelete -> ' + this.showDelete);
 
         getCityZipCodeObj({regionCode: 'EMR', eligibilityId: this.eligibilityId})
         .then(result => {
@@ -508,6 +513,10 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 case 'goBackToRecord':
                     this.modalObj.header = 'Chiudi la configurazione';
                     this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
+                    break;
+                case 'delete':
+                    this.modalObj.header = 'Elimina il criterio';
+                    this.modalObj.body = 'Perderai tutte le tue configurazioni, vuoi procedere?';
 
             }
 
@@ -544,6 +553,70 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 objectApiName: 'Product2',
                 actionName: 'view'
             }
+        });
+
+    }
+
+    delete(){
+        console.log('# delete #');
+
+        this.spinnerObj.spinner = true;
+        this.spinnerObj.spincss = 'deletingdata slds-text-heading_small';
+
+        var toastObj = {success: true, title: '', message: '', variant: ''};
+
+        deleteEligibilityCriteria({productId: this.productid, eligibilityId: this.eligibilityId})
+        .then(result => {
+            console.log('# delete success #');
+            console.log('# resp -> ' + result.success);
+
+            if(result.success){
+                toastObj.success = true;
+                toastObj.title = 'Successo';
+                toastObj.message = result.message;
+                toastObj.variant = 'success';
+
+                this.goBackToRecord();
+
+            } else {
+                toastObj.success = false;
+                toastObj.title = 'Attenzione';
+                toastObj.message = result.message;
+                toastObj.variant = 'warning';
+                
+                //this.errorObj.showError = true;
+                //this.errorObj.errorString = result.message;
+
+            }
+            
+            this.spinnerObj.spinner = false;
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: toastObj.title,
+                    message: toastObj.message,
+                    variant: toastObj.variant,
+                })
+            );
+
+        })
+        .catch(error => {
+            //this.errorObj.showError = true;
+            //this.errorObj.errorString = error.body.message;
+            this.spinnerObj.spinner = false;
+
+            toastObj.success = false;
+            toastObj.title = 'Attenzione';
+            toastObj.message = error.body.message;
+            toastObj.variant = 'warning';
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: toastObj.title,
+                    message: toastObj.message,
+                    variant: toastObj.variant,
+                })
+            );
         });
 
     }

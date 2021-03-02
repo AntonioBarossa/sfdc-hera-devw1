@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 import saveNewOfferConfigured from '@salesforce/apex/HDT_LC_OfferConfiguratorController.saveNewOfferConfigured';
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
+import deleteTechnicalOffer from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.deleteTechnicalOffer';
 import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
@@ -10,6 +11,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     @track selection;
     @api productid;
     @api technicalofferid;
+    showDelete = false;
     @track spinnerObj = {
         spinner: false,
         spincss: ''
@@ -51,10 +53,6 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 this.product.version = data.fields.Version__c.value;
                 this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
                 this.product.productCode = data.fields.ProductCode.value;
-                for(var i in this.product){
-                    console.log('# >>> ' + i + ': ' + this.product[i]);
-                }
-
             } catch(e){
                 this.errorObj.showError = true;
                 this.errorObj.errorString = '[' + e.message + '[' + 'Valore non trovato -> Version__c, Template__c, RateCategory__r.Name, ProductCode';
@@ -175,6 +173,9 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         //this.product.productId = this.productid;
         console.log('# technicalofferid -> ' + this.technicalofferid);
+        
+        this.showDelete = (this.technicalofferid != null && this.technicalofferid != '' && this.technicalofferid != undefined) ? true : false;
+        console.log('>>> showDelete -> ' + this.showDelete);
 
         getOfferMatrix({productId: this.productid, technicalOfferId: this.technicalofferid})
         .then(result => {
@@ -337,6 +338,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 case 'saveAndSend':
                     this.modalObj.header = 'Salva ed invia la configurazione';
                     this.modalObj.body = 'La configurazione verrà salvata ed inviata a SAP. Vuoi confermare?';
+                    break;
+                case 'delete':
+                    this.modalObj.header = 'Elimina la configurazione';
+                    this.modalObj.body = 'La configurazione verrà eliminata. Vuoi confermare?';
             }
 
             this.modalObj.isVisible = true;
@@ -382,6 +387,63 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 element.m = false;
                 element.v = true;
         }
+
+    }
+
+    delete(){
+        console.log('# delete #');
+
+        this.spinnerObj.spinner = true;
+        this.spinnerObj.spincss = 'deletingdata slds-text-heading_small';
+
+        var toastObj = {success: true, title: '', message: '', variant: ''};
+
+        deleteTechnicalOffer({productId: this.productid, technicalOfferId: this.technicalofferid})
+        .then(result => {
+            console.log('# delete success #');
+            console.log('# resp -> ' + result.success);
+
+            if(result.success){
+                toastObj.success = true;
+                toastObj.title = 'Successo';
+                toastObj.message = result.message;
+                toastObj.variant = 'success';
+
+                this.goBackToRecord();
+
+            } else {
+                toastObj.success = false;
+                toastObj.title = 'Attenzione';
+                toastObj.message = result.message;
+                toastObj.variant = 'warning';
+                
+                this.errorObj.showError = true;
+                this.errorObj.errorString = result.message;
+
+            }
+            
+            this.spinnerObj.spinner = false;
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: toastObj.title,
+                    message: toastObj.message,
+                    variant: toastObj.variant,
+                })
+            );
+
+        })
+        .catch(error => {
+            this.errorObj.showError = true;
+            this.errorObj.errorString = error.body.message;
+            this.spinnerObj.spinner = false;
+
+            toastObj.success = false;
+            toastObj.title = 'Attenzione';
+            toastObj.message = error.body.message;
+            toastObj.variant = 'warning'; 
+
+        });
 
     }
 

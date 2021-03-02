@@ -184,4 +184,35 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         return saveResponse;
     }
 
+    @AuraEnabled
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse deleteEligibilityCriteria(String productId, String eligibilityId){
+        
+        System.debug('# deleteEligibilityCriteria >>> productId: ' + productId + ' - >>> eligibilityId: ' + eligibilityId);
+
+        HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse;
+
+        try{
+
+            List<EligibilityCriteria__c> criteriaListToDelete = new List<EligibilityCriteria__c>();
+            criteriaListToDelete = [
+                SELECT Id
+                FROM EligibilityCriteria__c
+                WHERE Id =: eligibilityId AND Product__c = :productId
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+
+            if(criteriaListToDelete.size()>0){
+                saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.deleteEligibilityCriteriaHelper(criteriaListToDelete, saveResponse);
+            }
+
+        } catch (Exception ex){
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: ' + ex.getMessage() + '; at line [' + String.valueOf(ex.getLineNumber()) + ']';
+            throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
+        }
+        
+        return saveResponse;
+    }
+
 }

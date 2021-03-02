@@ -218,10 +218,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse deleteOfferMatrix(String productId, String technicalOfferId){
-        System.debug('# deleteOfferMatrix #');
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse deleteTechnicalOffer(String productId, String technicalOfferId){
+        
+        System.debug('# deleteOfferMatrix >>> productId: ' + productId + ' - >>> technicalOfferId: ' + technicalOfferId);
 
-        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
+        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
         try{
 
@@ -235,8 +236,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             ];
 
             if(techOffList.size()>0){
-                delete techOffList;
-                saveResponse.success = true;
+                saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.deleteTechnicalOfferHelper(techOffList, saveResponse);
             }
 
         } catch (Exception ex){
