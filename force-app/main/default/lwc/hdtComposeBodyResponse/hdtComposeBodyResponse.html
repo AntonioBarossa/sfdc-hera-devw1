@@ -27,7 +27,8 @@
                 obj-name="ResponseTemplate__c"
                 search-by="Name"
                 set-as-key="ComplaintBodyResponse__c"
-                icon-name="custom:custom57"
+                icon-name="custom:custom83"
+                is-reclamo="true"
                 label-name="labelName"
                 onvalueselect={handleSelection}
                 placeholder="Seleziona Template Risposta..."
@@ -84,9 +85,39 @@
         onsubmit ={handleSubmit}
         density="comfy"
         >
-        <lightning-input-field field-name="evr_CorpoRispostaReclamo__c"></lightning-input-field>
+        <lightning-input-field field-name="ComplaintBodyResponse__c"></lightning-input-field>
+
+        <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+            <div class="actionsLeft">
+
+            </div>
+            <div class="actionsRight">
+
+                
+                    <lightning-button class="slds-m-left_xxx-small" 
+                    variant="destructive" 
+                    name="delete all" 
+                    label="Cancella Tutto" 
+                    onclick={handleCompose}></lightning-button>
+
+                    <lightning-button icon-name="utility:copy" 
+                    class="slds-m-left_xxx-small" 
+                    variant="neutral" 
+                    name="copy" 
+                    label="Copy to Clipboard" 
+                    onclick={copyToClip}></lightning-button>
+
+                    <lightning-button variant="success" 
+                    class="slds-m-left_xxx-small" 
+                    type="submit" 
+                    name="save" 
+                    label="Conferma Pratica"></lightning-button>
+
+
+            </div>
+        </div>
             
-        <div>
+       <!--<div>
         
             <lightning-button variant="brand" type="submit" name="save" label="Conferma"></lightning-button>
 
@@ -94,7 +125,7 @@
 
             <lightning-button class="slds-m-left_xxx-small" variant="destructive" name="delete all" label="Cancella Tutto" onclick={handleCompose}></lightning-button> 
 
-        </div>
+        </div>-->
 
         </lightning-record-edit-form>
 

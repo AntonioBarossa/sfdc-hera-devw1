@@ -72,6 +72,9 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
+            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase'){
+                inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
+            }
 
             component.set('v.enableRefresh', true);
         }
@@ -94,7 +97,7 @@
        //TODO getire eventuali errori provenienti dal flow 
        //event.getParam("status") === "ERROR" 
 
-       if(event.getParam("status") === "FINISHED") {
+       if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
             var accountTabId = component.get("v.accountTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
@@ -126,29 +129,55 @@
                         }
                     },
                     focus: true
+                }).then(function(response){
+
+                    workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                        console.log('# Refresh page -> ' + enableRefresh);
+                        if(enableRefresh){
+                            console.log('# OK Refresh page #');
+                            $A.get('e.force:refreshView').fire();
+                        }
+        
+                        //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                        //    workspaceAPI.refreshTab({
+                        //        tabId: subTabToRefresh,
+                        //        includeAllSubtabs: true
+                        //    }).catch(function(error) {
+                        //        console.log(error);
+                        //    });
+                        //});
+        
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+
+
                 });
 
+            } else {
+
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                    console.log('# Refresh page -> ' + enableRefresh);
+                    if(enableRefresh){
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                    }
+    
+                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                    //    workspaceAPI.refreshTab({
+                    //        tabId: subTabToRefresh,
+                    //        includeAllSubtabs: true
+                    //    }).catch(function(error) {
+                    //        console.log(error);
+                    //    });
+                    //});
+    
+                }).catch(function(error) {
+                    console.log(error);
+                });
+
+
             }
-
-            workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                console.log('# Refresh page -> ' + enableRefresh);
-                if(enableRefresh){
-                    console.log('# OK Refresh page #');
-                    $A.get('e.force:refreshView').fire();
-                }
-
-                //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                //    workspaceAPI.refreshTab({
-                //        tabId: subTabToRefresh,
-                //        includeAllSubtabs: true
-                //    }).catch(function(error) {
-                //        console.log(error);
-                //    });
-                //});
-
-            }).catch(function(error) {
-                console.log(error);
-            });
 
        }
     }

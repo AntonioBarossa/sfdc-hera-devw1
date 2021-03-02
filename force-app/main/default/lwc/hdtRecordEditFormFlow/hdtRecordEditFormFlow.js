@@ -18,6 +18,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api density;
     @api recordType;
     @api saveInDraft;
+    @api cancelCase;
     @api addContentDocument;
     @api contentDocumentLabel;
     @api acceptedFormats;
@@ -29,6 +30,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api labelInputSection;
     @api labelReadOnlySection;
     @api availableActions = [];
+    @api variantSaveButton;
 
     @track errorMessage;
     @track error;
@@ -85,6 +87,14 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
         updateRecordView(recordId) {
             updateRecord({fields: { Id: recordId }});
+        }
+
+        @api
+        get variantButton() {
+            if(this.variantSaveButton != null && this.variantSaveButton != "" && this.variantSaveButton != "undefined" )
+            return this.variantSaveButton;
+        else
+            return "brand";
         }
         /*
         @wire(getContentDocs, {arecordId : '$recordId'}) 
@@ -164,7 +174,16 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     handleDraft(event){
         console.log('draft handle');
-        this.saveInDraft = true;
+        if(event.target.name === 'draft'){
+
+            this.saveInDraft = true;
+
+        } else if(event.target.name === 'cancel'){
+
+            this.cancelCase = true;
+
+        }
+
         this.template.querySelector('lightning-record-edit-form').submit();
     }
 
@@ -201,6 +220,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     handleSubmit(event){
         event.preventDefault();       // stop the form from submitting
         this.saveInDraft = false;
+        this.cancelCase = false;
         const fields = event.detail.fields;
         console.log('fields ' + JSON.stringify(fields));
         if(this.validateClass){

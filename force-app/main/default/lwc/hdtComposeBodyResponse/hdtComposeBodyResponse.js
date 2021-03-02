@@ -6,7 +6,7 @@ import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { updateRecord } from 'lightning/uiRecordApi';
 
 import QUARTO_LIVELLO from '@salesforce/schema/Case.FourthLevelComplaintClassification__c';
-//import ARGOMENTO from '@salesforce/schema/evr_TemplateRisposta__c.evr_Argomento__c'
+import ARGOMENTO from '@salesforce/schema/ResponseTemplate__c.Topic__c'
 
 const fields = [QUARTO_LIVELLO];
 
@@ -78,7 +78,7 @@ export default class HdtProva extends LightningElement {
 
     }
 
-    /*@wire(getPicklistValues,{recordTypeId: '012000000000000AAA', fieldApiName: ARGOMENTO})
+    @wire(getPicklistValues,{recordTypeId: '012000000000000AAA', fieldApiName: ARGOMENTO})
     wiredPicklist({error,data}){
         if(data){
 
@@ -98,7 +98,7 @@ export default class HdtProva extends LightningElement {
 
         }
 
-    }*/
+    }
 
     get options(){
 
