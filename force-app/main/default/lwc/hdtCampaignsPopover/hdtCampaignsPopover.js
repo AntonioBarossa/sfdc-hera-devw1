@@ -29,6 +29,7 @@ export default class PopoverContainer extends LightningElement {
                 });
                 this.rowdata = this.allCampaigns;
                 this.listResults = true;
+                
                 //send visibility to parent component
                 this.dispatchEvent(new CustomEvent('emitvisibility', {
                     detail: {

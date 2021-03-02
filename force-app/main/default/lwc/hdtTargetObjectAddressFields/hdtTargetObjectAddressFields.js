@@ -26,7 +26,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api codComuneSAP;
     @api codStradarioSAP;
     @api IndEstero ;
-    @api flagVerifiacto ;
+    @api flagVerificato ;
 
 @api
 handleAddressValues(servicePointRetrievedData){
@@ -64,13 +64,13 @@ handleAddressValues(servicePointRetrievedData){
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.codStradarioSAP = servicePointRetrievedData[key] ;
             break;
-            /*case 'IndirizzoEstero':
+            case 'IndirizzoEstero':
                 this.IndEstero = servicePointRetrievedData[key] ;
-            break;*/
+            break;
             case 'FlagVerificato':
-                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                console.log('servicePointRetrievedData[key] Flag Verificato*************************************'+JSON.stringify(servicePointRetrievedData[key]));
 
-                this.flagVerifiacto = servicePointRetrievedData[key] ;
+                this.flagVerificato = servicePointRetrievedData[key] ;
             break;
         }
 
@@ -87,12 +87,12 @@ handleCheckBoxChange(event){
         this.theRecord[event.target.name] = event.target.checked;
         console.log(event.target.name + ' now is set to ' + event.target.checked); 
         switch(event.target.name){
-            case 'Flag Forzato':
-                this.flagForzato = event.target.checked;
-                console.log(JSON.stringify(this.flagForzato));
+            case 'Indirizzo Estero':
+                this.IndEstero = event.target.checked;
                 break;
             case 'Flag Verificato':
                 this.flagVerifiacto =  event.target.checked;
+                break;
         }
 
 
@@ -180,8 +180,6 @@ disabledverifyFieldsAddressDisabled(){
 @api
     connectedCallback()
     {
-
-        
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
     }
 
@@ -201,6 +199,12 @@ disabledverifyFieldsAddressDisabled(){
         });
         
         console.log('getInstanceWrapObject - END');
+    }
+
+    @api
+    getInstanceWrapObjectBilling(billingProfileData){
+        this.handleAddressValues(billingProfileData);
+        this.theRecord = billingProfileData;
     }
     /**
      * Get availability of verify address button

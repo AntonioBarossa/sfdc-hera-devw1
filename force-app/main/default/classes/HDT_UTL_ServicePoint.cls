@@ -129,8 +129,8 @@ public with sharing class HDT_UTL_ServicePoint {
         }else{
             h.CodiceComuneSAP= s.SupplySAPCityCode__c;
         }
- 
-            h.FlagVerificato = s.supplyIsAddressVerified__c;
+            system.debug('flagVerificato  ********************** '+ s.SupplyIsAddressVerified__c);
+            h.FlagVerificato = s.SupplyIsAddressVerified__c;
         
           
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject END');
