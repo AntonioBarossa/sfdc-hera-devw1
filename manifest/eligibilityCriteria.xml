@@ -22,5 +22,33 @@
 		<members>hdtEligibilityCriteriaParameters</name>
 		<name>LightningComponentBundle</name>
 	</types>
+	<!--<types>
+		<members>EligibilityCriteria__c.ATCGas__c</members>
+		<members>EligibilityCriteria__c.Agency__c</members>
+		<members>EligibilityCriteria__c.Campaign__c</members>
+		<members>EligibilityCriteria__c.CategoryTypeClient__c</members>
+		<members>EligibilityCriteria__c.Channel__c</members>
+		<members>EligibilityCriteria__c.ClientAge__c</members>
+		<members>EligibilityCriteria__c.ClientMarker__c</members>
+		<members>EligibilityCriteria__c.CodeCriteria__c</members>
+		<members>EligibilityCriteria__c.CompanyOwner__c</members>
+		<members>EligibilityCriteria__c.EquipmenType__c</members>
+		<members>EligibilityCriteria__c.GreenEnergyOption__c</members>
+		<members>EligibilityCriteria__c.GreenGasOption__c</members>
+		<members>EligibilityCriteria__c.LoginGroup__c</members>
+		<members>EligibilityCriteria__c.Login__c</members>
+		<members>EligibilityCriteria__c.NewClient__c</members>
+		<members>EligibilityCriteria__c.Origin__c</members>
+		<members>EligibilityCriteria__c.PowerRange__c</members>
+		<members>EligibilityCriteria__c.ProductCode__c</members>
+		<members>EligibilityCriteria__c.ProductName__c</members>
+		<members>EligibilityCriteria__c.Product__c</members>
+		<members>EligibilityCriteria__c.Range__c</members>
+		<members>EligibilityCriteria__c.Regions__c</members>
+		<members>EligibilityCriteria__c.RoleProfile__c</members>
+		<members>EligibilityCriteria__c.UseCategory__c</members>
+		<members>EligibilityCriteria__c.Version__c</members>
+		<name>CustomField</name>
+	</types>-->
 	<version>50.0</version>
 </Package>

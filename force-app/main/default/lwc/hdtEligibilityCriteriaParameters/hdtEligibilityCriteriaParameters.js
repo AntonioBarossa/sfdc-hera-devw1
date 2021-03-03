@@ -1,4 +1,5 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtEligibilityCriteriaParameters extends LightningElement {
 
@@ -13,5 +14,67 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
        {row: '9', innerList: ['Fascia', 'Tipo Apparecchiatura']},
        {row: '10', innerList: ['Login', 'Tipo Cliente Categoria']}
     ];
+
+    @track fieldsList = [
+        {
+          id: '1',
+          list: [
+            'ATCGas__c',
+            'Agency__c',
+            'Campaign__c',
+            'CategoryTypeClient__c',
+            'Channel__c',
+            'ClientAge__c',
+            'ClientMarker__c',
+            'CodeCriteria__c',
+            'CompanyOwner__c'
+          ]
+        },
+        {
+          id: '2',
+          list: [
+            'EquipmenType__c',
+            'GreenEnergyOption__c',
+            'GreenGasOption__c',
+            'LoginGroup__c',
+            'Login__c',
+            'NewClient__c',
+            'Origin__c',
+            'Range__c',
+            'RoleProfile__c',
+            'UseCategory__c'
+          ]
+        }
+      ];
+
+    @api productid;
+    @api eligibilityId;
+
+    handleLoad(event){
+        console.log('>>>> handleLoad ');
+    }
+
+    handleSuccess(event) {
+
+        console.log('>>>> handleSuccess ');
+
+        const evt = new ShowToastEvent({
+            title: "Product created",
+            message: "Record ID: " + event.detail.id,
+            variant: "success"
+        });
+        this.dispatchEvent(evt);
+    }
+
+    handleError(event){
+        console.log('>>>> handleErrore ');
+        console.log('>>>> ' + event.detail.message);
+        console.log(JSON.stringify(event.detail.output.fieldErrors));
+    }
+
+    handleSubmitButtonClick(){
+        console.log('>>>> handleSubmitButtonClick > ');      
+        this.template.querySelector('lightning-record-edit-form').submit();
+     }
 
 }

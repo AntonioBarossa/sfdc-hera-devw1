@@ -6,7 +6,7 @@
         </h3>
         <div aria-hidden="false" class="slds-section__content">
 
-            <div class="slds-form" role="list">
+            <!--<div class="slds-form" role="list">
                 <template iterator:it={fields}>
                     <div class="slds-form__row" key={it.value.row}>
                       <template iterator:it={it.value.innerList} >
@@ -22,7 +22,31 @@
                       </template>
                     </div>
                 </template>
+              </div>-->
+              <lightning-record-edit-form
+                  record-id={eligibilityId}
+                  object-api-name="EligibilityCriteria__c"
+                  density="comfy"
+                  onsuccess={handleSuccess}
+                  onload={handleLoad}
+                  onerror={handleError}
+              >
+          
+              <lightning-messages></lightning-messages>
+              <lightning-input-field field-name="Product__c" value={productid} disabled ></lightning-input-field>
+              <div class="slds-grid slds-wrap">
+                  <template iterator:it={fieldsList}>
+                  
+                    <template iterator:it={it.value.list}>
+                      <div key={it.value.id} class="slds-col slds-size_1-of-2">
+                        <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
+                      </div>  
+                    </template> 
+                        
+                  </template>
               </div>
+              
+              </lightning-record-edit-form>
 
         </div>
     </div>
