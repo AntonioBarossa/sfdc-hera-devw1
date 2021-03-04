@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>--Provvisorio--</fullName>
+        <fullName>Contratti</fullName>
         <default>false</default>
-        <label>--Provvisorio--</label>
+        <label>Contratti</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi/Verifiche</fullName>
+        <default>false</default>
+        <label>Preventivi/Verifiche</label>
+    </customValue>
+    <customValue>
+        <fullName>Bollette</fullName>
+        <default>false</default>
+        <label>Bollette</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagamenti</fullName>
+        <default>false</default>
+        <label>Pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerte Commerciali</fullName>
+        <default>false</default>
+        <label>Offerte Commerciali</label>
+    </customValue>
+    <customValue>
+        <fullName>Consumi/letture</fullName>
+        <default>false</default>
+        <label>Consumi/letture</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione credito/morosità</fullName>
+        <default>false</default>
+        <label>Gestione credito/morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Digital</fullName>
+        <default>false</default>
+        <label>Digital</label>
+    </customValue>
+    <customValue>
+        <fullName>Migrazione CRM</fullName>
+        <default>false</default>
+        <label>Migrazione CRM</label>
     </customValue>
     <description>Tipologia Classificazione Problema Articolo</description>
     <masterLabel>Classificazione Problema Articolo</masterLabel>

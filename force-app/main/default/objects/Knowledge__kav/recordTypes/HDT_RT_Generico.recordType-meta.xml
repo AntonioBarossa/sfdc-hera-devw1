@@ -7,42 +7,198 @@
     <picklistValues>
         <picklist>CommercialDocumentationType__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>Gestione Rischio abbandono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione obiezioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobilità Sostenibile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Promozioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Script per contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Script per postvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Script per preventivi e verifiche</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FirstLevelClassification__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>Bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumi%2Fletture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione credito%2Fmorosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Migrazione CRM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte Commerciali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivi%2FVerifiche</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FormationDocumentationType__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>Aziendale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Procedure e tecniche di vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prodotto %2F Offerte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Specifiche di Business</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>ProblemType__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>Bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumi%2Fletture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione credito%2Fmorosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Migrazione CRM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte Commerciali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivi%2FVerifiche</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>SalesCompany__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>EB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCNE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HSPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>SecondLevelClassification__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>Bolletta alta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Estratto conto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recapito bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso e compensazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Solleciti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voci in bolletta</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_Competitivo</fullName>
+    <fullName>HDT_RT_Template</fullName>
     <active>true</active>
-    <description>Articolo per Contesto Competitivo</description>
-    <label>Contesto Competitivo</label>
+    <description>Articolo per Template</description>
+    <label>Template</label>
     <picklistValues>
         <picklist>CommercialDocumentationType__c</picklist>
         <values>
