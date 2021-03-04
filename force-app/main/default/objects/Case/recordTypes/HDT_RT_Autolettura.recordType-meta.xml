@@ -1932,7 +1932,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+<!--     <picklistValues>
         <picklist>OLDUseTypeEnergy__c</picklist>
         <values>
             <fullName>03 Illuminazione Pubblica</fullName>
@@ -2038,7 +2038,7 @@
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>OperationType__c</picklist>
         <values>
