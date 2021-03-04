@@ -1,5 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import buildResponse from '@salesforce/apex/HDT_LC_ComposeBodyResponse.buildResponse';
+import updateResponse from '@salesforce/apex/HDT_LC_ComposeBodyResponse.updateResponse';
 import { FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
@@ -32,15 +33,17 @@ export default class HdtProva extends LightningElement {
     data = [];
 
     selectedContent = [];
+    
+    currentSelectedContent = [];
 
     filterList = [
         {value: 'all', label: 'All'},
         {value: 'fourth', label: '4° Livello'}
     ];
 
-    filterValue = '';
+    filterValue = 'all';
 
-    filter = '';
+    filter = 'LastModifiedDate != NULL';
 
     columns = columns;
 
@@ -110,15 +113,15 @@ export default class HdtProva extends LightningElement {
 
         if(event.detail.value === 'all'){
 
-            this.filter = '';
+            this.filter = 'LastModifiedDate != NULL';
 
         } else if(event.detail.value === 'fourth'){
 
-            this.filter = 'evr_QuartoLivello__c INCLUDES (\'' + this.quartoLivello + '\')';
+            this.filter = 'FourthLevelComplaintClassification__c LIKE \'%' + this.quartoLivello + '%\'';
 
         } else{
 
-            this.filter = 'evr_Argomento__c LIKE \'%' + event.detail.value + '%\'';
+            this.filter = 'Topic__c LIKE \'%' + event.detail.value + '%\'';
 
         }
 
@@ -258,34 +261,51 @@ export default class HdtProva extends LightningElement {
             
         } else {
 
-            this.data.forEach(element =>{
+            console.log('Valore campo: '+this.template.querySelector('lightning-input-field').value);
 
-                this.selectedContent.push(element.content);
+            let responseValue = this.template.querySelector('lightning-input-field').value;
 
-            });
+            updateResponse({fieldValue: responseValue, recordId: this.recordId})
+            .then(result =>{
 
-            buildResponse({templates: this.selectedContent, recordId: this.recordId, deleteAll: false})
-            .then(results => {
+                console.log('Result updateResponse: '+result);
 
-                console.log(results);    
+                this.data.forEach(element =>{
 
-                this.refreshValues(this.recordId);
-            
-                setTimeout(() => {
+                    this.selectedContent.push(element.content);
 
-                    this.loadingSpinner = false;
+                });    
+
+                buildResponse({templates: this.selectedContent, currentTemplates:this.currentSelectedContent, recordId: this.recordId, deleteAll: false})
+                .then(results => {
+
+                    console.log(results);    
+
+                    this.refreshValues(this.recordId);
                 
-                }, this.delay);
+                    setTimeout(() => {
 
-                //this.showButtonLabel = 'Nascondi Corpo Risposta';
+                        this.loadingSpinner = false;
+                    
+                    }, this.delay);
+
+                    //this.showButtonLabel = 'Nascondi Corpo Risposta';
+
+                }).catch(error =>{
+
+                    console.log(error);
+
+                });
+
+                this.currentSelectedContent = this.selectedContent;
+
+                this.selectedContent = [];
 
             }).catch(error =>{
 
-                console.log(error);
+                console.log('SubmitError: '+error);
 
             });
-
-            this.selectedContent = [];
 
         }
 

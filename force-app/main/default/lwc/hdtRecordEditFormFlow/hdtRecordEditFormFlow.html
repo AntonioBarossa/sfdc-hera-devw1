@@ -19,6 +19,7 @@
     </template>
     <template if:false={error}>
         <lightning-record-edit-form record-id={recordId}
+                                        record-type-id={recordType}
                                         object-api-name={objectName}
                                         onsuccess={handleSuccess}
                                         onsubmit ={handleSubmit}

@@ -5,6 +5,8 @@
     <aura:attribute name="subTabToClose" type="String"/>
     <aura:attribute name="accountTabId" type="String"/>
     <aura:attribute name="enableRefresh" type="Boolean"/>
+    <aura:attribute name="resumeFromDraft" type="Boolean"/>
+
 
     <aura:attribute name="processType" type="String" />
     <aura:attribute name="recordTypeName" type="String" />
