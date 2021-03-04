@@ -7,7 +7,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
     public static List<Boolean> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
         List<Boolean> results = new List<Boolean>();
 
-        String podPdr = inputs[0].podPdr;
+        String servicePointId = inputs[0].servicePointId;
         String accountId = inputs[0].accountId;
         Date caseCreatedDate = inputs[0].caseCreatedDateTime.date();
         String metadataRecordName = inputs[0].metadataRecordName;
@@ -36,7 +36,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             badStates = configs[0].OrderBadStates__c.split(',');
         }
 
-        List<Order> activeOrders = queryHandler.accountOrders(accountId, podPdr, recordTypeIds, badPhases, badStates);
+        List<Order> activeOrders = queryHandler.accountOrders(accountId, servicePointId, recordTypeIds, badPhases, badStates);
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {
@@ -63,7 +63,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
     public class HDT_UTL_SelfReadingsFlowInputs {
 
         @InvocableVariable
-        public String podPdr;
+        public String servicePointId;
 
         @InvocableVariable
         public String accountId;

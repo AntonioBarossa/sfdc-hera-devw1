@@ -12,7 +12,7 @@
             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
             variant="neutral" type="button" name="draft" label="Salva In Bozza" onclick={handleClick}>
             </lightning-button>
-            <lightning-button
+            <lightning-button if:true={showBackButton}
             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
             variant="neutral" type="button" name="previous" label="Indietro" onclick={handleClick}>
             </lightning-button>

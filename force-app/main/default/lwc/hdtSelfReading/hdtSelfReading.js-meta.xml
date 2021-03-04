@@ -39,6 +39,8 @@
             
             <property name="isDraft" type="Boolean" label="Is Draft?" description="Discriminates if the case is in Draft" role="inputOnly"/>
             
+            <property name="showBackButton" type="Boolean" label="Show Back Button?" description="Whether to show the Back Button" role="inputOnly"/>
+
             <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
             
             <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>

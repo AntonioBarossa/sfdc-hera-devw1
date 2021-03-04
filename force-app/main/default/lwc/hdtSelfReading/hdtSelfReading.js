@@ -28,6 +28,8 @@ export default class HdtSelfReading extends LightningElement {
     
     @api isDraft;
 
+    @api showBackButton;
+
     @api readingCustomerDate;
 
     recordKey;

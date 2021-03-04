@@ -7,7 +7,7 @@ export default class HdtFlowNavigationButton extends LightningElement {
     @api nextLabel;
     @api nextVariant;
     @api isDraft;
-
+    @api showBackButton;
 
     handleClick(event){
 
