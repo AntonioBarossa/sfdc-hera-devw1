@@ -30,21 +30,8 @@ public inherited sharing class HDT_QR_SelfReadings {
                 query += ' AND ServicePointCodeFormula__c = :podPdr';
             }
 
-            // Genera una sottoquery AND (RecordTypeId = RT1 OR RecordTypeId = RT2 OR RecordTypeId = ... )
-            String rtSubquery = '';
             if (!recordTypeIds.isEmpty()) {
-                rtSubquery = ' AND (RecordTypeId = \'' + recordTypeIds[0] + '\'';
-            }
-            // Partiamo da i=1 poichè il primo RT l'abbiamo già messo nella query.
-            for (Integer i = 1; i < recordTypeIds.size(); i++) {
-                rtSubquery += ' OR RecordTypeId = \'' + recordTypeIds[i] + '\'';
-            }
-            if (!recordTypeIds.isEmpty()) {
-                rtSubquery += ')';
-            }
-
-            if (String.isNotBlank(rtSubquery)) {
-                query += rtSubquery;
+                query += ' AND RecordTypeId IN :recordTypeIds';
             }
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);
