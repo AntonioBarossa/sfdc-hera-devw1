@@ -125,6 +125,42 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazone verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IR010</fullName>
             <default>false</default>
         </values>
@@ -133,7 +169,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Accettata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Rifiutata</fullName>
             <default>false</default>
         </values>
     </picklistValues>
