@@ -129,6 +129,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
@@ -137,7 +141,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazone verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -154,6 +170,10 @@
         </values>
         <values>
             <fullName>IR020</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
