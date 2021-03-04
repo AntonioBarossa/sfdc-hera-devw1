@@ -121,6 +121,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Accettazione Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BL010</fullName>
             <default>false</default>
         </values>
