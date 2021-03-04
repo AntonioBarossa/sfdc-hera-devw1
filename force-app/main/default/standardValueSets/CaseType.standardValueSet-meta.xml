@@ -326,4 +326,39 @@
         <default>false</default>
         <label>Disassociazione Utente Web</label>
     </standardValue>
+    <standardValue>
+        <fullName>Autolettura da cliente</fullName>
+        <default>false</default>
+        <label>Autolettura da cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autolettura da processo</fullName>
+        <default>false</default>
+        <label>Autolettura da processo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Dati al DL</fullName>
+        <default>false</default>
+        <label>Verifica Dati al DL</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reclamo Scritto/Rich. Info</fullName>
+        <default>false</default>
+        <label>Reclamo Scritto/Rich. Info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comportamento Altri Venditori</fullName>
+        <default>false</default>
+        <label>Comportamento Altri Venditori</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comportamento Venditori HC</fullName>
+        <default>false</default>
+        <label>Comportamento Venditori HC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Votive Modena Cessazione</fullName>
+        <default>false</default>
+        <label>Votive Modena Cessazione</label>
+    </standardValue>
 </StandardValueSet>

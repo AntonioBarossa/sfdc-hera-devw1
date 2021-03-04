@@ -26,6 +26,9 @@
                                 <div class="slds-truncate" title="PRODUCT NAME">PRODUCT NAME</div>
                             </th>
                             <th class="" scope="col">
+                                <div class="slds-truncate" title="POD/PDR">POD/PDR</div>
+                            </th>
+                            <th class="" scope="col">
                             </th>
                             <th class="" scope="col">
                             </th>
@@ -47,6 +50,9 @@
                                     <div class="slds-truncate" title={quote.OpportunityName}>{quote.OpportunityName}</div>
                                 </td>
                                 <td data-label="PRODUCT NAME">
+                                    <div class="slds-truncate" title=""></div>
+                                </td>
+                                <td data-label="POD/PDR">
                                     <div class="slds-truncate" title=""></div>
                                 </td>
                                 <td>
@@ -72,6 +78,14 @@
                                     </td>
                                     <td data-label="PRODUCT NAME">
                                         <div class="slds-truncate" title={quoteLine.SBQQ__Product__r.Name}>{quoteLine.SBQQ__Product__r.Name}</div>
+                                    </td>
+                                    <td data-label="POD/PDR">
+                                        <template if:true={quoteLine.ServicePoint__c}>
+                                            <div class="slds-truncate" title={quoteLine.ServicePoint__r.ServicePointCode__c}>{quoteLine.ServicePoint__r.ServicePointCode__c}</div>
+                                        </template>
+                                        <template if:false={quoteLine.ServicePoint__c}>
+                                            <div></div>
+                                        </template>
                                     </td>
                                     <td>
                                         
