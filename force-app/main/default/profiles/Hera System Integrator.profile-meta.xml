@@ -886,6 +886,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>BillingProfile__c.ElectronicInvoicingMethod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BillingProfile__c.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
