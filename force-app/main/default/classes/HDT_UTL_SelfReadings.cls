@@ -8,11 +8,18 @@ public inherited sharing class HDT_UTL_SelfReadings {
         String accountId = inputs[0].accountId;
         Date caseCreatedDate = inputs[0].caseCreatedDateTime.date();
 
+        Id recordTypeSwitch = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_SwitchIn' WITH SECURITY_ENFORCED LIMIT 1].Id;
+        Id recordTypeVoltura = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Voltura' WITH SECURITY_ENFORCED LIMIT 1].Id;
+
         List<Order> activeOrders = [
             SELECT Id, EffectiveDate__c, CreatedDate 
             FROM Order
             WHERE AccountId = :accountId
             AND ServicePointCodeFormula__c = :podPdr
+            // TODO: anche HDT_RT_SwitchInVolturaTecnica ?
+            AND (
+                RecordTypeId = :recordTypeSwitch OR RecordTypeId = :recordTypeVoltura
+            )
             // TODO: which status and/or phases ?
             //AND Status = 'In Lavorazione'
             WITH SECURITY_ENFORCED
