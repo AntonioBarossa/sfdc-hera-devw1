@@ -3281,6 +3281,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Deliberation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Description</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4990,6 +4995,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.MaxRequiredPotential__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.MeterSN__c</field>
         <readable>true</readable>
@@ -4997,6 +5007,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.RequestPhase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SAPImplantCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
