@@ -15,12 +15,12 @@
             <value>
                 <fullName>Reclamo scritto</fullName>
                 <default>false</default>
-                <label>Reclamo scritto</label>
+                <label>Reclamo Scritto</label>
             </value>
             <value>
                 <fullName>Richiesta info</fullName>
                 <default>false</default>
-                <label>Richiesta info</label>
+                <label>Richiesta Info Scritta</label>
             </value>
         </valueSetDefinition>
     </valueSet>
