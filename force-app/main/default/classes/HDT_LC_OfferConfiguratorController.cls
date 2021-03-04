@@ -4,9 +4,17 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     public static String getTableData(String searchTerm){
         String result = '';
         try{
-            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'DataHelper' WITH SECURITY_ENFORCED LIMIT 1];
-            result = sr.Body.toString();
-
+            if(searchTerm != 'RateTemplate__c'){
+                StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'DataHelper' WITH SECURITY_ENFORCED LIMIT 1];
+                result = sr.Body.toString();
+            } else {
+                List<RateTemplate__c> rtList = new List<RateTemplate__c>();
+                rtList = [
+                    SELECT Id, Name
+                    FROM RateTemplate__c
+                ];
+                //result = JSON;
+            }
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
@@ -18,26 +26,25 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         System.debug('### recordId -> ' + productId);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer respObj = new HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer();
-        List<TechnicalOffer__c> tecOffList = new List<TechnicalOffer__c>();
-
+        
         try{
             respObj.success = true;
             respObj.errorMessage = '';
             respObj.data = new HDT_WRP_TechnicalOffer.HDT_WRP_TecnicalOfferObj();
 
-            tecOffList = [
-                SELECT Id
-                FROM TechnicalOffer__c
-                WHERE Product__c =: productId
-                WITH SECURITY_ENFORCED
-            ];
+            List<TechnicalOffer__c> tecOffList;
+            tecOffList = HDT_QR_TechnicalOffer.queryTechnicalOfferByProductId(productId, tecOffList);
 
             if(tecOffList != null && tecOffList.size() > 0){
                 respObj.data.offerIsPresent = true;
-                respObj.data.tecnicalOfferId = tecOffList[0].Id;
+                respObj.data.tecnicalOfferId = new List<String>();
+                for(TechnicalOffer__c to : tecOffList){
+                    respObj.data.tecnicalOfferId.add(to.Id);
+                }
+                
             } else {
                 respObj.data.offerIsPresent = false;
-                respObj.data.tecnicalOfferId = '';            
+                respObj.data.tecnicalOfferId = null;            
             }
 
         } catch (Exception ex){
@@ -150,8 +157,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String offerJson, String productId){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String offerJson, String productId, String technicalofferid){
         System.debug('# saveNewOfferConfigured #');
+        System.debug('# technicalofferid> ' + technicalofferid);
         //System.debug(offerJson);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
@@ -160,8 +168,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
 
-            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
-            HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, true);
+            if(String.isEmpty(technicalofferid)){
+                //Create new record
+                saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
+                //HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, true);
+            } else {
+                //update existing record
+                saveResponse.success = true;
+                saveResponse.techOffId = '';
+            }
 
             if(saveResponse.techOffId != null){
                 //send this tech off to SAP

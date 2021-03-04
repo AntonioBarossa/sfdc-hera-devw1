@@ -278,10 +278,11 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     sendToApex(){
         console.log('# sendToApex #');
+        console.log('# this.technicalofferid #' + this.technicalofferid);
 
         var toastObj = {success: true, title: '', message: '', variant: ''};
 
-        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid})
+        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);

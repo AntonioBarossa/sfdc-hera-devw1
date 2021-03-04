@@ -8,9 +8,23 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
+    showTable = false;
     @api productid;
     @track technicalOfferId;
     template;
+
+    @track rtObj = {
+        id:'',
+        label: '',
+        value: ''
+    };
+
+    @track selectionObj = {
+        enableCreate: false,
+        hasRecords: false,
+        records: []
+    };
+
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
@@ -48,17 +62,43 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
             };
 
             if(result.success){
-                console.log('# tecnicalOfferId success #');
-                console.log('# result.offerIsPresent > ' + result.data.offerIsPresent + ' - result.tecnicalOfferId > ' + result.data.tecnicalOfferId);
+                console.log('# getExistingOffer success #');
+                console.log('# offerIsPresent > ' + result.data.offerIsPresent);
+                
+                if(result.data.offerIsPresent){
+
+                    switch (result.data.tecnicalOfferId.length) {
+                        case 1:
+                            this.selectionObj.enableCreate = true;
+                            break;
+                        case 2:
+                            this.selectionObj.enableCreate = false;
+                    }
+
+                    result.data.tecnicalOfferId.forEach(id => {
+                        console.log('>>> id: ' + id);
+                        this.selectionObj.records.push(id);
+                    });
+
+                    this.selectionObj.hasRecords = true;
+                    console.log('>>> ' + this.selectionObj.records.length);
+
+                } else {
+                    this.selectionObj.enableCreate = true;
+                    this.selectionObj.hasRecords = false;
+                }
+
+                this.showWelcom = true;
+
+               //if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
+               //    this.technicalOfferId = result.data.tecnicalOfferId;
+               //    this.showCreateOffer = true;
+               //} else {
+               //    this.showWelcom = true;                
+               //}
+
             } else {
                 console.log('# tecnicalOfferId not success #');
-            }
-
-            if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
-                this.technicalOfferId = result.data.tecnicalOfferId;
-                this.showCreateOffer = true;
-            } else {
-                this.showWelcom = true;                
             }
 
         }).catch(error => {
@@ -96,12 +136,23 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         console.log('### Parent createNew ###');
         this.showWelcom = false;
         this.showCreateOffer = true;
+        //this.showTable = true;
     }
 
     search(event){
         console.log('### Parent search ###');
         this.showWelcom = false;
         this.showSearchOffer = true;
+        //this.showTable = true;
+    }
+
+    selectoffer(event){
+        console.log('### Parent selectoffer ###');
+        var techOffId = event.detail;
+        console.log('>>> ' + techOffId);
+        this.technicalOfferId = techOffId;
+        this.showCreateOffer = true;
+        this.showWelcom = false; 
     }
 
     closeSearch(event){
@@ -119,6 +170,10 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         //    }
         //});
 
+    }
+
+    handleSelection(event){
+        console.log('###');
     }
 
 }

@@ -6,6 +6,7 @@
 		<members>HDT_WRP_TechnicalOffer</members>
 		<members>HDT_LC_CustomLookupController</members>
 		<members>HDT_LCP_TechnicalOfferRecordPage</members>
+		<members>HDT_QR_TechnicalOffer</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -18,6 +19,7 @@
 		<members>hdtRadioGroup</members>
 		<members>hdtCustomIllustration</members>
 		<name>hdtTechnicalOfferRecordPage</name>
+		<name>hdtTechnicalOfferSelection</name>
 		<name>LightningComponentBundle</name>
 	</types>	
 	<types>
@@ -81,6 +83,15 @@
 		<members>MatrixConfiguration</members>
 		<members>DataHelper</name>
 		<name>StaticResource</name>
-	</types>		
+	</types>
+	<types>
+		<members>RateTemplate__c</members>
+		<members>TecnicalOffer__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Technical_Offer_Page1</members>
+		<name>FlexiPage</name>
+	</types>			
 	<version>50.0</version>
 </Package>

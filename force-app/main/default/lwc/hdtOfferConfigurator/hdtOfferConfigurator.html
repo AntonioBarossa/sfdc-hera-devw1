@@ -39,14 +39,16 @@
             <div class="slds-card__body slds-card__body_inner">
                 <div class="slds-grid slds-gutters">
                     <div class="slds-col">
+                        
                         <div class="slds-form slds-m-top_x-large " >
+
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt1} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
+                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
                                 <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
+                                    <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
                                     <div class="slds-box slds-box_x-small lgc-bg" >
-                                        <div class="slds-text-body_regular">{product.template}</div>
+                                        <div class="slds-text-body_regular">{product.productCode}</div>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +71,7 @@
                         <div class="slds-form slds-m-top_x-large " >
                             <div class="slds-form-element slds-form-element_horizontal">
                                 <lightning-helptext content={helpTxt3} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Cat. tariffa (Rate category)</label>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Category</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>-->
                                     <div class="slds-box slds-box_x-small lgc-bg" >
@@ -79,41 +81,17 @@
                             </div>
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
+                                <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
                                 <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
+                                    <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
                                     <div class="slds-box slds-box_x-small lgc-bg" >
-                                        <div class="slds-text-body_regular">{product.productCode}</div>
+                                        <div class="slds-text-body_regular">{product.template}</div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-                        <!--<div class="slds-form slds-m-top_x-large slds-m-bottom_x-large" >
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content="Nr Fattura...Select the right choice"></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Mercato</label>
-                                <div class="slds-form-element__control">
-                                    <lightning-input value="Small Medium Enterprise" type="text" label=" "></lightning-input>
-                                </div>
-                            </div>
-
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content="Nr Bollettino...Select the right choice"></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Chiave rif.</label>
-                                <div class="slds-form-element__control">
-                                    <lightning-input  value="235" type="text" label=" " ></lightning-input>
-                                </div>
-                            </div>
-
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content="Data emissione...Select the right choice"></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Tipo processo</label>
-                                <div class="slds-form-element__control">
-                                    <lightning-input  value="" type="text" label=" "></lightning-input>
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                 </div>
                 <!--slds-m-top_small slds-m-bottom_xxx_small slds-m-left_x-small slds-m-right_x-small-->

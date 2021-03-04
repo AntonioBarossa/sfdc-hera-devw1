@@ -1,6 +1,7 @@
 <template>
     <template if:true={showWelcom} >
-        <c-hdt-welcome-mat-modal
+        <c-hdt-technical-offer-selection
+            tiles={selectionObj}
             icon-name="standard:proposition"
             main-title-label="Offerta Tecnica"
             new-title-label="Crea una nuova offerta tecnica"
@@ -8,7 +9,22 @@
             onclosemodal={closeModal}
             oncreatenew={createNew}
             onsearch={search}
-        ></c-hdt-welcome-mat-modal>
+            onselectoffer={selectoffer}
+        ></c-hdt-technical-offer-selection>
+    </template>
+
+    <template if:true={showTable}>
+        <c-hdt-custom-lookup   
+            unique-key={rtObj.value}
+            value-id={rtObj.id}
+            obj-name="RateTemplate__c"
+            search-by="Name"
+            set-as-key="Id"
+            icon-name="custom:custom57"
+            label-name="labelName"
+            onvalueselect={handleSelection}
+            placeholder="Seleziona offerta..."
+        ></c-hdt-custom-lookup>
     </template>
 
     <template if:true={showSearchOffer} >

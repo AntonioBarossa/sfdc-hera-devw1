@@ -96,6 +96,11 @@ const stringValueColumns = [
     {label: 'Field 2', fieldName: 'col3'}
 ];
 
+const rate = [
+    {label: 'Id', fieldName: 'Id'},
+    {label: 'Name', fieldName: 'Name'}
+];
+
 export default class HdtModalDataTable extends LightningElement {
     @track data = [];
     @track columns = [];
@@ -122,7 +127,10 @@ export default class HdtModalDataTable extends LightningElement {
             case 'priceCode':
                 this.modalHeader = 'Seleziona il prezzo';
                 this.columns = firstRow.concat(priceColumns);
-
+                break;
+            case 'RateTemplate__c':
+                this.modalHeader = 'Seleziona il RateTemplate__c';
+                this.columns = firstRow.concat(priceColumns);
         }
 
         this.iconHeader = this.icon;
