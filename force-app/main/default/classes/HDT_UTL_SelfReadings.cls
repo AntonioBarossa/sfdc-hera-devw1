@@ -1,7 +1,8 @@
 public inherited sharing class HDT_UTL_SelfReadings {
 
     private static HDT_QR_SelfReadings queryHandler = new HDT_QR_SelfReadings();
-
+    private static HDT_QR_RecordType rtQueryHandler = new HDT_QR_RecordType();
+    
     @InvocableMethod(label = 'isProcessReading')
     public static List<Boolean> isProcessReading(List<HDT_UTL_SelfReadingsFlowInputs> inputs) {
         List<Boolean> results = new List<Boolean>();
@@ -35,7 +36,12 @@ public inherited sharing class HDT_UTL_SelfReadings {
             return results; 
         }
 
-        List<Id> recordTypeIds = new List<Id>{recordTypeSwitch, recordTypeVoltura}; // TODO: move RT to metadata
+        List<String> recordTypes = configs[0].OrderRecordTypes__c.split(',');
+        List<Id> recordTypeIds = new List<Id>();
+        for (String recordType : recordTypes) {
+            recordTypeIds.add(rtQueryHandler.getRecordTypeIdByName(recordType));
+        }
+
         List<Order> activeOrders = queryHandler.accountOrders(accountId, podPdr, recordTypeIds);
 
         Date contractStartDate = null;
