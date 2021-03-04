@@ -6556,12 +6556,12 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
+        <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
