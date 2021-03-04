@@ -3,7 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtEligibilityCriteriaParameters extends LightningElement {
 
-    @track fields = [
+    /*@track fields = [
        {row: '1', innerList: ['Agenzia', 'Marcatura Cliente']},
        {row: '2', innerList: ['ATC Gas', 'Nuovo Cliente']},
        {row: '3', innerList: ['Campagna', 'Opzione Energia Verde']},
@@ -13,7 +13,7 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
        {row: '8', innerList: ['Eta Cliente', 'Ruolo Profilo']},
        {row: '9', innerList: ['Fascia', 'Tipo Apparecchiatura']},
        {row: '10', innerList: ['Login', 'Tipo Cliente Categoria']}
-    ];
+    ];*/
 
     @track fieldsList = [
         {
@@ -54,9 +54,16 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         console.log('>>>> handleLoad ');
     }
 
-    handleSuccess(event) {
+    handleSubmit(event){
+      console.log('>>>> handleSubmit ');
+      //event.preventDefault();
+      //let fields = event.detail.fields; 
+      //console.log(JSON.stringify(fields));
+      //this.template.querySelector('lightning-record-edit-form').submit(fields);
+    }
 
-        console.log('>>>> handleSuccess ');
+    handleSuccess(event) {
+        console.log('>>>> handleSuccess');
 
         const evt = new ShowToastEvent({
             title: "Product created",
@@ -72,9 +79,22 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         console.log(JSON.stringify(event.detail.output.fieldErrors));
     }
 
-    handleSubmitButtonClick(){
-        console.log('>>>> handleSubmitButtonClick > ');      
-        this.template.querySelector('lightning-record-edit-form').submit();
-     }
+    @api handleSubmitButtonClick(){
+      console.log('>>>> handleSubmitButtonClick > ');
+      var criteriaObj = {};
+      this.template.querySelectorAll('lightning-input-field').forEach((field) => {
+        criteriaObj[field.fieldName] = field.value;
+      });
+
+      var jsonRecord = JSON.stringify(criteriaObj);
+      console.log(jsonRecord);
+      const saverecord = new CustomEvent("saverecord", {
+        detail: {record: jsonRecord}
+      });
+
+      // Dispatches the event.
+      this.dispatchEvent(saverecord);
+      //this.template.querySelector('lightning-record-edit-form').submit();
+    }
 
 }

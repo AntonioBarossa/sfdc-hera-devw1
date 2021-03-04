@@ -5,6 +5,7 @@
 		<members>HDT_LC_OfferConfiguratorCtrlHelper</members>
 		<members>HDT_WRP_TechnicalOffer</members>
 		<members>HDT_LC_CustomLookupController</members>
+		<members>HDT_LCP_TechnicalOfferRecordPage</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -16,6 +17,7 @@
 		<members>hdtCreateNewTechnicalOffer</members>
 		<members>hdtRadioGroup</members>
 		<members>hdtCustomIllustration</members>
+		<name>hdtTechnicalOfferRecordPage</name>
 		<name>LightningComponentBundle</name>
 	</types>	
 	<types>

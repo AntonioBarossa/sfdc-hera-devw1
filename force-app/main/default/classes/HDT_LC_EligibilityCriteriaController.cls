@@ -154,10 +154,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteria(String productId, String dataReceived) {
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteria(String productId, String record, String dataReceived) {
 
         System.debug('### productId ' + productId);
-        System.debug('### dataReceived: ' + dataReceived);
+        System.debug('### record: ' + record);
+        //System.debug('### dataReceived: ' + dataReceived);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
 

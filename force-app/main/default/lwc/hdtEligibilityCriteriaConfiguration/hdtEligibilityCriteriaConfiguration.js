@@ -444,15 +444,23 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
 
     saveAction(){
         console.log('# saveAction #');
+        this.template.querySelector('c-hdt-eligibility-criteria-parameters').handleSubmitButtonClick();
+    }
+
+    sendToApex(event){
+        console.log('# saveAction2 #');
 
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
+
+        var criteriaRecord = event.detail.record;
+        console.log('# criteriaRecord > ' + criteriaRecord);
 
         for(var i=0; i<this.provinceOptions.length; i++){
             this.provinceOptions[i].cityRemoved = [];
         }
 
-        saveEligibilityCriteria({productId: this.productid, dataReceived: JSON.stringify(this.provinceOptions)})
+        saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.provinceOptions)})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
