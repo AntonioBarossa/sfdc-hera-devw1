@@ -2,7 +2,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
     public List<HDT_SelfReadings__mdt> getConfigurationByName(String name) {
         try {
-            List<HDT_SelfReadings__mdt> config = [SELECT Id, ReadingDateIncrease__c, ReadingDateDecrease__c, OrderRecordTypes__c
+            List<HDT_SelfReadings__mdt> config = [SELECT Id, ReadingDateIncrease__c, ReadingDateDecrease__c, OrderRecordTypes__c, OrderBadPhases__c, OrderBadStates__c
                 FROM HDT_SelfReadings__mdt WHERE DeveloperName =:name WITH SECURITY_ENFORCED];
             return config;
         } catch (Exception ex) {
@@ -11,7 +11,7 @@ public inherited sharing class HDT_QR_SelfReadings {
         }
     }
 
-    public List<Order> accountOrders(String accountId, String podPdr, List<Id> recordTypeIds) {
+    public List<Order> accountOrders(String accountId, String podPdr, List<Id> recordTypeIds, List<String> badPhases, List<String> badStates) {
 
         List<Order> orders = new List<Order>();
 
@@ -32,6 +32,14 @@ public inherited sharing class HDT_QR_SelfReadings {
 
             if (!recordTypeIds.isEmpty()) {
                 query += ' AND RecordTypeId IN :recordTypeIds';
+            }
+
+            if (!badPhases.isEmpty()) {
+                query += ' AND Phase__c NOT IN :badPhases';
+            }
+
+            if (!badStates.isEmpty()) {
+                query += ' AND Status NOT IN :badStates';
             }
 
             System.debug('HDT_QR_SelfReadings: accountOrders query => ' + query);

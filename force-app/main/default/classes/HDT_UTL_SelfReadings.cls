@@ -12,23 +12,6 @@ public inherited sharing class HDT_UTL_SelfReadings {
         Date caseCreatedDate = inputs[0].caseCreatedDateTime.date();
         String metadataRecordName = inputs[0].metadataRecordName;
 
-        Id recordTypeSwitch = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_SwitchIn' WITH SECURITY_ENFORCED LIMIT 1].Id;
-        Id recordTypeVoltura = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Voltura' WITH SECURITY_ENFORCED LIMIT 1].Id;
-
-        /*List<Order> activeOrders = [
-            SELECT Id, EffectiveDate__c, CreatedDate 
-            FROM Order
-            WHERE AccountId = :accountId
-            AND ServicePointCodeFormula__c = :podPdr
-            // TODO: anche HDT_RT_SwitchInVolturaTecnica ?
-            AND (
-                RecordTypeId = :recordTypeSwitch OR RecordTypeId = :recordTypeVoltura
-            )
-            // TODO: which status and/or phases ?
-            //AND Status = 'In Lavorazione'
-            WITH SECURITY_ENFORCED
-        ];*/
-
         List<HDT_SelfReadings__mdt> configs = queryHandler.getConfigurationByName(metadataRecordName);
         if (configs.isEmpty()) {
             System.debug('HDT_UTL_SelfReadings: Nessun custom metadata trovato.');
@@ -41,8 +24,19 @@ public inherited sharing class HDT_UTL_SelfReadings {
         for (String recordType : recordTypes) {
             recordTypeIds.add(rtQueryHandler.getRecordTypeIdByName(recordType));
         }
+        
+        List<String> badPhases = new List<String>();
+        List<String> badStates = new List<String>();
 
-        List<Order> activeOrders = queryHandler.accountOrders(accountId, podPdr, recordTypeIds);
+        if (!String.isBlank(configs[0].OrderBadPhases__c)) {
+            badPhases = configs[0].OrderBadPhases__c.split(',');
+        }
+
+        if (!String.isBlank(configs[0].OrderBadStates__c)) {
+            badStates = configs[0].OrderBadStates__c.split(',');
+        }
+
+        List<Order> activeOrders = queryHandler.accountOrders(accountId, podPdr, recordTypeIds, badPhases, badStates);
 
         Date contractStartDate = null;
         for (Order activeOrder : activeOrders) {
