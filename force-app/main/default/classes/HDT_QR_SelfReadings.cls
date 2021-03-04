@@ -11,7 +11,7 @@ public inherited sharing class HDT_QR_SelfReadings {
         }
     }
 
-    public List<Order> accountOrders(String accountId, String podPdr, List<Id> recordTypeIds, List<String> badPhases, List<String> badStates) {
+    public List<Order> accountOrders(String accountId, String servicePointId, List<Id> recordTypeIds, List<String> badPhases, List<String> badStates) {
 
         List<Order> orders = new List<Order>();
 
@@ -26,8 +26,8 @@ public inherited sharing class HDT_QR_SelfReadings {
                 query += ' WHERE AccountId = :accountId';
             }
 
-            if (String.isNotBlank(podPdr)) {
-                query += ' AND ServicePointCodeFormula__c = :podPdr';
+            if (String.isNotBlank(servicePointId)) {
+                query += ' AND ServicePoint__c = :servicePointId';
             }
 
             if (!recordTypeIds.isEmpty()) {
