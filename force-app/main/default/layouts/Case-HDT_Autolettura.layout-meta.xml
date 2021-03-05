@@ -230,12 +230,16 @@
         <fields>ReadingValue2__c</fields>
         <fields>ReadingValue3__c</fields>
         <relatedList>Reading__c.CaseEle__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>ReadingValueCorrector__c</fields>
         <fields>ReadingValueMeter__c</fields>
         <relatedList>Reading__c.CaseGas__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedCommentsList</relatedList>
