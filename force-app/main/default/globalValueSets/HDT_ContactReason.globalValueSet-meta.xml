@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Gestione contratti</fullName>
+        <default>false</default>
+        <label>Gestione contratti</label>
+    </customValue>
+    <customValue>
+        <fullName>Info commerciali</fullName>
+        <default>false</default>
+        <label>Info commerciali</label>
+    </customValue>
+    <customValue>
+        <fullName>Bolletta e pagamenti</fullName>
+        <default>false</default>
+        <label>Bolletta e pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazioni ambientali</fullName>
+        <default>false</default>
+        <label>Segnalazioni ambientali</label>
+    </customValue>
+    <customValue>
+        <fullName>Altro</fullName>
+        <default>false</default>
+        <label>Altro</label>
+    </customValue>
+    <masterLabel>Motivo di Contatto</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
