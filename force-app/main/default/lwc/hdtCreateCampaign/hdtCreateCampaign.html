@@ -1,12 +1,56 @@
 <template>
-    <lightning-record-edit-form object-api-name={objectApiName} onload={handleFormLoad} onsuccess={handleSuccess}>
+    <lightning-record-edit-form object-api-name={objectApiName} onload={handleFormLoad} onerror={handleError} onsuccess={handleSuccess}>
         <div class="slds-grid slds-wrap">
-            <template for:each={fields} for:item="field" for:index="index">
-                <div key={field.fieldName} class={field.class}>
-                    <lightning-input-field field-name={field.fieldName} required={field.required}>
-                    </lightning-input-field>
-                </div>
-            </template>
+            <lightning-messages>
+            </lightning-messages>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Name" required="true"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Status"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Category__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Target__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-around--x-small">
+                <lightning-input-field field-name="Description"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="StartDate" required="true"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="EndDate"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Segment__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="TargetDescription__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="TargetingMode__c" required="true"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Priority__c"></lightning-input-field>
+            </div>
+            <div class="reitekField slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="ReitekIntegrationTechnology__c" required={reitekFieldRequired}></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="ParentId"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Tipology__c"></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}></lightning-input-field>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                <lightning-input-field field-name="Required__c"></lightning-input-field>
+            </div>
         </div>
     </lightning-record-edit-form>
 </template>
