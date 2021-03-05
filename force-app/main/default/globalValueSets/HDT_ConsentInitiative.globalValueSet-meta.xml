@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>sito standard</fullName>
+        <default>false</default>
+        <label>sito standard</label>
+    </customValue>
+    <customValue>
+        <fullName>sito standard proattivo</fullName>
+        <default>false</default>
+        <label>sito standard proattivo</label>
+    </customValue>
+    <customValue>
+        <fullName>chat</fullName>
+        <default>false</default>
+        <label>chat</label>
+    </customValue>
+    <customValue>
+        <fullName>prodotti HVAC</fullName>
+        <default>false</default>
+        <label>prodotti HVAC</label>
+    </customValue>
+    <customValue>
+        <fullName>plico contrattuale</fullName>
+        <default>false</default>
+        <label>plico contrattuale</label>
+    </customValue>
+    <masterLabel>Fonti Iniziativa</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
