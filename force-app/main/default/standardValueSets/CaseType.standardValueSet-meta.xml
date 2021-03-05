@@ -361,4 +361,44 @@
         <default>false</default>
         <label>Votive Modena Cessazione</label>
     </standardValue>
+    <standardValue>
+        <fullName>Informazioni servizi Hera</fullName>
+        <default>false</default>
+        <label>Informazioni servizi Hera</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Informazioni ambientali</fullName>
+        <default>false</default>
+        <label>Informazioni ambientali</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comunicazione di Fallimento</fullName>
+        <default>false</default>
+        <label>Comunicazione di Fallimento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Caduta Linea/Chiamata Muta</fullName>
+        <default>false</default>
+        <label>Caduta Linea/Chiamata Muta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pagamento Online</fullName>
+        <default>false</default>
+        <label>Pagamento Online</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pagamento ClickPay</fullName>
+        <default>false</default>
+        <label>Pagamento ClickPay</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Errore Chiamata</fullName>
+        <default>false</default>
+        <label>Errore Chiamata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Informative</fullName>
+        <default>false</default>
+        <label>Informative</label>
+    </standardValue>
 </StandardValueSet>

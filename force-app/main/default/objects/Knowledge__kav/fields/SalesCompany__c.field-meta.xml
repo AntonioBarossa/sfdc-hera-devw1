@@ -11,9 +11,39 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>--Provvisorio--</fullName>
+                <fullName>HC</fullName>
                 <default>false</default>
-                <label>--Provvisorio--</label>
+                <label>HC</label>
+            </value>
+            <value>
+                <fullName>EB</fullName>
+                <default>false</default>
+                <label>EB</label>
+            </value>
+            <value>
+                <fullName>EBT</fullName>
+                <default>false</default>
+                <label>EBT</label>
+            </value>
+            <value>
+                <fullName>HCM</fullName>
+                <default>false</default>
+                <label>HCM</label>
+            </value>
+            <value>
+                <fullName>HCNE</fullName>
+                <default>false</default>
+                <label>HCNE</label>
+            </value>
+            <value>
+                <fullName>HSPA</fullName>
+                <default>false</default>
+                <label>HSPA</label>
+            </value>
+            <value>
+                <fullName>MMS</fullName>
+                <default>false</default>
+                <label>MMS</label>
             </value>
         </valueSetDefinition>
     </valueSet>
