@@ -67,7 +67,7 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
     //};
 
     connectedCallback(){
-        this.filter = 'Product__r.Template__c=\''+ this.rateObj.rateTemplate +'\'';
+        this.filter = 'RateCategory__r.Name=\''+ this.rateObj.rateName +'\'';
     }
 
     searchClick(event){

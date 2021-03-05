@@ -163,7 +163,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String offerJson, String productId, String technicalofferid){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String offerJson, String productId, String technicalofferid, String rate){
         System.debug('# saveNewOfferConfigured #');
         System.debug('# technicalofferid> ' + technicalofferid);
         //System.debug(offerJson);
@@ -176,7 +176,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(String.isEmpty(technicalofferid)){
                 //Create new record
-                saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId);
+                saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(offerList, productId, rate);
                 //HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, true);
             } else {
                 //update existing record

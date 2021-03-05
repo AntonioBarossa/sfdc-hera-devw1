@@ -1,18 +1,22 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String productId) {
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String productId, String rate) {
         System.debug('# saveTechnicalOffer controller helper #');
         System.debug('# offerList size -> ' + offerList.size());
+        System.debug('# rate -> ' + rate);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
+        Product2 pr = [SELECT Id, Name, ProductCode,Version__c FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
+        Id rateId = [SELECT Id FROM RateTemplate__c WHERE Name = :rate LIMIt 1].Id;
 
         TechnicalOffer__c tecOff = new TechnicalOffer__c();
-        tecOff.Name = '[Offerta] - ' + pr.Name;
+        //Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
+        tecOff.Name = pr.Name + ' [' + pr.Version__c + '] [' + rate + ']';
         tecOff.Product__c = productId;
+        tecOff.RateCategory__c = rateId;
         
         try{
             insert tecOff;
@@ -124,7 +128,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     public static TechnicalOffer__c queryTechnicalOfferRecord(Id recId){
         TechnicalOffer__c techOff = [
-            SELECT Id, Name, (
+            SELECT Id, Name, RateCategory__r.Name, (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM TechnicalOfferItems__r ORDER BY RowId__c
@@ -144,12 +148,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TechnicalOffer__c newTechOff = new TechnicalOffer__c();
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, Name, ProductCode FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
+        Product2 pr = [SELECT Id, Name, ProductCode, Version__c FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
 
         TechnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
 
         newTechOff = recToClone.clone(false, true, false, false);
-        newTechOff.Name = '[Offerta] - ' + pr.Name;
+        newTechOff.Name = pr.Name + ' [' + pr.Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
         newTechOff.Product__c = productId;
 
         System.debug('# clone this -> ' + newTechOff);
