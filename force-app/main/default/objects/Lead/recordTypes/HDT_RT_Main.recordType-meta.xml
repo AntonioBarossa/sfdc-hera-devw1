@@ -316,10 +316,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Nome Social network</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Other</fullName>
             <default>false</default>
         </values>
@@ -333,14 +329,6 @@
         </values>
         <values>
             <fullName>Trade Show</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Webform callback</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Webform winback</fullName>
             <default>false</default>
         </values>
         <values>
