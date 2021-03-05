@@ -270,6 +270,16 @@
                 <label>Errata Emissione</label>
             </value>
             <value>
+                <fullName>Chiamata Mura</fullName>
+                <default>false</default>
+                <label>Chiamata Mura</label>
+            </value>
+            <value>
+                <fullName>Caduta Linea</fullName>
+                <default>false</default>
+                <label>Caduta Linea</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -435,6 +445,14 @@
         <valueSettings>
             <controllingFieldValue>Votive Modena Cessazione</controllingFieldValue>
             <valueName>Errata Emissione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Chiamata Mura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Caduta Linea</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
