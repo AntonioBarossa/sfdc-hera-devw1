@@ -5,6 +5,7 @@ import getCurrentUserName from '@salesforce/apex/HDT_LC_GeneralInfo.getCurrentUs
 import getSaleContactRole from '@salesforce/apex/HDT_LC_GeneralInfo.getSaleContactRole';
 export default class HdtGeneralInfo extends LightningElement {
     @api saleRecord = {};
+    @api campaignId;
     disabledInput = false;
     disabledNext = false;
     hiddenEdit = true;
@@ -18,6 +19,10 @@ export default class HdtGeneralInfo extends LightningElement {
 
     get isCampaignVisible(){
         return this.isCampaignTableVisible || this.saleRecord.Campaign__c !== undefined;
+    }
+
+    get isCampaignInputVisible(){
+        return this.disabledInput || (this.campaignId !== '' && this.campaignId !== undefined);
     }
 
     toggle(){
@@ -115,6 +120,7 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
     connectedCallback(){
+        console.log('hdtGeneralInfo - connectedCallback - campaignId: ', this.campaignId);
 
         //Set CreatedBy of Sale on component mount
         if(this.saleRecord.CreatedBy__c === '' || this.saleRecord.CreatedBy__c === null || this.saleRecord.CreatedBy__c === undefined) {

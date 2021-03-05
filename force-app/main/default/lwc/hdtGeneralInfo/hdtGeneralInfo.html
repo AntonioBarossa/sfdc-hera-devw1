@@ -23,13 +23,13 @@
                     <lightning-layout-item padding="horizontal-large" size="12">
                         <template if:true={isCampaignVisible}>
                             <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna</div>
-                            <template if:true={disabledInput}>
+                            <template if:true={isCampaignInputVisible}>
                                 <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
                                     <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.Campaign__c} field-name="Campaign__c" variant="label-stacked"></lightning-input-field>
                                 </lightning-record-edit-form>
                             </template>
                         </template>
-                        <template if:false={disabledInput}>
+                        <template if:false={isCampaignInputVisible}>
                             <c-hdt-campaigns-popover campaign-type="sale" object-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent} onemitvisibility={handleCampaignVisibility}></c-hdt-campaigns-popover>
                         </template>
                     </lightning-layout-item>
