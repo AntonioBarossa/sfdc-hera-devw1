@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Tipology__c</fullName>
+    <fullName>ShippingMode__c</fullName>
     <externalId>false</externalId>
-    <label>Tipologia</label>
+    <label>Modalità Spedizione</label>
     <required>false</required>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Quality Call</fullName>
+                <fullName>MA</fullName>
                 <default>false</default>
-                <label>Quality Call</label>
+                <label>MA</label>
             </value>
             <value>
-                <fullName>Comfort Call</fullName>
+                <fullName>RS</fullName>
                 <default>false</default>
-                <label>Comfort Call</label>
+                <label>RS</label>
             </value>
             <value>
-                <fullName>Teleselling</fullName>
+                <fullName>ARS</fullName>
                 <default>false</default>
-                <label>Teleselling</label>
+                <label>ARS</label>
             </value>
             <value>
-                <fullName>Passaggio a RID</fullName>
+                <fullName>PTCRN</fullName>
                 <default>false</default>
-                <label>Passaggio a RID</label>
+                <label>PTCRN</label>
             </value>
             <value>
-                <fullName>Passaggio a IEB</fullName>
+                <fullName>D</fullName>
                 <default>false</default>
-                <label>Passaggio a IEB</label>
+                <label>D</label>
             </value>
         </valueSetDefinition>
     </valueSet>
