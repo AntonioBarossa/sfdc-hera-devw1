@@ -42,6 +42,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC%2BHCM%2BHCNE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM</fullName>
             <default>false</default>
         </values>
@@ -214,7 +218,35 @@
     <picklistValues>
         <picklist>InterestArea__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Assicurazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-mobility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Green</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta GAS</fullName>
             <default>false</default>
         </values>
     </picklistValues>
