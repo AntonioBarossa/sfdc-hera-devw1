@@ -18,6 +18,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api density;
     @api recordType;
     @api saveInDraft;
+    @api cancelCase;
     @api addContentDocument;
     @api contentDocumentLabel;
     @api acceptedFormats;
@@ -29,6 +30,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api labelInputSection;
     @api labelReadOnlySection;
     @api availableActions = [];
+    @api variantSaveButton;
+    @api outputId;
 
     @track errorMessage;
     @track error;
@@ -86,6 +89,14 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         updateRecordView(recordId) {
             updateRecord({fields: { Id: recordId }});
         }
+
+        @api
+        get variantButton() {
+            if(this.variantSaveButton != null && this.variantSaveButton != "" && this.variantSaveButton != "undefined" )
+            return this.variantSaveButton;
+        else
+            return "brand";
+        }
         /*
         @wire(getContentDocs, {arecordId : '$recordId'}) 
             wiredContentDocument({ error, data }) {
@@ -124,8 +135,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.formats = this.acceptedFormats.split(";");
             console.log(JSON.stringify(this.formats));
         }
-        updateRecord({fields: { Id: this.recordId }});
-        
+        if(this.recordId != null){
+            updateRecord({fields: { Id: this.recordId }});
+        }
     }
     /*get formats(){
         var formats = [];
@@ -150,6 +162,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             return null;
     }
     handleSuccess(event) {
+
+        console.log('#Record Id Created --> ' +event.detail.id);
+
+        if(this.recordId == null || this.recordId == undefined){
+
+            this.outputId = event.detail.id;
+
+        }
+
         if(this.availableActions.find(action => action === 'FINISH')){
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -164,7 +185,16 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     handleDraft(event){
         console.log('draft handle');
-        this.saveInDraft = true;
+        if(event.target.name === 'draft'){
+
+            this.saveInDraft = true;
+
+        } else if(event.target.name === 'cancel'){
+
+            this.cancelCase = true;
+
+        }
+
         this.template.querySelector('lightning-record-edit-form').submit();
     }
 
@@ -199,31 +229,34 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleSubmit(event){
-        event.preventDefault();       // stop the form from submitting
-        this.saveInDraft = false;
-        const fields = event.detail.fields;
-        console.log('fields ' + JSON.stringify(fields));
-        if(this.validateClass){
-            validateRecord({
-                validateClass: this.validateClass,
-                fields: JSON.stringify(fields),
-                recordId: this.recordId
-            })
-                .then(result => {
-                    var resultWrapper = JSON.parse(result);
-                    if(resultWrapper.outcomeCode === "OK"){ 
-                        this.template.querySelector('lightning-record-edit-form').submit(fields);
-                    }else{
-                        console.log('ErrorMessage: ' +resultWrapper.outcomeDescription);
-                        this.showMessage('Errore',resultWrapper.outcomeDescription,'error');  
-                    }
+        if(this.recordId != null){
+            event.preventDefault();       // stop the form from submitting
+            this.saveInDraft = false;
+            this.cancelCase = false;
+            const fields = event.detail.fields;
+            console.log('fields ' + JSON.stringify(fields));
+            if(this.validateClass){
+                validateRecord({
+                    validateClass: this.validateClass,
+                    fields: JSON.stringify(fields),
+                    recordId: this.recordId
                 })
-                .catch(error => {
-                    this.error = true;
-                });
-        }else{
-            this.template.querySelector('lightning-record-edit-form').submit(fields);
-        } 
+                    .then(result => {
+                        var resultWrapper = JSON.parse(result);
+                        if(resultWrapper.outcomeCode === "OK"){ 
+                            this.template.querySelector('lightning-record-edit-form').submit(fields);
+                        }else{
+                            console.log('ErrorMessage: ' +resultWrapper.outcomeDescription);
+                            this.showMessage('Errore',resultWrapper.outcomeDescription,'error');  
+                        }
+                    })
+                    .catch(error => {
+                        this.error = true;
+                    });
+            }else{
+                this.template.querySelector('lightning-record-edit-form').submit(fields);
+            }
+        }
     }
 
     handleAttributeChange() {

@@ -14,9 +14,12 @@
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
 
+        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
+        component.set("v.recordid", caseId)
+        console.log('# component set recordid -> '+component.get("v.recordid"))
         console.log('# flowName -> ' + flowName);
         console.log('# accId -> ' + accId);
         console.log('# processType -> ' + processType);
@@ -72,6 +75,9 @@
             console.log('# CaseId is NOT NULL');
             //{ name : "InputCase", type : "SObject", value: {"Id" : caseId}}
             inputVariables.push({ name : 'InputCase', type : 'String', value : caseId });
+            if(processType === 'Annullamento prestazione' || processType === 'Ripristina fase'){
+                inputVariables.push({ name : 'ProcessType', type : 'String', value : processType });
+            }
 
             component.set('v.enableRefresh', true);
         }
@@ -79,7 +85,9 @@
                 inputVariables.push({ name : 'recordToCancell', type : 'String', value : recordToCancell });
         if(sObjectRecordToCancell != null)
                 inputVariables.push({ name : 'sObjectRecordToCancell', type : 'String', value : sObjectRecordToCancell });
-        
+        if(resumeFromDraft != null){
+            inputVariables.push({ name : 'ResumeFromDraft', type : 'Boolean', value : resumeFromDraft });
+        }
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
 
@@ -94,7 +102,7 @@
        //TODO getire eventuali errori provenienti dal flow 
        //event.getParam("status") === "ERROR" 
 
-       if(event.getParam("status") === "FINISHED") {
+       if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
             var accountTabId = component.get("v.accountTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
@@ -102,55 +110,85 @@
 
             console.log('# close -> ' + subTabToClose + ' - refresh -> ' + accountTabId);
 
-            if(!enableRefresh){
-                var outputVariables = event.getParam('outputVariables');
-                var outputVar;
-                var newCaseId;
+            //if(!enableRefresh){
+            var outputVariables = event.getParam('outputVariables');
+            var outputVar;
+            var newCaseId;
+
+            console.log('# recordid -> ' +component.get("v.recordid"));
+            if(outputVariables != null){      
                 for(var i = 0; i < outputVariables.length; i++) {
                     outputVar = outputVariables[i];
-
+                    
                     if(outputVar.name === "CaseId") {
                         newCaseId = outputVar.value;
                     }
-
                 }
-
-                workspaceAPI.openSubtab({
-                    parentTabId: accountTabId,
-                    pageReference: {
-                        type: "standard__recordPage",
-                        attributes: {
-                            recordId: newCaseId,
-                            objectApiName: "Case",
-                            actionName: "view"
-                        }
-                    },
-                    focus: true
-                });
-
+            }else{
+                newCaseId=component.get("v.recordid");
             }
 
-            workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                console.log('# Refresh page -> ' + enableRefresh);
-                if(enableRefresh){
-                    console.log('# OK Refresh page #');
-                    $A.get('e.force:refreshView').fire();
-                }
+            workspaceAPI.openSubtab({
+                parentTabId: accountTabId,
+                pageReference: {
+                    type: "standard__recordPage",
+                    attributes: {
+                        recordId: newCaseId,
+                        objectApiName: "Case",
+                        actionName: "view"
+                    }
+                },
+                focus: true
+            }).then(function(response){
 
-                //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                //    workspaceAPI.refreshTab({
-                //        tabId: subTabToRefresh,
-                //        includeAllSubtabs: true
-                //    }).catch(function(error) {
-                //        console.log(error);
-                //    });
-                //});
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                    console.log('# Refresh page -> ' + enableRefresh);
+                    if(enableRefresh){
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                    }
+    
+                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                    //    workspaceAPI.refreshTab({
+                    //        tabId: subTabToRefresh,
+                    //        includeAllSubtabs: true
+                    //    }).catch(function(error) {
+                    //        console.log(error);
+                    //    });
+                    //});
+    
+                }).catch(function(error) {
+                    console.log(error);
+                });
 
+
+            
+
+            //} else {
+
+                /*orkspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                    console.log('# Refresh page -> ' + enableRefresh);
+                    if(enableRefresh){
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                    }
+    
+                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                    //    workspaceAPI.refreshTab({
+                    //        tabId: subTabToRefresh,
+                    //        includeAllSubtabs: true
+                    //    }).catch(function(error) {
+                    //        console.log(error);
+                    //    });
+                    //});*/
+    
             }).catch(function(error) {
                 console.log(error);
             });
 
+
+            }
+
        }
-    }
     
 })
