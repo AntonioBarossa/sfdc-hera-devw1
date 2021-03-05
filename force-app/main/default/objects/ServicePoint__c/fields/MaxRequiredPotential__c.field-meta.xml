@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SAPImplantCode__c</fullName>
-    <description>SAPImplantCode__c</description>
+    <fullName>MaxRequiredPotential__c</fullName>
+    <description>Potenzialità specifica per il Gas</description>
     <externalId>false</externalId>
-    <label>Impianto SAP</label>
-    <length>20</length>
+    <label>Potenzialità Massima Richiesta</label>
+    <precision>11</precision>
     <required>false</required>
+    <scale>1</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

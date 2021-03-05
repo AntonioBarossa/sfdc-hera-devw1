@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Potentiality__c</fullName>
-    <description>Potenzialità specifica per il Gas</description>
+    <fullName>OpinionRequestNumber__c</fullName>
     <externalId>false</externalId>
-    <label>Potenzialità</label>
-    <precision>12</precision>
+    <label>Numero Pareri Richiesti</label>
+    <precision>18</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>0</scale>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Number</type>
     <unique>false</unique>

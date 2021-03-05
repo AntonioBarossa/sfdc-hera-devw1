@@ -260,6 +260,16 @@
                 <label>Opposizione</label>
             </value>
             <value>
+                <fullName>Sollecito Emissione</fullName>
+                <default>false</default>
+                <label>Sollecito Emissione</label>
+            </value>
+            <value>
+                <fullName>Errata Emissione</fullName>
+                <default>false</default>
+                <label>Errata Emissione</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -417,6 +427,14 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>TCP Comune no Int</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Votive Modena Cessazione</controllingFieldValue>
+            <valueName>Sollecito Emissione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Votive Modena Cessazione</controllingFieldValue>
+            <valueName>Errata Emissione</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EndCustomerRequestType__c</fullName>
+    <fullName>CustomerRequestAccomplished__c</fullName>
     <externalId>false</externalId>
-    <label>Tipo di richiesta Cliente Finale</label>
+    <label>Richiesta del cliente accolta?</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -13,14 +13,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Reclamo scritto</fullName>
+                <fullName>SI</fullName>
                 <default>false</default>
-                <label>Reclamo Scritto</label>
+                <label>SI</label>
             </value>
             <value>
-                <fullName>Richiesta info</fullName>
+                <fullName>NO</fullName>
                 <default>false</default>
-                <label>Richiesta Info Scritta</label>
+                <label>NO</label>
+            </value>
+            <value>
+                <fullName>Parziale</fullName>
+                <default>false</default>
+                <label>Parziale</label>
             </value>
         </valueSetDefinition>
     </valueSet>
