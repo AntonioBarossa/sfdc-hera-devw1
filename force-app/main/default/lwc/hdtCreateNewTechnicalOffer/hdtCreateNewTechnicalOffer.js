@@ -1,17 +1,18 @@
 import { LightningElement, wire, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import { getRecord } from 'lightning/uiRecordApi';
+//import { getRecord } from 'lightning/uiRecordApi';
 import getExistingOffer from '@salesforce/apex/HDT_LC_OfferConfiguratorController.getExistingOffer';
 
 export default class HdtCreateNewTechnicalOffer extends NavigationMixin(LightningElement) {
 
+    @api productid;
     showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
-    showTable = false;
-    @api productid;
+    //rateTemplate;
+    //rateName;
+    rateObj;
     @track technicalOfferId;
-    template;
 
     @track rtObj = {
         id:'',
@@ -31,18 +32,18 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         this.getExistingOfferId();
     }
 
-    @wire(getRecord, { recordId: '$productid', fields: ['Product2.Template__c'] })
-    wiredProduct({ error, data }) {
-        if (data) {
-            console.log('#### template -> ' + data.fields.Template__c.value);
-            this.template =  data.fields.Template__c.value;
-        } else if (error) {
-            for(var key in error){
-                console.log('# Error -> ' + key + ' - ' + error[key]);
-            }
-            
-        }
-    }
+    //@wire(getRecord, { recordId: '$productid', fields: ['Product2.Template__c'] })
+    //wiredProduct({ error, data }) {
+    //    if (data) {
+    //        console.log('#### template -> ' + data.fields.Template__c.value);
+    //        this.template =  data.fields.Template__c.value;
+    //    } else if (error) {
+    //        for(var key in error){
+    //            console.log('# Error -> ' + key + ' - ' + error[key]);
+    //        }
+    //        
+    //    }
+    //}
 
     getExistingOfferId(){
         console.log('# getExistingOfferId #');
@@ -67,7 +68,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                 
                 if(result.data.offerIsPresent){
 
-                    switch (result.data.tecnicalOfferId.length) {
+                    switch (result.data.tecnicalOffers.length) {
                         case 1:
                             this.selectionObj.enableCreate = true;
                             break;
@@ -75,9 +76,12 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                             this.selectionObj.enableCreate = false;
                     }
 
-                    result.data.tecnicalOfferId.forEach(id => {
-                        console.log('>>> id: ' + id);
-                        this.selectionObj.records.push(id);
+                    console.log('>>>> ' + JSON.stringify(result.data.tecnicalOffers));
+
+                    result.data.tecnicalOffers.forEach(item => {
+                        console.log('>>>  rateName> ' + item.RateCategory__r.Name);
+                        var recItem = {id: item.Id, name: item.Name, rateTemp: item.Template__c, rateName: item.RateCategory__r.Name};
+                        this.selectionObj.records.push(recItem);
                     });
 
                     this.selectionObj.hasRecords = true;
@@ -107,10 +111,6 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         });
     }
 
-    handleClick(event){
-        console.log('### productid -> ' + this.productid);
-    }
-
     closeModal(event){
         console.log('### Parent closeModal ###');
         console.log('### return to-> ' + this.productid);
@@ -134,22 +134,35 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
     createNew(event){
         console.log('### Parent createNew ###');
+        console.log('>>> rate id > ' + event.detail.rateId + ' - name > ' + event.detail.rateName + ' - ' + event.detail.rateTemplate);
+        this.rateObj = event.detail;
+        //this.rateTemplate = event.detail.rateTemplate;
+        //this.rateName = event.detail.rateName;
         this.showWelcom = false;
         this.showCreateOffer = true;
-        //this.showTable = true;
     }
 
     search(event){
         console.log('### Parent search ###');
+        console.log('>>> rate id > ' + event.detail.rateId + ' - name > ' + event.detail.rateName + ' - ' + event.detail.rateTemplate);
+        this.rateObj = event.detail;
+        //this.rateTemplate = event.detail.rateTemplate;
+        //this.rateName = event.detail.rateName;
         this.showWelcom = false;
         this.showSearchOffer = true;
-        //this.showTable = true;
     }
 
     selectoffer(event){
         console.log('### Parent selectoffer ###');
-        var techOffId = event.detail;
+        var techOffId = event.detail.id;
         console.log('>>> ' + techOffId);
+
+        this.rateObj = {
+            rateId: '',
+            rateName: event.detail.rate,
+            rateTemplate: event.detail.temp,         
+        };
+
         this.technicalOfferId = techOffId;
         this.showCreateOffer = true;
         this.showWelcom = false; 

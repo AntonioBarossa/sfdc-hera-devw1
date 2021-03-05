@@ -13,26 +13,26 @@
         ></c-hdt-technical-offer-selection>
     </template>
 
-    <template if:true={showTable}>
-        <c-hdt-custom-lookup   
-            unique-key={rtObj.value}
-            value-id={rtObj.id}
-            obj-name="RateTemplate__c"
-            search-by="Name"
-            set-as-key="Id"
-            icon-name="custom:custom57"
-            label-name="labelName"
-            onvalueselect={handleSelection}
-            placeholder="Seleziona offerta..."
-        ></c-hdt-custom-lookup>
-    </template>
-
     <template if:true={showSearchOffer} >
-        <c-hdt-search-technical-offer productid={productid} template={template} ongoback={closeSearch}></c-hdt-search-technical-offer>
+        <c-hdt-search-technical-offer
+            productid={productid}
+            rate-obj={rateObj}
+            ongoback={closeSearch}
+        ></c-hdt-search-technical-offer>
     </template>
 
     <template if:true={showCreateOffer} >
-        <c-hdt-offer-configurator productid={productid} technicalofferid={technicalOfferId} ongoback={closeModal} ></c-hdt-offer-configurator>
+        <c-hdt-offer-configurator
+            productid={productid}
+            technicalofferid={technicalOfferId}
+            rate-obj={rateObj}
+            ongoback={closeModal}
+        ></c-hdt-offer-configurator>
     </template>
+
+<!--
+rate-template={rateTemplate}
+rate-name={rateName}
+-->
 
 </template>

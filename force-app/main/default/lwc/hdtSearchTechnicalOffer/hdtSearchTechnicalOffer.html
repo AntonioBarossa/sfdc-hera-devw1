@@ -9,7 +9,7 @@
         ></c-hdt-confirmation-modal>
     </template>
 
-    <lightning-card title="Ricerca Offerta Tecnica" icon-name="standard:proposition" >
+    <lightning-card title="Ricerca e clonazione di un'offerta Tecnica" icon-name="standard:proposition" >
 
         <div if:true={spinnerObj.spinner} class="progress">
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
@@ -29,65 +29,73 @@
 
         <div if:false={error.show} class="slds-card__body slds-card__body_inner">
             
-            <lightning-record-view-form record-id={productid} object-api-name="Product2" >
-        
-                <div class="slds-grid slds-gutters">
-                    <div class="slds-col">
-                        <div class="slds-form slds-m-top_x-large " >
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt1} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
-                                <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
-                                    <div class="slds-box slds-box_x-small" >
-                                        <!--<div class="slds-text-body_regular">{product.template}</div>-->
-                                        <lightning-output-field field-name="Template__c" variant="label-hidden" ></lightning-output-field>
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                  <span class="slds-truncate slds-p-horizontal_small" title="Cerca">Stai creando un'offerta tecnica per questo prodotto</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                    <lightning-record-view-form record-id={productid} object-api-name="Product2" >
+                
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <div class="slds-form slds-m-top_x-large " >
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
+                                            <div class="slds-box slds-box_x-small  lgc-bg" >
+                                                <lightning-output-field field-name="ProductCode" variant="label-hidden" ></lightning-output-field>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt2}></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning-input disabled value={product.version} type="text" label=" "></lightning-input>-->
+                                            <div class="slds-box slds-box_x-small  lgc-bg" >
+                                                <lightning-output-field field-name="Version__c" variant="label-hidden" ></lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt2}></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
-                                <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.version} type="text" label=" "></lightning-input>-->
-                                    <div class="slds-box slds-box_x-small" >
-                                        <lightning-output-field field-name="Version__c" variant="label-hidden" ></lightning-output-field>
+                            <div class="slds-col">
+                                <div class="slds-form slds-m-top_x-large " >
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Template</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-box slds-box_x-small lgc-bg" >
+                                                <div class="slds-text-body_regular">{rateObj.rateName}</div>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-box slds-box_x-small  lgc-bg" >
+                                                <div class="slds-text-body_regular">{rateObj.rateTemplate}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
+                        </div>            
 
-                        </div>
-                    </div>
+                    </lightning-record-view-form>
 
-                    <div class="slds-col">
-                        <div class="slds-form slds-m-top_x-large " >
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Template</label>
-                                <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>-->
-                                    <div class="slds-box slds-box_x-small" >
-                                        <lightning-output-field field-name="RateCategory__c" variant="label-hidden" ></lightning-output-field>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
-                                <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
-                                <div class="slds-form-element__control">
-                                    <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
-                                    <div class="slds-box slds-box_x-small" >
-                                        <lightning-output-field field-name="ProductCode" variant="label-hidden" ></lightning-output-field>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>            
-
-            </lightning-record-view-form>
+                </div>
+            </div>
 
             <div class="slds-section slds-is-open">
                 <h3 class="slds-section__title slds-theme_shade">

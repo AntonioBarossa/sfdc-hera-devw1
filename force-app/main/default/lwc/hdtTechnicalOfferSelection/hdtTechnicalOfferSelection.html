@@ -16,71 +16,106 @@
                                 <lightning-icon icon-name={iconName} size="large" alternative-text="Nuovo" title="Event"></lightning-icon>    
                             </div>
                         </div>
-                        <ul class="slds-welcome-mat__tiles slds-size_1-of-2">
-                            <li class="slds-welcome-mat__tile slds-m-left_medium">
-                                <a onclick={search} href="javascript:void(0);" class={class1}>
-                                    <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
-                                        <div class="slds-welcome-mat__tile-figure">
-                                            <div class="slds-welcome-mat__tile-icon-container">
-                                                <span class="slds-icon_container">
-                                                    <lightning-icon icon-name="utility:search" alternative-text="Cerca" title="Event"></lightning-icon>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="slds-media__body">
-                                        <div class="slds-welcome-mat__tile-body">
-                                            <h3 class="slds-welcome-mat__tile-title">{searchTitleLabel}</h3>
-                                            <!--<p class="slds-welcome-mat__tile-description">Descriptio goes here</p>-->
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="slds-welcome-mat__tile slds-m-left_medium">
-                                <a onclick={createNew} href="javascript:void(0);" class={class1}>
-                                    <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
-                                        <div class="slds-welcome-mat__tile-figure">
-                                            <div class="slds-welcome-mat__tile-icon-container">
-                                                <span class="slds-icon_container">
-                                                    <lightning-icon icon-name="utility:new" alternative-text="Event" title="Event"></lightning-icon>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="slds-media__body">
-                                        <div class="slds-welcome-mat__tile-body">
-                                            <h3 class="slds-welcome-mat__tile-title">{newTitleLabel}</h3>
-                                            <!--<p class="slds-welcome-mat__tile-description">Descriptio goes here</p>-->
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-
-                            <template if:true={tiles.hasRecords} for:each={tiles.records} for:item="rec">
-                                <li key={rec} class="slds-welcome-mat__tile slds-m-left_medium">
-                                    <a onclick={selectOffer} data-name={rec} href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                        <template if:true={showSelection}>
+                            <ul class="slds-welcome-mat__tiles slds-size_1-of-2">
+                                <li class="slds-welcome-mat__tile slds-m-left_medium">
+                                    <a onclick={search} href="javascript:void(0);" class={class1}>
                                         <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
                                             <div class="slds-welcome-mat__tile-figure">
                                                 <div class="slds-welcome-mat__tile-icon-container">
                                                     <span class="slds-icon_container">
-                                                        <lightning-icon icon-name="utility:record_lookup" alternative-text="view" title="view"></lightning-icon>
+                                                        <lightning-icon icon-name="utility:search" alternative-text="Cerca" title="Event"></lightning-icon>
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="slds-media__body">
                                             <div class="slds-welcome-mat__tile-body">
-                                                <h3 class="slds-welcome-mat__tile-title">{rec}</h3>
-                                                <p class="slds-welcome-mat__tile-description">Rate category: EVVUDBH</p>
+                                                <h3 class="slds-welcome-mat__tile-title">{searchTitleLabel}</h3>
+                                                <!--<p class="slds-welcome-mat__tile-description">Descriptio goes here</p>-->
                                             </div>
                                         </div>
                                     </a>
                                 </li>
-                            </template>
+                                <li class="slds-welcome-mat__tile slds-m-left_medium">
+                                    <a onclick={createNew} href="javascript:void(0);" class={class1}>
+                                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                            <div class="slds-welcome-mat__tile-figure">
+                                                <div class="slds-welcome-mat__tile-icon-container">
+                                                    <span class="slds-icon_container">
+                                                        <lightning-icon icon-name="utility:new" alternative-text="Event" title="Event"></lightning-icon>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-media__body">
+                                            <div class="slds-welcome-mat__tile-body">
+                                                <h3 class="slds-welcome-mat__tile-title">{newTitleLabel}</h3>
+                                                <!--<p class="slds-welcome-mat__tile-description">Descriptio goes here</p>-->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
 
-
-
-                        </ul>
+                                <template if:true={tiles.hasRecords} for:each={tiles.records} for:item="rec">
+                                    <li key={rec.id} class="slds-welcome-mat__tile slds-m-left_medium">
+                                        <a onclick={selectOffer} data-id={rec.id} data-temp={rec.rateTemp} data-rate={rec.rateName} href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                                            <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                                <div class="slds-welcome-mat__tile-figure">
+                                                    <div class="slds-welcome-mat__tile-icon-container">
+                                                        <span class="slds-icon_container">
+                                                            <lightning-icon icon-name="utility:record_lookup" alternative-text="view" title="view"></lightning-icon>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="slds-media__body">
+                                                <div class="slds-welcome-mat__tile-body">
+                                                    <h3 class="slds-welcome-mat__tile-title">{rec.name}</h3>
+                                                    <p class="slds-welcome-mat__tile-description">Rate category: {rec.rateTemp}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </template>
+                            </ul>
+                        </template>
+                        <template if:true={showRate}>
+                            <div class="slds-box slds-welcome-mat__tiles slds-size_1-of-2" >
+                                <div onkeyup={handleKeyUp} class="slds-m-left_small slds-m-bottom_small">
+                                    <lightning-input
+                                        name="enter-search"
+                                        label="rateSearch"
+                                        variant="label-hidden"
+                                        type="search"
+                                        onchange={handleSearch}
+                                    ></lightning-input>
+                                </div>
+                                <ul ><!--class="slds-welcome-mat__tiles slds-size_1-of-2"-->
+                                    <template for:each={rateList} for:item="rate">
+                                        <li key={rate.Id} class="slds-welcome-mat__tile slds-m-left_medium">
+                                            <a onclick={selectRate} data-id={rate.Id} data-name={rate.Name} data-temp={rate.ContractTemplate__c} href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                                                <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                                    <div class="slds-welcome-mat__tile-figure">
+                                                        <div class="slds-welcome-mat__tile-icon-container">
+                                                            <span class="slds-icon_container">
+                                                                <lightning-icon icon-name="utility:button_choice" alternative-text="rate" title="rate"></lightning-icon>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-media__body">
+                                                    <div class="slds-welcome-mat__tile-body">
+                                                        <h3 class="slds-welcome-mat__tile-title">{rate.Name}</h3>
+                                                        <p class="slds-welcome-mat__tile-description">Rate category: {rate.ContractTemplate__c}</p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>

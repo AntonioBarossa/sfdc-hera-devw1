@@ -11,6 +11,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     @track selection;
     @api productid;
     @api technicalofferid;
+    @api rateObj;
     showDelete = false;
     @track spinnerObj = {
         spinner: false,
@@ -49,10 +50,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     wiredOptions({ error, data }) {
         if(data){
             try {
-                this.product.template = data.fields.Template__c.value;
-                this.product.version = data.fields.Version__c.value;
-                this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
                 this.product.productCode = data.fields.ProductCode.value;
+                this.product.version = data.fields.Version__c.value;
+                //this.product.template = data.fields.Template__c.value;
+                //this.product.rateCategory = data.fields.RateCategory__r.value.fields.Name.value;
             } catch(e){
                 this.errorObj.showError = true;
                 this.errorObj.errorString = '[' + e.message + '[' + 'Valore non trovato -> Version__c, Template__c, RateCategory__r.Name, ProductCode';
@@ -73,6 +74,14 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     connectedCallback() {
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'loadingdata slds-text-heading_small';
+
+        if(this.rateObj.rateName!=null && this.rateObj.rateName != undefined){
+            this.product.rateCategory = this.rateObj.rateName;
+        }
+
+        if(this.rateObj.rateTemplate!=null && this.rateObj.rateTemplate != undefined){
+            this.product.template = this.rateObj.rateTemplate;
+        }
 
         this.getMatrixData();
 
@@ -177,7 +186,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         this.showDelete = (this.technicalofferid != null && this.technicalofferid != '' && this.technicalofferid != undefined) ? true : false;
         console.log('>>> showDelete -> ' + this.showDelete);
 
-        getOfferMatrix({productId: this.productid, technicalOfferId: this.technicalofferid})
+        getOfferMatrix({productId: this.productid, technicalOfferId: this.technicalofferid, template: this.product.template})
         .then(result => {
             this.dataRows = [];
             console.log('# getOfferMatrix success #');

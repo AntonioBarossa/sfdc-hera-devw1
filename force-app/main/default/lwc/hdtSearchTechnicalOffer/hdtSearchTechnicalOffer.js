@@ -25,7 +25,9 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
     showTable = false;
 
     @api productid;
-    @api template;
+    //@api rateTemplate;
+    //@api rateName;
+    @api rateObj;
     @track result = {show: false, message: ''};
     @track error = {show: false, message: ''};
 
@@ -56,32 +58,17 @@ export default class HdtSearchTechnicalOffer extends NavigationMixin(LightningEl
         operation: ''
     }
 
-    @track product = {
-        productId: '',
-        template: 'TEMPLATE',
-        version: 'VERSION',
-        rateCategory: 'CATEGORY',
-        productCode: 'PRODUCT CODE'
-    };
+    //@track product = {
+    //    productId: '',
+    //    template: 'TEMPLATE',
+    //    version: 'VERSION',
+    //    rateCategory: 'CATEGORY',
+    //    productCode: 'PRODUCT CODE'
+    //};
 
     connectedCallback(){
-        this.filter = 'Product__r.Template__c=\''+ this.template +'\'';
+        this.filter = 'Product__r.Template__c=\''+ this.rateObj.rateTemplate +'\'';
     }
-
-    /*setOffertName(event){
-        console.log('### setOffertName ###');
-        this.searchObj.offertName = event.target.value;
-    }
-
-    setVersion(event){
-        console.log('### setVersion ###');
-        this.searchObj.version = event.target.value;
-    }
-
-    setOffertCode(event){
-        console.log('### setOffertCode ###');
-        this.searchObj.offertCode = event.target.value;
-    }*/
 
     searchClick(event){
         console.log('### searchClick ###');

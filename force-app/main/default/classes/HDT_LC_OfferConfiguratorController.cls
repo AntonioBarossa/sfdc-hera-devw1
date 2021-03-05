@@ -21,6 +21,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         return result;
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<RateTemplate__c> getRateList(String queryTerm) {
+        return HDT_QR_TechnicalOffer.getRateList(queryTerm);
+    }
+
     @AuraEnabled
     public static HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer getExistingOffer(String productId) {
         System.debug('### recordId -> ' + productId);
@@ -37,14 +42,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(tecOffList != null && tecOffList.size() > 0){
                 respObj.data.offerIsPresent = true;
-                respObj.data.tecnicalOfferId = new List<String>();
-                for(TechnicalOffer__c to : tecOffList){
-                    respObj.data.tecnicalOfferId.add(to.Id);
-                }
+                respObj.data.tecnicalOffers = new List<TechnicalOffer__c>();
+                respObj.data.tecnicalOffers.addAll(tecOffList);
+                //for(TechnicalOffer__c to : tecOffList){
+                //    respObj.data.tecnicalOfferId.add(to.Id);
+                //}
                 
             } else {
                 respObj.data.offerIsPresent = false;
-                respObj.data.tecnicalOfferId = null;            
+                respObj.data.tecnicalOffers = null;            
             }
 
         } catch (Exception ex){
@@ -56,7 +62,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable getOfferMatrix(String productId, String technicalOfferId){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable getOfferMatrix(String productId, String technicalOfferId, String template){
 
         //Boolean isMock = false;
         HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable matrixTable = new HDT_WRP_TechnicalOffer.HDT_WRP_MatrixTable();
@@ -73,12 +79,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             //} else {
                 Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> complexMap = HDT_LC_OfferConfiguratorCtrlHelper.crateComplexMatrix();
     
-                Product2 product = [SELECT Id, Template__c, RateCategory__r.Name FROM Product2 WHERE Id =: productId LIMIT 1];
+                //Product2 product = [SELECT Id, Template__c, RateCategory__r.Name FROM Product2 WHERE Id =: productId LIMIT 1];
                 
                 List<OperandTemplate__c> operands = [
                     SELECT Id, Operands__c, ContractTemplate__c, Typology__c, UnitPrice__c, Definition__c
                     FROM OperandTemplate__c
-                    WHERE ContractTemplate__c =: product.Template__c
+                    WHERE ContractTemplate__c =: template//product.Template__c
                     WITH SECURITY_ENFORCED
                 ];
 

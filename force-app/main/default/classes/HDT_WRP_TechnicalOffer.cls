@@ -44,7 +44,7 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
 
     public class HDT_WRP_TecnicalOfferObj {
         @auraEnabled public Boolean offerIsPresent;
-        @auraEnabled public List<String> tecnicalOfferId;
+        @auraEnabled public List<TechnicalOffer__c> tecnicalOffers;
     }
 
     public class HDT_WRP_MatrixTable {
