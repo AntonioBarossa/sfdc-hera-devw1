@@ -6,6 +6,7 @@ import deleteTile from '@salesforce/apex/HDT_LC_SaleServiceItemsTiles.deleteTile
 export default class hdtSaleServiceItemsTiles extends LightningElement {
 
     @api sale;
+    @api disabledInput;
     @track tilesData;
     showTilesInList = false;
     loaded = false;

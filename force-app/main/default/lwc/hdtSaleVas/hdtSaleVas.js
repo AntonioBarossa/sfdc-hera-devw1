@@ -1,4 +1,4 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getOrdersList from '@salesforce/apex/HDT_LC_SaleVas.getOrdersList';
 import getContractsList from '@salesforce/apex/HDT_LC_SaleVas.getContractsList';
@@ -8,7 +8,7 @@ export default class hdtSaleVas extends LightningElement {
 
     @api accountId;
     @api sale;
-    isModalVisible = false;
+    // isModalVisible = false;
     isInputVisible = false;
     isOrderListVisible = false;
     isContractsListVisible = false;
@@ -20,21 +20,25 @@ export default class hdtSaleVas extends LightningElement {
     inputText = '';
     isLoading = false;
     @api disabledInput;
+    totalPages = 0;
+    @track pages = [];
+    currentPage = 0;
+    @track tableData = [];
 
-    handleModalVisibility(){
-        this.isModalVisible = true;
-    }
+    // handleModalVisibility(){
+    //     this.isModalVisible = true;
+    // }
 
     get isConfirmDisabled(){
-        return this.selectedOption === '' ? true: false;
+        return this.selectedOption === '' || this.disabledInput ? true: false;
     }
 
-    handleCancelEvent(){
-        this.isInputVisible = false;
-        this.isOrderListVisible = false;
-        this.isContractsListVisible = false;
-        this.isModalVisible = false;
-    }
+    // handleCancelEvent(){
+    //     this.isInputVisible = false;
+    //     this.isOrderListVisible = false;
+    //     this.isContractsListVisible = false;
+    //     this.isModalVisible = false;
+    // }
 
     radioGroupOptions = [
         {'label': 'Ordini in corso', 'value': 'Ordini in corso'},
@@ -55,6 +59,7 @@ export default class hdtSaleVas extends LightningElement {
     ];
 
     handleRadioGroupChange(event) {
+        this.totalPages = 0;
         this.isOrderListVisible = false;
         this.isContractsListVisible = false;
         this.isInputVisible = false;
@@ -84,11 +89,12 @@ export default class hdtSaleVas extends LightningElement {
         this.isLoading = true;
         getOrdersList({accountId:this.accountId}).then(data =>{
             this.isLoading = false;
-            this.ordersList = data;
+            // this.ordersList = data;
+            this.createTable(data);
 
         }).catch(error => {
             this.isLoading = false;
-            this.isModalVisible = false;
+            // this.isModalVisible = false;
             console.log('Error: ', error.body.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
@@ -103,10 +109,11 @@ export default class hdtSaleVas extends LightningElement {
         this.isLoading = true;
         getContractsList({accountId:this.accountId}).then(data =>{
             this.isLoading = false;
-            this.contractsList = data;
+            // this.contractsList = data;
+            this.createTable(data);
         }).catch(error => {
             this.isLoading = false;
-            this.isModalVisible = false;
+            // this.isModalVisible = false;
             console.log('Error: ', error.body.message);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
@@ -116,6 +123,49 @@ export default class hdtSaleVas extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
         });
     }
+
+    //Pagination start
+    createTable(data) {
+        let i, j, temporary, chunk = 4;
+        this.pages = [];
+        for (i = 0, j = data.length; i < j; i += chunk) {
+            temporary = data.slice(i, i + chunk);
+            this.pages.push(temporary);
+        }
+        this.totalPages = this.pages.length;
+        this.reLoadTable();
+    }
+
+    reLoadTable() {
+        this.tableData = this.pages[this.currentPage];
+    }
+
+    get showPaginationButtons(){
+        return this.totalPages > 0;
+    }
+
+    get getCurrentPage() {
+        if (this.totalPages===0){
+            return 0;   
+        } else {
+            return this.currentPage + 1;
+        }
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPages - 1) {
+            this.currentPage++;
+        }
+        this.reLoadTable();
+    }
+
+    previousPage() {
+        if (this.currentPage > 0){
+            this.currentPage--;
+        }
+        this.reLoadTable();
+    }
+    //Pagination end
 
     handleInputText(event){
         this.inputText = event.detail.value;
@@ -132,10 +182,13 @@ export default class hdtSaleVas extends LightningElement {
             sale: this.sale
             }).then(data =>{
             this.isLoading = false;
-            this.isModalVisible = false;
+            // this.isModalVisible = false;
             this.isInputVisible = false;
             this.isOrderListVisible = false;
             this.isContractsListVisible = false;
+            this.selectedOption = '';
+            this.inputText = '';
+
             this.dispatchEvent(new CustomEvent('createvas'));
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

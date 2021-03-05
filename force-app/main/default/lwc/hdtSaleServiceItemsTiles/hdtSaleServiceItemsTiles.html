@@ -22,7 +22,7 @@
                                                         </ul>
                                                         <div class="slds-clearfix">
                                                             <div class="slds-float_right">
-                                                                <button data-id={tile.Id} data-name={tile.Name} onclick={handleTileDelete} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Cancella">
+                                                                <button disabled={disabledInput} data-id={tile.Id} data-name={tile.Name} onclick={handleTileDelete} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Cancella">
                                                                     <lightning-icon icon-name="utility:delete" alternative-text="Cancella" title="Cancella" size="x-small"></lightning-icon>
                                                                 </button>
                                                             </div>
@@ -61,7 +61,7 @@
                                             <h3 class="slds-tile__title">{tile.Name}</h3>
                                             <div class="slds-clearfix">
                                                 <div class="slds-float_right">
-                                                    <button data-id={tile.Id} data-name={tile.Name} onclick={handleTileDelete} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Cancella">
+                                                    <button disabled={disabledInput} data-id={tile.Id} data-name={tile.Name} onclick={handleTileDelete} class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="Cancella">
                                                         <lightning-icon icon-name="utility:delete" alternative-text="Cancella" title="Cancella" size="x-small"></lightning-icon>
                                                     </button>
                                                 </div>
