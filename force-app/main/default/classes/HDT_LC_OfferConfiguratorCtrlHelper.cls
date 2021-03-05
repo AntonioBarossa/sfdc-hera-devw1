@@ -256,7 +256,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
-    public static void updateTechnicalOffer(Id product2Id, Boolean asChild){
+    /*public static void updateTechnicalOffer(Id product2Id, Boolean asChild){
 
         try{
             Product2 prod = new Product2();
@@ -267,6 +267,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
 
-    }
+    }*/
 
 }

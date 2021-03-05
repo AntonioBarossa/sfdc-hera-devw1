@@ -1,14 +1,15 @@
 public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteriaHelper(List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList, String productId){
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteriaHelper(String productId, String record, List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList){
         
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
 
         Savepoint sp = Database.setSavepoint();
 
         EligibilityCriteria__c criteria = new EligibilityCriteria__c();
-        criteria.Regions__c = 'EMR';
-        criteria.Product__c = productId;
+        criteria = (EligibilityCriteria__c)JSON.deserialize(record, EligibilityCriteria__c.class);
+        //criteria.Regions__c = 'EMR';
+        //criteria.Product__c = productId;
 
         try{
             insert criteria;
@@ -200,7 +201,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     }
 
-    public static void updateEligibilityCriteria(Id product2Id, Boolean asChild){
+    /*public static void updateEligibilityCriteria(Id product2Id, Boolean asChild){
 
         try{
             Product2 prod = new Product2();
@@ -211,6 +212,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
 
-    }
+    }*/
 
 }

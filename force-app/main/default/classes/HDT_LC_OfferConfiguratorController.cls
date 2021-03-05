@@ -259,7 +259,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(techOffList.size()>0){
                 saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.deleteTechnicalOfferHelper(techOffList, saveResponse);
-                HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, false);
+                //HDT_LC_OfferConfiguratorCtrlHelper.updateTechnicalOffer(productId, false);
             }
 
         } catch (Exception ex){

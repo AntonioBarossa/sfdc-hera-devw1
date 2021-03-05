@@ -57,6 +57,8 @@
 		<members>TechnicalOffer__c.OfferCode__c</members>
 		<members>TechnicalOffer__c.Product__c</members>
 		<members>TechnicalOffer__c.Version__c</members>
+		<members>TechnicalOffer__c.Template__c</members>
+		<members>TechnicalOffer__c.Version__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
