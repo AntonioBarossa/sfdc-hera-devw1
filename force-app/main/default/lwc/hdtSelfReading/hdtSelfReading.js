@@ -296,7 +296,9 @@ export default class HdtSelfReading extends LightningElement {
         const action = event.detail;
         console.log('handleNavigation ' + action);
 
-        if(action === 'next' || action === 'save'){
+        if(action === 'next' || action === 'draft' || action === 'save'){
+
+            this.saveDraft = action === 'draft'; 
 
             if(this.availableActions.find(action => action === 'NEXT')){
 
@@ -338,23 +340,6 @@ export default class HdtSelfReading extends LightningElement {
         } else if(action === 'cancel'){
 
             this.cancelCase = true;
-
-            if(this.availableActions.find(action => action === 'NEXT')){
-
-                const navigateNextEvent = new FlowNavigationNextEvent();
-    
-                this.dispatchEvent(navigateNextEvent);
-    
-            } else {
-    
-                const navigateFinish = new FlowNavigationFinishEvent();
-    
-                this.dispatchEvent(navigateFinish);
-            }
-
-        } else if(action === 'draft'){
-
-            this.saveDraft = true;
 
             if(this.availableActions.find(action => action === 'NEXT')){
 
