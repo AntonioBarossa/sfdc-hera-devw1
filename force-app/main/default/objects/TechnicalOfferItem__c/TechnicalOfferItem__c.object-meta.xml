@@ -163,6 +163,6 @@
     </nameField>
     <pluralLabel>Technical Offer Items</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
