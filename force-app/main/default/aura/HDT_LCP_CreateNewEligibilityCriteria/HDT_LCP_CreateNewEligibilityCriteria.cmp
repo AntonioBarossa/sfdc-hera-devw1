@@ -1,5 +1,6 @@
 <aura:component implements="lightning:isUrlAddressable" >
 
+    <aura:attribute name="loaded" type="Boolean" default="false" />
     <aura:attribute name="recordId" type="string" />
     <aura:attribute name="eligibilityId" type="string" />
 
@@ -15,6 +16,13 @@
         ></c:hdtCreateNewEligibilityCriteria>
     -->
     
-    {!v.body}
+    <aura:if isTrue="{! v.loaded }">
+        {!v.body}
+        <aura:set attribute="else">
+            <lightning:spinner size="large" alternativeText="Loading" />
+        </aura:set>
+    </aura:if>
+
+    
 
 </aura:component>

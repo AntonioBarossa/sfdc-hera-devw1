@@ -13,6 +13,7 @@
 	<types>
 		<members>HDT_LCP_OpenEligibilityModal</members>
 		<members>HDT_LCP_CreateNewEligibilityCriteria</members>
+		<members>HDT_LCP_OverrideEditButton</members>
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
@@ -22,6 +23,14 @@
 		<members>hdtEligibilityCriteriaParameters</name>
 		<name>LightningComponentBundle</name>
 	</types>
+	<types>
+		<members>HDT_VFP_EligibilityDeleteButton</members>
+		<name>ApexPage</name>
+	</types>
+	<types>
+		<members>EligibilityCriteria__c</members>
+		<name>CustomObject</name>
+	</types>	
 	<!--<types>
 		<members>EligibilityCriteria__c.ATCGas__c</members>
 		<members>EligibilityCriteria__c.Agency__c</members>

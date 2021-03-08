@@ -13,6 +13,7 @@
                     var body = component.get("v.body");
                     body.push(lwcCmp);
                     component.set("v.body", body);
+                    component.set('v.loaded', true);
                 }
                 else if (status === "INCOMPLETE") {
                     console.log("No response from server or client is offline.");

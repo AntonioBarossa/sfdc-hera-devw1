@@ -24,6 +24,7 @@
 	</types>	
 	<types>
 		<members>HDT_LCP_CreateNewTechnicalOffer</members>
+		<members>HDT_LCP_OverrideEditButton</members>
 		<!--<members>HDT_LCP_OpenTechnicalOffer</members>-->
 		<members>HDT_LCP_OpenTechnicalOfferModal</members>
 		<name>AuraDefinitionBundle</name>
@@ -94,6 +95,10 @@
 	<types>
 		<members>Technical_Offer_Page1</members>
 		<name>FlexiPage</name>
+	</types>
+	<types>
+		<members>HDT_VFP_TechnicalOfferDeleteButton</members>
+		<name>ApexPage</name>
 	</types>			
 	<version>50.0</version>
 </Package>
