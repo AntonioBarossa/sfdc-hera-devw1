@@ -285,4 +285,64 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         const navigateBackEvent = new FlowNavigationBackEvent();
         this.dispatchEvent(navigateBackEvent);
     }
+
+    handleChange(event){
+
+        let five = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')).length === 0)
+        ? this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c');
+
+        console.log('Five '+five);
+
+        let channel = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c')).length === 0) 
+        ? this.firstColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c')
+        : this.secondColumn.filter(element => element['FieldName'] === 'ComplaintEntryChannel__c');
+
+        console.log('Channel '+channel);
+
+        if(!(Object.keys(five).length === 0)){
+
+            let fifthLevel = this.template.querySelector('lightning-input-field[data-id="FithLevelComplaintClassification__c"]') != null
+            ?this.template.querySelector('lightning-input-field[data-id="FithLevelComplaintClassification__c"]')
+            :null;
+
+            console.log('#Valore quinto livello -->' +fifthLevel.value)
+
+            if(fifthLevel != null){
+                if(fifthLevel.value != '' && fifthLevel.value != undefined && fifthLevel != null){
+
+                    let soldBy = this.template.querySelector('lightning-input-field[data-id="SoldBy__c"]');
+                    soldBy.disabled = false;
+
+                }
+            }
+        
+        } else if(!(Object.keys(channel).length === 0)){
+
+            let entryChannel = this.template.querySelector('lightning-input-field[data-id="ComplaintEntryChannel__c"]') != null
+            ?this.template.querySelector('lightning-input-field[data-id="ComplaintEntryChannel__c"]')
+            :null;
+
+            console.log('#Valore Entry Channel --> ' +entryChannel.value);
+
+            let address = this.template.querySelector('lightning-input-field[data-id="CompliantOriginEmail__c"]');
+
+            if(entryChannel.value === 'Email' || entryChannel.value === 'PEC'){
+
+                address.required = true;
+
+            } else {
+
+                address.required = false;
+
+            }
+
+
+
+        }
+
+
+    }
+
+
 }
