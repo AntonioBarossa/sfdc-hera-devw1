@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>BounceType__c</fullName>
+    <fullName>RateType__c</fullName>
+    <description>Campo di configurazione nella funzionalità di Configurazione Offerta Tecnica</description>
     <externalId>false</externalId>
-    <label>Tipologia Bounce</label>
+    <label>Rate Type</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
