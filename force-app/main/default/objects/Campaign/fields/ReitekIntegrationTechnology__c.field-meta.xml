@@ -10,9 +10,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>File</fullName>
                 <default>false</default>
-                <label>TBD</label>
+                <label>File</label>
+            </value>
+            <value>
+                <fullName>Web Service</fullName>
+                <default>false</default>
+                <label>Web Service</label>
             </value>
         </valueSetDefinition>
     </valueSet>

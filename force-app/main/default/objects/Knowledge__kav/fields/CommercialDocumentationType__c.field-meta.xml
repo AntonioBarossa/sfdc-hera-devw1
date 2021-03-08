@@ -11,9 +11,44 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>--Provvisorio--</fullName>
+                <fullName>Offerta Commerciale</fullName>
                 <default>false</default>
-                <label>--Provvisorio--</label>
+                <label>Offerta Commerciale</label>
+            </value>
+            <value>
+                <fullName>Mobilità Sostenibile</fullName>
+                <default>false</default>
+                <label>Mobilità Sostenibile</label>
+            </value>
+            <value>
+                <fullName>Promozioni</fullName>
+                <default>false</default>
+                <label>Promozioni</label>
+            </value>
+            <value>
+                <fullName>Script per contratti</fullName>
+                <default>false</default>
+                <label>Script per contratti</label>
+            </value>
+            <value>
+                <fullName>Script per preventivi e verifiche</fullName>
+                <default>false</default>
+                <label>Script per preventivi e verifiche</label>
+            </value>
+            <value>
+                <fullName>Script per postvendita</fullName>
+                <default>false</default>
+                <label>Script per postvendita</label>
+            </value>
+            <value>
+                <fullName>Gestione obiezioni</fullName>
+                <default>false</default>
+                <label>Gestione obiezioni</label>
+            </value>
+            <value>
+                <fullName>Gestione Rischio abbandono</fullName>
+                <default>false</default>
+                <label>Gestione Rischio abbandono</label>
             </value>
         </valueSetDefinition>
     </valueSet>

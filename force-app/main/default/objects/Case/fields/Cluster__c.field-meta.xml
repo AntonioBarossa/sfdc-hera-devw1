@@ -88,6 +88,16 @@
                 <default>false</default>
                 <label>Variazioni</label>
             </value>
+            <value>
+                <fullName>HERA</fullName>
+                <default>false</default>
+                <label>HERA</label>
+            </value>
+            <value>
+                <fullName>Ambiente</fullName>
+                <default>false</default>
+                <label>Ambiente</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
