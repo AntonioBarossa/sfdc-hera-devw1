@@ -2,6 +2,7 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Main</fullName>
     <active>true</active>
+    <businessProcess>Default</businessProcess>
     <label>Principale</label>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
