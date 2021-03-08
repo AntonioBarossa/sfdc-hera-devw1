@@ -10,6 +10,28 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @api nextLabel;
     @api nextVariant;
 
+
+    @api
+    get variantButton(){
+        if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "unedfined")
+            return this.nextVariant;
+        else 
+            return "success"
+        
+
+    }
+
+    @api
+    get labelButton(){
+        if(this.nextLabel != null && this.nextLabel!="" && this.nextLabel != "unedfined")
+            return this.nextLabel;
+        else 
+            return "Conferma Pratica"
+        
+
+    }
+
+
     handleGoNext() {
 
         this.cancelCase = false;
