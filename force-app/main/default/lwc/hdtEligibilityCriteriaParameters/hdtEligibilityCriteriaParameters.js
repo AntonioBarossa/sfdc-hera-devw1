@@ -19,7 +19,6 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         {
           id: '1',
           list: [
-            'ATCGas__c',
             'Agency__c',
             'Campaign__c',
             'CategoryTypeClient__c',
@@ -33,16 +32,14 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         {
           id: '2',
           list: [
-            'EquipmenType__c',
-            'GreenEnergyOption__c',
-            'GreenGasOption__c',
             'LoginGroup__c',
             'Login__c',
             'NewClient__c',
             'Origin__c',
             'Range__c',
-            'RoleProfile__c',
-            'UseCategory__c'
+            'UseCategory__c',
+            'ConsumptionRangeEE__c',
+            'ConsumptionRangeGAS__c'
           ]
         }
       ];
