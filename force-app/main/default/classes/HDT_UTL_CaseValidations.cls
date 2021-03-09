@@ -23,7 +23,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = validateInversioneContatore(recordId, fields, caseType);
         } else if (caseType == 'Variazione Anagrafica Cliente' && currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
             result = validateModificaDatiContatto(fields);
-        }
+
+        } else if(caseType == 'Gestione Disalimentabilità'){
+
+            result = validateMorosita(fields, recordId);
+
+        } /*else if(caseType == 'Marcatura/Uso PdR'){
+
+            result = validateVariazioni(fields,recordId);
+
+        }*/
 
         return result;
 
@@ -104,7 +113,32 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug('SendDate value:' +sendDate);
 
-        if((getFieldValue(fields, 'ComplaintEntryChannel__c') == 'Email' || getFieldValue(fields, 'ComplaintEntryChannel__c') == 'PEC')
+        System.debug('#DelegateName '+getFieldValue(fields, 'DelegateName__c') != null);
+
+        System.debug('#DelegateAddress '+getFieldValue(fields, 'DelegateAddressEmail__c') != null);
+
+        if((getFieldValue(fields, 'DelegateName__c') != null && getFieldValue(fields, 'DelegateName__c') != '')  
+        || (getFieldValue(fields, 'DelegateAddressEmail__c') != null && getFieldValue(fields, 'DelegateName__c') != '')){
+
+            List<ContentDocumentLink> attachedDocument = 
+            [SELECT Id 
+            FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId 
+            WITH SECURITY_ENFORCED];
+
+            System.debug(attachedDocument.size() == 0);
+
+            if(attachedDocument.size() == 0){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Documenti Delegato'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+            }
+
+        }else if((getFieldValue(fields, 'ComplaintEntryChannel__c') == 'Email' || getFieldValue(fields, 'ComplaintEntryChannel__c') == 'PEC')
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
@@ -145,6 +179,62 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
 
     }
+
+    
+    public String validateMorosita(String fields, string recordId){
+
+        String result;
+
+        String disconnectable = getFieldValue(fields, 'Disconnectable__c');
+
+        String disconnectableCategory = getFieldValue(fields, 'NotDisconnectableCategory__c');
+
+        String phonePesse = getFieldValue(fields, 'MobilePhonePersonalizedNoticePesse__c');
+
+        List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+        WHERE LinkedEntityId = :recordId 
+        WITH SECURITY_ENFORCED];
+
+        if(disconnectable == 'false' 
+        && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
+        || (phonePesse == 'null' || phonePesse == '') 
+        || (attachedDocument.size() == 0))){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
+                'Il telefono Pesse\nEd è necessario inserire un allegato'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
+
+        return result;
+
+    }
+
+    /*public String validateVariazioni(String fields, String recordId){
+
+        String supplyType = getFieldValue(fields, 'SupplyType__c');
+        String useCategory = getFieldValue(fields, 'UseCategory__c');
+        String servicePointType = getFieldValue(fields, 'ServicePointType__c');
+
+        String result;
+
+        if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
+
+        }
+
+        return result;
+
+    }*/
 
 
     public String getFieldValue(String fields, String fieldToGet){

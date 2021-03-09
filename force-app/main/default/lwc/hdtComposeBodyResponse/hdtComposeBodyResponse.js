@@ -240,9 +240,12 @@ export default class HdtProva extends LightningElement {
             buildResponse({templates: this.selectedContent, recordId: this.recordId, deleteAll: true})
         .then(results => {
 
+            this.currentSelectedContent = [];
+
             console.log(results);    
 
             this.refreshValues(this.recordId);
+
 
             setTimeout(() => {
 
