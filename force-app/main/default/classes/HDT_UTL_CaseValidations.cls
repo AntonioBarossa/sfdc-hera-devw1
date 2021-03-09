@@ -9,7 +9,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String result;
 
-        if(caseType == 'Reclamo Scritto/Rich. Info'){
+        if(caseType == 'Reclamo Scritto/Rich. Info' || caseType == 'Richiesta Parere'){
 
             result = validateReclamoScritto(fields, recordId);
 
@@ -118,9 +118,21 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data futura'));
 
-        } else if(getFieldValue(fields, 'OpinionRequest__c') == [SELECT OpinionRequest__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED].OpinionRequest__c){
+        } else if(getFieldValue(fields, 'OpinionRequest__c') != null){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire una richiesta parere differente da quella precedente'));
+            String opinionRequest = getFieldValue(fields, 'OpinionRequest__c');
+
+            String currentOpinionRequest = [SELECT OpinionRequest__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED].OpinionRequest__c;
+
+            if(opinionRequest.trim() == currentOpinionRequest.trim()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire una richiesta parere differente da quella precedente'));
+            
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+            }
 
         } else {
 
