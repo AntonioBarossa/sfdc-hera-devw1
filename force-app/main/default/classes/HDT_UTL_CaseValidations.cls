@@ -118,6 +118,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data futura'));
 
+        } else if(getFieldValue(fields, 'OpinionRequest__c') == [SELECT OpinionRequest__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED].OpinionRequest__c){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire una richiesta parere differente da quella precedente'));
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
