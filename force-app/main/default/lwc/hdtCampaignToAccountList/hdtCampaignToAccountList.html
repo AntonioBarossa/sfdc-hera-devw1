@@ -46,7 +46,7 @@
                                                 <a href="#" onmouseover={openPopover}
                                                     data-id={campaign.Id}>{campaign.Name}</a>
                                             </h3>
-                                            <c-hdt-popover class="slds-hide" data-id={campaign.Id}
+                                            <c-hdt-popover class="slds-hide" campaign-id={campaign.Id} record-id={entityId} data-id={campaign.Id}
                                                 onmouseover={openPopover} onclosepopover={closePopover}
                                                 onmouseout={closePopover}>
                                             </c-hdt-popover>

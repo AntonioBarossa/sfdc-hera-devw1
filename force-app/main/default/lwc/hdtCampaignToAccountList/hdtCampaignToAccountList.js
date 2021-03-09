@@ -10,7 +10,7 @@ const columns = [
 ];
 export default class PopoverContainer extends LightningElement {
     @api campaignType;
-    @api objectName;
+    @api objectApiName;
     @api entityId;
     @track allCampaigns = [];
     @track rowdata;
@@ -18,7 +18,7 @@ export default class PopoverContainer extends LightningElement {
     @track selectedCampaignId = null;
     @track campaignsNumber = 0;
     @track listResults = false;
-    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectName' }) campaigns({ error, data }) {
+    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectApiName' }) campaigns({ error, data }) {
         if (error) {
             console.log(error);
         } else if (data) {
