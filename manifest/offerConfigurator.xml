@@ -18,8 +18,8 @@
 		<members>hdtCreateNewTechnicalOffer</members>
 		<members>hdtRadioGroup</members>
 		<members>hdtCustomIllustration</members>
-		<name>hdtTechnicalOfferRecordPage</name>
-		<name>hdtTechnicalOfferSelection</name>
+		<members>hdtTechnicalOfferRecordPage</members>
+		<members>hdtTechnicalOfferSelection</members>
 		<name>LightningComponentBundle</name>
 	</types>	
 	<types>
