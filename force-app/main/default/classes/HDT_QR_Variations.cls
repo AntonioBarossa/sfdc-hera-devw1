@@ -35,4 +35,37 @@ public inherited sharing class HDT_QR_Variations {
     }
 
 
+
+    public static List<ServicePoint__c> queryServicePoint(String accountId, String commodity, String servicePointId){
+
+        List<ServicePoint__c> toReturnList = new List<ServicePoint__c>();
+        
+        toReturnList = [SELECT Id 
+        FROM ServicePoint__c
+        WHERE Id != :servicePointId
+        AND CommoditySector__c = :commodity
+        AND Account__c = :accountId
+        AND Resident__c = true
+        WITH SECURITY_ENFORCED];
+
+        return toReturnList;
+
+    }
+
+
+    public static List<Case> queryOtherCases(List<Id> servicePointIds, String caseId){
+
+        List<Case> toReturnList = new List<Case>();
+
+        toReturnList = [SELECT Id 
+        FROM Case
+        WHERE Id IN :servicePointIds
+        AND Id != :caseId
+        WITH SECURITY_ENFORCED];
+
+        return toReturnList;
+
+    }
+
+
 }

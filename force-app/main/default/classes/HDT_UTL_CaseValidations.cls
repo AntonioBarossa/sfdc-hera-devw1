@@ -28,9 +28,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateMorosita(fields, recordId);
 
-        } else if(caseType == 'Marcatura/Uso PdR'){
+        } else if(caseType == 'Marcatura/Uso PdR' 
+        || caseType == 'Condizioni Contrattuali Errate' 
+        || caseType == 'BP/CA - errata categoria'
+        || caseType == 'Modifica/Azzeramento Consumo Annuo'){
 
-            result = validateVariazioni(fields,recordId);
+            result = validateVariazioni(fields,recordId,caseType);
 
         }
 
@@ -189,21 +192,79 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateVariazioni(String fields, String recordId){
+    public String validateVariazioni(String fields, String recordId, String caseType){
 
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String useCategory = getFieldValue(fields, 'UseCategory__c');
         String servicePointType = getFieldValue(fields, 'ServicePointType__c');
 
+        
+
         String result;
 
-        if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
+        if(caseType == 'Marcatura/Uso PdR'){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
+
+            }
+        
+        }else if(caseType == 'BP/CA - errata categoria'){
+
+            String billingProblem = getFieldValue(fields, 'BillingProblem__c');
+            String bill = getFieldValue(fields, 'Bill__c');
+            String dlNote = getFieldValue(fields, 'DlNote__c');
+            String customerAggreement = getFieldValue(fields, 'CustomerAggreement__c');
+
+            if(billingProblem == 'Si' 
+            && (
+                (bill == null || bill == '')
+                ||(dlNote == null || dlNote == '')
+                ||(customerAggreement == null || customerAggreement == '')
+                )
+            ){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizzare: Fattura, Note al DL e Accordi con il Cliente'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        } else if(caseType == 'Modifica/Azzeramento Consumo Annuo'){
+
+            Date validityDate = Date.valueOf(getFieldValue(fields, 'EndValidityDate__c'));
+
+            Date effectiveDate = Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'));
+
+            if((validityDate > System.today().addYears(3)) || (validityDate <= effectiveDate)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Data Fine Validità incorretta'));
+
+            } else if(effectiveDate < System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Data Decorrenza incorretta'));
+
+            }else{
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        } else if(getFieldValue(fields, 'BillingProblem__c') == 'Si' && 
+        (getFieldValue(fields, 'CustomerAggreement__c') == null || getFieldValue(fields, 'CustomerAggreement__c') == '')){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
 
         } else {
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
         }
 
