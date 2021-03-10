@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>InterestArea__c</fullName>
-    <description>Gli interessi manifestati dal Lead</description>
+    <fullName>PrivacyProfilingConsentInitiative__c</fullName>
     <externalId>false</externalId>
-    <label>Area di Interesse</label>
+    <label>Iniziativa consenso Profilazione</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_InterestArea</valueSetName>
+        <valueSetName>HDT_ConsentInitiative</valueSetName>
     </valueSet>
 </CustomField>

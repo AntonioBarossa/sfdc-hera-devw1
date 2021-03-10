@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Webform callback</fullName>
+        <default>false</default>
+        <label>Webform callback</label>
+    </customValue>
+    <customValue>
+        <fullName>Webform winback</fullName>
+        <default>false</default>
+        <label>Webform winback</label>
+    </customValue>
+    <customValue>
+        <fullName>Evento  </fullName>
+        <default>false</default>
+        <label>Evento  </label>
+    </customValue>
+    <customValue>
+        <fullName>lista fornitore esterno</fullName>
+        <default>false</default>
+        <label>lista fornitore esterno</label>
+    </customValue>
+    <customValue>
+        <fullName>SOL</fullName>
+        <default>false</default>
+        <label>SOL</label>
+    </customValue>
+    <customValue>
+        <fullName>post-sales</fullName>
+        <default>false</default>
+        <label>post-sales</label>
+    </customValue>
+    <masterLabel>Fonti Consenso</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
