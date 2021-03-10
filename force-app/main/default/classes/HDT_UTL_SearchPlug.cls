@@ -61,7 +61,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             WITH SECURITY_ENFORCED
         ];
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote.SupplyCity__c);
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += ' AND Product2Id IN :eligibleProductsId';
@@ -112,7 +112,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             WITH SECURITY_ENFORCED
         ];
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote.SupplyCity__c);
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         whereClause += ' AND Product2Id IN :eligibleProductsId';
@@ -189,7 +189,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             WITH SECURITY_ENFORCED
         ];
 
-        Set<Id> eligibleProductsId = getEligibleProducts(myQuote.SupplyCity__c);
+        Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
         additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
         additionalFilter += ' AND Product2Id IN :eligibleProductsId';
@@ -199,27 +199,29 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return additionalFilter;
     }
 
-    public static Set<Id> getEligibleProducts(String cityCode){
+    public static Set<Id> getEligibleProducts(SBQQ__Quote__c quote){
 
         Set<Id> idList = new Set<Id>();
         List<String> familyList = getFamilyList();
 
-        List<List<SObject>> searchList = [
-            FIND :cityCode
-            IN ALL FIELDS
-            RETURNING
-                    EligibleMunicipality__c(EligibilityCriteria__r.Product__c
-                                            WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
-                                            AND EligibilityCriteria__r.Product__r.IsActive = true
-                                            AND EligibilityCriteria__r.Product__r.Family IN :familyList
-                                            )
-        ];
+        if(!String.isEmpty(quote.SupplyCity__c)){
+            List<List<SObject>> searchList = [
+                FIND :quote.SupplyCity__c
+                IN ALL FIELDS
+                RETURNING
+                        EligibleMunicipality__c(EligibilityCriteria__r.Product__c
+                                                WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
+                                                AND EligibilityCriteria__r.Product__r.IsActive = true
+                                                AND EligibilityCriteria__r.Product__r.Family IN :familyList
+                                                )
+            ];
 
-        List<EligibleMunicipality__c> eligibleMunicipality = ((List<EligibleMunicipality__c>)searchlist[0]);
+            List<EligibleMunicipality__c> eligibleMunicipality = ((List<EligibleMunicipality__c>)searchlist[0]);
 
-        for(EligibleMunicipality__c e : eligibleMunicipality){
-            System.debug('# > Prod id: ' + e.EligibilityCriteria__r.Product__c);
-            idList.add(e.EligibilityCriteria__r.Product__c);
+            for(EligibleMunicipality__c e : eligibleMunicipality){
+                System.debug('# > Prod id: ' + e.EligibilityCriteria__r.Product__c);
+                idList.add(e.EligibilityCriteria__r.Product__c);
+            }
         }
 
         List<Product2> prodWithoutCriteria = new List<Product2>();
@@ -230,10 +232,16 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             WITH SECURITY_ENFORCED
         ];
 
-        for(Product2 p : prodWithoutCriteria){
-            if(p.EligibilitiesCriteria__r.size() == 0){
-                idList.add(p.Id);
+        if(!String.isEmpty(quote.SupplyCity__c)){
+            for(Product2 p : prodWithoutCriteria){
+                if(p.EligibilitiesCriteria__r.size() == 0){
+                    idList.add(p.Id);
+                }
             }
+        } else {
+            for(Product2 p : prodWithoutCriteria){
+                idList.add(p.Id);
+            }            
         }
 
         return idList;
@@ -246,6 +254,10 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         sl.add('VAS Prodotto');
         sl.add('VAS Servizio');
         return sl;
+    }
+
+    public static void queryForEligibilitiesCriteria(){
+
     }
 
 }
