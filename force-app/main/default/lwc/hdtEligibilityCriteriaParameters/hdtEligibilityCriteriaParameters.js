@@ -19,27 +19,30 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         {
           id: '1',
           list: [
-            'Agency__c',
-            'Campaign__c',
-            'CategoryTypeClient__c',
             'Channel__c',
-            'ClientAge__c',
+            'Agency__c',
+            'Login__c',
+            'LoginGroup__c',
             'ClientMarker__c',
-            'CodeCriteria__c',
-            'CompanyOwner__c'
+            'CategoryTypeClient__c',
+            'NewClient__c',
+            'CompanyOwner__c',
+            'ClientAge__c',
+            'Campaign__c'
           ]
         },
         {
           id: '2',
           list: [
-            'LoginGroup__c',
-            'Login__c',
-            'NewClient__c',
-            'Origin__c',
-            'Range__c',
+            'EquipmenType__c',
             'UseCategory__c',
             'ConsumptionRangeEE__c',
-            'ConsumptionRangeGAS__c'
+            'ConsumptionRangeGAS__c',
+            'PowerRange__c',
+            'OriginMarket__c',
+            'ResidentDeliveryAddress__c',
+            'PaymentMode__c',
+            'BillSendingMethod__c'
           ]
         }
       ];

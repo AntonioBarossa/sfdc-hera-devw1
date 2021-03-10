@@ -126,6 +126,93 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return errorData;
     }
 
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities2(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj){
+
+        System.debug('# getExistingEligibleMunicipalities2 > ' + eligibilityId);
+
+        Map<String, Set<String>> existingMuniMap = new Map<String, Set<String>>();
+
+        CityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
+        List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
+        muniList = [
+            SELECT Id, Name, AreaCode__c, JSON_Code__c
+            FROM EligibleMunicipality__c
+            WHERE EligibilityCriteria__c =: eligibilityId
+            WITH SECURITY_ENFORCED
+        ];
+
+        try{            
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
+            for(EligibleMunicipality__c muni : muniList){
+                singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+
+                Set<String> tempSet = new Set<String>();
+                for(HDT_WRP_EligibilityCriteria.HDT_WRP_City city : singleProv.cityAvailable){
+                    tempSet.add(city.value);
+                }
+                existingMuniMap.put(muni.AreaCode__c, tempSet);
+
+            }
+
+            
+            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
+            CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+
+            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province prov : CityZipCodeObj.regionList[0].provinceList){
+
+                if(existingMuniMap.containsKey(prov.value)){
+                    Set<String> avalilableCityCode = existingMuniMap.get(prov.value);
+                    Set<Integer> itemsToRemove = new Set<Integer>();
+
+                    for(HDT_WRP_EligibilityCriteria.HDT_WRP_City c : prov.cityAvailable){
+
+                        if(!avalilableCityCode.contains(c.value)){
+                            itemsToRemove.add(prov.cityAvailable.indexOf(c));
+                            prov.cityRemoved.add(c);
+                        }
+                    }
+
+                    for(Integer i = prov.cityAvailable.size() - 1; i >= 0; i--) {
+                        if(itemsToRemove.contains(i)){
+                            prov.cityAvailable.remove(i);
+                        }
+                    }
+
+                    //System.debug('>>> cityAvailable: ' + prov.cityAvailable.size());
+                    //System.debug('>>> cityRemoved: ' + prov.cityRemoved.size());
+
+                } else {
+                    prov.isEnabled = false;
+                }
+            }
+
+
+            CityZipCodeObj.success = true;
+            CityZipCodeObj.message = '';
+
+        } catch (Exception e){
+            CityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Region singleRegion = new HDT_WRP_EligibilityCriteria.HDT_WRP_Region();
+            singleRegion.regionName = 'EmiliaRomagna';
+            singleRegion.regionCode = 'EMR';
+            singleRegion.provinceList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>();
+
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
+            for(EligibleMunicipality__c muni : muniList){
+                singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+                singleRegion.provinceList.add(singleProv);
+            }
+            CityZipCodeObj.regionList.add(singleRegion);
+            CityZipCodeObj.success = true;
+            CityZipCodeObj.message = '';
+        }
+
+        return CityZipCodeObj;
+
+    }
+
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj){
 
         System.debug('# getExistingEligibleMunicipalities > ' + eligibilityId);
@@ -159,8 +246,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             CityZipCodeObj.success = false;
             CityZipCodeObj.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
         }
-
-        system.debug(JSON.serialize(CityZipCodeObj));
 
         return CityZipCodeObj;
 

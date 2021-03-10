@@ -95,7 +95,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 CityZipCodeObj.message = '';
             } else {
                 // eligibilityId IS NOT NULL, so get eligibility database records
-                CityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(eligibilityId, CityZipCodeObj);
+                //CityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(eligibilityId, CityZipCodeObj);
+
+                // eligibilityId IS NOT NULL, so get eligibility database records ---> returns 2 list: cityAvailable and cityRemoved 
+                CityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities2(eligibilityId, CityZipCodeObj);
 
                 if(!CityZipCodeObj.success){
                     return CityZipCodeObj;
