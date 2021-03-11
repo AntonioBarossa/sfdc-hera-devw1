@@ -33,6 +33,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         AND ServicePoint__r.SupplyCity__c = :city
         AND ServicePoint__r.RecordType.DeveloperName = :type
         AND ServicePoint__r.MarketOrigin__c = :marketOrigin
+        AND Quote__r.AmendmentAllowed__c = false
         AND Opportunity__r.StageName NOT IN ('Closed Lost')
         WITH SECURITY_ENFORCED];
     }

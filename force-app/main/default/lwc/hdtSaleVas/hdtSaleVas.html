@@ -30,7 +30,10 @@
         </div>
         
         <div if:true={isOrderListVisible} class="slds-grid slds-m-top_large">
-            <div class="slds-size_1-of-1">
+            <div if:true={showEmptyOrdersMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno ordini attivi</div>
+            </div>
+            <div if:false={showEmptyOrdersMessage} class="slds-size_1-of-1">
                 <lightning-datatable
                     hide-checkbox-column={disabledInput}
                     key-field="Id"
@@ -43,7 +46,10 @@
         </div>
     
         <div if:true={isContractsListVisible} class="slds-grid slds-m-top_large">
-            <div class="slds-size_1-of-1">
+            <div if:true={showEmptyContractsMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno contratti attivi</div>
+            </div>
+            <div if:false={showEmptyContractsMessage} class="slds-size_1-of-1">
                 <lightning-datatable
                     key-field="Id"
                     data={tableData}

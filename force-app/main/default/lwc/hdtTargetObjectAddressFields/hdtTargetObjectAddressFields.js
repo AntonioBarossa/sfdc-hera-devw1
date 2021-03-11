@@ -112,6 +112,7 @@ handleTextChange(event){
                 break;
             case 'Comune':
                 this.comune =  event.target.value;
+                break;
             case 'Stato':
                 this.stato = event.target.value;
                 break;

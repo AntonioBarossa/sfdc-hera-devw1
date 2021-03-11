@@ -41,7 +41,7 @@
 
     <aura:if isTrue="{!v.order}">
         <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
-            <c:hdtChildOrderProcessDetails order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
+            <c:hdtChildOrderProcessDetails aura:id="detailsComp" order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
         </aura:if>
     </aura:if>
 

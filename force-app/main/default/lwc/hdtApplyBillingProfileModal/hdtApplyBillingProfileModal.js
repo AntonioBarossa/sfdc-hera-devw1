@@ -83,7 +83,12 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                 message:  'Quote line Bundle aggiornati con successo',
                 variant: 'success'
             });
-            dispatchEvent(event);
+            this.dispatchEvent(event);
+
+            this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
+                bubbles: true,
+                composed: true
+            }));
 
         }).catch(error => {
             this.loading = false;

@@ -13,7 +13,7 @@
 
                     <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleSectionToggle}>
                         
-                        <template for:each={availableSteps} for:item="section">
+                        <template for:each={pendingSteps} for:item="section">
 
                             <lightning-accordion-section key={section.step} if:true={section.processVisibility} name={section.name} label={section.label}>
                                 
@@ -77,6 +77,9 @@
                         </template>
 
                     </lightning-accordion>
+
+                    <!-- <div class="slds-border_bottom"></div> -->
+                    <c-hdt-accordion-with-click sections={confirmedSteps}></c-hdt-accordion-with-click>
 
                 </lightning-layout-item>
             </lightning-layout>

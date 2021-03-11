@@ -50,7 +50,9 @@ public inherited sharing class HDT_QR_Quote {
             SBQQ__Status__c,
             SBQQ__Ordered__c,
             SBQQ__LineItemsGrouped__c,
-            SBQQ__OrderByQuoteLineGroup__c
+            SBQQ__OrderByQuoteLineGroup__c,
+            AmendmentAllowed__c,
+            ContractReference__c
             FROM SBQQ__Quote__c
             WHERE Sale__c = :saleId
             AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')

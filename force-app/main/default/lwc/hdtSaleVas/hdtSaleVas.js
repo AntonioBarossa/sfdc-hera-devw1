@@ -11,7 +11,9 @@ export default class hdtSaleVas extends LightningElement {
     // isModalVisible = false;
     isInputVisible = false;
     isOrderListVisible = false;
+    showEmptyOrdersMessage = false;
     isContractsListVisible = false;
+    showEmptyContractsMessage = false;
     ordersList = [];
     selectedOrder = {};
     contractsList = [];
@@ -90,7 +92,12 @@ export default class hdtSaleVas extends LightningElement {
         getOrdersList({accountId:this.accountId}).then(data =>{
             this.isLoading = false;
             // this.ordersList = data;
-            this.createTable(data);
+            
+            if(data.length > 0){
+                this.createTable(data);
+            } else {
+                this.showEmptyOrdersMessage = true;
+            }
 
         }).catch(error => {
             this.isLoading = false;
@@ -110,7 +117,13 @@ export default class hdtSaleVas extends LightningElement {
         getContractsList({accountId:this.accountId}).then(data =>{
             this.isLoading = false;
             // this.contractsList = data;
-            this.createTable(data);
+
+            if(data.length > 0){
+                this.createTable(data);
+            } else {
+                this.showEmptyContractsMessage = true;
+            }
+
         }).catch(error => {
             this.isLoading = false;
             // this.isModalVisible = false;
@@ -141,7 +154,7 @@ export default class hdtSaleVas extends LightningElement {
     }
 
     get showPaginationButtons(){
-        return this.totalPages > 0;
+        return this.totalPages > 1;
     }
 
     get getCurrentPage() {
@@ -196,6 +209,11 @@ export default class hdtSaleVas extends LightningElement {
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
+
+            this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
+                bubbles: true,
+                composed: true
+            }));
 
         }).catch(error => {
             this.isLoading = false;

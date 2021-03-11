@@ -50,6 +50,8 @@
                     console.log("SUCSSES1",response.getReturnValue());
                     let result = response.getReturnValue();
                     component.set("v.order", result);
+                    var detailsComp = component.find("detailsComp");
+                    detailsComp.loadAccordion();
                 }
                 else {
                     console.log("Failed with state: " + state);

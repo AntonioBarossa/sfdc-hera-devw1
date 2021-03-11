@@ -97,7 +97,8 @@ public inherited sharing class HDT_LC_SaleVas {
             FriendCode__c = order.FriendCode__c,
             CampaignCode__c = order.CampaignCode__c,
             CreatedBy__c = order.CreatedBy__c,
-            SupplyCity__c = supplyCity
+            SupplyCity__c = supplyCity,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -137,7 +138,8 @@ public inherited sharing class HDT_LC_SaleVas {
             FriendCode__c = contract.SBQQ__Order__r.FriendCode__c,
             CampaignCode__c = contract.SBQQ__Order__r.CampaignCode__c,
             CreatedBy__c = contract.SBQQ__Order__r.CreatedBy__c,
-            SupplyCity__c = supplyCity
+            SupplyCity__c = supplyCity,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -170,7 +172,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Opportunity2__c = newOpportunity.Id,
             SBQQ__Account__c = accountId,
             SBQQ__Primary__c = true,
-            SupplyCity__c = supplyCity
+            SupplyCity__c = supplyCity,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

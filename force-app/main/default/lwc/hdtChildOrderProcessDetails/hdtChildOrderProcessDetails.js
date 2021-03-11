@@ -13,7 +13,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     isAccountResidential;
     choosenSection = '';
     activeSections = [];
-    availableSteps = [];
+    @track availableSteps = []; //has steps that are navigated with buttons
+    @track availableStepsFirst = []; //has all available steps for current process
+    @track confirmedSteps = [];
+    @track pendingSteps = [];
     loading = false;
     showModuloInformativo = false;
     showDelibera40 = false;
@@ -225,15 +228,41 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     }
 
+    getConfirmedSteps(){
+        // this.confirmedSteps = this.availableSteps.filter(section => section.step < this.order.Step__c);
+        this.confirmedSteps = this.availableStepsFirst.filter(section => (section.name !== 'creditCheck' && section.name !== 'dettaglioImpianto' && section.name !== 'fatturazione' && section.name === 'datiPrecedenteIntestatario'));
+
+        console.log('this.confirmedSteps: ', JSON.stringify(this.confirmedSteps));
+    }
+
+    getPendingSteps(){
+        // this.pendingSteps = this.availableSteps.filter(section => section.step >= this.order.Step__c);
+        this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'creditCheck' || section.name === 'dettaglioImpianto' || section.name === 'fatturazione' || section.name === 'datiPrecedenteIntestatario'));
+        this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
+        console.log('this.pendingSteps: ', JSON.stringify(this.pendingSteps));
+    }
+
+    @api
+    loadAccordion(){
+        this.getConfirmedSteps();
+        this.getPendingSteps();
+        if(this.currentSection !== undefined){
+            this.choosenSection = this.currentSection.name;
+            this.activeSections = [this.choosenSection];
+        }
+    }
+
     getFirstStepName(){
-        this.availableSteps = this.fields.filter(section => section.processVisibility === true);
+        this.availableStepsFirst = this.fields.filter(section => section.processVisibility === true);
+        // this.availableSteps = this.fields.filter(section => section.processVisibility === true);
+        this.loadAccordion();
         this.availableSteps[0].firstStep = true;
         this.availableSteps[this.availableSteps.length - 1].lastStep = true;
         this.lastStepNumber = this.availableSteps[this.availableSteps.length - 1].step;
 
         this.dispatchEvent(new CustomEvent('emitlaststep', {detail: {lastStepNumber: this.lastStepNumber}}));
 
-        console.log(this.lastStepNumber);
+        console.log('this.lastStepNumber: ',this.lastStepNumber);
 
         if (this.order.Step__c === 2) {
             this.currentSectionObjectApi = this.availableSteps[0].objectApiName;
@@ -314,8 +343,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             this.currentSectionObjectApi = this.availableSteps[currentSectionIndex + 1].objectApiName;
             this.currentSectionRecordId = this.availableSteps[currentSectionIndex + 1].recordId;
-            this.sectionDataToSubmit = {};
-            
+            this.sectionDataToSubmit = {};            
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
         }).catch(error => {
@@ -509,8 +537,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         updateProcessStep({order: this.order, step: previousSectionStep}).then(data =>{
             this.loading = false;
             this.currentSection = this.availableSteps[currentSectionIndex - 1];
-            this.choosenSection = this.availableSteps[currentSectionIndex - 1].name;
-            this.activeSections = [this.choosenSection];
 
             this.currentSectionObjectApi = this.availableSteps[currentSectionIndex - 1].objectApiName;
             this.currentSectionRecordId = this.availableSteps[currentSectionIndex - 1].recordId;

@@ -47,7 +47,7 @@ public inherited sharing class HDT_QR_Opportunity {
         
         String query = 'SELECT '+ fields +
 
-                ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.ContractReference__c = null AND SBQQ__PrimaryQuote__r.OrderReference__c = null AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
+                ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.IsVAS__c = null AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }
@@ -63,7 +63,8 @@ public inherited sharing class HDT_QR_Opportunity {
         List<Opportunity> records = [
             SELECT
             Id,
-            StageName
+            StageName,
+            SBQQ__PrimaryQuote__c
             FROM Opportunity
             WHERE Id = :opportunityId
             WITH SECURITY_ENFORCED
@@ -117,9 +118,8 @@ public inherited sharing class HDT_QR_Opportunity {
             CreatedDate
             FROM Opportunity
             WHERE Sale__c = :saleId
-            AND (SBQQ__PrimaryQuote__r.OrderReference__c != null 
-            OR SBQQ__PrimaryQuote__r.ContractReference__c != null
-            OR Name LIKE '%VAS%')
+            AND SBQQ__PrimaryQuote__r.IsVAS__c = true
+            AND StageName != 'Closed Lost'
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];

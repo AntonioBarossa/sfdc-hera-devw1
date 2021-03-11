@@ -23,8 +23,18 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         Map<String,Object> mapResponse = new Map<String,Object>();
         
         // Order ord = [SELECT AccountId,Account.Name, Id,recordtype.DeveloperName, Status FROM Order Where id = :orderId];
-        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status');
+        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status,SBQQ__Quote__r.IsVAS__c,SBQQ__Quote__r.AmendmentAllowed__c');
         Order ord = orderQr.getRecordById(orderId);
+
+        if (ord.SBQQ__Quote__r.IsVAS__c || ord.SBQQ__Quote__r.AmendmentAllowed__c) {
+            Order ordToUpdate = new Order(
+                Id = orderId,
+                Step__c = 2,
+                RecordTypeId = ord.SBQQ__Quote__r.IsVAS__c ? orderSrv.getRecordTypeIdByDeveloperName('HDT_RT_Subentro') : orderSrv.getRecordTypeIdByDeveloperName('HDT_RT_Subentro')//record type just for testing, will change later
+            );
+            orderSrv.updateRecord(ordToUpdate);
+            ord = orderQr.getRecordById(orderId);
+        }
 
         //List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId = : ord.Id];
         orderItemSrv.checkReadAccess('Service_Point__r.Name,Service_Point__r.ServicePointCode__c,OrderId,Product2.name');

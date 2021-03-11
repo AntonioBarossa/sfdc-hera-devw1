@@ -29,6 +29,11 @@
                                 <div class="slds-truncate" title="POD/PDR">POD/PDR</div>
                             </th>
                             <th class="" scope="col">
+                                <div class="slds-truncate" title="BILLING PROFILE">BILLING PROFILE</div>
+                            </th>
+                            <th class="" scope="col">
+                            </th>
+                            <th class="" scope="col">
                             </th>
                             <th class="" scope="col">
                             </th>
@@ -55,11 +60,17 @@
                                 <td data-label="POD/PDR">
                                     <div class="slds-truncate" title=""></div>
                                 </td>
+                                <td data-label="BILLING PROFILE">
+                                    <div class="slds-truncate" title=""></div>
+                                </td>
+                                <td>
+                                    <lightning-button if:true={quote.AmendmentAllowed} disabled={disabledButton} data-id={quote.ContractReference} variant="brand" label="Aggiungi" title="Modifica Sconti Bonus VAS" onclick={handleAmend}></lightning-button>
+                                </td>
                                 <td>
                                     <lightning-button disabled={disabledButton} data-id={quote.Id} variant="brand" label="Configura" title="Configura" onclick={handleOpenConfigureModal}></lightning-button>
                                 </td>
                                 <td>
-                                    <lightning-button disabled={disabledButton} data-opportunityid={quote.OpportunityId} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
+                                    <lightning-button-icon disabled={disabledButton} data-opportunityid={quote.OpportunityId} data-id={quote.Id} data-name={quote.Name} onclick={handleQuoteDelete} icon-name="utility:delete" alternative-text="Elimina" variant="brand" title="Elimina"></lightning-button-icon>
                                 </td>
                             </tr>
                             <template for:each={quote.QuoteLines} for:item="quoteLine">
@@ -86,6 +97,17 @@
                                         <template if:false={quoteLine.ServicePoint__c}>
                                             <div></div>
                                         </template>
+                                    </td>
+                                    <td data-label="BILLING PROFILE">
+                                        <template if:true={quoteLine.BillingProfile__c}>
+                                            <div class="slds-truncate" title={quoteLine.BillingProfile__r.Name}>{quoteLine.BillingProfile__r.Name}</div>
+                                        </template>
+                                        <template if:false={quoteLine.BillingProfile__c}>
+                                            <div></div>
+                                        </template>
+                                    </td>
+                                    <td>
+                                        
                                     </td>
                                     <td>
                                         

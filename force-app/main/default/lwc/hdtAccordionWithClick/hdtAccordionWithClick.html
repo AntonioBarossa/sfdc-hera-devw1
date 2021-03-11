@@ -1,0 +1,58 @@
+<template>
+    <lightning-accordion allow-multiple-sections-open>
+                        
+        <template for:each={sections} for:item="section">
+
+            <lightning-accordion-section key={section.step} if:true={section.processVisibility} name={section.name} label={section.label}>
+                
+                <template if:true={loading}>
+                    <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                </template>
+
+                <lightning-record-edit-form record-id={section.recordId} object-api-name={section.objectApiName}>
+                    <div class="slds-grid slds-wrap slds-m-top_small">
+                        <template for:each={section.data} for:item="field">
+                            <template if:false={field.diffObjApi}>
+                                <template if:true={field.value}>
+                                    <lightning-input-field onchange={handleSectionDataToSubmitCollection} if:true={field.typeVisibility} value={field.value} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                </template>
+                                <template if:false={field.value}>
+                                    <lightning-input-field onchange={handleSectionDataToSubmitCollection} if:true={field.typeVisibility} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                </template>
+                            </template>
+                        </template>
+                    </div>
+                </lightning-record-edit-form>
+
+                <template if:true={section.diffObjApi}>
+                    <lightning-record-edit-form record-id={section.diffRecordId} object-api-name={section.diffObjApi}>
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <template for:each={section.data} for:item="field">
+                                <template if:true={field.diffObjApi}>
+                                    <template if:false={field.isMockPicklist}>
+                                        <lightning-input-field onchange={handleSectionDiffDataToSubmitCollection} key={field.apiname} if:true={field.typeVisibility} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                    </template>
+                                    <template if:true={field.isMockPicklist}>
+                                        <lightning-combobox
+                                            if:true={field.typeVisibility}
+                                            key={field.apiname}
+                                            class="slds-size_1-of-3 fieldsData"
+                                            name={field.apiname}
+                                            label={field.label}
+                                            value={field.value}
+                                            placeholder="--None--"
+                                            options={field.mockOptions}
+                                            onchange={handleSectionDiffDataToSubmitCollection} >
+                                        </lightning-combobox>
+                                    </template>
+                                </template>
+                            </template>
+                        </div>
+                    </lightning-record-edit-form>
+                </template>
+            </lightning-accordion-section>
+        </template>
+
+    </lightning-accordion>
+
+</template>

@@ -120,7 +120,9 @@ public inherited sharing class HDT_QR_Order {
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
             PreviousTrader__c,
-            VolturaThirdTrader__c
+            VolturaThirdTrader__c,
+            SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.AmendmentAllowed__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
