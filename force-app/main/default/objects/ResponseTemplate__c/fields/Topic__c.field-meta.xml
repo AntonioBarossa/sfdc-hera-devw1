@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Topic__c</fullName>
+    <externalId>false</externalId>
+    <label>Argomento</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cambio contatore non reg_doppia matr</fullName>
+                <default>false</default>
+                <label>Cambio contatore non reg_doppia matr</label>
+            </value>
+            <value>
+                <fullName>Cmor venditore entrante</fullName>
+                <default>false</default>
+                <label>Cmor venditore entrante</label>
+            </value>
+            <value>
+                <fullName>Cmor venditore uscente</fullName>
+                <default>false</default>
+                <label>Cmor venditore uscente</label>
+            </value>
+            <value>
+                <fullName>Contestazione disattivazione_cambio offerta</fullName>
+                <default>false</default>
+                <label>Contestazione disattivazione_cambio offerta</label>
+            </value>
+            <value>
+                <fullName>Contestazione volutra_subentro</fullName>
+                <default>false</default>
+                <label>Contestazione volutra_subentro</label>
+            </value>
+            <value>
+                <fullName>Contestazione Offerta_Promo_Bonus_Sconti</fullName>
+                <default>false</default>
+                <label>Contestazione Offerta_Promo_Bonus_Sconti</label>
+            </value>
+            <value>
+                <fullName>Contestazioni Diritti fissi e costi aperture e chiusura</fullName>
+                <default>false</default>
+                <label>Contestazioni Diritti fissi e costi aperture e chiusura</label>
+            </value>
+            <value>
+                <fullName>Contratti contestati ML</fullName>
+                <default>false</default>
+                <label>Contratti contestati ML</label>
+            </value>
+            <value>
+                <fullName>Contestazione letture di switch in e switch out</fullName>
+                <default>false</default>
+                <label>Contestazione letture di switch in e switch out</label>
+            </value>
+            <value>
+                <fullName>Inversione contatore</fullName>
+                <default>false</default>
+                <label>Inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Lettere_Wave Rimborsi</fullName>
+                <default>false</default>
+                <label>Lettere_Wave Rimborsi</label>
+            </value>
+            <value>
+                <fullName>LETTERE CONTRATTO MUI</fullName>
+                <default>false</default>
+                <label>LETTERE CONTRATTO MUI</label>
+            </value>
+            <value>
+                <fullName>LETTERE MOROSITA</fullName>
+                <default>false</default>
+                <label>LETTERE MOROSITA</label>
+            </value>
+            <value>
+                <fullName>LETTERE PAGAMENTI 1 - INFO SU MODALITA DI PAGAMENTO</fullName>
+                <default>false</default>
+                <label>LETTERE PAGAMENTI 1 - INFO SU MODALITA DI PAGAMENTO</label>
+            </value>
+            <value>
+                <fullName>LETTERE PAGAMENTI 2 - CONTESTAZIONI SU MODALITA DI PAGAMENTO</fullName>
+                <default>false</default>
+                <label>LETTERE PAGAMENTI 2 - CONTESTAZIONI SU MODALITA DI PAGAMENTO</label>
+            </value>
+            <value>
+                <fullName>LETTERE PAGAMENTI 3 - CLIENTE COMUNICA PAGAMENTO DI FATTURA CHE RISULTA INSOLUTA</fullName>
+                <default>false</default>
+                <label>LETTERE PAGAMENTI 3 - CLIENTE COMUNICA PAGAMENTO DI FATTURA CHE RISULTA INSOLUTA</label>
+            </value>
+            <value>
+                <fullName>Lettere V4_Wave Ricostruzione Consumi</fullName>
+                <default>false</default>
+                <label>Lettere V4_Wave Ricostruzione Consumi</label>
+            </value>
+            <value>
+                <fullName>Lettere Wave Compensazioni</fullName>
+                <default>false</default>
+                <label>Lettere Wave Compensazioni</label>
+            </value>
+            <value>
+                <fullName>Lettere Wave Compensazioni non richieste</fullName>
+                <default>false</default>
+                <label>Lettere Wave Compensazioni non richieste</label>
+            </value>
+            <value>
+                <fullName>Lettere Wave Doppi Incassi</fullName>
+                <default>false</default>
+                <label>Lettere Wave Doppi Incassi</label>
+            </value>
+            <value>
+                <fullName>Lettere Wave Doppi Pagamenti</fullName>
+                <default>false</default>
+                <label>Lettere Wave Doppi Pagamenti</label>
+            </value>
+            <value>
+                <fullName>Preventivi Lavori</fullName>
+                <default>false</default>
+                <label>Preventivi Lavori</label>
+            </value>
+            <value>
+                <fullName>Lettere Recl_Rich info_Credit check ko</fullName>
+                <default>false</default>
+                <label>Lettere Recl_Rich info_Credit check ko</label>
+            </value>
+            <value>
+                <fullName>Lettere_Legge 81</fullName>
+                <default>false</default>
+                <label>Lettere_Legge 81</label>
+            </value>
+            <value>
+                <fullName>Problematiche in fase di attivazione contrattuale</fullName>
+                <default>false</default>
+                <label>Problematiche in fase di attivazione contrattuale</label>
+            </value>
+            <value>
+                <fullName>Problematiche in fase di cessazione contrattuale</fullName>
+                <default>false</default>
+                <label>Problematiche in fase di cessazione contrattuale</label>
+            </value>
+            <value>
+                <fullName>Procedura Contestazioni Autolettura</fullName>
+                <default>false</default>
+                <label>Procedura Contestazioni Autolettura</label>
+            </value>
+            <value>
+                <fullName>Procedura Contestazioni Lettura Reale</fullName>
+                <default>false</default>
+                <label>Procedura Contestazioni Lettura Reale</label>
+            </value>
+            <value>
+                <fullName>Procedura Contestazioni Lettura Stimata</fullName>
+                <default>false</default>
+                <label>Procedura Contestazioni Lettura Stimata</label>
+            </value>
+            <value>
+                <fullName>Reclamo Rateizzazioni</fullName>
+                <default>false</default>
+                <label>Reclamo Rateizzazioni</label>
+            </value>
+            <value>
+                <fullName>Residente_Non Residente</fullName>
+                <default>false</default>
+                <label>Residente_Non Residente</label>
+            </value>
+            <value>
+                <fullName>Richiesta di rettifica doppia fatturazione</fullName>
+                <default>false</default>
+                <label>Richiesta di rettifica doppia fatturazione</label>
+            </value>
+            <value>
+                <fullName>Sollecito emissione prima bolletta</fullName>
+                <default>false</default>
+                <label>Sollecito emissione prima bolletta</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

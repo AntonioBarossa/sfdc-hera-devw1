@@ -20,13 +20,15 @@ public inherited sharing class HDT_QR_QuoteLine {
             SELECT
             Id,
             Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
             SBQQ__Product__r.Name,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
             SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
 
@@ -45,13 +47,19 @@ public inherited sharing class HDT_QR_QuoteLine {
         return [
             SELECT
             Id,
-            Name,
-            SBQQ__Product__r.Name,
+            SBQQ__RequiredBy__c,
+            SBQQ__RequiredBy__r.Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__RequiredBy__r.SBQQ__Product__r.Name,
             SBQQ__Quote__r.Name,
-            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            SBQQ__RequiredBy__r.BillingProfile__c,
+            SBQQ__RequiredBy__r.BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            AND PaymentMode__c = :paymentMethod
+            AND SBQQ__Product__r.Name IN ('POD', 'PDR')
+            AND SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];

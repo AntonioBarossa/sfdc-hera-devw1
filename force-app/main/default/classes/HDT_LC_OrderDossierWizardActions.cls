@@ -73,7 +73,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico validato Firmato'
+                Phase__c = 'Plico Firmato da validare'
             ));
 
         }
@@ -129,30 +129,31 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         //EVERIS: COMMENTIAMO POICHE' CAMPI NON CENSITI A DM.
         /*if(ord.AutorizationVolturaThirdTrader__c != null || ord.CiRappresentateLegale__c != null ||  ord.CiCliente__c != null || ord.PreventivoRapido__c != null || ord.VisuraCamerale__c != null || ord.Istanza326__c != null || ord.DocLegge80__c != null)
+        if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null)
         {
            	check = true;
-            if(ord.CiRappresentateLegale__c != null && !'Validato'.EqualsIgnoreCase(ord.CiRappresentateLegale__c)){
+            if(ord.CILegalRepresentative__c != null && !'Validato'.EqualsIgnoreCase(ord.CILegalRepresentative__c)){
                 check = false;
             }
-            if(ord.CiCliente__c != null && !'Validato'.EqualsIgnoreCase(ord.CiCliente__c)){
+            if(ord.CIAccoutn__c != null && !'Validato'.EqualsIgnoreCase(ord.CIAccoutn__c)){
                 check = false;
             }
-            if(ord.PreventivoRapido__c != null && !'Validato'.EqualsIgnoreCase(ord.PreventivoRapido__c)){
+            if(ord.QuickQuote__c != null && !'Validato'.EqualsIgnoreCase(ord.QuickQuote__c)){
                 check = false;
             }
-            if(ord.VisuraCamerale__c != null && !'Validato'.EqualsIgnoreCase(ord.VisuraCamerale__c)){
+            if(ord.ChamberCommerceRegistration__c != null && !'Validato'.EqualsIgnoreCase(ord.ChamberCommerceRegistration__c)){
                 check = false;
             }
-            if(ord.Istanza326__c != null && !'Validato'.EqualsIgnoreCase(ord.Istanza326__c)){
+            if(ord.Instance326__c != null && !'Validato'.EqualsIgnoreCase(ord.Instance326__c)){
                 check = false;
             }
-            if(ord.DocLegge80__c != null && !'Validato'.EqualsIgnoreCase(ord.DocLegge80__c)){
+            if(ord.DocumentLow80__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentLow80__c)){
                 check = false;
             }
             if(ord.AutorizationVolturaThirdTrader__c != null && !'Validato'.EqualsIgnoreCase(ord.AutorizationVolturaThirdTrader__c)){
                 check = false;
             }
-        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CiRappresentateLegale__c == null &&  ord.CiCliente__c == null && ord.PreventivoRapido__c == null && ord.VisuraCamerale__c == null && ord.Istanza326__c == null && ord.DocLegge80__c == null) {
+        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null) {
             check = true;
         }*/
 

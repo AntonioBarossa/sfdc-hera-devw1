@@ -13,17 +13,17 @@
                 <div data-id="modal-body" class="slds-modal__content slds-p-around_medium modal-body-height">
                     <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
                         
-                        <lightning-record-edit-form object-api-name="BillingProfile__c">
+                        <lightning-record-edit-form record-id={recordId} object-api-name="BillingProfile__c">
                             
                             <lightning-input-field required onchange={handlePaymentMethodSelect} field-name="PaymentMethod__c" variant="label-stacked"></lightning-input-field>
                             <template if:true={fields}>    
                                 <div class="slds-grid slds-wrap slds-m-top_small">
                                     <template for:each={fields} for:item="field">
                                         <template if:true={field.value}>
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" if:true={field.visibility} value={field.value} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} if:true={field.visibility} value={field.value} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                         <template if:false={field.value}>
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" if:true={field.visibility} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} if:true={field.visibility} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </template>
                                 </div>
@@ -46,7 +46,7 @@
 
                         </lightning-record-edit-form>
 
-                        <c-hdt-target-object-address-fields objectapiname="BillingProfile__c"></c-hdt-target-object-address-fields>
+                        <c-hdt-target-object-address-fields objectapiname="BillingProfile__c" wrapaddressobject={wrapAddressObject}></c-hdt-target-object-address-fields>
 
                 </div>
                 <footer class="slds-modal__footer">

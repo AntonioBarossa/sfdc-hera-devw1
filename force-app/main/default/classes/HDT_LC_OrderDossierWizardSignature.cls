@@ -61,6 +61,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             system.debug('childOrderToUpdate: ' + childOrderToUpdate);
             ordersToUpdate.add(childOrderToUpdate);
         }
+
+        if(orderUpdates.ContractSigned__c != null && orderUpdates.ContractSigned__c){
+            orderUpdates.SignatureMethod__c = 'Stampa';
+            orderUpdates.DocSendingMethod__c = 'Stampa';
+        }
+
         orderUpdates.Step__c = 2;
         ordersToUpdate.add(orderUpdates);
 

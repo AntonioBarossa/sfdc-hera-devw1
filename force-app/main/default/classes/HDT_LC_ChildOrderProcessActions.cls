@@ -32,15 +32,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Subentro' { // only for HDT_RT_Residenziale
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
-                    //orderToUpdate.CiCliente__c = 'Richiesto';
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Documenti relativi alla Legge 80.
-                    //orderToUpdate.DocLegge80__c = 'Richiesto';
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
             }
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
-                    orderToUpdate.CiCliente__c = 'Richiesto';
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
 
                     if (order.VolturaThirdTrader__c) {
                         orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
@@ -49,47 +49,57 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     if (order.WaiverRightAfterthought__c == 'Si') {
                         orderToUpdate.DateSentToSII__c = Date.today();
                     } else {
-                        orderToUpdate.MaxAfterthoughtDate__c = Date.today();
+                        Date maxAfterthoughtDate = order.MaxAfterthoughtDate__c;
+
+                        if(maxAfterthoughtDate != null){
+                            orderToUpdate.DateSentToSII__c = maxAfterthoughtDate.addDays(1);
+                        }
                     }
 
                 } else {
                     orderToUpdate.DateSentToSII__c = Date.today();
+
+                    if (order.VolturaThirdTrader__c) {
+                        orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                    }
+
+                    orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                 }
             }
             when 'HDT_RT_Attivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
-                    //orderToUpdate.CiCliente__c = 'Richiesto';
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Doc Legge 80.
-                    //orderToUpdate.DocLegge80__c = 'Richiesto';
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                     // Istanza 326.
-                    //orderToUpdate.Istanza326__c = 'Richiesto';
+                    orderToUpdate.Instance326__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Carta d’identità del legale rappresentante;
-                    //orderToUpdate.CiRappresentateLegale__c = 'Richiesto';
+                    orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     // Istanza 326.
-                    //orderToUpdate.Istanza326__c = 'Richiesto';
+                    orderToUpdate.Instance326__c = 'Richiesto';
                 }
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
-                    //orderToUpdate.CiCliente__c = 'Richiesto';
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Documenti relativi alla Legge 80
-                    //orderToUpdate.DocLegge80__c = 'Richiesto';
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
                     // Istanza 326
-                    //orderToUpdate.Istanza326__c = 'Richiesto';
+                    orderToUpdate.Instance326__c = 'Richiesto';
                     // Accettazione Preventivo rapido.
-                    //orderToUpdate.PreventivoRapido__c = 'Richiesto';
+                    orderToUpdate.QuickQuote__c = 'Richiesto';
                 } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                     // Visura camerale
-                    //orderToUpdate.VisuraCamerale__c = 'Richiesto';
+                    orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
                     // Carta identità
-                    //orderToUpdate.CiCliente__c = 'Richiesto';
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
                     // Accettazione preventivo rapido
-                    //orderToUpdate.PreventivoRapido__c = 'Richiesto';
+                    orderToUpdate.QuickQuote__c = 'Richiesto';
                     // Istanza 326
-                    //orderToUpdate.Istanza326__c = 'Richiesto';
+                    orderToUpdate.Instance326__c = 'Richiesto';
                 }
             }
         }*/

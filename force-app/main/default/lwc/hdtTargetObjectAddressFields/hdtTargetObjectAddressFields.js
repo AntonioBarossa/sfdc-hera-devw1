@@ -200,6 +200,12 @@ disabledverifyFieldsAddressDisabled(){
         
         console.log('getInstanceWrapObject - END');
     }
+
+    @api
+    getInstanceWrapObjectBilling(billingProfileData){
+        this.handleAddressValues(billingProfileData);
+        this.theRecord = billingProfileData;
+    }
     /**
      * Get availability of verify address button
      */

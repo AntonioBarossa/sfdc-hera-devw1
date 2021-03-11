@@ -45,6 +45,7 @@ public inherited sharing class HDT_QR_Order {
             SELECT
             Name,
             OrderNumber,
+            RecordTypeId,
             AccountId,
             Account.Name,
             Account.FirstName__c,
@@ -89,6 +90,7 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.RecordType.Developername,
             Name,
+            RecordTypeId,
             RecordType.Name,
             RecordType.DeveloperName,
             SystemModstamp,
@@ -112,12 +114,16 @@ public inherited sharing class HDT_QR_Order {
             Deliberation__c,
             ParentOrder__c,
             ParentOrder__r.Status,
+            ParentOrder__r.Phase__c,
             ParentOrder__r.ContractSigned__c,
             ParentOrder__r.SignedDate__c,
             OrderNumber,
             Phase__c/*, EVRIS: COMMENTATO POICHE' CAMPO NON DISPONIBILE SULLA NOSTRA ORG
             RequestOption__c,
-            PreviousTrader__c*/
+            WaiverRightAfterthought__c,
+            MaxAfterthoughtDate__c,
+            PreviousTrader__c,
+            VolturaThirdTrader__c*/
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -154,13 +160,14 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             Step__c,
-            /*CiRappresentateLegale__c,
-            CiCliente__c,
-            PreventivoRapido__c,
-            VisuraCamerale__c,
-            Istanza326__c,
-            DocLegge80__c,
-            AutorizationVolturaThirdTrader__c,*/
+            /*CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c,
+            AutorizationVolturaThirdTrader__c,
+            VolturaThirdTrader__c,*/
             Phase__c
             FROM
             Order
@@ -200,12 +207,12 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             Step__c,
-            /*CiRappresentateLegale__c,
-            CiCliente__c,
-            PreventivoRapido__c,
-            VisuraCamerale__c,
-            Istanza326__c,
-            DocLegge80__c,
+            /*CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,*/
             Phase__c
             FROM

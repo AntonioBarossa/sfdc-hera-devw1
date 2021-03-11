@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ExciseEle__c</fullName>
+    <externalId>false</externalId>
+    <label>Accise Ele</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Imposta usi domestici</fullName>
+                <default>false</default>
+                <label>Imposta usi domestici</label>
+            </value>
+            <value>
+                <fullName>Imposta ordinaria Altri Usi (Cod. E_IE_M04)</fullName>
+                <default>false</default>
+                <label>Imposta ordinaria Altri Usi (Cod. E_IE_M04)</label>
+            </value>
+            <value>
+                <fullName>Imposta C En&gt;50% unità prod (Cod. E_IE_14A)</fullName>
+                <default>false</default>
+                <label>Imposta C En&gt;50% unità prod (Cod. E_IE_14A)</label>
+            </value>
+            <value>
+                <fullName>Imposta Usi Chim Elettrol Metal No Sog. Obbl.  (Cod. E_IE_L11)</fullName>
+                <default>false</default>
+                <label>Imposta Usi Chim Elettrol Metal No Sog. Obbl.  (Cod. E_IE_L11)</label>
+            </value>
+            <value>
+                <fullName>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)</fullName>
+                <default>false</default>
+                <label>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)</label>
+            </value>
+            <value>
+                <fullName>Imposta FFSS (Cod. E_IE_L03)</fullName>
+                <default>false</default>
+                <label>Imposta FFSS (Cod. E_IE_L03)</label>
+            </value>
+            <value>
+                <fullName>Imposta Grossiti EE Non Domest (Cod. E_IE_L98)</fullName>
+                <default>false</default>
+                <label>Imposta Grossiti EE Non Domest (Cod. E_IE_L98)</label>
+            </value>
+            <value>
+                <fullName>Imposta Illum Pubbl (Cod. E_IE_L01)</fullName>
+                <default>false</default>
+                <label>Imposta Illum Pubbl (Cod. E_IE_L01)</label>
+            </value>
+            <value>
+                <fullName>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)</fullName>
+                <default>false</default>
+                <label>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)</label>
+            </value>
+            <value>
+                <fullName>Imposta Opifici (Cod. E_IE_L13)</fullName>
+                <default>false</default>
+                <label>Imposta Opifici (Cod. E_IE_L13)</label>
+            </value>
+            <value>
+                <fullName>Imposta esente Prod.EE (Cod. E_IE_L06)</fullName>
+                <default>false</default>
+                <label>Imposta esente Prod.EE (Cod. E_IE_L06)</label>
+            </value>
+            <value>
+                <fullName>Imposta Sedi Diplomatiche (Cod.E_IE_L02)</fullName>
+                <default>false</default>
+                <label>Imposta Sedi Diplomatiche (Cod.E_IE_L02)</label>
+            </value>
+            <value>
+                <fullName>Imposta Trasp Urb. (Cod. E_IE_L04)</fullName>
+                <default>false</default>
+                <label>Imposta Trasp Urb. (Cod. E_IE_L04)</label>
+            </value>
+            <value>
+                <fullName>Imposta % Usi Chim Metall No Sog. Obbl.   (Cod. E_IE_11D)</fullName>
+                <default>false</default>
+                <label>Imposta % Usi Chim Metall No Sog. Obbl.   (Cod. E_IE_11D)</label>
+            </value>
+            <value>
+                <fullName>Imposta % Usi Mineral No Sog. Obbl.  (Cod. E_IE_11C)</fullName>
+                <default>false</default>
+                <label>Imposta % Usi Mineral No Sog. Obbl.  (Cod. E_IE_11C)</label>
+            </value>
+            <value>
+                <fullName>Imposta Usi Mineral No Sog. Obbl.  (Cod. E_IE_11A)</fullName>
+                <default>false</default>
+                <label>Imposta Usi Mineral No Sog. Obbl.  (Cod. E_IE_11A)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

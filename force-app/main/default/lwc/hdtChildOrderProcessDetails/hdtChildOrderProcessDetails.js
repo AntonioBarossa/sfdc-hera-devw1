@@ -269,13 +269,25 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.extraFieldsToSubmit.objectApiName = 'Order';
 
             if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
-                this.extraFieldsToSubmit.MaxAfterthoughtDate__c = '2021-03-09';
-                nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-03-09';
-                this.extraFieldsToSubmit.EffectiveDate__c = '2021-04-01';
-                nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
+
+                if(this.order.WaiverRightAfterthought__c == 'Si'){
+                    this.extraFieldsToSubmit.MaxAfterthoughtDate__c = '2021-03-15';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-03-15';
+
+                    this.extraFieldsToSubmit.EffectiveDate__c = '2021-04-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
+                } else {
+                    this.extraFieldsToSubmit.MaxAfterthoughtDate__c = '2021-03-15';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-03-15';
+
+                    this.extraFieldsToSubmit.EffectiveDate__c = '2021-05-01';
+                    // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                }
+
             } else {
+
                 this.extraFieldsToSubmit.EffectiveDate__c = '2021-05-01';
-                nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
             }
         }
         console.log('applyDateOrdineLogic: ', JSON.stringify(this.extraFieldsToSubmit));
@@ -2098,16 +2110,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'disabled': true,
                         'value': '',
                         'processVisibility': ''
-                    },
-                    {
-                        'label': 'Data decorrenza',
-                        'apiname': 'EffectiveDate__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
                     }
+                    // {
+                    //     'label': 'Data decorrenza',
+                    //     'apiname': 'EffectiveDate__c',
+                    //     'typeVisibility': this.typeVisibility('both'),
+                    //     'required': false,
+                    //     'disabled': true,
+                    //     'value': '',
+                    //     'processVisibility': ''
+                    // }
                 ]
             },
             {
