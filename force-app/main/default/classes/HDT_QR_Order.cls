@@ -118,12 +118,12 @@ public inherited sharing class HDT_QR_Order {
             ParentOrder__r.ContractSigned__c,
             ParentOrder__r.SignedDate__c,
             OrderNumber,
-            Phase__c/*, EVRIS: COMMENTATO POICHE' CAMPO NON DISPONIBILE SULLA NOSTRA ORG
+            Phase__c, 
             RequestOption__c,
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
             PreviousTrader__c,
-            VolturaThirdTrader__c*/
+            VolturaThirdTrader__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -160,14 +160,14 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             Step__c,
-            /*CILegalRepresentative__c,
+            CILegalRepresentative__c,
             CIAccoutn__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
             Instance326__c,
             DocumentLow80__c,
             AutorizationVolturaThirdTrader__c,
-            VolturaThirdTrader__c,*/
+            VolturaThirdTrader__c,
             Phase__c
             FROM
             Order
@@ -207,13 +207,13 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             Step__c,
-            /*CILegalRepresentative__c,
+            CILegalRepresentative__c,
             CIAccoutn__c,
             QuickQuote__c,
             ChamberCommerceRegistration__c,
             Instance326__c,
             DocumentLow80__c,
-            AutorizationVolturaThirdTrader__c,*/
+            AutorizationVolturaThirdTrader__c,
             Phase__c
             FROM
             Order

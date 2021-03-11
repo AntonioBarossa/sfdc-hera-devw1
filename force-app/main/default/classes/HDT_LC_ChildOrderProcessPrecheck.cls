@@ -49,8 +49,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         orderSrv.updateRecord(new Order(
             Id = orderId,
             RecordTypeId = recordTypeId,
-            Step__c = 2,
-            Deliberation__c = deliberate
+            Phase__c = 'Bozza', //Everis: Aggiunto update fase
+            Step__c = 2//,
+            //Deliberation__c = deliberate //Everis: Commentato poiche Deliberation__c non e' un boolean a DM
         ));
     }
 }

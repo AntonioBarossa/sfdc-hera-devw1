@@ -27,6 +27,7 @@ public inherited sharing class HDT_LC_SelfReading {
         if(fields != null){
 
             obj = (Order)JSON.deserialize(fields, Order.class);
+            obj.ConnectionType__c = 'Permanente';
 
         }
 
@@ -55,6 +56,9 @@ public inherited sharing class HDT_LC_SelfReading {
             }
 
         } else {
+
+            //inserire update cliente uscente
+            //inserire update cliente uscente
 
             obj.Step__c = 20;
 

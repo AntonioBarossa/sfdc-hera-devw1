@@ -38,7 +38,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     handleSave(){
         this.loading = true;
         //INIZIO SVILUPPI EVERIS
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        /*if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
             
             updateOrder({recordId: this.order.Id, completed:true})
             .then(result => {
@@ -54,7 +54,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
             })
 
         }
-        //FINE SVILUPPI EVERIS
+        //FINE SVILUPPI EVERIS*/
         save({order: this.order}).then(data =>{
             this.loading = false;
 

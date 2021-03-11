@@ -20,44 +20,23 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
-
-        //INIZIO SVILUPPI EVERIS
-
-        Integer count = 0;
         
-        for(Order childOrder : childOrders){
-
-            if(childOrder.Phase__c == 'Accettazione Voltura'){
-
-                ++count;
-
-            }
-
-        }
-
-        if(count == childOrders.size()){
-
-            return;
-
-        }
-
-        //FINE SVILUPPI EVERIS
-
-
         if (orderParent.ContractSigned__c == false) {
 
             //update child orders
             for (Order childOrder : childOrders) {
                 ordersToUpdate.add(new Order(
                     Id = childOrder.Id,
-                    Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                    //EVERIS: Aggiunto caso per Voltura 
+                    Phase__c = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c 
+                    : checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
                 ));
             }
 
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico inviato da validare'
+                Phase__c = 'Plico da inviare' //Everis: modificato in 'Plico da inviare poiche non la fase 'Plico inviato da validare' non presente a DM'
             ));
 
         } else {
@@ -127,8 +106,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         Boolean check = true;
 
-        //EVERIS: COMMENTIAMO POICHE' CAMPI NON CENSITI A DM.
-        /*if(ord.AutorizationVolturaThirdTrader__c != null || ord.CiRappresentateLegale__c != null ||  ord.CiCliente__c != null || ord.PreventivoRapido__c != null || ord.VisuraCamerale__c != null || ord.Istanza326__c != null || ord.DocLegge80__c != null)
         if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null)
         {
            	check = true;
@@ -155,7 +132,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null) {
             check = true;
-        }*/
+        }
 
         return check;
     }

@@ -1010,27 +1010,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         disabled: false
                     },
                     {
-                        apiname: 'AnnualConsumption__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
                         apiname: 'SignedDate__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'DeliveryAddress__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'WithdrawalClass__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'PaymentMode__c',
                         required: true,
                         disabled: false
                     },
@@ -1062,6 +1042,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         apiname: 'Email__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'WithdrawalClass__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'AnnualConsumption__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'PaymentMode__c',
+                        required: false,
+                        disabled: true
+                    },
+                    {
+                        apiname: 'DeliveryAddress__c',
                         required: false,
                         disabled: true
                     },
