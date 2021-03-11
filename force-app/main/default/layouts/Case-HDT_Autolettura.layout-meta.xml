@@ -33,6 +33,10 @@
                 <behavior>Readonly</behavior>
                 <field>CommodityFormula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>AddressFormula__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -209,6 +213,9 @@
         <quickActionListItems>
             <quickActionName>FeedItem.PollPost</quickActionName>
         </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>Case.SendEmail</quickActionName>
+        </quickActionListItems>
     </quickActionList>
     <relatedContent>
         <relatedContentItems>
@@ -229,6 +236,12 @@
         <fields>ReadingValue1__c</fields>
         <fields>ReadingValue2__c</fields>
         <fields>ReadingValue3__c</fields>
+        <fields>ReadingValue4__c</fields>
+        <fields>ReadingValue5__c</fields>
+        <fields>ReadingValue6__c</fields>
+        <fields>ReadingValue7__c</fields>
+        <fields>ReadingValue8__c</fields>
+        <fields>ReadingValue9__c</fields>
         <relatedList>Reading__c.CaseEle__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Desc</sortOrder>
