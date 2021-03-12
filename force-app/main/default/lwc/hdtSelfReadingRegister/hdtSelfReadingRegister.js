@@ -264,11 +264,11 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             });
 
-            if(parseInt(event.target.value) <= parseInt(this.registerObj[indexReading].value)){
+            if(parseInt(event.target.value) < parseInt(this.registerObj[indexReading].value)){
 
                 //this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
 
-                this.advanceError = 'Impossibile inserire lettura inferiore o uguale all\'ultima lettura';
+                this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
 
                 event.target.setCustomValidity(this.advanceError);
 
