@@ -1,5 +1,5 @@
 import { LightningElement, api } from 'lwc';
-
+import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 
 const columns = [
     {id:1, fieldName:'PersonalData__c'},
@@ -24,6 +24,8 @@ export default class HdtDocumentValidation extends LightningElement {
     @api saveInDraft;
     @api cancelCase;
     @api documentValidated
+
+    @api availableActions = [];
 
     checkboxField = columns;
 
@@ -68,6 +70,8 @@ export default class HdtDocumentValidation extends LightningElement {
         console.log('Document Validated? --> '+this.documentValidated);
 
         this.template.querySelector('lightning-record-edit-form').submit(fields);
+
+        this.handleGoNext();
 
 
         /*fields.forEach(element =>{
