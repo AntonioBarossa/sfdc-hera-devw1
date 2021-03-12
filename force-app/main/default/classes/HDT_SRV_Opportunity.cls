@@ -124,4 +124,8 @@ public inherited sharing class HDT_SRV_Opportunity {
         quoteService.deleteRecord(opp.SBQQ__PrimaryQuote__c);
         HDT_UTL_DatabaseService.deleteSObject(opportunityId);
     }
+
+    public void deleteRecords(List<String> opportunities){
+        HDT_UTL_DatabaseService.deleteSObject(opportunities);
+    }
 }

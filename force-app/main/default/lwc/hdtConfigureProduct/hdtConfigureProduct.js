@@ -20,6 +20,8 @@ export default class hdtConfigureProduct extends LightningElement {
     isDialogVisible = false;
     currentStep = 3;
     nextStep = 4;
+    showAmend = false;
+    iframeSrcAmend = '';
 
     get hiddenEdit(){
         let result = true;
@@ -118,23 +120,32 @@ export default class hdtConfigureProduct extends LightningElement {
 
     handleAmend(event){
         this.selectedContractId = event.currentTarget.dataset.id;
+        // this.selectedContractId = '8007Y000002vCnkQAE'; //used for testing
         console.log('this.selectedContractId: ', this.selectedContractId);
+        //'/apex/sbqq__sb?scontrolCaching=1&amp;id=' + quoteId +'#quote/le?qId='+ quoteId;
+        // this.iframeSrcAmend = '/apex/sbqq__AmendContract?id=8007Y000002vCnkQAE';
+        this.showAmend = true;
 
-        this.loaded = false;
-        amendContract({contractId: this.selectedContractId}).then(data =>{
-            this.loaded = true;
+        // this.loaded = false;
+        // amendContract({contractId: this.selectedContractId}).then(data =>{
+        //     this.loaded = true;
 
-            console.log('amendContract: ', JSON.stringify(data));
+        //     console.log('amendContract: ', JSON.stringify(data));
 
-        }).catch(error => {
-            this.loaded = true;
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
-        });
+        // }).catch(error => {
+        //     this.loaded = true;
+        //     const toastErrorMessage = new ShowToastEvent({
+        //         title: 'Errore',
+        //         message: error.message,
+        //         variant: 'error'
+        //     });
+        //     this.dispatchEvent(toastErrorMessage);
+        // });
+
+    }
+
+    handleCloseAmendContract(){
+        this.showAmend = false;
     }
 
     handleQuoteDelete(event){

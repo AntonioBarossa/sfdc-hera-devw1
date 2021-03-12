@@ -129,6 +129,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         return newSaleServiceItem;
     }
 
+    public void updateRecords(List<SaleServiceItem__c> records){
+        HDT_UTL_DatabaseService.updateSObject(records);
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Delete multiple SaleServiceItem__c records

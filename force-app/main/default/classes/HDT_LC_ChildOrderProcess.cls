@@ -30,7 +30,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
             Order ordToUpdate = new Order(
                 Id = orderId,
                 Step__c = 2,
-                RecordTypeId = ord.SBQQ__Quote__r.IsVAS__c ? orderSrv.getRecordTypeIdByDeveloperName('HDT_RT_Subentro') : orderSrv.getRecordTypeIdByDeveloperName('HDT_RT_Subentro')//record type just for testing, will change later
+                RecordTypeId = ord.SBQQ__Quote__r.IsVAS__c ? orderSrv.getRecordTypeIdByDeveloperName('HDT_RT_VAS') : orderSrv.getRecordTypeIdByDeveloperName('HDT_RT_ScontiBonus')//record type just for testing, will change later
             );
             orderSrv.updateRecord(ordToUpdate);
             ord = orderQr.getRecordById(orderId);

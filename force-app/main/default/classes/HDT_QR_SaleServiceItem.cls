@@ -136,4 +136,28 @@ public inherited sharing class HDT_QR_SaleServiceItem {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public List<SaleServiceItem__c> getActiveRecordsByQuoteAndOpportunity(List<String> quotes, List<String> opportunities){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c
+        FROM SaleServiceItem__c
+        WHERE Quote__c IN :quotes
+        AND Opportunity__c IN :opportunities
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        WITH SECURITY_ENFORCED
+        ORDER BY Opportunity__r.CreatedDate ASC
+        ];
+    }
 }
