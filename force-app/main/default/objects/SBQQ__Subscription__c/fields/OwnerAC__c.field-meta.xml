@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OwnerAC__c</fullName>
+    <description>indica se il dato record di product option deve essere associato al Proprietario della fornitura</description>
+    <externalId>false</externalId>
+    <label>Prorietario</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_YesNo</valueSetName>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Agency__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>la tipologia di canale associato al dato record di product option</description>
+    <externalId>false</externalId>
+    <label>Agenzia</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Subscriptions (Agenzia)</relationshipLabel>
+    <relationshipName>Subscriptions</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
