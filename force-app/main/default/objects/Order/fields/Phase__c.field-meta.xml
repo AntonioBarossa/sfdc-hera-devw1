@@ -255,56 +255,6 @@
                 <default>false</default>
                 <label>Plico validato Firmato</label>
             </value>
-            <value>
-                <fullName>Bozza Annullata</fullName>
-                <default>false</default>
-                <label>Bozza Annullata</label>
-            </value>
-            <value>
-                <fullName>Accettazione Voltura</fullName>
-                <default>false</default>
-                <label>Accettazione Voltura</label>
-            </value>
-            <value>
-                <fullName>Voltura Accettata</fullName>
-                <default>false</default>
-                <label>Voltura Accettata</label>
-            </value>
-            <value>
-                <fullName>Voltura Rifiutata</fullName>
-                <default>false</default>
-                <label>Voltura Rifiutata</label>
-            </value>
-            <value>
-                <fullName>Comunicazone verso Heroku OK</fullName>
-                <default>false</default>
-                <label>Comunicazone verso Heroku OK</label>
-            </value>
-            <value>
-                <fullName>Esito OK da SII</fullName>
-                <default>false</default>
-                <label>Esito OK da SII</label>
-            </value>
-            <value>
-                <fullName>Esito KO da SII</fullName>
-                <default>false</default>
-                <label>Esito KO da SII</label>
-            </value>
-            <value>
-                <fullName>KO Rilavorato</fullName>
-                <default>false</default>
-                <label>KO Rilavorato</label>
-            </value>
-            <value>
-                <fullName>KO Definitivo</fullName>
-                <default>false</default>
-                <label>KO Definitivo</label>
-            </value>
-            <value>
-                <fullName>Chiuso</fullName>
-                <default>false</default>
-                <label>Chiuso</label>
-            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
