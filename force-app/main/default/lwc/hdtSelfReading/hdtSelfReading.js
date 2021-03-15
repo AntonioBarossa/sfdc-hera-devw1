@@ -74,9 +74,9 @@ export default class HdtSelfReading extends LightningElement {
 
             for(let i=1; i <= this.rowNumber; ++i){
                 const headerText = i <= 3 ? 'Energia Attiva' : (i <= 6 ? 'Energia Reattiva' : 'Potenza');
-                const headerIndex = i % 3 == 0 ? 3 : i % 3;
+                const headerIndex = i % 3 == 0 ? 3 : i % 3;  // L'indice è sempre 1, 2, o 3.
 
-                this.rowObj = [...this.rowObj,{id:i, number: i, headerText: headerText, headerIndex: headerIndex}]; // Modulo 4 per avere sempre indici 1/2/3
+                this.rowObj = [...this.rowObj,{id:i, number: i, headerText: headerText, headerIndex: headerIndex}];
     
             }    
 
