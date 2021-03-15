@@ -139,6 +139,7 @@ export default class HdtSelfReading extends LightningElement {
     handleClick(){
 
         this.buttonDisabled = true;
+        this.lastReadingsChecked = true;
 
         if(this.commodity == 'Energia Elettrica'){
 
@@ -158,7 +159,6 @@ export default class HdtSelfReading extends LightningElement {
 
         }
 
-        this.lastReadingsChecked = true;
 
     }
 

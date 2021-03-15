@@ -1,20 +1,26 @@
 <template>
 
-   <p><b>{rowObj.headerText} {rowObj.headerIndex}</b></p>
+   <div class={visibilityClass}>
 
-   <template for:each={registerObj} for:item="register">
+      <p><b>{rowObj.headerText} {rowObj.headerIndex}</b></p>
 
-      <lightning-input if:true={register.visible}
-      key={register.id} 
-      type={register.type}
-      label={register.label}
-      value={register.value}
-      disabled={register.disabled}
-      date-style="long"
-      onchange={handleChange}>
-      </lightning-input>
+      <template for:each={registerObj} for:item="register">
+   
+         <lightning-input if:true={register.visible}
+         key={register.id} 
+         type={register.type}
+         label={register.label}
+         value={register.value}
+         disabled={register.disabled}
+         date-style="long"
+         onchange={handleChange}>
+         </lightning-input>
+   
+      </template>
 
-   </template>
+   </div>
+
+
 
 
 </template>

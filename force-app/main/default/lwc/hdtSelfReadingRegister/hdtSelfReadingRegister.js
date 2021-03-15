@@ -9,7 +9,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api commodity;
     @api isRetroactive;
     @api isVolture;
+    @api isVisible;
     advanceError;
+
+    get visibilityClass() {
+        return this.isVisible === true ? 'slds-show' : 'slds-hide';
+    }
 
     registerObjEle = [
         {id: 1, name: "readingType", label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
@@ -127,6 +132,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
         var readingObj = JSON.parse(jsonReading);
 
         console.log(readingObj);
+
+        if (this.commodity === 'Energia Elettrica' && this.rowObj.id <= readingObj.length) {
+            this.isVisible = true;
+        } else if (this.commodity === 'Gas') {
+            this.isVisible = (this.rowObj.id === 'Meter' && readingObj.length === 1 || this.rowObj.id === 'Corrector' && readingObj.length === 2);
+        }
 
         var indexIn = readingObj.findIndex(p => p.register == this.rowObj.number);
 
