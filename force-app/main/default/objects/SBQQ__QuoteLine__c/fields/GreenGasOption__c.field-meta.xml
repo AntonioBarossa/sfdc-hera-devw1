@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>GreenGasOption__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>usato per indicare se è presente(o meno) la presenza dell&apos;opzone Energia Verde per il dato record di di Product Option</description>
+    <externalId>false</externalId>
+    <label>Green Gas Option</label>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

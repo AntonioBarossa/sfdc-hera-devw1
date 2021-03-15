@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DocumentAmount__c</fullName>
-    <description>Importo Documento</description>
+    <fullName>QAdTicketCallTime__c</fullName>
+    <description>Data e ora chiamata biglietto inviata da Sigma al CRM.</description>
     <externalId>false</externalId>
-    <label>Importo Documento</label>
-    <precision>18</precision>
+    <label>Data e ora chiamata biglietto</label>
     <required>false</required>
-    <scale>2</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>DateTime</type>
 </CustomField>

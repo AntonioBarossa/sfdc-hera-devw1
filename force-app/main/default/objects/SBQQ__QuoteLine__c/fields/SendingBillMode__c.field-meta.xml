@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DocumentAmount__c</fullName>
-    <description>Importo Documento</description>
+    <fullName>SendingBillMode__c</fullName>
     <externalId>false</externalId>
-    <label>Importo Documento</label>
-    <precision>18</precision>
+    <label>Modalita Invio Bolletta</label>
     <required>false</required>
-    <scale>2</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_BillSendingMode</valueSetName>
+    </valueSet>
 </CustomField>
