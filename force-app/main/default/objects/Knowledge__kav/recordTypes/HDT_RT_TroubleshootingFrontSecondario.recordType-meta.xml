@@ -202,4 +202,27 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>ValidationStatus</picklist>
+        <values>
+            <fullName>Not Validated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validated</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato Da Pubblicatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato Da Approvatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Revisionare</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>
