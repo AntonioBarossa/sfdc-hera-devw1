@@ -13,23 +13,23 @@ export default class HdtSelfReadingRegister extends LightningElement {
     advanceError;
 
     registerObjEle = [
-        {id: 1, label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
-        {id: 2, label:"Data Lettura ", type: "date", value: null, disabled:true, visible:true},
-        {id: 3, label:"Lettura ", type: "number", value: null, disabled:true, visible:true},
-        {id: 4, label:"Lettura da Cliente ", type: "number", value: null, disabled:false, visible:true},
-        {id: 5, label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id: 6, label:"Matricola ", type: "text", value: null, disabled:true, visible:true}
+        {id: 1, name: "readingType", label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
+        {id: 2, name: "readingDate", label:"Data Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
+        {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true}
     ];
 
     registerObjGas = [
-        {id:1, label:"Tipo ", type: "text", value: null, disabled:true, visible:true},
-        {id:2, label:"Data Lettura", type: "date", value: null, disabled:true, visible:true},
-        {id:3, label:"Lettura", type: "number", value: null, disabled:true, visible:true},
-        {id:4, label:"Lettura da Cliente ", type: "number", value: null, disabled:false, visible:true},
-        {id:5, label:"Mat. ", type: "text", value: null, disabled:true, visible:true},
-        {id:6, label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id:7, label:"Registro", type: "text", value: null, disabled:true, visible:false},
-        {id:8, label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false}
+        {id:1, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:true},
+        {id:2, name: "readingDate", label:"Data Lettura", type: "date", value: null, disabled:true, visible:true},
+        {id:3, name: "readingOldValue", label:"Lettura", type: "number", value: null, disabled:true, visible:true},
+        {id:4, name: "readingValue", label:"Ultima Lettura ", type: "number", value: null, disabled:false, visible:true},
+        {id:5, name: "readingSerialNumber", label:"Mat. ", type: "text", value: null, disabled:true, visible:true},
+        {id:6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id:7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id:8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false}
     ];
 
     @track registerObj = [];
@@ -49,17 +49,17 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
 
-                this.registerObj[i].label += this.rowObj.number;
+                this.registerObj[i].label += 'F' + this.rowObj.headerIndex;
 
             }
         } else if(this.commodity === 'Gas'){
 
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
 
-                if(this.registerObj[i].label.includes("Tipo") 
-                || this.registerObj[i].label.includes("Mat.")
-                || this.registerObj[i].label.includes("Fascia")
-                || this.registerObj[i].label.includes("Lettura da Cliente")){
+                if(this.registerObj[i].name === 'readingType'
+                || this.registerObj[i].name === 'readingSerialNumber'
+                || this.registerObj[i].name === 'readingBand'
+                || this.registerObj[i].name === 'readingValue'){
 
                     this.registerObj[i].label += this.rowObj.number;
 
@@ -72,7 +72,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
         // Per l'autolettura il tasto Verifica Ultima Lettura è obbligatorio, quindi inizialmente disabilitiamo tutto. 
         if (!this.isVolture) {
             for(let i=0; i<Object.keys(this.registerObj).length; ++i){
-                if (this.registerObj[i].label.includes("Lettura da Cliente")) {
+                if (this.registerObj[i].name === 'readingValue') {
                     this.registerObj[i].disabled = true;
                 }
             }
@@ -98,7 +98,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
             //today = dd + '/' + mm + '/' + yyyy;
             today = yyyy + '-' + mm + '-' + dd;
 
-            var index = this.registerObj.findIndex(p => p.label.includes("Data Lettura"));
+            var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
 
             if(Date.parse(readingCustomerDate) > Date.parse(today)){
 
@@ -135,13 +135,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         if(indexIn == -1){
 
-            var indexCustomerReading = this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"));
+            var indexCustomerReading = this.registerObj.findIndex(p => p.name === 'readingValue');
 
             this.registerObj[indexCustomerReading].disabled = true;
 
         } else{
             if (!this.isVolture) {
-                var indexCustomerReading = this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"));
+                var indexCustomerReading = this.registerObj.findIndex(p => p.name === 'readingValue');
                 this.registerObj[indexCustomerReading].disabled = false;
             }
 
@@ -151,7 +151,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
                 var indexOut = this.registerObj.findIndex(p => {
 
-                    if(property == "Lettura"){
+                    /*if(property == "Lettura"){
 
                         return this.commodity === "Energia Elettrica" ? p.label == property+' '+this.rowObj.number 
                         : this.commodity === "Gas" ? p.label == property 
@@ -161,9 +161,10 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
                         return p.label.includes(property);
 
-                    }
+                    }*/
                     
-                
+                    return p.name === property;
+
                 });
 
                 console.log("indexOut "+indexOut);
@@ -189,7 +190,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
                 if(element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
     
-                    this.advanceError = 'Impossibile procedere: Lettura da Cliente deve essere valorizzata';
+                    this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
     
                 } 
     
@@ -207,36 +208,17 @@ export default class HdtSelfReadingRegister extends LightningElement {
     
                 this.registerRet = 
                     {
-                        ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
-                        ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
-                        ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
-                        ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
+                        ['ReadingType'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingType')].value,
+                        ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingBand')].value,
+                        ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value,
+                        ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value,
                         ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
-                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
+                        this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value
                         : null,
                         ['ReadingUnit'+this.rowObj.id+'__c']:this.commodity === 'Gas' ?
-                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
+                        this.registerObj[this.registerObj.findIndex(p => p.name === 'readingUnit')].value 
                         : null
                     };
-    
-                /*this.registerRet = 
-                    {id: this.rowNumber, 
-                    redingType:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Tipo"))].value,
-                    readingDate:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Data"))].value,
-                    band:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Fascia"))].value,
-                    meterCode:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Mat"))].value,
-                    reading:this.registerObj[
-                        this.registerObj.findIndex(p => this.commodity === 'Energia Elettrica' ? p.label == 'Lettura ' + this.rowNumber 
-                        : this.commodity === 'Gas' ? p.label == 'Lettura' : 0)
-                        ].value,
-                    readingCustomer:this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value,
-                    register:this.commodity === 'Gas' ? 
-                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Registro"))].value 
-                        : null,
-                    unitMeasure:this.commodity === 'Gas' ?
-                        this.registerObj[this.registerObj.findIndex(p => p.label.includes("Unita"))].value 
-                        : null
-                    };*/
     
                     console.log('Array filled with: ' + this.registerRet + ' keys: ' + Object.keys(this.registerRet));
     
@@ -259,13 +241,11 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('isRetroactive? '+this.isRetroactive);
 
-        if(event.target.label.includes("Lettura da Cliente") && !this.isRetroactive){
+        if(event.target.label.includes('Nuova Lettura') && !this.isRetroactive){
             
             var indexReading = this.registerObj.findIndex(p => {
 
-                return this.commodity === "Energia Elettrica" ? p.label == 'Lettura '+this.rowObj.number
-                : this.commodity === "Gas" ? p.label == 'Lettura'
-                : null;
+                return p.name === 'readingOldValue';
 
             });
 
@@ -286,7 +266,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             } else {
 
-                this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value = event.target.value; 
+                this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value = event.target.value; 
 
                 this.advanceError = undefined;
 
@@ -296,7 +276,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         } else {
 
-            this.registerObj[this.registerObj.findIndex(p => p.label.includes("Lettura da Cliente"))].value = event.target.value; 
+            this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value = event.target.value; 
 
             this.advanceError = undefined;
 

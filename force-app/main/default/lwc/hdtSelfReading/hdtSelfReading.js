@@ -76,7 +76,7 @@ export default class HdtSelfReading extends LightningElement {
                 const headerText = i <= 3 ? 'Energia Attiva' : (i <= 6 ? 'Energia Reattiva' : 'Potenza');
                 const headerIndex = i % 3 == 0 ? 3 : i % 3;
 
-                this.rowObj = [...this.rowObj,{id:i, number: i, header: headerText + ' ' + headerIndex}]; // Modulo 4 per avere sempre indici 1/2/3
+                this.rowObj = [...this.rowObj,{id:i, number: i, headerText: headerText, headerIndex: headerIndex}]; // Modulo 4 per avere sempre indici 1/2/3
     
             }    
 
@@ -84,7 +84,7 @@ export default class HdtSelfReading extends LightningElement {
 
             console.log('loop gas');
 
-            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore", header: "Misuratore"},{id:'Corrector', number: "Correttore", header: "Correttore"}];
+            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore", headerText: "Misuratore"},{id:'Corrector', number: "Correttore", headerText: "Correttore"}];
 
 
         }
@@ -144,8 +144,7 @@ export default class HdtSelfReading extends LightningElement {
 
             this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
 
-                //element.handleLastReading('[{"register":"1", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F1","Matricola":"R00100000002956134", "Lettura":"1620"},{"register":"2", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F2","Matricola":"R00100000002956134", "Lettura":"1390"},{"register":"3", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F3","Matricola":"R00100000002956134", "Lettura":"1410"},{"register":"4", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F4","Matricola":"R00100000002956134", "Lettura":"1203"},{"register":"5", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F5","Matricola":"R00100000002956134", "Lettura":"1041"},{"register":"6", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F6","Matricola":"R00100000002956134", "Lettura":"1508"}]');
-                element.handleLastReading('[{"register":"1", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F1","Matricola":"R00100000002956134", "Lettura":"1620"},{"register":"2", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F2","Matricola":"R00100000002956134", "Lettura":"1390"},{"register":"3", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F3","Matricola":"R00100000002956134", "Lettura":"1410"}]');
+                element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
 
             });
 
@@ -153,7 +152,7 @@ export default class HdtSelfReading extends LightningElement {
 
             this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
 
-                element.handleLastReading('[{"register":"Misuratore", "Tipo":"Volumetrico","Mat.":"R00050030408819956","Fascia":"M1","Registro":"001","Data Lettura":"2021-02-11","Lettura":"3000","Unita di Misura":"M3"}]');
+                element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
 
             });
 
