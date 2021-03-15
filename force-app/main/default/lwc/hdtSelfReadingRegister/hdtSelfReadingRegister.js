@@ -11,21 +11,25 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api isVolture;
     advanceError;
 
-    registerObjEle = [{id: 1, label:"Tipo Lettura ", type: "text", value: null, disabled:true},
-    {id: 2, label:"Data Lettura ", type: "date", value: null, disabled:true},
-    {id: 3, label:"Fascia ", type: "text", value: null, disabled:true},
-    {id: 4, label:"Matricola ", type: "text", value: null, disabled:true},
-    {id: 5, label:"Lettura ", type: "number", value: null, disabled:true},
-    {id: 6, label:"Lettura da Cliente ", type: "number", value: null, disabled:false}];
+    registerObjEle = [
+        {id: 1, label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
+        {id: 2, label:"Data Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id: 3, label:"Lettura ", type: "number", value: null, disabled:true, visible:true},
+        {id: 4, label:"Lettura da Cliente ", type: "number", value: null, disabled:false, visible:true},
+        {id: 5, label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id: 6, label:"Matricola ", type: "text", value: null, disabled:true, visible:true}
+    ];
 
-    registerObjGas = [{id:1, label:"Tipo ", type: "text", value: null, disabled:true},
-    {id:2, label:"Mat. ", type: "text", value: null, disabled:true},
-    {id:3, label:"Fascia ", type: "text", value: null, disabled:true},
-    {id:4, label:"Registro", type: "text", value: null, disabled:true},
-    {id:5, label:"Data Lettura", type: "date", value: null, disabled:true},
-    {id:6, label:"Lettura", type: "number", value: null, disabled:true},
-    {id:7, label:"Unita di Misura", type: "text", value: null, disabled:true},
-    {id:8, label:"Lettura da Cliente ", type: "number", value: null, disabled:false}];
+    registerObjGas = [
+        {id:1, label:"Tipo ", type: "text", value: null, disabled:true, visible:true},
+        {id:2, label:"Data Lettura", type: "date", value: null, disabled:true, visible:true},
+        {id:3, label:"Lettura", type: "number", value: null, disabled:true, visible:true},
+        {id:4, label:"Lettura da Cliente ", type: "number", value: null, disabled:false, visible:true},
+        {id:5, label:"Mat. ", type: "text", value: null, disabled:true, visible:true},
+        {id:6, label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
+        {id:7, label:"Registro", type: "text", value: null, disabled:true, visible:false},
+        {id:8, label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false}
+    ];
 
     @track registerObj = [];
 
