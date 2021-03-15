@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>LoginGroup__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>il gruppo di user associato al dato record di product option</description>
+    <description>Il gruppo di user associato al dato record di subscription</description>
     <externalId>false</externalId>
     <label>Raggruppamento Login</label>
     <referenceTo>LoginGroup__c</referenceTo>

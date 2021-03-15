@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CategoryTypeClient__c</fullName>
-    <description>la tiologia di cliente legata al dato record di product option</description>
+    <description>La tiologia di cliente legata al dato record di quote line</description>
     <externalId>false</externalId>
     <label>Tipo Cliente/Categoria</label>
     <required>false</required>

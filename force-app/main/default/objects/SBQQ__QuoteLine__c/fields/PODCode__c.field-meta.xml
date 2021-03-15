@@ -6,8 +6,8 @@
     <externalId>false</externalId>
     <label>Codice POD</label>
     <referenceTo>SaleServiceItem__c</referenceTo>
-    <relationshipLabel>Quote Lines</relationshipLabel>
-    <relationshipName>Quote_Lines</relationshipName>
+    <relationshipLabel>Quote Lines (Codice POD)</relationshipLabel>
+    <relationshipName>PODQuoteLines</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

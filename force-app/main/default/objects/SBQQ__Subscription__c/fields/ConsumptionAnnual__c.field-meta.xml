@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ConsumptionAnnual__c</fullName>
-    <description>Il Consumo Annuo legato al Product Option</description>
+    <description>Il Consumo Annuo legato al Subscription</description>
     <externalId>false</externalId>
     <label>Consumo Annuo</label>
     <precision>12</precision>

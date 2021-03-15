@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ResidentDeliveryAddress__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>flag che indica se il dato record di product option deve essere legato all&apos;indirizzo di residenza della fornitura</description>
+    <description>Flag che indica se il dato record di quote line deve essere legato all&apos;indirizzo di residenza della fornitura</description>
     <externalId>false</externalId>
     <label>Residente Indirizzo di Fornitura</label>
     <trackHistory>false</trackHistory>

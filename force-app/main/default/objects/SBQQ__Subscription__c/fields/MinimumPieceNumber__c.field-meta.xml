@@ -3,7 +3,7 @@
     <fullName>MinimumPieceNumber__c</fullName>
     <description>MinimumPieceNumber</description>
     <externalId>false</externalId>
-    <label>MinimumPieceNumber</label>
+    <label>Numero Minimo pezzi</label>
     <precision>3</precision>
     <required>false</required>
     <scale>0</scale>

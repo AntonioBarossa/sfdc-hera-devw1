@@ -2,12 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PDRCode__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>il codice PDR associato al dato record di product option</description>
+    <description>Il codice PDR associato al dato record di quote line</description>
     <externalId>false</externalId>
     <label>Codice PDR</label>
     <referenceTo>SaleServiceItem__c</referenceTo>
     <relationshipLabel>Quote Lines (Codice PDR)</relationshipLabel>
-    <relationshipName>Quote_Lines1</relationshipName>
+    <relationshipName>PDRQuoteLines</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

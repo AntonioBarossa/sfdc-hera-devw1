@@ -2,12 +2,12 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Campaign__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>la campagna legata al dato record di product option</description>
+    <description>La campagna legata al dato record di quote line</description>
     <externalId>false</externalId>
     <label>Campagna</label>
     <referenceTo>Campaign</referenceTo>
     <relationshipLabel>Quote Lines</relationshipLabel>
-    <relationshipName>Quote_Lines</relationshipName>
+    <relationshipName>QuoteLines</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

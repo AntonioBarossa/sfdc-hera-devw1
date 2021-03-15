@@ -8,13 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>To define</fullName>
-                <default>false</default>
-                <label>To define</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_ClientAge</valueSetName>
     </valueSet>
 </CustomField>
