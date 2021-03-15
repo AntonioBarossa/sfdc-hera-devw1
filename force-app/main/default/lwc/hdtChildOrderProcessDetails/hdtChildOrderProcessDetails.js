@@ -1015,16 +1015,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         disabled: false
                     },
                     {
-                        apiname: 'BillSendMode__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'RecessSent__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
                         apiname: 'Volture__c',
                         required: false,
                         disabled: true
@@ -1051,16 +1041,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         apiname: 'AnnualConsumption__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'PaymentMode__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'DeliveryAddress__c',
                         required: false,
                         disabled: true
                     },
