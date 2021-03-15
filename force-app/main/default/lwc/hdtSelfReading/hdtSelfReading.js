@@ -73,8 +73,10 @@ export default class HdtSelfReading extends LightningElement {
             console.log('loop energia elettrica')
 
             for(let i=1; i <= this.rowNumber; ++i){
+                const headerText = i <= 3 ? 'Energia Attiva' : (i <= 6 ? 'Energia Reattiva' : 'Potenza');
+                const headerIndex = i % 3 == 0 ? 3 : i % 3;
 
-                this.rowObj = [...this.rowObj,{id:i, number: i}];
+                this.rowObj = [...this.rowObj,{id:i, number: i, header: headerText + ' ' + headerIndex}]; // Modulo 4 per avere sempre indici 1/2/3
     
             }    
 
@@ -82,7 +84,7 @@ export default class HdtSelfReading extends LightningElement {
 
             console.log('loop gas');
 
-            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore"},{id:'Corrector', number: "Correttore"}];
+            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore", header: "Misuratore"},{id:'Corrector', number: "Correttore", header: "Correttore"}];
 
 
         }

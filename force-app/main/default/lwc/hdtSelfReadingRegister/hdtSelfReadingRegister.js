@@ -5,6 +5,7 @@ import {refreshApex} from '@salesforce/apex';
 export default class HdtSelfReadingRegister extends LightningElement {
 
 
+    @api header;
     @api rowObj;
     @api commodity;
     @api isRetroactive;
