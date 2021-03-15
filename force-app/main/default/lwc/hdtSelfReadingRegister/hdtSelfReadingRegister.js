@@ -133,10 +133,10 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log(readingObj);
 
-        if (this.commodity === 'Energia Elettrica' && this.rowObj.id <= readingObj.length) {
-            this.isVisible = true;
+        if (this.commodity === 'Energia Elettrica') {
+            this.isVisible = (this.rowObj.id <= readingObj.length);
         } else if (this.commodity === 'Gas') {
-            this.isVisible = (this.rowObj.id === 'Meter' && readingObj.length === 1 || this.rowObj.id === 'Corrector' && readingObj.length === 2);
+            this.isVisible = (this.rowObj.id === 'Meter' || (this.rowObj.id === 'Corrector' && readingObj.length === 2));
         }
 
         var indexIn = readingObj.findIndex(p => p.register == this.rowObj.number);
