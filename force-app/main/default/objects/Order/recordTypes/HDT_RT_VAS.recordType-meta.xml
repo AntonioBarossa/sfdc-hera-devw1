@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_RiattivazioniNonMorose</fullName>
+    <fullName>HDT_RT_VAS</fullName>
     <active>true</active>
-    <description>Record type per gli ordini di Riattivazione Non Morose</description>
-    <label>Riattivazione Non Morose</label>
+    <label>VAS</label>
     <picklistValues>
         <picklist>AggregateBilling__c</picklist>
         <values>
@@ -485,7 +484,99 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Accettazione pagamento a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità conformità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità conformità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BL010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL Documentazione completa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL accertamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL documentazione incompleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito DL KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito DL OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione appuntamento su portale DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -497,7 +588,95 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa appuntamento DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esecuzione appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa tempi di ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio allegato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo Accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione  da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -510,10 +689,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>ProcessType__c</picklist>
-        <values>
-            <fullName>Riattivazione non morose</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>To define</fullName>
             <default>false</default>
@@ -730,7 +905,15 @@
     <picklistValues>
         <picklist>Volture__c</picklist>
         <values>
+            <fullName>Con Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Retroattiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
             <default>false</default>
         </values>
     </picklistValues>
