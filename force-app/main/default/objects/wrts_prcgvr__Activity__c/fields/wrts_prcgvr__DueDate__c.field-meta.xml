@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DocumentAmount__c</fullName>
-    <description>Importo Documento</description>
+    <fullName>wrts_prcgvr__DueDate__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Due Date</description>
     <externalId>false</externalId>
-    <label>Importo Documento</label>
-    <precision>18</precision>
+    <inlineHelpText>Due Date</inlineHelpText>
+    <label>Due Date</label>
     <required>false</required>
-    <scale>2</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>DateTime</type>
 </CustomField>

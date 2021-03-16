@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DocumentAmount__c</fullName>
-    <description>Importo Documento</description>
+    <fullName>CalledNumber__c</fullName>
+    <description>Numero cliente per chiamate outbound, numero cliente per chiamate inbound</description>
     <externalId>false</externalId>
-    <label>Importo Documento</label>
-    <precision>18</precision>
+    <label>Numero Chiamato</label>
     <required>false</required>
-    <scale>2</scale>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Phone</type>
 </CustomField>

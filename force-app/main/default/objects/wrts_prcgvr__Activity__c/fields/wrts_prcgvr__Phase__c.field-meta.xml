@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NominativeHavingRightCeaseConcession__c</fullName>
-    <description>Campo testo per inserire un nominativo. Solo per processo &quot;Gestione Bonus Sociale&quot;.</description>
+    <fullName>wrts_prcgvr__Phase__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Destination phase of master object in which the Activity was created</description>
     <externalId>false</externalId>
-    <label>Nominat. avente diritto agev. da cessare</label>
+    <inlineHelpText>Destination phase of master object in which the Activity was created</inlineHelpText>
+    <label>Phase</label>
     <length>255</length>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
