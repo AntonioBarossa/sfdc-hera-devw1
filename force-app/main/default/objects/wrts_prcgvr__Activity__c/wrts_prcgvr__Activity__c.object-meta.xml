@@ -164,6 +164,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Activities</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts>
         <customTabListAdditionalFields>wrts_prcgvr__Description__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>wrts_prcgvr__DueDate__c</customTabListAdditionalFields>

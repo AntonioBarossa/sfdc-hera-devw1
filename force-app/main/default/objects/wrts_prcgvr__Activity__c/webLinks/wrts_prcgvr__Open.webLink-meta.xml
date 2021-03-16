@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>wrts_prcgvr__Open</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <linkType>url</linkType>
+    <masterLabel>Open</masterLabel>
+    <openType>replace</openType>
+    <protected>false</protected>
+    <url>../apex/wrts_prcgvr__PageRoute?_pg=Activity&amp;id={!wrts_prcgvr__Activity__c.Id}&amp;retURL=/{!wrts_prcgvr__Activity__c.Id}</url>
+</WebLink>
