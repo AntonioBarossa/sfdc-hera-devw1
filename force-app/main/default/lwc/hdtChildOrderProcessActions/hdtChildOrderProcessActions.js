@@ -87,7 +87,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         console.log('handleSaveDraft Diff: ' + this.diffDraftObjectApiName + ' ' + JSON.stringify(this.diffFields));
 
         //INIZIO SVILUPPI EVERIS
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        /*if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
            
             this.loading = true;
       
@@ -104,7 +104,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
             });
             
-        }
+        }*/
         //FINE SVILUPPI EVERIS
         
         if ( this.draftObject != null && this.diffFields == null) {
