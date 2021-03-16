@@ -12,23 +12,23 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>1</fullName>
+                <fullName>01</fullName>
                 <default>false</default>
                 <label>Procura</label>
             </value>
             <value>
-                <fullName>2</fullName>
+                <fullName>02</fullName>
                 <default>false</default>
                 <label>Contratto firmato</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Si</controllingFieldValue>
-            <valueName>1</valueName>
+            <valueName>01</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Si</controllingFieldValue>
-            <valueName>2</valueName>
+            <valueName>02</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

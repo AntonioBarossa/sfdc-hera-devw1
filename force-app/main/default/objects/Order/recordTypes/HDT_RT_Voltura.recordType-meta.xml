@@ -643,11 +643,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>01</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2</fullName>
+            <fullName>02</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -705,6 +705,36 @@
         </values>
         <values>
             <fullName>Non Domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VoltureType__c</picklist>
+        <values>
+            <fullName>Incorporazione societaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mortis Causa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Oridnaria</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Volture__c</picklist>
+        <values>
+            <fullName>Con Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroattiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
             <default>false</default>
         </values>
     </picklistValues>
