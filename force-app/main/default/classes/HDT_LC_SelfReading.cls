@@ -2,17 +2,17 @@ public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
     public static void insertSelfReading(String fields, String commodity){
-
+ 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
-
+ 
         HDT_UTL_DatabaseService.insertSObject(obj);
     }
-
+ 
     @AuraEnabled
     public static void updateSelfReading(String fields, String commodity){
-
+ 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
-
+ 
         HDT_UTL_DatabaseService.updateSObject(obj);
     }
 
@@ -74,6 +74,14 @@ public inherited sharing class HDT_LC_SelfReading {
                 throw new AuraHandledException('La Data Retroattiva deve essere nel passato'); 
 
             }
+        } else if(obj.SignedDate__c != null){
+
+            if(obj.SignedDate__c > System.today()){
+
+                throw new AuraHandledException('La Data Firma non può essere nel futuro'); 
+
+            }
+
         }
 
 
