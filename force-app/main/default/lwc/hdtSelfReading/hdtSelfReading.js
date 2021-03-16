@@ -1,4 +1,5 @@
 import { LightningElement, track, api, wire } from 'lwc';
+import insertSelfReading from '@salesforce/apex/HDT_LC_SelfReading.insertSelfReading';
 import updateSelfReading from '@salesforce/apex/HDT_LC_SelfReading.updateSelfReading';
 import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
@@ -266,12 +267,10 @@ export default class HdtSelfReading extends LightningElement {
 
         if(!this.isSaved){
 
-            updateSelfReading({fields : JSON.stringify(this.outputObj), 
-                readingCustomerDate:String(this.readingCustomerDate),
-                commodity:this.commodity})
+            insertSelfReading({fields : JSON.stringify(this.outputObj)})
             .then(result => { 
                 
-                console.log(result) 
+                console.log('insertSelfReading result ' + result);
 
                 if (this.isVolture) {
                     let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};

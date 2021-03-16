@@ -92,23 +92,25 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('isRetroactive? '+this.isRetroactive);
 
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        //today = dd + '/' + mm + '/' + yyyy;
+        today = yyyy + '-' + mm + '-' + dd;
+
+        if(Date.parse(readingCustomerDate) > Date.parse(today)){
+
+            this.advanceError = 'Impossibile inserire una data futura!';
+
+        }
+
         if(!this.isRetroactive){
-
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
-
-            //today = dd + '/' + mm + '/' + yyyy;
-            today = yyyy + '-' + mm + '-' + dd;
 
             var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
 
-            if(Date.parse(readingCustomerDate) > Date.parse(today)){
-
-                this.advanceError = 'Impossibile inserire una data futura!';
-
-            } else if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
+            if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
 
                 this.advanceError = 'Impossibile inserire una data precedente o uguale all\'ultima lettura!'
 

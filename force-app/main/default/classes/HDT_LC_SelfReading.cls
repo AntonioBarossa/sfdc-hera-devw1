@@ -1,18 +1,19 @@
 public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
-    public static String updateSelfReading(String fields, String commodity){
+    public static void insertSelfReading(String fields, String commodity){
 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
 
         HDT_UTL_DatabaseService.insertSObject(obj);
+    }
 
-        //Map<String, Object> objMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
+    @AuraEnabled
+    public static void updateSelfReading(String fields, String commodity){
 
-        //System.debug(objMap);
+        Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
 
-        return null;
-
+        HDT_UTL_DatabaseService.updateSObject(obj);
     }
 
     @AuraEnabled
