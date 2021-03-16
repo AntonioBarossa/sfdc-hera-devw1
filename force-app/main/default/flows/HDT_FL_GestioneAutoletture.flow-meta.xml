@@ -101,6 +101,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_pulsante_premuto</name>
+        <label>Pulsante premuto?</label>
+        <locationX>1402</locationX>
+        <locationY>365</locationY>
+        <defaultConnector>
+            <targetReference>Check_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Salva_in_bozza_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Data_Lettura_Cliente</targetReference>
+            </connector>
+            <label>Salva in bozza</label>
+        </rules>
+        <rules>
+            <name>Annullamento_outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Service_Point</name>
         <label>Check Service Point</label>
         <locationX>647</locationX>
@@ -125,36 +165,6 @@
             <label>Service Point KO</label>
         </rules>
     </decisions>
-    <decisions>
-        <name>Salva_in_Bozza</name>
-        <label>Salva in Bozza?</label>
-        <locationX>1401</locationX>
-        <locationY>365</locationY>
-        <defaultConnector>
-            <targetReference>Check_Processo</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Salva_in_bozza_outcome</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>SaveInDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Data_Lettura_Cliente</targetReference>
-            </connector>
-            <label>Salva in bozza</label>
-        </rules>
-    </decisions>
-    <formulas>
-        <name>IsDraftCase</name>
-        <dataType>Boolean</dataType>
-        <expression>TEXT({!Get_Case.Phase__c}) = &apos;Bozza&apos;</expression>
-    </formulas>
     <interviewLabel>Gestione Autoletture {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Autoletture</label>
     <processMetadataValues>
@@ -326,7 +336,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Salva_in_Bozza</targetReference>
+            <targetReference>Check_pulsante_premuto</targetReference>
         </connector>
         <fields>
             <name>selfReadingDisplayText</name>
@@ -405,12 +415,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isDraft</name>
-                <value>
-                    <elementReference>IsDraftCase</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>nextLabel</name>
                 <value>
                     <stringValue>Conferma Pratica</stringValue>
@@ -431,7 +435,7 @@
             <inputParameters>
                 <name>nextVariant</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -446,6 +450,24 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -455,6 +477,10 @@
             <outputParameters>
                 <assignToReference>ReadingCustomerDate</assignToReference>
                 <name>readingCustomerDate</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
@@ -484,6 +510,32 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Gestione_Annullamento</name>
+        <label>Gestione Annullamento</label>
+        <locationX>1411</locationX>
+        <locationY>574</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Refresh_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <variables>
+        <name>CancelCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
@@ -496,6 +548,13 @@
         <dataType>Date</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
