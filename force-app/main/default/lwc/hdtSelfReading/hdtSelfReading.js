@@ -34,6 +34,8 @@ export default class HdtSelfReading extends LightningElement {
 
     @api readingCustomerDate;
 
+    @api disabledReadingDate;
+
     recordKey;
 
     selfReadingObj = [];
@@ -136,6 +138,7 @@ export default class HdtSelfReading extends LightningElement {
 
     }
     
+    @api
     handleClick(){
 
         this.buttonDisabled = true;
