@@ -1,25 +1,18 @@
 public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
-    public static Id insertSelfReading(String fields, String commodity){
-
+    public static void insertSelfReading(String fields, String commodity){
+ 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
-
-        List<Database.SaveResult> insertResult = HDT_UTL_DatabaseService.insertSObjectWithResult(obj);
-        for (Database.SaveResult saveResult : insertResult) {
-            if (saveResult.isSuccess()) {
-                return saveResult.getId();
-            }
-        }
-
-        return null;
+ 
+        HDT_UTL_DatabaseService.insertSObject(obj);
     }
-
+ 
     @AuraEnabled
     public static void updateSelfReading(String fields, String commodity){
-
+ 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
-
+ 
         HDT_UTL_DatabaseService.updateSObject(obj);
     }
 
