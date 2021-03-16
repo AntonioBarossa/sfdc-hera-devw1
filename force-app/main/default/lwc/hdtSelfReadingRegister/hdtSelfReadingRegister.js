@@ -22,7 +22,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
         {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
         {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
-        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true}
+        {id: 6, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:false}
     ];
 
     registerObjGas = [
@@ -63,6 +63,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 if(this.registerObj[i].name === 'readingDate'
                 || this.registerObj[i].name === 'readingSerialNumber'
                 || this.registerObj[i].name === 'readingOldValue'
+                || this.registerObj[i].name === 'readingType'
                 || this.registerObj[i].name === 'readingValue'){
 
                     this.registerObj[i].label += this.rowObj.number;
