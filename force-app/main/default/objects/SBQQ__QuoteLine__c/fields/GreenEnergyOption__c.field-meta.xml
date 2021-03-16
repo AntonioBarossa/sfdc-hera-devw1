@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>GreenEnergyOption__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>per indicare se è presente(o meno) la presenza dell&apos;opzone Energia Verde per il dato record di di Product Option</description>
+    <description>Per indicare se è presente(o meno) la presenza dell&apos;opzone Energia Verde per il dato record di di Quote Line</description>
     <externalId>false</externalId>
     <label>Opzione Energia Verde</label>
     <trackHistory>false</trackHistory>

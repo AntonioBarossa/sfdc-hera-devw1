@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PriceFromThirds__c</fullName>
+    <externalId>false</externalId>
+    <formula>SBQQ__Product__r.PriceFromThirds__c</formula>
+    <label>Prezzo da Terzi</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

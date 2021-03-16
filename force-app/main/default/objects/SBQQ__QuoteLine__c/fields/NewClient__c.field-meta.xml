@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NewClient__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>indica se tale record di product option è associabile ai new client</description>
+    <description>Indica se tale record di quote line è associabile ai new client</description>
     <externalId>false</externalId>
     <label>Nuovo Cliente</label>
     <trackHistory>false</trackHistory>

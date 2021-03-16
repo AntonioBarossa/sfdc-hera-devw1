@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>OccupantsNumber__c</fullName>
-    <description>il numero Occupanti legato al dato record di product option</description>
+    <description>Il numero Occupanti legato al dato record di quote line</description>
     <externalId>false</externalId>
     <label>Numero Occupanti</label>
     <precision>18</precision>
