@@ -222,6 +222,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
                         ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingBand')].value,
                         ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value,
                         ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value,
+                        ['ReadingOldValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value,
                         ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
                         this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value
                         : null,
