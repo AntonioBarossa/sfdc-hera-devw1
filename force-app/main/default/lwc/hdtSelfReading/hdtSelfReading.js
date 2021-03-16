@@ -1,6 +1,7 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import insertSelfReading from '@salesforce/apex/HDT_LC_SelfReading.insertSelfReading';
 import updateSelfReading from '@salesforce/apex/HDT_LC_SelfReading.updateSelfReading';
+import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -27,7 +28,9 @@ export default class HdtSelfReading extends LightningElement {
 
     @api nextVariant;
     
-    @api isDraft;
+    @api resumedFromDraft;
+
+    @api showDraftButton;
 
     @api showBackButton;
 
@@ -261,17 +264,46 @@ export default class HdtSelfReading extends LightningElement {
 
         this.outputObj['RecordTypeId'] = this.recordTypeId;
 
+        if (this.resumedFromDraft === true) {
+            console.log('Resumed from draft');
+
+            getReadingId({
+                objectName : this.object,
+                objectId : this.recordId,
+                commodity : this.commodity
+            })
+            .then(result => { 
+                
+                console.log('getReadingId result ' + result);
+                if (result != null && result != undefined) {
+
+                    this.outputObj['Id'] = result;
+
+                    if (!this.isSaved) {
+                        console.log('Update record oggetto Reading__c esistente: ' + this.outputObj['Id']);
+                        updateSelfReading({fields : JSON.stringify(this.outputObj)})
+                        .then(result => { 
+                                       
+                            this.isSaved = true;
+                        
+                        })
+                        .catch(error => { console.log(error) });
+                    }
+                }
+            })
+            .catch(error => { console.log(error) });
+        }
+
         //this.outputObj[`${commodity === 'Energia Elettrica' ? 'OrderElectricEnergy__c' : 'OrderGas__c'}`] = this.recordId
 
         console.log('stringify: ' + JSON.stringify(this.outputObj));
 
-        if(!this.isSaved){
+        if(!this.isSaved && !this.resumedFromDraft){
 
+            console.log('Inserimento nuovo record oggetto Reading__c');
             insertSelfReading({fields : JSON.stringify(this.outputObj)})
             .then(result => { 
                 
-                console.log('insertSelfReading result ' + result);
-
                 if (this.isVolture) {
                     let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
 

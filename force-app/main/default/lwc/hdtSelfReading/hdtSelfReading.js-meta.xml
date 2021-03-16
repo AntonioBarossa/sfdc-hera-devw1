@@ -53,8 +53,10 @@
             
             <property name="isVolture" type="Boolean" label="Is Volture?" description="Discriminates if the process is a Volture" role="inputOnly"/>
             
-            <property name="isDraft" type="Boolean" label="Is Draft?" description="Discriminates if the case is in Draft" role="inputOnly"/>
-            
+            <property name="resumedFromDraft" type="Boolean" label="Resumed from Draft?" description="Discriminates if the case has been resumed from Draft" role="inputOnly"/>
+
+            <property name="showDraftButton" type="Boolean" label="Show Draft Button?" description="Whether to show the Draft Button" role="inputOnly"/>
+
             <property name="showBackButton" type="Boolean" label="Show Back Button?" description="Whether to show the Back Button" role="inputOnly"/>
             
             <property name="showCancelButton" type="Boolean" label="Show Cancel Button?" description="Whether to show the Cancel Button" role="inputOnly"/>
