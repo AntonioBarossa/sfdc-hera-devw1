@@ -28,7 +28,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateMorosita(fields, recordId);
 
-        } else if(caseType == 'Marcatura/Uso PdR' 
+        } else if(caseType == 'Marcatura/Uso PdR'
+        || caseType == 'Fiscale' 
         || caseType == 'Condizioni Contrattuali Errate' 
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'){
@@ -202,7 +203,30 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String result;
 
-        if(caseType == 'Marcatura/Uso PdR'){
+
+        if(caseType == 'Fiscale'){
+
+            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId 
+            WITH SECURITY_ENFORCED];
+
+            Date effectiveDate = Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'));
+
+            if(attachedDocument.size() == 0){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire allegati'));
+            
+            } else if(effectiveDate < System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La Data Decorrenza non può essere nel passato'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        }else if(caseType == 'Marcatura/Uso PdR'){
 
             if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
 
