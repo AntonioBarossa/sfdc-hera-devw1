@@ -6,9 +6,10 @@
     <externalId>false</externalId>
     <label>Attività</label>
     <referenceTo>wrts_prcgvr__Activity__c</referenceTo>
-    <relationshipLabel>Orders</relationshipLabel>
-    <relationshipName>Orders</relationshipName>
+    <relationshipLabel>Quotes (CPQ)</relationshipLabel>
+    <relationshipName>Quotes_CPQ</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>
