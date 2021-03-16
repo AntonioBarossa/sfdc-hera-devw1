@@ -5,8 +5,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
 
-        Boolean result = HDT_UTL_DatabaseService.insertSObject(obj);
-        System.debug('HDT_LC_SelfReading: insert result: ' + result);
+        HDT_UTL_DatabaseService.insertSObject(obj);
 
         //Map<String, Object> objMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
 
@@ -28,6 +27,7 @@ public inherited sharing class HDT_LC_SelfReading {
         if(fields != null){
 
             obj = (Order)JSON.deserialize(fields, Order.class);
+            obj.ConnectionType__c = 'Permanente';
 
         }
 
@@ -43,25 +43,38 @@ public inherited sharing class HDT_LC_SelfReading {
 
             if(isRetroactive){
 
-                //obj.Volture__c = 'Retroattiva';
+                obj.Volture__c = 'Retroattiva';
 
             } else if(isReading){
 
-                //obj.Volture__c = 'Con Autolettura';
+                obj.Volture__c = 'Con Autolettura';
 
             } else {
 
-                //obj.Volture__c = 'Standard';
+                obj.Volture__c = 'Standard';
 
             }
 
         } else {
+
+            //inserire update cliente uscente
+            //inserire update cliente uscente
 
             obj.Step__c = 20;
 
             obj.Phase__c = 'Accettazione Voltura';
 
         }
+
+        if(obj.RetroactiveDate__c != null){
+
+            if(obj.RetroactiveDate__c >= System.today()){
+
+                throw new AuraHandledException('La Data Retroattiva deve essere nel passato'); 
+
+            }
+        }
+
 
         HDT_UTL_DatabaseService.updateSObject(obj);
 
