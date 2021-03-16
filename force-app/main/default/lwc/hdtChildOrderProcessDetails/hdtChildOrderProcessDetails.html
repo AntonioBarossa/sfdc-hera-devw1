@@ -13,7 +13,7 @@
 
     <!--INIZIO SVILUPPI EVERIS-->
 
-                    <lightning-accordion allow-multiple-sections-open8um  active-section-name={activeVoltureSection} onsectiontoggle={handleVoltureToggle}>
+                    <lightning-accordion allow-multiple-sections-open  active-section-name={activeVoltureSection} onsectiontoggle={handleVoltureToggle}>
 
                         <template if:true={loading}>
                             <lightning-spinner alternative-text="Loading"></lightning-spinner>
@@ -78,6 +78,8 @@
                                     object="Order" 
                                     is-volture="true"
                                     is-retroactive={isRetroactive}
+                                    reading-customer-date={readingCustomerDate}
+                                    disabled-reading-date={disabledReadingDate}
                                     onsavereading={handelVoltureReading}></c-hdt-self-reading>
 
                                 </template>

@@ -60,11 +60,22 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     
     goReading = false;
 
+    @track readingCustomerDate;
+
+    @track disabledReadingDate;
+
     @track isRetroactive = false;
 
     @track isReading = false;
 
+    @track lastCallFlag = false;
+
     handleVoltureToggle(){}
+
+    sysdate(){
+        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
+    }
 
     handleVoltureChange(event){
 
@@ -161,6 +172,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             console.log('Commodity ' +this.order.ServicePoint__r.CommoditySector__c);
 
             console.log('Wired Retroactive ' +this.isRetroactive)
+
+            this.disabledReadingDate = !this.isRetroactive;
+
+            if(this.isRetroactive){
+
+                this.readingCustomerDate = this.outputFieldObj['RetroactiveDate__c'];
+
+            } else {
+
+                this.readingCustomerDate = this.sysdate();
+
+            }
+
+            console.log('#DisabledReadingDate --> '+this.disabledReadingDate);
 
         }else if(error){
 
@@ -712,7 +737,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         isRetroactive: this.isRetroactive, isReading: this.isReading, completed:false})
                     .then(result =>{
 
-                        console.log(result)
+                        console.log(result);
+
+                        if(nextVoltureSection === 'reading' && !this.lastCallFlag){
+
+                            this.lastCallFlag = true;
+
+                            this.template.querySelector('c-hdt-self-reading').handleClick();
+
+                        }
 
                         this.activeVoltureSection = nextVoltureSection;
             
@@ -1011,6 +1044,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         apiname: 'SignedDate__c',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: '',
+                        required: true,
+                        disabled: false
+                    },
+                    {
+                        apiname: '',
                         required: true,
                         disabled: false
                     },

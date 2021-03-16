@@ -66,6 +66,16 @@ public inherited sharing class HDT_LC_SelfReading {
 
         }
 
+        if(obj.RetroactiveDate__c != null){
+
+            if(obj.RetroactiveDate__c >= System.today()){
+
+                throw new AuraHandledException('La Data Retroattiva deve essere nel passato'); 
+
+            }
+        }
+
+
         HDT_UTL_DatabaseService.updateSObject(obj);
 
         return null;

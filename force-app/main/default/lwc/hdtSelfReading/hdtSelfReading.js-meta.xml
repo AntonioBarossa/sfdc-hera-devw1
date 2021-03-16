@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    
     
     <apiVersion>50.0</apiVersion>
     
+    
+    
     <isExposed>true</isExposed>
+    
+    
     
     <targets>
         
+        
+        
         <target>lightning__FlowScreen</target>
+        
+        
         
     </targets>
     
+    
+    
     <targetConfigs>
+        
+        
         
         <targetConfig targets="lightning__FlowScreen">
             
@@ -23,11 +39,20 @@
             <property name="nextVariant" type="String" label="Next variant" description="The variant of the next button" default="brand" role="inputOnly"/>
             <property name="isVolture" type="Boolean" label="Is Volture?" description="Discriminates if the process is a Volture" role="inputOnly"/>
             <property name="isDraft" type="Boolean" label="Is Draft?" description="Discriminates if the case is in Draft" role="inputOnly"/>
+            <property name="showBackButton" type="Boolean" label="Show Back Button?" description="Whether to show the Back Button" role="inputOnly"/>
+            <property name="showCancelButton" type="Boolean" label="Show Cancel Button?" description="Whether to show the Cancel Button" role="inputOnly"/>
             <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
-            <property name="cancelCase" type="Boolean" label="Is Volture?" description="If true call the cancellation flow" role="outputOnly"/>
+            <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>
+            <property name="readingCustomerDate" type="Date" label="Reading Customer Date" description="Date of reading provided by customer" role="outputOnly"/>
+            <property name="disabledReadingDate" type="Boolean" label="Disabled Reading Date" description="If true reading date is disabled" role="inputOnly"/>
+
 
         </targetConfig>
         
+        
+        
     </targetConfigs>
+    
+    
     
 </LightningComponentBundle>

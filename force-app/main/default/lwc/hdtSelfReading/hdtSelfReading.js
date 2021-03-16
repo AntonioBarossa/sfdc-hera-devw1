@@ -4,8 +4,6 @@ import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-//fare metodo per showtoast
-
 export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
@@ -30,6 +28,14 @@ export default class HdtSelfReading extends LightningElement {
     
     @api isDraft;
 
+    @api showBackButton;
+
+    @api showCancelButton;
+
+    @api readingCustomerDate;
+
+    @api disabledReadingDate;
+
     recordKey;
 
     selfReadingObj = [];
@@ -50,11 +56,13 @@ export default class HdtSelfReading extends LightningElement {
 
     isSaved = false;
 
-    errorAdvanceMessage = 'Impossibile salvare autolettura. Si prega di correggere gli errori';
+    errorAdvanceMessage = '';
 
-    @track readingCustomerDate;
+    lastReadingsChecked = false;
 
     connectedCallback(){
+
+        this.readingCustomerDate = this.sysdate();
 
         this.recordKey = this.object === 'Order' ? 
             (this.commodity === 'Energia Elettrica' ? 'OrderEle__c' : 'OrderGas__c') : 
@@ -67,8 +75,10 @@ export default class HdtSelfReading extends LightningElement {
             console.log('loop energia elettrica')
 
             for(let i=1; i <= this.rowNumber; ++i){
+                const headerText = i <= 3 ? 'Energia Attiva' : (i <= 6 ? 'Energia Reattiva' : 'Potenza');
+                const headerIndex = i % 3 == 0 ? 3 : i % 3;  // L'indice è sempre 1, 2, o 3.
 
-                this.rowObj = [...this.rowObj,{id:i, number: i}];
+                this.rowObj = [...this.rowObj,{id:i, number: i, headerText: headerText, headerIndex: headerIndex}];
     
             }    
 
@@ -76,7 +86,7 @@ export default class HdtSelfReading extends LightningElement {
 
             console.log('loop gas');
 
-            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore"},{id:'Corrector', number: "Correttore"}];
+            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore", headerText: "Misuratore"},{id:'Corrector', number: "Correttore", headerText: "Correttore"}];
 
 
         }
@@ -128,15 +138,17 @@ export default class HdtSelfReading extends LightningElement {
 
     }
     
+    @api
     handleClick(){
 
         this.buttonDisabled = true;
+        this.lastReadingsChecked = true;
 
         if(this.commodity == 'Energia Elettrica'){
 
             this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
 
-                element.handleLastReading('[{"register":"1", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F1","Matricola":"R00100000002956134", "Lettura":"1620"},{"register":"2", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F2","Matricola":"R00100000002956134", "Lettura":"1390"},{"register":"3", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F3","Matricola":"R00100000002956134", "Lettura":"1410"},{"register":"4", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F4","Matricola":"R00100000002956134", "Lettura":"1203"},{"register":"5", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F5","Matricola":"R00100000002956134", "Lettura":"1041"},{"register":"6", "Tipo Lettura":"Multi Reg. Attiva", "Data Lettura":"2021-01-20", "Fascia":"F6","Matricola":"R00100000002956134", "Lettura":"1508"}]');
+                element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
 
             });
 
@@ -144,19 +156,22 @@ export default class HdtSelfReading extends LightningElement {
 
             this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
 
-                element.handleLastReading('[{"register":"Misuratore", "Tipo":"Volumetrico","Mat.":"R00050030408819956","Fascia":"M1","Registro":"001","Data Lettura":"2021-02-11","Lettura":"3000","Unita di Misura":"M3"}]');
+                //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
+                element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
 
             });
 
         }
 
+
     }
 
+    // event è definito solo per la voltura (this.isVolture) 
     handleSaveButton(event){    
 
-        console.log(event.target.name);
+        console.log('handleSaveButton ' + event + ' is saved?' + this.isSaved);
 
-        if(this.isVolture && event.target.name === 'previous'){
+        if(this.isVolture && event != undefined && event.target.name === 'previous'){
 
             let dispObj = {name: event.target.name};
 
@@ -181,8 +196,16 @@ export default class HdtSelfReading extends LightningElement {
 
             console.log(this.errorAdvanceMessage);
 
-            return;
+            throw BreakException;
 
+        } else if(!this.isVolture && !this.lastReadingsChecked){
+            this.errorAdvanceMessage = 'Premere il pulsante Verifica Ultima Lettura ed inserire le letture del cliente.';
+
+            this.showToastMessage(this.errorAdvanceMessage);
+
+            console.log(this.errorAdvanceMessage);
+
+            throw BreakException;
         } else {
 
             try{this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
@@ -195,7 +218,7 @@ export default class HdtSelfReading extends LightningElement {
 
                     console.log('Error '+this.errorAdvanceMessage);
 
-                    this.outputObj = [];
+                    this.outputObj = {};
 
                     this.showToastMessage(this.errorAdvanceMessage);
 
@@ -219,7 +242,8 @@ export default class HdtSelfReading extends LightningElement {
 
             if (e !== BreakException){
 
-                this.outputObj = [];
+                console.log('exception: ' + e);
+                this.outputObj = {};
 
                 throw e;
 
@@ -238,7 +262,7 @@ export default class HdtSelfReading extends LightningElement {
 
         //this.outputObj[`${commodity === 'Energia Elettrica' ? 'OrderElectricEnergy__c' : 'OrderGas__c'}`] = this.recordId
 
-        console.log(JSON.stringify(this.outputObj));
+        console.log('stringify: ' + JSON.stringify(this.outputObj));
 
         if(!this.isSaved){
 
@@ -249,11 +273,13 @@ export default class HdtSelfReading extends LightningElement {
                 
                 console.log(result) 
 
-                let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+                if (this.isVolture) {
+                    let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
 
-                console.log('Event Name '+dispObj.name)
-                
-                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+                    console.log('Event Name '+dispObj.name);
+
+                    this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+                }
 
                 this.isSaved = true;
             
@@ -262,24 +288,33 @@ export default class HdtSelfReading extends LightningElement {
 
         } else {
 
-            let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+            if (this.isVolture) {
+                let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
 
-            this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
-
+                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+            }
         }
-
-
     }
 
-    handleNavigation(action){
+    handleNavigation(event){
 
-        if(action === 'next' || action === 'draft'){
+        const action = event.detail;
+        console.log('handleNavigation ' + action);
+
+        if(action === 'next' || action === 'draft' || action === 'save'){
 
             this.saveDraft = action === 'draft'; 
 
             if(this.availableActions.find(action => action === 'NEXT')){
 
-                this.handleSaveButton();
+                try {
+                    this.handleSaveButton();
+                } catch (e) {
+                    console.log('handleNavigation catch' + e);
+                    this.showToastMessage(this.errorAdvanceMessage);
+                    this.errorAdvanceMessage = '';
+                    return;
+                }
 
                 const navigateNextEvent = new FlowNavigationNextEvent();
     
@@ -287,8 +322,15 @@ export default class HdtSelfReading extends LightningElement {
     
             } else {
 
-                this.handleSaveButton();
-    
+                try {
+                    this.handleSaveButton();
+                } catch (e) {
+                    console.log('handleNavigation catch' + e);
+                    this.showToastMessage(this.errorAdvanceMessage);
+                    this.errorAdvanceMessage = '';
+                    return;
+                }
+
                 const navigateFinish = new FlowNavigationFinishEvent();
     
                 this.dispatchEvent(navigateFinish);
@@ -333,13 +375,19 @@ export default class HdtSelfReading extends LightningElement {
 
     }
 
+    // Genera la sysdate in formato DD/MM/YYYY HH:MM
     currentDateTime(){
+        const today = new Date();
+        const dateOptions = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const timeOptions = { hour12: false, hour: '2-digit', minute:'2-digit' };
 
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        return date+' '+time;
+        // Usiamo en-GB per forzare il formato con gli slash (DD/MM/YYYY)
+        return today.toLocaleString('en-GB', dateOptions) + ' ' + today.toLocaleTimeString('en-GB', timeOptions);
+    }
 
+    sysdate(){
+        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
 
