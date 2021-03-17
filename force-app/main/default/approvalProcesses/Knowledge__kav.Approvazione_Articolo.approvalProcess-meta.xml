@@ -3,6 +3,10 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
+        <submitter>Scrittori</submitter>
+        <type>group</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <type>owner</type>
     </allowedSubmitters>
     <approvalPageFields>
@@ -41,10 +45,8 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>antonino.fugazzotto@heravendita.com.devw1</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <description>prima approvazione dell’articolo da parte dell&apos;Approvatore</description>
         <entryCriteria>
@@ -68,10 +70,8 @@
         <allowDelegate>false</allowDelegate>
         <assignedApprover>
             <approver>
-                <name>antonino.fugazzotto@heravendita.com.devw1</name>
-                <type>user</type>
+                <type>adhoc</type>
             </approver>
-            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <description>il Pubblicatore accetta o rifiuta la pubblicazione dell&apos; articolo</description>
         <entryCriteria>

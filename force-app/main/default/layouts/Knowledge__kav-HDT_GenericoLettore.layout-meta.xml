@@ -30,9 +30,6 @@
         <label>Corpo Articolo</label>
         <layoutColumns>
             <layoutItems>
-                <field>ArticleContent__c</field>
-            </layoutItems>
-            <layoutItems>
                 <field>Question__c</field>
             </layoutItems>
         </layoutColumns>
@@ -45,8 +42,20 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
+        <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
+        <label>New Section</label>
+        <layoutColumns>
+            <layoutItems>
+                <field>ArticleContent__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Custom Links</label>
         <layoutColumns/>
         <layoutColumns/>

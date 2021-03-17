@@ -78,6 +78,9 @@
                         <valueListItems>
                             <value>SubmitKnowledgeArticleVersionForTranslation</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>PublishKnowledgeArticleVersion</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
