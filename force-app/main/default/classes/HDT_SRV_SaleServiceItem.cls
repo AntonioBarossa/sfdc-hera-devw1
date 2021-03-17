@@ -104,6 +104,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,
                 SalesCompany__c = sale.SalesCompany__c,
+                Campaign__c = sale.Campaign__c,
                 SupplyCity__c = servicePoint.SupplyCity__c,
                 AmendmentAllowed__c = isAmendmentAllowed(servicePoint, sale),
                 ContractReference__c = isAmendmentAllowed(servicePoint, sale) ? contractsForAmendmentCheck[0].Id : null

@@ -137,6 +137,29 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ];
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 13/03/2021
+    * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
+    * @param String contractId – Quote__r.ContractReference__c
+    * @return List<SaleServiceItem__c>
+    */
+    public List<SaleServiceItem__c> getRecordsByContract(String contractId, String saleId){
+
+        return [
+            SELECT  
+            Quote__c,
+            ServicePoint__c,
+            ServicePoint__r.RecordType.Name,
+            ServicePoint__r.RecordType.DeveloperName
+            FROM SaleServiceItem__c
+            WHERE Quote__r.ContractReference__c = :contractId
+            AND Quote__r.Sale__c = :saleId
+            AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     public List<SaleServiceItem__c> getActiveRecordsByQuoteAndOpportunity(List<String> quotes, List<String> opportunities){
 
         return [SELECT 

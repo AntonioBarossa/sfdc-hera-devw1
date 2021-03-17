@@ -15,7 +15,7 @@
         <c:hdtSellingWizardHeader saleRecord="{!v.sale}"></c:hdtSellingWizardHeader>
         <c:hdtGeneralInfo saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}"></c:hdtGeneralInfo>
         <c:hdtSaleServiceContainer aura:id="hdtSaleServiceContainer" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onnewservicepoint="{!c.handleNewServicePoint}" onnewtile="{!c.handleNewTileEvent}" ontiledelete="{!c.handleTileDeleteEvent}" onsalewizard__refreshproductstable="{!c.handleRefreshProductsTable}" processType="" accountId="{!v.recordId}" targetObject="Fornitura" addititionalParam=""></c:hdtSaleServiceContainer>
-        <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onquotecancel="{!c.handleQuoteCancelEvent}"></c:hdtConfigureProduct>
+        <c:hdtConfigureProduct aura:id="hdtConfigureProduct" saleRecord="{!v.sale}" onrefresh_tiles="{!c.handleTileRefresh}" onsaleupdate="{!c.handleSaleUpdateEvent}" onquotecancel="{!c.handleQuoteCancelEvent}"></c:hdtConfigureProduct>
         <c:hdtConfigurePaymentMethods accountId="{!v.recordId}" saleRecord="{!v.sale}" onsaleupdate="{!c.handleSaleUpdateEvent}" onsalewizard__refreshproductstable="{!c.handleRefreshProductsTable}"></c:hdtConfigurePaymentMethods>
         <c:hdtSaleActions saleRecord="{!v.sale}" onsavedraftevent="{!c.handleSaveDraftEvent}" oncancelsaleevent="{!c.handleCancelSaleEvent}" onsavesaleevent="{!c.handleSaveSaleEvent}"></c:hdtSaleActions>
     </aura:if>

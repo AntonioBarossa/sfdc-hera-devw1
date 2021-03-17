@@ -86,7 +86,7 @@ export default class hdtConfigureProduct extends LightningElement {
                     "Type"                 :el.quote[0].SBQQ__Type__c,
                     "OpportunityName"      :el.quote[0].SBQQ__Opportunity2__r.Name,
                     "OpportunityId"        :el.quote[0].SBQQ__Opportunity2__r.Id,
-                    "AmendmentAllowed"     :el.quote[0].AmendmentAllowed__c !== undefined ? el.quote[0].AmendmentAllowed__c : false,
+                    "AmendmentAllowed"     :el.quote[0].AmendmentAllowed__c !== undefined && el.quote[0].AmendmentAllowed__c && el.quote[0].SBQQ__Type__c === 'Quote' ? true : false,
                     "ContractReference"    :el.quote[0].ContractReference__c !== undefined ? el.quote[0].ContractReference__c : '',
                     "QuoteLines"           :el.quoteLines
                 });
@@ -146,6 +146,7 @@ export default class hdtConfigureProduct extends LightningElement {
 
     handleCloseAmendContract(){
         this.showAmend = false;
+        this.dispatchEvent(new CustomEvent('refresh_tiles'));
     }
 
     handleQuoteDelete(event){

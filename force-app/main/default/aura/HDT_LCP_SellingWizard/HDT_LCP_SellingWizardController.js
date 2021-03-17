@@ -75,5 +75,10 @@
     handleRefreshProductsTable : function(component, event, helper){
         var hdtConfigureProduct = component.find("hdtConfigureProduct");
         hdtConfigureProduct.getQuotesData();
-    }
+    },
+
+    handleTileRefresh : function(component){
+        var hdtSaleServiceContainer = component.find("hdtSaleServiceContainer");
+        hdtSaleServiceContainer.refreshTileData();
+    },
 })

@@ -133,6 +133,10 @@
             <c-hdt-edit-quote sale={saleRecord} quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
         </template>
 
+        <template if:true={showAmend}>
+            <c-hdt-quote-amend-contract sale-id={saleRecord.Id} contract-id={selectedContractId} onclose_amend_contract={handleCloseAmendContract} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-quote-amend-contract>
+        </template>
+
         <c-hdt-confirmation-dialog-dropdown
                            object-api-name="SBQQ__Quote__c"
                            picklist-api-name="CancellationReason__c"
@@ -144,24 +148,6 @@
                            name="deleteQuoteConfimation"
                            onclick={handleDialogResponse}>
         </c-hdt-confirmation-dialog-dropdown>
-
-        <template if:true={showAmend}>
-            <c-hdt-quote-amend-contract contract-id={selectedContractId} onclose_amend_contract={handleCloseAmendContract}></c-hdt-quote-amend-contract>
-        </template>
-
-        <!-- <div if:true={showAmend} style="height: 600px;">
-			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-				<div class="slds-modal__container editCpqModal">
-					<header class="slds-modal__header">
-						<lightning-button-icon icon-name="utility:close" variant="bare" class="slds-modal__close" size="large" alternative-text="Close" onclick={handleCloseModal}></lightning-button-icon>
-						<h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit quote line items</h2>
-						<lightning-button class="slds-modal__close_btn" variant="brand" label="Close" title="Close" onclick={handleCloseModal}></lightning-button>
-					</header>
-					<iframe class="demo-only iframe-placeholder" src={iframeSrcAmend} ></iframe>
-				</div>
-			</section>
-			<div class="slds-backdrop slds-backdrop_open"></div>
-		</div> -->
 
     </lightning-card>
 </template>

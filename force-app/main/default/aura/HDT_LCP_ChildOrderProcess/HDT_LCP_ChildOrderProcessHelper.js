@@ -29,6 +29,14 @@
                     if(ord.RecordType){
                     	component.set("v.recordtypeOrder",ord.RecordType.DeveloperName);
                     }
+
+                    if(results.mainOrderItem){
+                        component.set("v.mainOrderItem",results.mainOrderItem);
+                    }
+
+                    if(results.analisiConsumi){
+                        component.set("v.analisiConsumi",results.analisiConsumi);
+                    }
                 }
                 else {
                     console.log("Failed with state: " + state);

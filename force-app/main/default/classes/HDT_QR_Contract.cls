@@ -10,6 +10,22 @@ public inherited sharing class HDT_QR_Contract {
 
     }
     
+    public List<Contract> getRecordById(String contractId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            ContractNumber,
+            BillingProfile__c,
+            Status,
+            SBQQ__Order__r.BillingProfile__c
+            FROM
+            Contract
+            WHERE Id = :contractId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get active records by accountId

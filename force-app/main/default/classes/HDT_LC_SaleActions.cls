@@ -101,10 +101,22 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
 
         List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
+        system.debug('quoteLinesList: ' + quoteLinesList);
+        system.debug('quoteLinesList size: ' + quoteLinesList.size());
         system.debug('allQuoteLines: ' + allQuoteLines);
+        system.debug('allQuoteLines size: ' + allQuoteLines.size());
+        System.debug('mapLineGroup: ' + mapLineGroup);
         for(SBQQ__QuoteLine__c quoteLine : allQuoteLines){
             // system.debug(mapLineGroup.get(quoteLine.Id).Id);
             // quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
+
+            if (mapLineGroup.get(quoteLine.Id) == null) {
+                system.debug('missing quoteLine Id: ' + quoteLine.Id);
+            }
+
+            else if (mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c) == null) {
+                system.debug('missing quoteLine SBQQ__RequiredBy__c: ' + quoteLine.SBQQ__RequiredBy__c + ' ' + quoteLine.Id);
+            }
 
             SBQQ__QuoteLine__c quoteLineToUpdate = new SBQQ__QuoteLine__c(
                 Id = quoteLine.Id,

@@ -74,7 +74,10 @@ public inherited sharing class HDT_QR_Quote {
             Id,
             SBQQ__Status__c,
             SBQQ__Opportunity2__c,
-            SBQQ__Type__c
+            SBQQ__Type__c,
+            ContractReference__c,
+            OrderReference__c,
+            IsVAS__c
             FROM SBQQ__Quote__c
             WHERE Id = :quoteId
             WITH SECURITY_ENFORCED
