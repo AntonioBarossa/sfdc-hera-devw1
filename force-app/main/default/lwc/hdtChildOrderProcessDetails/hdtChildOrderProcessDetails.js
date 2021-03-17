@@ -1111,33 +1111,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             },
             {
                 section: 5,
-                label: 'Dati Firma',
-                name: 'signatureData',
-                reading: false,
-                readingButton: false,
-                inputField: true,
-                recordId: this.order.Id,
-                objectApiName: 'Order',
-                active: true,
-                data:
-                [
-                    {
-                        apiname: 'SignatureMethod__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'DocSendingMethod__c',
-                        required: true,
-                        disabled: false
-
-                    }
-
-                ]
-
-            },
-            {
-                section: 6,
                 label: 'Cliente Uscente',
                 name: 'exitingCustomer',
                 reading:false,
