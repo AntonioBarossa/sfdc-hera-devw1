@@ -13952,6 +13952,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ActivityDuration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.ActivityEndTime__c</field>
         <readable>false</readable>
@@ -13970,6 +13975,11 @@
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.BPCode__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CallDuration__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -14100,6 +14110,11 @@
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.VATNumber__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.WaitingTime__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
