@@ -1,7 +1,9 @@
 public inherited sharing class HDT_LC_SelfReading {
 
+    private static HDT_QR_SelfReadings queryClass = new HDT_QR_SelfReadings();
+
     @AuraEnabled
-    public static void insertSelfReading(String fields, String commodity){
+    public static void insertSelfReading(String fields){
  
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
  
@@ -9,11 +11,18 @@ public inherited sharing class HDT_LC_SelfReading {
     }
  
     @AuraEnabled
-    public static void updateSelfReading(String fields, String commodity){
+    public static void updateSelfReading(String fields){
  
         Reading__c obj = (Reading__c)JSON.deserialize(fields, Reading__c.class);
  
         HDT_UTL_DatabaseService.updateSObject(obj);
+    }
+
+    @AuraEnabled
+    public static Id getReadingId(String objectName, Id objectId, String commodity){
+
+        return queryClass.getReadingId(objectName, objectId, commodity);
+        
     }
 
     @AuraEnabled
