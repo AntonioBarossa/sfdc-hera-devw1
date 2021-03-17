@@ -27,7 +27,8 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Product__r.Name,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
-            SBQQ__RequiredBy__c
+            SBQQ__RequiredBy__c,
+            SBQQ__RequiredBy__r.SBQQ__RequiredBy__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')

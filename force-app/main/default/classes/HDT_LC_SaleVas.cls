@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_SaleVas {
     public static List<Order> getOrdersList(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status');
-        return orderQr.getActiveRecordsByAccountIdNotParent(accountId);
+        return orderQr.getRecordsForVasSelection(accountId);
     }
 
     /**

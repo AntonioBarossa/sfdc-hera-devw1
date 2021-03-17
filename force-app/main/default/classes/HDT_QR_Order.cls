@@ -312,4 +312,34 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getRecordsForVasSelection(String accountId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            OrderNumber,
+            Status,
+            Agency__c,
+            Market__c,
+            Channel__c,
+            FriendCode__c,
+            CampaignCode__c,
+            CreatedBy__c,
+            SBQQ__Quote__c,
+            SBQQ__Quote__r.IsVAS__c,
+            SBQQ__Quote__r.AmendmentAllowed__c,
+            RecordTypeId,
+            RecordType.DeveloperName
+            FROM
+            Order
+            WHERE AccountId = :accountId
+            AND RecordType.DeveloperName != null
+            AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
+            AND SBQQ__Quote__r.IsVAS__c != true
+            AND SBQQ__Quote__r.AmendmentAllowed__c != true
+            AND Status IN ('In Lavorazione','Draft')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
