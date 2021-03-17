@@ -2,29 +2,24 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
     <standardValue>
-        <fullName>Feature Request</fullName>
-        <default>false</default>
-        <label>Feature Request</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Question</fullName>
-        <default>false</default>
-        <label>Question</label>
-    </standardValue>
-    <standardValue>
         <fullName>Allineamento Canone Rai</fullName>
         <default>false</default>
         <label>Allineamento Canone Rai</label>
     </standardValue>
     <standardValue>
-        <fullName>Sospensione Canone Rai</fullName>
+        <fullName>Altre Verifiche</fullName>
         <default>false</default>
-        <label>Sospensione Canone Rai</label>
+        <label>Altre Verifiche</label>
     </standardValue>
     <standardValue>
-        <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
+        <fullName>Annullamento Contratti</fullName>
         <default>false</default>
-        <label>Verifica Pareggio Fittizio Canone Rai</label>
+        <label>Annullamento Contratti</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Attivazione Click&amp;Pay</fullName>
+        <default>false</default>
+        <label>Attivazione Click&amp;Pay</label>
     </standardValue>
     <standardValue>
         <fullName>Blocco Sollecito/Interessi</fullName>
@@ -32,24 +27,9 @@
         <label>Blocco Sollecito/Interessi</label>
     </standardValue>
     <standardValue>
-        <fullName>Contenzioso In Corso</fullName>
+        <fullName>Chiusura Contatore</fullName>
         <default>false</default>
-        <label>Contenzioso In Corso</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Copia Bolletta/Bollettino</fullName>
-        <default>false</default>
-        <label>Copia Bolletta/Bollettino</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Paperless</fullName>
-        <default>false</default>
-        <label>Paperless</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Storno Rateizzazione</fullName>
-        <default>false</default>
-        <label>Storno Rateizzazione</label>
+        <label>Chiusura Contatore</label>
     </standardValue>
     <standardValue>
         <fullName>Comunicazione Pagamento</fullName>
@@ -57,14 +37,74 @@
         <label>Comunicazione Pagamento</label>
     </standardValue>
     <standardValue>
+        <fullName>Contenzioso In Corso</fullName>
+        <default>false</default>
+        <label>Contenzioso In Corso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contratto Non Richiesto</fullName>
+        <default>false</default>
+        <label>Contratto Non Richiesto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Copia Bolletta/Bollettino</fullName>
+        <default>false</default>
+        <label>Copia Bolletta/Bollettino</label>
+    </standardValue>
+    <standardValue>
         <fullName>Doppi Pagamenti/Incassi</fullName>
         <default>false</default>
         <label>Doppi Pagamenti/Incassi</label>
     </standardValue>
     <standardValue>
-        <fullName>Chiusura Contatore</fullName>
+        <fullName>Errore di Fatturazione</fullName>
         <default>false</default>
-        <label>Chiusura Contatore</label>
+        <label>Errore di Fatturazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Feature Request</fullName>
+        <default>false</default>
+        <label>Feature Request</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gestione Bonus Sociale</fullName>
+        <default>false</default>
+        <label>Gestione Bonus Sociale</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Inversione del Contatore</fullName>
+        <default>false</default>
+        <label>Inversione del Contatore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Mod. Imp. - Em. Imp. - Var. Portata</fullName>
+        <default>false</default>
+        <label>Mod. Imp. - Em. Imp. - Var. Portata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+        <default>false</default>
+        <label>Nuovo Impianto - Aggiunta Attacco</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Paperless</fullName>
+        <default>false</default>
+        <label>Paperless</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Piano Rateizzazione</fullName>
+        <default>false</default>
+        <label>Piano Rateizzazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Prescrizione Fatture</fullName>
+        <default>false</default>
+        <label>Prescrizione Fatture</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Question</fullName>
+        <default>false</default>
+        <label>Question</label>
     </standardValue>
     <standardValue>
         <fullName>Recesso per Altri Motivi</fullName>
@@ -82,14 +122,14 @@
         <label>Recesso su Richesta Cliente</label>
     </standardValue>
     <standardValue>
-        <fullName>Switch Out SII</fullName>
+        <fullName>Rettifica Consumi - Errore di Lettura</fullName>
         <default>false</default>
-        <label>Switch Out SII</label>
+        <label>Rettifica Consumi - Errore di Lettura</label>
     </standardValue>
     <standardValue>
-        <fullName>Attivazione Click&amp;Pay</fullName>
+        <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
         <default>false</default>
-        <label>Attivazione Click&amp;Pay</label>
+        <label>Rettifica Consumi - Errore Stima Consumi</label>
     </standardValue>
     <standardValue>
         <fullName>Revoca Domiciliazione</fullName>
@@ -102,14 +142,9 @@
         <label>Richiesta Domiciliazione</label>
     </standardValue>
     <standardValue>
-        <fullName>Variazione Domiciliazione</fullName>
+        <fullName>Ricostruzione Consumi</fullName>
         <default>false</default>
-        <label>Variazione Domiciliazione</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Piano Rateizzazione</fullName>
-        <default>false</default>
-        <label>Piano Rateizzazione</label>
+        <label>Ricostruzione Consumi</label>
     </standardValue>
     <standardValue>
         <fullName>Rimborso</fullName>
@@ -117,14 +152,84 @@
         <label>Rimborso</label>
     </standardValue>
     <standardValue>
-        <fullName>Altre Verifiche</fullName>
+        <fullName>Rimozione Impianto</fullName>
         <default>false</default>
-        <label>Altre Verifiche</label>
+        <label>Rimozione Impianto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ripristino Fornitura Interrotta</fullName>
+        <default>false</default>
+        <label>Ripristino Fornitura Interrotta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ritorno a Fatturazione Bimestrale/Mensile</fullName>
+        <default>false</default>
+        <label>Ritorno a Fatturazione Bimestrale/Mensile</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sollecito Emissione Bolletta</fullName>
+        <default>false</default>
+        <label>Sollecito Emissione Bolletta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione Canone Rai</fullName>
+        <default>false</default>
+        <label>Sospensione Canone Rai</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Spostamento Contatore - Cavi</fullName>
+        <default>false</default>
+        <label>Spostamento Contatore - Cavi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Spostamento Votive Modena</fullName>
+        <default>false</default>
+        <label>Spostamento Votive Modena</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Storno Rateizzazione</fullName>
+        <default>false</default>
+        <label>Storno Rateizzazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Switch Out SII</fullName>
+        <default>false</default>
+        <label>Switch Out SII</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Testo Contratto in Bolletta</fullName>
+        <default>false</default>
+        <label>Testo Contratto in Bolletta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+        <default>false</default>
+        <label>Unificazione/Separazione CA-Bolletta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Unificazione POD</fullName>
+        <default>false</default>
+        <label>Unificazione POD</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Domiciliazione</fullName>
+        <default>false</default>
+        <label>Variazione Domiciliazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Fase</fullName>
+        <default>false</default>
+        <label>Variazione Fase</label>
     </standardValue>
     <standardValue>
         <fullName>Variazione Potenza</fullName>
         <default>false</default>
         <label>Variazione Potenza</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Tensione</fullName>
+        <default>false</default>
+        <label>Variazione Tensione</label>
     </standardValue>
     <standardValue>
         <fullName>Variazione Tensione - Pressione</fullName>
@@ -135,5 +240,165 @@
         <fullName>Verifica GDM</fullName>
         <default>false</default>
         <label>Verifica GDM</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
+        <default>false</default>
+        <label>Verifica Pareggio Fittizio Canone Rai</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Titolarità POD/PDR</fullName>
+        <default>false</default>
+        <label>Verifica Titolarità POD/PDR</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione Fornitura</fullName>
+        <default>false</default>
+        <label>Sospensione Fornitura</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interruzione Fornitura</fullName>
+        <default>false</default>
+        <label>Interruzione Fornitura</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione No Disalimentabile</fullName>
+        <default>false</default>
+        <label>Risoluzione No Disalimentabile</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione Punto Sospeso</fullName>
+        <default>false</default>
+        <label>Risoluzione Punto Sospeso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione No Punto Sospeso</fullName>
+        <default>false</default>
+        <label>Risoluzione No Punto Sospeso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riattivazione Fornitura</fullName>
+        <default>false</default>
+        <label>Riattivazione Fornitura</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Gestione Disalimentabilità</fullName>
+        <default>false</default>
+        <label>Gestione Disalimentabilità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Votive Modena Pagamenti Morosità</fullName>
+        <default>false</default>
+        <label>Votive Modena Pagamenti Morosità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Allineamento Anagrafica</fullName>
+        <default>false</default>
+        <label>Allineamento Anagrafica</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Esercizio Diritti Privacy</fullName>
+        <default>false</default>
+        <label>Esercizio Diritti Privacy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Alert</fullName>
+        <default>false</default>
+        <label>Modifica Alert</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Privacy</fullName>
+        <default>false</default>
+        <label>Modifica Privacy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Anagrafica Cliente</fullName>
+        <default>false</default>
+        <label>Variazione Anagrafica Cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione su Amministratore</fullName>
+        <default>false</default>
+        <label>Variazione su Amministratore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Disassociazione Utente Web</fullName>
+        <default>false</default>
+        <label>Disassociazione Utente Web</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autolettura da cliente</fullName>
+        <default>false</default>
+        <label>Autolettura da cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autolettura da processo</fullName>
+        <default>false</default>
+        <label>Autolettura da processo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Dati al DL</fullName>
+        <default>false</default>
+        <label>Verifica Dati al DL</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Reclamo Scritto/Rich. Info</fullName>
+        <default>false</default>
+        <label>Reclamo Scritto/Rich. Info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comportamento Altri Venditori</fullName>
+        <default>false</default>
+        <label>Comportamento Altri Venditori</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comportamento Venditori HC</fullName>
+        <default>false</default>
+        <label>Comportamento Venditori HC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Votive Modena Cessazione</fullName>
+        <default>false</default>
+        <label>Votive Modena Cessazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Informazioni servizi Hera</fullName>
+        <default>false</default>
+        <label>Informazioni servizi Hera</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Informazioni ambientali</fullName>
+        <default>false</default>
+        <label>Informazioni ambientali</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Comunicazione di Fallimento</fullName>
+        <default>false</default>
+        <label>Comunicazione di Fallimento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Caduta Linea/Chiamata Muta</fullName>
+        <default>false</default>
+        <label>Caduta Linea/Chiamata Muta</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pagamento Online</fullName>
+        <default>false</default>
+        <label>Pagamento Online</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pagamento ClickPay</fullName>
+        <default>false</default>
+        <label>Pagamento ClickPay</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Errore Chiamata</fullName>
+        <default>false</default>
+        <label>Errore Chiamata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Informative</fullName>
+        <default>false</default>
+        <label>Informative</label>
     </standardValue>
 </StandardValueSet>

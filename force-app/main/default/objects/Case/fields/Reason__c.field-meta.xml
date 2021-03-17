@@ -230,6 +230,56 @@
                 <label>Agevolazioni non Energy indirette</label>
             </value>
             <value>
+                <fullName>Portabilità dei dati</fullName>
+                <default>false</default>
+                <label>Portabilità dei dati</label>
+            </value>
+            <value>
+                <fullName>Cancellazione dei dati</fullName>
+                <default>false</default>
+                <label>Cancellazione dei dati</label>
+            </value>
+            <value>
+                <fullName>Rettifica dati personali</fullName>
+                <default>false</default>
+                <label>Rettifica dati personali</label>
+            </value>
+            <value>
+                <fullName>Accesso dei dati</fullName>
+                <default>false</default>
+                <label>Accesso dei dati</label>
+            </value>
+            <value>
+                <fullName>Limitazione dei dati</fullName>
+                <default>false</default>
+                <label>Limitazione dei dati</label>
+            </value>
+            <value>
+                <fullName>Opposizione</fullName>
+                <default>false</default>
+                <label>Opposizione</label>
+            </value>
+            <value>
+                <fullName>Sollecito Emissione</fullName>
+                <default>false</default>
+                <label>Sollecito Emissione</label>
+            </value>
+            <value>
+                <fullName>Errata Emissione</fullName>
+                <default>false</default>
+                <label>Errata Emissione</label>
+            </value>
+            <value>
+                <fullName>Chiamata Mura</fullName>
+                <default>false</default>
+                <label>Chiamata Mura</label>
+            </value>
+            <value>
+                <fullName>Caduta Linea</fullName>
+                <default>false</default>
+                <label>Caduta Linea</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -387,6 +437,22 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>TCP Comune no Int</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Votive Modena Cessazione</controllingFieldValue>
+            <valueName>Sollecito Emissione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Votive Modena Cessazione</controllingFieldValue>
+            <valueName>Errata Emissione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Chiamata Mura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Caduta Linea</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

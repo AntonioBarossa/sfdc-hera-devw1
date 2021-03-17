@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>NotJustMotivation__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivo Non Fondato</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Procedura presente</fullName>
+                <default>false</default>
+                <label>Procedura presente</label>
+            </value>
+            <value>
+                <fullName>Argomento errato</fullName>
+                <default>false</default>
+                <label>Argomento errato</label>
+            </value>
+            <value>
+                <fullName>Analisi incompleta</fullName>
+                <default>false</default>
+                <label>Analisi incompleta</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

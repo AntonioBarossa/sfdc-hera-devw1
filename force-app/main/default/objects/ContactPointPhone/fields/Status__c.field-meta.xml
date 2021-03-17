@@ -12,14 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Verificato</fullName>
-                <default>false</default>
-                <label>Verificato</label>
-            </value>
-            <value>
                 <fullName>Non Verificato</fullName>
                 <default>false</default>
                 <label>Non Verificato</label>
+            </value>
+            <value>
+                <fullName>Verificato</fullName>
+                <default>false</default>
+                <label>Verificato</label>
             </value>
         </valueSetDefinition>
     </valueSet>
