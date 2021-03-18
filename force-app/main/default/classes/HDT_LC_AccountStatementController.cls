@@ -1,53 +1,18 @@
 public class HDT_LC_AccountStatementController {
 
     @AuraEnabled(cacheable=true)
-    public static SecLevColumnsObj getSecondLevelColumns(String tabValue) {
-
-        SecLevColumnsObj obj = new SecLevColumnsObj();
-
-        List<HDT_ColumnsSecondLevel__mdt> colSecList = new List<HDT_ColumnsSecondLevel__mdt>();
-        colSecList = [
-            SELECT MasterLabel, ColumnOrder__c, FieldName__c, InitialWidth__c, IsFilter__c, IsVisible__c, Sortable__c
-            FROM HDT_ColumnsSecondLevel__mdt
-            WHERE IsVisible__c = true AND Tab__r.DeveloperName =: tabValue
-            ORDER BY ColumnOrder__c ASC
-        ];
-
-        if(colSecList.size()==0){
-            obj.success = false;
-            obj.message = 'No data for Second level';
-        }
-
-        obj.columnObj = new List<SingleSecCol>();
-
-        SingleSecCol colObj;
-        for(HDT_ColumnsSecondLevel__mdt colSec_mdt : colSecList){
-            colObj = new SingleSecCol();
-            colObj.isFilter = colSec_mdt.IsFilter__c;
-            colObj.label = colSec_mdt.MasterLabel;
-            colObj.fieldName = colSec_mdt.FieldName__c;
-            colObj.sortable = colSec_mdt.Sortable__c;
-            colObj.initialWidth = colSec_mdt.InitialWidth__c;
-            obj.columnObj.add(colObj);
-        }
-
-        //SecLevColumnsObj mockFromString = (SecLevColumnsObj)JSON.deserialize(secondJsonObjString, SecLevColumnsObj.class);
-        //mockFromString.success = true;
-        //mockFromString.message = 'col from apex';
-
-        obj.success = true;
-
-        return obj;
+    public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumns(String tabValue) {
+        return HDT_LC_AccountStatementCtrlHelper.getSecondLevelColumnsHelper(tabValue);
     }
 
     @AuraEnabled(cacheable=true)
-    public static ColumnsObj getTabConfiguration(String tabValue, String recordId) {
+    public static HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj getTabConfiguration(String tabValue, String recordId) {
 
         System.debug('# GET COLUMNS #');
         System.debug('# Current tab -> ' + tabValue);
         //Boolean isMock = false;
 
-        ColumnsObj columnsObj = new ColumnsObj();
+        HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj columnsObj = new HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj();
 
         try{
 
@@ -67,8 +32,8 @@ public class HDT_LC_AccountStatementController {
 
             columnsObj.success = true;
             columnsObj.message = '';
-            columnsObj.confObj = new ConfTabObjDetail();
-            columnsObj.columnObj = new List<SingleColumn>();
+            columnsObj.confObj = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
+            columnsObj.columnObj = new List<HDT_WRP_AccountStatement.HDT_WRP_SingleColumn>();
 
             columnsObj.confObj = getConfObj(tabValue);
 
@@ -80,14 +45,14 @@ public class HDT_LC_AccountStatementController {
                 return columnsObj;
             }
 
-            ColumnDetail cd;
-            SingleColumn sc;
+            HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail cd;
+            HDT_WRP_AccountStatement.HDT_WRP_SingleColumn sc;
             for(HDT_ColumnsFirstLevel__mdt c : column_mdtList){
-                cd = new ColumnDetail();
+                cd = new HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail();
                 cd.type = c.FieldType__c;
                 cd.isAmount = c.IsAmountField__c;
 
-                sc = new SingleColumn();
+                sc = new HDT_WRP_AccountStatement.HDT_WRP_SingleColumn();
                 sc.label = c.MasterLabel;
                 sc.fieldName = c.FieldName__c;
                 sc.showSort = c.IsSortable__c;
@@ -109,7 +74,7 @@ public class HDT_LC_AccountStatementController {
             return columnsObj;
         }
 
-        System.debug('# columnsObj ' + JSON.serialize(columnsObj));
+        System.debug('# HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj ' + JSON.serialize(columnsObj));
         return columnsObj;
     }
 
@@ -119,10 +84,10 @@ public class HDT_LC_AccountStatementController {
         return accList;
     }
 
-    public static ConfTabObjDetail getConfObj(String tabValue) {
+    public static HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail getConfObj(String tabValue) {
                 
-        ConfTabObjDetail objDetail = new ConfTabObjDetail();
-        objDetail.buttonList = new List<ButtonObjDetail>();
+        HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail objDetail = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
+        objDetail.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         List<HDT_TabConfiguration__mdt> mdtTabConfList = new List<HDT_TabConfiguration__mdt>();
         mdtTabConfList = [
@@ -154,7 +119,7 @@ public class HDT_LC_AccountStatementController {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c));
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c));
         }
         
         return objDetail;
@@ -163,7 +128,8 @@ public class HDT_LC_AccountStatementController {
     @AuraEnabled//Sync caller method
     public static Object callMulesoft(String techObj, String requestObj){
         System.debug('# Sync callMulesoft #');
-        return HDT_WS_MulesoftCallerHelper.createMulesoftCall(techObj, requestObj);
+        //return HDT_WS_MulesoftCallerHelper.createMulesoftCall(techObj, requestObj);
+        return HDT_LC_AccountStatementCtrlHelper.createMulesoftCall(techObj, requestObj);
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -211,11 +177,11 @@ public class HDT_LC_AccountStatementController {
     //------------------------------------------------------------------------------------------------------------------
     
     @AuraEnabled
-    public static ResponseObj sendFileToPrint(String dataList){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj sendFileToPrint(String dataList){
         System.debug('# saveNewOfferConfigured #');
         System.debug(dataList);
 
-        ResponseObj responseObj = new ResponseObj();
+        HDT_WRP_AccountStatement.HDT_WRP_ResponseObj responseObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
 
         try{
             HDT_WS_SOAP_EngageOnePrint.ReturnObj returnObj = HDT_WS_SOAP_EngageOnePrint.sendFile(dataList);
@@ -234,34 +200,34 @@ public class HDT_LC_AccountStatementController {
     }
 
     @AuraEnabled
-    public static ResponseObj operationBackend(String operation, List<String> idlist){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj operationBackend(String operation, List<String> idlist){
 
         System.debug('@ Operation -> ' + operation);
         System.debug('@ idlist -> ' + idlist);
 
-        ResponseObj respObj = new ResponseObj();
+        HDT_WRP_AccountStatement.HDT_WRP_ResponseObj respObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
         respObj.success = true;
         respObj.message = '';
         return respObj;
     }
 
     @AuraEnabled(Cacheable=true)
-    public static ReturnPicklist getFieldValues(){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValues(){
 
-        ReturnPicklist pickObj = new ReturnPicklist();
+        HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj = new HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist();
 
         try{
-            pickObj.companyList = new List<PicklistObj>();
-            pickObj.joinLevelList = new List<PicklistObj>();
+            pickObj.companyList = new List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>();
+            pickObj.joinLevelList = new List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>();
 
             List<HDT_HeraCompany__mdt> companyList = new List<HDT_HeraCompany__mdt>();
             companyList = [
                 SELECT DeveloperName, Label
                 FROM HDT_HeraCompany__mdt
             ];
-            PicklistObj company;
+            HDT_WRP_AccountStatement.HDT_WRP_PicklistObj company;
             for(HDT_HeraCompany__mdt hc : companyList){
-                company  = new PicklistObj();
+                company  = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
                 company.label = hc.Label;
                 company.value = hc.DeveloperName;
                 pickObj.companyList.add(company);
@@ -270,9 +236,9 @@ public class HDT_LC_AccountStatementController {
             //Schema.DescribeFieldResult fieldResult = HDT_RequestEstrattoConto__mdt.Aggregazione__c.getDescribe();
             Schema.DescribeFieldResult fieldResult = HDT_StatementRequest__mdt.Aggregation__c.getDescribe();
             List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-            PicklistObj joinLevel;
+            HDT_WRP_AccountStatement.HDT_WRP_PicklistObj joinLevel;
             for( Schema.PicklistEntry f : ple){
-                joinLevel = new PicklistObj();
+                joinLevel = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
                 joinLevel.label = f.getLabel();
                 joinLevel.value = f.getValue();
                 pickObj.joinLevelList.add(joinLevel);
@@ -286,81 +252,6 @@ public class HDT_LC_AccountStatementController {
         }
 
         return pickObj;
-    }
-
-    public class ConfTabObjDetail {
-        @AuraEnabled public String recordCode;
-        @AuraEnabled public String tabCode;
-        @AuraEnabled public Boolean hasSecondLevel;
-        @AuraEnabled public Boolean hasAmountField;
-        @AuraEnabled public String secondLevelAPIname;
-        @AuraEnabled public List<ButtonObjDetail> buttonList;
-    }
-
-    public class ButtonObjDetail {
-        @AuraEnabled public String label;
-        @AuraEnabled public String name;
-        @AuraEnabled public Boolean enable;
-        
-        public ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp){
-            label = labelTemp;
-            name = nameTemp;
-            enable = enableTemp;
-        }
-    }
-
-    public class ColumnsObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public ConfTabObjDetail confObj;
-        @AuraEnabled public List<SingleColumn> columnObj;
-    }
-
-    public class SingleColumn {
-        @AuraEnabled public ColumnDetail detail;
-        @AuraEnabled public String label;
-        @AuraEnabled public String fieldName;
-        @AuraEnabled public Boolean showSort;
-        @AuraEnabled public Boolean showAmount;
-    }
-
-    public class ColumnDetail {
-        @AuraEnabled public String type;
-        @AuraEnabled public Boolean isAmount;
-    }
-
-    public class ResponseObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public Boolean dataError;
-        @AuraEnabled public String bodyBase64;
-    }
-
-    public class ReturnPicklist {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<PicklistObj> companyList;
-        @AuraEnabled public List<PicklistObj> joinLevelList;
-    }
-
-    public class PicklistObj {
-        @AuraEnabled public String label;
-        @AuraEnabled public String value;
-    }
-
-    //SECOND LEVEL COLUMN OBJ
-    public class SecLevColumnsObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<SingleSecCol> columnObj;
-    }
-
-    public class SingleSecCol {
-        @AuraEnabled public Boolean isFilter;
-        @AuraEnabled public String label;
-        @AuraEnabled public String fieldName;
-        @AuraEnabled public Boolean sortable;
-        @AuraEnabled public Decimal initialWidth;
     }
 
 }

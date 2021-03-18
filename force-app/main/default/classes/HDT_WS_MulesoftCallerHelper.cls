@@ -1,3 +1,7 @@
+
+
+//THIS CLASS IS OBSOLETE
+
 public without sharing class HDT_WS_MulesoftCallerHelper {
 
     public static Boolean isMock = true; 
