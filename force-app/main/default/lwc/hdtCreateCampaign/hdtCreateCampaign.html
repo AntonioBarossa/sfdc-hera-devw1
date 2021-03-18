@@ -1,56 +1,166 @@
 <template>
-    <lightning-record-edit-form object-api-name={objectApiName} onload={handleFormLoad} onerror={handleError} onsuccess={handleSuccess}>
-        <div class="slds-grid slds-wrap">
-            <lightning-messages>
-            </lightning-messages>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Name" required="true"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Status"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Category__c"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Target__c"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-1 slds-p-around--x-small">
-                <lightning-input-field field-name="Description"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="StartDate" required="true"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="EndDate"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Segment__c"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="TargetDescription__c"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="TargetingMode__c" required="true"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Priority__c"></lightning-input-field>
-            </div>
-            <div class="reitekField slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="ReitekIntegrationTechnology__c" required={reitekFieldRequired}></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="ParentId"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Tipology__c"></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}></lightning-input-field>
-            </div>
-            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
-                <lightning-input-field field-name="Required__c"></lightning-input-field>
-            </div>
-        </div>
-    </lightning-record-edit-form>
+    <div class="slds-p-top--small">
+        <lightning-card title="Configurazione Campagna">
+            <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} onload={handleFormLoad}
+                onsubmit={handleSubmit} onerror={handleError} onsuccess={handleSuccess}>
+                <div class="slds-wrap">
+                    <lightning-messages>
+                    </lightning-messages>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Name" required="true"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small statusField">
+                            <lightning-input-field field-name="Status" onchange={handleChangeStatus} required="true">
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small categoryField">
+                            <lightning-input-field field-name="Category__c" onchange={handleChangeCategory}
+                                required={categoryFieldRequired}>
+                            </lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small channelField">
+                            <lightning-input-field field-name="Channel__c" onchange={handleChangeChannel}
+                                required={channelFieldRequired} value={channelValues}>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Target__c"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="TargetDescription__c"></lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Priority__c"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Required__c"></lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="StartDate" required={startDateFieldRequired}>
+                            </lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="EndDate"></lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Tipology__c"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="ProcessType__c" required={processTypeFieldRequired}>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Segment__c"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="TargetingMode__c" required={targetingModeFieldRequired}>
+                            </lightning-input-field>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="ParentId"></lightning-input-field>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                            <lightning-input-field field-name="Description"></lightning-input-field>
+                        </div>
+                    </div>
+
+                    <template if:true={campaignInboundFields}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CaseCategory__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CaseSubCategory__c"></lightning-input-field>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template if:true={campaignOutboundFields}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="reitekField slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="ReitekIntegrationTechnology__c"
+                                    required={reitekFieldRequired}>
+                                </lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="MacroActivityEasyCIM__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CampaignEasyCIM__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small assignmentType">
+                                <lightning-input-field field-name="AssignmentType__c"
+                                    onchange={handleChangeAssignmentTye}
+                                    required={campaignMemberAssignmentTypeRequired}>
+                                </lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="CampaignMemberAssigment__c"
+                                    required={campaignMemberAssignmentRequired}
+                                    onchange={handleChangeCampaignMemberAssignment}></lightning-input-field>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template if:true={campaignBillingFields}>
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="BillTypeMessage__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-input-field field-name="StaticTextMessageBill__c"></lightning-input-field>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template if:true={campaignRecurringFields}>
+                        <lightning-card title="Campagna Ricorrente" class="slds-col slds-size_1-of-1">
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small recurringField">
+                                    <lightning-input-field field-name="RecurringCampaign__c"
+                                        onchange={handleRecurringCampaignChange}></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="DateNextGeneration__c"
+                                        required={recurringCampaignFieldsRequired}></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                    <lightning-input-field field-name="GenerationPeriod__c"
+                                        required={recurringCampaignFieldsRequired}></lightning-input-field>
+                                </div>
+                            </div>
+                        </lightning-card>
+                    </template>
+                    <div class="slds-col slds-size_1-of-1  slds-p-around--small rightAlign slds-card__footer">
+                        <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update"
+                            label="Salva">
+                        </lightning-button>
+                    </div>
+                </div>
+            </lightning-record-edit-form>
+        </lightning-card>
+    </div>
 </template>
