@@ -1,4 +1,5 @@
 import { LightningElement, track, wire, api } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
 
 
@@ -12,19 +13,26 @@ export default class PopoverContainer extends LightningElement {
     @api campaignType;
     @api objectApiName;
     @api entityId;
+    @api campaignCategory;
+    @api campaignChannel;
     @track allCampaigns = [];
     @track rowdata;
     @track isSale = false;
     @track selectedCampaignId = null;
     @track campaignsNumber = 0;
     @track listResults = false;
-    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectApiName' }) campaigns({ error, data }) {
-        if (error) {
+    @track campaignsResult = [];
+
+    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectApiName', category: '$campaignCategory', channel: '$campaignChannel' }) campaigns(result) {
+        this.campaignsResult = result;
+        this.allCampaigns = [];
+        this.campaignsNumber = 0;
+        if (result.error) {
             console.log(error);
-        } else if (data) {
-            if (data.length !== 0) {
-                data.forEach(item => {
-                    this.allCampaigns.push(item.Campaign);
+        } else if (result.data) {
+            if (result.data.length !== 0) {
+                result.data.forEach(item => {
+                    this.allCampaigns.push(item);
                     this.campaignsNumber++;
                 });
                 this.rowdata = this.allCampaigns;
@@ -42,6 +50,10 @@ export default class PopoverContainer extends LightningElement {
     columns = columns;
     connectedCallback() {
         this.isSale = this.campaignType == "sale" ? true : false;
+    }
+
+    handleCampaignsUpdate() {
+        refreshApex(this.campaignsResult);
     }
 
     handleRowSelection(event) {

@@ -38,17 +38,23 @@
                 <div class="slds-page-header__col-details">
                     <div class="slds-page-header__detail-row dblock">
                         <template if:true={listResults}>
-                            <template for:each={allCampaigns} for:item="campaign">
-                                <div class="slds-m-around_xx-small" key={campaign.Id}>
-                                    <article class="slds-tile" key={campaign.Id}>
-                                        <div onmouseout={closePopover} data-id={campaign.Id}>
-                                            <h3 class="slds-tile__title slds-truncate" title={campaign.Name}>
+                            <template for:each={allCampaigns} for:item="c">
+                                <div class="slds-m-around_xx-small" key={c.Id}>
+                                    <article class="slds-tile">
+                                        <div onmouseout={closePopover} data-id={c.Id}>
+                                            <h3 class="slds-tile__title slds-truncate campaignName"
+                                                data-required={c.Campaign.Required__c} data-id={c.Id}
+                                                title={c.Campaign.Name}>
                                                 <a href="#" onmouseover={openPopover}
-                                                    data-id={campaign.Id}>{campaign.Name}</a>
+                                                    data-id={c.Id}>{c.Campaign.Name}</a>
                                             </h3>
-                                            <c-hdt-popover class="slds-hide" campaign-id={campaign.Id} record-id={entityId} data-id={campaign.Id}
+                                            <c-hdt-popover class="slds-hide" campaign-id={c.CampaignId}
+                                                record-id={entityId} campaign-member-id={c.Id} data-id={c.Id}
+                                                process-type={c.Campaign.ProcessType__c}
+                                                case-cluster={c.Campaign.CaseCategory__c}
+                                                case-sub-process={c.Campaign.CaseSubCategory__c}
                                                 onmouseover={openPopover} onclosepopover={closePopover}
-                                                onmouseout={closePopover}>
+                                                onmouseout={closePopover} onstatusupdate={handleCampaignsUpdate}>
                                             </c-hdt-popover>
                                         </div>
                                         <div class="slds-tile__detail">
@@ -56,19 +62,25 @@
                                                 <dt class="slds-item_label slds-text-color_weak slds-truncate"
                                                     title="Status">
                                                     Stato:</dt>
-                                                <dd class="slds-item_detail slds-truncate" title={campaign.Status}>
-                                                    {campaign.Status}</dd>
+                                                <dd class="slds-item_detail slds-truncate" title={c.Status}>
+                                                    {c.Status}</dd>
                                                 <dt class="slds-item_label slds-text-color_weak slds-truncate"
                                                     title="Channel">
                                                     Canale:</dt>
-                                                <dd class="slds-item_detail slds-truncate" title={campaign.Channel__c}>
-                                                    {campaign.Channel__c}
+                                                <dd class="slds-item_detail slds-truncate"
+                                                    title={c.Campaign.Channel__c}>
+                                                    {c.Campaign.Channel__c}
                                                 </dd>
                                                 <dt class="slds-item_label slds-text-color_weak slds-truncate"
                                                     title="Closing Date">
                                                     Close Date:</dt>
-                                                <dd class="slds-item_detail slds-truncate" title={campaign.EndDate}>
-                                                    {campaign.EndDate}</dd>
+                                                <dd class="slds-item_detail slds-truncate" title={c.Campaign.EndDate}>
+                                                    {c.Campaign.EndDate}</dd>
+                                                <dt class="slds-item_label slds-text-color_weak slds-truncate"
+                                                    title="Contact">
+                                                    Contact Name:</dt>
+                                                <dd class="slds-item_detail slds-truncate" title={c.Contact.Name}>
+                                                    {c.Contact.Name}</dd>
                                             </dl>
                                         </div>
                                     </article>
