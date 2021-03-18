@@ -30,7 +30,7 @@ public inherited sharing class HDT_QR_Opportunity {
         
         String query = 'SELECT '+ fields +
 
-                ' FROM Opportunity WHERE Sale__c = :saleId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
+                ' FROM Opportunity WHERE Sale__c = :saleId AND StageName != :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }
@@ -47,7 +47,7 @@ public inherited sharing class HDT_QR_Opportunity {
         
         String query = 'SELECT '+ fields +
 
-                ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.IsVAS__c = null AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
+                ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.IsVAS__c = null AND StageName != :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }
