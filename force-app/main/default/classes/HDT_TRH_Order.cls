@@ -1,4 +1,4 @@
-public class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
+public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){}
  	public override void beforeDelete(){}

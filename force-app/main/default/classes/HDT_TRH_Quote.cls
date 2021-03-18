@@ -1,4 +1,4 @@
-public class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
+public inherited sharing class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
     
     public override void beforeInsert(){
         system.debug('Quote beforeInsert START');
