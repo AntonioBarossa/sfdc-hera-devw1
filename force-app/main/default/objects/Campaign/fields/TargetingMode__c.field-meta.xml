@@ -10,9 +10,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>A Priori</fullName>
+                <fullName>A priori</fullName>
                 <default>false</default>
-                <label>A Priori</label>
+                <label>A priori</label>
             </value>
             <value>
                 <fullName>Dinamico</fullName>

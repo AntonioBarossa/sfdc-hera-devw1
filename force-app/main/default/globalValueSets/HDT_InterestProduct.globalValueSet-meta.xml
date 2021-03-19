@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Offerta EE</fullName>
+        <default>false</default>
+        <label>Offerta EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta GAS</fullName>
+        <default>false</default>
+        <label>Offerta GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta Dual</fullName>
+        <default>false</default>
+        <label>Offerta Dual</label>
+    </customValue>
+    <customValue>
+        <fullName>HVAC</fullName>
+        <default>false</default>
+        <label>HVAC</label>
+    </customValue>
+    <customValue>
+        <fullName>HVAC - caldaia</fullName>
+        <default>false</default>
+        <label>HVAC - caldaia</label>
+    </customValue>
+    <customValue>
+        <fullName>HVAC - condizionatore</fullName>
+        <default>false</default>
+        <label>HVAC - condizionatore</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS – assicurazioni</fullName>
+        <default>false</default>
+        <label>VAS – assicurazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS – prodotti</fullName>
+        <default>false</default>
+        <label>VAS – prodotti</label>
+    </customValue>
+    <customValue>
+        <fullName>E- mobility auto</fullName>
+        <default>false</default>
+        <label>E- mobility auto</label>
+    </customValue>
+    <customValue>
+        <fullName>E- mobility bicicletta</fullName>
+        <default>false</default>
+        <label>E- mobility bicicletta</label>
+    </customValue>
+    <customValue>
+        <fullName>Altro</fullName>
+        <default>false</default>
+        <label>Altro</label>
+    </customValue>
+    <masterLabel>Prodotti di Interesse</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

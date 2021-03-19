@@ -11,9 +11,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>--Provvisorio--</fullName>
+                <fullName>Procedure e tecniche di vendita</fullName>
                 <default>false</default>
-                <label>--Provvisorio--</label>
+                <label>Procedure e tecniche di vendita</label>
+            </value>
+            <value>
+                <fullName>Aziendale</fullName>
+                <default>false</default>
+                <label>Aziendale</label>
+            </value>
+            <value>
+                <fullName>Specifiche di Business</fullName>
+                <default>false</default>
+                <label>Specifiche di Business</label>
+            </value>
+            <value>
+                <fullName>Prodotto / Offerte</fullName>
+                <default>false</default>
+                <label>Prodotto / Offerte</label>
             </value>
         </valueSetDefinition>
     </valueSet>

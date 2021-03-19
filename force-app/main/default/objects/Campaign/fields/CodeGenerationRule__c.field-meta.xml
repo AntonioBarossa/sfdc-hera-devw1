@@ -15,14 +15,19 @@
                 <label>Manuale</label>
             </value>
             <value>
-                <fullName>Prefisso + Progressivo</fullName>
+                <fullName>PrefissoProgressivo</fullName>
                 <default>false</default>
                 <label>Prefisso + Progressivo</label>
             </value>
             <value>
-                <fullName>Prefisso + Nome + Cognome + Progressivo</fullName>
+                <fullName>PrefissoNome</fullName>
                 <default>false</default>
-                <label>Prefisso + Nome + Cognome + Progressivo</label>
+                <label>Prefisso + Nome</label>
+            </value>
+            <value>
+                <fullName>CognomeProgressivo</fullName>
+                <default>false</default>
+                <label>Cognome + Progressivo</label>
             </value>
         </valueSetDefinition>
     </valueSet>

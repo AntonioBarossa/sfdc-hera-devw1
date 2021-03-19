@@ -10,14 +10,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Nuovo Caso</fullName>
-                <default>false</default>
-                <label>Nuovo Caso</label>
-            </value>
-            <value>
                 <fullName>Nuova Vendita</fullName>
                 <default>false</default>
                 <label>Nuova Vendita</label>
+            </value>
+            <value>
+                <fullName>Nuovo Caso</fullName>
+                <default>false</default>
+                <label>Nuovo Caso</label>
             </value>
             <value>
                 <fullName>Entrambi</fullName>

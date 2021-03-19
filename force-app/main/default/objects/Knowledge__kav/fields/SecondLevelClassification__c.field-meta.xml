@@ -7,14 +7,82 @@
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>FirstLevelClassification__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>--Provvisorio--</fullName>
+                <fullName>Recapito bollette</fullName>
                 <default>false</default>
-                <label>--Provvisorio--</label>
+                <label>Recapito bollette</label>
+            </value>
+            <value>
+                <fullName>Estratto conto</fullName>
+                <default>false</default>
+                <label>Estratto conto</label>
+            </value>
+            <value>
+                <fullName>Voci in bolletta</fullName>
+                <default>false</default>
+                <label>Voci in bolletta</label>
+            </value>
+            <value>
+                <fullName>Bolletta alta</fullName>
+                <default>false</default>
+                <label>Bolletta alta</label>
+            </value>
+            <value>
+                <fullName>Rateizzazione</fullName>
+                <default>false</default>
+                <label>Rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Solleciti</fullName>
+                <default>false</default>
+                <label>Solleciti</label>
+            </value>
+            <value>
+                <fullName>Rimborso e compensazione</fullName>
+                <default>false</default>
+                <label>Rimborso e compensazione</label>
+            </value>
+            <value>
+                <fullName>Morosità</fullName>
+                <default>false</default>
+                <label>Morosità</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Recapito bollette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Estratto conto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Voci in bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Bolletta alta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Solleciti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Rimborso e compensazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Bollette</controllingFieldValue>
+            <valueName>Morosità</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
