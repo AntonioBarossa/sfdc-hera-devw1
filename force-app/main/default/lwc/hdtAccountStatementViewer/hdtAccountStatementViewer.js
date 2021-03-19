@@ -93,7 +93,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         if (this.hasRendered) {
             this.hasRendered = false;
         } else {
-            //console.log('# rendered #');
             this.template.querySelectorAll('[data-name="pagination"]').forEach((but) => {
                 if(this.page == but.dataset.id){
                     but.variant = 'brand';
@@ -131,7 +130,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             if(result.success){
                 this.columns = result.columnObj;
                 this.confObj = result.confObj.buttonList;
-                console.log('----------> ' + result.confObj.recordCode);
+                console.log('----------> ' + result.confObj.customerCode);
+                this.techObj.customerCode = result.confObj.customerCode;
                 this.backendCall('home', '');// Chiamata in backend
                 this.columns.forEach((i) => {
                     this.interObj[i.fieldName] = '';   
@@ -156,7 +156,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         .catch(error => {
             this.handleError(error);
             this.showError = true;
-            this.showErrorMessage = 'While getting Tab Configuration';
+            this.showErrorMessage = JSON.stringify(error);
             this.closeMainSpinner();
         });
     }
@@ -456,7 +456,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# Get data from Mulesoft #');
 
         this.techObj.requestType = requestType;
-        //this.techObj.statementType = this.statementType;
 
         callMulesoft({techObj: JSON.stringify(this.techObj), requestObj: requestObj})
             .then(result => {
@@ -488,11 +487,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                         this.accountData = this.allData;
                     }
 
-                    //this.totAmountStored = result.totAmount;
-                    //this.totAmount = result.totAmount;
                     this.totAmountStored = this.totAmount;
                     this.secondLevelList = obj.data[0][this.detailTable];
-                    //this.spinnerObj.spinner = false;
                     this.totRecs = this.allData.length;
                     this.fromRec = 1;
 
@@ -503,12 +499,10 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     }
 
                     this.setPages(this.allData.length);
-                    //this.spinnerObj.spinner = false;
                     this.closeMainSpinner();
                 } else {
                     this.showError = true;
                     this.showErrorMessage = result.message;
-                    //this.spinnerObj.spinner = false;
                     this.closeMainSpinner();
                 }
                
@@ -1021,10 +1015,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     applyFilter(event){
         console.log('# applyFilter #');
-        //console.log('# # -> ' + JSON.stringify(filterObject));
         console.log('# filterobj -> ' + event.detail.filterobj);
 
-        //this.backendCall('aggregafiltri', event.detail.filterobj);// Chiamata in backend
         this.handleButtonClick('joinFilter', event.detail.filterobj);
         this.focusOnButton('joinFilter');
     }

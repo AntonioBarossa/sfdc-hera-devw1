@@ -135,7 +135,7 @@ public class HDT_WS_MulesoftCallerAsync {
         }
 
 
-        HDT_WRP_MulesoftResponse.ReturnObj restMessage = (HDT_WRP_MulesoftResponse.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_MulesoftResponse.ReturnObj.class);
+        HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj restMessage = (HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj)JSON.deserialize(resultBody, HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj.class);
 
         if(restMessage.status != 'success'){
             wrapObj.success = false;

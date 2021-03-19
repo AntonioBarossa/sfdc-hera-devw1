@@ -1,8 +1,8 @@
 public without sharing class HDT_WS_MulesoftCaller {
 
-    public static ResponseCtrl retrieveDataCtrl(String body, HttpObj httpObj) {
+    public static HDT_WRP_Response retrieveDataCtrl(String body, HDT_WRP_HttpObj httpObj) {
 
-        ResponseCtrl respObj = new ResponseCtrl();
+        HDT_WRP_Response respObj = new HDT_WRP_Response();
 
         //Integer initialLimit = Limits.getHeapSize();
         //Datetime startTime = Datetime.now();
@@ -76,13 +76,13 @@ public without sharing class HDT_WS_MulesoftCaller {
         return respObj;
     }
 
-    public class HttpObj {
+    public class HDT_WRP_HttpObj {
         public String endPoint;
         public String httpMethod;
         public Map<String, String> headersMap;
     }
 
-    public class ResponseCtrl {
+    public class HDT_WRP_Response {
         public Boolean success;
         public String message;
         public String body;

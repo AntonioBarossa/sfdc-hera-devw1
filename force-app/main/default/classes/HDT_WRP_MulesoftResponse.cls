@@ -5,7 +5,7 @@ public class HDT_WRP_MulesoftResponse {
         public String status;
         public String correlationId;
         public String timestamp;
-        public ErrorDetails errorDetails;
+        public HDT_WRP_ErrorDetails errorDetails;
     }
 
     public class HDT_WRP_ErrorDetails {

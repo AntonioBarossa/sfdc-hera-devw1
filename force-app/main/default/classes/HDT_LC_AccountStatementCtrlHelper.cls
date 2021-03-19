@@ -1,5 +1,95 @@
 public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
+    public static HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj getTabConfigurationHelper(HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj columnsObj, String tabValue, String recordId) {
+        System.debug('# GET COLUMNS #');
+        System.debug('# Current tab -> ' + tabValue);
+
+        columnsObj = new HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj();
+
+        try{
+
+            List<HDT_ColumnsFirstLevel__mdt> column_mdtList;
+            column_mdtList = HDT_QR_AccountStatement.getColumnMetaDataList(column_mdtList, tabValue);
+
+            if(column_mdtList.size()==0){
+                columnsObj.success = false;
+                columnsObj.message = 'No custom metadata found for coloumns';
+                return columnsObj;
+            }
+
+            columnsObj.success = true;
+            columnsObj.message = '';
+            columnsObj.confObj = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
+            columnsObj.columnObj = new List<HDT_WRP_AccountStatement.HDT_WRP_SingleColumn>();
+
+            columnsObj.confObj = getConfObj(tabValue);
+
+            //columnsObj.confObj.recordCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].Name;
+            columnsObj.confObj.customerCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].CustomerCode__c;
+
+            if(columnsObj.confObj.buttonList == null || columnsObj.confObj.buttonList.size()==0){
+                columnsObj.success = false;
+                columnsObj.message = 'Error to retrieve metadata: No data for buttons';
+                return columnsObj;
+            }
+
+            HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail cd;
+            HDT_WRP_AccountStatement.HDT_WRP_SingleColumn sc;
+            for(HDT_ColumnsFirstLevel__mdt c : column_mdtList){
+                cd = new HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail();
+                cd.type = c.FieldType__c;
+                cd.isAmount = c.IsAmountField__c;
+
+                sc = new HDT_WRP_AccountStatement.HDT_WRP_SingleColumn();
+                sc.label = c.MasterLabel;
+                sc.fieldName = c.FieldName__c;
+                sc.showSort = c.IsSortable__c;
+                sc.showAmount = c.ShowTotAmountHere__c;
+                sc.detail = cd;
+                columnsObj.columnObj.add(sc);
+            }
+
+        } catch (Exception ex){
+            columnsObj.success = false;
+            columnsObj.message = 'Error to retrieve metadata: ' + ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']';
+            return columnsObj;
+        }
+
+        System.debug('# HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj ' + JSON.serialize(columnsObj));
+        return columnsObj;
+    }
+
+    public static HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail getConfObj(String tabValue) {
+                
+        HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail objDetail = new HDT_WRP_AccountStatement.HDT_WRP_ConfTabObjDetail();
+        objDetail.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
+
+        List<HDT_TabConfiguration__mdt> mdtTabConfList;
+        mdtTabConfList = HDT_QR_AccountStatement.getTabConfMetadataList(mdtTabConfList, tabValue);
+ 
+        if(mdtTabConfList.size()==0){
+            return objDetail;
+        }
+        
+        objDetail.tabCode = tabValue;
+        objDetail.secondLevelAPIname = mdtTabConfList[0].SecondLevelAPI_Name__c;
+        objDetail.hasSecondLevel = mdtTabConfList[0].HasSecondLevel__c;
+        objDetail.hasAmountField = mdtTabConfList[0].HasAmountField__c;
+        
+        List<HDT_ButtonDetails__mdt> mdtButtonList;
+        mdtButtonList = HDT_QR_AccountStatement.getButtonMetadataList(mdtButtonList, tabValue);
+
+        if(mdtButtonList.size()==0){
+            return objDetail;
+        }
+
+        for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c));
+        }
+        
+        return objDetail;
+    }
+
     public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumnsHelper(String tabValue) {
 
         HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj obj = new HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj();
@@ -25,10 +115,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             obj.columnObj.add(colObj);
         }
 
-        //HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObjmockFromString = (SecLevColumnsObj)JSON.deserialize(secondJsonObjString, SecLevColumnsObj.class);
-        //mockFromString.success = true;
-        //mockFromString.message = 'col from apex';
-
         obj.success = true;
 
         return obj;
@@ -37,19 +123,24 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
     public static Object createMulesoftCall(String techObj, String requestObj){
 
         HDT_WRP_AccountStatement.HDT_WRP_ReponseWrapper wrapObj = new HDT_WRP_AccountStatement.HDT_WRP_ReponseWrapper();
-        Set<String> commonTabs = new Set<String>{'EC1', 'EC9', 'EC4', 'EC5', 'EC6', 'EC7', 'EC8', 'npi'};
 
         HDT_WRP_AccountStatement.HDT_WRP_TechObj tObj = (HDT_WRP_AccountStatement.HDT_WRP_TechObj)JSON.deserialize(techObj, HDT_WRP_AccountStatement.HDT_WRP_TechObj.class);
         System.debug('# Technical Object: -> ' + tObj);
         System.debug('# RequestObj -> ' + requestObj);
 
-        HDT_WRP_HttpDataBodyRow dbr;
+        if(String.isBlank(tObj.customerCode)){
+            wrapObj.success = false;
+            wrapObj.message = 'No customerCode';
+            return wrapObj;     
+        }
+
+        HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow dbr;
         if(String.isBlank(requestObj)){
             System.debug('# requestObj is null');
-            dbr = new HDT_WRP_HttpDataBodyRow();
+            dbr = new HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow();
         } else {
             System.debug('# requestObj is NOT null');
-            dbr = (HDT_WRP_HttpDataBodyRow)JSON.deserialize(requestObj, HDT_WRP_HttpDataBodyRow.class);
+            dbr = (HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow)JSON.deserialize(requestObj, HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow.class);
         }
 
         try{
@@ -65,12 +156,16 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             }   
 
             dbr.applicativo = tObj.requestType;
-            dbr.codiceCliente = tObj.recordId;
+            dbr.applicativo = 'AL';
+            dbr.codiceCliente = tObj.customerCode;
             dbr.aggregazione = mdtList[0].Aggregation__c;
+            dbr.aggregazione = '01';
             dbr.tipoTransazione = tObj.tabCode;
+            dbr.tipoTransazione = 'EC2';
             dbr.tipoEstrattoConto = tObj.statementType;
+            dbr.tipoEstrattoConto = 'ORDINARIO';
             dbr.loginId = mdtList[0].LoginId__c;
-
+            
             switch on tObj.requestType {
                 when 'home' {
                     
@@ -98,7 +193,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             return wrapObj;
         }
 
-        HDT_WS_MulesoftCaller.HttpObj httpObj = setHttpObject(tObj.tabCode);
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject(tObj.tabCode);
 
         if(httpObj == null){
             wrapObj.success = false;
@@ -106,15 +201,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             return wrapObj;
         }
 
-        dbr.applicativo = 'AL';
-        dbr.aggregazione = '01';
-        dbr.codiceCliente = '1001635149';
-        dbr.tipoTransazione = 'EC2';
-        dbr.tipoEstrattoConto = 'ORDINARIO';
-
-       //MODIFICATION START HERE
        String body = JSON.serialize(dbr, true);
-       HDT_WS_MulesoftCaller.ResponseCtrl responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+       HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
        if(!responseCtrl.success){
             wrapObj.success = false;
@@ -122,7 +210,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             return wrapObj;
         }
 
-        HDT_WRP_MulesoftResponse.ReturnObj restMessage = (HDT_WRP_MulesoftResponse.ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.ReturnObj.class);
+        HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj restMessage = (HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj.class);
 
         if(restMessage.status != 'success'){
             wrapObj.success = false;
@@ -138,18 +226,20 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
     }
 
-    public static HDT_WS_MulesoftCaller.HttpObj setHttpObject(String tabCode){
+    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(String tabCode){
 
-        HDT_WS_MulesoftCaller.HttpObj httpObj = new HDT_WS_MulesoftCaller.HttpObj();
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
         List<HDT_TabConfiguration__mdt> endPointMDT;
         endPointMDT = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMDT, tabCode);
 
         if(endPointMDT.size()>0 && !String.isEmpty(endPointMDT[0].EndpointService__c)){
-            httpObj.endPoint = endPointMDT[0].EndpointService__c;
+            //httpObj.endPoint = endPointMDT[0].EndpointService__c;
+            httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
             httpObj.httpMethod = 'POST';
-            httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');
+            //httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');            
+            httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
             httpObj.headersMap.put('Content-Type', 'application/json');
         } else {
             httpObj = null;
@@ -164,6 +254,45 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         String month = String.valueOf(tempDate.month());
         String year = String.valueOf(tempDate.year());
         return day + '/' + month + '/' + year;
+    }
+
+    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValuesHelper(HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj){
+        
+        pickObj = new HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist();
+        
+        try{
+            pickObj.companyList = new List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>();
+            pickObj.joinLevelList = new List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>();
+
+            List<HDT_HeraCompany__mdt> companyList;
+            companyList = HDT_QR_AccountStatement.getCompanyList(companyList);
+
+            HDT_WRP_AccountStatement.HDT_WRP_PicklistObj company;
+            for(HDT_HeraCompany__mdt hc : companyList){
+                company  = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
+                company.label = hc.Label;
+                company.value = hc.DeveloperName;
+                pickObj.companyList.add(company);
+            }
+
+            Schema.DescribeFieldResult fieldResult = HDT_StatementRequest__mdt.Aggregation__c.getDescribe();
+            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+            HDT_WRP_AccountStatement.HDT_WRP_PicklistObj joinLevel;
+            for( Schema.PicklistEntry f : ple){
+                joinLevel = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
+                joinLevel.label = f.getLabel();
+                joinLevel.value = f.getValue();
+                pickObj.joinLevelList.add(joinLevel);
+            }     
+
+            pickObj.success = true;
+
+        } catch (Exception ex){
+            pickObj.success = false;
+            pickObj.message = String.valueOf(ex.getLineNumber()) + '; ' + ex.getMessage();
+        }
+
+        return pickObj;        
     }
 
 }

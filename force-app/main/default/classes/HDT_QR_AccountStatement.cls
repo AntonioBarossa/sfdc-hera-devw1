@@ -5,7 +5,7 @@ public inherited sharing class HDT_QR_AccountStatement {
         colSecList = [
             SELECT MasterLabel, ColumnOrder__c, FieldName__c, InitialWidth__c, IsFilter__c, IsVisible__c, Sortable__c
             FROM HDT_ColumnsSecondLevel__mdt
-            WHERE IsVisible__c = true AND Tab__r.DeveloperName =: tabValue
+            WHERE IsVisible__c = true AND Tab__r.DeveloperName = :tabValue
             WITH SECURITY_ENFORCED
             ORDER BY ColumnOrder__c ASC
         ];
@@ -17,7 +17,8 @@ public inherited sharing class HDT_QR_AccountStatement {
         mdtList = [
             SELECT Aggregation__c, StatementType__c, TransactionType__c, LoginId__c
             FROM HDT_StatementRequest__mdt
-            WHERE DeveloperName =: requestType
+            WHERE DeveloperName = :requestType
+            WITH SECURITY_ENFORCED
         ];
         return mdtList;
     }
@@ -27,9 +28,66 @@ public inherited sharing class HDT_QR_AccountStatement {
         endPointMDT = [
             SELECT EndpointService__c
             FROM HDT_TabConfiguration__mdt
-            WHERE DeveloperName =: tabCode
+            WHERE DeveloperName = :tabCode
+            WITH SECURITY_ENFORCED
         ];
         return endPointMDT;       
+    }
+
+    public static List<HDT_HeraCompany__mdt> getCompanyList(List<HDT_HeraCompany__mdt> companyList){
+        companyList = new List<HDT_HeraCompany__mdt>();
+        companyList = [
+            SELECT DeveloperName, Label
+            FROM HDT_HeraCompany__mdt
+            WITH SECURITY_ENFORCED
+        ];
+        return companyList;
+    }
+
+    public static List<HDT_ColumnsFirstLevel__mdt> getColumnMetaDataList(List<HDT_ColumnsFirstLevel__mdt> column_mdtList, String tabValue){ 
+        column_mdtList = new List<HDT_ColumnsFirstLevel__mdt>();
+        column_mdtList = [
+            SELECT MasterLabel, FieldName__c, DeveloperName, IsAmountField__c, IsSortable__c, FieldType__c, ShowTotAmountHere__c, ColumnOrder__c, IsVisible__c
+            FROM HDT_ColumnsFirstLevel__mdt
+            WHERE Tab__r.DeveloperName = :tabValue AND IsVisible__c = true
+            WITH SECURITY_ENFORCED
+            ORDER BY ColumnOrder__c ASC
+        ];
+        return column_mdtList;
+    }
+
+    public static List<HDT_TabConfiguration__mdt> getTabConfMetadataList(List<HDT_TabConfiguration__mdt> mdtTabConfList, String tabValue){
+        mdtTabConfList = new List<HDT_TabConfiguration__mdt>();
+        mdtTabConfList = [
+            SELECT MasterLabel, HasSecondLevel__c, DeveloperName, SecondLevelAPI_Name__c, HasAmountField__c
+            FROM HDT_TabConfiguration__mdt
+            WHERE DeveloperName = :tabValue
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+        return mdtTabConfList;
+    }
+
+    public static List<Account> getAccountData(String accId){
+        List<Account> accList = new List<Account>();
+        accList = [
+            SELECT Name, CustomerCode__c
+            FROM Account
+            WHERE Id = :accId
+            WITH SECURITY_ENFORCED
+            ];
+        return accList;
+    }
+
+    public static List<HDT_ButtonDetails__mdt> getButtonMetadataList(List<HDT_ButtonDetails__mdt> mdtButtonList, String tabValue){
+        mdtButtonList = new List<HDT_ButtonDetails__mdt>();
+        mdtButtonList = [
+            SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, Tab__r.DeveloperName
+            FROM HDT_ButtonDetails__mdt	
+            WHERE Tab__r.DeveloperName = :tabValue
+            ORDER BY ButtonOrder__c ASC
+        ];
+        return mdtButtonList;
     }
 
 }
