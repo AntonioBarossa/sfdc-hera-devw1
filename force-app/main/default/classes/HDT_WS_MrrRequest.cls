@@ -1,13 +1,26 @@
+/**​
+* @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+* @date 17/03/2021
+* @description HDT_WS_MrrRequest – Rest API for inbound requests in the Mrr JSON format
+* @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
+*/
+
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
     
+    /**​
+    * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+    * @date 17/03/2021
+    * @description HDT_WS_MrrRequest.doPost() – Manages the POST Method requests
+    * @return Descrizione di quanto ritorna il metodo​
+    */
     @HttpPost
     webservice static void doPost() {
 
         JSONGenerator responseGen = JSON.createGenerator(true);
         responseGen.writeStartObject();
 
-        try{ 
+        try {
 
             String body = RestContext.request.requestBody.toString();
 
@@ -88,14 +101,27 @@ global with sharing class HDT_WS_MrrRequest {
                 }
 
             }
+            
+        } catch (JSONException jsonEx) {
+
+            System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
+            System.debug('errorMessage: ' + jsonEx.getMessage());
+            System.debug('errorStack: ' + jsonEx.getStackTraceString());
+            
+            responseGen.writeStringField('status', 'failed');
+
+            responseGen.writeFieldName('errorDetails');
+            responseGen.writeStartArray();
+                responseGen.writeStartObject();
+                    responseGen.writeStringField('code', 'BAD_REQUEST');
+                    responseGen.writeStringField('message', 'Malformed JSON body');
+                responseGen.writeEndObject();
+            responseGen.writeEndArray();
+
+            RestContext.response.statusCode = 400;
 
         } catch(Exception e) {
             
-            // responseGen.writeStringField('requestbody', RestContext.request.requestBody.toString());
-            // responseGen.writeStringField('RestContext', String.valueOf(RestContext.request));
-            // responseGen.writeStringField('errorMessage', e.getMessage());
-            // responseGen.writeStringField('errorStack', e.getStackTraceString());
-
             System.debug('requestbody: ' + String.valueOf(RestContext.request.requestBody));
             System.debug('errorMessage: ' + e.getMessage());
             System.debug('errorStack: ' + e.getStackTraceString());
@@ -118,8 +144,6 @@ global with sharing class HDT_WS_MrrRequest {
 
         RestContext.response.responseBody = Blob.valueOf(responseGen.getAsString());
         RestContext.response.headers.put('Content-Type', 'application/json');
-
-        // return responseGen.getAsString();
 
     }
 
