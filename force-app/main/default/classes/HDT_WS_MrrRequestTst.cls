@@ -1,3 +1,10 @@
+/**​
+* @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
+* @date 18/03/2021
+* @description HDT_WS_MrrRequestTst – Test class for the Rest API
+* @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
+*/
+
 @isTest
 public with sharing class HDT_WS_MrrRequestTst {
 
@@ -118,6 +125,26 @@ public with sharing class HDT_WS_MrrRequestTst {
         System.debug(RestContext.response.responseBody.toString());
         
         System.assertEquals(500, RestContext.response.statusCode, 'Apex error, should fail');
+    }
+
+    @isTest
+    private static Void postJSONException() {
+
+        RestRequest req = new RestRequest();
+        RestResponse res = new RestResponse();
+
+        req.requestURI = 'services/apexrest/MRRInboundService';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf('{"requests": ["header": {"requestId": "","requestTimestamp": "","requestType": "WRONG"},"objects": [{"fields": [{"fieldType": "","name": "","value": ""}],"id": "","name": "","objects": [],"objectType": "Case"}]}]}');
+
+        RestContext.request = req;
+        RestContext.response = res;
+        
+        HDT_WS_MrrRequest.doPost();
+
+        System.debug(RestContext.response.responseBody.toString());
+        
+        System.assertEquals(400, RestContext.response.statusCode, 'Apex JSON error, should fail');
     }
 
 }
