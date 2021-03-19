@@ -156,8 +156,9 @@
     <gender>Feminine</gender>
     <label>Assegnazione Campaign Member Item</label>
     <nameField>
+        <displayFormat>ACMI-{000000}</displayFormat>
         <label>Assegnazione Campaign Member Item Name</label>
-        <type>Text</type>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Assegnazioni Campaign Member Item</pluralLabel>
     <searchLayouts/>

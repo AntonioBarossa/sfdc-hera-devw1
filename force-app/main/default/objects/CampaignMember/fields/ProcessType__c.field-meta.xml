@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>TargetingMode__c</fullName>
+    <fullName>ProcessType__c</fullName>
     <externalId>false</externalId>
-    <label>Modalità Targeting</label>
+    <label>Tipo Processo</label>
     <required>false</required>
     <type>Picklist</type>
     <valueSet>
@@ -10,14 +10,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>A Priori</fullName>
+                <fullName>Nuovo Caso</fullName>
                 <default>false</default>
-                <label>A Priori</label>
+                <label>Nuovo Caso</label>
             </value>
             <value>
-                <fullName>Dinamico</fullName>
+                <fullName>Nuova Vendita</fullName>
                 <default>false</default>
-                <label>Dinamico</label>
+                <label>Nuova Vendita</label>
+            </value>
+            <value>
+                <fullName>Entrambi</fullName>
+                <default>false</default>
+                <label>Entrambi</label>
             </value>
         </valueSetDefinition>
     </valueSet>
