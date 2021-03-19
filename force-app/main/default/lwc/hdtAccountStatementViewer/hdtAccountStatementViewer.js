@@ -79,9 +79,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# connectedCallback #');
         console.log('# recordid -> ' + this.recordid);
         console.log('# statementType -> ' + this.statementType);
+
+        //set default value for SAP call
         this.techObj.statementType = this.statementType;
         this.techObj.recordId = this.recordid;
         this.techObj.tabCode = this.tabCode;
+        this.techObj.aggregation = '03';
+
         this.acctStmt = this.statementType;
         this.openMainSpinner();
         this.getTabConfigurationData();

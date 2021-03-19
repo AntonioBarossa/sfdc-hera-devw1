@@ -145,7 +145,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         try{
 
-            List<HDT_StatementRequest__mdt> mdtList;
+            /*List<HDT_StatementRequest__mdt> mdtList;
             mdtList = HDT_QR_AccountStatement.getStatementRequestMetaData(mdtList, tObj.requestType);
 
             if(mdtList.size()==0){
@@ -153,18 +153,14 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 wrapObj.success = false;
                 wrapObj.message = 'No custom metadata found on Salesforce';
                 return wrapObj;
-            }   
+            }*/
 
-            dbr.applicativo = tObj.requestType;
-            dbr.applicativo = 'AL';
+            dbr.applicativo = 'AL';//possible value -> ML, MT, AL
             dbr.codiceCliente = tObj.customerCode;
-            dbr.aggregazione = mdtList[0].Aggregation__c;
-            dbr.aggregazione = '01';
-            dbr.tipoTransazione = tObj.tabCode;
+            dbr.aggregazione = tObj.aggregation;//01|02|03|04
             dbr.tipoTransazione = 'EC2';
             dbr.tipoEstrattoConto = tObj.statementType;
-            dbr.tipoEstrattoConto = 'ORDINARIO';
-            dbr.loginId = mdtList[0].LoginId__c;
+            dbr.loginId = '0-1';
             
             switch on tObj.requestType {
                 when 'home' {
@@ -202,6 +198,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
        String body = JSON.serialize(dbr, true);
+       System.debug('>>> body obj > ' + body);
        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
        if(!responseCtrl.success){

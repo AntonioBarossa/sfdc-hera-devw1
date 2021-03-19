@@ -88,6 +88,7 @@ public class HDT_WRP_AccountStatement {
         public String customerCode;
         public String tabCode;
         public String statementType;
+        public String aggregation;
     }
 
     public class HDT_WRP_HttpDataBodyRow {

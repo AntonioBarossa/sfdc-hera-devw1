@@ -12,7 +12,7 @@ public inherited sharing class HDT_QR_AccountStatement {
         return colSecList;
     }
 
-    public static List<HDT_StatementRequest__mdt> getStatementRequestMetaData(List<HDT_StatementRequest__mdt> mdtList, String requestType){
+    /*public static List<HDT_StatementRequest__mdt> getStatementRequestMetaData(List<HDT_StatementRequest__mdt> mdtList, String requestType){
         mdtList = new List<HDT_StatementRequest__mdt>();
         mdtList = [
             SELECT Aggregation__c, StatementType__c, TransactionType__c, LoginId__c
@@ -21,7 +21,7 @@ public inherited sharing class HDT_QR_AccountStatement {
             WITH SECURITY_ENFORCED
         ];
         return mdtList;
-    }
+    }*/
 
     public static List<HDT_TabConfiguration__mdt> getTabConfigurationMetaData(List<HDT_TabConfiguration__mdt> endPointMDT, String tabCode){
         endPointMDT = new List<HDT_TabConfiguration__mdt>();
