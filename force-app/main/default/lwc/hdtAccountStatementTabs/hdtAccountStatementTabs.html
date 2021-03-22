@@ -1,6 +1,21 @@
 <template>
 
-    <div class="slds-box slds-box_xx-small" style="background:#ffffff">
+    <div if:true={showError} class="slds-text-align_center">
+        <lightning-card>
+            <lightning-icon icon-name="utility:wifi"
+                alternative-text="Warning!"
+                title="Warning"
+                size="large"
+            ></lightning-icon>
+
+        <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
+            <p>{showErrorMessage}</p>
+        </div>
+
+        </lightning-card>
+    </div>
+
+    <div if:false={showError} class="slds-box slds-box_xx-small" style="background:#ffffff">
 
         <lightning-tabset active-tab-value={defaultTab}>
 
@@ -23,71 +38,6 @@
                     </div>
                 </lightning-tab>  
             </template>
-
-            <!--
-            <lightning-tab label="Estratto conto"  value="EC" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small" >
-                <div class="slds-m-left_x-small slds-m-right_x-small" >
-                    <c-hdt-account-statement-viewer recordid={recordId} data-tabcode="EC" tab-code="EC" statement-type={statementType} onsettype={setStatementType} onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-account-statement-viewer>
-                </div>
-            </lightning-tab>   
-
-            <lightning-tab label="Gestione del credito"  value="EC1" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    <c-hdt-account-statement-viewer recordid={recordId} data-tabcode="EC1" tab-code="EC1" statement-type={statementType} onsettype={setStatementType} onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-account-statement-viewer>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Scaduto per riattivazione"  value="EC9" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    <c-hdt-account-statement-viewer recordid={recordId} data-tabcode="EC9" tab-code="EC9" statement-type={statementType} onsettype={setStatementType} onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-account-statement-viewer>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Paperless"  value="paperless" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small" >
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    <c-hdt-account-statement-viewer recordid={recordId} data-tabcode="paperless" tab-code="paperless" statement-type={statementType} onsettype={setStatementType} onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-account-statement-viewer>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Rate"  value="EC4" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    [LWC] - Rate
-                    <c-hdt-mock-cmp data-tabcode="EC4" tab-code="EC4" onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-mock-cmp>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Solleciti"  value="EC5" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    [LWC] - Solleciti
-                    <c-hdt-mock-cmp data-tabcode="EC5" tab-code="EC5" onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-mock-cmp>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Partite non fatturate"  value="EC7" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    <c-hdt-account-statement-viewer recordid={recordId} data-tabcode="EC7" tab-code="EC7" statement-type={statementType} onsettype={setStatementType} onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-account-statement-viewer>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Pagamenti e compensazioni"  value="EC6" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    <c-hdt-mock-cmp data-tabcode="EC6" tab-code="EC6" onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-mock-cmp>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Indennizzi"  value="EC8" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small" >
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    [LWC] - Indennizzi
-                    <c-hdt-mock-cmp data-tabcode="EC8" tab-code="EC8" onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-mock-cmp>
-                </div>
-            </lightning-tab>
-
-            <lightning-tab label="Note Var. IVA"  value="EC9x" onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small">
-                <div class="slds-m-left_x-small slds-m-right_x-small">
-                    [LWC] - Note Var. IVA
-                    <c-hdt-mock-cmp data-tabcode="EC9x" tab-code="EC9x" onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-mock-cmp>
-                </div>
-            </lightning-tab>-->
 
         </lightning-tabset>
 

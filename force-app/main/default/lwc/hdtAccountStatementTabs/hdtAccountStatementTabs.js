@@ -1,25 +1,13 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getTabsMetaData from '@salesforce/apex/HDT_LC_AccountStatementController.getTabsMetaData';
 
-/*const tabList = [
-    {label: 'Estratto conto', value: 'EC', isDeveloped: true},
-    {label: 'Gestione del credito', value: 'EC1', isDeveloped: true},
-    {label: 'Scaduto per riattivazione', value: 'EC9', isDeveloped: true},
-    {label: 'Paperless', value: 'paperless', isDeveloped: true},
-    {label: 'Rate', value: 'EC4', isDeveloped: true},
-    {label: 'Solleciti', value: 'EC6', isDeveloped: true},
-    {label: 'Parite non fatturate', value: 'EC7', isDeveloped: true},
-    {label: 'Pagamenti e compensazioni', value: 'EC5', isDeveloped: true},
-    {label: 'Indennizzi', value: 'EC8', isDeveloped: true},
-    {label: 'Note Var. IVA', value: 'npi', isDeveloped: true},
-];*/
-
 export default class HdtAccountStatementTabs extends LightningElement {
     @api recordId;
     @track tabContent = '';
     @track statementType;
     @track tabList;
     @track defaultTab = 'EC';
+    showError = false;
     @track spinnerObj = {
         spinner: false,
         spincss: ''
@@ -43,6 +31,8 @@ export default class HdtAccountStatementTabs extends LightningElement {
                 this.tabList = result.tabDetail;
             } else {
                 console.log('# error #');
+                this.showError = true;
+                this.showErrorMessage = result.message;
             }
 
         })
