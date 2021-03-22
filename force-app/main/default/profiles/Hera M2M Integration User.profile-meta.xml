@@ -14869,7 +14869,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
