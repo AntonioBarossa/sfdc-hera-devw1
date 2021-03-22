@@ -13464,7 +13464,9 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
-    <recordTypeVisibilities>
+
+  
+  <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
         <visible>true</visible>
