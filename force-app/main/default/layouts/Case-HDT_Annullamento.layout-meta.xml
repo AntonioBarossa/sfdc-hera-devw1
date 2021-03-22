@@ -73,10 +73,6 @@
                 <behavior>Readonly</behavior>
                 <field>SendToDistributorDate__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DlNote__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
