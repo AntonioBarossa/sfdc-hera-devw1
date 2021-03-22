@@ -1,17 +1,18 @@
 import { LightningElement, track, api, wire } from 'lwc';
+import getTabsMetaData from '@salesforce/apex/HDT_LC_AccountStatementController.getTabsMetaData';
 
-const tabList = [
+/*const tabList = [
     {label: 'Estratto conto', value: 'EC', isDeveloped: true},
     {label: 'Gestione del credito', value: 'EC1', isDeveloped: true},
     {label: 'Scaduto per riattivazione', value: 'EC9', isDeveloped: true},
     {label: 'Paperless', value: 'paperless', isDeveloped: true},
-    {label: 'Rate', value: 'EC4', isDeveloped: false},
-    {label: 'Solleciti', value: 'EC6', isDeveloped: false},
+    {label: 'Rate', value: 'EC4', isDeveloped: true},
+    {label: 'Solleciti', value: 'EC6', isDeveloped: true},
     {label: 'Parite non fatturate', value: 'EC7', isDeveloped: true},
-    {label: 'Pagamenti e compensazioni', value: 'EC5', isDeveloped: false},
-    {label: 'Indennizzi', value: 'EC8', isDeveloped: false},
-    {label: 'Note Var. IVA', value: 'npi', isDeveloped: false},
-];
+    {label: 'Pagamenti e compensazioni', value: 'EC5', isDeveloped: true},
+    {label: 'Indennizzi', value: 'EC8', isDeveloped: true},
+    {label: 'Note Var. IVA', value: 'npi', isDeveloped: true},
+];*/
 
 export default class HdtAccountStatementTabs extends LightningElement {
     @api recordId;
@@ -27,8 +28,27 @@ export default class HdtAccountStatementTabs extends LightningElement {
     previousTab = '';
 
     connectedCallback(){
+        this.getTabsMetaData();
         this.statementType = 'ORDINARIO';
-        this.tabList = tabList;
+        //this.tabList = tabList;
+    }
+
+    getTabsMetaData(){
+        getTabsMetaData()
+        .then(result => {
+            console.log('# # #');
+
+            if(result.success){
+                console.log('>>> result > ' + result.success);
+                this.tabList = result.tabDetail;
+            } else {
+                console.log('# error #');
+            }
+
+        })
+        .catch(error => {
+
+        });
     }
 
     openSpinner(){

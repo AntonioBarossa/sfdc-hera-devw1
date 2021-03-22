@@ -89,6 +89,7 @@ public class HDT_WRP_AccountStatement {
         public String tabCode;
         public String statementType;
         public String aggregation;
+        public String transactionType;
     }
 
     public class HDT_WRP_HttpDataBodyRow {
@@ -106,6 +107,17 @@ public class HDT_WRP_AccountStatement {
         public String societa;
         public String contratto;
         public String loginId;
+    }
+
+    public class HDT_WRP_Tabs {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public List<HDT_WRP_TabDetail> tabDetail;
+    }
+
+    public class HDT_WRP_TabDetail {
+        @AuraEnabled public String label;
+        @AuraEnabled public String value;
     }
 
 }

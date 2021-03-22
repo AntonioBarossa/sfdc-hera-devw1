@@ -11,21 +11,15 @@
             <template for:each={tabList} for:item="t">
                 <lightning-tab key={t.value} label={t.label}  value={t.value} onactive={handleActive} class="slds-p-top_xx-small slds-p-bottom_xx-small" >
                     <div class="slds-m-left_x-small slds-m-right_x-small" >
-                        <template if:true={t.isDeveloped}>
-                            <c-hdt-account-statement-viewer
-                                recordid={recordId}
-                                data-tabcode={t.value}
-                                tab-code={t.value}
-                                statement-type={statementType}
-                                onsettype={setStatementType}
-                                onopenspinner={openSpinner}
-                                onremovespinner={removeSpinner}
-                            ></c-hdt-account-statement-viewer>
-                        </template>
-                        <template if:false={t.isDeveloped}>
-                            [LWC] - Not yet developed
-                            <c-hdt-mock-cmp data-tabcode={t.value} tab-code={t.value} onopenspinner={openSpinner} onremovespinner={removeSpinner} ></c-hdt-mock-cmp>
-                        </template>
+                        <c-hdt-account-statement-viewer
+                            recordid={recordId}
+                            data-tabcode={t.value}
+                            tab-code={t.value}
+                            statement-type={statementType}
+                            onsettype={setStatementType}
+                            onopenspinner={openSpinner}
+                            onremovespinner={removeSpinner}
+                        ></c-hdt-account-statement-viewer>
                     </div>
                 </lightning-tab>  
             </template>

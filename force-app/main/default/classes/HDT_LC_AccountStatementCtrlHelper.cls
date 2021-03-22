@@ -1,5 +1,32 @@
 public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
+    public static HDT_WRP_AccountStatement.HDT_WRP_Tabs getTabsMetaDataHelper(){
+        HDT_WRP_AccountStatement.HDT_WRP_Tabs tabsList = new HDT_WRP_AccountStatement.HDT_WRP_Tabs();
+        List<HDT_TabConfiguration__mdt> tabMetadataList;
+        tabMetadataList = HDT_QR_AccountStatement.getTabMetaData(tabMetadataList);
+
+        if(tabMetadataList.size()==0){
+            tabsList.success = false;
+            tabsList.message = 'No metadata for tabs';
+            return tabsList;
+        }
+
+        tabsList.tabDetail = new List<HDT_WRP_AccountStatement.HDT_WRP_TabDetail>();
+        HDT_WRP_AccountStatement.HDT_WRP_TabDetail td;
+        for(HDT_TabConfiguration__mdt md : tabMetadataList){
+            if(md.ShowTab__c){
+                td = new HDT_WRP_AccountStatement.HDT_WRP_TabDetail();
+                td.label = md.Label;
+                td.value = md.DeveloperName;
+                tabsList.tabDetail.add(td);
+            }
+        }
+
+        tabsList.success = true;
+
+        return tabsList;
+    }
+
     public static HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj getTabConfigurationHelper(HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj columnsObj, String tabValue, String recordId) {
         System.debug('# GET COLUMNS #');
         System.debug('# Current tab -> ' + tabValue);
@@ -55,7 +82,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             return columnsObj;
         }
 
-        System.debug('# HDT_WRP_AccountStatement.HDT_WRP_ColumnsObj ' + JSON.serialize(columnsObj));
+        System.debug('# HDT_WRP_ColumnsObj > ' + JSON.serialize(columnsObj));
         return columnsObj;
     }
 
@@ -86,7 +113,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
             objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c));
         }
-        
+        System.debug('# ButtonDetails > ' + JSON.serialize(objDetail));
         return objDetail;
     }
 
@@ -116,7 +143,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         obj.success = true;
-
+        System.debug('# HDT_WRP_SecLevColumnsObj > ' + JSON.serialize(obj));
         return obj;
     }
 
@@ -127,6 +154,27 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         HDT_WRP_AccountStatement.HDT_WRP_TechObj tObj = (HDT_WRP_AccountStatement.HDT_WRP_TechObj)JSON.deserialize(techObj, HDT_WRP_AccountStatement.HDT_WRP_TechObj.class);
         System.debug('# Technical Object: -> ' + tObj);
         System.debug('# RequestObj -> ' + requestObj);
+
+        /* >>> Technical Object contains
+               - requestType
+               - statementType
+               - recordId
+               - tabCode
+               - aggregation
+               - transactionType
+               - customerCode
+        */
+
+        /* >>> RequestObj contains
+               - viewResult -> numeroFattura
+               - joinFilter -> aggregazione
+                               numeroFattura
+                               numeroBollettino
+                               contoContrattuale
+                               dataInizio
+                               dataFine
+                               societa
+        */
 
         if(String.isBlank(tObj.customerCode)){
             wrapObj.success = false;
@@ -155,29 +203,66 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 return wrapObj;
             }*/
 
-            dbr.applicativo = 'AL';//possible value -> ML, MT, AL
+            dbr.applicativo = 'AL';//possible value -> ML, MT, AL --> Default=AL only for WAVE1
             dbr.codiceCliente = tObj.customerCode;
-            dbr.aggregazione = tObj.aggregation;//01|02|03|04
-            dbr.tipoTransazione = 'EC2';
             dbr.tipoEstrattoConto = tObj.statementType;
             dbr.loginId = '0-1';
             
             switch on tObj.requestType {
+                //Tasto Home
                 when 'home' {
-                    
+                    //applicativo
+                    //aggregazione
+                    //codiceCliente
+                    //tipoTransazione
+                    //tipoEstrattoConto
+                    //loginId
+
+                    dbr.aggregazione = tObj.aggregation;//01|02|03|04
+                    dbr.tipoTransazione = tObj.transactionType;
                 }
+                //Tasto Tutte le partite recenti:
                 when 'allRecentItems' {
+                    //dataFine
+                    //dataInizio
+                    //applicativo
+                    //aggregazione
+                    //codiceCliente
+                    //tipoTransazione
+                    //tipoEstrattoConto
+                    //loginId
+
+                    dbr.aggregazione = tObj.aggregation;//01|02|03|04
+                    dbr.tipoTransazione = 'EC2';
                     Date todayDate = date.today();
                     Date minusDate = todayDate.addYears(-5);                    
                     dbr.dataFine = String.valueOf(todayDate.day()) + '/' + String.valueOf(todayDate.month()) + '/' + String.valueOf(todayDate.year());
                     dbr.dataInizio = String.valueOf(minusDate.day()) + '/' + String.valueOf(minusDate.month()) + '/' + String.valueOf(minusDate.year());
                 }
+                //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
+                    //numeroFattura
+                    //applicativo
+                    //aggregazione
+                    //codiceCliente
+                    //tipoTransazione
+                    //tipoEstrattoConto
+                    //loginId
+
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                 }
+                //Tasto Visualizza Esito
                 when 'viewResult' {
-
+                    dbr.aggregazione = tObj.aggregation;//01|02|03|04
+                    dbr.tipoTransazione = tObj.transactionType;
+                    //numeroFattura - ok
+                    //applicativo - ok
+                    //aggregazione - ok
+                    //codiceCliente - ok
+                    //tipoTransazione - ok
+                    //tipoEstrattoConto - ok
+                    //loginId - ok
                 }
 
             }
@@ -198,7 +283,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
        String body = JSON.serialize(dbr, true);
-       System.debug('>>> body obj > ' + body);
+       System.debug('>>> body obj > ');
+       System.debug(body);
        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
        if(!responseCtrl.success){

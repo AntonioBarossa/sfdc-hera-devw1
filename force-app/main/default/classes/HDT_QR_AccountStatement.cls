@@ -1,5 +1,16 @@
 public inherited sharing class HDT_QR_AccountStatement {
 
+    public static List<HDT_TabConfiguration__mdt> getTabMetaData(List<HDT_TabConfiguration__mdt> tabMetadataList){
+        tabMetadataList = new List<HDT_TabConfiguration__mdt>();
+        tabMetadataList = [
+            SELECT Label, DeveloperName, ShowTab__c, TabOrder__c
+            FROM HDT_TabConfiguration__mdt
+            WITH SECURITY_ENFORCED
+            ORDER BY TabOrder__c
+        ];
+        return tabMetadataList;       
+    }
+
     public static List<HDT_ColumnsSecondLevel__mdt> getColumnsSecondLevel(List<HDT_ColumnsSecondLevel__mdt> colSecList, String tabValue){
         colSecList = new List<HDT_ColumnsSecondLevel__mdt>();
         colSecList = [

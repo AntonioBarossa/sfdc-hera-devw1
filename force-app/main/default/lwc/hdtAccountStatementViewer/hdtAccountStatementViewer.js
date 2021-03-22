@@ -85,6 +85,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.techObj.recordId = this.recordid;
         this.techObj.tabCode = this.tabCode;
         this.techObj.aggregation = '03';
+        this.techObj.transactionType = 'EC1';
 
         this.acctStmt = this.statementType;
         this.openMainSpinner();
@@ -460,6 +461,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# Get data from Mulesoft #');
 
         this.techObj.requestType = requestType;
+
+        console.log(JSON.stringify(this.techObj));
 
         callMulesoft({techObj: JSON.stringify(this.techObj), requestObj: requestObj})
             .then(result => {
