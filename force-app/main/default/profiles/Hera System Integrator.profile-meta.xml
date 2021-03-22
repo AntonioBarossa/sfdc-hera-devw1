@@ -12202,16 +12202,6 @@
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_SwitchOutSIIGas</recordType>
     </layoutAssignments>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.HDT_RT_UnificazioneSeparazioneCABolletta</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.HDT_RT_VariazioneAnagraficaCliente</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_VerificaGdm_EE</recordType>
@@ -13312,12 +13302,12 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Lead.HDT_CreazioneManuale</recordType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Lead.HDT_Main</recordType>
+        <recordType>Lead.HDT_RT_Main</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
