@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CAWithOrWithoutSEPA__c</fullName>
+    <fullName>PraxidiaDissatisfiedCustomer__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>CA con/senza SEPA</description>
     <externalId>false</externalId>
-    <label>CA con/senza SEPA</label>
-    <trackFeedHistory>false</trackFeedHistory>
+    <label>Cliente insoddisfatto Praxidia</label>
     <trackHistory>false</trackHistory>
-    <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>
