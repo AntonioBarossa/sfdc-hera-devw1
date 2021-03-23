@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_HCPoint</fullName>
+    <fullName>HDT_RT_DistributorAppointment</fullName>
     <active>true</active>
-    <description>RT per gli HC Point</description>
-    <label>HC Point</label>
+    <description>Activity per tracciare gli appuntamenti presi fra cliente e distributore</description>
+    <label>Appuntamento Distributore</label>
     <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
