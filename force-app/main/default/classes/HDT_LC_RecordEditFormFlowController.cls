@@ -47,7 +47,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
         return HDT_QR_RecordEditFormFlowController.queryCd(cdIdList);
     }
 
-    @AuraEnabled(cacheable=true)
+   /* @AuraEnabled(cacheable=true)
     public static String getOptions(String serviceClass, String params) {
         String result;
        System.debug('Params getOptions ' + params);
@@ -188,7 +188,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
         return HDT_QR_InformativeManager.getFieldToPrePopulate(recordId);
 
-    }
+    }*/
 
 
 
