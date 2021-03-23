@@ -165,7 +165,7 @@
         </div>
 
         <!-- Section 2: data of first level -->
-        <div id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll">
+        <div id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll" >
             <table class="slds-table" >
                 <thead>
                     <tr>
@@ -262,7 +262,7 @@
         </div>
 
         <!-- Section 3: data of sevond level -->
-        <div if:true={showSecondLevel} class="slds-col slds-size_1-of-1">
+        <div if:true={showSecondLevel} class="slds-col slds-size_1-of-1" style="height: 22vh;" >
             <c-hdt-account-statement-detail-viewer
                 tab-code={tabCode}
                 accountdetails={secondLevelList}

@@ -1,4 +1,4 @@
-.tableFixHead{ overflow-y: auto; height:42vh;/*height:230px;*/ }
+.tableFixHead{ overflow-y: auto; height:30vh;/*height:230px;*/ }/*42vh*/
 .tableFixHead thead th { position: sticky; top: 0; z-index: 1; }
 .divheader { /*width: 200px;*/ }
 .mainbutton { white-space: nowrap; }

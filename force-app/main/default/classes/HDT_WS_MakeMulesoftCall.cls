@@ -1,5 +1,8 @@
 public class HDT_WS_MakeMulesoftCall {
 
+    // APEX CLASS NOT IN USE - EVALUATE TO DELETE
+
+    /*
     public static ResponseCtrl makeHttpRequest(String body, HttpObj httpObj) {
 
         ResponseCtrl respObj = new ResponseCtrl();
@@ -45,5 +48,5 @@ public class HDT_WS_MakeMulesoftCall {
         public String message;
         public HttpRequest httpReq;
     }
-
+*/
 }

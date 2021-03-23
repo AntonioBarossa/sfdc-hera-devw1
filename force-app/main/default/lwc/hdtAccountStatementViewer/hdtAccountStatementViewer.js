@@ -74,7 +74,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     @track confObj = [];
 
-
     connectedCallback() {
         console.log('# connectedCallback #');
         console.log('# recordid -> ' + this.recordid);

@@ -1,5 +1,6 @@
 public class HDT_WS_MulesoftCallerAsync {
-
+    // APEX CLASS NOT IN USE - EVALUATE TO DELETE
+    /*
     public static Boolean isMock = false; 
 
     public static HDT_WS_MakeMulesoftCall.ResponseCtrl createMulesoftCall(String techObj, String requestObj){
@@ -149,89 +150,6 @@ public class HDT_WS_MulesoftCallerAsync {
         wrapObj.data = resultBody;
         return wrapObj;
 
-        /*if(tObj.tabCode.equalsIgnoreCase('EC')){
-
-            ReponseObj resp = new ReponseObj();
-
-            HDT_WRP_AccountStatement.ReturnObj restMessage = (HDT_WRP_AccountStatement.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_AccountStatement.ReturnObj.class);
-            resp.data = new List<HDT_WRP_AccountStatement.DataWrapper>();
-
-            if(restMessage.status != 'success'){
-                resp.success = false;
-                resp.message += 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                resp.message += ']; Detail: ' + restMessage.errorDetails.message;
-                resp.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
-                return resp;
-            }
-
-            resp.data = restMessage.data;
-            resp.totAmount = 0;
-
-            for(Integer i=0; i<resp.data.size(); i++){
-                resp.data[i].id = resp.data[i].idPrimoLivelloSAP;
-                if(!String.isBlank(resp.data[i].importo)){
-                    resp.totAmount += Decimal.valueOf(resp.data[i].importo);
-                }      
-            }
-            
-            resp.success = true;
-
-            return resp;
-        } else if(commonTabs.contains(tObj.tabCode)){
-            ReponseObjCommonTab resp = new ReponseObjCommonTab();
-            HDT_WRP_CommonTab.ReturnObj restMessage = (HDT_WRP_CommonTab.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_CommonTab.ReturnObj.class);
-            resp.data = new List<HDT_WRP_CommonTab.FirstLevelObj>();
-
-            if(restMessage.status != 'success'){
-                resp.success = false;
-                resp.message += 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                resp.message += ']; Detail: ' + restMessage.errorDetails.message;
-                resp.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
-                return resp;
-            }
-
-            resp.data = restMessage.data;
-            resp.totAmount = 0;
-
-            for(Integer i=0; i<resp.data.size(); i++){
-                resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
-            }
-
-            resp.success = true;
-
-            return resp;
-        } else if(tObj.tabCode.equalsIgnoreCase('paperless')){
-            ReponseObjPaperless resp = new ReponseObjPaperless();
-
-            HDT_WRP_Paperless.ReturnObj restMessage = (HDT_WRP_Paperless.ReturnObj)JSON.deserialize(resultBody, HDT_WRP_Paperless.ReturnObj.class);
-            resp.data = new List<HDT_WRP_Paperless.FirstLevelObj>();
-
-            if(restMessage.status != 'success'){
-                resp.success = false;
-                resp.message += 'Mulesoft side [code: ' + restMessage.errorDetails.code;
-                resp.message += ']; Detail: ' + restMessage.errorDetails.message;
-                resp.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
-                return resp;
-            }
-
-            resp.data = restMessage.data;
-            //resp.totAmount = 0;
-
-            //for(Integer i=0; i<resp.data.size(); i++){
-            //    resp.totAmount += Decimal.valueOf(resp.data[i].importo);            
-            //}
-
-            resp.success = true;
-
-            return resp;
-        }
-
-        ReponseObjGeneric respNull = new ReponseObjGeneric();
-        respNull.success = false;
-        respNull.message = 'No logic developed';
-        return respNull;
-
-        //MODIFICATION END HERE*/
     }
 
     public static HDT_WS_MakeMulesoftCall.HttpObj setHttpObject(String tabCode){
@@ -281,34 +199,11 @@ public class HDT_WS_MulesoftCallerAsync {
         @AuraEnabled public String message;
     }
 
-    //RESPONSE OBJ RETURNED TO CONTROLLER FOR ACCOUNT STATEMENT
-    /*public class ReponseObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_AccountStatement.DataWrapper> data;
-        @AuraEnabled public Decimal totAmount;
-    }
-
-    //RESPONSE OBJ RETURNED TO CONTROLLER FOR Other tab
-    public class ReponseObjCommonTab {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_CommonTab.FirstLevelObj> data;
-        @AuraEnabled public Decimal totAmount;
-    }
-
-    //RESPONSE OBJ RETURNED TO CONTROLLER FOR Paperless
-    public class ReponseObjPaperless {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_Paperless.FirstLevelObj> data;
-    }*/
-
     public class TechObj {
         public String requestType;
         public String recordId;
         public String tabCode;
         public String statementType;
     }
-
+*/
 }
