@@ -27,14 +27,14 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 	}
 	
 	private static List<QuoteManagement__c> menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
-		
+
 		String localDispatcher 		= inputs[0].localDispatcher; 
 		String seller 				= inputs[0].seller;
 		String voltage 				= inputs[0].voltage;
-		Double powerAvailable 		= Double.valueOf(inputs[0].powerAvailable);
-		Double powerCommitted 		= Double.valueOf(inputs[0].powerCommitted);
+		Double powerAvailable 		= inputs[0].powerAvailable != '' ? Double.valueOf(inputs[0].powerAvailable) : null;
+		Double powerCommitted 		= inputs[0].powerCommitted != '' ? Double.valueOf(inputs[0].powerCommitted) : null;
 		String connectionType 		= inputs[0].connectionType;
-		Double powerRequested 		= Double.valueOf(inputs[0].powerRequested);
+		Double powerRequested 		= inputs[0].powerRequested != '' ? Double.valueOf(inputs[0].powerRequested) : null;
 		String supplyType 			= inputs[0].supplyType;
 		String phaseType 			= inputs[0].phaseType;
 		String energyUseType		= inputs[0].energyUseType;
@@ -85,7 +85,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 	private static String getRangeValue(Double power){
 		String result = '';
 		if(power != null){
-			List<HDT_PowerRangeValue__mdt> powerRangeValueList = [SELECT Range__c FROM HDT_PowerRangeValue__mdt WHERE Low__c <=: power AND High__c >= :power];
+			List<HDT_PowerRangeValue__mdt> powerRangeValueList = [SELECT Range__c FROM HDT_PowerRangeValue__mdt WHERE Low__c <=: power AND High__c >= :power WITH SECURITY_ENFORCED];
 			if(powerRangeValueList.size() > 0){
 				result = powerRangeValueList[0].Range__c;
 			}
