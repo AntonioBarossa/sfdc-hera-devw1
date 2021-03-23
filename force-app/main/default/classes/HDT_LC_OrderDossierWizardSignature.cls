@@ -37,15 +37,56 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-    * @date 13/01/2021
+    * @date 05/02/2021
     * @description Handle next action on signature section
     * @param Order orderUpdates
     */
     @AuraEnabled
     public static void next(Order orderUpdates){
-        
-        orderSrv.updateRecord(orderUpdates);
+        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderUpdates.Id);
+        List<Order> ordersToUpdate = new List<Order>();
+        Map<String,Object> objMap = orderUpdates.getPopulatedFieldsAsMap();
 
+        for (Order childOrder : childOrders) {
+            Order childOrderToUpdate = new Order(
+                Id = childOrder.Id
+            );
+
+            for (String key : objMap.keySet()) {
+                if (key != 'Id') {
+                    childOrderToUpdate.put(key, objMap.get(key));
+                }
+            }
+
+            system.debug('childOrderToUpdate: ' + childOrderToUpdate);
+            ordersToUpdate.add(childOrderToUpdate);
+        }
+
+        if(orderUpdates.ContractSigned__c != null && orderUpdates.ContractSigned__c){
+            orderUpdates.SignatureMethod__c = 'Stampa';
+            orderUpdates.DocSendingMethod__c = 'Stampa';
+        }
+
+        orderUpdates.Step__c = 2;
+        ordersToUpdate.add(orderUpdates);
+
+        system.debug('childOrdersToUpdate before update: ' + ordersToUpdate);
+        orderSrv.updateRecords(ordersToUpdate);
+        system.debug('childOrdersToUpdate after update: ' + ordersToUpdate);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 05/02/2021
+    * @description Handle "modifica" action on signature section
+    * @param String orderParentId
+    */
+    @AuraEnabled
+    public static void edit(String orderParentId){
+        orderSrv.updateRecord(new Order(
+            Id = orderParentId,
+            Step__c = 1
+        ));
     }
 
 }

@@ -10,9 +10,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>Manuale</fullName>
                 <default>false</default>
-                <label>TBD</label>
+                <label>Manuale</label>
+            </value>
+            <value>
+                <fullName>Peso Percentuale</fullName>
+                <default>false</default>
+                <label>Peso Percentuale</label>
+            </value>
+            <value>
+                <fullName>Su Base Lead</fullName>
+                <default>false</default>
+                <label>Su Base Lead</label>
             </value>
         </valueSetDefinition>
     </valueSet>

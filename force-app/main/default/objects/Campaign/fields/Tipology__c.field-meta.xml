@@ -10,9 +10,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>Quality Call</fullName>
                 <default>false</default>
-                <label>TBD</label>
+                <label>Quality Call</label>
+            </value>
+            <value>
+                <fullName>Comfort Call</fullName>
+                <default>false</default>
+                <label>Comfort Call</label>
+            </value>
+            <value>
+                <fullName>Teleselling</fullName>
+                <default>false</default>
+                <label>Teleselling</label>
+            </value>
+            <value>
+                <fullName>Passaggio a RID</fullName>
+                <default>false</default>
+                <label>Passaggio a RID</label>
+            </value>
+            <value>
+                <fullName>Passaggio a IEB</fullName>
+                <default>false</default>
+                <label>Passaggio a IEB</label>
             </value>
         </valueSetDefinition>
     </valueSet>

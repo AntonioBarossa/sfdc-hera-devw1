@@ -3,7 +3,7 @@
     <fullName>PushTriggeredSendRequestId__c</fullName>
     <caseSensitive>false</caseSensitive>
     <description>Marketing Cloud’s unique identifier for every request. Il campo &quot;request id&quot; è sempre e solo uno, cioè unico, anche se l&apos;utente ha ricevuto più notifiche, quindi per sapere se una persona ha ricevuto più notifiche basterebbe fare una count delle request id raggruppando per contact key</description>
-    <externalId>false</externalId>
+    <externalId>true</externalId>
     <label>PushTriggeredSendRequestId</label>
     <length>255</length>
     <required>false</required>

@@ -11,6 +11,7 @@
   <members>CaseReason</members>
   <members>CaseStatus</members>
   <members>CaseType</members>
+  <members>KnowledgeValidationStatus</members>
   <name>StandardValueSet</name>
 </types>
   <types>

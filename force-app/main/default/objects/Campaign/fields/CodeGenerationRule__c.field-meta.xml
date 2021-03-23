@@ -10,9 +10,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>Manuale</fullName>
                 <default>false</default>
-                <label>TBD</label>
+                <label>Manuale</label>
+            </value>
+            <value>
+                <fullName>PrefissoProgressivo</fullName>
+                <default>false</default>
+                <label>Prefisso + Progressivo</label>
+            </value>
+            <value>
+                <fullName>PrefissoNome</fullName>
+                <default>false</default>
+                <label>Prefisso + Nome</label>
+            </value>
+            <value>
+                <fullName>CognomeProgressivo</fullName>
+                <default>false</default>
+                <label>Cognome + Progressivo</label>
             </value>
         </valueSetDefinition>
     </valueSet>

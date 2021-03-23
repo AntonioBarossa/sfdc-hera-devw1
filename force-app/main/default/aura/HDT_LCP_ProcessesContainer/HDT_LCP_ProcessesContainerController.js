@@ -5,12 +5,12 @@
         var navService = component.find("navService");
         var workspaceAPI = component.find("workspace");
         var self = this;
-        var orderParentId = component.get('v.recordId') ;
+        var orderId = component.get('v.recordId') ;
         const ntfLib = component.find('notifLib');
         const ntfSvc = component.find('notify');
         
         action.setParams({
-            "orderParentId" : orderParentId
+            "orderId" : orderId
         });
         action.setCallback(this,function(response){
             var state = response.getState();
