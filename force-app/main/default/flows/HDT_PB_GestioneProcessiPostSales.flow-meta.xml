@@ -444,7 +444,7 @@
         </rules>
     </decisions>
     <description>Process Builder per la gestione di automazione Post Sales</description>
-    <interviewLabel>HDT_PB_GestioneProcessiPostSales-12_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_GestioneProcessiPostSales-13_InterviewLabel</interviewLabel>
     <label>Gestione Processi Post Sales</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -777,39 +777,6 @@
                 </value>
             </processMetadataValues>
             <field>CancellationReason__c</field>
-        </inputAssignments>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Data Richiesta Annullamento</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>GlobalConstant</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>CancellationRequestDate__c</field>
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
