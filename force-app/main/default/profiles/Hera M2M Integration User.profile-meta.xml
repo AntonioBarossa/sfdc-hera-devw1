@@ -15040,7 +15040,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
