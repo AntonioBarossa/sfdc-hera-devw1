@@ -45,7 +45,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>VatCode__c</field>
+                <field>VatNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

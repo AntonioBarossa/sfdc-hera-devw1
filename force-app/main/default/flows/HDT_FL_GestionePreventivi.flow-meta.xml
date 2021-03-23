@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Esiste_Importo_Configurato</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -26,6 +27,7 @@
         <faultConnector>
             <targetReference>ErrorConfigurationScreen</targetReference>
         </faultConnector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caliber</name>
             <value>
@@ -230,13 +232,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Get_Input_Case.ServicePoint__r.PowerAvailable__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.DlNote__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case.Note__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1229,6 +1224,7 @@
                     <stringValue>Indirizzo di fornitura</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1371,6 +1367,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>SaveInDraft</assignToReference>
@@ -1478,6 +1475,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1510,6 +1508,7 @@
                     <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1608,6 +1607,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
