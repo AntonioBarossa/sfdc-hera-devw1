@@ -11221,11 +11221,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__Subscription__c.SBQQ__SubscriptionPricing__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__Subscription__c.SBQQ__SubscriptionStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
