@@ -1,0 +1,52 @@
+<aura:component controller="HDT_LC_ChildOrderProcess" implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,lightning:availableForFlowScreens" access="global">
+    <aura:attribute name='order' type="Order"/>
+    <aura:attribute name='orderId' type="String"/>
+    <aura:attribute name='ordername' type="String"/>
+    <aura:attribute name='orderstatus' type="String"/>
+    <aura:attribute name='orderPod' type="String"/>
+    <aura:attribute name='selectedValue' type='String' default="Prima Attivazione"/>
+    <aura:attribute name='precheck' type='String' default=""/>
+	<aura:attribute name='compatibilita' type='String' default=""/>
+    <aura:attribute name="openModale" type="Boolean" default="false"/>
+    <aura:attribute name="recordtypeOrder" type="String"/>
+    <aura:attribute name="orderParentId" type="String"/>
+    <aura:attribute name="accountId" type="String"/>
+    <aura:attribute name="venditaId" type="String"/>
+    <aura:attribute name='causale' type='String' default=""/>
+    <aura:attribute name="lastStepNumber" type='Integer' default="3"/>
+    <aura:attribute name="loading" type='Boolean' default="false"/>
+    <aura:attribute name="draftObjectApiName" type='String' default=""/>
+    <aura:attribute name="draftObject" type='Map' />
+    <aura:attribute name="diffDraftObjectApiName" type='String' default=""/>
+    <aura:attribute name="diffFields" type='Map' />
+    <aura:attribute name="test" type='String' default="test"/>
+    <lightning:navigation aura:id="navService" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.loading}">
+        <lightning:spinner alternativeText="Loading" size="large" />
+    </aura:if> 
+
+    <aura:if isTrue="{!v.order}">
+        <c:hdtChildOrderProcessHeader order="{!v.order}"></c:hdtChildOrderProcessHeader>
+    </aura:if>
+
+    <aura:if isTrue="{!v.order}">
+        <c:hdtChildOrderProcessPrecheck order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}"></c:hdtChildOrderProcessPrecheck>
+    </aura:if>
+    
+    <br/>
+
+    <aura:if isTrue="{!v.order}">
+        <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
+            <c:hdtChildOrderProcessDetails order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
+        </aura:if>
+    </aura:if>
+
+    <aura:if isTrue="{!v.order}">
+        <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
+    </aura:if>
+
+</aura:component>	

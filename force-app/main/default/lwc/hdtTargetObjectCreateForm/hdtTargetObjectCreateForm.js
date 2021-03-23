@@ -1,12 +1,16 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 import { refreshApex } from '@salesforce/apex';
 import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
+
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
+
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
+
 
 
 
@@ -55,7 +59,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api rowsplitele = [];
     @api rowsplitgas = [];
 
-    
     
     /**
      * Handle save button availability
@@ -136,7 +139,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     toObject(fieldsData, fieldsDataReq){
         console.log('fieldsReq************^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^' + this.fieldsDataReq);
 
- 
         let fieldsDataObject = [];
         let mapFieldReq = new Map() ;
         mapFieldReq = this.fieldRequiredMapping();
@@ -154,6 +156,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         fieldsData.forEach(element => {
             
            if(this.selectedservicepoint != undefined){
+
             if(element == 'CommoditySector__c')
             {
              console.log('entra in Punto Elettrico CommoditySector__c');
@@ -168,6 +171,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             else if(( element == 'DisconnectibilityType__c' && this.servicePointRetrievedData['Disconnectable__c']=='SI'))
             {
+
                 fieldsDataObject.push(
                     {
                         fieldname: element,
@@ -179,15 +183,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             else
             {
+
                 fieldsDataObject.push(
                     {
                         fieldname: element,
                         required : mapFieldReq.get(element),
                         value: this.servicePointRetrievedData[element],
                         disabled: element == 'ServicePointCode__c' ? true : false
+
                     }
                 ) 
             }
+
 
             }
             else {
@@ -226,6 +233,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
 
+
         });
 
         return fieldsDataObject;
@@ -263,8 +271,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('datareqRaw *********************'+ JSON.stringify(this.fieldsDataReqRaw));
         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
         console.log('datareq *********************'+ JSON.stringify(this.fieldsDataReq ));
-        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+
         console.log('fieldsDataObject *********************'+ JSON.stringify(this.fieldsDataObject));
+
         //get address fields
         this.fieldsAddress = this.toArray(this.customSettings.FieldAddress__c);
         this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
@@ -290,7 +299,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 case 'Punto Gas':
                     this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c  : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldGas__c ) );
                     //this.fieldsDataRaw = undefined || null  ? this.fieldsDataRaw += data.FieldGas__c :  this.fieldsDataRaw +=','+ data.FieldGas__c;
+
                      //this.fieldsDataReqRaw += data.FieldGas__c;
+
                     this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredGas__c  : (data.FieldRequiredGas__c == null || data.FieldRequiredGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredGas__c ) );
             }
 
@@ -323,8 +334,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             this.fieldsDataReqRaw =(this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c  : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c ) );
                     }
                     this.manageFields();
+
                     //this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObject(this.servicePointRetrievedData);
                     this.getInstanceWrapObject(this.servicePointRetrievedData);
+
                 }).catch(error => {
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -356,6 +369,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
 
+
     @api
     getInstanceWrapObject(servicePointRetrievedData){
         console.log('getInstanceWrapObject - START');
@@ -372,6 +386,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         
         console.log('getInstanceWrapObject - END');
     }
+
 
     /**
      * Pre-fill Account__c field on render
@@ -444,6 +459,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     
         }
        
+
     }
 
     /**

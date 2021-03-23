@@ -1,0 +1,46 @@
+<template>
+    <lightning-card title="Informazioni Generali">
+        <template if:true={saleRecord}>
+            <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-large" size="12">
+                    <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
+                        <div class="slds-grid slds-wrap slds-m-top_small">
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Channel__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c" data-name="SalesContactRole__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Agency__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="FriendCode__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesCompany__c" variant="label-stacked"></lightning-input-field>
+                        </div>
+                    </lightning-record-edit-form>
+                </lightning-layout-item>
+            </lightning-layout>
+            
+                <lightning-layout>
+                    <lightning-layout-item padding="horizontal-large" size="12">
+                        <template if:true={isCampaignVisible}>
+                            <div class="slds-text-heading_small slds-m-vertical_small">Selezione campagna</div>
+                            <template if:true={disabledInput}>
+                                <lightning-record-edit-form record-id={saleRecord.Id} object-api-name="Sale__c">
+                                    <lightning-input-field disabled class="slds-size_1-of-3" value={saleRecord.Campaign__c} field-name="Campaign__c" variant="label-stacked"></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </template>
+                        </template>
+                        <template if:false={disabledInput}>
+                            <c-hdt-campaigns-popover campaign-type="sale" object-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent} onemitvisibility={handleCampaignVisibility}></c-hdt-campaigns-popover>
+                        </template>
+                    </lightning-layout-item>
+                </lightning-layout>
+
+            <div class="slds-clearfix slds-p-around_small">
+                <div class="slds-float_right">
+                    <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+                    <lightning-button hidden={hiddenEdit} onclick={handleEdit} label="Modifica" variant="brand" class="slds-m-left_x-small" icon-name="utility:edit"></lightning-button>
+                </div>
+            </div>
+        </template>
+    </lightning-card>
+</template>

@@ -27,6 +27,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api codComuneSAP;
     @api codStradarioSAP;
     @api IndEstero ;
+
     @api flagVerifiacto ;
     @track openmodel = false;
     tableData = [];
@@ -363,6 +364,7 @@ handleAddressFromAccount()
         this.openMod();
     }
 
+
 @api
 handleAddressValues(servicePointRetrievedData){
     console.log('handleAddressValues START - servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
@@ -403,9 +405,11 @@ handleAddressValues(servicePointRetrievedData){
                 this.IndEstero = servicePointRetrievedData[key] ;
             break;
             case 'FlagVerificato':
+
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
 
                 this.flagVerifiacto = servicePointRetrievedData[key] ;
+
             break;
         }
 
@@ -448,6 +452,7 @@ handleTextChange(event){
             case 'Comune':
                 this.comune =  event.target.value;
                 break;
+
             case 'Stato':
                 this.stato = event.target.value;
                 break;
@@ -536,6 +541,14 @@ disabledverifyFieldsAddressDisabled(){
         
         console.log('getInstanceWrapObject - END');
     }
+
+
+    @api
+    getInstanceWrapObjectBilling(billingProfileData){
+        this.handleAddressValues(billingProfileData);
+        this.theRecord = billingProfileData;
+    }
+
     /**
      * Get availability of verify address button
      */

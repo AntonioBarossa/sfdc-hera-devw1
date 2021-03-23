@@ -1,8 +1,8 @@
 trigger HDT_Case on Case(before insert, before update, before delete, 
 	                          after insert, after update, after delete, after undelete) {
 
-	HDT_TRH_Case handler = new HDT_TRH_Case();
-
+	new HDT_TRH_Case().run();
+/*
 	if (Trigger.isUpdate && Trigger.isBefore){
 		System.debug('case trigger: do before update');
     	handler.OnBeforeUpdate();       
@@ -15,5 +15,5 @@ trigger HDT_Case on Case(before insert, before update, before delete,
 	} else if(Trigger.isInsert && Trigger.isAfter){
 		System.debug('case trigger: do after insert');
 		handler.OnAfterInsert();
-	}
+	}*/
 }

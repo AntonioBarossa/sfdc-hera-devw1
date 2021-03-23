@@ -3,7 +3,7 @@
     <fullName>PrivacyProfilingChoiceDate__c</fullName>
     <description>Viene valorizzato ogni qual volta che il cliente cambia la scelta privacy relativa</description>
     <externalId>false</externalId>
-    <label>Data diniego profilazione</label>
+    <label>Data Consenso Profilazione</label>
     <required>false</required>
     <trackHistory>true</trackHistory>
     <type>Date</type>

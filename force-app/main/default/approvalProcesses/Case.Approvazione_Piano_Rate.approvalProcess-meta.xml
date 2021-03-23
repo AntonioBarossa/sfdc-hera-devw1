@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>CaseNumber</field>
+        <field>Owner</field>
+        <field>CreatedDate</field>
+        <field>Deposit__c</field>
+        <field>ApplicationInterests__c</field>
+        <field>CAWithOrWithoutSEPA__c</field>
+        <field>ClientCategory__c</field>
+        <field>CutomerAssisted__c</field>
+        <field>FirstExpirationDate__c</field>
+        <field>RefundableEscape__c</field>
+        <field>WorkStatus__c</field>
+        <field>Reason__c</field>
+        <field>MaxInstallmentsNumber__c</field>
+        <field>InstallmentPlanNumber__c</field>
+        <field>ExistingInstallmentPlanUnpaid__c</field>
+        <field>InstallmentNumberRequired__c</field>
+        <field>SuspensionInThePastTwelveMonths__c</field>
+        <field>TypeInstallmentPlan__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <type>adhoc</type>
+            </approver>
+        </assignedApprover>
+        <label>Step 1</label>
+        <name>Step_1</name>
+    </approvalStep>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <criteriaItems>
+            <field>Case.RecordType</field>
+            <operation>equals</operation>
+            <value>Pagamenti - Piano Rateizzazione</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Phase__c</field>
+            <operation>equals</operation>
+            <value>In Attesa Approvazione</value>
+        </criteriaItems>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Passa_a_Approvato_OK</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Passa_a_Approvato_KO</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <label>Approvazione Piano Rate</label>
+    <processOrder>1</processOrder>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>true</showApprovalHistory>
+</ApprovalProcess>

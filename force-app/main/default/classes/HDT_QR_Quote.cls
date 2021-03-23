@@ -19,11 +19,41 @@ public inherited sharing class HDT_QR_Quote {
             Id,
             Name,
             SBQQ__Opportunity2__r.Name,
-            SBQQ__Type__c
+            SBQQ__Type__c,
+            SBQQ__Status__c,
+            SBQQ__Ordered__c,
+            SBQQ__LineItemsGrouped__c,
+            SBQQ__OrderByQuoteLineGroup__c
             FROM SBQQ__Quote__c
-            WHERE
-           // WHERE Vendita__c = :saleId DISABILITATO PER MANCANZA CAMPO IN DEVW1 ANcora da Creare
-             SBQQ__Status__c != :status
+            WHERE Sale__c = :saleId
+            AND SBQQ__Status__c != :status
+
+            WITH SECURITY_ENFORCED
+            ORDER BY CreatedDate ASC
+        ];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records to show in "Configura Prodotti" section on wizard
+     * @param String Sale__c.Id
+     * @return List<SBQQ__Quote__c>
+     */
+    public List<SBQQ__Quote__c> getActiveRecords(String saleId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Opportunity2__r.Name,
+            SBQQ__Type__c,
+            SBQQ__Status__c,
+            SBQQ__Ordered__c,
+            SBQQ__LineItemsGrouped__c,
+            SBQQ__OrderByQuoteLineGroup__c
+            FROM SBQQ__Quote__c
+            WHERE Sale__c = :saleId
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate ASC
         ];
@@ -75,5 +105,46 @@ public inherited sharing class HDT_QR_Quote {
         ];
 
         return records[0];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records that will be updated on Sale save Event
+     * @param String Sale__c.Id
+     * @return List<SBQQ__Quote__c>
+     */
+    public List<SBQQ__Quote__c> getRecordsForSaleSaveEvent(String saleId){
+
+        return [
+            SELECT
+            SBQQ__Status__c,
+            SBQQ__Ordered__c,
+            SBQQ__LineItemsGrouped__c,
+            SBQQ__OrderByQuoteLineGroup__c
+            FROM SBQQ__Quote__c
+            WHERE Sale__c = :saleId
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+            ORDER BY CreatedDate ASC
+        ];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records that will be updated on Sale cancel Event
+     * @param String Sale__c.Id
+     * @return List<SBQQ__Quote__c>
+     */
+    public List<SBQQ__Quote__c> getRecordsForSaleCancelEvent(String saleId){
+
+        return [
+            SELECT
+            SBQQ__Status__c
+            FROM SBQQ__Quote__c
+            WHERE Sale__c = :saleId
+            AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+            ORDER BY CreatedDate ASC
+        ];
     }
 }

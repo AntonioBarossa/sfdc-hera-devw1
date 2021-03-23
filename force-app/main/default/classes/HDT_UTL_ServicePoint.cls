@@ -64,11 +64,13 @@ public with sharing class HDT_UTL_ServicePoint {
         system.debug('mapObject*************'+mapObject);
         system.debug('mapBooleanObject*************'+mapBooleanObject);
         return  result =   mapFieldsAddressWithWrapObject(mapObject,mapBooleanObject,mapApiName);
+
     }else{     
     
         result = new HDT_WRP_AddressObject('','','','','','','','','',false,false);
         System.debug('result:' +  result);
     }
+
 	
     System.debug('HDT_UTL_ServicePoint - getInstanceWrapAddressObject END');
     return result;
@@ -136,6 +138,7 @@ public with sharing class HDT_UTL_ServicePoint {
             }
         }
         system.debug('wrapObject: ***************' + h);
+
           
         System.debug('HDT_UTL_ServicePoint - mapFieldsAddressWithWrapObject END');
         return h;

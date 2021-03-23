@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReitekSendDate__c</fullName>
+    <description>Data gestita in automatico dal sistema per le Campagne Outbound Telefoniche, indica la data in cui la numerazione è stata inviata a Reitek</description>
+    <externalId>false</externalId>
+    <label>Data Invio a Reitek</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

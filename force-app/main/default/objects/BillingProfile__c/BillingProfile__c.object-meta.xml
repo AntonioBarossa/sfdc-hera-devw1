@@ -152,6 +152,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Masculine</gender>
     <label>Billing Profile</label>
     <nameField>
@@ -161,7 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Billing Profiles</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -1,0 +1,40 @@
+<template>
+    <template if:true={saleRecord}>
+        <lightning-card title={saleRecord.Name}>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-large" size="12">
+                    <div class="slds-page-header__col-details">
+                        <ul class="slds-page-header__detail-row">
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Account Name</div>
+                                <div class="slds-truncate" title="Account Name">{saleRecord.Account__r.Name}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Company Owner</div>
+                                <div class="slds-truncate" title="Account Name">{saleRecord.Account__r.CompanyOwner__c}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Account Owner</div>
+                                <div class="slds-truncate" title="Account Name">{saleRecord.Account__r.Owner.Name}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Codice Fiscale">
+                                    Codice Fiscale
+                                </div>
+                                <div class="slds-truncate" title="Codice Fiscale">{saleRecord.Account__r.FiscalCode__c}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Partita Iva">Partita Iva</div>
+                                <div class="slds-truncate" title="Partita Iva">{saleRecord.Account__r.VATNumber__c}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Data Inizio Vendita</div>
+                                <lightning-formatted-date-time value={saleRecord.CreatedDate} year="numeric" month="numeric" day="numeric" hour="2-digit" minute="2-digit" hour12="false"></lightning-formatted-date-time>
+                            </li>
+                        </ul>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+        </lightning-card>
+    </template>
+</template>
