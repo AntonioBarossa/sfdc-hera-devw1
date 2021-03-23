@@ -5331,6 +5331,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Knowledge__kav.Answer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Knowledge__kav.CommercialDocumentationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5382,6 +5387,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Knowledge__kav.ProblemType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Knowledge__kav.Question__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13246,6 +13256,11 @@
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
         <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
