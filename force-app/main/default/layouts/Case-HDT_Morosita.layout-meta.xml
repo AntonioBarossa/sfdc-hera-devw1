@@ -48,8 +48,8 @@
                 <field>PODPDRFormula__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DisconnectablePicklist__c</field>
+                <behavior>Edit</behavior>
+                <field>Disconnectable__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
