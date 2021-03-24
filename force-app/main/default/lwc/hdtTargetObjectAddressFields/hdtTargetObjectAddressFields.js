@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
+
 export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
     @api fieldsAddressObject=[];
@@ -26,7 +27,343 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api codComuneSAP;
     @api codStradarioSAP;
     @api IndEstero ;
-    @api flagVerificato ;
+
+    @api flagVerifiacto ;
+    @track openmodel = false;
+    tableData = [];
+    tableColumnsFornitura = [];
+    tableDataFornitura = [];
+    tableColumns = [];
+    isLoaded = false;
+    columns = [];
+    originalData = [];
+    originalDataFornitura = [];
+    pages = [];
+    pagesFornitura=[];
+    preloading = false;
+    @track currentPage = 0;
+    @track currentPageFornitura = 0;
+    totalPage = 0;
+    totalPageFornitura = 0;
+    @api accountid;
+    @track filterInputWordFornitura = null;
+    @track filterInputWord = null;
+    confirmButtonDisabled=true;
+    rowToSend=[];
+    disableCheckBoxFornitura=false;
+    disableCheckBoxFatturazione=false;
+
+handleAddressFromAccount()
+{
+    console.log(' getAddressFromAccount START****');
+	this.preloading = true;
+	/*getAddressFromAccount({accountId:this.accountid}).then(data =>
+	{
+        console.log('data getAddressFromAccount ****' + JSON.stringify(data));
+		if(data!= undefined){
+
+            this.via= data['Via'];
+            this.civico= data['Civico'];
+            this.comune=data['Comune'];		
+            this.provincia=data['Provincia'];
+            this.cap=data['CAP'];
+            this.stato=data['Stato'];
+			this.estensCivico='';
+            this.codComuneSAP='';
+            this.codStradarioSAP='';
+            //this.flagVerifiacto=false;
+
+            this.theRecord['Via']= data['Via'];
+            this.theRecord['Civico']= data['Civico'];
+            this.theRecord['Comune']= data['Comune'];
+            this.theRecord['Provincia']= data['Provincia'];
+            this.theRecord['CAP']= data['CAP'];
+            this.theRecord['Stato']= data['Stato'];
+            this.theRecord['Estens.Civico']= '';
+            this.theRecord['Codice Comune SAP']= '';
+            this.theRecord['Codice Via Stradario SAP']= '';
+            //this.theRecord['Flag Verificato']= false;
+
+        }
+    });*/
+	
+	this.preloading = false;
+    console.log(' getAddressFromAccount END****');
+}
+
+    handleConfirm(){
+        console.log('entra in handleconfirm');
+        this.preloading = true;
+        this.closeModal();
+		let data = [];
+        console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo']));
+        if(this.rowToSend['Indirizzo']!=undefined){
+            data = this.rowToSend['Indirizzo'].split(",");
+            console.log('data after rowToSend**************'+JSON.stringify(data));
+        }
+        else if(this.rowToSend['Indirizzo Fornitura']!=undefined)
+        {
+            console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo Fornitura']));
+            data = this.rowToSend['Indirizzo Fornitura'].split(",");
+            console.log('data after rowToSend**************'+JSON.stringify(data));
+
+        }
+
+        if(data!= undefined){
+
+            if(data.length>7){
+                this.via= data[0];
+                this.civico= data[1];
+                this.estensCivico= data[2];
+                this.comune=data[4]; 
+                this.provincia=data[5];
+                this.cap=data[6];
+                this.stato=data[7];
+            }else{
+                this.via= data[0];
+                this.civico= data[1];
+                this.estensCivico= data[2];
+                this.comune=data[3]; 
+                this.provincia=data[4];
+                this.cap=data[5];
+                this.stato=data[6];
+            }
+
+            this.theRecord['Via']= this.via;
+            this.theRecord['Civico']= this.civico;
+            this.theRecord['Estens.Civico']= this.estensCivico;
+            this.theRecord['Comune']= this.comune;
+            this.theRecord['Provincia']= this.provincia;
+            this.theRecord['CAP']= this.cap;
+            this.theRecord['Stato']= this.stato;
+            }
+        
+        this.preloading = false;
+        console.log('esce da handleconfirm');
+
+    }
+
+    getSelectedServicePoint(event){
+        console.log('getSelectedServicePoint START');
+        /*table = $("#main_index1").DataTable();
+        table.rows( '.selected' ).nodes().to$().removeClass( 'selected' );*/
+        
+        this.disableCheckBoxFornitura=true;
+        this.preloading = true;
+        let selectedRows = event.detail.selectedRows;
+        this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+        this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+        console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
+        this.preloading = false;
+        console.log('getSelectedServicePoint END');
+    }
+    
+    getSelectedAddress(event){
+        console.log('getSelectedAddress START');
+       /* table = $("#main_index1").DataTable();
+        table.rows( '.selected' ).nodes().to$().removeClass( 'selected' );*/
+
+        this.disableCheckBoxFatturazione=true;
+        this.preloading = true;
+        let selectedRows = event.detail.selectedRows;
+        this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
+        this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
+        console.log('rowToSend ******' + JSON.stringify(this.rowToSend));
+        this.preloading = false;
+        console.log('getSelectedAddress END');
+    }
+
+
+    handleFilterDataTableFornitura(event) {
+        let val = event.target.value;
+        let self = this;
+        let data;
+        setTimeout(function () {
+            data = JSON.parse(JSON.stringify(self.originalDataFornitura));
+            if (val.trim() !== '') {
+                data = data.filter(row => {
+                    let found = false;
+                    Object.values(row).forEach(v => {
+                        if (v !== undefined && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase())  !== -1 ) ) {
+                            found = true;
+                        }
+                    });
+                    if (found) return row;
+                })
+            }
+            self.createTableFornitura(data); // redesign table
+            self.currentPageFornitura = 0; // reset page
+        }, 1000);
+    }
+
+    handleFilterDataTable(event) {
+        let val = event.target.value;
+        let self = this;
+        let data;
+        setTimeout(function () {
+            data = JSON.parse(JSON.stringify(self.originalData));
+            if (val.trim() !== '') {
+                data = data.filter(row => {
+                    let found = false;
+                    Object.values(row).forEach(v => {
+                        if (v !== undefined && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase())  !== -1 ) ) {
+                            found = true;
+                        }
+                    });
+                    if (found) return row;
+                })
+            }
+            self.createTable(data); // redesign table
+            self.currentPage = 0; // reset page
+        }, 1000);
+    }
+
+    @api
+    submitIndirizzo(){
+        this.preloading = true;
+            console.log('AccountId *******************'+ JSON.stringify(this.accountid));
+          /*  getIndirizzo({accountId:this.accountid}).then(data =>{
+                this.preloading = false;
+                if (data.length > 0) {
+                    this.originalData = JSON.parse(JSON.stringify(data));
+                    this.createTable(data);
+                    this.formatTableHeaderColumns(data);
+                    this.openmodel = true;
+                    this.isLoaded = true;
+                } else {
+                   
+                    this.tableData=[];
+                    this.tableData = data;
+                }
+            });*/
+           /* getIndirizzoFornitura({accountId:this.accountid}).then(data =>{
+                this.preloading = false;
+                if (data.length > 0) {
+                    this.originalDataFornitura = JSON.parse(JSON.stringify(data));
+                    this.createTableFornitura(data);
+                    this.formatTableHeaderColumnsFornitura(data);
+                    this.openmodel = true;
+                    this.isLoaded = true;
+                } else {
+                    this.alert('Dati tabella','Nessun record trovato','warn')
+                    this.tableDataFornitura=[];
+                    this.tableDataFornitura = data;
+                }
+            });*/
+            console.log('tableData******'+ JSON.stringify(this.tableData));
+            console.log('tableDataFornitura******'+ JSON.stringify(this.tableDataFornitura));
+
+       
+        
+    }
+
+     /**
+     * Create header for Data-Table header with original data
+     */
+      formatTableHeaderColumns(rowData) {
+        let columns = [];
+        this.tableColumns = [];
+        rowData.forEach(row => {
+            let keys = Object.keys(row);
+            columns = columns.concat(keys);
+        });
+        let columnsUniq = [...new Set(columns)];
+        columnsUniq.forEach(field => this.tableColumns.push({label: field, fieldName: field}));
+    }
+
+    formatTableHeaderColumnsFornitura(rowData) {
+        let columns = [];
+        this.tableColumnsFornitura = [];
+        rowData.forEach(row => {
+            let keys = Object.keys(row);
+            columns = columns.concat(keys);
+        });
+        let columnsUniq = [...new Set(columns)];
+        columnsUniq.forEach(field => this.tableColumnsFornitura.push({label: field, fieldName: field}));
+    }
+
+    /**
+     * Create Data-Table
+     */
+    createTable(data) {
+        let i, j, temporary, chunk = 5;
+        this.pages = [];
+        for (i = 0, j = data.length; i < j; i += chunk) {
+            temporary = data.slice(i, i + chunk);
+            this.pages.push(temporary);
+        }
+        this.totalPage = this.pages.length;
+        this.reLoadTable();
+    }
+
+    createTableFornitura(data) {
+        let i, j, temporary, chunk = 5;
+        this.pagesFornitura = [];
+        for (i = 0, j = data.length; i < j; i += chunk) {
+            temporary = data.slice(i, i + chunk);
+            this.pagesFornitura.push(temporary);
+        }
+        this.totalPageFornitura = this.pagesFornitura.length;
+        this.reLoadTableFornitura();
+    }
+
+    reLoadTable() {
+        this.tableData=[];
+        this.tableData = this.pages[this.currentPage];
+
+        console.log('tableData********'+ JSON.stringify(this.tableData));
+
+    }
+
+    reLoadTableFornitura() {
+        this.tableDataFornitura=[];
+        this.tableDataFornitura = this.pagesFornitura[this.currentPageFornitura];
+
+        console.log('tableDataFornitura********'+ JSON.stringify(this.tableDataFornitura));
+
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPage - 1) this.currentPage++;
+        this.reLoadTable();
+    }
+
+    previousPage() {
+        if (this.currentPage > 0) this.currentPage--;
+        this.reLoadTable();
+    }
+
+    nextPageFornitura() {
+        if (this.currentPageFornitura < this.totalPageFornitura - 1) this.currentPageFornitura++;
+        this.reLoadTableFornitura();
+    }
+
+    previousPageFornitura() {
+        if (this.currentPageFornitura > 0) this.currentPageFornitura--;
+        this.reLoadTableFornitura();
+    }
+
+    get getCurrentPage() {
+        if (this.totalPage===0) return 0;
+        return this.currentPage + 1;
+    }
+
+    get getCurrentPageFornitura() {
+        if (this.totalPageFornitura===0) return 0;
+        return this.currentPageFornitura + 1;
+    }
+    
+    openmodal() {
+        this.openmodel = true;
+    }
+    closeModal() {
+        this.openmodel = false;
+    } 
+
+    submitAddressModal(){
+        this.openMod();
+    }
+
 
 @api
 handleAddressValues(servicePointRetrievedData){
@@ -68,9 +405,11 @@ handleAddressValues(servicePointRetrievedData){
                 this.IndEstero = servicePointRetrievedData[key] ;
             break;
             case 'FlagVerificato':
-                console.log('servicePointRetrievedData[key] Flag Verificato*************************************'+JSON.stringify(servicePointRetrievedData[key]));
 
-                this.flagVerificato = servicePointRetrievedData[key] ;
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+
+                this.flagVerifiacto = servicePointRetrievedData[key] ;
+
             break;
         }
 
@@ -112,6 +451,8 @@ handleTextChange(event){
                 break;
             case 'Comune':
                 this.comune =  event.target.value;
+                break;
+
             case 'Stato':
                 this.stato = event.target.value;
                 break;
@@ -201,11 +542,13 @@ disabledverifyFieldsAddressDisabled(){
         console.log('getInstanceWrapObject - END');
     }
 
+
     @api
     getInstanceWrapObjectBilling(billingProfileData){
         this.handleAddressValues(billingProfileData);
         this.theRecord = billingProfileData;
     }
+
     /**
      * Get availability of verify address button
      */
