@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_HCPoint</fullName>
+    <fullName>HDT_RT_CreditCheckKO</fullName>
     <active>true</active>
-    <description>RT per gli HC Point</description>
-    <label>HC Point</label>
+    <description>Record type per le activity di KO Credit Check sul Nuovo Cliente</description>
+    <label>Credit Check KO</label>
     <picklistValues>
         <picklist>AppointmentCompetence__c</picklist>
         <values>
@@ -151,10 +151,6 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Dimostrata Estraneità</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Saldo pagato</fullName>
             <default>false</default>
         </values>
@@ -177,11 +173,67 @@
     <picklistValues>
         <picklist>Status__c</picklist>
         <values>
+            <fullName>Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento confermato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento di competenza Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento eseguito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento non eseguito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Creata</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Invio app%2Eto SELF cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Forzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Risolto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica appuntamento in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica confermata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Null</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>
