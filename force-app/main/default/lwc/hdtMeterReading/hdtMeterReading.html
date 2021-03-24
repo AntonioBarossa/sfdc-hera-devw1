@@ -1,0 +1,44 @@
+<template>
+
+    <lightning-card  title="Seleziona il contratto">
+
+        <div class="slds-grid slds-gutters slds-m-left_xx-small">
+        <div class="slds-col slds-size_1-of-3">
+            <lightning-input
+                name="enter-search"
+                label=" "
+                variant="label-hidden"
+                type="search"
+            ></lightning-input>
+        </div>
+
+        </div>
+
+        <div class="slds-m-bottom_small" >
+
+        </div>
+        <div style="height: 150px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={data}
+                    columns={contractColumns}
+                    onrowaction={handleRowAction}
+                    hide-checkbox-column
+                    resize-column-disabled
+            ></lightning-datatable>
+        </div>
+    </lightning-card>
+
+
+    <div class="slds-m-top_x-small" style="height: 50px;">
+        <lightning-card  title={detailTableHeader}>
+            <lightning-datatable
+                key-field="id"
+                data={lettureData}
+                columns={columns}
+                resize-column-disabled
+            ></lightning-datatable>
+        </lightning-card>
+    </div>
+
+</template>
