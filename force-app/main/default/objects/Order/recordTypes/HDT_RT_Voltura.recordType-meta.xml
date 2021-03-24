@@ -5,6 +5,36 @@
     <description>Record Type per processo di Voltura</description>
     <label>Voltura</label>
     <picklistValues>
+        <picklist>AggregateBilling__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>AutorizationVolturaThirdTrader__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>BillSendMode__c</picklist>
         <values>
             <fullName>Bolletta per e-mail</fullName>
@@ -28,6 +58,169 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CIAccoutn__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CILegalRepresentative__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CancellationReason__c</picklist>
+        <values>
+            <fullName>Annullamento da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullo cambio offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullo voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Classificazione errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Codice ABI obsoleto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancanza titolarità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multi-ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No conferma Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDR%2FPOD errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica errata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality - Annullo cambio offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca ai sensi del comma 14%2E3 del TIMOE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca ai sensi del comma 6%2E3 del TIMOE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca ai sensi del comma 8%2E2 del TIMG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento da cliente oltre i termini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento tramite quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ChamberCommerceRegistration__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ConnectionMandate__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ConnectionType__c</picklist>
         <values>
             <fullName>Permanente</fullName>
@@ -39,6 +232,17 @@
         </values>
         <values>
             <fullName>Temporanea permanente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Deliberation__c</picklist>
+        <values>
+            <fullName>Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Delibera</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -58,6 +262,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DocumentLow80__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ElectronicInvoicingMethod__c</picklist>
         <values>
             <fullName>Estero</fullName>
@@ -73,6 +296,147 @@
         </values>
         <values>
             <fullName>XML PA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ExciseEle__c</picklist>
+        <values>
+            <fullName>Imposta %25 Usi Chim Metall No Sog%2E Obbl%2E   %28Cod%2E E_IE_11D%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta %25 Usi Mineral No Sog%2E Obbl%2E  %28Cod%2E E_IE_11C%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta C En%3E50%25 unità prod %28Cod%2E E_IE_14A%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Esente Forze Armate NATO %28Cod%2E E_IE_L10%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta FFSS %28Cod%2E E_IE_L03%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Grossiti EE Non Domest %28Cod%2E E_IE_L98%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Illum Pubbl %28Cod%2E E_IE_L01%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Opifici %28Cod%2E E_IE_L13%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Sedi Diplomatiche %28Cod%2EE_IE_L02%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Trasp Urb%2E %28Cod%2E E_IE_L04%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Usi Chim Elettrol Metal No Sog%2E Obbl%2E  %28Cod%2E E_IE_L11%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Usi Mineral No Sog%2E Obbl%2E  %28Cod%2E E_IE_11A%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta esente Prod%2EEE %28Cod%2E E_IE_L06%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta ordinaria Altri Usi %28Cod%2E E_IE_M04%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi domestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No sottoposto 100%25 Off%2E Acquisto_Min%2EChim%2EMetall%2E %28Cod%2E E_IE_06C%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ExciseGAS__c</picklist>
+        <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imosta Autopr-Prod EE Industr %28Cod%2E G_I15%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Autotrazione %28Cod%2E G_I09%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Forze Armate NATO %28Cod%2E G_I25%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Forze Armate Nazionali %28Cod%2E G_I24%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Processi Elettrolitici %28Cod%2E G_I21%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Processi Metallurgici %28Cod%2E G_I22%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Processi Mineralogici %28Cod%2E G_I23%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Sedi Diplomatiche - Art%2E22 %28Cod%2E G_I26%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Usi Domestici %28Cod%2E G_ICD%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi industriali %28Cod%2E G_I04%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi non domestici iva 10%25 %28Cod%2E G_ICC10%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Instance326__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -121,47 +485,7 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Accettazione Voltura</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bozza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bozza Annullata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiuso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazone verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da Inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -173,27 +497,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Definitivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Rilavorato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura Accettata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura Rifiutata</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -205,6 +509,32 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ProcessType__c</picklist>
+        <values>
+            <fullName>To define</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>QuickQuote__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>RecessSent__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -212,6 +542,17 @@
         </values>
         <values>
             <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RequestPhase__c</picklist>
+        <values>
+            <fullName>Monofase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trifase</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -296,6 +637,17 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SelfCertificationConnection__c</picklist>
+        <values>
+            <fullName>01</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02</fullName>
             <default>false</default>
         </values>
     </picklistValues>
