@@ -9,10 +9,9 @@
             </lightning-layout-item>
         </lightning-layout>
         <lightning-layout>
-            <lightning-layout-item  padding="around-small" size="12" >
+            <lightning-layout-item size="12">
                 <c-hdt-advanced-search disabledinput={disabledInput} onservicepointselection={handleServicePointSelection} additionalfilter={additionalFilter} showbuttoncontract={showButtonContract} showbuttonforniture={showButtonForniture} processtype={processType} targetobject={targetObject} accountid={accountId} ></c-hdt-advanced-search>
             </lightning-layout-item>
         </lightning-layout>
-        <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>
     </lightning-card>
 </template>
