@@ -6,7 +6,7 @@ export default class Popover extends LightningElement {
     @api campaignMemberId;
     @api processType;
     @api caseCluster;
-    @api caseSubProcess;
+    @api caseType;
     @track showNewCaseButton;
     @track showNewSaleButton;
 

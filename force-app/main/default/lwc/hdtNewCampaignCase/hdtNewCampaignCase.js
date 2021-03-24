@@ -6,7 +6,7 @@ import createNewCase from '@salesforce/apex/HDT_LC_CampaignsController.createNew
 export default class HdtNewCampaignCase extends NavigationMixin(LightningElement) {
     @api accountId;
     @api caseCluster;
-    @api caseSubProcess;
+    @api caseType;
     @api campaignId;
     caseObj = null;
 
@@ -15,7 +15,7 @@ export default class HdtNewCampaignCase extends NavigationMixin(LightningElement
             'Subject': 'PostVendita',
             'AccountId': this.accountId,
             'Cluster__c' : this.caseCluster,
-            'Subprocess__c': this.caseSubProcess,
+            'Type': this.caseType,
             'Campaign__c' : this.campaignId
         };
     }
