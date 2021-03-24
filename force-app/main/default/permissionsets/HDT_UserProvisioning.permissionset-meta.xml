@@ -5538,7 +5538,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Discount__c</field>
+        <field>SBQQ__ProductOption__c.DiscountEurMWh__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
