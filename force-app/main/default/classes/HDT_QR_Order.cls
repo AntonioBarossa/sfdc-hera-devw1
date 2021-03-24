@@ -44,17 +44,25 @@ public inherited sharing class HDT_QR_Order {
         return [
             SELECT
             Name,
+            OrderNumber,
+            RecordTypeId,
             AccountId,
             Account.Name,
+            Account.FirstName__c,
+            Account.LastName__c,
             Account.VATNumber__c,
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.RecordType.DeveloperName,
             Status,
             ContractSigned__c,
             SignedDate__c,
             SignatureMethod__c,
-            DocSendingMethod__c
+            DocSendingMethod__c,
+            CreatedDate,
+            Step__c,
+            Phase__c
             FROM Order 
             WHERE Sale__c = :saleId
             AND RecordTypeId = :recordTypeId
@@ -78,7 +86,12 @@ public inherited sharing class HDT_QR_Order {
             Account.FiscalCode__c,
             Account.BillingAddress,
             Account.ShippingAddress,
+            Account.FirstName__c,
+            Account.LastName__c,
+            Account.RecordType.Developername,
             Name,
+            RecordTypeId,
+            RecordType.Name,
             RecordType.DeveloperName,
             SystemModstamp,
             Status,
@@ -86,7 +99,28 @@ public inherited sharing class HDT_QR_Order {
             SignedDate__c,
             SignatureMethod__c,
             DocSendingMethod__c,
-            Sale__c
+            Sale__c,
+            CreatedDate,
+            Step__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.RecordType.DeveloperName,
+            ServicePoint__r.Account__c,
+            ServicePoint__r.MeterClass__c,
+            BillingProfile__c,
+            Deliberation__c,
+            ParentOrder__c,
+            ParentOrder__r.Status,
+            ParentOrder__r.Phase__c,
+            ParentOrder__r.ContractSigned__c,
+            ParentOrder__r.SignedDate__c,
+            OrderNumber,
+            Phase__c,
+            RequestOption__c,
+            WaiverRightAfterthought__c,
+            MaxAfterthoughtDate__c,
+            PreviousTrader__c,
+            VolturaThirdTrader__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -119,7 +153,65 @@ public inherited sharing class HDT_QR_Order {
             BillingProfile__r.InvoicingStreetName__c,
             BillingProfile__r.InvoicingStreetNumber__c,
             BillingProfile__r.InvoicingStreetNumberExtension__c,
-            OrderNumber
+            OrderNumber,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            Step__c,
+            CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c,
+            AutorizationVolturaThirdTrader__c,
+            VolturaThirdTrader__c,
+            Phase__c
+            FROM
+            Order
+            WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 20/02/2020
+    * @description Get child records by parent order Id without status filtering
+    * @param String parentOrderId
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersByParentIdAllStatus(String parentOrderId){
+        return [
+            SELECT 
+            AccountId,
+            Account.Name,
+            Name,
+            Recordtypeid,
+            Recordtype.Name,
+            Recordtype.DeveloperName,
+            Status,
+            BillingProfile__c,
+            BillingProfile__r.InvoicingCityCode__c,
+            BillingProfile__r.InvoicingCountry__c,
+            BillingProfile__r.InvoicingPlace__c,
+            BillingProfile__r.InvoicingPostalCode__c,
+            BillingProfile__r.InvoicingProvince__c,
+            BillingProfile__r.InvoicingStreetName__c,
+            BillingProfile__r.InvoicingStreetNumber__c,
+            BillingProfile__r.InvoicingStreetNumberExtension__c,
+            OrderNumber,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            Step__c,
+            CILegalRepresentative__c,
+            CIAccoutn__c,
+            QuickQuote__c,
+            ChamberCommerceRegistration__c,
+            Instance326__c,
+            DocumentLow80__c,
+            AutorizationVolturaThirdTrader__c,
+            Phase__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId

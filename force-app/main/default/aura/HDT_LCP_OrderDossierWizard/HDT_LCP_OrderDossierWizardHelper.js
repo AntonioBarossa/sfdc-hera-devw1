@@ -270,5 +270,23 @@
                 console.log('******' + error);
             });
             
-        }
+        },
+
+    getOrderParentRecord : function(component){
+        var orderParentId = component.get("v.orderParentId");
+
+        var action = component.get("c.getOrderParent");
+        action.setParams({orderParentId : orderParentId});
+        action.setCallback(this, function(response){
+            component.set('v.loading', false);
+            var state = response.getState();
+            if(state == 'SUCCESS') {
+                var retrievedOrderParent = response.getReturnValue();
+                component.set('v.orderParentRecord', retrievedOrderParent);
+            } else {
+                console.log(response.getError());
+            }
+        });
+        $A.enqueueAction(action);
+    }
 })

@@ -11,9 +11,34 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>Nessuno</fullName>
                 <default>false</default>
-                <label>TBD</label>
+                <label>Nessuno</label>
+            </value>
+            <value>
+                <fullName>Generico</fullName>
+                <default>false</default>
+                <label>Generico</label>
+            </value>
+            <value>
+                <fullName>Per singolo Campaign Member</fullName>
+                <default>false</default>
+                <label>Per singolo Campaign Member</label>
+            </value>
+            <value>
+                <fullName>Porta un amico</fullName>
+                <default>false</default>
+                <label>Porta un amico</label>
+            </value>
+            <value>
+                <fullName>Pubblico</fullName>
+                <default>false</default>
+                <label>Pubblico</label>
+            </value>
+            <value>
+                <fullName>Convenzione</fullName>
+                <default>false</default>
+                <label>Convenzione</label>
             </value>
         </valueSetDefinition>
     </valueSet>

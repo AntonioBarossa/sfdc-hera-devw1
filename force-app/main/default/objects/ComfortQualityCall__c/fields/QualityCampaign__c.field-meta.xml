@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>QualityCampaign__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Indicherà  le campagne relative alla quality call</description>
+    <externalId>false</externalId>
+    <label>Campagna Quality</label>
+    <referenceTo>Campaign</referenceTo>
+    <relationshipLabel>Comfort e Quality Call</relationshipLabel>
+    <relationshipName>QualityCalls</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

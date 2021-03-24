@@ -55,13 +55,14 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale){
 
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c');
 
         String recordTypeName = existingServicePoint[0].RecordType.DeveloperName;
         String supplyCity = existingServicePoint[0].SupplyCity__c;
+        String marketOrigin = existingServicePoint[0].MarketOrigin__c;
 
-        checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,Opportunity__r.Sale__c');
-        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale.Id, supplyCity, recordTypeName);
+        checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.RecordType.MarketOrigin__c,Opportunity__r.Sale__c');
+        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale.Id, supplyCity, recordTypeName, marketOrigin);
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
 
@@ -92,7 +93,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SBQQ__Account__c = sale.Account__c,
                 SBQQ__Primary__c = true,
                 Agency__c = sale.Agency__c,
-                Market__c = sale.Market__c,
+                Market__c = servicePoint.MarketOrigin__c,
                 Channel__c = sale.Channel__c,
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,
