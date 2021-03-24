@@ -15,6 +15,18 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     isDialogVisible = false;
     
     get disabledSave(){
+        //INIZIO SVILUPPI EVERIS
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+            console.log(this.lastStepNumber);
+
+            return !(this.lastStepNumber === 1);
+
+        }
+
+        //FINE SVILUPPI EVERIS
+
         console.log('lastStepNumber disabledSave: ', this.lastStepNumber);
         console.log('this.order.Step__c disabledSave: ', this.order.Step__c);
         return (this.order.Step__c !== this.lastStepNumber);
@@ -144,8 +156,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
             console.log('hdtChildOrderProcessActions - handleSaveDraft - draftObject has no data');
             this.dispatchEvent(new CustomEvent('redirecttoparent'));
         }
-
-        
     }
 
     callCancel(cancellationReason){

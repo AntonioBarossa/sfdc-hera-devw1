@@ -33,6 +33,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
             {"label":"Subentro","value":"HDT_RT_Subentro"},
             {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
+            {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"},
+            //INIZIO SVILUPPI VOLTURA EVERIS
+            {"label":"Voltura","value":"HDT_RT_Voltura"}
+            //FINE SVILUPPI VOLTURA EVERIS
             // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
         ];
     }
@@ -114,6 +118,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
             this.showDeliberation = false;
         }
+        //INIZIO SVILUPPI VOLTURA EVERIS
+        else if(selectedProcess === 'HDT_RT_Voltura')
+        {
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        //FINE SVILUPPI VOLTURA EVERIS
     }
 
     handleSelectProcess(event){

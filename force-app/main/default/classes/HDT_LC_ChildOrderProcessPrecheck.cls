@@ -42,15 +42,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(String orderId, String selectedProcess, String deliberate){
+    public static void next(String orderId, String selectedProcess, Boolean deliberate){
 
         String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcess);
 
         orderSrv.updateRecord(new Order(
             Id = orderId,
             RecordTypeId = recordTypeId,
-            Step__c = 2,
-            Deliberation__c = deliberate
+            Phase__c = 'Bozza', //Everis: Aggiunto update fase
+            Step__c = 2//,
+            //Deliberation__c = deliberate //Everis: Commentato poiche Deliberation__c non e' un boolean a DM
         ));
     }
 }

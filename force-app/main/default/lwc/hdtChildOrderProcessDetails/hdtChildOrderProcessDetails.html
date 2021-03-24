@@ -11,8 +11,92 @@
             <lightning-layout>
                 <lightning-layout-item padding="horizontal-large" size="12">
 
+    <!--INIZIO SVILUPPI EVERIS-->
+
+                    <lightning-accordion allow-multiple-sections-open  active-section-name={activeVoltureSection} onsectiontoggle={handleVoltureToggle}>
+
+                        <template if:true={loading}>
+                            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+                        </template>
+                      
+                        <template for:each={availableVoltureSection} for:item = "section">
+
+                            <lightning-accordion-section id={section.name} key={section.name} name={section.name} label={section.label}>
+
+                                <template if:false={section.reading}>
+
+                                    <div  class="slds-grid slds-wrap">
+
+                                        <template for:each={section.data} for:item="field">
+
+                                                <div key={field.apiName} class="slds-col slds-size_1-of-4 slds-p-around_small">
+
+                                                    <lightning-input if:false={section.inputField}
+                                                    type={field.type}
+                                                    name={field.apiname}
+                                                    label={field.label}
+                                                    value={field.value}
+                                                    disabled={field.disabled}
+                                                    required={field.required}
+                                                    onchange={handleVoltureChange}
+                                                    >
+                                                </lightning-input>
+
+
+                                                    <lightning-record-edit-form if:true={section.inputField} record-id={section.recordId} object-api-name={section.objectApiName}>   
+
+                                                        <lightning-input-field 
+                                                            field-name={field.apiname}
+                                                            disabled={field.disabled}
+                                                            required={field.required}
+                                                            onchange={handleVoltureChange}
+                                                            >
+                                                        </lightning-input-field>
+
+                                                    </lightning-record-edit-form>    
+
+                                                </div>  
+
+                                        </template>
+
+                                    </div>
+
+                                    <div class="slds-clearfix slds-p-around_small">
+                                        <div class="slds-float_right">
+                                            <lightning-button if:true={section.readingButton} class="slds-p-around_small" value={section.name} onclick={handleNext} label="Inserisci Autolettura" name='goReading' variant="brand" icon-name="utility:right"></lightning-button>
+                                            <lightning-button if:false={section.firstStep} value={section.name} onclick={handlePrevious} label="Indietro" variant="neutral" icon-name="utility:left"></lightning-button>
+                                            <lightning-button if:false={section.lastStep} value={section.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
+                                        </div>
+                                    </div>
+
+                                </template>
+
+                                <template if:true={section.reading}>
+
+                                    <c-hdt-self-reading commodity={order.ServicePoint__r.CommoditySector__c}
+                                    record-id={order.Id} 
+                                    object="Order" 
+                                    is-volture="true"
+                                    is-retroactive={isRetroactive}
+                                    reading-customer-date={readingCustomerDate}
+                                    disabled-reading-date={disabledReadingDate}
+                                    onsavereading={handelVoltureReading}></c-hdt-self-reading>
+
+                                </template>
+
+                            </lightning-accordion-section>
+  
+                      <!--<lightning-accordion-section name="SelfReading" label="Autolettura">
+                            <c-hdt-self-reading commodity="Energia Elettrica" record-id={order.Id} object="Order"></c-hdt-self-reading>
+                        </lightning-accordion-section>-->
+
+                    </template>
+                  
+                </lightning-accordion>
+
+    <!--FINE SVILUPPI EVERIS-->
                     <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleSectionToggle}>
-                        
+
                         <template for:each={availableSteps} for:item="section">
 
                             <lightning-accordion-section key={section.step} if:true={section.processVisibility} name={section.name} label={section.label}>
@@ -63,15 +147,16 @@
                                     </lightning-record-edit-form>
                                 </template>
 
-                                <div class="slds-clearfix slds-p-around_small">
+                                <!--<div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_right">
-                                        <template if:true={section.hasCalculateButton}>
+                                        COMMENTATO POICHE NON PRESENTE SU GIT
+                                            <template if:true={section.hasCalculateButton}>
                                             <c-hdt-calculate-estimated-cost record-id={section.diffRecordId}></c-hdt-calculate-estimated-cost>
                                         </template>
                                         <lightning-button if:false={section.firstStep} value={section.name} onclick={handlePrevious} label="Indietro" variant="brand" icon-name="utility:left" class="slds-m-left_x-small"></lightning-button>
                                         <lightning-button if:false={section.lastStep} value={section.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>
-                                </div>
+                                </div>-->
                             </lightning-accordion-section>
 
                         </template>
