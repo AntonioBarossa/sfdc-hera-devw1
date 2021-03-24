@@ -6,7 +6,35 @@
     <picklistValues>
         <picklist>CommercialDocumentationType__c</picklist>
         <values>
-            <fullName>--Provvisorio--</fullName>
+            <fullName>Gestione Rischio abbandono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione obiezioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mobilità Sostenibile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Promozioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Script per contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Script per postvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Script per preventivi e verifiche</fullName>
             <default>false</default>
         </values>
     </picklistValues>
