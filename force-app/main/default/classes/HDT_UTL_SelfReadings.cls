@@ -20,10 +20,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         }
 
         List<String> recordTypes = configs[0].OrderRecordTypes__c.split(',');
-        List<Id> recordTypeIds = new List<Id>();
-        for (String recordType : recordTypes) {
-            recordTypeIds.add(rtQueryHandler.getRecordTypeIdByName(recordType));
-        }
+        List<Id> recordTypeIds = rtQueryHandler.getRecordTypeIdsByNames(recordTypes);
         
         List<String> badPhases = new List<String>();
         List<String> badStates = new List<String>();
