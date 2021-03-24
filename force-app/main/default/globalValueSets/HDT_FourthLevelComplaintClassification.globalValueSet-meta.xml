@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Accesso ai dati</fullName>
+        <default>false</default>
+        <label>Accesso ai dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Accise</fullName>
+        <default>false</default>
+        <label>Accise</label>
+    </customValue>
+    <customValue>
+        <fullName>Accollo Totale</fullName>
+        <default>false</default>
+        <label>Accollo Totale</label>
+    </customValue>
+    <customValue>
+        <fullName>Adeguamento normativa</fullName>
+        <default>false</default>
+        <label>Adeguamento normativa</label>
+    </customValue>
+    <customValue>
+        <fullName>Altro</fullName>
+        <default>false</default>
+        <label>Altro</label>
+    </customValue>
+    <customValue>
+        <fullName>APP - Accessibilità canale</fullName>
+        <default>false</default>
+        <label>APP - Accessibilità canale</label>
+    </customValue>
+    <customValue>
+        <fullName>APP - Funzionalità</fullName>
+        <default>false</default>
+        <label>APP - Funzionalità</label>
+    </customValue>
+    <customValue>
+        <fullName>Applicazione offerta</fullName>
+        <default>false</default>
+        <label>Applicazione offerta</label>
+    </customValue>
+    <customValue>
+        <fullName>Assicurazione contro incidenti da gas</fullName>
+        <default>false</default>
+        <label>Assicurazione contro incidenti da gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni- non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>Attivazioni- non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni - non eseguita causa Distributore</fullName>
+        <default>false</default>
+        <label>Attivazioni - non eseguita causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni - non eseguita causa Venditore</fullName>
+        <default>false</default>
+        <label>Attivazioni - non eseguita causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni - tempistiche/modalità/costi</fullName>
+        <default>false</default>
+        <label>Attivazioni - tempistiche/modalità/costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Bolletta - chiarezza espositiva</fullName>
+        <default>false</default>
+        <label>Bolletta - chiarezza espositiva</label>
+    </customValue>
+    <customValue>
+        <fullName>Bolletta - dettaglio</fullName>
+        <default>false</default>
+        <label>Bolletta - dettaglio</label>
+    </customValue>
+    <customValue>
+        <fullName>Bonus_Sconti_Promo</fullName>
+        <default>false</default>
+        <label>Bonus_Sconti_Promo</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio contatore</fullName>
+        <default>false</default>
+        <label>Cambio contatore</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellazione dati</fullName>
+        <default>false</default>
+        <label>Cancellazione dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Canone Rai</fullName>
+        <default>false</default>
+        <label>Canone Rai</label>
+    </customValue>
+    <customValue>
+        <fullName>Causa Arera</fullName>
+        <default>false</default>
+        <label>Causa Arera</label>
+    </customValue>
+    <customValue>
+        <fullName>Causa Cliente</fullName>
+        <default>false</default>
+        <label>Causa Cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Causa Distributore</fullName>
+        <default>false</default>
+        <label>Causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Causa Venditore</fullName>
+        <default>false</default>
+        <label>Causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Certificati GO</fullName>
+        <default>false</default>
+        <label>Certificati GO</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazione non corretta</fullName>
+        <default>false</default>
+        <label>Cessazione non corretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazioni - non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>Cessazioni - non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazioni - non eseguita causa Distributore</fullName>
+        <default>false</default>
+        <label>Cessazioni - non eseguita causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazioni - non eseguita causa Venditore</fullName>
+        <default>false</default>
+        <label>Cessazioni - non eseguita causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazioni - tempistiche/modalità/costi</fullName>
+        <default>false</default>
+        <label>Cessazioni - tempistiche/modalità/costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Compensazioni</fullName>
+        <default>false</default>
+        <label>Compensazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Condizioni negoziate</fullName>
+        <default>false</default>
+        <label>Condizioni negoziate</label>
+    </customValue>
+    <customValue>
+        <fullName>Conferma erogazione</fullName>
+        <default>false</default>
+        <label>Conferma erogazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Consumo annuo</fullName>
+        <default>false</default>
+        <label>Consumo annuo</label>
+    </customValue>
+    <customValue>
+        <fullName>Contatore accessibile</fullName>
+        <default>false</default>
+        <label>Contatore accessibile</label>
+    </customValue>
+    <customValue>
+        <fullName>Contatore guasto/fermo/correttore malfunzionante</fullName>
+        <default>false</default>
+        <label>Contatore guasto/fermo/correttore malfunzionante</label>
+    </customValue>
+    <customValue>
+        <fullName>Contatore non accessibile</fullName>
+        <default>false</default>
+        <label>Contatore non accessibile</label>
+    </customValue>
+    <customValue>
+        <fullName>CRM (call center) - Comportamento, informazioni non corrette</fullName>
+        <default>false</default>
+        <label>CRM (call center) - Comportamento, informazioni non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>CRM (sp+cc) - Accessibilità canale</fullName>
+        <default>false</default>
+        <label>CRM (sp+cc) - Accessibilità canale</label>
+    </customValue>
+    <customValue>
+        <fullName>CRM (sportelli) - Comportamento, informazioni non corrette</fullName>
+        <default>false</default>
+        <label>CRM (sportelli) - Comportamento, informazioni non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>CTS</fullName>
+        <default>false</default>
+        <label>CTS</label>
+    </customValue>
+    <customValue>
+        <fullName>Decorrenza voltura</fullName>
+        <default>false</default>
+        <label>Decorrenza voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Del. 228 passiva</fullName>
+        <default>false</default>
+        <label>Del. 228 passiva</label>
+    </customValue>
+    <customValue>
+        <fullName>Deposito cauzionale</fullName>
+        <default>false</default>
+        <label>Deposito cauzionale</label>
+    </customValue>
+    <customValue>
+        <fullName>Diniego</fullName>
+        <default>false</default>
+        <label>Diniego</label>
+    </customValue>
+    <customValue>
+        <fullName>Diritti fissi e costi</fullName>
+        <default>false</default>
+        <label>Diritti fissi e costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Documentazione mancante</fullName>
+        <default>false</default>
+        <label>Documentazione mancante</label>
+    </customValue>
+    <customValue>
+        <fullName>Domestico - Non Domestico</fullName>
+        <default>false</default>
+        <label>Domestico - Non Domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>Domiciliazione</fullName>
+        <default>false</default>
+        <label>Domiciliazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Doppia Fatturazione</fullName>
+        <default>false</default>
+        <label>Doppia Fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Doppio incasso/doppio pagamento</fullName>
+        <default>false</default>
+        <label>Doppio incasso/doppio pagamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Emissione prima bolletta</fullName>
+        <default>false</default>
+        <label>Emissione prima bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>Falso procurato</fullName>
+        <default>false</default>
+        <label>Falso procurato</label>
+    </customValue>
+    <customValue>
+        <fullName>Fattura di chiusura</fullName>
+        <default>false</default>
+        <label>Fattura di chiusura</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione a conguaglio</fullName>
+        <default>false</default>
+        <label>Fatturazione a conguaglio</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione ad acconto costante</fullName>
+        <default>false</default>
+        <label>Fatturazione ad acconto costante</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione in stima/acconto</fullName>
+        <default>false</default>
+        <label>Fatturazione in stima/acconto</label>
+    </customValue>
+    <customValue>
+        <fullName>Frequenza fatturazione</fullName>
+        <default>false</default>
+        <label>Frequenza fatturazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Impianti fuganti</fullName>
+        <default>false</default>
+        <label>Impianti fuganti</label>
+    </customValue>
+    <customValue>
+        <fullName>Informazioni su compilazione</fullName>
+        <default>false</default>
+        <label>Informazioni su compilazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Interruzione servizio</fullName>
+        <default>false</default>
+        <label>Interruzione servizio</label>
+    </customValue>
+    <customValue>
+        <fullName>Inversione contatore</fullName>
+        <default>false</default>
+        <label>Inversione contatore</label>
+    </customValue>
+    <customValue>
+        <fullName>Invito verifica cassa metrica</fullName>
+        <default>false</default>
+        <label>Invito verifica cassa metrica</label>
+    </customValue>
+    <customValue>
+        <fullName>IVA</fullName>
+        <default>false</default>
+        <label>IVA</label>
+    </customValue>
+    <customValue>
+        <fullName>Ko causa cliente</fullName>
+        <default>false</default>
+        <label>Ko causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Ko causa Venditore</fullName>
+        <default>false</default>
+        <label>Ko causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavori - non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>Lavori - non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavori - non eseguita causa Distributore</fullName>
+        <default>false</default>
+        <label>Lavori - non eseguita causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavori - non eseguita causa Venditore</fullName>
+        <default>false</default>
+        <label>Lavori - non eseguita causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavori - non eseguita causa Venditore precedente</fullName>
+        <default>false</default>
+        <label>Lavori - non eseguita causa Venditore precedente</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavori - tempistiche,modalità,costi</fullName>
+        <default>false</default>
+        <label>Lavori - tempistiche,modalità,costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Lettura contestata</fullName>
+        <default>false</default>
+        <label>Lettura contestata</label>
+    </customValue>
+    <customValue>
+        <fullName>Lettura di switch in</fullName>
+        <default>false</default>
+        <label>Lettura di switch in</label>
+    </customValue>
+    <customValue>
+        <fullName>Lettura di switch out</fullName>
+        <default>false</default>
+        <label>Lettura di switch out</label>
+    </customValue>
+    <customValue>
+        <fullName>Limitazione dei dati</fullName>
+        <default>false</default>
+        <label>Limitazione dei dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancata/ritardata erogazione</fullName>
+        <default>false</default>
+        <label>Mancata/ritardata erogazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancata ricezione Welcome letter</fullName>
+        <default>false</default>
+        <label>Mancata ricezione Welcome letter</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancata risposta a richiesta cliente</fullName>
+        <default>false</default>
+        <label>Mancata risposta a richiesta cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancato utilizzo</fullName>
+        <default>false</default>
+        <label>Mancato utilizzo</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancato utilizzo letture Distributore</fullName>
+        <default>false</default>
+        <label>Mancato utilizzo letture Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità autolettura</fullName>
+        <default>false</default>
+        <label>Modalità autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità recesso</fullName>
+        <default>false</default>
+        <label>Modalità recesso</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica indirizzo di fornitura</fullName>
+        <default>false</default>
+        <label>Modifica indirizzo di fornitura</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifiche unilaterali</fullName>
+        <default>false</default>
+        <label>Modifiche unilaterali</label>
+    </customValue>
+    <customValue>
+        <fullName>MUI_ disconoscimento parziale</fullName>
+        <default>false</default>
+        <label>MUI_ disconoscimento parziale</label>
+    </customValue>
+    <customValue>
+        <fullName>MUI_ disconoscimento totale</fullName>
+        <default>false</default>
+        <label>MUI_ disconoscimento totale</label>
+    </customValue>
+    <customValue>
+        <fullName>Non richiesto</fullName>
+        <default>false</default>
+        <label>Non richiesto</label>
+    </customValue>
+    <customValue>
+        <fullName>Opposizione</fullName>
+        <default>false</default>
+        <label>Opposizione</label>
+    </customValue>
+    <customValue>
+        <fullName>Pagamenti</fullName>
+        <default>false</default>
+        <label>Pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Pdr errato (cliente ha firmato)</fullName>
+        <default>false</default>
+        <label>Pdr errato (cliente ha firmato)</label>
+    </customValue>
+    <customValue>
+        <fullName>Pdr errato (cliente inconsapevole)</fullName>
+        <default>false</default>
+        <label>Pdr errato (cliente inconsapevole)</label>
+    </customValue>
+    <customValue>
+        <fullName>PdR errato sui sistemi</fullName>
+        <default>false</default>
+        <label>PdR errato sui sistemi</label>
+    </customValue>
+    <customValue>
+        <fullName>Penali</fullName>
+        <default>false</default>
+        <label>Penali</label>
+    </customValue>
+    <customValue>
+        <fullName>Piano casa</fullName>
+        <default>false</default>
+        <label>Piano casa</label>
+    </customValue>
+    <customValue>
+        <fullName>Pod errato (cliente ha firmato)</fullName>
+        <default>false</default>
+        <label>Pod errato (cliente ha firmato)</label>
+    </customValue>
+    <customValue>
+        <fullName>Pod errato (cliente inconsapevole)</fullName>
+        <default>false</default>
+        <label>Pod errato (cliente inconsapevole)</label>
+    </customValue>
+    <customValue>
+        <fullName>POD errato sui sistemi</fullName>
+        <default>false</default>
+        <label>POD errato sui sistemi</label>
+    </customValue>
+    <customValue>
+        <fullName>Portabilità dei dati</fullName>
+        <default>false</default>
+        <label>Portabilità dei dati</label>
+    </customValue>
+    <customValue>
+        <fullName>Prelievi fraudolenti</fullName>
+        <default>false</default>
+        <label>Prelievi fraudolenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Prelivo abusivo</fullName>
+        <default>false</default>
+        <label>Prelivo abusivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Pressione</fullName>
+        <default>false</default>
+        <label>Pressione</label>
+    </customValue>
+    <customValue>
+        <fullName>Presunti danni</fullName>
+        <default>false</default>
+        <label>Presunti danni</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi - non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>Preventivi - non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi - non eseguita causa Distributore</fullName>
+        <default>false</default>
+        <label>Preventivi - non eseguita causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi - non eseguita causa Venditore</fullName>
+        <default>false</default>
+        <label>Preventivi - non eseguita causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi - tempistiche/modalità/costi</fullName>
+        <default>false</default>
+        <label>Preventivi - tempistiche/modalità/costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi- tempistiche/modalità/costi</fullName>
+        <default>false</default>
+        <label>Preventivi- tempistiche/modalità/costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Privacy</fullName>
+        <default>false</default>
+        <label>Privacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Proposto del. 228</fullName>
+        <default>false</default>
+        <label>Proposto del. 228</label>
+    </customValue>
+    <customValue>
+        <fullName>Proposto del. 229</fullName>
+        <default>false</default>
+        <label>Proposto del. 229</label>
+    </customValue>
+    <customValue>
+        <fullName>Proposto del. 230</fullName>
+        <default>false</default>
+        <label>Proposto del. 230</label>
+    </customValue>
+    <customValue>
+        <fullName>Proposto del. 231</fullName>
+        <default>false</default>
+        <label>Proposto del. 231</label>
+    </customValue>
+    <customValue>
+        <fullName>Quote fisse</fullName>
+        <default>false</default>
+        <label>Quote fisse</label>
+    </customValue>
+    <customValue>
+        <fullName>Rateizzazione - diniego piano di rientro</fullName>
+        <default>false</default>
+        <label>Rateizzazione - diniego piano di rientro</label>
+    </customValue>
+    <customValue>
+        <fullName>Rateizzazione - numero rate</fullName>
+        <default>false</default>
+        <label>Rateizzazione - numero rate</label>
+    </customValue>
+    <customValue>
+        <fullName>Recapito - causa vettore</fullName>
+        <default>false</default>
+        <label>Recapito - causa vettore</label>
+    </customValue>
+    <customValue>
+        <fullName>Recapito - indirizzo non corretto</fullName>
+        <default>false</default>
+        <label>Recapito - indirizzo non corretto</label>
+    </customValue>
+    <customValue>
+        <fullName>Recapito - ritardo consegna</fullName>
+        <default>false</default>
+        <label>Recapito - ritardo consegna</label>
+    </customValue>
+    <customValue>
+        <fullName>Recupero quote non fatturate</fullName>
+        <default>false</default>
+        <label>Recupero quote non fatturate</label>
+    </customValue>
+    <customValue>
+        <fullName>Residente - Non Residente</fullName>
+        <default>false</default>
+        <label>Residente - Non Residente</label>
+    </customValue>
+    <customValue>
+        <fullName>Rettifica dati personali</fullName>
+        <default>false</default>
+        <label>Rettifica dati personali</label>
+    </customValue>
+    <customValue>
+        <fullName>Riattivazione</fullName>
+        <default>false</default>
+        <label>Riattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Ricostruzione consumi</fullName>
+        <default>false</default>
+        <label>Ricostruzione consumi</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborsi</fullName>
+        <default>false</default>
+        <label>Rimborsi</label>
+    </customValue>
+    <customValue>
+        <fullName>Ripensamento gestito</fullName>
+        <default>false</default>
+        <label>Ripensamento gestito</label>
+    </customValue>
+    <customValue>
+        <fullName>Ripensamento senza dati cliente</fullName>
+        <default>false</default>
+        <label>Ripensamento senza dati cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Ripristino condizioni precedenti</fullName>
+        <default>false</default>
+        <label>Ripristino condizioni precedenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritardo/KO Distributore</fullName>
+        <default>false</default>
+        <label>Ritardo/KO Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Scivoli</fullName>
+        <default>false</default>
+        <label>Scivoli</label>
+    </customValue>
+    <customValue>
+        <fullName>Sezionamento presa</fullName>
+        <default>false</default>
+        <label>Sezionamento presa</label>
+    </customValue>
+    <customValue>
+        <fullName>SOL - Accessibilità canale</fullName>
+        <default>false</default>
+        <label>SOL - Accessibilità canale</label>
+    </customValue>
+    <customValue>
+        <fullName>SOL - Funzionalità</fullName>
+        <default>false</default>
+        <label>SOL - Funzionalità</label>
+    </customValue>
+    <customValue>
+        <fullName>Sospensione</fullName>
+        <default>false</default>
+        <label>Sospensione</label>
+    </customValue>
+    <customValue>
+        <fullName>Sospensione non legittima</fullName>
+        <default>false</default>
+        <label>Sospensione non legittima</label>
+    </customValue>
+    <customValue>
+        <fullName>Spese</fullName>
+        <default>false</default>
+        <label>Spese</label>
+    </customValue>
+    <customValue>
+        <fullName>Spese di sollecito/interessi</fullName>
+        <default>false</default>
+        <label>Spese di sollecito/interessi</label>
+    </customValue>
+    <customValue>
+        <fullName>Tariffa al kwh</fullName>
+        <default>false</default>
+        <label>Tariffa al kwh</label>
+    </customValue>
+    <customValue>
+        <fullName>Tariffa al metro cubo</fullName>
+        <default>false</default>
+        <label>Tariffa al metro cubo</label>
+    </customValue>
+    <customValue>
+        <fullName>Tariffe diverse dalle aspettative</fullName>
+        <default>false</default>
+        <label>Tariffe diverse dalle aspettative</label>
+    </customValue>
+    <customValue>
+        <fullName>Telegestione</fullName>
+        <default>false</default>
+        <label>Telegestione</label>
+    </customValue>
+    <customValue>
+        <fullName>Tempistiche,modalità</fullName>
+        <default>false</default>
+        <label>Tempistiche,modalità</label>
+    </customValue>
+    <customValue>
+        <fullName>Tempistiche,modalità,costi</fullName>
+        <default>false</default>
+        <label>Tempistiche,modalità,costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Tempistiche e modalità switch</fullName>
+        <default>false</default>
+        <label>Tempistiche e modalità switch</label>
+    </customValue>
+    <customValue>
+        <fullName>Tensione</fullName>
+        <default>false</default>
+        <label>Tensione</label>
+    </customValue>
+    <customValue>
+        <fullName>Tipo impianto (gas)</fullName>
+        <default>false</default>
+        <label>Tipo impianto (gas)</label>
+    </customValue>
+    <customValue>
+        <fullName>Unificazione/separazione CA</fullName>
+        <default>false</default>
+        <label>Unificazione/separazione CA</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita - Agente - Comportamento/Informazioni non corrette</fullName>
+        <default>false</default>
+        <label>Vendita - Agente - Comportamento/Informazioni non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita - Call Center - Comportamento/Informazioni non corrette</fullName>
+        <default>false</default>
+        <label>Vendita - Call Center - Comportamento/Informazioni non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita - Sportello CRM - Comportamento/Informazioni non corrette</fullName>
+        <default>false</default>
+        <label>Vendita - Sportello CRM - Comportamento/Informazioni non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita - Teleselling - Comportamento/Informazioni non corrette</fullName>
+        <default>false</default>
+        <label>Vendita - Teleselling - Comportamento/Informazioni non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>Venditore entrante</fullName>
+        <default>false</default>
+        <label>Venditore entrante</label>
+    </customValue>
+    <customValue>
+        <fullName>Venditore ha titolarità</fullName>
+        <default>false</default>
+        <label>Venditore ha titolarità</label>
+    </customValue>
+    <customValue>
+        <fullName>Venditore terzo</fullName>
+        <default>false</default>
+        <label>Venditore terzo</label>
+    </customValue>
+    <customValue>
+        <fullName>Venditore uscente</fullName>
+        <default>false</default>
+        <label>Venditore uscente</label>
+    </customValue>
+    <customValue>
+        <fullName>Voltura con richiesta accessoria</fullName>
+        <default>false</default>
+        <label>Voltura con richiesta accessoria</label>
+    </customValue>
+    <description>Classificazione Quarto Livello (cluster Reclami)</description>
+    <masterLabel>4° Livello</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

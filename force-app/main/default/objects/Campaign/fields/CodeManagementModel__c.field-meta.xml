@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CodeManagementModel__c</fullName>
+    <description>Generico, Per singolo Campaign Member, Porta un amico: selezionabile solo con Campagne MC e Campagne Outbound con canale Bolletta. Pubblico e Convenzione sono compatibili solo con Campagne CRM</description>
+    <externalId>false</externalId>
+    <label>Modello Gestione Codici</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Nessuno</fullName>
+                <default>false</default>
+                <label>Nessuno</label>
+            </value>
+            <value>
+                <fullName>Generico</fullName>
+                <default>false</default>
+                <label>Generico</label>
+            </value>
+            <value>
+                <fullName>Per singolo Campaign Member</fullName>
+                <default>false</default>
+                <label>Per singolo Campaign Member</label>
+            </value>
+            <value>
+                <fullName>Porta un amico</fullName>
+                <default>false</default>
+                <label>Porta un amico</label>
+            </value>
+            <value>
+                <fullName>Pubblico</fullName>
+                <default>false</default>
+                <label>Pubblico</label>
+            </value>
+            <value>
+                <fullName>Convenzione</fullName>
+                <default>false</default>
+                <label>Convenzione</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

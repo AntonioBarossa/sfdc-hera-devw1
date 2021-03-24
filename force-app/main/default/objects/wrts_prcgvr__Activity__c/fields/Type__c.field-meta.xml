@@ -16,6 +16,21 @@
                 <default>false</default>
                 <label>Approvazione Quote</label>
             </value>
+            <value>
+                <fullName>Chiamata Callback</fullName>
+                <default>false</default>
+                <label>Chiamata Callback</label>
+            </value>
+            <value>
+                <fullName>Chiamata inbound</fullName>
+                <default>false</default>
+                <label>Chiamata inbound</label>
+            </value>
+            <value>
+                <fullName>Chiamata outbound</fullName>
+                <default>false</default>
+                <label>Chiamata outbound</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

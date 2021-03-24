@@ -18,6 +18,7 @@
                                                             <li class="slds-item"><p>{tile.Name}</p></li>
                                                             <li class="slds-item"><p>{tile.Type}</p></li>
                                                             <li class="slds-item"><p>{tile.City}</p></li>
+                                                            <li class="slds-item"><p>{tile.MarketOrigin}</p></li>
                                                         </ul>
                                                         <div class="slds-clearfix">
                                                             <div class="slds-float_right">
@@ -30,8 +31,11 @@
                                                 </li>
                                                 <li>
                                                     <ul class="slds-has-inline-block-links_space">
-                                                        <template for:each={tile.ServicePoints} for:item="item">
+                                                        <template if:true={tile.ServicePoints} for:each={tile.ServicePoints} for:item="item">
                                                             <li class="slds-item" key={item.Id}>{item.ServicePoint__r.ServicePointCode__c}</li>
+                                                        </template>
+                                                        <template if:true={tile.VasEl}>
+                                                            <li class="slds-item">{tile.VasEl.Number}</li>
                                                         </template>
                                                     </ul>
                                                 </li>
@@ -68,12 +72,16 @@
                                         <ul class="slds-list_horizontal slds-has-dividers_right">
                                             <li class="slds-item"><p>{tile.Type}</p></li>
                                             <li class="slds-item"><p>{tile.City}</p></li>
+                                            <li class="slds-item"><p>{tile.MarketOrigin}</p></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <ul class="slds-has-inline-block-links_space">
-                                            <template for:each={tile.ServicePoints} for:item="item">
+                                            <template if:true={tile.ServicePoints} for:each={tile.ServicePoints} for:item="item">
                                                 <li class="slds-item" key={item.Id}>{item.ServicePoint__r.ServicePointCode__c}</li>
+                                            </template>
+                                            <template if:true={tile.VasEl}>
+                                                <li class="slds-item">{tile.VasEl.Number}</li>
                                             </template>
                                         </ul>
                                     </li>

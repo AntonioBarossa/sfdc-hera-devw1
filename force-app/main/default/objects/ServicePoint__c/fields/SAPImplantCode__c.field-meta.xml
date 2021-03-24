@@ -3,7 +3,7 @@
     <fullName>SAPImplantCode__c</fullName>
     <description>SAPImplantCode__c</description>
     <externalId>false</externalId>
-    <label>Codice Impianto SAP</label>
+    <label>Impianto SAP</label>
     <length>20</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

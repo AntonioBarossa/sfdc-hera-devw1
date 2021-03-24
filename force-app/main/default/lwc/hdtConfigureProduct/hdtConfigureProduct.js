@@ -12,6 +12,7 @@ export default class hdtConfigureProduct extends LightningElement {
     showEditQuote = false;
     selectedQuoteId;
     cancelQuoteId;
+    cancelQuoteOpportunityId;
     dialogTitle;
     dialogMessage;
     isDialogVisible = false;
@@ -71,6 +72,8 @@ export default class hdtConfigureProduct extends LightningElement {
             let quotesArray = [];
             let count = 0;
 
+            console.log('getQuotesData: ', JSON.parse(JSON.stringify(data)));
+
             data.forEach(el => {
                 quotesArray.push({
                     "Count"                :++count,
@@ -78,6 +81,7 @@ export default class hdtConfigureProduct extends LightningElement {
                     "Name"                 :el.quote[0].Name,
                     "Type"                 :el.quote[0].SBQQ__Type__c,
                     "OpportunityName"      :el.quote[0].SBQQ__Opportunity2__r.Name,
+                    "OpportunityId"        :el.quote[0].SBQQ__Opportunity2__r.Id,
                     "QuoteLines"           :el.quoteLines
                 });
             });
@@ -110,16 +114,21 @@ export default class hdtConfigureProduct extends LightningElement {
 
     handleQuoteDelete(event){
         this.cancelQuoteId = event.currentTarget.dataset.id;
+        this.cancelQuoteOpportunityId = event.currentTarget.dataset.opportunityid;
         let quoteName = event.currentTarget.dataset.name;
         this.dialogTitle = "Cancella la Quote " + quoteName;
-        this.dialogMessage = "Sei sicuro di voler cancellare la Quote " + quoteName + " ?";
+        this.dialogMessage = "Scegli una causale per procedere: ";
         this.isDialogVisible = true;
     }
 
     handleDialogResponse(event){
         if(event.detail.status == true){
             this.loaded = false;
-            cancelQuote({quoteId:this.cancelQuoteId}).then(data =>{
+            cancelQuote({
+                quoteId:this.cancelQuoteId,
+                opportunityId:this.cancelQuoteOpportunityId,
+                cancellationReason:event.detail.choice
+                }).then(data =>{
                 this.loaded = true;
     
                 this.getQuotesData();
@@ -162,7 +171,8 @@ export default class hdtConfigureProduct extends LightningElement {
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
-                variant: 'error'
+                variant: 'error',
+                mode: 'sticky'
             });
             this.dispatchEvent(toastErrorMessage);
         });

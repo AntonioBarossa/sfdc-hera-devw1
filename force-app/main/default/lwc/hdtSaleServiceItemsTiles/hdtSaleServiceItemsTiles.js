@@ -24,19 +24,47 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
 
             let tilesArray = [];
 
-            data.forEach(el => {
+            data.saleServiceItemsTiles.forEach(el => {
                 tilesArray.push({
                     "Id"           :el[0].Opportunity__c,
                     "Name"         :el[0].Opportunity__r.Name,
                     "Type"         :el[0].ServicePoint__r.RecordType.Name,
                     "City"         :el[0].ServicePoint__r.SupplyCity__c,
-                    "ServicePoints":el
+                    "MarketOrigin" :el[0].ServicePoint__r.MarketOrigin__c,
+                    "ServicePoints":el,
+                    "CreatedDate"  : el[0].Opportunity__r.CreatedDate
+                });
+            });
+
+            data.vasTiles[0].forEach(el => {
+
+                let vasType = '';
+                let vasEl = {Id: '', Number: ''};
+                if (el.SBQQ__PrimaryQuote__r.OrderReference__c !== undefined) {
+                    vasType = 'Order VAS';
+                    vasEl = {Id: el.SBQQ__PrimaryQuote__r.OrderReference__c, Number: el.SBQQ__PrimaryQuote__r.OrderReference__r.OrderNumber};
+                } else if (el.SBQQ__PrimaryQuote__r.ContractReference__c !== undefined) {
+                    vasType = 'Contract VAS';
+                    vasEl = {Id:el.SBQQ__PrimaryQuote__r.ContractReference__c, Number:el.SBQQ__PrimaryQuote__r.ContractReference__r.ContractNumber};
+                } else {
+                    vasType = 'Vas Stand Alone';
+                }
+
+                tilesArray.push({
+                    "Id"           :el.Id,
+                    "Name"         :el.Name,
+                    "Type"         :vasType,
+                    "City"         :el.SBQQ__PrimaryQuote__r.SupplyCity__c,
+                    "VasEl"        :vasEl,
+                    "CreatedDate"  :el.CreatedDate
                 });
             });
             
             this.tilesData = tilesArray;
 
-            this.showTilesInList = data.length > 4 ? true : false;
+            this.tilesData = this.tilesData.sort((a, b) => (a.CreatedDate > b.CreatedDate) ? 1 : -1);
+
+            this.showTilesInList = this.tilesData.length > 4 ? true : false;
 
         }).catch(error => {
             this.loaded = true;

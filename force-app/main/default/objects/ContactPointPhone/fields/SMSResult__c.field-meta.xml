@@ -11,41 +11,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>3002</fullName>
-                <default>false</default>
-                <label>AcceptedByCarrier</label>
-            </value>
-            <value>
-                <fullName>4502</fullName>
-                <default>false</default>
-                <label>Deleted</label>
-            </value>
-            <value>
-                <fullName>4000</fullName>
-                <default>false</default>
-                <label>Delivered</label>
-            </value>
-            <value>
-                <fullName>2000</fullName>
-                <default>false</default>
-                <label>DeliveredToAggregator</label>
-            </value>
-            <value>
-                <fullName>3000</fullName>
-                <default>false</default>
-                <label>Enroute</label>
-            </value>
-            <value>
-                <fullName>4501</fullName>
-                <default>false</default>
-                <label>Expired</label>
-            </value>
-            <value>
-                <fullName>2500</fullName>
-                <default>false</default>
-                <label>FailedToAggregator</label>
-            </value>
-            <value>
                 <fullName>1000</fullName>
                 <default>false</default>
                 <label>QueuedToSfmcSendService</label>
@@ -56,29 +21,19 @@
                 <label>QueueFailureToSfmcSendService</label>
             </value>
             <value>
-                <fullName>4503</fullName>
+                <fullName>1501</fullName>
                 <default>false</default>
-                <label>Rejected</label>
+                <label>ValidationError</label>
             </value>
             <value>
-                <fullName>3001</fullName>
+                <fullName>2000</fullName>
                 <default>false</default>
-                <label>SentToCarrier</label>
+                <label>DeliveredToAggregator</label>
             </value>
             <value>
-                <fullName>2600</fullName>
+                <fullName>2500</fullName>
                 <default>false</default>
-                <label>ThrottledToAggregator</label>
-            </value>
-            <value>
-                <fullName>4500</fullName>
-                <default>false</default>
-                <label>Undeliverable</label>
-            </value>
-            <value>
-                <fullName>3400</fullName>
-                <default>false</default>
-                <label>Unknown</label>
+                <label>FailedToAggregator</label>
             </value>
             <value>
                 <fullName>2501</fullName>
@@ -86,9 +41,54 @@
                 <label>UnknownToAggregator</label>
             </value>
             <value>
-                <fullName>1501</fullName>
+                <fullName>2600</fullName>
                 <default>false</default>
-                <label>ValidationError</label>
+                <label>ThrottledToAggregator</label>
+            </value>
+            <value>
+                <fullName>3000</fullName>
+                <default>false</default>
+                <label>Enroute</label>
+            </value>
+            <value>
+                <fullName>3001</fullName>
+                <default>false</default>
+                <label>SentToCarrier</label>
+            </value>
+            <value>
+                <fullName>3002</fullName>
+                <default>false</default>
+                <label>AcceptedByCarrier</label>
+            </value>
+            <value>
+                <fullName>3400</fullName>
+                <default>false</default>
+                <label>Unknown</label>
+            </value>
+            <value>
+                <fullName>4000</fullName>
+                <default>false</default>
+                <label>Delivered</label>
+            </value>
+            <value>
+                <fullName>4500</fullName>
+                <default>false</default>
+                <label>Undeliverable</label>
+            </value>
+            <value>
+                <fullName>4501</fullName>
+                <default>false</default>
+                <label>Expired</label>
+            </value>
+            <value>
+                <fullName>4502</fullName>
+                <default>false</default>
+                <label>Deleted</label>
+            </value>
+            <value>
+                <fullName>4503</fullName>
+                <default>false</default>
+                <label>Rejected</label>
             </value>
         </valueSetDefinition>
     </valueSet>

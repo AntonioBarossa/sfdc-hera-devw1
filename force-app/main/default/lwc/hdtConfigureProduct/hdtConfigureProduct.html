@@ -26,6 +26,9 @@
                                 <div class="slds-truncate" title="PRODUCT NAME">PRODUCT NAME</div>
                             </th>
                             <th class="" scope="col">
+                                <div class="slds-truncate" title="POD/PDR">POD/PDR</div>
+                            </th>
+                            <th class="" scope="col">
                             </th>
                             <th class="" scope="col">
                             </th>
@@ -49,11 +52,14 @@
                                 <td data-label="PRODUCT NAME">
                                     <div class="slds-truncate" title=""></div>
                                 </td>
+                                <td data-label="POD/PDR">
+                                    <div class="slds-truncate" title=""></div>
+                                </td>
                                 <td>
                                     <lightning-button disabled={disabledButton} data-id={quote.Id} variant="brand" label="Configura" title="Configura" onclick={handleOpenConfigureModal}></lightning-button>
                                 </td>
                                 <td>
-                                    <lightning-button disabled={disabledButton} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
+                                    <lightning-button disabled={disabledButton} data-opportunityid={quote.OpportunityId} data-id={quote.Id} data-name={quote.Name} variant="brand" label="Elimina" title="Elimina" onclick={handleQuoteDelete}></lightning-button>
                                 </td>
                             </tr>
                             <template for:each={quote.QuoteLines} for:item="quoteLine">
@@ -72,6 +78,14 @@
                                     </td>
                                     <td data-label="PRODUCT NAME">
                                         <div class="slds-truncate" title={quoteLine.SBQQ__Product__r.Name}>{quoteLine.SBQQ__Product__r.Name}</div>
+                                    </td>
+                                    <td data-label="POD/PDR">
+                                        <template if:true={quoteLine.ServicePoint__c}>
+                                            <div class="slds-truncate" title={quoteLine.ServicePoint__r.ServicePointCode__c}>{quoteLine.ServicePoint__r.ServicePointCode__c}</div>
+                                        </template>
+                                        <template if:false={quoteLine.ServicePoint__c}>
+                                            <div></div>
+                                        </template>
                                     </td>
                                     <td>
                                         
@@ -94,17 +108,20 @@
         </div>
 
         <template if:true={showEditQuote}>
-            <c-hdt-edit-quote quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
+            <c-hdt-edit-quote sale={saleRecord} quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
         </template>
-        
-        <c-hdt-confirmation-dialog title={dialogTitle}
+
+        <c-hdt-confirmation-dialog-dropdown
+                           object-api-name="SBQQ__Quote__c"
+                           picklist-api-name="CancellationReason__c"
+                           title={dialogTitle}
                            message={dialogMessage}
                            confirm-label='Si'
                            cancel-label='No'
                            visible={isDialogVisible}
                            name="deleteQuoteConfimation"
                            onclick={handleDialogResponse}>
-        </c-hdt-confirmation-dialog>
+        </c-hdt-confirmation-dialog-dropdown>
 
     </lightning-card>
 </template>

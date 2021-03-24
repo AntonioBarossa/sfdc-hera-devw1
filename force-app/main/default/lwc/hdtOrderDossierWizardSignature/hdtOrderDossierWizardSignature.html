@@ -6,16 +6,16 @@
                 <lightning-layout-item padding="horizontal-large" size="12">
                     <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
                         <div class="slds-grid slds-wrap slds-m-top_small">
-                            <lightning-input-field data-id="checkbox" onchange={handleDataCollection} class="slds-size_1-of-2" field-name="ContractSigned__c" variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field if:true={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignedDate__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} data-id="ContractSigned__c" onchange={handleDataCollection} class="slds-size_1-of-2" field-name="ContractSigned__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignedDate__c" variant="label-stacked"></lightning-input-field>
                         </div>
                         <template if:true={areInputsVisible}>
                             <div class="slds-grid slds-wrap slds-m-top_small">
-                                <lightning-input-field onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignatureMethod__c" variant="label-stacked"></lightning-input-field>
-                                <lightning-input-field onchange={handleDataCollection} class="slds-size_1-of-2" field-name="DocSendingMethod__c" data-id="DocSendingMethod__c" variant="label-stacked"></lightning-input-field>                                
-                                <lightning-input-field onchange={handleDataCollection} class={mailClasses} field-name="Mail__c" variant="label-stacked"></lightning-input-field>
+                                <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="SignatureMethod__c" variant="label-stacked"></lightning-input-field>
+                                <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-2" field-name="DocSendingMethod__c" data-id="DocSendingMethod__c" variant="label-stacked"></lightning-input-field>                                
+                                <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class={mailClasses} field-name="ShippingMail__c" variant="label-stacked"></lightning-input-field>
                                 <lightning-input disabled class={mailClasses} variant="label-stacked" type="email" label="Indirizzo Mail" value={primaryContactEmail}></lightning-input>
-                                <lightning-radio-group name="Indirizzi"
+                                <lightning-radio-group disabled={disabledInput} name="Indirizzi"
                                     label="Indirizzi"
                                     options={addressOptions}
                                     value={value}
@@ -27,7 +27,6 @@
                             <c-hdt-target-object-address-fields objectapiname="Order" class={addrFormClasses}></c-hdt-target-object-address-fields>
                         </template>
                     </lightning-record-edit-form>
-
 
                 </lightning-layout-item>
             </lightning-layout>

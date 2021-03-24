@@ -15,7 +15,8 @@ public inherited sharing class HDT_QR_OrderItem {
     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
         return [
-            SELECT 
+            SELECT
+            ServicePoint__c,
             ServicePoint__r.Name,
             ServicePoint__r.ServicePointCode__c,
             OrderId,
@@ -48,6 +49,27 @@ public inherited sharing class HDT_QR_OrderItem {
             WHERE
             OrderId = :orderId 
             AND Product2.Name IN ('PDR','POD')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 10/02/2021
+    * @description Get record that have BillingProfile__c value set
+    * @param List<Id> listOrderId
+    * @return List<OrderItem>
+    */
+    public List<OrderItem> getRecordsWithBillingProfile(List<Id> listOrderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c
+            FROM 
+            OrderItem 
+            WHERE
+            OrderId IN :listOrderId  
+            AND BillingProfile__c != null
             WITH SECURITY_ENFORCED
         ];
     }

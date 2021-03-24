@@ -22,8 +22,8 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         Map<String,Object> mapResponse = new Map<String,Object>();
         
-        // Order ord = [SELECT AccountId,Account.Name, Id,recordtype.name, Status FROM Order Where id = :orderId];
-        orderSrv.checkReadAccess('AccountId,Account.Name,RecordRype.Name,Status');
+        // Order ord = [SELECT AccountId,Account.Name, Id,recordtype.DeveloperName, Status FROM Order Where id = :orderId];
+        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status');
         Order ord = orderQr.getRecordById(orderId);
 
         //List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId = : ord.Id];
@@ -38,6 +38,8 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         mapResponse.put('orderItem',ordItem);
         mapResponse.put('order',ord);
+        mapResponse.put('accountId',ord.AccountId);
+        mapResponse.put('venditaId',ord.Sale__c);
         return mapResponse;
     }
     
@@ -76,6 +78,18 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         }
 
         // orderSrv.updateRecord(ord);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Refresh order
+    * @param String orderId
+    * @return Order
+    */
+    @AuraEnabled
+    public static Order refreshOrderChild(String orderId){
+        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status');
+        return orderQr.getRecordById(orderId);
     }
 
 }
