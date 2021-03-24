@@ -24,12 +24,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if (caseType == 'Variazione Anagrafica Cliente' && currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
             result = validateModificaDatiContatto(fields);
 
-        } else if(caseType == 'Gestione Disalimentabilità'){
+        } else if(caseType == 'Gestione Disalimentabilità' || caseType == 'Riattivazione Fornitura'){
 
-            result = validateMorosita(fields, recordId);
+            result = validateMorosita(fields, recordId, caseType);
 
-        } else if(caseType == 'Marcatura/Uso PdR'
-        || caseType == 'Fiscale' 
+        } else if(caseType == 'Marcatura/Uso PdR' 
         || caseType == 'Condizioni Contrattuali Errate' 
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'){
@@ -160,7 +159,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     
-    public String validateMorosita(String fields, string recordId){
+    public String validateMorosita(String fields, string recordId, String caseType){
 
         String result;
 
@@ -170,19 +169,45 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String phonePesse = getFieldValue(fields, 'MobilePhonePersonalizedNoticePesse__c');
 
-        List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
-        WHERE LinkedEntityId = :recordId 
-        WITH SECURITY_ENFORCED];
 
-        if(disconnectable == 'false' 
-        && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
-        || (phonePesse == 'null' || phonePesse == '') 
-        || (attachedDocument.size() == 0))){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
-                'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
-                'Il telefono Pesse\nEd è necessario inserire un allegato'));
+        if(caseType == 'Riattivazione Fornitura'){
 
+            Date paymentDate = date.ValueOf(getFieldValue(fields, 'PaymentDate__c'));
+
+            if(paymentDate > System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data futura'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+
+        }else if(caseType == 'Gestione Disalimentabilità'){
+
+            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId 
+            WITH SECURITY_ENFORCED];
+
+
+
+            if(disconnectable == 'false' 
+            && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
+            || (phonePesse == 'null' || phonePesse == '') 
+            || (attachedDocument.size() == 0))){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                    'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
+                    'Il telefono Pesse\nEd è necessario inserire un allegato'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -203,30 +228,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String result;
 
-
-        if(caseType == 'Fiscale'){
-
-            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
-            WHERE LinkedEntityId = :recordId 
-            WITH SECURITY_ENFORCED];
-
-            Date effectiveDate = Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'));
-
-            if(attachedDocument.size() == 0){
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire allegati'));
-            
-            } else if(effectiveDate < System.today()){
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La Data Decorrenza non può essere nel passato'));
-
-            } else {
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
-            }
-
-        }else if(caseType == 'Marcatura/Uso PdR'){
+        if(caseType == 'Marcatura/Uso PdR'){
 
             if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
 
