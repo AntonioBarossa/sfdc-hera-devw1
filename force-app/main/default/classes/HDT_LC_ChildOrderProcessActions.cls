@@ -228,8 +228,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderSrv.updateRecord(new Order(
             Id = order.Id,
             Status = 'Annullato',
-            Phase__c = 'Annullato'/*, COMMENTATO POICHE' CAMPO NON PRESENTE NELLA NOSTRA ORG
-            CancellationReason__c = cancellationReason*/
+            Phase__c = 'Annullato',
+            CancellationReason__c = cancellationReason
         ));
     }
 }

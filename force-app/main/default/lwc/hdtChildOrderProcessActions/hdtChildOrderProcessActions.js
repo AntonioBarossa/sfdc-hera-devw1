@@ -1,9 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import save from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.save';
-//INIZIO SVILUPPI EVERIS
-import updateOrder from '@salesforce/apex/HDT_LC_SelfReading.updateOrder';
-//FINE SVILUPPI EVERIS
 import saveDraft from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.saveDraft';
 import cancel from '@salesforce/apex/HDT_LC_ChildOrderProcessActions.cancel';
 
@@ -37,24 +34,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
     handleSave(){
         this.loading = true;
-        //INIZIO SVILUPPI EVERIS
-        /*if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-            
-            updateOrder({recordId: this.order.Id, completed:true})
-            .then(result => {
-
-                console.log(result);
-
-                this.loading = false; 
-
-                this.dispatchEvent(new CustomEvent('redirecttoparent'));
-
-                return;
-
-            })
-
-        }
-        //FINE SVILUPPI EVERIS*/
         save({order: this.order}).then(data =>{
             this.loading = false;
 
@@ -85,27 +64,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
         console.log('handleSaveDraft: ' + this.draftObjectApiName);
         console.log('handleSaveDraft: ' + JSON.stringify(this.draftObject));
         console.log('handleSaveDraft Diff: ' + this.diffDraftObjectApiName + ' ' + JSON.stringify(this.diffFields));
-
-        //INIZIO SVILUPPI EVERIS
-        /*if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-           
-            this.loading = true;
-      
-            updateOrder({recordId: this.order.Id, completed:true})
-            .then(result => {
-
-                console.log(result);
-
-                this.loading = false; 
-
-                this.dispatchEvent(new CustomEvent('redirecttoparent'));
-
-                return;
-
-            });
-            
-        }*/
-        //FINE SVILUPPI EVERIS
         
         if ( this.draftObject != null && this.diffFields == null) {
 

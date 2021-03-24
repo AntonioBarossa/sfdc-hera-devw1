@@ -17,8 +17,6 @@ export default class hdtOrderDossierWizardActions extends LightningElement {
         isSaveDisabled({orderParentId: this.orderParentRecord.Id}).then(data =>{
             console.log('isSaveDisabled: ', data);
             this.loading = false;
-            //INIZIO SVILUPPI EVERIS
-            //FINE SVILUPPI EVERIS
             this.isSaveButtonDisabled = data;
 
         }).catch(error => {

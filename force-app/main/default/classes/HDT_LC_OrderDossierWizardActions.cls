@@ -36,7 +36,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico da inviare' //Everis: modificato in 'Plico da inviare poiche non la fase 'Plico inviato da validare' non presente a DM'
+                Phase__c = 'Plico da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
             ));
 
         } else {
@@ -79,8 +79,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             ordersToUpdate.add(new Order(
                 Id = childOrder.Id,
                 Status = 'Annullato',
-                Phase__c = 'Annullato'/*, EVRIS: COMMENTATO POICHE' CAMPO NON DISPONIBILE SULLA NOSTRA ORG
-                CancellationReason__c = cancellationReason*/
+                Phase__c = 'Annullato',
+                CancellationReason__c = cancellationReason
             ));
         }
 
@@ -88,8 +88,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         ordersToUpdate.add(new Order(
             Id = orderParent.Id,
             Status = 'Annullato',
-            Phase__c = 'Annullato'/*, EVERIS: COMMENTATO POICHE' CAMPO NON DISPONIBILE SULLA NOSTRA ORG
-            CancellationReason__c = cancellationReason*/
+            Phase__c = 'Annullato',
+            CancellationReason__c = cancellationReason
         ));
 
         orderSrv.updateRecords(ordersToUpdate);
