@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Errore_Fatturazione_Senza_Obbligatoriet</name>
@@ -366,14 +366,6 @@
             <label>Avvisare Cliente</label>
         </rules>
     </decisions>
-    <dynamicChoiceSets>
-        <name>UtilisationCeasingMotivationChoiceSet</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>UtilisationCeasingMotivation__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
     <formulas>
         <name>ConvertTipoDocumentoToUppercase</name>
         <dataType>String</dataType>
