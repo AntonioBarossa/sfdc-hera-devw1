@@ -3371,11 +3371,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.OLDUseTypeEnergy__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.OperationCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5630,11 +5625,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.PartnerAccountId</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Phone</field>
         <readable>true</readable>
@@ -5943,11 +5933,6 @@
         <editable>true</editable>
         <field>Opportunity.NextStep</field>
         <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Opportunity.PartnerAccountId</field>
-        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -10056,7 +10041,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.AmendmentAllowed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.CampaignCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.Campaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10082,6 +10077,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.FriendCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IsVAS__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11221,11 +11221,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__Subscription__c.SBQQ__SubscriptionPricing__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__Subscription__c.SBQQ__SubscriptionStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11851,6 +11846,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivityDuration__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11862,6 +11862,31 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivityStartTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentCompetence__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentDateToConfirm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentResultCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentTimeSlotToConfirm__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11906,7 +11931,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CausalError__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ConnectionID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11921,7 +11956,42 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Distributor__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DistributorFirstDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DistributorsSlot__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.FiscalCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAtoA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isManualAppoitment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isSelfAppointment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11941,7 +12011,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Mobile__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Note__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.OperatorChange__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ParentActivity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12001,6 +12091,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ServicePoint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Service__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12012,6 +12107,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.URL__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13257,6 +13357,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -13650,15 +13755,15 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
-        <name>EditKnowledge</name>
-    </userPermissions>
-    <userPermissions>
-        <enabled>true</enabled>
         <name>EditMyDashboards</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>EditMyReports</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>EditKnowledge</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
@@ -14126,6 +14231,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>ViewArchivedArticles</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>ViewDataAssessment</name>
     </userPermissions>
     <userPermissions>
@@ -14135,6 +14244,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ViewDataLeakageEvents</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewDraftArticles</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

@@ -4,6 +4,7 @@
 import lookUp from '@salesforce/apex/HDT_LC_CustomLookupController.lookUp';
 import { getRecord } from 'lightning/uiRecordApi';
 import { api, LightningElement, track, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 const FIELDS = [];
 
@@ -14,12 +15,16 @@ export default class LookupLwc extends LightningElement {
     @api iconName;
     @api labelName;
     @api readOnly = false;
-    @api filter = '';
+    @api filter;
     @api showLabel = false;
     @api uniqueKey;
     @api placeholder;
     @api searchBy;
     @api setAsKey;
+    @api detailFields;
+    //AGGIUNTO NEL CASO DI RECLAMO
+    @api isReclamo = false;
+    //AGGIUNTO NEL CASO DI RECLAMO
     objLabelName;
     searchTerm;
     @track valueObj;
@@ -34,9 +39,19 @@ export default class LookupLwc extends LightningElement {
 
     connectedCallback() {
         console.log("objName", this.objName);
+        
+        if(this.detailFields===undefined){
+            this.detailFields = [];
+        }
+
+        if(this.filter===undefined){
+            this.filter = '';
+        }
+
         if(FIELDS.length === 0){
             FIELDS.push(this.objName + '.' + this.searchBy);
             FIELDS.push(this.objName + '.' + this.setAsKey);
+            FIELDS.push(this.objName + '.Name');
         }
         console.log("FIELDS", FIELDS);
     }
@@ -61,13 +76,24 @@ export default class LookupLwc extends LightningElement {
         console.log("# Rendered: ", this.objName);
     }
 
-    @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', searchBy: '$searchBy', setAsKey: '$setAsKey'})
+    @wire(lookUp, {searchTerm : '$searchTerm', myObject : '$objName', filter : '$filter', searchBy: '$searchBy', setAsKey: '$setAsKey', detailFields: '$detailFields'})
     wiredRecords({ error, data }) {
         if (data) {
             this.record = data;
             this.error = undefined;
             this.options = this.record;
             //console.log("# lookup result: ", JSON.stringify(this.options));
+
+            if(this.options.length===0){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Nessune risultato trovato',
+                        variant: 'warning'
+                    }),
+                );
+            }
+
         } else if (error) {
             this.error = error;
             this.record = undefined;
@@ -76,9 +102,10 @@ export default class LookupLwc extends LightningElement {
     }
 
     //To get preselected or selected record
-    @wire(getRecord, { recordId: '$valueId', fields: FIELDS })
+    /*@wire(getRecord, { recordId: '$valueId', fields: FIELDS })
     wiredOptions({ error, data }) {
         if (data) {
+            console.log("# record: ", JSON.stringify(data));
             this.record = data;
             this.error = undefined;
             this.valueObj = this.record.fields.Name.value;
@@ -89,7 +116,7 @@ export default class LookupLwc extends LightningElement {
             this.record = undefined;
             console.log("# error: ", this.error);
         }
-    }
+    }*/
 
     //when valueId changes
     valueChange() {
@@ -123,6 +150,9 @@ export default class LookupLwc extends LightningElement {
             detail: { selectedId: selectedObj.id, code: selectedObj.code, name: selectedObj.name }
         });
         this.dispatchEvent(valueSelectedEvent);
+
+        this.valueObj = selectedObj.name;
+        this.isValue = !this.isReclamo;
 
         if(this.blurTimeout) {
             clearTimeout(this.blurTimeout);
