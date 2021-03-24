@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Fatturazione</label>
+    <protected>false</protected>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Fatturazione</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Testo Contratto in Bolletta&quot;,&quot;value&quot;:&quot;Testo Contratto in Bolletta&quot;},
+{&quot;label&quot;:&quot;Unificazione/Separazione CA-Bolletta&quot;,&quot;value&quot;:&quot;Unificazione/Separazione CA-Bolletta&quot;},
+{&quot;label&quot;:&quot;Sollecito Emissione Bolletta&quot;,&quot;value&quot;:&quot;Sollecito Emissione Bolletta&quot;},
+{&quot;label&quot;:&quot;Gestione Bonus Sociale&quot;,&quot;value&quot;:&quot;Gestione Bonus Sociale&quot;},
+{&quot;label&quot;:&quot;Ritorno a Fatturazione Bimestrale/Mensile&quot;,&quot;value&quot;:&quot;Ritorno a Fatturazione Bimestrale/Mensile&quot;},
+{&quot;label&quot;:&quot;Verifica Titolarità POD/PDR&quot;,&quot;value&quot;:&quot;Verifica Titolarità POD/PDR&quot;},
+{&quot;label&quot;:&quot;Inversione del Contatore&quot;,&quot;value&quot;:&quot;Inversione del Contatore&quot;},
+{&quot;label&quot;:&quot;Prescrizione Fatture&quot;,&quot;value&quot;:&quot;Prescrizione Fatture&quot;},
+{&quot;label&quot;:&quot;Ricostruzione Consumi&quot;,&quot;value&quot;:&quot;Ricostruzione Consumi&quot;},
+{&quot;label&quot;:&quot;Errore di Fatturazione&quot;,&quot;value&quot;:&quot;Errore di Fatturazione&quot;},
+{&quot;label&quot;:&quot;Rettifica Consumi - Errore Stima Consumi&quot;,&quot;value&quot;:&quot;Rettifica Consumi - Errore Stima Consumi&quot;},
+{&quot;label&quot;:&quot;Rettifica Consumi - Errore di Lettura&quot;,&quot;value&quot;:&quot;Rettifica Consumi - Errore di Lettura&quot;}]</value>
+    </values>
+</CustomMetadata>
