@@ -14,12 +14,23 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     deliberation = '';
     showDeliberation = false;
     disabledDeliberation = false;
+    showEsitoCheck = true;
+    vasAmendDisabledInput = false;
     
     get value(){
         let result = '';
+        console.log('**************************************** ', this.order.RecordType.DeveloperName);
         if (this.order.RecordType.DeveloperName !== 'Default') {
-            result = this.order.RecordType.DeveloperName;
-            this.applySelectionLogic(this.order.RecordType.DeveloperName);
+
+            if(this.order.SBQQ__Quote__r.IsVAS__c){
+                result = 'HDT_RT_VAS';
+            } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c) {
+                result = 'HDT_RT_ScontiBonus';
+            } else {
+                result = this.order.RecordType.DeveloperName;
+            }
+
+            this.applySelectionLogic(result);
         } else {
             result = '';
         }
@@ -27,18 +38,33 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     }
 
     get options(){
-        return [
-            {"label":"Attivazione","value":"HDT_RT_Attivazione"},
-            {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
-            // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
-            {"label":"Subentro","value":"HDT_RT_Subentro"},
-            {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
-            {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"},
-            //INIZIO SVILUPPI VOLTURA EVERIS
-            {"label":"Voltura","value":"HDT_RT_Voltura"}
-            //FINE SVILUPPI VOLTURA EVERIS
-            // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
-        ];
+
+        let records = [];
+
+        if(this.order.SBQQ__Quote__r.IsVAS__c){
+            records = [
+                {"label":"VAS","value":"HDT_RT_VAS"}
+            ]
+        } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c){
+            records = [
+                {"label":"Aggiunta Sconti o Bonus VAS","value":"HDT_RT_ScontiBonus"}
+            ]
+        } else {
+            records = [
+                {"label":"Attivazione","value":"HDT_RT_Attivazione"},
+                {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
+                // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
+                {"label":"Subentro","value":"HDT_RT_Subentro"},
+                {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
+                //INIZIO SVILUPPI VOLTURA EVERIS
+                {"label":"Voltura","value":"HDT_RT_Voltura"}
+                //FINE SVILUPPI VOLTURA EVERIS
+                // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
+                
+            ]
+        }
+
+        return records;
     }
 
     handleShowDeliberation(selectedProcess){
@@ -60,7 +86,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get disabledInput(){
         let result = true;
         console.log('disabledInput - rcordtype', this.order.RecordType.DeveloperName);
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default'){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput){
             result = true;
         } else {
             result = false;
@@ -118,15 +144,22 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
             this.showDeliberation = false;
         }
-        //INIZIO SVILUPPI VOLTURA EVERIS
-        else if(selectedProcess === 'HDT_RT_Voltura')
+        else if(selectedProcess === 'HDT_RT_VAS')
         {
+            this.selectedProcess = 'HDT_RT_VAS';
             this.precheck = true;
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
         }
-        //FINE SVILUPPI VOLTURA EVERIS
+        else if(selectedProcess === 'HDT_RT_ScontiBonus')
+        {
+            this.selectedProcess = 'HDT_RT_ScontiBonus';
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
     }
 
     handleSelectProcess(event){
@@ -176,5 +209,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     connectedCallback(){
         console.log('this.order: ', JSON.parse(JSON.stringify(this.order)));
+
+        if(this.order.SBQQ__Quote__r.IsVAS__c || this.order.SBQQ__Quote__r.AmendmentAllowed__c){
+            this.showEsitoCheck = false;
+            this.vasAmendDisabledInput = true;
+        } 
     }
 }

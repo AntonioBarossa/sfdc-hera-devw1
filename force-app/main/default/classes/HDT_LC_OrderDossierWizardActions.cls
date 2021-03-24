@@ -25,12 +25,16 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
             //update child orders
             for (Order childOrder : childOrders) {
-                ordersToUpdate.add(new Order(
-                    Id = childOrder.Id,
-                    //EVERIS: Aggiunto caso per Voltura 
-                    Phase__c = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c 
-                    : checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
+
+                if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
+                    ordersToUpdate.add(new Order(
+                        Id = childOrder.Id,
+                        //EVERIS: AGGIUNTA CASISTICA VOLTURA
+                        Phase__c = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
+                        checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                    ));
+                }
+
             }
 
             //update parent order
@@ -43,10 +47,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
             //update child orders
             for (Order childOrder : childOrders) {
-                ordersToUpdate.add(new Order(
-                    Id = childOrder.Id,
-                    Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
+                if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
+                    ordersToUpdate.add(new Order(
+                        Id = childOrder.Id,
+                        Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                    ));
+                }
             }
 
             //update parent order

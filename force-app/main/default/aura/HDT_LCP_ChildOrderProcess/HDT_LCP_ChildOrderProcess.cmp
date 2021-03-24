@@ -20,6 +20,8 @@
     <aura:attribute name="diffDraftObjectApiName" type='String' default=""/>
     <aura:attribute name="diffFields" type='Map' />
     <aura:attribute name="test" type='String' default="test"/>
+    <aura:attribute name="mainOrderItem" type="OrderItem" />
+    <aura:attribute name="analisiConsumi" type="OrderItem" />
     <lightning:navigation aura:id="navService" />
     <lightning:workspaceAPI aura:id="workspace"/>
 
@@ -41,7 +43,7 @@
 
     <aura:if isTrue="{!v.order}">
         <aura:if isTrue="{!v.order.RecordType.DeveloperName != 'HDT_RT_Default'}">
-            <c:hdtChildOrderProcessDetails order="{!v.order}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
+            <c:hdtChildOrderProcessDetails aura:id="detailsComp" order="{!v.order}" mainOrderItem="{!v.mainOrderItem}" analisiConsumi="{!v.analisiConsumi}" onrefreshorderchild="{!c.handleRefreshOrderChild}" onemitlaststep="{!c.handleEmitLastStep}" onemitdraftdata="{!c.handleEmitDraftData}" onemitdiffdraftdata="{!c.handleEmitDiffDraftData}"></c:hdtChildOrderProcessDetails>
         </aura:if>
     </aura:if>
 

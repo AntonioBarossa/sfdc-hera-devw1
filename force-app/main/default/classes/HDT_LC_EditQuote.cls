@@ -12,6 +12,12 @@ public inherited sharing class HDT_LC_EditQuote {
     private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
     private static HDT_QR_SaleServiceItem saleServiceItemQr = new HDT_QR_SaleServiceItem();
     private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
 
     /*
     private static HDT_QR_Product productQr = new HDT_QR_Product();
@@ -149,6 +155,44 @@ public inherited sharing class HDT_LC_EditQuote {
         SBQQ__QuoteLine__c primary = new SBQQ__QuoteLine__c();
         SBQQ__QuoteLine__c secondary = new SBQQ__QuoteLine__c();
     }*/
+
+    private static void assocBillingProfileContract(String contractId, String quoteId){
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
+        List<Contract> contract = contractQr.getRecordById(contractId);
+        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByQuoteFilteredPaymentMethodNotNull(quoteId);
+
+        system.debug('HDT_LC_EditQuote - contract: ' + contract);
+        system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
+
+        if (!contract.isEmpty() && !quoteLine.isEmpty()) {
+            quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
+                Id = quoteLine[0].Id
+                // BillingProfile__c = contract[0].BillingProfile__c //to uncomment
+            ));
+        } else {
+            system.debug('HDT_LC_EditQuote - assocBillingProfileContract - nessun contract o quoteLine trovato');
+        }
+
+    }
+
+    private static void assocBillingProfileOrder(String orderId, String quoteId){
+        contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
+        Order order = orderQr.getRecordById(orderId);
+        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByQuoteFilteredPaymentMethodNotNull(quoteId);
+
+        system.debug('HDT_LC_EditQuote - order: ' + order);
+        system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
+
+        if (order != null && !quoteLine.isEmpty()) {
+            quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
+                Id = quoteLine[0].Id
+                // BillingProfile__c = order.BillingProfile__c //to uncomment
+            ));
+        } else {
+            system.debug('HDT_LC_EditQuote - assocBillingProfileContract - nessun contract o quoteLine trovato');
+        }
+
+    }
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -156,8 +200,7 @@ public inherited sharing class HDT_LC_EditQuote {
     * @param String saleId – Sale__c.Id
     * @param String quoteId - SBQQ__Quote__c
     */
-    @AuraEnabled
-    public static void assocPodToQuoteLine(String saleId, String quoteId){
+    private static void assocPodToQuoteLine(String saleId, String quoteId){
        
         //get all quoteLine pods
         quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,ServicePoint__c');
@@ -210,6 +253,33 @@ public inherited sharing class HDT_LC_EditQuote {
 
         } else {
             system.debug('HDT_LC_EditQuote - assocPodToQuoteLine - Configurare i prodotti per tutti i Service Point!');
+        }
+
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Execute actions when exiting modal
+    */
+    @AuraEnabled
+    public static void execModalExitActions(String saleId, String quoteId){
+
+        SBQQ__Quote__c quote = quoteQr.getRecordById(quoteId);
+
+        system.debug('******************* quote' + quote);
+
+        if (quote.ContractReference__c != null) {
+            assocBillingProfileContract(quote.ContractReference__c, quoteId);
+        }
+
+        system.debug('******************* quote.OrderReference__c' + quote.OrderReference__c);
+
+        if (quote.OrderReference__c != null) {
+            assocBillingProfileOrder(quote.OrderReference__c, quoteId);
+        }
+
+        if (!quote.IsVAS__c) {
+            assocPodToQuoteLine(saleId,quoteId);
         }
 
     }

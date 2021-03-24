@@ -12,6 +12,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
+    private static List<Contract> contractsForAmendmentCheck = new List<Contract>();
     private static final String READPERMISSION = 'read';
     private static final String CREATEPERMISSION = 'create';
 
@@ -66,7 +69,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
 
-        if (!existingSaleServiceItems.isEmpty()) {
+        system.debug('!isAmendmentAllowed ' + !isAmendmentAllowed(servicePoint, sale));
+
+        if (!existingSaleServiceItems.isEmpty() && !isAmendmentAllowed(servicePoint, sale)) {
 
             if (isServicePointConfirmed(existingSaleServiceItems, servicePoint.Id)) {
                 throw new AuraHandledException('Service Point già presente in ' + existingSaleServiceItems[0].Opportunity__r.Name);
@@ -99,7 +104,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,
                 SalesCompany__c = sale.SalesCompany__c,
-                SupplyCity__c = servicePoint.SupplyCity__c
+                Campaign__c = sale.Campaign__c,
+                SupplyCity__c = servicePoint.SupplyCity__c,
+                AmendmentAllowed__c = isAmendmentAllowed(servicePoint, sale),
+                ContractReference__c = isAmendmentAllowed(servicePoint, sale) ? contractsForAmendmentCheck[0].Id : null
             ));
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -120,6 +128,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         HDT_UTL_DatabaseService.insertSObject(newSaleServiceItem);
 
         return newSaleServiceItem;
+    }
+
+    public void updateRecords(List<SaleServiceItem__c> records){
+        HDT_UTL_DatabaseService.updateSObject(records);
     }
 
     /**
@@ -176,5 +188,27 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         }
 
         return oppItems;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check if amendment is allowed for this tile creation
+     * @param ServicePoint__c servicePoint
+     * @param Sale__c sale
+     * @return Boolean
+     */
+    private Boolean isAmendmentAllowed(ServicePoint__c servicePoint, Sale__c sale){
+        Boolean result = false;
+
+        if(servicePoint.Account__c == sale.Account__c){
+            String accountId = sale.Account__c;
+            contractSrv.checkReadAccess('Name,AccountId,ServicePoint__c,ContractNumber,Status');
+            contractsForAmendmentCheck = contractQr.getActiveRecordsByAccountIdAndServicePointId(accountId, servicePoint.Id);
+
+            system.debug('!contractsForAmendmentCheck.isEmpty() ' + !contractsForAmendmentCheck.isEmpty());
+            result = !contractsForAmendmentCheck.isEmpty();
+        }
+
+        return result;
     }
 }
