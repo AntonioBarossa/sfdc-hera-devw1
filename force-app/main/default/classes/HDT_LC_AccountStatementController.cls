@@ -1,4 +1,4 @@
-public class HDT_LC_AccountStatementController {
+public inherited sharing class HDT_LC_AccountStatementController {
 
     @AuraEnabled(cacheable=true)
     public static HDT_WRP_AccountStatement.HDT_WRP_Tabs getTabsMetaData() {
