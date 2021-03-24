@@ -136,14 +136,14 @@ public inherited sharing class HDT_QR_Order {
             ContractReference__c,
             OrderReference__c,
             ContractReference__r.ContractNumber,
-            OrderReference__r.OrderNumber
-            // ActivationStreetName__c,
-            // ActivationCity__c,
-            // ActivationPostalCode__c,
-            // ActivationCountry__c,
-            // ActivationProvince__c,
-            // ActivationStreetNumberExtension__c,
-            // ActivationStreetNumber__c
+            OrderReference__r.OrderNumber,
+            ActivationStreetName__c,
+            ActivationCity__c,
+            ActivationPostalCode__c,
+            ActivationCountry__c,
+            ActivationProvince__c,
+            ActivationStreetNumberExtension__c,
+            ActivationStreetNumber__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

@@ -166,8 +166,8 @@ public inherited sharing class HDT_LC_EditQuote {
 
         if (!contract.isEmpty() && !quoteLine.isEmpty()) {
             quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
-                Id = quoteLine[0].Id
-                // BillingProfile__c = contract[0].BillingProfile__c //to uncomment
+                Id = quoteLine[0].Id,
+                BillingProfile__c = contract[0].BillingProfile__c
             ));
         } else {
             system.debug('HDT_LC_EditQuote - assocBillingProfileContract - nessun contract o quoteLine trovato');
@@ -185,8 +185,8 @@ public inherited sharing class HDT_LC_EditQuote {
 
         if (order != null && !quoteLine.isEmpty()) {
             quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
-                Id = quoteLine[0].Id
-                // BillingProfile__c = order.BillingProfile__c //to uncomment
+                Id = quoteLine[0].Id,
+                BillingProfile__c = order.BillingProfile__c
             ));
         } else {
             system.debug('HDT_LC_EditQuote - assocBillingProfileContract - nessun contract o quoteLine trovato');
