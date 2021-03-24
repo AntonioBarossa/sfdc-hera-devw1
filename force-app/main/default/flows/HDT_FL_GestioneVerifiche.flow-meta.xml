@@ -138,6 +138,31 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Annullamento</name>
+        <label>Annullamento?</label>
+        <locationX>165</locationX>
+        <locationY>1514</locationY>
+        <defaultConnector>
+            <targetReference>Aggiorna_Conferma_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Annullare</defaultConnectorLabel>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtDocumentSignature.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_Subflow_0</targetReference>
+            </connector>
+            <label>Annullare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Energia_Elettrica_o_Gas</name>
         <label>Energia Elettrica o Gas?</label>
         <locationX>688</locationX>
@@ -232,7 +257,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Conferma_Case</targetReference>
+                <targetReference>Screen_Documentale</targetReference>
             </connector>
             <label>Trovata</label>
         </rules>
@@ -240,8 +265,8 @@
     <decisions>
         <name>SalvaInBozza_o_Conferma</name>
         <label>SalvaInBozza o Conferma?</label>
-        <locationX>688</locationX>
-        <locationY>1142</locationY>
+        <locationX>700</locationX>
+        <locationY>1183</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -258,10 +283,25 @@
             </connector>
             <label>Conferma</label>
         </rules>
+        <rules>
+            <name>Annullato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento_Subflow</targetReference>
+            </connector>
+            <label>Annullato</label>
+        </rules>
     </decisions>
     <description>Flow per la gestione delle verifiche</description>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>HDT_FL_GestioneVerifiche</label>
+    <label>Gestione Verifiche</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -329,8 +369,8 @@
     <recordUpdates>
         <name>Aggiorna_Conferma_Case</name>
         <label>Aggiorna Fase in Inviare Preventivo</label>
-        <locationX>208</locationX>
-        <locationY>1472</locationY>
+        <locationX>293</locationX>
+        <locationY>1667</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -354,7 +394,7 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Inviare preventivo</stringValue>
+                <stringValue>Attesa conferma preventivo cliente</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -394,7 +434,7 @@
             <inputParameters>
                 <name>density</name>
                 <value>
-                    <stringValue>auto</stringValue>
+                    <stringValue>Comfy</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -489,6 +529,38 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Documentale</name>
+        <label>Screen Documentale</label>
+        <locationX>210</locationX>
+        <locationY>1366</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Annullamento</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignature</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <elementReference>Quote_Management.QuoteType__c</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
         <locationX>1326</locationX>
@@ -508,7 +580,7 @@
             <inputParameters>
                 <name>density</name>
                 <value>
-                    <stringValue>auto</stringValue>
+                    <stringValue>Comfy</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -573,6 +645,44 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>926</locationX>
+        <locationY>1232</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow_0</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>21</locationX>
+        <locationY>1674</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>

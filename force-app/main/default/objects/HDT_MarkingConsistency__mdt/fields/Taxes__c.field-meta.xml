@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Taxes__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Tipo Imposta</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>G_ICD-Imposta Usi Domestici</fullName>
+                <default>true</default>
+                <label>G_ICD-Imposta Usi Domestici</label>
+            </value>
+            <value>
+                <fullName>G_ICC10 - Imposta NonDom.agevIVA</fullName>
+                <default>false</default>
+                <label>G_ICC10 - Imposta NonDom.agevIVA</label>
+            </value>
+            <value>
+                <fullName>G_104 - Riduzione Usi Industiali</fullName>
+                <default>false</default>
+                <label>G_104 - Riduzione Usi Industiali</label>
+            </value>
+            <value>
+                <fullName>G_I125 - Forze Armate Nato</fullName>
+                <default>false</default>
+                <label>G_I125 - Forze Armate Nato</label>
+            </value>
+            <value>
+                <fullName>G_I24-Imp. Forze Armate Nazion</fullName>
+                <default>false</default>
+                <label>G_I24-Imp. Forze Armate Nazion</label>
+            </value>
+            <value>
+                <fullName>G_ICC - Imposta Usi Non Dom.</fullName>
+                <default>false</default>
+                <label>G_ICC - Imposta Usi Non Dom.</label>
+            </value>
+            <value>
+                <fullName>Non Ridotta IVA 10%-G_ICC10</fullName>
+                <default>false</default>
+                <label>Non Ridotta IVA 10%-G_ICC10</label>
+            </value>
+            <value>
+                <fullName>Non Ridotta IVA 20%-G_ICC</fullName>
+                <default>false</default>
+                <label>Non Ridotta IVA 20%-G_ICC</label>
+            </value>
+            <value>
+                <fullName>Ridotta-G_I04</fullName>
+                <default>false</default>
+                <label>Ridotta-G_I04</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
