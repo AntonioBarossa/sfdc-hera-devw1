@@ -1,4 +1,4 @@
-public class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
+public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){}
  	public override void beforeDelete(){}
@@ -16,7 +16,9 @@ public class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
                 .bulkCheckCompleted(new Map<String,Object>{'triggerNew'=>Trigger.new, 'triggerOld' => Trigger.old});
         
         
-       // HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);          
+
+        HDT_UTL_OrderProcess.salesProcessManagementBefore(trigger.new,trigger.old);          
+
         
         
         
@@ -30,7 +32,9 @@ public class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
                 .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
        
-        //HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);          
+
+        HDT_UTL_OrderProcess.salesProcessManagementAfter(trigger.new,trigger.old);          
+
     }
 
     public override void afterInsert(){   
