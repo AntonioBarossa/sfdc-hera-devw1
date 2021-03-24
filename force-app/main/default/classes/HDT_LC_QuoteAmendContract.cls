@@ -17,8 +17,8 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
 
         if (!contract.isEmpty() && !quoteLine.isEmpty()) {
             quoteLineSrv.updateRecord(new SBQQ__QuoteLine__c(
-                Id = quoteLine[0].Id,
-                BillingProfile__c = contract[0].BillingProfile__c
+                Id = quoteLine[0].Id
+                // BillingProfile__c = contract[0].BillingProfile__c //to uncomment
             ));
         } else {
             system.debug('HDT_LC_QuoteAmendContract - assocBillingProfileFromContract - nessun contract o quoteLine trovato');
