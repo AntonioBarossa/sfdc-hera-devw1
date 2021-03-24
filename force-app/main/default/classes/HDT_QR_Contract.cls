@@ -16,7 +16,7 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
-            BillingProfile__c,
+            // BillingProfile__c,
             Status,
             SBQQ__Order__r.BillingProfile__c
             FROM
