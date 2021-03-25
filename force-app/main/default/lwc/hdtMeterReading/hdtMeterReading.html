@@ -25,7 +25,7 @@
             </div>
 
             <div class="slds-grid slds-gutters" >
-                <div class="slds-col slds-size_1-of-2 slds-scrollable_y" style="height: 20vh;">
+                <div class="slds-col slds-size_1-of-2 slds-scrollable_y slds-m-left_small slds-border_bottom slds-border_top" style="height: 20vh;">
                     <lightning-datatable
                             key-field="id"
                             data={contractDataToView}
@@ -41,24 +41,12 @@
     </template>
 
     <div if:false={error} class="slds-m-top_x-small" >
-        <div if:false={meterReadingError} >
-            <lightning-card title={detailTableHeader} >
-                <div if:true={loadData} class="slds-scrollable_y" style="height: 25vh;">
-                    <lightning-datatable
-                        key-field="id"
-                        data={meterReadingData}
-                        columns={columns}
-                        resize-column-disabled
-                    ></lightning-datatable>
-                </div>
-                <div if:false={loadData} style="height: 25vh;" >
-                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-                </div>
-            </lightning-card>
-        </div>
-        <div if:true={meterReadingError} class="slds-box" style="background:#ffffff" >
-            <p class="slds-text-heading_small slds-text-color_error" >{meterReadingErrorMessage}</p>
-        </div>
+        <template if:true={contractNumberAvailable} >
+            <c-hdt-meter-reading-detail-table 
+                contract-number={contractNumber}
+                ondataload={dataload}
+            ></c-hdt-meter-reading-detail-table>
+        </template>
     </div>
 
 </template>

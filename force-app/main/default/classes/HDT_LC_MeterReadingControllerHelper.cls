@@ -1,7 +1,7 @@
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
-    public static HDT_WRP_ContractObj getContractRecordsHelper(String accountId) {
-        HDT_WRP_ContractObj contrObj = new HDT_WRP_ContractObj();
+    public static HDT_WRP_MeterReading.HDT_WRP_ContractObj getContractRecordsHelper(String accountId) {
+        HDT_WRP_MeterReading.HDT_WRP_ContractObj contrObj = new HDT_WRP_MeterReading.HDT_WRP_ContractObj();
 
         try {
 
@@ -14,9 +14,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return contrObj;                
             }
 
-            contrObj.contractList = new List<HDT_WRP_ContractDetail>();
+            contrObj.contractList = new List<HDT_WRP_MeterReading.HDT_WRP_ContractDetail>();
             for(Contract c : contractList){
-                HDT_WRP_ContractDetail contrWrp;
+                HDT_WRP_MeterReading.HDT_WRP_ContractDetail contrWrp;
                 contrObj.contractList.add(convertContractToWrapper(c, contrWrp));
             }
 
@@ -31,8 +31,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     }
 
-    private static HDT_WRP_ContractDetail convertContractToWrapper(Contract c, HDT_WRP_ContractDetail contrWrp){
-        contrWrp = new HDT_WRP_ContractDetail();
+    private static HDT_WRP_MeterReading.HDT_WRP_ContractDetail convertContractToWrapper(Contract c, HDT_WRP_MeterReading.HDT_WRP_ContractDetail contrWrp){
+        contrWrp = new HDT_WRP_MeterReading.HDT_WRP_ContractDetail();
         contrWrp.id = c.Id;
         contrWrp.contractNumber = c.ContractNumber;
         contrWrp.status = c.Status;
@@ -43,13 +43,51 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return contrWrp;
     }
 
-    public static HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode) {
-        HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReadingObj();
+    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode) {
+        HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj();
 
         try{
-            meterReadingObj.meterReadingList = new List<HDT_WRP_MeterReadingDetail>();
-            meterReadingObj.meterReadingList.addAll(createMockRecords(contractCode));
+            meterReadingObj.data = new List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail>();
+
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject();
+
+            HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
+            bodyWrp.codiceContratto = contractCode;
+            bodyWrp.codiceImpianto = '';
+            bodyWrp.codicePod = '';
+            bodyWrp.dataInizioLettura = '';
+            bodyWrp.dataFineLettura = '';
+            bodyWrp.letturaReale = '';
+
+            String body = JSON.serialize(bodyWrp, true);
+            System.debug('>>> body obj > ');
+            System.debug(body);
+            HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+     
+            if(!responseCtrl.success){
+                meterReadingObj.success = false;
+                meterReadingObj.message = responseCtrl.message;
+                return meterReadingObj;
+            }
+
+            HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj restMessage = (HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MulesoftResponse.HDT_WRP_ReturnObj.class);
+
+            if(restMessage.status != 'success'){
+                meterReadingObj.success = false;
+                meterReadingObj.message = 'Mulesoft side [code: ' + restMessage.errorDetails.code;
+                meterReadingObj.message += ']; Detail: ' + restMessage.errorDetails.message;
+                meterReadingObj.message += '; Additional Info' + restMessage.errorDetails.additionalInfo;
+                return meterReadingObj;
+            }
+    
+            //here we have to deserialize body to wrapper obj
+            HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingData = (HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj.class);
+            System.debug('>>> ' + meterReadingData);
+
+            //meterReadingObj.data.addAll(createMockRecords(contractCode));
+            meterReadingObj.data = meterReadingData.data;
             meterReadingObj.success = true;
+
         } catch (Exception e){
             meterReadingObj.success = false;
             meterReadingObj.message = '> ERROR > ' + e.getMessage() + ' at line [' + String.valueOf(e.getLineNumber());
@@ -58,11 +96,24 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return meterReadingObj;
     }
 
-    private static List<HDT_WRP_MeterReadingDetail> createMockRecords(String contract){
-        List<HDT_WRP_MeterReadingDetail> meterReadingList = new List<HDT_WRP_MeterReadingDetail>();
-        HDT_WRP_MeterReadingDetail detObj;
+    private static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(){
+
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+        httpObj.headersMap = new Map<String, String>();
+
+        httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
+        httpObj.httpMethod = 'POST';            
+        httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+        httpObj.headersMap.put('Content-Type', 'application/json');
+
+        return httpObj;
+    }
+
+    private static List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail> createMockRecords(String contract){
+        List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail> data = new List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail>();
+        HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail detObj;
         for(Integer n=0; n<15; n++){
-            detObj = new HDT_WRP_MeterReadingDetail();
+            detObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail();
             detObj.id = contract + String.valueOf(n); 
             detObj.contractId = contract;
 
@@ -87,51 +138,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             detObj.consumedType = 'KWH';
             detObj.sector = 'Energia Elettrica';
             detObj.reasonWhy = '';
-            meterReadingList.add(detObj);
+            data.add(detObj);
         }
-        return meterReadingList;
+        return data;
     }
 
-    public class HDT_WRP_ContractObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_ContractDetail> contractList;
-    }
-
-    public class HDT_WRP_MeterReadingObj {
-        @AuraEnabled public Boolean success;
-        @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_MeterReadingDetail> meterReadingList;
-    }
-
-    public class HDT_WRP_ContractDetail {
-        @AuraEnabled public String id;
-        @AuraEnabled public String contractNumber;
-        @AuraEnabled public String status;
-        @AuraEnabled public String startDate;
-        @AuraEnabled public String endDate;
-        @AuraEnabled public String asset;
-        @AuraEnabled public String service;
-    }
-
-    public class HDT_WRP_MeterReadingDetail {
-        @AuraEnabled public String id; 
-        @AuraEnabled public String contractId; 
-        @AuraEnabled public String lectureDate;
-        @AuraEnabled public String slot; 
-        @AuraEnabled public String lectureInt; 
-        @AuraEnabled public String lectureDecimal; 
-        @AuraEnabled public String assetCode; 
-        @AuraEnabled public String contractCode; 
-        @AuraEnabled public String status; 
-        @AuraEnabled public String lectureType; 
-        @AuraEnabled public String reason;
-        @AuraEnabled public String billingDate; 
-        @AuraEnabled public String consumedAvg; 
-        @AuraEnabled public String regType; 
-        @AuraEnabled public String consumed;
-        @AuraEnabled public String consumedType;
-        @AuraEnabled public String sector;
-        @AuraEnabled public String reasonWhy;
-    }
 }

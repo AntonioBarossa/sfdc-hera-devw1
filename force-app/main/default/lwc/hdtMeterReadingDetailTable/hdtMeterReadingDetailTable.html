@@ -1,0 +1,21 @@
+<template>
+    <div if:false={meterReadingError} >
+        <lightning-card title={detailTableHeader} >
+            <div if:true={loadData} class="slds-scrollable_y slds-m-left_small slds-m-right_small" style="height: 25vh;">
+                <lightning-datatable
+                    key-field="id"
+                    data={meterReadingData}
+                    columns={columns}
+                    resize-column-disabled
+                    hide-checkbox-column
+                ></lightning-datatable>
+            </div>
+            <div if:false={loadData} style="height: 25vh;" >
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+        </lightning-card>
+    </div>
+    <div if:true={meterReadingError} class="slds-box" style="background:#ffffff" >
+        <p class="slds-text-heading_small slds-text-color_error" >{meterReadingErrorMessage}</p>
+    </div> 
+</template>
