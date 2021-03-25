@@ -5,6 +5,17 @@
     <description>RT per gli HC Point</description>
     <label>HC Point</label>
     <picklistValues>
+        <picklist>AppointmentCompetence__c</picklist>
+        <values>
+            <fullName>Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Approved__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -27,7 +38,148 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IwsDemand__c</picklist>
+        <values>
+            <fullName>HCMARCHE_AUTOLETTURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_BOLLETTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_BOLLETTE_DUPL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_COMMMARCHE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_CONTRATTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_GENERICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_MERCATOLIBERO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AUTOLETT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AUTOLETT_BLANK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AZIENDE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_BOLLETTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_CONTRATTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_GENERICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_MAGGIORTUTELA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_MERCATOLIBERO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_TUTELASIMILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_AUTOLETTURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_BOLLETTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_BOLLETTE_DUPL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_CONTRATTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_FAMIGLIE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_GENERICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_MAGGIORTUTELA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_RAI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_TUTELASIMILE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason__c</picklist>
+        <values>
+            <fullName>Dimostrata Estraneità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saldo pagato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service__c</picklist>
+        <values>
+            <fullName>HERACOMM_MARCHE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MERCATO_AZIENDE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MERCATO_FAMIGLIE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Status__c</picklist>
+        <values>
+            <fullName>Creata</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Null</fullName>
             <default>false</default>
@@ -37,18 +189,6 @@
         <picklist>Type__c</picklist>
         <values>
             <fullName>Approvazione Quote</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata Callback</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata inbound</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata outbound</fullName>
             <default>false</default>
         </values>
     </picklistValues>

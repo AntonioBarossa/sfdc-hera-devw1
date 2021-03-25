@@ -1,7 +1,7 @@
 public virtual class HDT_TRH_TriggerHandler {
 
   // static map of handlername, times run() was invoked
-  private static Map<String, LoopCount> loopCountMap;
+  private static Map<String, HDT_TRH_LoopCount> loopCountMap;
   private static Set<String> bypassedHandlers;
 
   // the current context of the trigger, overridable in tests
@@ -14,7 +14,7 @@ public virtual class HDT_TRH_TriggerHandler {
 
   // static initialization
   static {
-    loopCountMap = new Map<String, LoopCount>();
+    loopCountMap = new Map<String, HDT_TRH_LoopCount>();
     bypassedHandlers = new Set<String>();
   }
   
@@ -56,7 +56,7 @@ public virtual class HDT_TRH_TriggerHandler {
   public void setMaxLoopCount(Integer max) {
     String handlerName = getHandlerName();
     if(!HDT_TRH_TriggerHandler.loopCountMap.containsKey(handlerName)) {
-      HDT_TRH_TriggerHandler.loopCountMap.put(handlerName, new LoopCount(max));
+      HDT_TRH_TriggerHandler.loopCountMap.put(handlerName, new HDT_TRH_LoopCount(max));
     } else {
       HDT_TRH_TriggerHandler.loopCountMap.get(handlerName).setMax(max);
     }
@@ -136,7 +136,7 @@ public virtual class HDT_TRH_TriggerHandler {
       Boolean exceeded = HDT_TRH_TriggerHandler.loopCountMap.get(handlerName).increment();
       if(exceeded) {
         Integer max = HDT_TRH_TriggerHandler.loopCountMap.get(handlerName).max;
-        throw new TriggerHandlerException('Maximum loop count of ' + String.valueOf(max) + ' reached in ' + handlerName);
+        throw new HDT_TRH_TriggerHandlerException('Maximum loop count of ' + String.valueOf(max) + ' reached in ' + handlerName);
       }
     }
   }
@@ -145,7 +145,7 @@ public virtual class HDT_TRH_TriggerHandler {
   @TestVisible
   private Boolean validateRun() {
     if(!this.isTriggerExecuting || this.context == null) {
-      throw new TriggerHandlerException('Trigger handler called outside of Trigger execution');
+      throw new HDT_TRH_TriggerHandlerException('Trigger handler called outside of Trigger execution');
     }
     if(HDT_TRH_TriggerHandler.bypassedHandlers.contains(getHandlerName())) {
       return false;
@@ -184,16 +184,16 @@ public virtual class HDT_TRH_TriggerHandler {
 
   // inner class for managing the loop count per handler
   @TestVisible
-  private class LoopCount {
+  private class HDT_TRH_LoopCount {
     private Integer max;
     private Integer count;
 
-    public LoopCount() {
+    public HDT_TRH_LoopCount() {
       this.max = 5;
       this.count = 0;
     }
 
-    public LoopCount(Integer max) {
+    public HDT_TRH_LoopCount(Integer max) {
       this.max = max;
       this.count = 0;
     }
@@ -233,6 +233,6 @@ public virtual class HDT_TRH_TriggerHandler {
   }
 
   // exception class
-  public class TriggerHandlerException extends Exception {}
+  public class HDT_TRH_TriggerHandlerException extends Exception {}
 
 }

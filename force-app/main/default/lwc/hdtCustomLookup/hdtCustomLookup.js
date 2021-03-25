@@ -22,6 +22,9 @@ export default class LookupLwc extends LightningElement {
     @api searchBy;
     @api setAsKey;
     @api detailFields;
+    //AGGIUNTO NEL CASO DI RECLAMO
+    @api isReclamo = false;
+    //AGGIUNTO NEL CASO DI RECLAMO
     objLabelName;
     searchTerm;
     @track valueObj;
@@ -149,7 +152,7 @@ export default class LookupLwc extends LightningElement {
         this.dispatchEvent(valueSelectedEvent);
 
         this.valueObj = selectedObj.name;
-        this.isValue = true;
+        this.isValue = !this.isReclamo;
 
         if(this.blurTimeout) {
             clearTimeout(this.blurTimeout);
