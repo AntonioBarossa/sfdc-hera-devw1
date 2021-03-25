@@ -79,8 +79,8 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     infoCase.ServicePoint__c = contextObj.ServicePoint__c;
                     infoCase.Market__c = contextObj.Market__c;
                     infoCase.BillingProfile__c = contextObj.BillingProfile__c;
-                    //infoCase.InformativeCluster__c = contextObj.Cluster__c;
-                    //infoCase.InformativeType__c = contextObj.Type;
+                    infoCase.InformativeCluster__c = contextObj.Cluster__c;
+                    infoCase.InformativeType__c = contextObj.Type;
                     infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.Contract__c;
                     infoCase.ParentId = contextId;
