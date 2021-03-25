@@ -34,9 +34,15 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         
         //Get Orders
         List<Order> listOrder = orderQr.getRecordBySale(saleId);
+
+        //Store orders Id
+        List<Id> listOrdersId = new List<Id>();
         
         //Get OrderDossier record type
         String recordTypeIdOrderDossier = orderSrv.getRecordTypeIdOrderDossier();
+
+        //Get Default record type
+        String recordTypeIdDefault = orderSrv.getRecordTypeIdDefault();
 
         //Check for parent orders
         List<Order> listOrderParent = orderQr.getRecordBySaleFilterRecordTypeId(saleId, recordTypeIdOrderDossier);
@@ -62,11 +68,44 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                 orderSrv.createRecord(parentOrderNew);
                 
                 for(Order o : listOrder){
-                    o.ParentOrder__c = parentOrderNew.Id;
+                    listOrdersId.add(o.Id);
                 }
 
                 if(listOrder != null && !listOrder.isEmpty()){
-                    orderSrv.updateRecords(listOrder);
+                    Map<String, Order> ordersToUpdateMap = new Map<String, Order>();
+                    List<Order> ordersToUpdate = new List<Order>();
+                    orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
+                    List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+                    for (OrderItem orderItem : orderItemsList) {
+                        ordersToUpdateMap.put(orderItem.OrderId, new Order(
+                            Id = orderItem.OrderId,
+                            ServicePoint__c = orderItem.ServicePoint__c != null ? orderItem.ServicePoint__c : null,
+                            ParentOrder__c = parentOrderNew.Id,
+                            RecordTypeId = recordTypeIdDefault
+                        ));
+                    }
+                    orderItemSrv.checkReadAccess('OrderId,BillingProfile__c');
+                    List<OrderItem> orderItemsListWithBillingProfile = orderItemQr.getRecordsWithBillingProfile(listOrdersId);
+                    for (OrderItem orderItem : orderItemsListWithBillingProfile) {
+                        if (ordersToUpdateMap.get(orderItem.OrderId) != null) {
+                            Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
+                            orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c != null ? orderItem.BillingProfile__c : null;
+                            ordersToUpdate.add(orderToUpdate);
+                        }
+                    }
+
+                    List<OrderItem> orderItemsAmend = orderItemQr.getRecordsWithAmend(listOrdersId);
+                    system.debug('ordersToUpdate before: ' + ordersToUpdate);
+                    system.debug('orderItemsAmend: ' + orderItemsAmend);
+                    for (OrderItem orderItem : orderItemsAmend) {
+                        Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
+                        system.debug('orderToUpdate: ' + orderToUpdate);
+                        system.debug('ordersToUpdate after: ' + ordersToUpdate);
+                        ordersToUpdate.add(orderToUpdate);
+                    }
+
+
+                    orderSrv.updateRecords(ordersToUpdate);
                 }
 
                 parentOrder = orderQr.getRecordById(parentOrderNew.Id);
@@ -93,6 +132,12 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     //     update ordVen;
     //     return ordVen.account__c;
     // }
+    
+    @AuraEnabled
+    public static Order getOrderParent(String orderParentId){
+        orderSrv.checkReadAccess('AccountId,Account.Name,Account.VATNumber__c,Account.FiscalCode__c,Account.BillingAddress,Account.ShippingAddress,Name,RecordType.DeveloperName,SystemModstamp,Status,ContractSigned__c,SignedDate__c,SignatureMethod__c,DocSendingMethod__c,Sale__c,CreatedDate,Step__c');
+        return orderQr.getRecordById(orderParentId);
+    }
 
     @AuraEnabled
     public static boolean saveProsegui(String orderParentId){
@@ -116,19 +161,6 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         }
 
         return check;
-    }
-
-    @AuraEnabled
-    public static void saveDraftController(String orderParentId){
-        
-        Boolean check = true;
-
-        Order orderParent = new Order(
-            Id = orderParentId,
-            Status = 'Draft'
-        );
-
-        orderSrv.updateRecord(orderParent);
     }
 
 }

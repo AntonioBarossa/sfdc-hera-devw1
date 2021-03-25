@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Mancata ricezione Plico</fullName>
+        <default>false</default>
+        <label>Mancata ricezione Plico</label>
+    </customValue>
+    <customValue>
+        <fullName>Assistenza compilazione moduli (daticatastali, legge 80)</fullName>
+        <default>false</default>
+        <label>Assistenza compilazione moduli (daticatastali, legge 80)</label>
+    </customValue>
+    <customValue>
+        <fullName>Stato pratica attivazione</fullName>
+        <default>false</default>
+        <label>Stato pratica attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Info appuntamento apertura</fullName>
+        <default>false</default>
+        <label>Info appuntamento apertura</label>
+    </customValue>
+    <customValue>
+        <fullName>Informazioni attivazione non corrette</fullName>
+        <default>false</default>
+        <label>Informazioni attivazione non corrette</label>
+    </customValue>
+    <customValue>
+        <fullName>Riattivazione contratto post chiusura per morosità</fullName>
+        <default>false</default>
+        <label>Riattivazione contratto post chiusura per morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità di ripensamento</fullName>
+        <default>false</default>
+        <label>Modalità di ripensamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità richiesta attivazione</fullName>
+        <default>false</default>
+        <label>Modalità richiesta attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Consulenza Offerte o tariffari (contratti non ancora attivi)</fullName>
+        <default>false</default>
+        <label>Consulenza Offerte o tariffari (contratti non ancora attivi)</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su contatto teleselling/agenzia</fullName>
+        <default>false</default>
+        <label>Info su contatto teleselling/agenzia</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica su agente Hera</fullName>
+        <default>false</default>
+        <label>Verifica su agente Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Info mancato Ricontatto Da Canali Di Vendita</fullName>
+        <default>false</default>
+        <label>Info mancato Ricontatto Da Canali Di Vendita</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifiche cambio contatore pre attivazione</fullName>
+        <default>false</default>
+        <label>Verifiche cambio contatore pre attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su tempi consegna prodotti</fullName>
+        <default>false</default>
+        <label>Info su tempi consegna prodotti</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita scorretta</fullName>
+        <default>false</default>
+        <label>Vendita scorretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su documentazione​</fullName>
+        <default>false</default>
+        <label>Info su documentazione​</label>
+    </customValue>
+    <customValue>
+        <fullName>Informazioni errate</fullName>
+        <default>false</default>
+        <label>Informazioni errate</label>
+    </customValue>
+    <customValue>
+        <fullName>Lamentela su prodotto/servizio​</fullName>
+        <default>false</default>
+        <label>Lamentela su prodotto/servizio​</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerte prodotti e servizi</fullName>
+        <default>false</default>
+        <label>Offerte prodotti e servizi</label>
+    </customValue>
+    <customValue>
+        <fullName>Info fatture Vas</fullName>
+        <default>false</default>
+        <label>Info fatture Vas</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità richiesta disattivazione</fullName>
+        <default>false</default>
+        <label>Modalità richiesta disattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su errore richiesta disattivazione</fullName>
+        <default>false</default>
+        <label>Info su errore richiesta disattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Info esito disattivazione (con appuntamento o senza)</fullName>
+        <default>false</default>
+        <label>Info esito disattivazione (con appuntamento o senza)</label>
+    </customValue>
+    <customValue>
+        <fullName>Info stato contratto</fullName>
+        <default>false</default>
+        <label>Info stato contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità richiesta preventivo e costi</fullName>
+        <default>false</default>
+        <label>Modalità richiesta preventivo e costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Sopralluogo e preventivazione</fullName>
+        <default>false</default>
+        <label>Sopralluogo e preventivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Esecuzione lavori</fullName>
+        <default>false</default>
+        <label>Esecuzione lavori</label>
+    </customValue>
+    <customValue>
+        <fullName>Assistenza accettazione moduli</fullName>
+        <default>false</default>
+        <label>Assistenza accettazione moduli</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancata ricezione preventivo</fullName>
+        <default>false</default>
+        <label>Mancata ricezione preventivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Modalità richiesta verifica e costi</fullName>
+        <default>false</default>
+        <label>Modalità richiesta verifica e costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazione contatore rotto/congelato</fullName>
+        <default>false</default>
+        <label>Segnalazione contatore rotto/congelato</label>
+    </customValue>
+    <customValue>
+        <fullName>Appuntamento sopralluogo e esecuzione</fullName>
+        <default>false</default>
+        <label>Appuntamento sopralluogo e esecuzione</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiede come inviare reclamo</fullName>
+        <default>false</default>
+        <label>Chiede come inviare reclamo</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiede se reclamo ricevuto</fullName>
+        <default>false</default>
+        <label>Chiede se reclamo ricevuto</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnala attesa di risposta</fullName>
+        <default>false</default>
+        <label>Segnala attesa di risposta</label>
+    </customValue>
+    <customValue>
+        <fullName>Spiegata risposta</fullName>
+        <default>false</default>
+        <label>Spiegata risposta</label>
+    </customValue>
+    <customValue>
+        <fullName>Come richiedere la domiciliazione</fullName>
+        <default>false</default>
+        <label>Come richiedere la domiciliazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Come pagare la bolletta</fullName>
+        <default>false</default>
+        <label>Come pagare la bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>Come variare i dati bancari</fullName>
+        <default>false</default>
+        <label>Come variare i dati bancari</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiarimento modalità di pagamento</fullName>
+        <default>false</default>
+        <label>Chiarimento modalità di pagamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi e chiarimenti Paperless</fullName>
+        <default>false</default>
+        <label>Problemi e chiarimenti Paperless</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi pagamento Sol e App</fullName>
+        <default>false</default>
+        <label>Problemi pagamento Sol e App</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiarimenti doppi pagamenti/rimborsi</fullName>
+        <default>false</default>
+        <label>Chiarimenti doppi pagamenti/rimborsi</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica pagamenti</fullName>
+        <default>false</default>
+        <label>Verifica pagamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica saldo residuo da pagare</fullName>
+        <default>false</default>
+        <label>Verifica saldo residuo da pagare</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica rateizzazione</fullName>
+        <default>false</default>
+        <label>Verifica rateizzazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Spiegazione sollecito</fullName>
+        <default>false</default>
+        <label>Spiegazione sollecito</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica crediti da rimborsare</fullName>
+        <default>false</default>
+        <label>Verifica crediti da rimborsare</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica compensazione</fullName>
+        <default>false</default>
+        <label>Verifica compensazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Sospensione fornitura</fullName>
+        <default>false</default>
+        <label>Sospensione fornitura</label>
+    </customValue>
+    <customValue>
+        <fullName>Tempi riattivazione</fullName>
+        <default>false</default>
+        <label>Tempi riattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Comunicato saldo per riattivazione</fullName>
+        <default>false</default>
+        <label>Comunicato saldo per riattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Info canone pagato/da pagare</fullName>
+        <default>false</default>
+        <label>Info canone pagato/da pagare</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica dati canone rai</fullName>
+        <default>false</default>
+        <label>Verifica dati canone rai</label>
+    </customValue>
+    <customValue>
+        <fullName>Spiegazione Canone Rai</fullName>
+        <default>false</default>
+        <label>Spiegazione Canone Rai</label>
+    </customValue>
+    <customValue>
+        <fullName>Spiegazione voci in bolletta</fullName>
+        <default>false</default>
+        <label>Spiegazione voci in bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancata ricezione bolletta cartacea/email</fullName>
+        <default>false</default>
+        <label>Mancata ricezione bolletta cartacea/email</label>
+    </customValue>
+    <customValue>
+        <fullName>Approfondimenti consumi fatturati</fullName>
+        <default>false</default>
+        <label>Approfondimenti consumi fatturati</label>
+    </customValue>
+    <customValue>
+        <fullName>Periodo fatturato</fullName>
+        <default>false</default>
+        <label>Periodo fatturato</label>
+    </customValue>
+    <customValue>
+        <fullName>Altre voci in fattura</fullName>
+        <default>false</default>
+        <label>Altre voci in fattura</label>
+    </customValue>
+    <customValue>
+        <fullName>Fattura rettificata</fullName>
+        <default>false</default>
+        <label>Fattura rettificata</label>
+    </customValue>
+    <customValue>
+        <fullName>Come fornire un&apos;autolettura</fullName>
+        <default>false</default>
+        <label>Come fornire un&apos;autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Fornite date per autolettura</fullName>
+        <default>false</default>
+        <label>Fornite date per autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Conferma lettura fornita</fullName>
+        <default>false</default>
+        <label>Conferma lettura fornita</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi su autolettura canali automatici (IVR, SMS, Sol/App)</fullName>
+        <default>false</default>
+        <label>Problemi su autolettura canali automatici (IVR, SMS, Sol/App)</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su sms ricevuto per rifiuto lettura</fullName>
+        <default>false</default>
+        <label>Info su sms ricevuto per rifiuto lettura</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica dati anagrafici</fullName>
+        <default>false</default>
+        <label>Verifica dati anagrafici</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica privacy</fullName>
+        <default>false</default>
+        <label>Verifica privacy</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica dati di recapito fatture</fullName>
+        <default>false</default>
+        <label>Verifica dati di recapito fatture</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica dati di contatto</fullName>
+        <default>false</default>
+        <label>Verifica dati di contatto</label>
+    </customValue>
+    <customValue>
+        <fullName>Fornite info su variazione richiesta</fullName>
+        <default>false</default>
+        <label>Fornite info su variazione richiesta</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica avanzamento richiesta variazione</fullName>
+        <default>false</default>
+        <label>Verifica avanzamento richiesta variazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Come accedere ad Hera</fullName>
+        <default>false</default>
+        <label>Come accedere ad Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore chiamata</fullName>
+        <default>false</default>
+        <label>Errore chiamata</label>
+    </customValue>
+    <customValue>
+        <fullName>Abbina/Disabbina contatto (Sol/App)</fullName>
+        <default>false</default>
+        <label>Abbina/Disabbina contatto (Sol/App)</label>
+    </customValue>
+    <customValue>
+        <fullName>App non disponibile</fullName>
+        <default>false</default>
+        <label>App non disponibile</label>
+    </customValue>
+    <customValue>
+        <fullName>Disallineamento dati (Sol/App)</fullName>
+        <default>false</default>
+        <label>Disallineamento dati (Sol/App)</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi di Navigazione (Sol/App)</fullName>
+        <default>false</default>
+        <label>Problemi di Navigazione (Sol/App)</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi di Pagamento (Sol/App)</fullName>
+        <default>false</default>
+        <label>Problemi di Pagamento (Sol/App)</label>
+    </customValue>
+    <customValue>
+        <fullName>Sol non disponibile</fullName>
+        <default>false</default>
+        <label>Sol non disponibile</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi di accesso (Sol/app)</fullName>
+        <default>false</default>
+        <label>Problemi di accesso (Sol/app)</label>
+    </customValue>
+    <customValue>
+        <fullName>Info su Sol e App (registrazione/funzionamento)</fullName>
+        <default>false</default>
+        <label>Info su Sol e App (registrazione/funzionamento)</label>
+    </customValue>
+    <customValue>
+        <fullName>Problemi Sol e App</fullName>
+        <default>false</default>
+        <label>Problemi Sol e App</label>
+    </customValue>
+    <customValue>
+        <fullName>Pronto intervento</fullName>
+        <default>false</default>
+        <label>Pronto intervento</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello Accoglienza</fullName>
+        <default>false</default>
+        <label>Sportello Accoglienza</label>
+    </customValue>
+    <customValue>
+        <fullName>Prenotazione Sportello</fullName>
+        <default>false</default>
+        <label>Prenotazione Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>Info numeri di contatto Hera (sportelli, stazioni ecologiche)</fullName>
+        <default>false</default>
+        <label>Info numeri di contatto Hera (sportelli, stazioni ecologiche)</label>
+    </customValue>
+    <customValue>
+        <fullName>Info ritiri (appuntamento mancato/errato)</fullName>
+        <default>false</default>
+        <label>Info ritiri (appuntamento mancato/errato)</label>
+    </customValue>
+    <customValue>
+        <fullName>Info/problemi carta smeraldo</fullName>
+        <default>false</default>
+        <label>Info/problemi carta smeraldo</label>
+    </customValue>
+    <customValue>
+        <fullName>Info PAP</fullName>
+        <default>false</default>
+        <label>Info PAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Orari stazione ecologica/segnalazioni</fullName>
+        <default>false</default>
+        <label>Orari stazione ecologica/segnalazioni</label>
+    </customValue>
+    <masterLabel>Dettaglio Informazioni</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

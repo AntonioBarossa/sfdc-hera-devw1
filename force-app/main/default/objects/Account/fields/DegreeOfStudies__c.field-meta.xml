@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DegreeOfStudies__c</fullName>
+    <externalId>false</externalId>
+    <label>Titolo di studio</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Licenza elementare</fullName>
+                <default>false</default>
+                <label>Licenza elementare</label>
+            </value>
+            <value>
+                <fullName>Diploma scuola media inferiore</fullName>
+                <default>false</default>
+                <label>Diploma scuola media inferiore</label>
+            </value>
+            <value>
+                <fullName>Diploma scuola media superiore</fullName>
+                <default>false</default>
+                <label>Diploma scuola media superiore</label>
+            </value>
+            <value>
+                <fullName>Laurea</fullName>
+                <default>false</default>
+                <label>Laurea</label>
+            </value>
+            <value>
+                <fullName>Master</fullName>
+                <default>false</default>
+                <label>Master</label>
+            </value>
+            <value>
+                <fullName>Nessun titolo</fullName>
+                <default>false</default>
+                <label>Nessun titolo</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

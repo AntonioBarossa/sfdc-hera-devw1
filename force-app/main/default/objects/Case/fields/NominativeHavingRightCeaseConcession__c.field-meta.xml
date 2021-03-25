@@ -3,7 +3,7 @@
     <fullName>NominativeHavingRightCeaseConcession__c</fullName>
     <description>Campo testo per inserire un nominativo. Solo per processo &quot;Gestione Bonus Sociale&quot;.</description>
     <externalId>false</externalId>
-    <label>Nominativo avente diritto agevolazione d</label>
+    <label>Nominat. avente diritto agev. da cessare</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

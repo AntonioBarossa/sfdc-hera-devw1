@@ -73,6 +73,19 @@ public inherited sharing class HDT_SRV_QuoteLine {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Update single record
+    * @param SBQQ__QuoteLine__c quoteLine
+    */
+    public void updateRecord(SBQQ__QuoteLine__c quoteLine){
+        
+        List<String> fields = helperMethods.getObjAttrList(quoteLine);
+        checkUpdateAccess(String.join(fields, ','));
+
+        HDT_UTL_DatabaseService.updateSObject(quoteLine);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Update records in bulk
     * @param List<SBQQ__QuoteLine__c> objectsList
     */

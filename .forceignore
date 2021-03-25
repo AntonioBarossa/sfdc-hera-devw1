@@ -14,4 +14,4 @@ package.xml
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
 **profiles/Minimum Access - Salesforce.profile
-**profiles
+#**profiles
