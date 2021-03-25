@@ -48,6 +48,10 @@
         <apexClass>HDT_UTL_SobjectUtils</apexClass>
         <enabled>false</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_MrrRequest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>true</custom>
     <fieldPermissions>
         <editable>false</editable>
