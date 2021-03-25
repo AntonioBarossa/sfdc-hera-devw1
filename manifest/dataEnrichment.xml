@@ -19,11 +19,13 @@
 		<members>Account.cmor</members>
 		<members>Account.raiFee</members>
 		<members>Account.socialBonus</members>
+		<members>Account.HDT_AccountReadings</members>
+		<members>Account.HDT_AccountStatement</members>
 		<name>QuickAction</name>
 	</types>
 	<types>
 		<members>FakeSAPdata</members>
 		<name>CspTrustedSite</name>
-	</types> 
+	</types>
 	<version>50.0</version>
 </Package>

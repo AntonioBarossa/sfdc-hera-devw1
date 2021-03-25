@@ -3,36 +3,23 @@ import getContractRecords from '@salesforce/apex/HDT_LC_MeterReadingController.g
 import getMeterReadingRecords from '@salesforce/apex/HDT_LC_MeterReadingController.getMeterReadingRecords';
 //import getMeterReadingRecords from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.getMeterReadingRecords';
 
-const contractData = [
-    {
-        Id: '1',
-        contractNumber: '2001',
-        status: 'Draft',
-        startDate: '03/05/2018',
-        endDate: '01/06/2020',
-        asset: 'SP-0001',
-        service: 'ELE'
-    },
-    {
-        Id: '2',
-        contractNumber: '2002',
-        status: 'Draft',
-        startDate: '02/02/2018',
-        endDate: '02/05/2020',
-        asset: 'SP-0001',
-        service: 'GAS'
-    }
-];
-
 export default class HdtMeterReading extends LightningElement {
     @api recordid;
-    @track data = [];
+    contractData = [];
+    contractDataToView = [];
     @track contractColumns = contractColumns;
     @track detailTableHeader = 'Letture';
     @track accountData = [];
     @track meterReadingData;
     @track columns = columns;
+    queryTerm = '';
     spinner = true;
+    loadData = false;
+    meterReadingError = false;
+    meterReadingErrorMessage = '';
+
+    error = false;
+    errorMessage = '';
 
     connectedCallback() {
         this.contractBackendCall();
@@ -42,11 +29,14 @@ export default class HdtMeterReading extends LightningElement {
         getContractRecords({accountId: this.recordid}).then(result => {
 
             if(result.success){
-                this.data = result.contractList;
-                this.meterReadingBackendCall(this.data[0].contractNumber);
+                this.contractData = result.contractList;
+                this.contractDataToView =  result.contractList;
+                this.meterReadingBackendCall(this.contractData[0].contractNumber);
             } else {
                 console.log('>>>> ERROR > getContractRecords');
-                console.log(JSON.stringify(result));  
+                this.error = true;
+                this.errorMessage = result.message;
+                this.spinner = false;
             }
 
         }).catch(error => {
@@ -62,9 +52,11 @@ export default class HdtMeterReading extends LightningElement {
             if(result.success){
                 this.meterReadingData = result.meterReadingList;
                 this.detailTableHeader = 'Letture contratto > ' + contractNumber;
+                this.loadData = true;
             } else {
                 console.log('>>>> ERROR > getMeterReadingRecords');
-                console.log(JSON.stringify(result));  
+                this.meterReadingError = true;
+                this.meterReadingErrorMessage = result.message;
             }
 
             this.spinner = false;
@@ -79,20 +71,25 @@ export default class HdtMeterReading extends LightningElement {
         console.log('# handleRowAction #');
         console.log(event.detail.row.contractNumber);
         this.detailTableHeader = 'Letture contratto > ' + event.detail.row.contractNumber;
+        this.loadData = false;
+        this.meterReadingError = false;
+        this.meterReadingErrorMessage = '';
         this.meterReadingBackendCall(event.detail.row.contractNumber);
     }
 
-    /*changeContractId(c){
-        console.log('#### ' + c);
-        var dataToView = [];
-        var i;
-        for(i=0; i<this.accountData.length; i++){
-            if(this.accountData[i].contractId == c){
-                dataToView.push(this.accountData[i]);
+    handleSearch(event) {
+        this.contractDataToView = [];
+
+        if(event.target.value!=''){
+            var filteredContract = this.contractData.filter(c => { return c.contractNumber == event.target.value });
+
+            if(filteredContract.length>0){
+                this.contractDataToView = filteredContract;
             }
+        } else {
+            this.contractDataToView = this.contractData;
         }
-        this.meterReadingData = dataToView;
-    }*/
+    }
 
 }
 
@@ -130,7 +127,7 @@ const contractColumns = [
                             alternativeText: 'Seleziona'
                         }
     },
-    {label: 'Numero Contratto', fieldName: 'contractNumber'},
+    {label: 'Numero Contratto', fieldName: 'contractNumber', initialWidth: 200},
     {label: 'Stato', fieldName: 'status'},
     {label: 'Data inizio', fieldName: 'startDate'},
     {label: 'Data fine', fieldName: 'endDate'},

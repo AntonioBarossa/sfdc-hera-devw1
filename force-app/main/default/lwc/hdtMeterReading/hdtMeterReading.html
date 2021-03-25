@@ -4,43 +4,61 @@
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </div>
 
-    <lightning-card  title="Seleziona il contratto">
+    <div if:true={error} class="slds-box" style="background:#ffffff" >
+        <p class="slds-text-heading_small slds-text-color_error" >{errorMessage}</p>
+    </div>
 
-        <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-bottom_small">
-            <div class="slds-col slds-size_1-of-3">
-                <lightning-input
-                    name="enter-search"
-                    label=" "
-                    variant="label-hidden"
-                    type="search"
-                ></lightning-input>
+    <template if:false={error} >
+        <lightning-card  title="Seleziona il contratto">
+
+            <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-bottom_small">
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-input
+                        name="enter-search"
+                        label=" "
+                        variant="label-hidden"
+                        type="search"
+                        value={searchValue}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                </div>
             </div>
-        </div>
 
-        <div style="height: 20vh;">
-            <lightning-datatable
-                    key-field="id"
-                    data={data}
-                    columns={contractColumns}
-                    onrowaction={handleRowAction}
-                    hide-checkbox-column
-                    resize-column-disabled
-            ></lightning-datatable>
-        </div>
+            <div class="slds-grid slds-gutters" >
+                <div class="slds-col slds-size_1-of-2 slds-scrollable_y" style="height: 20vh;">
+                    <lightning-datatable
+                            key-field="id"
+                            data={contractDataToView}
+                            columns={contractColumns}
+                            onrowaction={handleRowAction}
+                            hide-checkbox-column
+                            resize-column-disabled
+                    ></lightning-datatable>
+                </div>
+            </div>
 
-    </lightning-card>
-
-    <div class="slds-m-top_x-small">
-        <lightning-card  title={detailTableHeader}>
-            <div class="slds-scrollable_y" style="height: 25vh;">
-            <lightning-datatable
-                key-field="id"
-                data={meterReadingData}
-                columns={columns}
-                resize-column-disabled
-            ></lightning-datatable>
-        </div>
         </lightning-card>
+    </template>
+
+    <div if:false={error} class="slds-m-top_x-small" >
+        <div if:false={meterReadingError} >
+            <lightning-card title={detailTableHeader} >
+                <div if:true={loadData} class="slds-scrollable_y" style="height: 25vh;">
+                    <lightning-datatable
+                        key-field="id"
+                        data={meterReadingData}
+                        columns={columns}
+                        resize-column-disabled
+                    ></lightning-datatable>
+                </div>
+                <div if:false={loadData} style="height: 25vh;" >
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+            </lightning-card>
+        </div>
+        <div if:true={meterReadingError} class="slds-box" style="background:#ffffff" >
+            <p class="slds-text-heading_small slds-text-color_error" >{meterReadingErrorMessage}</p>
+        </div>
     </div>
 
 </template>

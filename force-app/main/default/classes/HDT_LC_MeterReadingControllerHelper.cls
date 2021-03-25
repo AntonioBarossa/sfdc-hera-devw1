@@ -31,7 +31,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     }
 
-    public static HDT_WRP_ContractDetail convertContractToWrapper(Contract c, HDT_WRP_ContractDetail contrWrp){
+    private static HDT_WRP_ContractDetail convertContractToWrapper(Contract c, HDT_WRP_ContractDetail contrWrp){
         contrWrp = new HDT_WRP_ContractDetail();
         contrWrp.id = c.Id;
         contrWrp.contractNumber = c.ContractNumber;
@@ -54,10 +54,11 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             meterReadingObj.success = false;
             meterReadingObj.message = '> ERROR > ' + e.getMessage() + ' at line [' + String.valueOf(e.getLineNumber());
         }
+
         return meterReadingObj;
     }
 
-    public static List<HDT_WRP_MeterReadingDetail> createMockRecords(String contract){
+    private static List<HDT_WRP_MeterReadingDetail> createMockRecords(String contract){
         List<HDT_WRP_MeterReadingDetail> meterReadingList = new List<HDT_WRP_MeterReadingDetail>();
         HDT_WRP_MeterReadingDetail detObj;
         for(Integer n=0; n<15; n++){

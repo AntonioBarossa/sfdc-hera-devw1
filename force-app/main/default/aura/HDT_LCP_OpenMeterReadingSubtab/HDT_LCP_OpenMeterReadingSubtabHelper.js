@@ -42,7 +42,7 @@
             });
             workspaceAPI.setTabIcon({
                 tabId: i,
-                icon: 'custom:custom97'
+                icon: 'custom:custom109'
             });
             $A.get("e.force:closeQuickAction").fire();
         })
