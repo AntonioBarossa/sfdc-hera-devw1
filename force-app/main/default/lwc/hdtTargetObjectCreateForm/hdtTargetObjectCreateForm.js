@@ -271,7 +271,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('datareqRaw *********************'+ JSON.stringify(this.fieldsDataReqRaw));
         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
         console.log('datareq *********************'+ JSON.stringify(this.fieldsDataReq ));
-
+        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         console.log('fieldsDataObject *********************'+ JSON.stringify(this.fieldsDataObject));
 
         //get address fields
