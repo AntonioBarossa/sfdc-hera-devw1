@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <decisions>
+        <name>DUMMY</name>
+        <label>DUMMY</label>
+        <locationX>664</locationX>
+        <locationY>198</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>DUMMY2</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Flow.CurrentDate</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <dateValue>2010-01-01</dateValue>
+                </rightValue>
+            </conditions>
+            <label>DUMMY</label>
+        </rules>
+    </decisions>
+    <interviewLabel>HDT_FL_GestioneFatturazione_GestioneLetture {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>HDT_FL_GestioneFatturazione_GestioneLetture</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <start>
+        <locationX>109</locationX>
+        <locationY>178</locationY>
+        <connector>
+            <targetReference>DUMMY</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>
