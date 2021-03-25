@@ -16,12 +16,33 @@
                 <field>ToPublishDate__c</field>
             </layoutItems>
             <layoutItems>
+                <field>ExpirationDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>FirstLevelClassification__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>SecondLevelClassification__c</field>
+            </layoutItems>
+            <layoutItems>
                 <field>PublicLink__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <field>Language</field>
+            </layoutItems>
+            <layoutItems>
+                <field>ProblemType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>SalesCompany__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>CommercialDocumentationType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>FormationDocumentationType__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -30,18 +51,37 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Corpo Articolo</label>
+        <label>Informazioni Generali</label>
         <layoutColumns>
+            <layoutItems>
+                <field>ArticleContent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>FlowDiagram__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>FlowManagement__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>MailArea__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>MainArticle__c</field>
+            </layoutItems>
             <layoutItems>
                 <field>Question__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <field>Answer__c</field>
             </layoutItems>
+            <layoutItems>
+                <field>FrontOffice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <field>OfferedService__c</field>
+            </layoutItems>
         </layoutColumns>
-        <style>TwoColumnsLeftToRight</style>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
