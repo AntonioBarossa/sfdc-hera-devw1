@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>NumericValue__c</fullName>
-    <description>valore numerico (usato per fattori moltiplicativi/numerici, consumi, per valori di potenza, valori numerici dei prezzi, altri numerici..)</description>
+    <fullName>Template__c</fullName>
+    <description>Recupera il rate template</description>
     <externalId>false</externalId>
-    <label>Valore Numerico</label>
-    <length>100</length>
+    <formula>RateCategory__r.ContractTemplate__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Template</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
