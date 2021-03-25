@@ -1,0 +1,29 @@
+<template>
+<!--     <div onkeyup={handleKeyUp}>
+        <lightning-input
+            name="enter-search"
+            label={searchLabel}
+            type="search"
+            variant={searchVariant}
+            placeholder={searchPlaceholder}
+            min-length="3"
+        ></lightning-input>
+    </div>
+    </br> -->
+    <template if:true={data}>
+        <div style="max-height: 300px;">
+            <lightning-datatable
+                    key-field="id"
+                    data={data}
+                    columns={columns}
+                    onrowaction={handleRowAction}
+                max-row-selection={maxRow}
+                is-loading={isLoading}
+                onrowselection={handleRowSelection}>
+            </lightning-datatable>
+        </div>
+    </template>
+    <template if:true={showNoRecordMessage}>
+        Attenzione! Non sono presenti record selezionabili.
+    </template>
+</template>
