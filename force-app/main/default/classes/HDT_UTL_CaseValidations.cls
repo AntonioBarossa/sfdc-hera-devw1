@@ -244,7 +244,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             String billingProblem = getFieldValue(fields, 'BillingProblem__c');
             String bill = getFieldValue(fields, 'Bill__c');
-            String dlNote = getFieldValue(fields, 'DlNote__c');
+            String dlNote = getFieldValue(fields, 'Note__c');
             String customerAggreement = getFieldValue(fields, 'CustomerAggreement__c');
 
             if(billingProblem == 'Si' 

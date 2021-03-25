@@ -653,7 +653,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DlNote__c</field>
+            <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
@@ -1145,7 +1145,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DlNote__c</field>
+            <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
@@ -1423,7 +1423,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DlNote__c</field>
+            <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
@@ -1512,7 +1512,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DlNote__c</field>
+            <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>

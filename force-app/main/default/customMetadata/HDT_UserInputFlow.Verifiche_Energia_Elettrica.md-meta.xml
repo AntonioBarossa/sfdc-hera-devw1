@@ -6,7 +6,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;DlNote__c&quot;,
+&quot;FieldName&quot; : &quot;Note__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1
 },
