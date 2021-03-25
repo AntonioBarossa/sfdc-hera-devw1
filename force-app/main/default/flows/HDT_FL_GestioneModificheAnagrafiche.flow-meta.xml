@@ -893,7 +893,6 @@ Inserisci manualmente i seguenti campi:</description>
                     <stringValue>Comfy</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>SaveInDraft</assignToReference>
@@ -953,7 +952,6 @@ Inserisci manualmente i seguenti campi:</description>
                     <stringValue>Label-Hidden</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>BillingProfileId</assignToReference>
@@ -995,7 +993,6 @@ Inserisci manualmente i seguenti campi:</description>
                     <stringValue>Account_Contacts</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>TargetContactId</assignToReference>
