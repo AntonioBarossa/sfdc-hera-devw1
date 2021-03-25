@@ -94,10 +94,6 @@
                 <behavior>Edit</behavior>
                 <field>FAX__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CancellationNote__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
