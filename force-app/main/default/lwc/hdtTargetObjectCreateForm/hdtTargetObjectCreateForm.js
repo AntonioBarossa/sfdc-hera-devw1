@@ -113,6 +113,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         let mapFieldReq = new Map() ;
 
             if((this.rowsplitele!=undefined ||this.rowsplitele !='')&& this.recordtype.label ==='Punto Elettrico'){
+                console.log('===============================enter fieldRequiredMapping');
                 this.rowsplitele.forEach(element=>{
            
                     mapFieldReq.set(element,true);
@@ -199,6 +200,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             else {
                 console.log('recordType :' + JSON.stringify(this.recordtype.label));
+                console.log('++++++element: ', element);
                 if((this.recordtype.label == 'Punto Elettrico'&& element == 'CommoditySector__c'))
                 {
                  console.log('entra in Punto Elettrico CommoditySector__c');
@@ -271,6 +273,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('datareqRaw *********************'+ JSON.stringify(this.fieldsDataReqRaw));
         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
         console.log('datareq *********************'+ JSON.stringify(this.fieldsDataReq ));
+
+        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
         console.log('fieldsDataObject *********************'+ JSON.stringify(this.fieldsDataObject));
 
