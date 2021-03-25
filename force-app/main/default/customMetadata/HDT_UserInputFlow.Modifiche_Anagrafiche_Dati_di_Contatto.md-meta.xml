@@ -26,7 +26,7 @@
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;PEC__c&quot;,
+        &quot;FieldName&quot; : &quot;CertifiedEmail__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 2
     },
