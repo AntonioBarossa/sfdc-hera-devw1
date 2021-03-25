@@ -1,9 +1,9 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
 import getContacts from '@salesforce/apex/HDT_LC_AccountSelectorController.getContacts';
 import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccount';
-import getAccounts from '@salesforce/apex/HDT_LC_AccountSelectorController.getAccounts';
 import updateActivity from '@salesforce/apex/HDT_LC_AccountSelectorController.updateActivity';
 
 export default class HdtAccountSelector extends LightningElement {
@@ -49,11 +49,15 @@ export default class HdtAccountSelector extends LightningElement {
 					getContacts({queryString: queryString})
 					.then(result => {
 						this.contacts = result;
-						// this.contactsFound = (this.contacts.length > 0);
 					})
 					.catch(error => {
 						// WIP
 						console.log('error ' + error);
+						this.dispatchEvent(new ShowToastEvent({
+							variant: 'error',
+							title: 'Errore',
+							message: 'Si è verificato un errore. Ricaricare la pagina e riprovare.',
+						}));
 					});
 				}
 			}
@@ -68,6 +72,7 @@ export default class HdtAccountSelector extends LightningElement {
 				this.accounts = result;
 				if(result.length == 1) {
 					this.accountId = this.accounts[0].Id;
+					getRecordNotifyChange([{recordId: this.recordId}]);
 					this.dispatchEvent(new ShowToastEvent({
 						variant: 'success',
 						title: 'Account Trovato',
@@ -77,15 +82,32 @@ export default class HdtAccountSelector extends LightningElement {
 			})
 			.catch(error => {
 				// WIP
+				console.log('error ' + error);
+				this.dispatchEvent(new ShowToastEvent({
+					variant: 'error',
+					title: 'Errore',
+					message: 'Si è verificato un errore. Ricaricare la pagina e riprovare.',
+				}));
 			});
 		} else if(this.showAccountSearchPanel) {
 			this.accountId = event.currentTarget.dataset.id;
 			updateActivity({activityId: this.recordId, contactId: this.contactId, accountId: this.accountId})
 			.then(result => {
-				// TOAST
+				getRecordNotifyChange([{recordId: this.recordId}]);
+				this.dispatchEvent(new ShowToastEvent({
+					variant: 'success',
+					title: 'Successo',
+					message: 'L\'activity è stata aggiornata.',
+				}));
 			})
 			.catch(ERROR => {
 				// WIP
+				console.log('error ' + error);
+				this.dispatchEvent(new ShowToastEvent({
+					variant: 'error',
+					title: 'Errore',
+					message: 'Si è verificato un errore. Ricaricare la pagina e riprovare.',
+				}));
 			});
 		}
 	}
