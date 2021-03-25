@@ -3,10 +3,6 @@
     <active>true</active>
     <allowRecall>true</allowRecall>
     <allowedSubmitters>
-        <submitter>Scrittori</submitter>
-        <type>group</type>
-    </allowedSubmitters>
-    <allowedSubmitters>
         <type>owner</type>
     </allowedSubmitters>
     <approvalPageFields>

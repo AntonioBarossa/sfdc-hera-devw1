@@ -15,9 +15,6 @@
             <layoutItems>
                 <field>ToPublishDate__c</field>
             </layoutItems>
-            <layoutItems>
-                <field>PublicLink__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
