@@ -41,7 +41,7 @@ public inherited sharing class HDT_QR_ServicePoint {
     public List<ServicePoint__c> getRecordById(Id id, String fields) {
 		contractSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +
-                ' FROM ServicePoint__c WHERE Id = :id LIMIT 1';
+                ' FROM ServicePoint__c WHERE Id = :id WITH SECURITY_ENFORCED LIMIT 1';
         List<ServicePoint__c> servicePoints = Database.query(query);
 
         return servicePoints;
@@ -50,7 +50,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public List<ServicePoint__c> getRecordByCode(String code, String fields) {
 		contractSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +
-                ' FROM ServicePoint__c WHERE ServicePointCode__c = :code LIMIT 1';
+                ' FROM ServicePoint__c WHERE ServicePointCode__c = :code WITH SECURITY_ENFORCED LIMIT 1';
         List<ServicePoint__c> servicePoints = Database.query(query);
         return servicePoints;
     }
