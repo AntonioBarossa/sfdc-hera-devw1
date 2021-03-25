@@ -659,12 +659,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Note__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Origin</field>
             <value>
                 <stringValue>Phone</stringValue>
@@ -1151,12 +1145,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Note__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Origin</field>
             <value>
                 <stringValue>Phone</stringValue>
@@ -1509,12 +1497,6 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Note__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
