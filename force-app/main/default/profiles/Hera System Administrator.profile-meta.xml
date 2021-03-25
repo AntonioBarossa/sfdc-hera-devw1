@@ -11929,7 +11929,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOfferItem__c.Definition__c</field>
         <readable>true</readable>
@@ -11944,6 +11943,7 @@
         <field>TechnicalOfferItem__c.InfoGroupValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOfferItem__c.NumericValue__c</field>
         <readable>true</readable>
