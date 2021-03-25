@@ -51,4 +51,4 @@
         <c:hdtChildOrderProcessActions order="{!v.order}" onredirecttoparent="{!c.handleRedirectToParent}" lastStepNumber="{!v.lastStepNumber}" draftObject="{!v.draftObject}" draftObjectApiName="{!v.draftObjectApiName}" diffDraftObjectApiName="{!v.diffDraftObjectApiName}" diffFields="{!v.diffFields}"></c:hdtChildOrderProcessActions>
     </aura:if>
 
-</aura:component>	
+</aura:component>

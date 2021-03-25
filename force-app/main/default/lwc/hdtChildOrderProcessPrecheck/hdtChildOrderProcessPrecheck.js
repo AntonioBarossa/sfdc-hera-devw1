@@ -56,6 +56,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
                 {"label":"Subentro","value":"HDT_RT_Subentro"},
                 {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
+                //INIZIO SVILUPPI VOLTURA EVERIS
+                {"label":"Voltura","value":"HDT_RT_Voltura"}
+                //FINE SVILUPPI VOLTURA EVERIS
                 // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
                 
             ]

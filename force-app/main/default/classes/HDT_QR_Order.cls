@@ -105,6 +105,9 @@ public inherited sharing class HDT_QR_Order {
             Step__c,
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
+            //INIZIO SVILUPPI EVERIS
+            ServicePoint__r.CommoditySector__c,
+            //FINE SVILUPPI EVERIS
             ServicePoint__r.RecordType.DeveloperName,
             ServicePoint__r.Account__c,
             ServicePoint__r.MeterClass__c,
@@ -118,7 +121,7 @@ public inherited sharing class HDT_QR_Order {
             ParentOrder__r.ContractSigned__c,
             ParentOrder__r.SignedDate__c,
             OrderNumber,
-            Phase__c,
+            Phase__c, 
             RequestOption__c,
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
