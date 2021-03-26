@@ -26,27 +26,53 @@ const columns = [
 export default class HdtMeterReadingDetailTable extends LightningElement {
 
     @api contractNumber;
+    @api loadData;
+    @api hideCheckboxColumn;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
     @track columns = columns;
-    loadData = false;
     meterReadingError = false;
     meterReadingErrorMessage = '';
 
-    connectedCallback(){
-        this.meterReadingBackendCall(this.contractNumber);
+    @api loadingData(){
+        this.loadData = false;
+        this.meterReadingError = false;
+        this.meterReadingErrorMessage = '';
     }
 
-    /*@wire(getMeterReadingRecords, {contractCode : '$contractNumber'})
+    @wire(getMeterReadingRecords, {contractCode : '$contractNumber'})
     wiredRecords({ error, data }) {
         if(data) {
-
+            if(data.success){
+                this.meterReadingData = data.data;
+                this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
+                this.loadData = true;
+            } else {
+                this.meterReadingError = true;
+                this.meterReadingErrorMessage = data.message;
+            }
+            this.dataLoaded();
         } else if(error) {
-
+            console.log('>>>> ERROR > getMeterReadingRecords');
+            this.meterReadingError = true;
+            this.meterReadingErrorMessage = 'ERROR';
         }
-    }*/
+    }
 
-    @api meterReadingBackendCall(contractNumber){
+    dataLoaded(){
+        const dataLoad = new CustomEvent("dataload", {
+            detail:  {spinner: false}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(dataLoad);
+    }
+
+    operation(){
+        var selectedRow = this.template.querySelector('lightning-datatable').getSelectedRows();
+        console.log(JSON.stringify(selectedRow));
+    }
+
+    /*@api meterReadingBackendCall(contractNumber){
         console.log('>>>> contractNumber  > ' + contractNumber);
         this.loadData = false;
         getMeterReadingRecords({contractCode: contractNumber}).then(result => {
@@ -71,6 +97,6 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
             console.log('>>>> ERROR - catch');
             console.log(JSON.stringify(error));
         });
-    }
+    }*/
 
 }

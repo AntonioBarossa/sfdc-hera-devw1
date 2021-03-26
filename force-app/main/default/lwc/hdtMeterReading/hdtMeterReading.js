@@ -7,6 +7,8 @@ export default class HdtMeterReading extends LightningElement {
     @api recordid;
     @track contractColumns = contractColumns;
     @track contractNumber;
+    hideCheckboxColumn = false;
+    loadData = false;
     queryTerm = '';
     spinner = true;
     error = false;
@@ -27,7 +29,6 @@ export default class HdtMeterReading extends LightningElement {
                 this.contractDataToView =  result.contractList;
                 this.contractNumber = this.contractData[0].contractNumber;
                 this.contractNumberAvailable = true;
-                //this.template.querySelector("c-hdt-meter-reading-detail-table").meterReadingBackendCall(this.contractNumber);
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
@@ -43,9 +44,8 @@ export default class HdtMeterReading extends LightningElement {
 
     handleRowAction(event) {
         console.log('# handleRowAction #');
-        console.log(event.detail.row.contractNumber);
-        this.contractNumber = event.detail.row.contractNumber; 
-        this.template.querySelector("c-hdt-meter-reading-detail-table").meterReadingBackendCall(this.contractNumber);
+        this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
+        this.contractNumber = event.detail.row.contractNumber;
     }
 
     handleSearch(event) {

@@ -24,7 +24,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
         } catch (Exception e){
             contrObj.success = false;
-            contrObj.message = '> ERROR > ' + e.getMessage() + ' at line [' + String.valueOf(e.getLineNumber());
+            contrObj.message = '> ERROR > ' + e.getMessage() + ' at line [' + String.valueOf(e.getLineNumber() + ']');
         }
 
         return contrObj;
@@ -34,12 +34,12 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
     private static HDT_WRP_MeterReading.HDT_WRP_ContractDetail convertContractToWrapper(Contract c, HDT_WRP_MeterReading.HDT_WRP_ContractDetail contrWrp){
         contrWrp = new HDT_WRP_MeterReading.HDT_WRP_ContractDetail();
         contrWrp.id = c.Id;
-        contrWrp.contractNumber = c.ContractNumber;
+        contrWrp.contractNumber = c.SAPContractCode__c;
         contrWrp.status = c.Status;
         contrWrp.startDate = String.valueOf(c.StartDate);
         contrWrp.endDate = String.valueOf(c.EndDate);
-        contrWrp.asset = c.ServicePoint__r.Name;
-        contrWrp.service = 'ele';
+        contrWrp.asset = c.ServicePoint__r.SAPImplantCode__c;
+        contrWrp.service = c.ServicePoint__r.CommoditySector__c;
         return contrWrp;
     }
 
@@ -82,11 +82,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
     
             //here we have to deserialize body to wrapper obj
             HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingData = (HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj.class);
-            System.debug('>>> ' + meterReadingData);
 
-            //meterReadingObj.data.addAll(createMockRecords(contractCode));
-            meterReadingObj.data = meterReadingData.data;
             meterReadingObj.success = true;
+            meterReadingObj.data = meterReadingData.data;
 
         } catch (Exception e){
             meterReadingObj.success = false;
@@ -107,40 +105,6 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         httpObj.headersMap.put('Content-Type', 'application/json');
 
         return httpObj;
-    }
-
-    private static List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail> createMockRecords(String contract){
-        List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail> data = new List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail>();
-        HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail detObj;
-        for(Integer n=0; n<15; n++){
-            detObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail();
-            detObj.id = contract + String.valueOf(n); 
-            detObj.contractId = contract;
-
-            if(contract=='2002'){
-                detObj.lectureDate = '01/08/2021';
-            } else {
-                detObj.lectureDate = '28/03/2019';
-            }
-            
-            detObj.slot = 'Fascia ' + contract; 
-            detObj.lectureInt = '575'; 
-            detObj.lectureDecimal = '0.0001'; 
-            detObj.assetCode = 'R0010004'; 
-            detObj.contractCode = '300145966'; 
-            detObj.status = 'Calcolabile'; 
-            detObj.lectureType = 'Stima automatica'; 
-            detObj.reason = 'Stima automatica';
-            detObj.billingDate = '0'; 
-            detObj.consumedAvg = '0.000'; 
-            detObj.regType = 'Energia attiva'; 
-            detObj.consumed = '';
-            detObj.consumedType = 'KWH';
-            detObj.sector = 'Energia Elettrica';
-            detObj.reasonWhy = '';
-            data.add(detObj);
-        }
-        return data;
     }
 
 }

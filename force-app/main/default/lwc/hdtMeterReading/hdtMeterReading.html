@@ -1,9 +1,5 @@
 <template>
 
-    <div if:true={spinner} >
-        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-    </div>
-
     <div if:true={error} class="slds-box" style="background:#ffffff" >
         <p class="slds-text-heading_small slds-text-color_error" >{errorMessage}</p>
     </div>
@@ -11,6 +7,10 @@
     <template if:false={error} >
         <lightning-card  title="Seleziona il contratto">
 
+            <div if:true={spinner} >
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            
             <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-bottom_small">
                 <div class="slds-col slds-size_1-of-6">
                     <lightning-input
@@ -45,6 +45,8 @@
             <c-hdt-meter-reading-detail-table 
                 contract-number={contractNumber}
                 ondataload={dataload}
+                load-data={loadData}
+                hide-checkbox-column={hideCheckboxColumn}
             ></c-hdt-meter-reading-detail-table>
         </template>
     </div>
