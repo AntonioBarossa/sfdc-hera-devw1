@@ -18,6 +18,31 @@ function loadWDE() {
     iwscore.getLayoutParams().integrationType = "wde";
     iwscore.createConnection(softphoneSettings.WDE_HOST, softphoneSettings.WDE_PORT, { 'protocol': softphoneSettings.WDE_PROTOCOL });
 }
+iwscore.addFilters();
+function addFilters() {
+	addFilter("onEventRingingInbound", "action");
+	addFilter("onEventRingingConsult", "action");
+	addFilter("onEventEstablishedInbound", "action");
+	addFilter("onEventEstablishedConsult", "action");
+	addFilter("onEventEstablishedOutbound", "action");
+	addFilter("onEventDialingOutbound", "action");
+	addFilter("onEventPartyChangedInbound", "action");
+	
+}
+
+function action(message)
+{
+	log.debug("Called action function...");
+	//if the attach is defined
+	if(message.attachdata.CRM)
+	{
+		log.debugFormat("action - message.attachdata.CRM [{0}] ", message.attachdata.CRM);
+		return (message.attachdata.CRM == "siebel");
+	}
+	else	
+		return true;
+}
+
 function loadPureRequestConfig() {
     var auth = {
         environment: softphoneSettings.PEF_GC_ENVIRONMENT,

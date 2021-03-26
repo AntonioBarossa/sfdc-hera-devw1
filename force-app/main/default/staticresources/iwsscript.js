@@ -21,6 +21,10 @@ function onEventMarkDoneInternal(message) {
 function onSwitchCrmInbound(message) {
     sfutil.closeActivity(message, true, false);
 }
+function onEventPartyChangedInbound(message) {
+}
+function onEventPartyChangedOutbound(message) {
+}
 
 /********* STANDARD *********/
 var softphone_connector_initialized = false;
@@ -91,10 +95,6 @@ function onEventRingingInternal(message) {
 function onEventRingingConsult(message) {
 }
 function onEventRingingOutbound(message) {
-}
-function onEventPartyChangedInbound(message) {
-}
-function onEventPartyChangedOutbound(message) {
 }
 function onEventEstablishedConsult(message) {
 }
