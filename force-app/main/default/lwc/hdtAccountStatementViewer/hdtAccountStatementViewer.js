@@ -223,6 +223,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.totAmount = 0;
     }
 
+    closeFirstLevelFilter(event){
+        this.showAccountData = true;
+        this.refreshRecord();
+    }
+
     joinFilter(event) {
         console.log('# joinFilter #');
         this.joinFilterModal = true;

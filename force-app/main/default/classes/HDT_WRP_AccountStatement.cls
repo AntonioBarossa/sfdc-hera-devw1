@@ -34,6 +34,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String label;
         @AuraEnabled public String fieldName;
         @AuraEnabled public Boolean showSort;
+        @AuraEnabled public Boolean isFilter;
         @AuraEnabled public Boolean showAmount;
     }
 

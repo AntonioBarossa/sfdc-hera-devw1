@@ -71,6 +71,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 sc.label = c.MasterLabel;
                 sc.fieldName = c.FieldName__c;
                 sc.showSort = c.IsSortable__c;
+                sc.isFilter = c.IsFilter__c;
                 sc.showAmount = c.ShowTotAmountHere__c;
                 sc.detail = cd;
                 columnsObj.columnObj.add(sc);
