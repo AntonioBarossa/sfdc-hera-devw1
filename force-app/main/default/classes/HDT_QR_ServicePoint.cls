@@ -14,9 +14,17 @@ public inherited sharing class HDT_QR_ServicePoint {
 	 */
 	public  List<ServicePoint__c> getAccountServicePoints(String accountid) {
 		system.debug('accountId : '+ accountId);
-		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name');
+		contractSrv.checkReadAccess('Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name,');
 		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
 		return listSp= [SELECT Id, Account__c,Account__r.Name, ServicePointCode__c, MeterSN__c, SupplyAddress__c, Distributor__r.Name,recordType.Name FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
+	}
+	
+
+	public  List<ServicePoint__c> getAddressFornitura(String accountid) {
+		system.debug('accountId : '+ accountId);
+		contractSrv.checkReadAccess('Account__c,SupplyAddress__c');
+		List<ServicePoint__c> listSp = new List<ServicePoint__c>();
+		return listSp= [SELECT Account__c, SupplyAddress__c FROM ServicePoint__c WHERE Account__c =: accountid WITH SECURITY_ENFORCED];
 	}
 
 	/*
@@ -25,7 +33,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 	public  List<ServicePoint__c> getAccountServicePointsWithFilter(String accountid,String additionalFilter) {
 		system.debug('getAccountServicePointsWithFilter START');
 		contractSrv.checkReadAccess(fieldSp);
-        String query;
+		String query;
 		IF(additionalFilter.contains('Commodity')){
 			query = 'SELECT '+fieldSp+' FROM ServicePoint__c WHERE Account__c =: accountid '+additionalFilter;
 		}
@@ -114,7 +122,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 				 query = 'SELECT '+ fields +
                 ' FROM ServicePoint__c WHERE Id = :SpCode LIMIT 1';
 			}
-
+			
 			servicePoints = Database.query(query);
 		}
         
@@ -150,7 +158,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 			query = 'SELECT ' + fields +
 			' FROM ServicePoint__c WHERE MeterSN__c LIKE :stringSerialNumber ';
 		}
-
+		
 		List<ServicePoint__c> servicePoints = Database.query(query);
 		system.debug('getServicePointsByMeterSerialNumberWithFilter END');
 		return servicePoints;
@@ -182,7 +190,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 			query = 'SELECT ' + fields +
 			' FROM ServicePoint__c WHERE ServicePointCode__c = :stringCode ';
 		}
-		
+
 		List<ServicePoint__c> servicePoints = Database.query(query);
 		return servicePoints;
 	}
@@ -216,6 +224,7 @@ public inherited sharing class HDT_QR_ServicePoint {
 		return [SELECT Output_Contract__c,Max_Record__c, OutputServicePoint__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED][0];
 	}
 
+
 		/*
 	 * Getting Custom Settimg FIELD REQUIRED ELE 'CS_SelezioneFornitura'
 	 */
@@ -233,4 +242,6 @@ public inherited sharing class HDT_QR_ServicePoint {
 		contractSrv.checkReadAccess(' FieldRequiredGas__c');
 		return [SELECT FieldRequiredGas__c FROM CS_SelezioneFornitura__c WITH SECURITY_ENFORCED];
 	}
+
+
 }
