@@ -5,6 +5,17 @@
     <description>RT per le Chiamate CTI</description>
     <label>Chiamata</label>
     <picklistValues>
+        <picklist>AppointmentCompetence__c</picklist>
+        <values>
+            <fullName>Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Approved__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -138,6 +149,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Reason__c</picklist>
+        <values>
+            <fullName>Dimostrata Estraneità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saldo pagato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Service__c</picklist>
         <values>
             <fullName>HERACOMM_MARCHE</fullName>
@@ -154,6 +176,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Status__c</picklist>
+        <values>
+            <fullName>Creata</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Null</fullName>
             <default>false</default>

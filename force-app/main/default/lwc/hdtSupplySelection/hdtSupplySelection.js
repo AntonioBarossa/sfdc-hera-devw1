@@ -13,7 +13,7 @@ export default class hdtSupplySelection extends LightningElement {
     showCreateTargetObjectButton = false;
     showCreateTargetObjectMod = false;
     selectedServicePoint;
-    disabledInput = false;
+    @api disabledInput;
     disabledNext = false;
     hiddenEdit = true;
     @api outputContract;
@@ -167,19 +167,19 @@ export default class hdtSupplySelection extends LightningElement {
         this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
     }
 
-    toggle(){
-        this.disabledInput = !this.disabledInput;
-        this.disabledNext = !this.disabledNext;
-        this.hiddenEdit = !this.hiddenEdit;
-    }
+    // toggle(){
+    //     this.disabledInput = !this.disabledInput;
+    //     this.disabledNext = !this.disabledNext;
+    //     this.hiddenEdit = !this.hiddenEdit;
+    // }
 
-    handleNext(){
-        this.toggle();
-    }
+    // handleNext(){
+    //     this.toggle();
+    // }
 
-    handleEdit(){
-        this.toggle();
-    }
+    // handleEdit(){
+    //     this.toggle();
+    // }
        /**
 
      * Dispatch confirmed service point

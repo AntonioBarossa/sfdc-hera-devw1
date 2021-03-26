@@ -9,8 +9,24 @@ public inherited sharing class HDT_QR_Contract {
     public HDT_QR_Contract() {
 
     }
-        /**
+    
+    public List<Contract> getRecordById(String contractId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            ContractNumber,
+            // BillingProfile__c,
+            Status,
+            SBQQ__Order__r.BillingProfile__c
+            FROM
+            Contract
+            WHERE Id = :contractId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 
+    /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get active records by accountId
     * @param String accountId
@@ -27,6 +43,30 @@ public inherited sharing class HDT_QR_Contract {
             FROM
             Contract
             WHERE AccountId = :accountId
+            AND Status = 'Activated'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Get active records by accountId and servicePointId
+    * @param String accountId
+    * @param String servicePointId
+    * @return List<Contract>
+    */
+    public List<Contract> getActiveRecordsByAccountIdAndServicePointId(String accountId, String servicePointId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            ServicePoint__c,
+            ContractNumber,
+            Status 
+            FROM
+            Contract
+            WHERE AccountId = :accountId
+            AND ServicePoint__c = :servicePointId
             AND Status = 'Activated'
             WITH SECURITY_ENFORCED
         ];

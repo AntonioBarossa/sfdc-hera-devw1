@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PhoneNumber__c</fullName>
+    <description>Valorizzato con il numero di telefono inserito manualmente dall&apos;utente nel widget di composizione dell&apos;SMS, o in mancanza di esso con il ContactPointPhone primario del Contact selezionato nel widget.</description>
+    <externalId>false</externalId>
+    <label>Telefono Alternativo</label>
+    <required>false</required>
+    <type>Phone</type>
+</CustomField>

@@ -89,7 +89,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     for (OrderItem orderItem : orderItemsList) {
                         ordersToUpdateMap.put(orderItem.OrderId, new Order(
                             Id = orderItem.OrderId,
-                            ServicePoint__c = orderItem.ServicePoint__c,
+                            ServicePoint__c = orderItem.ServicePoint__c != null ? orderItem.ServicePoint__c : null,
                             ParentOrder__c = parentOrderNew.Id,
                             RecordTypeId = recordTypeIdDefault
                         ));
@@ -97,10 +97,24 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     orderItemSrv.checkReadAccess('OrderId,BillingProfile__c');
                     List<OrderItem> orderItemsListWithBillingProfile = orderItemQr.getRecordsWithBillingProfile(listOrdersId);
                     for (OrderItem orderItem : orderItemsListWithBillingProfile) {
+                        if (ordersToUpdateMap.get(orderItem.OrderId) != null) {
+                            Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
+                            orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c != null ? orderItem.BillingProfile__c : null;
+                            ordersToUpdate.add(orderToUpdate);
+                        }
+                    }
+
+                    List<OrderItem> orderItemsAmend = orderItemQr.getRecordsWithAmend(listOrdersId);
+                    system.debug('ordersToUpdate before: ' + ordersToUpdate);
+                    system.debug('orderItemsAmend: ' + orderItemsAmend);
+                    for (OrderItem orderItem : orderItemsAmend) {
                         Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
-                        orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c;
+                        system.debug('orderToUpdate: ' + orderToUpdate);
+                        system.debug('ordersToUpdate after: ' + ordersToUpdate);
                         ordersToUpdate.add(orderToUpdate);
                     }
+
+
                     orderSrv.updateRecords(ordersToUpdate);
                 }
 

@@ -25,7 +25,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND Product2.Name IN ('PDR','POD')
+            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family = 'VAS Opzione prodotto' AND (NOT Product2.Description LIKE '%Sconto%')))
             WITH SECURITY_ENFORCED
         ];
     }
@@ -70,6 +70,53 @@ public inherited sharing class HDT_QR_OrderItem {
             WHERE
             OrderId IN :listOrderId  
             AND BillingProfile__c != null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getRecordsWithAmend(List<Id> listOrderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c
+            FROM 
+            OrderItem 
+            WHERE
+            OrderId IN :listOrderId  
+            AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
+            AND Product2.Name IN ('PDR','POD')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getMainItem(String orderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c,
+            Product2Id,
+            Product2.Family,
+            Product2.Name
+            FROM 
+            OrderItem 
+            WHERE OrderId = :orderId
+            AND SBQQ__RequiredBy__c = null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getAnalisiConsumi(String orderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c,
+            Product2Id,
+            Product2.Family,
+            Product2.Name
+            FROM 
+            OrderItem 
+            WHERE OrderId = :orderId
+            AND Product2.Name = 'Analisi Consumi'
             WITH SECURITY_ENFORCED
         ];
     }

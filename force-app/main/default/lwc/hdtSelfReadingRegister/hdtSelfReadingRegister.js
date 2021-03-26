@@ -18,7 +18,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
     registerObjEle = [
         {id: 1, name: "readingType", label:"Tipo Lettura ", type: "text", value: null, disabled:true, visible:false},
-        {id: 2, name: "readingDate", label:"Data Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id: 2, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
         {id: 3, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
         {id: 4, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
         {id: 5, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
@@ -26,11 +26,11 @@ export default class HdtSelfReadingRegister extends LightningElement {
     ];
 
     registerObjGas = [
-        {id:1, name: "readingDate", label:"Data Lettura ", type: "date", value: null, disabled:true, visible:true},
+        {id:1, name: "readingDate", label:"Data Ultima Lettura ", type: "date", value: null, disabled:true, visible:true},
         {id:2, name: "readingOldValue", label:"Ultima Lettura ", type: "number", value: null, disabled:true, visible:true},
         {id:3, name: "readingValue", label:"Nuova Lettura ", type: "number", value: null, disabled:false, visible:true},
         {id:4, name: "readingSerialNumber", label:"Matricola ", type: "text", value: null, disabled:true, visible:true},
-        {id:5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:true},
+        {id:5, name: "readingType", label:"Tipo ", type: "text", value: null, disabled:true, visible:false},
         {id:6, name: "readingBand", label:"Fascia ", type: "text", value: null, disabled:true, visible:false},
         {id:7, name: "readingRegister", label:"Registro", type: "text", value: null, disabled:true, visible:false},
         {id:8, name: "readingUnit", label:"Unita di Misura", type: "text", value: null, disabled:true, visible:false}
@@ -63,7 +63,6 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 if(this.registerObj[i].name === 'readingDate'
                 || this.registerObj[i].name === 'readingSerialNumber'
                 || this.registerObj[i].name === 'readingOldValue'
-                || this.registerObj[i].name === 'readingType'
                 || this.registerObj[i].name === 'readingValue'){
 
                     this.registerObj[i].label += this.rowObj.number;
@@ -93,23 +92,25 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
         console.log('isRetroactive? '+this.isRetroactive);
 
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        //today = dd + '/' + mm + '/' + yyyy;
+        today = yyyy + '-' + mm + '-' + dd;
+
+        if(Date.parse(readingCustomerDate) > Date.parse(today)){
+
+            this.advanceError = 'Impossibile inserire una data futura!';
+
+        }
+
         if(!this.isRetroactive){
-
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
-
-            //today = dd + '/' + mm + '/' + yyyy;
-            today = yyyy + '-' + mm + '-' + dd;
 
             var index = this.registerObj.findIndex(p => p.label.name === 'readingDate');
 
-            if(Date.parse(readingCustomerDate) > Date.parse(today)){
-
-                this.advanceError = 'Impossibile inserire una data futura!';
-
-            } else if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
+            if(Date.parse(readingCustomerDate) <= Date.parse(this.registerObj[index].value)){
 
                 this.advanceError = 'Impossibile inserire una data precedente o uguale all\'ultima lettura!'
 
@@ -223,6 +224,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
                         ['ReadingBand'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingBand')].value,
                         ['ReadingSerialNumber'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingSerialNumber')].value,
                         ['ReadingValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value,
+                        ['ReadingOldValue'+this.rowObj.id+'__c']:this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value,
                         ['ReadingRegister'+this.rowObj.id+'__c']:this.commodity === 'Gas' ? 
                         this.registerObj[this.registerObj.findIndex(p => p.name === 'readingRegister')].value
                         : null,

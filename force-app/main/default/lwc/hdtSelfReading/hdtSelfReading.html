@@ -2,7 +2,8 @@
 
     <div class="demo-only demo-only--sizing slds-grid slds-wrap">
 
-        <div class="slds-m-left_x-small slds-size_1-of-3">
+        <!-- Aggiungiamo padding in alto con slds-p-top_xxx-small per allineare l'input al button Verifica Ultima Lettura -->
+        <div class="slds-m-left_x-small slds-size_1-of-3 slds-p-top_xxx-small">
 
             <lightning-input class="input" 
             type="date" 
@@ -75,7 +76,7 @@
             <c-hdt-flow-navigation-button if:false={isVolture} 
             next-label={nextLabel} 
             next-variant={nextVariant} 
-            is-draft={isDraft}
+            is-draft={showDraftButton}
             is-previous={showBackButton}
             is-cancel={showCancelButton}
             onnavigation={handleNavigation}>

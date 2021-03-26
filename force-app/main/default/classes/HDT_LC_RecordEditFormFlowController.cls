@@ -47,7 +47,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
         return HDT_QR_RecordEditFormFlowController.queryCd(cdIdList);
     }
 
-   /* @AuraEnabled(cacheable=true)
+    @AuraEnabled(cacheable=true)
     public static String getOptions(String serviceClass, String params) {
         String result;
        System.debug('Params getOptions ' + params);
@@ -79,8 +79,8 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     infoCase.ServicePoint__c = contextObj.ServicePoint__c;
                     infoCase.Market__c = contextObj.Market__c;
                     infoCase.BillingProfile__c = contextObj.BillingProfile__c;
-                    infoCase.InformativeCluster__c = contextObj.Cluster__c;
-                    infoCase.InformativeType__c = contextObj.Type;
+                    //infoCase.InformativeCluster__c = contextObj.Cluster__c;
+                    //infoCase.InformativeType__c = contextObj.Type;
                     infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.Contract__c;
                     infoCase.ParentId = contextId;
@@ -88,7 +88,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                 }
                 when 'Order'{
 
-                    //Da Commentare
+                    /*
 
                     Order contextObj = (Order) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
 
@@ -101,12 +101,12 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.Contract__c; // qui capire che campo bisogna prendere
 
-                    
+                    */
 
                 }
                 when 'Opportunity'{
 
-                    //Da Commentare
+                    /*
 
                     Opportunity contextObj = (Opportunity) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
 
@@ -119,12 +119,12 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     //infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.ContractId; // qui capire che campo bisogna prendere
 
-                    
+                    */
 
                 }
                 when 'ServicePoint__c'{
 
-                    //Da commentare
+                    /*
 
                     ServicePoint__c contextObj = (ServicePoint__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
 
@@ -135,12 +135,12 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     //infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     //infoCase.Contract__c = contextObj.Contract__c;
 
-                    
+                    */
 
                 }
                 when 'BillingProfile__c'{
 
-                    //Da commentare
+                    /*
 
                     BillingProfile__c contextObj = (BillingProfile__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
 
@@ -155,7 +155,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
                     }
 
-
+                    */
 
                 }
                 when 'Account'{
@@ -188,7 +188,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
         return HDT_QR_InformativeManager.getFieldToPrePopulate(recordId);
 
-    }*/
+    }
 
 
 
