@@ -186,8 +186,9 @@ export default class hdtSupplySelection extends LightningElement {
      */
     handleConfirmServicePoint(event){
         console.log('handleConfirmServicePoint');
-        let servicePoint = event.detail;
-        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
+        let data = event.detail;
+        console.log('hdtSupplySelection - handleConfirmServicePoint: ', JSON.stringify(data));
+        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: data}));
     }
 
 }

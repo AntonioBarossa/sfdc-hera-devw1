@@ -213,6 +213,30 @@ public inherited sharing class HDT_QR_QuoteLine {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 25/03/2021
+    * @description Get records by quoteId
+    * @param String quoteId - SBQQ__Quote__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getRecordsByQuoteId(String quoteId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            ServicePoint__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 17/11/2020
     * @description Get records by quoteId and Product.Name "POD"
     * @param String contractId - SBQQ__Quote__r.ContractReference__c

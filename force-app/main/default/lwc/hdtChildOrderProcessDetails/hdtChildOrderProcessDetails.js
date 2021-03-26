@@ -241,14 +241,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     getConfirmedSteps(){
         // this.confirmedSteps = this.availableSteps.filter(section => section.step < this.order.Step__c);
-        this.confirmedSteps = this.availableStepsFirst.filter(section => (section.name !== 'creditCheck' && section.name !== 'dettaglioImpianto' && section.name !== 'fatturazione' && section.name !== 'datiPrecedenteIntestatario' && section.name !== 'indirizzodiAttivazione' && section.name !== 'indirizzoSpedizione'));
+        this.confirmedSteps = this.availableStepsFirst.filter(section => (section.name !== 'creditCheck' && section.name !== 'dettaglioImpianto' && section.name !== 'fatturazione' && section.name !== 'datiPrecedenteIntestatario' && section.name !== 'indirizzodiAttivazione' && section.name !== 'indirizzoSpedizione' && section.name !== 'ivaAccise'));
 
         console.log('this.confirmedSteps: ', JSON.stringify(this.confirmedSteps));
     }
 
     getPendingSteps(){
         // this.pendingSteps = this.availableSteps.filter(section => section.step >= this.order.Step__c);
-        this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'creditCheck' || section.name === 'dettaglioImpianto' || section.name === 'fatturazione' || section.name === 'datiPrecedenteIntestatario' || section.name === 'indirizzodiAttivazione' || section.name === 'indirizzoSpedizione'));
+        this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'creditCheck' || section.name === 'dettaglioImpianto' || section.name === 'fatturazione' || section.name === 'datiPrecedenteIntestatario' || section.name === 'indirizzodiAttivazione' || section.name === 'indirizzoSpedizione' || section.name === 'ivaAccise'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('this.pendingSteps: ', JSON.stringify(this.pendingSteps));
     }
@@ -580,7 +580,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.fields = [
             {
-                step: 3,
+                step: '',
                 label: 'Cliente Uscente',
                 name: 'clienteUscente',
                 objectApiName: 'Account',
@@ -635,7 +635,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 4,
+                step: 3,
                 label: 'Credit check',
                 name: 'creditCheck',
                 objectApiName: 'Order',
@@ -676,7 +676,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 5,
+                step: 4,
                 label: 'Dati precedente intestatario',
                 name: 'datiPrecedenteIntestatario',
                 objectApiName: 'Order',
@@ -731,7 +731,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 6,
+                step: 5,
                 label: 'Dettaglio impianto',
                 name: 'dettaglioImpianto',
                 objectApiName: 'ServicePoint__c',
@@ -1134,7 +1134,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 8,
+                step: '',
                 label: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? 'Indirizzo di residenza' : 'Indirizzo sede legale',
                 name: 'indirizzoResidenzaOsedeLegale',
                 objectApiName: 'Account',
@@ -1219,7 +1219,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 10,
+                step: '',
                 label: 'Fatturazione elettronica',
                 name: 'fatturazioneElettronicaClienteNonResidenziale',
                 objectApiName: 'BillingProfile__c',
@@ -1287,7 +1287,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 12,
+                step: '',
                 label: 'Riepilogo Dati',
                 name: 'riepilogoDatiAmend',
                 objectApiName: '',
@@ -1334,7 +1334,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 13,
+                step: '',
                 label: 'Analisi Consumi',
                 name: 'analisiConsumi',
                 objectApiName: 'OrderItem',
@@ -1380,7 +1380,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 14,
+                step: '',
                 label: 'Riepilogo Dati',
                 name: 'riepilogoDatiVas',
                 // objectApiName: 'Order',
@@ -1461,7 +1461,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 15,
+                step: 6,
                 label: 'Indirizzo di attivazione',
                 name: 'indirizzodiAttivazione',
                 hasAddrComp: true,
@@ -1473,7 +1473,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 16,
+                step: 7,
                 label: 'Indirizzo spedizione',
                 name: 'indirizzoSpedizione',
                 hasAddrComp: true,
@@ -1485,7 +1485,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 9,
+                step: 8,
                 label:'Fatturazione',
                 name: 'fatturazione',
                 objectApiName: 'BillingProfile__c',
@@ -1610,7 +1610,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 17,
+                step: 9,
+                label:'Iva e accise',
+                name: 'ivaAccise',
+                objectApiName: '',
+                recordId: '',
+                processVisibility: false,
+                data: [
+                    
+                ]
+            },
+            {
+                step: '',
                 label: 'Metodo pagamento',
                 name: 'metodoPagamento',
                 objectApiName: 'BillingProfile__c',
@@ -1740,7 +1751,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 18,
+                step: '',
                 label: 'Date ordine',
                 name: 'dateOrdine',
                 objectApiName: 'Order',
@@ -1778,7 +1789,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             },
             {
                 lastStep: true,
-                step: 19,
+                step: '',
                 label: 'Metodo firma canale invio',
                 name: 'metodoFirmaCanaleInvio',
                 objectApiName: 'Order',

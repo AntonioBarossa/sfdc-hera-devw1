@@ -73,8 +73,8 @@ public inherited sharing class HDT_LC_SaleVas {
      */
     public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
         
-        if (order.Id == null || supplyCity == '') {
-            throw new AuraHandledException('Devi scegliere un ordine e compilare il comune!');
+        if (order.Id == null) {
+            throw new AuraHandledException('Devi scegliere un ordine!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -97,7 +97,7 @@ public inherited sharing class HDT_LC_SaleVas {
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
-            SupplyCity__c = supplyCity,
+            SupplyCity__c = null, //to do (other logic to get SupplyCity)
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             IsVAS__c = true
@@ -116,8 +116,8 @@ public inherited sharing class HDT_LC_SaleVas {
      */
     public static void handleActiveContractConfirm(Contract contract, String supplyCity, Sale__c sale){
         
-        if (contract.Id == null || supplyCity == '') {
-            throw new AuraHandledException('Devi scegliere un contrato e compilare il comune!');
+        if (contract.Id == null) {
+            throw new AuraHandledException('Devi scegliere un contrato!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -142,7 +142,7 @@ public inherited sharing class HDT_LC_SaleVas {
             CreatedBy__c = sale.CreatedBy__c,
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
-            SupplyCity__c = supplyCity,
+            SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true
         ));
 

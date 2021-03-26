@@ -53,9 +53,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
      * @description Create SaleServiceItem__c record
      * @param ServicePoint__c servicePoint
      * @param Sale__c sale
+     * @param Map<String,String> extraParams - params needed for special cases
      * @return SaleServiceItem__c saleServiceItem
      */
-    public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale){
+    public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
 
         servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName');
         List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c');
@@ -71,7 +72,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
         system.debug('!isAmendmentAllowed ' + !isAmendmentAllowed(servicePoint, sale));
 
-        if (!existingSaleServiceItems.isEmpty() && !isAmendmentAllowed(servicePoint, sale)) {
+        if (!existingSaleServiceItems.isEmpty() && !isAmendmentAllowed(servicePoint, sale) && extraParams == null) {
 
             if (isServicePointConfirmed(existingSaleServiceItems, servicePoint.Id)) {
                 throw new AuraHandledException('Service Point già presente in ' + existingSaleServiceItems[0].Opportunity__r.Name);
@@ -91,6 +92,18 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
+            Boolean allowChangeUse = false;
+            String contractReference = isAmendmentAllowed(servicePoint, sale) ? contractsForAmendmentCheck[0].Id : null;
+            Boolean amendmentAllowed = isAmendmentAllowed(servicePoint, sale);
+
+            if (extraParams != null) {
+                if (extraParams.get('AllowChangeUse__c') != null && extraParams.get('AllowChangeUse__c') == 'true') {
+                    contractReference = extraParams.get('contractReference');
+                    amendmentAllowed = false;
+                    allowChangeUse = true;
+                }
+            }
+
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
@@ -106,8 +119,9 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SalesCompany__c = sale.SalesCompany__c,
                 Campaign__c = sale.Campaign__c,
                 SupplyCity__c = servicePoint.SupplyCity__c,
-                AmendmentAllowed__c = isAmendmentAllowed(servicePoint, sale),
-                ContractReference__c = isAmendmentAllowed(servicePoint, sale) ? contractsForAmendmentCheck[0].Id : null
+                AmendmentAllowed__c = amendmentAllowed,
+                ContractReference__c = contractReference,
+                AllowChangeUse__c = allowChangeUse
             ));
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

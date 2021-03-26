@@ -259,10 +259,41 @@ public inherited sharing class HDT_LC_EditQuote {
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if products have been created for quote
+    * @param String quoteId
+    */
+    private static Boolean haveProductsBeenCreated(String quoteId){
+        List<SBQQ__QuoteLine__c> createdQuoteLines = quoteLineQr.getRecordsByQuoteId(quoteId);
+
+        return !createdQuoteLines.isEmpty();
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Execute actions when products are created for amend Quote
+    * @param String quoteId
+    */
+    private static void execAmendAllowQuoteProdConfigured(String quoteId){
+
+        if (haveProductsBeenCreated(quoteId)) {
+            SBQQ__Quote__c quote = new SBQQ__Quote__c(
+                Id = quoteId,
+                AmendmentAllowed__c = false
+            );
+
+            quoteSrv.updateRecord(quote);
+        }
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Execute actions when exiting modal
+    * @param String saleId
+    * @params String quoteId
+    * @return Boolean - true(if products have been created), false (if no products)
     */
     @AuraEnabled
-    public static void execModalExitActions(String saleId, String quoteId){
+    public static Boolean execModalExitActions(String saleId, String quoteId){
 
         SBQQ__Quote__c quote = quoteQr.getRecordById(quoteId);
 
@@ -281,6 +312,12 @@ public inherited sharing class HDT_LC_EditQuote {
         if (!quote.IsVAS__c) {
             assocPodToQuoteLine(saleId,quoteId);
         }
+
+        if (quote.AmendmentAllowed__c) {
+            execAmendAllowQuoteProdConfigured(quoteId);
+        }
+
+        return haveProductsBeenCreated(quoteId);
 
     }
 

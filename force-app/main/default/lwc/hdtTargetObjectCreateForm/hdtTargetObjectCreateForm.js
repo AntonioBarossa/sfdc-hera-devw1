@@ -729,11 +729,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         confirmServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
             this.loading = false;
             this.closeCreateTargetObjectModal();
-            this.servicePointId = data.id;
-            this.newServicePoint = data;
+            console.log('hdtTargetObjectCreateForm - confirmServicePoint: ', JSON.stringify(data));
+            this.servicePointId = data.newServicePoint.Id;
+            this.newServicePoint = data.newServicePoint;
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
-            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
+            this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: data}));
             
         }).catch(error => {
             this.loading = false;

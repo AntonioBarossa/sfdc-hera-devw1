@@ -42,15 +42,53 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(String orderId, String selectedProcess, String deliberate){
+    public static void next(String orderId, String selectedProcess, String deliberate, Map<String,String> extraParams){
 
+        system.debug('extraParams: ' + extraParams);
+        
         String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcess);
+
+        String processType = null;
+
+        switch on selectedProcess {
+            when 'HDT_RT_VAS'{
+                processType = 'VAS';
+            }
+            when 'HDT_RT_ScontiBonus' {
+                processType = 'Aggiunta Sconti o Bonus VAS';
+            }
+            when 'HDT_RT_Subentro' {
+                if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
+                    processType = 'Subentro Ele';
+                } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
+                    processType = 'Subentro Gas';
+                }
+            }
+            when 'HDT_RT_SwitchIn' {
+                if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
+                    processType = 'Switch in Ele';
+                } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
+                    processType = 'Switch in Gas';
+                }
+            }
+            when 'HDT_RT_Attivazione' {
+                if (deliberate == 'In Delibera') {
+                    processType = '	Prima Attivazione In delibera';
+                } else if(deliberate == 'Fuori delibera') {
+                    processType = 'Prima Attivazione Fuori delibera';
+                }
+            }
+            when 'HDT_RT_AttivazioneConModifica' {
+                processType = 'Prima Attivazione con modifica';
+            }
+        }
 
         orderSrv.updateRecord(new Order(
             Id = orderId,
             RecordTypeId = recordTypeId,
             Step__c = 2,
-            Deliberation__c = deliberate
+            Deliberation__c = deliberate,
+            ProcessType__c = processType
         ));
     }
 }

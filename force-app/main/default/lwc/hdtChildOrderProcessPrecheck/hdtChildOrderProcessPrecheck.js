@@ -164,9 +164,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         this.applySelectionLogic(this.selectedProcess);
     }
 
-    goToNextStep(){
+    goToNextStep(extraParams){
         this.loaded = false;
-        next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation}).then(data =>{
+
+        if(Object.keys(extraParams).length === 0) {
+            extraParams = {};
+        }
+
+        next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
@@ -186,9 +191,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     handleNext(){
         console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
 
+        let extraParams = {};
+
+        if(this.order.ServicePoint__r !== undefined){
+            extraParams['servicePointType'] = this.order.ServicePoint__r.RecordType.DeveloperName;
+        }
+
         if (this.showDeliberation === true) {
             if (this.deliberation !== '') {
-                this.goToNextStep();
+                this.goToNextStep(extraParams);
             } else {
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
@@ -199,7 +210,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             }
         } else {
-            this.goToNextStep();
+            this.goToNextStep(extraParams);
         }
 
     }
