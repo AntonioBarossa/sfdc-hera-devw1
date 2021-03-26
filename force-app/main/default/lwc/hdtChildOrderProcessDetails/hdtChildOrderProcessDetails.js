@@ -477,7 +477,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     /*handleNext(event){ //EVERIS: COMMENTATA FORSE DEPRECATA?
-<<<<<<< HEAD
 
         console.log('event '+event.target.label);
 
@@ -568,98 +567,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         //FINE SVILUPPI EVERIS
 
-=======
-
-        console.log('event '+event.target.label);
-
-        this.loading = true;
-
-        //INIZIO SVILUPPI EVERIS
-
-        console.log('here 1');
-
-        this.goReading = event.target.name === 'goReading' ? true : false;
-
-        console.log('here 2');
-
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-
-            console.log('here');
-
-            console.log('Nome Sezione: '+event.currentTarget.value);
-
-            let currentVoltureSectionName = event.currentTarget.value;
-    
-            let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name == currentVoltureSectionName);
-
-            let nextVoltureSection = currentVoltureSectionName === 'retroactiveDate' ? 
-            (this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'reading' 
-            && event.target.name === 'goReading'
-            ? this.availableVoltureSection[currentVoltureSectionIndex + 1].name 
-            : this.availableVoltureSection[currentVoltureSectionIndex + 2].name)
-            : this.availableVoltureSection[currentVoltureSectionIndex + 1].name;
-
-            if(Object.keys(this.outputFieldObj).length > 0 || currentVoltureSectionName === 'reading'){
-
-                console.log('here');
-
-                console.log(this.outputFieldObj);
-
-                console.log(JSON.stringify(this.outputFieldObj));
-
-                updateOrder({fields: JSON.stringify(this.outputFieldObj), recordId: this.order.Id, 
-                    isRetroactive: this.isRetroactive, isReading: this.isReading, completed:false})
-                .then(result =>{
-
-                    console.log(result)
-
-                    this.activeVoltureSection = nextVoltureSection;
-        
-                    this.loading = false;
-
-                    this.showReadingButton = this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'retroactiveDate'
-                    ? true : false;
-
-                    this.outputFieldObj = {};
-
-                    this.refreshValues(this.order.Id);
-        
-                    this.dispatchEvent(new CustomEvent('refreshorderchild'));
-
-
-                }).catch(error => {
-
-                    this.loading = false;
-                    console.log((error.body.message !== undefined) ? error.body.message : error.message);
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: (error.body.message !== undefined) ? error.body.message : error.message,
-                        variant: 'error',
-                    });
-                    this.dispatchEvent(toastErrorMessage);
-
-                });
-
-            } else {
-
-                this.activeVoltureSection = nextVoltureSection;
-        
-                this.loading = false;
-
-                this.outputFieldObj = {};
-    
-                this.dispatchEvent(new CustomEvent('refreshorderchild'));
-
-            }
-
-            return;
-
-        }
-
-
-        //FINE SVILUPPI EVERIS
-
->>>>>>> 6a89f1cf6f07087d4e45db8e9c1368ef61373c9c
         let currentSectionName = event.currentTarget.value;
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
@@ -1032,35 +939,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('handle Click Event Data: ', event.currentTarget.value);
 
         let currentSectionName = event.currentTarget.value;
-<<<<<<< HEAD
-
-        //INIZIO SVILUPPI EVERIS
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-
-            let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name === currentSectionName);
-
-            let previousVoltureSection = currentSectionName === 'processVariable' ?
-            (this.availableVoltureSection[currentVoltureSectionIndex - 1].name === 'reading' && this.goReading
-            ? this.availableVoltureSection[currentVoltureSectionIndex - 1].name 
-            : this.availableVoltureSection[currentVoltureSectionIndex - 2].name)
-            : this.availableVoltureSection[currentVoltureSectionIndex - 1].name;
-
-            console.log('Previous Section '+previousVoltureSection);
-
-            this.activeVoltureSection = previousVoltureSection;
-            
-            console.log(this.activeVoltureSection);
-
-            this.loading = false;
-        
-            this.dispatchEvent(new CustomEvent('refreshorderchild'));
-
-        }
-        //FINE SVILUPPI EVERIS
-
-        let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
-=======
->>>>>>> 6a89f1cf6f07087d4e45db8e9c1368ef61373c9c
 
         //INIZIO SVILUPPI EVERIS
         if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){

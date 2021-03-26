@@ -214,5 +214,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showEsitoCheck = false;
             this.vasAmendDisabledInput = true;
         } 
+
+        console.log('Endend Callback');
+
     }
 }
