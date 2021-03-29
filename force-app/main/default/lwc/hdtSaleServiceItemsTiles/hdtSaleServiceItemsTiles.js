@@ -56,7 +56,7 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
                 });
             }
 
-            if(data.vasTiles !== undefined){
+            if(data.vasTiles[0] !== undefined){
                 data.vasTiles[0].forEach(el => {
 
                     let vasType = '';

@@ -37,6 +37,20 @@ public inherited sharing class HDT_LC_SellingWizardController {
         return saleQuery.getRecordById(id, fields);
     }
 
+    @AuraEnabled
+    public static boolean checkCommunityLogin(){
+        Boolean check=False;
+        String us= userinfo.getUserType();
+        
+        system.debug(us);
+
+        if (!'Standard'.Equals(us)){
+            check = true;
+        }
+
+        return check;
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Create Sale__c
