@@ -61,9 +61,10 @@
     },
 
     handleCancelSaleEvent : function (component, event, helper){
-        var accountId = component.get("v.recordId");
-        var objectApiName = 'Account';
-        helper.redirectToSObjectSubtab(component, accountId, objectApiName);
+        console.log('HDT_LCP_SellingWizardController - handleCancelSaleEvent');
+        var saleId = component.get("v.saleId");
+        var objectApiName = 'Sale__c';
+        helper.redirectToSObjectSubtab(component, saleId, objectApiName);
     },
 
     handleSaveSaleEvent : function(component, event, helper){
