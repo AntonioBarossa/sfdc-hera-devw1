@@ -11791,6 +11791,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>User.CreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.LoginChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.SalesChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>User.SBQQ__DefaultProductLookupTab__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11817,6 +11832,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.SBQQ__Theme__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.Station__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

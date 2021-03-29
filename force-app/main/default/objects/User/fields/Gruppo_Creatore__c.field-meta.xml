@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Gruppo_Creatore__c</fullName>
+    <externalId>false</externalId>
+    <label>Gruppo Creatore</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>LoginChannel__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_CreatorGroup</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>APP</controllingFieldValue>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <controllingFieldValue>Callback</controllingFieldValue>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_CC_OUT_KN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>APP</controllingFieldValue>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <controllingFieldValue>Callback</controllingFieldValue>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_SITOGRUPPO_OUT_KN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>APP</controllingFieldValue>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <controllingFieldValue>Callback</controllingFieldValue>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_SOLAPP_OUT_KN</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CFBS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CFBS_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CRBO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CRBO_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CVMCONTR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CVMCONTR_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CVMPV</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_CVMPV_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_POM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_POM_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_POM_PEC_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_STS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Assistente web</controllingFieldValue>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_MMSME_STS_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CDO_OM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CDO_OM_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CDO_PPT_DISCO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CDO_PPT_DISCO_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CDO_PPT_QMMUI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CDO_PPT_QMMUI_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CORPMUI_CORP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CORPMUI_CORP_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CORPMUI_MUI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CORPMUI_MUI_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CREDITO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CREDITO OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CRM_CC_OUT_LT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_CC_OUT_VK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CRM_SDOVEST_BO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CRM_SDOVEST_FE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CRM_SDOVEST_IM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CRM_SDOVEST_MO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_BONUS_ENERGY</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_BONUS_ENERGY_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_CANONE_RAI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_CSA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EB_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EB_QC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EB_QC_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_ATTESA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_FISU_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_FSD_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_MO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_QC_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HC_CVMBO_SREG_EBT_URC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HCM_BACK</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HCM_BACK_OUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HCM_CRE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HCM_DISCO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HCM_SCORE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Back office</controllingFieldValue>
+            <valueName>HSPA_FATTURAZIONE E INCASSI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Camper</controllingFieldValue>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_SIND</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_AGGOP_STAFF</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_HD_LTCH</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Chat</controllingFieldValue>
+            <valueName>HC_CRM_SIND_CONS</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
