@@ -22,27 +22,39 @@ function loadWDE() {
 }
 
 function addFilters() {
-	addFilter("onEventRingingInbound", "action");
-	addFilter("onEventRingingConsult", "action");
-	addFilter("onEventEstablishedInbound", "action");
-	addFilter("onEventEstablishedConsult", "action");
-	addFilter("onEventEstablishedOutbound", "action");
-	addFilter("onEventDialingOutbound", "action");
-	addFilter("onEventPartyChangedInbound", "action");
-	
+    addFilter("onEventRingingInbound", "action");
+    addFilter("onEventEstablishedInbound", "action");
+    addFilter("onEventMarkDoneInbound", "action");
+    addFilter("onEventDialingOutbound", "action");
+    addFilter("onEventDialingInternal", "action");
+    addFilter("onEventRingingInternal", "action");
+    addFilter("onEventEstablishedOutbound", "action");
+    addFilter("onEventMarkDoneOutbound", "action");
+    addFilter("onEventDialingConsult", "action");
+    addFilter("onEventRingingConsult", "action");
+    addFilter("onEventEstablishedConsult", "action");
+    addFilter("onEventMarkDoneConsult", "action");
+    addFilter("onEventPartyChangedInbound", "action");
+    
+    addFilter("onEventRingingOutbound", "action");
+    addFilter("onChatEventRingingInbound", "action");
+    addFilter("onChatEventRingingConsult", "action");
+    addFilter("onEmailEventRingingInbound", "action");
+    addFilter("onWorkitemEventRingingInbound", "action");
+    addFilter("onWorkitemEventRingingInbound", "action");
 }
 
 function action(message)
 {
-	log.debug("Called action function...");
-	//if the attach is defined
-	if(message.attachdata.CRM)
-	{
-		log.debugFormat("action - message.attachdata.CRM [{0}] ", message.attachdata.CRM);
-		return (message.attachdata.CRM == "siebel");
-	}
-	else	
-		return true;
+    log.debug("Called action function...");
+    //if the attach is defined
+    if(message.attachdata.CRM) {
+        log.debugFormat("action - message.attachdata.CRM [{0}] ", message.attachdata.CRM);
+        return (message.attachdata.CRM == "sfdc");
+    } else {
+        
+        return true;
+    }
 }
 
 function loadPureRequestConfig() {

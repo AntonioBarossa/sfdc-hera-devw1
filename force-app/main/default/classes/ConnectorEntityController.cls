@@ -1,16 +1,9 @@
 global with sharing class ConnectorEntityController {
 	public ConnectorEntityController() {}
 
-	private class AttachData {
-		String target_crm;
-		String sf_activity_id;
-		String sb_activity_id;
-	}
-
 	@RemoteAction
 	global static String createActivity(String jsonMessage) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
-		AttachData attachdata = (AttachData) JSON.deserialize((String) message.get('attachdata'), attachdata.class);
 
 		if(message.get('ErrorCode') != '0') {
 			return 'Error: ' + message.get('ErrorMessage');
@@ -19,20 +12,20 @@ global with sharing class ConnectorEntityController {
 		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Chiamata'];
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 			RecordTypeId = recordType.Id,
-			Type__c = 'Chiamata',
 			wrts_prcgvr__Status__c = 'In Progress',
 			ActivityStartTime__c = DateTime.now(),
 			CallStartTime__c = DateTime.now(),
-			ConnectionID__c = (String) message.get('ConnectionID'),
-			Subtype__c = (String) message.get('CallType')
+			ConnectionID__c = (String) message.get('ConnectionID')
 		);
 
 		switch on (String) message.get('CallType') {
 			when 'Outbound' {
+				activity.Type__c = 'Chiamata Outbound';
 				activity.CallCenterNumber__c = (String) message.get('ANI');
 				activity.ClientNumber__c = (String) message.get('DNIS');
 			}
 			when 'Inbound' {
+				activity.Type__c = 'Chiamata Inbound';
 				activity.CallCenterNumber__c = (String) message.get('DNIS');
 				activity.ClientNumber__c = (String) message.get('ANI');
 			}
@@ -45,7 +38,7 @@ global with sharing class ConnectorEntityController {
 		Map<String,String> result = new Map<String,String>();
 		List<Contact> contacts = [SELECT Id, AccountId FROM Contact WHERE Phone =: activity.ClientNumber__c OR MobilePhone =: activity.ClientNumber__c];
 		if(contacts.size() == 1) {
-			Contact contact = contact[0];
+			Contact contact = contacts[0];
 			activity.Contact__c = contact.Id;
 			result.put('contactId', contact.Id);
 			List<AccountContactRelation> relations = [SELECT Id FROM AccountContactRelation WHERE ContactId =: contact.Id];
@@ -64,10 +57,10 @@ global with sharing class ConnectorEntityController {
 	@RemoteAction
 	global static String closeActivity(String jsonMessage, Boolean crmChange, Boolean operatorChange) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
-		AttachData attachdata = (AttachData) JSON.deserialize((String) message.get('attachdata'), attachdata.class);
+		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-			Id = attachdata.sf_activity_id,
+			Id = (String) attachdata.get('sf_activity_id'),
 			wrts_prcgvr__Status__c = 'Completed',
 			ActivityEndTime__c = Datetime.now(),
 			CallEndTime__c = Datetime.now(),
