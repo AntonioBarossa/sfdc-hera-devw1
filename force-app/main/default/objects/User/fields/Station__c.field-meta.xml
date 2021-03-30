@@ -8,7 +8,7 @@
     <trackFeedHistory>false</trackFeedHistory>
     <type>Picklist</type>
     <valueSet>
-        <controllingField>Gruppo_Creatore__c</controllingField>
+        <controllingField>CreatorGroup__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_Station</valueSetName>
         <valueSettings>
