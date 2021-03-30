@@ -319,11 +319,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         endPointMDT = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMDT, tabCode);
 
         if(endPointMDT.size()>0 && !String.isEmpty(endPointMDT[0].EndpointService__c)){
-            //httpObj.endPoint = endPointMDT[0].EndpointService__c;
-            httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
+            httpObj.endPoint = endPointMDT[0].EndpointService__c;
+            //httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
             httpObj.httpMethod = 'POST';
-            //httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');            
-            httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+            httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');            
+            //httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
             httpObj.headersMap.put('Content-Type', 'application/json');
         } else {
             httpObj = null;

@@ -1,43 +1,84 @@
 public without sharing class HDT_LC_ViewSapDataTableCtrl {
 
     @AuraEnabled
-    public static ReturnedObj getTableConfig(String recordId, String type){
+    public static HDT_WRP_ReturnMetadataObj getTableConfig(String recordId, String type){
         
-        ReturnedObj retObj = new ReturnedObj();
-        retObj.tables = new List<TableMetaData>();
+        HDT_WRP_ReturnMetadataObj retObj = new HDT_WRP_ReturnMetadataObj();
+        retObj.tables = new List<HDT_WRP_TableMetadata>();
         
-        
-        try {            
-            if(type == 'cmor'){
-                TableMetaData tdata = new TableMetaData();
-                tdata.columns = new List<ColumnObj>();
-                tdata = (TableMetaData)JSON.deserialize(cmorColumns1, TableMetaData.class);
+        try {
+
+            List<AccountDataEnrichment__mdt> enrichmentbMetadataList;
+            enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
+
+            if(enrichmentbMetadataList.size()==0){
+                //handle error here
+            }
+
+            switch on type {
+                when 'cmor' {
+                    HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                    tdata.columns = new List<HDT_WRP_ColumnObj>();
+                    tdata = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns1, HDT_WRP_TableMetadata.class);
+                    tdata.tableTitle = 'CMOR - Venditore entrante';
+                    tdata.iconName = 'standard:record_update';
+                    retObj.tables.add(tdata);
+    
+                    HDT_WRP_TableMetadata tdata2 = new HDT_WRP_TableMetadata();
+                    tdata2.columns = new List<HDT_WRP_ColumnObj>();
+                    tdata2 = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns2, HDT_WRP_TableMetadata.class);
+                    tdata2.tableTitle = 'CMOR - Venditore uscente';
+                    tdata2.iconName = 'standard:record_update';
+                    retObj.tables.add(tdata2);
+                }	
+                when 'socialBonus' {
+                    HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                    tdata.columns = new List<HDT_WRP_ColumnObj>();
+                    tdata = (HDT_WRP_TableMetadata)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, HDT_WRP_TableMetadata.class);
+                    tdata.tableTitle = 'Bonus Sociale';
+                    tdata.iconName = 'standard:customer_lifecycle_analytics';
+                    retObj.tables.add(tdata);
+                }
+                when 'raiFee' {
+                    HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                    tdata.columns = new List<HDT_WRP_ColumnObj>();
+                    tdata = (HDT_WRP_TableMetadata)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, HDT_WRP_TableMetadata.class);
+                    tdata.tableTitle = 'Canone RAI';
+                    tdata.iconName = 'standard:expense';
+                    retObj.tables.add(tdata);
+                }
+            }
+
+            /*if(type == 'cmor'){
+                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                tdata.columns = new List<HDT_WRP_ColumnObj>();
+                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns1, HDT_WRP_TableMetadata.class);
                 tdata.tableTitle = 'CMOR - Venditore entrante';
                 tdata.iconName = 'standard:record_update';
                 retObj.tables.add(tdata);
 
-                TableMetaData tdata2 = new TableMetaData();
-                tdata2.columns = new List<ColumnObj>();
-                tdata2 = (TableMetaData)JSON.deserialize(cmorColumns2, TableMetaData.class);
+                HDT_WRP_TableMetadata tdata2 = new HDT_WRP_TableMetadata();
+                tdata2.columns = new List<HDT_WRP_ColumnObj>();
+                tdata2 = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns2, HDT_WRP_TableMetadata.class);
                 tdata2.tableTitle = 'CMOR - Venditore uscente';
                 tdata2.iconName = 'standard:record_update';
                 retObj.tables.add(tdata2);
 
             } else if(type == 'socialBonus'){
-                TableMetaData tdata = new TableMetaData();
-                tdata.columns = new List<ColumnObj>();
-                tdata = (TableMetaData)JSON.deserialize(socialBonusColumns, TableMetaData.class);
+                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                tdata.columns = new List<HDT_WRP_ColumnObj>();
+                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(socialBonusColumns, HDT_WRP_TableMetadata.class);
                 tdata.tableTitle = 'Bonus Sociale';
                 tdata.iconName = 'standard:customer_lifecycle_analytics';
                 retObj.tables.add(tdata);
             } else if(type == 'raiFee'){
-                TableMetaData tdata = new TableMetaData();
-                tdata.columns = new List<ColumnObj>();
-                tdata = (TableMetaData)JSON.deserialize(raiFeeColumns, TableMetaData.class);
+                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                tdata.columns = new List<HDT_WRP_ColumnObj>();
+                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(raiFeeColumns, HDT_WRP_TableMetadata.class);
                 tdata.tableTitle = 'Canone RAI';
                 tdata.iconName = 'standard:expense';
                 retObj.tables.add(tdata);
-            }
+            }*/
             
         } catch (Exception e) {
             //throw new AuraHandledException(e.getMessage());
@@ -78,17 +119,19 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
         return result;
     }
 
-    public class ReturnedObj {
-        @AuraEnabled public List<TableMetaData> tables;
+    public class HDT_WRP_ReturnMetadataObj {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public List<HDT_WRP_TableMetadata> tables;
     }
 
-    public class TableMetaData {
+    public class HDT_WRP_TableMetadata {
         @AuraEnabled public String tableTitle;
         @AuraEnabled public String iconName;
-        @AuraEnabled public List<ColumnObj> columns;
+        @AuraEnabled public List<HDT_WRP_ColumnObj> columns;
     }
 
-    public class ColumnObj {
+    public class HDT_WRP_ColumnObj {
         @AuraEnabled public String fieldName;
         @AuraEnabled public String label;
     }
@@ -121,7 +164,7 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
     '{ "label": "Settore merceologico", "fieldName": "SPARTE"},'+
     '{ "label": "Società", "fieldName": "SERVICEID"}]}';
 
-    public static String raiFeeColumns = '{ "columns": [{ "label": "Stato Pratica", "fieldName": "statoPratica"},'+
+    /*public static String raiFeeColumns = '{ "columns": [{ "label": "Stato Pratica", "fieldName": "statoPratica"},'+
     '{ "label": "Società", "fieldName": "societa"},'+
     '{ "label": "B.partner", "fieldName": "bpartner"},'+
     '{ "label": "Pod", "fieldName": "pod"},'+
@@ -142,6 +185,6 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
     '{ "label": "Data Attivazione Bonus", "fieldName": "dataAttivazioneBonus"},'+
     '{ "label": "Data Cessazione Bonus", "fieldName": "dataCessazioneBonus"},'+
     '{ "label": "Tipo Compensazione Sap", "fieldName": "tipoCompensazioneSap"},'+
-    '{ "label": "Descrizione Tipo Compensazione", "fieldName": "descrizioneTipo"}]}';
+    '{ "label": "Descrizione Tipo Compensazione", "fieldName": "descrizioneTipo"}]}';*/
 
 }
