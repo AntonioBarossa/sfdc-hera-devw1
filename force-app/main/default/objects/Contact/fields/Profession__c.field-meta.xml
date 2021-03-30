@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DegreeOfStudies__c</fullName>
+    <fullName>Profession__c</fullName>
     <externalId>false</externalId>
-    <label>Titolo di studio</label>
+    <label>Professione</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_DegreeOfStudies</valueSetName>
+        <valueSetName>HDT_ClientProfession</valueSetName>
     </valueSet>
 </CustomField>
