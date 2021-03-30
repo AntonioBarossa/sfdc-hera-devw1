@@ -60,6 +60,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api rowsplitgas = [];
 
     
+    
     /**
      * Handle save button availability
      */
@@ -139,6 +140,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     toObject(fieldsData, fieldsDataReq){
         console.log('fieldsReq************^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^' + this.fieldsDataReq);
 
+ 
         let fieldsDataObject = [];
         let mapFieldReq = new Map() ;
         mapFieldReq = this.fieldRequiredMapping();
@@ -271,7 +273,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('datareqRaw *********************'+ JSON.stringify(this.fieldsDataReqRaw));
         this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
         console.log('datareq *********************'+ JSON.stringify(this.fieldsDataReq ));
-
+        this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         console.log('fieldsDataObject *********************'+ JSON.stringify(this.fieldsDataObject));
 
         //get address fields
@@ -730,6 +732,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
+            
             
         }).catch(error => {
             this.loading = false;

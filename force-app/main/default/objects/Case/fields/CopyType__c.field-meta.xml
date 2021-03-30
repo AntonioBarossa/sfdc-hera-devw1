@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CopyType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo Copia</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Copia contratto firmato</fullName>
+                <default>false</default>
+                <label>Copia contratto firmato</label>
+            </value>
+            <value>
+                <fullName>Copia contratto non firmato</fullName>
+                <default>false</default>
+                <label>Copia contratto non firmato</label>
+            </value>
+            <value>
+                <fullName>Copia della registrazione</fullName>
+                <default>false</default>
+                <label>Copia della registrazione</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

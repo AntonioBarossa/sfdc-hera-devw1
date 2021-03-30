@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ProductName__c</fullName>
+    <description>Nome del prodotto collegato alla regola di eleggibilità</description>
     <externalId>false</externalId>
     <formula>Product__r.Name</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Prodotto</label>
+    <label>Nome Prodotto</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
