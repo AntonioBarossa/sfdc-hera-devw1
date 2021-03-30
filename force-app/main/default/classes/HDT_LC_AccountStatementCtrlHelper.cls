@@ -382,12 +382,25 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
     public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHelper(String tabValue, String recordId, String records, HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse){
 
         serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
-       
+        
+        List<HDT_ColumnsFirstLevel__mdt> column_mdtList;
+        column_mdtList = HDT_QR_AccountStatement.getColumnMetaDataList(column_mdtList, tabValue);
+
         try{
 
             System.debug('> tabValue > ' + tabValue);
             System.debug('> recordId > ' + recordId);
             System.debug('> records > ' + records);
+
+            Map<String, Object> jsonMap = (Map<String, Object>)JSON.deserializeUntyped('{"obj":' + records + '}');
+            List<Object> recordsList = (List<Object>)jsonMap.get('obj');
+       
+            for(Object obj : recordsList ){
+                Map<String, Object> singleRecordMap = (Map<String, Object>)obj;
+                for(HDT_ColumnsFirstLevel__mdt col_mdt : column_mdtList){
+                    System.debug('> ' + col_mdt.FieldName__c +' > ' + singleRecordMap.get(col_mdt.FieldName__c));
+                }
+            }
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = 'serviceCatalogId';
