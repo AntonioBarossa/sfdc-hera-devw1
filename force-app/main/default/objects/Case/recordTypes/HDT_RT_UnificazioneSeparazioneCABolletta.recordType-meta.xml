@@ -3784,10 +3784,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Question</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Recesso per Altri Motivi</fullName>
             <default>false</default>
         </values>

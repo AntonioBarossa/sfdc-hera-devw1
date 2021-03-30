@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EnableExpiringDays__c</fullName>
+    <description>Indica l&apos;Abilitazione Giorni Scadenza sulla regola dell&apos;alert.</description>
+    <externalId>false</externalId>
+    <formula>AlertConfiguration__r.EnableExpiringDays__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Abilitazione Giorni Scadenza</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

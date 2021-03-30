@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Reclami</label>
+    <protected>false</protected>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Reclami</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">[{&quot;label&quot;:&quot;Verifica Dati al DL&quot;,&quot;value&quot;:&quot;Verifica Dati al DL&quot;},
+{&quot;label&quot;:&quot;Reclamo Scritto/Rich. Info&quot;,&quot;value&quot;:&quot;Reclamo Scritto/Rich. Info&quot;},
+{&quot;label&quot;:&quot;Comportamento Altri Venditori&quot;,&quot;value&quot;:&quot;Comportamento Altri Venditori&quot;},
+{&quot;label&quot;:&quot;Comportamento Venditori HC&quot;,&quot;value&quot;:&quot;Comportamento Venditori HC&quot;},
+{&quot;label&quot;:&quot;Votive Modena Contestazione Fattura&quot;,&quot;value&quot;:&quot;Votive Modena Contestazione Fattura&quot;}]</value>
+    </values>
+</CustomMetadata>
