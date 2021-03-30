@@ -142,26 +142,49 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <customHelpPage>SBQQ__ProductOptionHelp</customHelpPage>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Oggetto di configurazione per la determinazione di Rete Category e Contract Template nella funzionalità di configurazione offerta tecnica</description>
+    <deprecated>false</deprecated>
+    <description>Option for a configurable product.</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
-    <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <gender>Feminine</gender>
-    <label>Rate Template</label>
+    <label>Product Option</label>
     <nameField>
-        <label>Rate Category </label>
-        <type>Text</type>
+        <displayFormat>PO-{000000}</displayFormat>
+        <label>Option Name</label>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Rate Templates</pluralLabel>
-    <searchLayouts/>
+    <pluralLabel>Product Options</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>SBQQ__ConfiguredSKU__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SBQQ__Feature__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SBQQ__Number__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SBQQ__OptionalSKU__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SBQQ__Quantity__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SBQQ__Bundled__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SBQQ__ConfiguredSKU__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SBQQ__Feature__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SBQQ__Number__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SBQQ__OptionalSKU__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>SBQQ__ConfiguredSKU__c</searchFilterFields>
+        <searchFilterFields>SBQQ__Number__c</searchFilterFields>
+        <searchFilterFields>SBQQ__Feature__c</searchFilterFields>
+        <searchFilterFields>SBQQ__OptionalSKU__c</searchFilterFields>
+        <searchFilterFields>SBQQ__Bundled__c</searchFilterFields>
+        <searchFilterFields>SBQQ__Quantity__c</searchFilterFields>
+        <searchFilterFields>SBQQ__Discount__c</searchFilterFields>
+        <searchFilterFields>UPDATEDBY_USER</searchFilterFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
