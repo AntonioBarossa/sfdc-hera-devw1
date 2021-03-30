@@ -5,7 +5,7 @@
         <name>Assegna_BP_al_Case</name>
         <label>Assegna BP al Case</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.BillingProfile__c</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +20,8 @@
     <assignments>
         <name>Assegna_BP_al_Case_0</name>
         <label>Assegna BP al Case</label>
-        <locationX>842</locationX>
-        <locationY>518</locationY>
+        <locationX>1018</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.BillingProfile__c</assignToReference>
             <operator>Assign</operator>
@@ -36,8 +36,8 @@
     <assignments>
         <name>Assegna_BP_al_Case_0_0</name>
         <label>Assegna BP al Case</label>
-        <locationX>1502</locationX>
-        <locationY>518</locationY>
+        <locationX>1722</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.BillingProfile__c</assignToReference>
             <operator>Assign</operator>
@@ -50,9 +50,84 @@
         </connector>
     </assignments>
     <decisions>
+        <name>BP_assegnato</name>
+        <label>BP assegnato?</label>
+        <locationX>710</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Processo_Richiesta_Domiciliazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Assegnato</defaultConnectorLabel>
+        <rules>
+            <name>NonAssegnato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.BillingProfile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SelezionaBillingProfile</targetReference>
+            </connector>
+            <label>Non Assegnato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>BP_assegnato_0</name>
+        <label>BP assegnato?</label>
+        <locationX>1150</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Processo_Variazione_Domiciliazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Assegnato</defaultConnectorLabel>
+        <rules>
+            <name>NonAssegnato_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.BillingProfile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SelezionaBillingProfile_0</targetReference>
+            </connector>
+            <label>Non Assegnato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>BP_assegnato_0_0</name>
+        <label>BP assegnato?</label>
+        <locationX>1854</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Screen_Inserimento_Dati_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Assegnato</defaultConnectorLabel>
+        <rules>
+            <name>NonAssegnato_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.BillingProfile__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>SelezionaBillingProfile_0_0</targetReference>
+            </connector>
+            <label>Non Assegnato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>2228</locationX>
+        <locationX>2580</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_0_0</targetReference>
@@ -77,7 +152,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>1832</locationX>
+        <locationX>2008</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_0_0_0_0</targetReference>
@@ -138,7 +213,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelezionaBillingProfile</targetReference>
+                <targetReference>BP_assegnato</targetReference>
             </connector>
             <label>Richiesta Domiciliazione/Attivazione Click&amp;Pay</label>
         </rules>
@@ -153,7 +228,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelezionaBillingProfile_0</targetReference>
+                <targetReference>BP_assegnato_0</targetReference>
             </connector>
             <label>Variazione Domiciliazione</label>
         </rules>
@@ -183,7 +258,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SelezionaBillingProfile_0_0</targetReference>
+                <targetReference>BP_assegnato_0_0</targetReference>
             </connector>
             <label>Revoca Domiciliazione</label>
         </rules>
@@ -236,7 +311,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>3086</locationX>
+        <locationX>3438</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -258,7 +333,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma_0</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>2030</locationX>
+        <locationX>2382</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -280,8 +355,8 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma_0_0</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>1502</locationX>
-        <locationY>878</locationY>
+        <locationX>1854</locationX>
+        <locationY>1094</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -302,7 +377,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma_0_0_0</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>3614</locationX>
+        <locationX>3966</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -322,6 +397,12 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei pagamenti</description>
+    <formulas>
+        <description>Formula per calcolare l&apos;ID Ente per il QR Code Paperless: si tratta della PIVA della Società Tesoriera (Hera SpA oppure MMS), ricavata in base al company owner dell&apos;Account.</description>
+        <name>IdEnteFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!Get_Input_Case.Account.CompanyOwner__c}) = &apos;MMS&apos; , &apos;02059030417&apos;, &apos;03819031208&apos;)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti</label>
     <processMetadataValues>
@@ -346,7 +427,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1832</locationX>
+        <locationX>2008</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -368,7 +449,7 @@
         <name>Aggiorna_Billing_Profile_Case</name>
         <label>Aggiorna Billing Profile Case</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Processo_Richiesta_Domiciliazione</targetReference>
         </connector>
@@ -377,8 +458,8 @@
     <recordUpdates>
         <name>Aggiorna_Billing_Profile_Case_0</name>
         <label>Aggiorna Billing Profile Case</label>
-        <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationX>1018</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Processo_Variazione_Domiciliazione</targetReference>
         </connector>
@@ -387,8 +468,8 @@
     <recordUpdates>
         <name>Aggiorna_Billing_Profile_Case_0_0</name>
         <label>Aggiorna Billing Profile Case</label>
-        <locationX>1502</locationX>
-        <locationY>638</locationY>
+        <locationX>1722</locationX>
+        <locationY>758</locationY>
         <connector>
             <targetReference>Screen_Inserimento_Dati_0_0_0</targetReference>
         </connector>
@@ -397,7 +478,7 @@
     <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
-        <locationX>1898</locationX>
+        <locationX>2250</locationX>
         <locationY>758</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -419,13 +500,19 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>VatNumber__c</field>
+            <value>
+                <elementReference>IdEnteFormula</elementReference>
+            </value>
+        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a Elaborazione Manuale</label>
-        <locationX>1370</locationX>
-        <locationY>998</locationY>
+        <locationX>1722</locationX>
+        <locationY>1214</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -451,7 +538,7 @@
     <recordUpdates>
         <name>Passa_a_In_Lavorazione</name>
         <label>Passa a In Lavorazione</label>
-        <locationX>3482</locationX>
+        <locationX>3834</locationX>
         <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -478,7 +565,7 @@
     <recordUpdates>
         <name>Passa_a_In_Lavorazione_0</name>
         <label>Passa a In Lavorazione</label>
-        <locationX>2954</locationX>
+        <locationX>3306</locationX>
         <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -505,7 +592,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>3086</locationX>
+        <locationX>3438</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -609,7 +696,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>2030</locationX>
+        <locationX>2382</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -701,7 +788,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>2426</locationX>
+        <locationX>2778</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -772,8 +859,8 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>1502</locationX>
-        <locationY>758</locationY>
+        <locationX>1854</locationX>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -864,7 +951,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>3614</locationX>
+        <locationX>3966</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -957,7 +1044,7 @@
         <name>SelezionaBillingProfile</name>
         <label>Seleziona Billing Profile</label>
         <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1012,8 +1099,8 @@
     <screens>
         <name>SelezionaBillingProfile_0</name>
         <label>Seleziona Billing Profile</label>
-        <locationX>842</locationX>
-        <locationY>398</locationY>
+        <locationX>1018</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1068,8 +1155,8 @@
     <screens>
         <name>SelezionaBillingProfile_0_0</name>
         <label>Seleziona Billing Profile</label>
-        <locationX>1502</locationX>
-        <locationY>398</locationY>
+        <locationX>1722</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1122,7 +1209,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1706</locationX>
+        <locationX>1882</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1145,7 +1232,7 @@
     <subflows>
         <name>Processo_Blocco_Sollecito_ed_Interessi</name>
         <label>Processo Blocco Sollecito ed Interessi</label>
-        <locationX>2690</locationX>
+        <locationX>3042</locationX>
         <locationY>398</locationY>
         <flowName>HDT_FL_GestionePagamenti_BloccoSollecitoInteressi</flowName>
         <inputAssignments>
@@ -1172,8 +1259,8 @@
     <subflows>
         <name>Processo_Richiesta_Domiciliazione</name>
         <label>Processo Richiesta Domiciliazione</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>710</locationX>
+        <locationY>974</locationY>
         <flowName>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</flowName>
         <inputAssignments>
             <name>CaseInput</name>
@@ -1185,7 +1272,7 @@
     <subflows>
         <name>Processo_Rimborso</name>
         <label>Processo Rimborso</label>
-        <locationX>1106</locationX>
+        <locationX>1458</locationX>
         <locationY>398</locationY>
         <flowName>HDT_FL_GestionePagamenti_Rimborso</flowName>
         <inputAssignments>
@@ -1198,8 +1285,8 @@
     <subflows>
         <name>Processo_Variazione_Domiciliazione</name>
         <label>Processo Variazione Domiciliazione</label>
-        <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationX>1150</locationX>
+        <locationY>974</locationY>
         <flowName>HDT_FL_GestionePagamenti_VariazioneDomiciliazione</flowName>
         <inputAssignments>
             <name>CaseInput</name>

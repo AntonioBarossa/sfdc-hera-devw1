@@ -1,0 +1,76 @@
+<template>
+    <template if:true={order}>
+    <lightning-card title='Selezione Processo'>
+        
+        <template if:false={loaded}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+        
+        <lightning-record-edit-form record-id={order.Id} object-api-name="Order">
+        <div class="slds-p-around_large">
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12">
+                    <template if:true={options}>
+                        <lightning-combobox
+                        disabled={disabledInput}
+                            name="selectProcess"
+                            label="Processo"
+                            value={value}
+                            placeholder="Seleziona Processo"
+                            options={options}
+                            onchange={handleSelectProcess} >
+                        </lightning-combobox>
+                    </template>
+                </div>
+                <div class="slds-col slds-size_2-of-12"></div>
+                <template if:true={showDeliberation}>
+                        <div class="slds-col slds-size_6-of-12">
+                            <lightning-input-field disabled={disabledDeliberation} onchange={handleDeliberateSelection} data-id="Deliberation__c" data-name="Deliberation__c" record-id={order.Id} field-name="Deliberation__c" variant="label-stacked"></lightning-input-field>
+                        </div>
+                </template>
+            </div>
+            <br/>
+            <div if:true={showEsitoCheck} class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_4-of-12">
+                    <div class="slds-text-title slds-truncate" title="order status">Esito Check POD/PDR contendibile</div>
+                    <template if:true={precheck}>
+                        <lightning-icon icon-name="action:approval" size="small" alternative-text="Indicates approval" title="Indicates approval"></lightning-icon>
+                    </template>
+                    <template if:false={precheck}>
+                        <lightning-icon icon-name="action:close" size="small" alternative-text="Indicates close" title="Indicates close"></lightning-icon>
+                    </template>
+                </div>
+                <div class="slds-col slds-size_2-of-12"></div>
+                <div class="slds-col slds-size_6-of-12">
+                    <lightning-input type="text" name="Causale" label="Causale Check POD/PDR contendibile" value={causale} disabled></lightning-input>
+                </div>
+            </div>
+            <br/>
+            <template if:true={precheck}>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_4-of-12">
+                        <div class="slds-text-title slds-truncate" title="order status">Compatibilità</div>
+                        <template if:true={compatibilita}>
+                            <lightning-icon icon-name="action:approval" size="small" alternative-text="Indicates approval" title="Indicates approval"></lightning-icon>
+                        </template>
+                        <template if:false={compatibilita}>
+                            <lightning-icon icon-name="action:close" size="small" alternative-text="Indicates close" title="Indicates close"></lightning-icon>
+                        </template>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12"></div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <lightning-input type="text" name="Causale Compatibilita" label="Causale Compatibilità" value={causaleCompatibilita} disabled></lightning-input>
+                    </div>
+                </div>
+            </template>
+            <br/>
+        </div>
+        </lightning-record-edit-form>
+        <div class="slds-clearfix slds-p-around_small">
+            <div class="slds-float_right">
+                <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
+</template>

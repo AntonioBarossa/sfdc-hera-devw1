@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Ins Lum Pubb (Perm Partic)</fullName>
+        <default>false</default>
+        <label>Ins Lum Pubb (Perm Partic)</label>
+    </customValue>
+    <customValue>
+        <fullName>Imp Risalita (Perm Partic)</fullName>
+        <default>false</default>
+        <label>Imp Risalita (Perm Partic)</label>
+    </customValue>
+    <customValue>
+        <fullName>Illuminaz Monum (Perm Partic)</fullName>
+        <default>false</default>
+        <label>Illuminaz Monum (Perm Partic)</label>
+    </customValue>
+    <customValue>
+        <fullName>Non raggiungibile(Perm Partic)</fullName>
+        <default>false</default>
+        <label>Non raggiungibile(Perm Partic)</label>
+    </customValue>
+    <customValue>
+        <fullName>Ordinaria (Perm)</fullName>
+        <default>false</default>
+        <label>Ordinaria (Perm)</label>
+    </customValue>
+    <customValue>
+        <fullName>Inst Non presid (Perm Partic)</fullName>
+        <default>false</default>
+        <label>Inst Non presid (Perm Partic)</label>
+    </customValue>
+    <customValue>
+        <fullName>Ville rifugi simili(Perm Part)</fullName>
+        <default>false</default>
+        <label>Ville rifugi simili(Perm Part)</label>
+    </customValue>
+    <customValue>
+        <fullName>Roulottes simili (Perm Partic)</fullName>
+        <default>false</default>
+        <label>Roulottes simili (Perm Partic)</label>
+    </customValue>
+    <customValue>
+        <fullName>Cottimo (Perm)</fullName>
+        <default>false</default>
+        <label>Cottimo (Perm)</label>
+    </customValue>
+    <customValue>
+        <fullName>Manifest (Temp Straord 6h)</fullName>
+        <default>false</default>
+        <label>Manifest (Temp Straord 6h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Manifest (Temp Straord 8h)</fullName>
+        <default>false</default>
+        <label>Manifest (Temp Straord 8h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Spett viagg (Temp Straord 6h)</fullName>
+        <default>false</default>
+        <label>Spett viagg (Temp Straord 6h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Spett viagg (Temp Straord)</fullName>
+        <default>false</default>
+        <label>Spett viagg (Temp Straord)</label>
+    </customValue>
+    <customValue>
+        <fullName>Ripr cine tv(Temp Straord 8h)</fullName>
+        <default>false</default>
+        <label>Ripr cine tv(Temp Straord 8h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Manifest (Temp Straord 16h)</fullName>
+        <default>false</default>
+        <label>Manifest (Temp Straord 16h)</label>
+    </customValue>
+    <customValue>
+        <fullName>For temp abit(Temp Straord 6h)</fullName>
+        <default>false</default>
+        <label>For temp abit(Temp Straord 6h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Leviga Pavim(Temp Straord 8h)</fullName>
+        <default>false</default>
+        <label>Leviga Pavim(Temp Straord 8h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Cantiere (Temp)</fullName>
+        <default>false</default>
+        <label>Cantiere (Temp)</label>
+    </customValue>
+    <customValue>
+        <fullName>Luminarie (Temp Straord 16h)</fullName>
+        <default>false</default>
+        <label>Luminarie (Temp Straord 16h)</label>
+    </customValue>
+    <customValue>
+        <fullName>Leviga Pavimenti(Temp Straord)</fullName>
+        <default>false</default>
+        <label>Leviga Pavimenti(Temp Straord)</label>
+    </customValue>
+    <customValue>
+        <fullName>Luminarie (Temp Straord 8h)</fullName>
+        <default>false</default>
+        <label>Luminarie (Temp Straord 8h)</label>
+    </customValue>
+    <customValue>
+        <fullName>03 Illuminazione Pubblica</fullName>
+        <default>false</default>
+        <label>03 Illuminazione Pubblica</label>
+    </customValue>
+    <customValue>
+        <fullName>Spett viagg (Temp permanente)</fullName>
+        <default>false</default>
+        <label>Spett viagg (Temp permanente)</label>
+    </customValue>
+    <customValue>
+        <fullName>Leviga Pavim(Temp permanente)</fullName>
+        <default>false</default>
+        <label>Leviga Pavim(Temp permanente)</label>
+    </customValue>
+    <customValue>
+        <fullName>Ripr cine tv(Temp permanente)</fullName>
+        <default>false</default>
+        <label>Ripr cine tv(Temp permanente)</label>
+    </customValue>
+    <customValue>
+        <fullName>Manifest (Temp permanente)</fullName>
+        <default>false</default>
+        <label>Manifest (Temp permanente)</label>
+    </customValue>
+    <masterLabel>Uso energia</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
