@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>UnitPrice__c</fullName>
-    <description>Campo di configurazione usato per gestire i valori di Unità prezzo al Contract Template da usare durante la funzionalità di Configurazione Offerta Tecnica</description>
+    <fullName>BillingMode__c</fullName>
+    <description>la modalità di fatturazione legata al dato record di product option</description>
     <externalId>false</externalId>
-    <label>Unita Prezzo </label>
+    <label>Modalita di Fatturazione</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_UnitPrice</valueSetName>
+        <valueSetName>HDT_BillingModeVAS</valueSetName>
     </valueSet>
 </CustomField>
