@@ -1,55 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <actionCalls>
-        <name>Calcola_Codice_Causale</name>
-        <label>Calcola Codice Causale</label>
-        <locationX>50</locationX>
-        <locationY>1214</locationY>
-        <actionName>HDT_UTL_CausalCodeCalculation</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Assegna_Output</targetReference>
-        </connector>
-        <inputParameters>
-            <name>cluster</name>
-            <value>
-                <elementReference>Get_Input_Case.Cluster__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>commodity</name>
-            <value>
-                <elementReference>Get_Input_Case.CommodityFormula__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>process</name>
-            <value>
-                <elementReference>Get_Input_Case.Type</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Assegna_Output</name>
         <label>Assegna Output</label>
         <locationX>50</locationX>
         <locationY>1334</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.CausalCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calcola_Codice_Causale.CausalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.OperatorCode__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calcola_Codice_Causale.OperationCode__c</elementReference>
-            </value>
-        </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -62,6 +18,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcoloCodiceCausale.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcoloCodiceCausale.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -297,7 +267,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Calcola_Codice_Causale</targetReference>
+                <targetReference>CalcoloCodiceCausale</targetReference>
             </connector>
             <label>Non Votive</label>
         </rules>
@@ -324,6 +294,48 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>CalcoloCodiceCausale</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>50</locationX>
+        <locationY>1214</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Output</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>

@@ -21,11 +21,6 @@
 &quot;Column&quot; : 1
 },	
 {
-&quot;FieldName&quot; : &quot;CustomerPresence__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 2
-},
-{
 &quot;FieldName&quot; : &quot;AlternativeAddress__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 2
@@ -57,6 +52,10 @@
       &quot;Column&quot;:1
    },
    {
+      &quot;FieldName&quot;:&quot;DeliveryAddress__c&quot;,
+      &quot;Column&quot;:1
+   },
+   {
       &quot;FieldName&quot;:&quot;RemoteManagementSystem__c&quot;,
       &quot;Column&quot;:1
    },
@@ -73,8 +72,13 @@
       &quot;Column&quot;:1
    },
    {
-      &quot;FieldName&quot;:&quot;AccountId&quot;,
+      &quot;FieldName&quot;:&quot;Email__c&quot;,
       &quot;Column&quot;:1
+   },
+
+   {
+      &quot;FieldName&quot;:&quot;AccountId&quot;,
+      &quot;Column&quot;:2
    },
    {
       &quot;FieldName&quot;:&quot;Market__c&quot;,
