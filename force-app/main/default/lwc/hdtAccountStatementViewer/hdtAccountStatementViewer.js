@@ -4,6 +4,7 @@ import getTabConfiguration from '@salesforce/apex/HDT_LC_AccountStatementControl
 import callMulesoft from '@salesforce/apex/HDT_LC_AccountStatementController.callMulesoft';
 import operationBackend from '@salesforce/apex/HDT_LC_AccountStatementController.operationBackend';
 import sendFileToPrint from '@salesforce/apex/HDT_LC_AccountStatementController.sendFileToPrint';
+import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -59,6 +60,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     set_size = 5;//pagination
     showPagination = true;
     filterPagination = false;
+    showFilterFirstLevel = false;
     showOperationModal;
 
     totRecs;
@@ -219,13 +221,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     interrogation(event){
-        this.showAccountData = false;
+        this.showFilterFirstLevel = true;
         this.totAmount = 0;
     }
 
     closeFirstLevelFilter(event){
-        this.showAccountData = true;
-        this.refreshRecord();
+        this.showFilterFirstLevel = false;
     }
 
     joinFilter(event) {
@@ -253,13 +254,29 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.resetFile();
         this.resetIdList();
         this.refreshSortButton();
+        this.setButtonForFilterApplied(false);
     }
 
-    operationClick(){
-        console.log('# operationClick #');
+    serviceCatalogHandler(){
+        console.log('# serviceCatalogHandler #');
 
         if(idlist.length > 0){
             this.showOperationModal = true;
+
+            var selectedRecord = this.allData.filter(function(item) {
+                if(!idlist.includes(item.id))
+                    return false;
+                
+                return true;
+            });
+
+            selectedRecord.forEach(r => {
+                r[this.detailTable] = [];
+            });
+
+            var recordsString = JSON.stringify(selectedRecord);
+            this.serviceCatalogBackendOperation(recordsString);
+
         } else {
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -270,6 +287,30 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             );
         }
  
+    }
+
+    serviceCatalogBackendOperation(recordsString){
+        console.log('# serviceCatalogBackendOperation #');
+        console.log(recordsString);
+
+        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.recordid, records: recordsString})
+        .then(result => {
+            console.log('# service Catalog BackenHandler #');
+
+            if(result.success){
+                console.log('>>> result > ' + result.serviceCatalogId);
+            } else {
+                console.log('>>> result > ' + result.message);
+            }
+
+        })
+        .catch(error => {
+            this.handleError(error);
+            this.showError = true;
+            this.showErrorMessage = JSON.stringify(error);
+            this.closeMainSpinner();
+        });
+
     }
 
     home(event) {
@@ -678,15 +719,111 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.interObj[fieldId] = event.detail.value;
     }
 
-    applyInterrogation(event){
-        console.log('# applyInterrogation # ');
-        var currentFilter = {};
+    applyInterFromChild(event){
+        console.log(JSON.parse(event.detail.value));
+        //var currentFilter = {};
+        var interObj = JSON.parse(event.detail.value);
+        /*for (var key in interObj) {
+            currentFilter[key] = interObj[key].value;
+        }
+        console.log('> ' + JSON.stringify(currentFilter));*/
+
+        try {
+
+            if(interObj && Object.keys(interObj).length === 0 && interObj.constructor === Object){
+                console.log('>>> no apply filter');
+            } else {
+                this.applyInterrogation(interObj);
+            }
+
+        } catch (error) {
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );            
+        }
         
+
+    }
+
+    /*applyInterrogation(){
+        var currentFilter = {};
         for (var key in this.interObj) {
             if(this.interObj[key] != undefined && this.interObj[key] !=''){
                 currentFilter[key] = this.interObj[key];
             }
         }
+        this.applyInterrogation(currentFilter);
+    }*/
+
+    applyInterrogation(currentFilter){
+        console.log('# applyInterrogation # ');
+
+        const columnTypeMap = new Map();
+        this.columns.forEach((col) => {
+            columnTypeMap.set(col.fieldName, col.detail.type);
+        });
+
+        var contoContrArray;
+        if(currentFilter.contoContrattuale != undefined && currentFilter.contoContrattuale.value != undefined){
+            contoContrArray = currentFilter.contoContrattuale.value.split(',');
+        }
+
+        this.allDataFiltered = this.allData.filter(function(item) {
+            
+            for (var key in currentFilter) {
+
+                const currentType = columnTypeMap.get(key);
+                var filterValue;
+                var tableValueToFilter;
+
+                switch (currentType) {
+                    case 'number':
+                        filterValue = parseFloat(currentFilter[key].value);
+                        tableValueToFilter = parseFloat(item[key]);
+                        break;
+                    case 'date':
+                        var date = new Date(currentFilter[key].value + 'T00:00:00+0000');
+                        filterValue = date.getTime();
+
+                        var cDate = item[key].split('/');
+                        var cDate2 = new Date(cDate[2] + '-' + cDate[1] + '-' + cDate[0] + 'T00:00:00+0000');
+                        tableValueToFilter = cDate2.getTime();
+
+                        break;
+                    case 'text':
+                        filterValue = currentFilter[key].value;
+                        tableValueToFilter = item[key];
+                }
+
+                switch (currentFilter[key].operator) {
+                    case '='://uguale a
+                        if (tableValueToFilter != filterValue)
+                        return false;
+                        break;
+                    case '>'://maggiore di
+                        if (tableValueToFilter <= filterValue)
+                        return false;
+                        break;
+                    case 'in'://contiene caratteri
+                        if(!tableValueToFilter.includes(filterValue))
+                        return false;
+                        break;
+                    case 'on'://contiene valori
+                        if(!contoContrArray.includes(tableValueToFilter))
+                        return false;
+                }
+
+            }
+            return true;
+        });
+
+        /*this.allDataFiltered = this.allData.filter(function(item) {
+            for (var key in currentFilter) {
+                if (item[key] === undefined || item[key] != currentFilter[key].value)
+                return false;
+            }
+            return true;
+        });
 
         this.allDataFiltered = this.allData.filter(function(item) {
             for (var key in currentFilter) {
@@ -694,7 +831,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 return false;
             }
             return true;
-        });
+        });*/
 
         if(this.allDataFiltered.length == 0){
             this.dispatchEvent(
@@ -729,10 +866,28 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         this.filterOn = true;
-        this.showAccountData = true;
+        this.showFilterFirstLevel = false;
         let element = this.template.querySelector('[data-id="' + firstRowId + '"]');
         element.style.background = ' #ecebea';
+        
+        try{
+            this.setButtonForFilterApplied(true);
+        } catch (e){
+            console.log(e);
+        }
 
+    }
+
+    setButtonForFilterApplied(remove){
+        this.template.querySelectorAll('button').forEach(c => {
+            if(c.name === 'interrogation' || c.name === 'joinFilter'){
+                if(remove){
+                    c.setAttribute('disabled', '');
+                } else {
+                    c.removeAttribute('disabled');
+                }
+            }
+        });
     }
 
     refreshSortButton(){

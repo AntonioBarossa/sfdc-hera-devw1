@@ -3,7 +3,7 @@
              aria-labelledby="modal-heading-01"
              aria-modal="true"
              aria-describedby="modal-content-id-1"
-             class="slds-modal slds-fade-in-open slds-modal_medium">
+             class="slds-modal slds-fade-in-open slds-modal_small">
 
         <div class="slds-modal__container">
 
@@ -12,7 +12,7 @@
                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
                 <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
                 </button>
-                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Interrogazione dei dati</h2>
+                <h2 id="modal-heading-01" class="slds-text-heading_large slds-hyphenate">Interrogazione dei dati</h2>
             </header>
 
             <!-- modal body start -->        
@@ -20,31 +20,69 @@
         
                 <div class="slds-form slds-m-top_x-large slds-m-bottom_x-large" >
 
-                    <!--<div if:true={spinnerObj.spinner}>
-                        <lightning-spinner style="height: 50%; top:200px" alternative-text="Loading" size="large" ></lightning-spinner>
-                    </div>-->
-
-                    <div class="slds-grid slds-wrap">
-                        <template iterator:c={columns} >
-                            <div key={c.value.fieldName} if:true={c.value.isFilter} class="slds-col slds-size_4-of-12 slds-border_left" >
-                                <div class="slds-m-around_xx-small">
-                                    <lightning-input id={c.value.fieldName}
-                                                    type={c.value.detail.type}
-                                                    label={c.value.label}
-                                                    variant="label-inline"
-                                    ></lightning-input>
-                                </div>
-                            </div>
-                        </template>
+                    <div class="slds-grid slds-wrap slds-border_right">
+                      <div class="slds-col slds-size_4-of-12 slds-border_left" >
+                        <div class="slds-text-heading_medium slds-m-left_small">
+                          Campo
+                        </div>
+                      </div>
+                      <div class="slds-col slds-size_4-of-12 slds-border_left" >
+                        <div class="slds-text-heading_medium slds-m-left_small">
+                          Operatore
+                        </div>
+                      </div>
+                      <div class="slds-col slds-size_4-of-12 slds-border_left" >
+                        <div class="slds-text-heading_medium slds-m-left_small">
+                          Valore
+                        </div>
+                      </div>
                     </div>
+
+                    <template iterator:c={columns} >
+                      <div key={c.value.fieldName} class="slds-grid slds-wrap slds-border_right">
+                        <div class="slds-col slds-size_4-of-12 slds-border_left" >
+                          <div class="slds-m-around_x-small">
+                            <lightning-input
+                              type="text"
+                              label="EnterSomeText"
+                              value={c.value.label}
+                              variant="label-hidden"
+                              readonly
+                            ></lightning-input>
+                          </div>      
+                        </div>
+                        <div class="slds-col slds-size_4-of-12 slds-border_left" >
+                            <div class="slds-m-around_x-small">
+                              <c-hdt-custom-combobox
+                                field-name={c.value.fieldName}
+                                field-type={c.value.detail.type}
+                                onsetoperator={setOperator}
+                              ></c-hdt-custom-combobox>
+                            </div>      
+                        </div>
+                        <div class="slds-col slds-size_4-of-12 slds-border_left" >
+                            <div class="slds-m-around_x-small">
+                              <lightning-input id={c.value.fieldName}
+                                              name={c.value.fieldName}
+                                              type={c.value.detail.type}
+                                              formatter="currency"
+                                              step="0.01"
+                                              label="valore"
+                                              variant="label-hidden"
+                                              onchange={onChangeHandler}
+                              ></lightning-input>
+                            </div>
+                        </div>         
+                      </div>
+                    </template>
 
                 </div>
 
             </div>
             <!-- modal footer start-->
             <footer class="slds-modal__footer">
+            <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={closeModal} ></lightning-button>
                 <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Interroga" title="confirm" onclick={applyFilter} ></lightning-button>
-                <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={closeModal} ></lightning-button>
             </footer>
 
         </div>

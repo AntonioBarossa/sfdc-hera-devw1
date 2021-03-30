@@ -8,13 +8,14 @@
             console.log(JSON.stringify('Current subTab > ' + response.isSubtab));
             
             if(response.isSubtab){
-                var currentComponentName = response.pageReference.attributes.componentName;
+                /*var currentComponentName = response.pageReference.attributes.componentName;
+                console.log(JSON.stringify(response.pageReference));
                 if(currentComponentName!= undefined && currentComponentName==='c__HDT_LCP_AcctStmtOpenLwc'){
 
                     $A.get("e.force:closeQuickAction").fire();
 
-                } else {
-
+                } else {*/
+                    var currentComponentName = 'c__HDT_LCP_AcctStmtOpenLwc';
                     workspaceAPI.getTabInfo({
                         tabId: response.parentTabId
                     }).then(function(resp) {
@@ -34,7 +35,7 @@
 
                     });
                                     
-                }
+                //}
                 
             } else {
                 helper.openSubTab(component, event, helper);

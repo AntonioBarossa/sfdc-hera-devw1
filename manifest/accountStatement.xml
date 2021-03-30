@@ -52,6 +52,7 @@
 		<members>hdtTableCell</members>
 		<members>hdtCustomLookup</members>
 		<members>hdtMockCmp</members>
+		<members>hdtCustomCombobox</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>

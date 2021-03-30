@@ -121,4 +121,10 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String value;
     }
 
+    public class HDT_WRP_ServiceCatalogResponse {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public String serviceCatalogId;
+    }
+
 }

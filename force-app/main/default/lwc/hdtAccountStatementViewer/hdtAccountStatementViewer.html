@@ -21,15 +21,18 @@
         ></c-hdt-join-filter-modal >
     </template>
 
-    <template if:false={showAccountData} >
+    <template if:true={showFilterFirstLevel} >
         <c-hdt-filter-first-level-modal
             columns={columns}
+            onapplyinterrogation={applyInterFromChild}
             onclosemodal={closeFirstLevelFilter}
         ></c-hdt-filter-first-level-modal>
     </template>
 
     <template if:true={showOperationModal} >    
-        <c-hdt-operation-modal oncloseopmodal={closeOpModal}> </c-hdt-operation-modal>
+        <c-hdt-operation-modal
+            oncloseopmodal={closeOpModal}
+        ></c-hdt-operation-modal>
     </template>
 
     <div if:true={spinnerObj.spinner} >

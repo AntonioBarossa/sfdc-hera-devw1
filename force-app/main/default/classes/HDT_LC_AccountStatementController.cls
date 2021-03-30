@@ -64,6 +64,13 @@ public inherited sharing class HDT_LC_AccountStatementController {
         return pickObj;
     }
 
+    @AuraEnabled(Cacheable=true)
+    public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHandler(String tabValue, String recordId, String records){
+        HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse;
+        serviceCatalogResponse = HDT_LC_AccountStatementCtrlHelper.serviceCatalogBackendHelper(tabValue, records, recordId, serviceCatalogResponse);
+        return serviceCatalogResponse;
+    }
+
     //------------------------------------------------------------------------------------------------------------------
     /*@AuraEnabled(continuation=true)//Async caller method
     public static Object callMulesoftAsync(String techObj, String requestObj){

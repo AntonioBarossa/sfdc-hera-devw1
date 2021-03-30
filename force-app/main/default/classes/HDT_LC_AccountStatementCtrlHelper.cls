@@ -379,4 +379,25 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         return pickObj;        
     }
 
+    public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHelper(String tabValue, String recordId, String records, HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse){
+
+        serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
+       
+        try{
+
+            System.debug('> tabValue > ' + tabValue);
+            System.debug('> recordId > ' + recordId);
+            System.debug('> records > ' + records);
+
+            serviceCatalogResponse.success = true;
+            serviceCatalogResponse.serviceCatalogId = 'serviceCatalogId';
+        } catch(Exception e){
+            serviceCatalogResponse.success = false;
+            serviceCatalogResponse.message = '> ERROR: ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()) + ']';
+        }
+
+        return serviceCatalogResponse;
+
+    }
+
 }
