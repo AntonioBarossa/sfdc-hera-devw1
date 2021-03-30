@@ -18,7 +18,7 @@ var GC_ENVIRONMENT = softphoneSettings.PEF_GC_ENVIRONMENT;
 function loadWDE() {
     iwscore.getLayoutParams().integrationType = "wde";
     iwscore.createConnection(softphoneSettings.WDE_HOST, softphoneSettings.WDE_PORT, { 'protocol': softphoneSettings.WDE_PROTOCOL });
-    iwscore.addFilters();
+    addFilters();
 }
 
 function addFilters() {
@@ -42,6 +42,7 @@ function addFilters() {
     addFilter("onEmailEventRingingInbound", "action");
     addFilter("onWorkitemEventRingingInbound", "action");
     addFilter("onWorkitemEventRingingInbound", "action");
+    console.log('### FILTERS LOADED!');
 }
 
 function action(message)

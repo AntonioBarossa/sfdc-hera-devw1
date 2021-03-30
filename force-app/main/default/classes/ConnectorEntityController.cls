@@ -5,8 +5,8 @@ global with sharing class ConnectorEntityController {
 	global static String createActivity(String jsonMessage) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 
-		if(message.get('ErrorCode') != '0') {
-			return 'Error: ' + message.get('ErrorMessage');
+		if((Integer) message.get('ErrorCode') != 0) {
+			return 'Error: ' + JSON.serialize(message);
 		}
 
 		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Chiamata'];
@@ -22,12 +22,12 @@ global with sharing class ConnectorEntityController {
 			when 'Outbound' {
 				activity.Type__c = 'Chiamata Outbound';
 				activity.CallCenterNumber__c = (String) message.get('ANI');
-				activity.ClientNumber__c = (String) message.get('DNIS');
+				activity.ClientNumber__c = ((String) message.get('DNIS')).removeStart('0');
 			}
 			when 'Inbound' {
 				activity.Type__c = 'Chiamata Inbound';
 				activity.CallCenterNumber__c = (String) message.get('DNIS');
-				activity.ClientNumber__c = (String) message.get('ANI');
+				activity.ClientNumber__c = ((String) message.get('ANI')).removeStart('0');
 			}
 		}
 
@@ -59,6 +59,7 @@ global with sharing class ConnectorEntityController {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 
+		System.debug(JSON.serialize(attachdata));
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 			Id = (String) attachdata.get('sf_activity_id'),
 			wrts_prcgvr__Status__c = 'Completed',
@@ -75,7 +76,8 @@ global with sharing class ConnectorEntityController {
 		try {
 			update activity;
 		} catch (Exception e) {
-			return 'ERROR: ' + e.getMessage() + ' ' + e.getCause();
+			// WIP
+			return 'ERROR: ' + e.getMessage() + ' After closeActivity';
 		}
 
 		return '0';
