@@ -140,6 +140,18 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
     }
 
     @AuraEnabled
+    public static boolean checkCommunityLogin(){
+        boolean check=False;
+        string us= userinfo.getUserType();
+        system.debug(us);
+        if (!'Standard'.Equals(us)){
+            check=True;
+           
+        }
+        return check;
+    }
+    
+    @AuraEnabled
     public static boolean saveProsegui(String orderParentId){
         Boolean check = true;
 
