@@ -1,6 +1,8 @@
 import { LightningElement, api, track } from 'lwc';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
-
+import getIndirizzo from '@salesforce/apex/HDT_LC_AdvancedSearch.getIndirizzo';
+import getIndirizzoFornitura from '@salesforce/apex/HDT_LC_AdvancedSearch.getIndirizzoFornitura';
+import getAddressFromAccount from '@salesforce/apex/HDT_LC_AdvancedSearch.getAddressFromAccount';
 export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
     @api fieldsAddressObject=[];
@@ -57,7 +59,9 @@ handleAddressFromAccount()
 {
     console.log(' getAddressFromAccount START****');
 	this.preloading = true;
-	/*getAddressFromAccount({accountId:this.accountid}).then(data =>
+    console.log('accountiD getAddressFromAccount ****' + JSON.stringify(this.accountid));
+
+	getAddressFromAccount({accountId:this.accountid}).then(data =>
 	{
         console.log('data getAddressFromAccount ****' + JSON.stringify(data));
 		if(data!= undefined){
@@ -85,7 +89,7 @@ handleAddressFromAccount()
             //this.theRecord['Flag Verificato']= false;
 
         }
-    });*/
+    });
 	
 	this.preloading = false;
     console.log(' getAddressFromAccount END****');
@@ -222,7 +226,7 @@ handleAddressFromAccount()
     submitIndirizzo(){
         this.preloading = true;
             console.log('AccountId *******************'+ JSON.stringify(this.accountid));
-          /*  getIndirizzo({accountId:this.accountid}).then(data =>{
+            getIndirizzo({accountId:this.accountid}).then(data =>{
                 this.preloading = false;
                 if (data.length > 0) {
                     this.originalData = JSON.parse(JSON.stringify(data));
@@ -235,8 +239,9 @@ handleAddressFromAccount()
                     this.tableData=[];
                     this.tableData = data;
                 }
-            });*/
-           /* getIndirizzoFornitura({accountId:this.accountid}).then(data =>{
+            });
+            
+            getIndirizzoFornitura({accountId:this.accountid}).then(data =>{
                 this.preloading = false;
                 if (data.length > 0) {
                     this.originalDataFornitura = JSON.parse(JSON.stringify(data));
@@ -249,7 +254,7 @@ handleAddressFromAccount()
                     this.tableDataFornitura=[];
                     this.tableDataFornitura = data;
                 }
-            });*/
+            });
             console.log('tableData******'+ JSON.stringify(this.tableData));
             console.log('tableDataFornitura******'+ JSON.stringify(this.tableDataFornitura));
 
@@ -542,11 +547,16 @@ disabledverifyFieldsAddressDisabled(){
     }
 
 
+		
+													 
+	
     @api
     getInstanceWrapObjectBilling(billingProfileData){
         this.handleAddressValues(billingProfileData);
         this.theRecord = billingProfileData;
-    }
+    }												 
+											
+	 
 
     /**
      * Get availability of verify address button

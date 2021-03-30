@@ -87,8 +87,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             Id = orderId,
             RecordTypeId = recordTypeId,
             Step__c = 2,
-            Deliberation__c = deliberate,
-            ProcessType__c = processType
+            //Deliberation__c = deliberate //Everis: Commentato poiche Deliberation__c non e' un boolean a DM
+            ProcessType__c = processType,
+            Phase__c = 'Bozza' //Everis: Aggiunto update fase
         ));
     }
 }

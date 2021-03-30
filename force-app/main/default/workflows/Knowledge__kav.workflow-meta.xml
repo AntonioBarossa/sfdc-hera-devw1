@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldUpdates>
+        <fullName>Esito_Pubblicazione_Ko</fullName>
+        <field>ValidationStatus</field>
+        <literalValue>Da Revisionare</literalValue>
+        <name>Esito Pubblicazione Ko</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Ko_Approvazione</fullName>
+        <description>Esito approvazione KO</description>
+        <field>ValidationStatus</field>
+        <literalValue>Da Revisionare</literalValue>
+        <name>Ko Approvazione</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Ok_Approvazione</fullName>
+        <description>Articolo Approvato</description>
+        <field>ValidationStatus</field>
+        <literalValue>Validato Da Approvatore</literalValue>
+        <name>Ok Approvazione</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Pubblicazione_Approvata</fullName>
+        <description>l&apos;articolo viene approvato dal Pubblicatore</description>
+        <field>ValidationStatus</field>
+        <literalValue>Validato Da Pubblicatore</literalValue>
+        <name>Pubblicazione Approvata</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Pubblicazione_Non_Approvata</fullName>
+        <description>il pubblicatore non approva l&apos;articolo</description>
+        <field>ValidationStatus</field>
+        <literalValue>Da Revisionare</literalValue>
+        <name>Pubblicazione Non Approvata</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>false</reevaluateOnChange>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>Pubblicazione_Ok</fullName>
+        <description>L&apos;articolo ha ricevuto l&apos;ok per la pubblicazione</description>
+        <field>ValidationStatus</field>
+        <literalValue>Validato Da Pubblicatore</literalValue>
+        <name>Pubblicazione Ok</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
+    <knowledgePublishes>
+        <fullName>Esito_Pubblicazione_Ok</fullName>
+        <action>Publish</action>
+        <description>L&apos;articolo viene pubblicato</description>
+        <label>Esito Pubblicazione Ok</label>
+        <language>en_US</language>
+        <protected>false</protected>
+    </knowledgePublishes>
+    <knowledgePublishes>
+        <fullName>Pubblica</fullName>
+        <action>Publish</action>
+        <description>Pubblica dopo approvazione</description>
+        <label>Pubblica</label>
+        <language>en_US</language>
+        <protected>false</protected>
+    </knowledgePublishes>
+    <knowledgePublishes>
+        <fullName>Pubblicazione</fullName>
+        <action>Publish</action>
+        <description>L&apos;articolo viene pubblicato</description>
+        <label>Pubblicazione</label>
+        <language>en_US</language>
+        <protected>false</protected>
+    </knowledgePublishes>
+</Workflow>
