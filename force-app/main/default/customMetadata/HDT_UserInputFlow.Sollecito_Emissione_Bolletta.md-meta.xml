@@ -9,6 +9,11 @@
        &quot;FieldName&quot; : &quot;Reason__c&quot;,
        &quot;Required&quot; : true,
        &quot;Column&quot; : 1
+    },
+   {
+       &quot;FieldName&quot; : &quot;Order__c&quot;,
+       &quot;Required&quot; : false,
+       &quot;Column&quot; : 1
     }
 ]</value>
     </values>
@@ -37,6 +42,11 @@
     },
     {
         &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContractStartDate__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
