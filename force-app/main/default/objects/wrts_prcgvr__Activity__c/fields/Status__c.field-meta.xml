@@ -3,7 +3,7 @@
     <fullName>Status__c</fullName>
     <description>Stato dell&apos;attività</description>
     <externalId>false</externalId>
-    <label>Stato attività</label>
+    <label>Stato Lavorazione Attività</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
@@ -16,6 +16,81 @@
                 <fullName>Null</fullName>
                 <default>false</default>
                 <label>Null</label>
+            </value>
+            <value>
+                <fullName>Creata</fullName>
+                <default>false</default>
+                <label>Creata</label>
+            </value>
+            <value>
+                <fullName>Invio app.to SELF cliente</fullName>
+                <default>false</default>
+                <label>Invio app.to SELF cliente</label>
+            </value>
+            <value>
+                <fullName>Presa appuntamento in corso</fullName>
+                <default>false</default>
+                <label>Presa appuntamento in corso</label>
+            </value>
+            <value>
+                <fullName>Appuntamento di competenza Distributore</fullName>
+                <default>false</default>
+                <label>Appuntamento di competenza Distributore</label>
+            </value>
+            <value>
+                <fullName>Appuntamento confermato</fullName>
+                <default>false</default>
+                <label>Appuntamento confermato</label>
+            </value>
+            <value>
+                <fullName>Modifica appuntamento in corso</fullName>
+                <default>false</default>
+                <label>Modifica appuntamento in corso</label>
+            </value>
+            <value>
+                <fullName>Modifica confermata</fullName>
+                <default>false</default>
+                <label>Modifica confermata</label>
+            </value>
+            <value>
+                <fullName>Appuntamento non eseguito</fullName>
+                <default>false</default>
+                <label>Appuntamento non eseguito</label>
+            </value>
+            <value>
+                <fullName>Appuntamento eseguito</fullName>
+                <default>false</default>
+                <label>Appuntamento eseguito</label>
+            </value>
+            <value>
+                <fullName>Annullata</fullName>
+                <default>false</default>
+                <label>Annullata</label>
+            </value>
+            <value>
+                <fullName>Chiusa</fullName>
+                <default>false</default>
+                <label>Chiusa</label>
+            </value>
+            <value>
+                <fullName>Comunicazione Inviata</fullName>
+                <default>false</default>
+                <label>Comunicazione Inviata</label>
+            </value>
+            <value>
+                <fullName>KO Risolto</fullName>
+                <default>false</default>
+                <label>KO Risolto</label>
+            </value>
+            <value>
+                <fullName>KO Definitivo</fullName>
+                <default>false</default>
+                <label>KO Definitivo</label>
+            </value>
+            <value>
+                <fullName>KO Forzato</fullName>
+                <default>false</default>
+                <label>KO Forzato</label>
             </value>
         </valueSetDefinition>
     </valueSet>
