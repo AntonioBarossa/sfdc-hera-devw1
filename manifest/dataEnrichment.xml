@@ -24,10 +24,10 @@
 		<members>Account.HDT_AccountStatement</members>
 		<name>QuickAction</name>
 	</types>
-	<types>
+	<!--<types>
 		<members>FakeSAPdata</members>
 		<name>CspTrustedSite</name>
-	</types>
+	</types>-->
 	<types>
 		<members>AccountDataEnrichment.cmor</members>
 		<members>AccountDataEnrichment.raiFee</members>
