@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>URL__c</field>
-        <value xsi:type="xsd:string">/sfc/servlet.shepherd/version/renditionDownload?rendition=ORIGINAL_Png&amp;versionId=0681X000001RDUH&amp;operationContext=CHATTER&amp;contentId=05T1X000005HS4L/HDT_Service4.png</value>
+        <value xsi:type="xsd:string">/resource/HDT_Service4</value>
     </values>
 </CustomMetadata>
