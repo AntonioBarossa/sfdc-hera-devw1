@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_Main</fullName>
+    <fullName>HDT_RT_CreazioneManuale</fullName>
     <active>true</active>
     <businessProcess>Default</businessProcess>
-    <label>Principale</label>
+    <label>Creazione Manuale</label>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
         <values>
@@ -42,6 +42,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC%2BHCM%2BHCNE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM</fullName>
             <default>false</default>
         </values>
@@ -66,33 +70,6 @@
         <picklist>ContactReason__c</picklist>
         <values>
             <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DegreeOfStudies__c</picklist>
-        <values>
-            <fullName>Diploma scuola media inferiore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Diploma scuola media superiore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Laurea</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Licenza elementare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Master</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nessun titolo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -241,7 +218,82 @@
     <picklistValues>
         <picklist>InterestArea__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Assicurazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-mobility</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Green</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta GAS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>InterestProduct__c</picklist>
+        <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E- mobility auto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E- mobility bicicletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC - caldaia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC - condizionatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta EE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VAS %E2%80%93 assicurazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VAS %E2%80%93 prodotti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -312,9 +364,21 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PhonePrefix__c</picklist>
+        <picklist>NonConversionReason__c</picklist>
         <values>
-            <fullName>%2B39</fullName>
+            <fullName>Cliente non coperto rete gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da poco con altro Gestore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Già Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non interessato all%27offerta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -330,6 +394,44 @@
         </values>
         <values>
             <fullName>Warm</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SourceAgency__c</picklist>
+        <values>
+            <fullName>Koinè</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linetech</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SourceDetail__c</picklist>
+        <values>
+            <fullName>ADSALA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ecc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>prodotti HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sito standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sito standard proattivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
