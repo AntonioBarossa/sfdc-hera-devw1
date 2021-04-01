@@ -519,6 +519,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                     var obj = JSON.parse(result.data);
                     console.log('---> data ' + obj.data.length);
                     
+                    if(obj.data.length===0){
+                        this.closeMainSpinner();
+                        return;
+                    }
+
                     this.totAmount = 0;
                     if(this.amountField != null && this.amountField != ''){
                         obj.data.forEach((e) => { 

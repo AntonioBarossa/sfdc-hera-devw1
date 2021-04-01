@@ -12,4 +12,16 @@ public  inherited sharing  class HDT_QR_AccountDataEnrichment {
         return enrichmentbMetadataList;       
     }
 
+    public static List<Account> getAccountRecords(List<Account> accList, String recordId){
+        accList = new List<Account>();
+        accList = [
+            SELECT Id, CustomerCode__c
+            FROM Account
+            WHERE Id = :recordId
+            WITH SECURITY_ENFORCED
+            LIMIT 1            
+        ];
+        return accList;
+    }
+
 }

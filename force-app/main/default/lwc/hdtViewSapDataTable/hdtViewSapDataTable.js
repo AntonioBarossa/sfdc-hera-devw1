@@ -9,12 +9,14 @@ export default class HdtViewSapDataTable extends LightningElement {
     iconName;
 
     showSecondTable;
-
     data2 = [];
     columns2;
     tableTitle2;
     iconName2;
 
+    showError = false;
+    showErrorMessage = '';
+    showSpinner = true;
     
     @api recordId;
     @api type;
@@ -33,6 +35,8 @@ export default class HdtViewSapDataTable extends LightningElement {
         .then(result => {
 
             console.log('# getTableConfig #');
+
+
             if(this.type != 'cmor'){
                 this.tableTitle = result.tables[0].tableTitle;
                 this.iconName = result.tables[0].iconName;
@@ -48,8 +52,13 @@ export default class HdtViewSapDataTable extends LightningElement {
                 this.columns2 = result.tables[1].columns;
             }
 
+
         }).catch(error => {
             console.log('# error -> ' + error);
+            this.showError = true;
+            //{"status":500,"body":{"message":"No Customer Code!"},"headers":{}}
+            this.showErrorMessage = error.body.message;
+            this.showSpinner = false;
         });
     
     }
@@ -61,7 +70,6 @@ export default class HdtViewSapDataTable extends LightningElement {
             console.log('# SAP result #');
 
             var obj = JSON.parse(result);
-
             console.log('# success: ' + obj.status);
 
             if(this.type != 'cmor'){
@@ -71,9 +79,14 @@ export default class HdtViewSapDataTable extends LightningElement {
                 this.data = obj.dataSellIn;
                 this.data2 = obj.dataSellOut;
             }
+
+            this.showSpinner = false;
             
         }).catch(error => {
             console.error('# error -> ' + error);
+            this.showError = true;
+            this.showErrorMessage = error.body.message;
+            this.showSpinner = false;
         });
     
     }

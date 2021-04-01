@@ -12,83 +12,54 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
             enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
 
             if(enrichmentbMetadataList.size()==0){
-                //handle error here
+                retObj.success = false;
+                retObj.message = 'No metadata found';
+                return retObj;
             }
 
-            switch on type {
-                when 'cmor' {
-                    HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
-                    tdata.columns = new List<HDT_WRP_ColumnObj>();
-                    tdata = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns1, HDT_WRP_TableMetadata.class);
-                    tdata.tableTitle = 'CMOR - Venditore entrante';
-                    tdata.iconName = 'standard:record_update';
-                    retObj.tables.add(tdata);
-    
-                    HDT_WRP_TableMetadata tdata2 = new HDT_WRP_TableMetadata();
-                    tdata2.columns = new List<HDT_WRP_ColumnObj>();
-                    tdata2 = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns2, HDT_WRP_TableMetadata.class);
-                    tdata2.tableTitle = 'CMOR - Venditore uscente';
-                    tdata2.iconName = 'standard:record_update';
-                    retObj.tables.add(tdata2);
-                }	
-                when 'socialBonus' {
-                    HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
-                    tdata.columns = new List<HDT_WRP_ColumnObj>();
-                    tdata = (HDT_WRP_TableMetadata)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, HDT_WRP_TableMetadata.class);
-                    tdata.tableTitle = 'Bonus Sociale';
-                    tdata.iconName = 'standard:customer_lifecycle_analytics';
-                    retObj.tables.add(tdata);
-                }
-                when 'raiFee' {
-                    HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
-                    tdata.columns = new List<HDT_WRP_ColumnObj>();
-                    tdata = (HDT_WRP_TableMetadata)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, HDT_WRP_TableMetadata.class);
-                    tdata.tableTitle = 'Canone RAI';
-                    tdata.iconName = 'standard:expense';
-                    retObj.tables.add(tdata);
-                }
+            if(type.equalsIgnoreCase('cmor')){
+                retObj.tables = (List<HDT_WRP_TableMetadata>)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, List<HDT_WRP_TableMetadata>.class);
+            } else {
+                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
+                tdata.columns = new List<HDT_WRP_ColumnObj>();
+                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, HDT_WRP_TableMetadata.class);
+                retObj.tables.add(tdata);
             }
 
-            /*if(type == 'cmor'){
-                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
-                tdata.columns = new List<HDT_WRP_ColumnObj>();
-                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns1, HDT_WRP_TableMetadata.class);
-                tdata.tableTitle = 'CMOR - Venditore entrante';
-                tdata.iconName = 'standard:record_update';
-                retObj.tables.add(tdata);
+            retObj.success = true;
 
-                HDT_WRP_TableMetadata tdata2 = new HDT_WRP_TableMetadata();
-                tdata2.columns = new List<HDT_WRP_ColumnObj>();
-                tdata2 = (HDT_WRP_TableMetadata)JSON.deserialize(cmorColumns2, HDT_WRP_TableMetadata.class);
-                tdata2.tableTitle = 'CMOR - Venditore uscente';
-                tdata2.iconName = 'standard:record_update';
-                retObj.tables.add(tdata2);
-
-            } else if(type == 'socialBonus'){
-                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
-                tdata.columns = new List<HDT_WRP_ColumnObj>();
-                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(socialBonusColumns, HDT_WRP_TableMetadata.class);
-                tdata.tableTitle = 'Bonus Sociale';
-                tdata.iconName = 'standard:customer_lifecycle_analytics';
-                retObj.tables.add(tdata);
-            } else if(type == 'raiFee'){
-                HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
-                tdata.columns = new List<HDT_WRP_ColumnObj>();
-                tdata = (HDT_WRP_TableMetadata)JSON.deserialize(raiFeeColumns, HDT_WRP_TableMetadata.class);
-                tdata.tableTitle = 'Canone RAI';
-                tdata.iconName = 'standard:expense';
-                retObj.tables.add(tdata);
-            }*/
-            
         } catch (Exception e) {
-            //throw new AuraHandledException(e.getMessage());
+            retObj.success = false;
+            retObj.message = 'ERROR > ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
         }
+
         return retObj;
     }
     
     // Action method
     @AuraEnabled(continuation=true cacheable=true)
     public static Object startRequest(String recordId, String type) {
+
+        System.debug('>>> recordId > ' + recordId);
+
+        String httpBody = '';
+
+        List<AccountDataEnrichment__mdt> enrichmentbMetadataList;
+        enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
+
+        if(enrichmentbMetadataList.size()==0){
+            throw new AuraHandledException('No enrichment Metadata!');
+        }
+
+        List<Account> accList;
+        accList = HDT_QR_AccountDataEnrichment.getAccountRecords(accList, recordId);
+
+        if(accList.size() == 0 || String.isEmpty(accList[0].CustomerCode__c)){
+            throw new AuraHandledException('No Customer Code!');
+        }
+
+        httpBody = '{"bp": "' + accList[0].CustomerCode__c + '"}';
+
         // Create continuation. Argument is timeout in seconds.
         Continuation con = new Continuation(40);
         // Set callback method
@@ -98,10 +69,10 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
         // Create callout request
         HttpRequest req = new HttpRequest();
         req.setMethod('POST');
-        req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/' + type);
+        req.setEndpoint(enrichmentbMetadataList[0].Credential__c);
         req.setHeader('Content-Type', 'application/json');
-        req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
-        req.setbody('body');
+        req.setHeader('Authorization', enrichmentbMetadataList[0].Authorization__c);
+        req.setbody(httpBody);
         req.setTimeout(120000);
         // Add callout request to continuation
         con.addHttpRequest(req);
@@ -115,8 +86,17 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
         // Get the response by using the unique label
         HttpResponse response = Continuation.getResponse(labels[0]);
         // Set the result variable
-        String result = response.getBody();
-        return result;
+        //String result = response.getBody();
+        
+        Integer statusCode = response.getStatusCode();
+        if (statusCode == 200) {
+            return response.getBody();
+        } else if(statusCode >= 2000) {
+            throw new AuraHandledException('Continuation Error: ' + statusCode + ' - ' + response.getBody());
+        } else {
+            throw new AuraHandledException('HTTP Request Error: ' + statusCode + ' - ' + response.getBody());
+        }
+
     }
 
     public class HDT_WRP_ReturnMetadataObj {
@@ -136,55 +116,10 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
         @AuraEnabled public String label;
     }
 
-    public static String cmorColumns1 = '{ "columns": [{ "label": "POD/PDR", "fieldName": "POD"},'+
-    '{ "label": "Impianto", "fieldName": "ANLAGE"},'+
-    '{ "label": "Numero business partner", "fieldName": "PARTNER"},'+
-    '{ "label": "Contratto", "fieldName": "CONTRATTO"},'+
-    '{ "label": "Importo Cmor", "fieldName": "CMOR"},'+
-    '{ "label": "Stato CMOR", "fieldName": "STATO"},'+
-    '{ "label": "codice pratica gestore", "fieldName": "ID_RICH"},'+
-    '{ "label": "data ricezione", "fieldName": "DATA_COM"},'+
-    '{ "label": "data di ultimo aggiornamento", "fieldName": "DATA_AGG"},'+
-    '{ "label": "Settore merceologico", "fieldName": "SPARTE"},'+
-    '{ "label": "Società", "fieldName": "SERVICEID"},'+
-    '{ "label": "Importo Cmor stornato", "fieldName": "CMOR_STORNATO"},'+
-    '{ "label": "Importo Cmor rettificato", "fieldName": "CMOR_RETT"}]}';
-
-    public static String cmorColumns2 = '{ "columns": [{ "label": "Stato Richiesta Indennizzo", "fieldName": "status"},'+
-    '{ "label": "N. conto contrattuale", "fieldName": "VKONT"},'+
-    '{ "label": "Numero business partner", "fieldName": "GPART"},'+
-    '{ "label": "Contratto", "fieldName": "VERTRAG"},'+
-    '{ "label": "Codice POD/PDR", "fieldName": "POD"},'+
-    '{ "label": "IMPORTO CMOR", "fieldName": "IMPORTO_CMOR"},'+
-    '{ "label": "IMPORTO CMOR PREGRESSO ", "fieldName": "CMOR_1"},'+
-    '{ "label": "codice gestore", "fieldName": "ID_ESTERNO"},'+
-    '{ "label": "invio richiesta", "fieldName": "DATA_RICHIESTA"},'+
-    '{ "label": "data ultima modifica", "fieldName": "DATA_FLUSSO"},'+
-    '{ "label": "Data switch out", "fieldName": "DATA_SWITCH"},'+
-    '{ "label": "Settore merceologico", "fieldName": "SPARTE"},'+
-    '{ "label": "Società", "fieldName": "SERVICEID"}]}';
-
-    /*public static String raiFeeColumns = '{ "columns": [{ "label": "Stato Pratica", "fieldName": "statoPratica"},'+
-    '{ "label": "Società", "fieldName": "societa"},'+
-    '{ "label": "B.partner", "fieldName": "bpartner"},'+
-    '{ "label": "Pod", "fieldName": "pod"},'+
-    '{ "label": "Contratto", "fieldName": "contratto"},'+
-    '{ "label": "Mese di riferimento", "fieldName": "meseRiferimento"},'+
-    '{ "label": "Id.addebito", "fieldName": "idAddebito"},'+
-    '{ "label": "Periodo Riferimento", "fieldName": "periodoRiferimento"},'+
-    '{ "label": "Num.Documento", "fieldName": "numDocumento"},'+
-    '{ "label": "Importo Rata", "fieldName": "importoRata"},'+
-    '{ "label": "Data scadenza Rata", "fieldName": "dataScadenzaRata"}]}';
-
-    public static String socialBonusColumns = '{ "columns": [{ "label": "BP", "fieldName": "BP"},'+
-    '{ "label": "POD", "fieldName": "POD"},'+
-    '{ "label": "CONTRATTO", "fieldName": "CONTRATTO"},'+
-    '{ "label": "data attivazione contratto", "fieldName": "dataAttivazione"},'+
-    '{ "label": "data cessazione contratto", "fieldName": "dataCessazione"},'+
-    '{ "label": "Decodifica Società", "fieldName": "decodificaSocieta"},'+
-    '{ "label": "Data Attivazione Bonus", "fieldName": "dataAttivazioneBonus"},'+
-    '{ "label": "Data Cessazione Bonus", "fieldName": "dataCessazioneBonus"},'+
-    '{ "label": "Tipo Compensazione Sap", "fieldName": "tipoCompensazioneSap"},'+
-    '{ "label": "Descrizione Tipo Compensazione", "fieldName": "descrizioneTipo"}]}';*/
+    public class HDT_WRP_RequestResponse {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public String resultBody;       
+    }
 
 }
