@@ -379,7 +379,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         return pickObj;        
     }
 
-    public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHelper(String tabValue, String recordId, String records, HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHelper(String tabValue, String recordId, String records, HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse, String level){
 
         serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
         
@@ -404,6 +404,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = 'serviceCatalogId';
+
         } catch(Exception e){
             serviceCatalogResponse.success = false;
             serviceCatalogResponse.message = '> ERROR: ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()) + ']';
@@ -411,6 +412,24 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         return serviceCatalogResponse;
 
+    }
+
+    public static void setServiceCatalogRecord(ServiceCatalog__c serviceCatalog){
+        serviceCatalog = new ServiceCatalog__c();
+
+        serviceCatalog.UpsertKey__c = serviceCatalog.UserId__c + serviceCatalog.Context__c;
+
+        serviceCatalog.OnCredit__c = false;
+        serviceCatalog.Context__c = '';
+        serviceCatalog.DocumentSelected__c = '';
+        serviceCatalog.IsInvoice__c = false;
+        serviceCatalog.Multiselect__c = false;
+        serviceCatalog.IsPrescribable__c = false;
+        serviceCatalog.IsInstallment__c = false;
+        serviceCatalog.Vendor__c = '';
+        serviceCatalog.SameCA__c = false;
+        serviceCatalog.UserId__c = '';
+        upsert serviceCatalog UpsertKey__c;
     }
 
 }

@@ -65,9 +65,9 @@ public inherited sharing class HDT_LC_AccountStatementController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHandler(String tabValue, String recordId, String records){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHandler(String tabValue, String recordId, String records, String level){
         HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse;
-        serviceCatalogResponse = HDT_LC_AccountStatementCtrlHelper.serviceCatalogBackendHelper(tabValue, recordId, records, serviceCatalogResponse);
+        serviceCatalogResponse = HDT_LC_AccountStatementCtrlHelper.serviceCatalogBackendHelper(tabValue, recordId, records, serviceCatalogResponse, level);
         return serviceCatalogResponse;
     }
 

@@ -1,7 +1,27 @@
 <aura:component implements="lightning:isUrlAddressable" >
+
     <aura:attribute name="recordid" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 
-    <c:hdtAccountStatementTabs recordId="{!v.recordid}" ></c:hdtAccountStatementTabs>
+    <c:hdtAccountStatementTabs recordId="{!v.recordid}" onservicecatalog="{!c.openmodal}" ></c:hdtAccountStatementTabs>
+
+    <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="modalbox" class="slds-modal">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header">
+                <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                    <lightning:icon iconName="utility:close" variant="inverse" size="small" />
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="header43" class="slds-text-heading--medium">Catalogo Servizi</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                {!v.body}
+            </div>
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" title="Close" onclick="{!c.closeModal}" >Indietro</button>
+            </footer>
+        </div>
+    </div>
+    <div class="slds-backdrop " aura:id="modalbackdrop"></div>
 
 </aura:component>

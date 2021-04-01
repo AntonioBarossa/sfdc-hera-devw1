@@ -73,7 +73,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showFile = false;
     showAcctStmt = false;;
     @track acctStmt = 'label';
-
     @track confObj = [];
 
     connectedCallback() {
@@ -293,12 +292,19 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('# serviceCatalogBackendOperation #');
         console.log(recordsString);
 
-        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.recordid, records: recordsString})
+        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.recordid, records: recordsString, context: '1'})
         .then(result => {
             console.log('# service Catalog BackenHandler #');
 
             if(result.success){
                 console.log('>>> result > ' + result.serviceCatalogId);
+
+                const serviceCatalog = new CustomEvent("servicecatalog", {
+                    detail: this.recordid
+                });
+                // Dispatches the event.
+                this.dispatchEvent(serviceCatalog);
+
             } else {
                 console.log('>>> result > ' + result.message);
             }
