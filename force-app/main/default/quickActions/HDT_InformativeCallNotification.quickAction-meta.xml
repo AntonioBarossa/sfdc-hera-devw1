@@ -10,7 +10,7 @@
     </fieldOverrides>
     <fieldOverrides>
         <field>Phase__c</field>
-        <literalValue>Chiuso</literalValue>
+        <literalValue>Completata</literalValue>
     </fieldOverrides>
     <fieldOverrides>
         <field>Status</field>
