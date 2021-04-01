@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EffectiveDate__c</fullName>
-    <description>Data Decorrenza</description>
+    <fullName>BillingProblem__c</fullName>
     <externalId>false</externalId>
-    <label>Data Decorrenza</label>
+    <label>Problemi di fatturazione</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Date</type>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_YesNo</valueSetName>
+    </valueSet>
 </CustomField>

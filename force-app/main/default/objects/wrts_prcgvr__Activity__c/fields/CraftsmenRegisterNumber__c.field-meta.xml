@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EffectiveDate__c</fullName>
-    <description>Data Decorrenza</description>
+    <fullName>CraftsmenRegisterNumber__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag per gestione attività</description>
     <externalId>false</externalId>
-    <label>Data Decorrenza</label>
-    <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
+    <label>N. Iscrizione albo artigiani</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Date</type>
+    <type>Checkbox</type>
 </CustomField>

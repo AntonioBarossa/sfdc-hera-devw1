@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>EffectiveDate__c</fullName>
-    <description>Data Decorrenza</description>
+    <fullName>ChangeDate__c</fullName>
+    <description>Dato che l&apos;operatore inserisce manualmente</description>
     <externalId>false</externalId>
-    <label>Data Decorrenza</label>
+    <label>Data di cambio</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
