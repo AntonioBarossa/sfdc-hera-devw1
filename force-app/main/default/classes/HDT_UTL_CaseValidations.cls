@@ -57,6 +57,50 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile modificare tipo processo'));
 
+        } else if(caseType == 'Piano Rateizzazione'){
+            
+            Boolean applicationInterests = Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'));
+            Integer requestedInstall = Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'));
+            String clientCategory = getFieldValue(fields, 'ClientCategory__c');
+            String reason = getFieldValue(fields, 'Reason__c');
+            Double amountInstall = Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'));
+            Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
+            ? System.today() + 365
+            : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
+
+            if(clientCategory.contains('SME')){
+
+                if(!applicationInterests && requestedInstall > 6){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 6'));
+
+                } else if(applicationInterests && requestedInstall > 2){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 2'));
+
+                } else {
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+            
+            }else{
+
+                if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
+                    'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
+                    
+                } else {
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+
+
+            }
+    
+        
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
