@@ -2,6 +2,11 @@
 <StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <sorted>false</sorted>
     <standardValue>
+        <fullName>Allineamento Anagrafica</fullName>
+        <default>false</default>
+        <label>Allineamento Anagrafica</label>
+    </standardValue>
+    <standardValue>
         <fullName>Allineamento Canone Rai</fullName>
         <default>false</default>
         <label>Allineamento Canone Rai</label>
@@ -20,6 +25,16 @@
         <fullName>Attivazione Click&amp;Pay</fullName>
         <default>false</default>
         <label>Attivazione Click&amp;Pay</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autolettura da cliente</fullName>
+        <default>false</default>
+        <label>Autolettura da cliente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autolettura da processo</fullName>
+        <default>false</default>
+        <label>Autolettura da processo</label>
     </standardValue>
     <standardValue>
         <fullName>Blocco Sollecito/Interessi</fullName>
@@ -52,6 +67,11 @@
         <label>Copia Bolletta/Bollettino</label>
     </standardValue>
     <standardValue>
+        <fullName>Disassociazione Utente Web</fullName>
+        <default>false</default>
+        <label>Disassociazione Utente Web</label>
+    </standardValue>
+    <standardValue>
         <fullName>Doppi Pagamenti/Incassi</fullName>
         <default>false</default>
         <label>Doppi Pagamenti/Incassi</label>
@@ -60,6 +80,11 @@
         <fullName>Errore di Fatturazione</fullName>
         <default>false</default>
         <label>Errore di Fatturazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Esercizio Diritti Privacy</fullName>
+        <default>false</default>
+        <label>Esercizio Diritti Privacy</label>
     </standardValue>
     <standardValue>
         <fullName>Feature Request</fullName>
@@ -72,6 +97,16 @@
         <label>Gestione Bonus Sociale</label>
     </standardValue>
     <standardValue>
+        <fullName>Gestione Disalimentabilità</fullName>
+        <default>false</default>
+        <label>Gestione Disalimentabilità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Interruzione Fornitura</fullName>
+        <default>false</default>
+        <label>Interruzione Fornitura</label>
+    </standardValue>
+    <standardValue>
         <fullName>Inversione del Contatore</fullName>
         <default>false</default>
         <label>Inversione del Contatore</label>
@@ -80,6 +115,16 @@
         <fullName>Mod. Imp. - Em. Imp. - Var. Portata</fullName>
         <default>false</default>
         <label>Mod. Imp. - Em. Imp. - Var. Portata</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Alert</fullName>
+        <default>false</default>
+        <label>Modifica Alert</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Privacy</fullName>
+        <default>false</default>
+        <label>Modifica Privacy</label>
     </standardValue>
     <standardValue>
         <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
@@ -137,6 +182,11 @@
         <label>Revoca Domiciliazione</label>
     </standardValue>
     <standardValue>
+        <fullName>Riattivazione Fornitura</fullName>
+        <default>false</default>
+        <label>Riattivazione Fornitura</label>
+    </standardValue>
+    <standardValue>
         <fullName>Richiesta Domiciliazione</fullName>
         <default>false</default>
         <label>Richiesta Domiciliazione</label>
@@ -162,6 +212,21 @@
         <label>Ripristino Fornitura Interrotta</label>
     </standardValue>
     <standardValue>
+        <fullName>Risoluzione No Disalimentabile</fullName>
+        <default>false</default>
+        <label>Risoluzione No Disalimentabile</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione No Punto Sospeso</fullName>
+        <default>false</default>
+        <label>Risoluzione No Punto Sospeso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Risoluzione Punto Sospeso</fullName>
+        <default>false</default>
+        <label>Risoluzione Punto Sospeso</label>
+    </standardValue>
+    <standardValue>
         <fullName>Ritorno a Fatturazione Bimestrale/Mensile</fullName>
         <default>false</default>
         <label>Ritorno a Fatturazione Bimestrale/Mensile</label>
@@ -175,6 +240,11 @@
         <fullName>Sospensione Canone Rai</fullName>
         <default>false</default>
         <label>Sospensione Canone Rai</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione Fornitura</fullName>
+        <default>false</default>
+        <label>Sospensione Fornitura</label>
     </standardValue>
     <standardValue>
         <fullName>Spostamento Contatore - Cavi</fullName>
@@ -212,6 +282,11 @@
         <label>Unificazione POD</label>
     </standardValue>
     <standardValue>
+        <fullName>Variazione Anagrafica Cliente</fullName>
+        <default>false</default>
+        <label>Variazione Anagrafica Cliente</label>
+    </standardValue>
+    <standardValue>
         <fullName>Variazione Domiciliazione</fullName>
         <default>false</default>
         <label>Variazione Domiciliazione</label>
@@ -225,6 +300,11 @@
         <fullName>Variazione Potenza</fullName>
         <default>false</default>
         <label>Variazione Potenza</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione su Amministratore</fullName>
+        <default>false</default>
+        <label>Variazione su Amministratore</label>
     </standardValue>
     <standardValue>
         <fullName>Variazione Tensione</fullName>
@@ -252,153 +332,83 @@
         <label>Verifica Titolarità POD/PDR</label>
     </standardValue>
     <standardValue>
-        <fullName>Sospensione Fornitura</fullName>
-        <default>false</default>
-        <label>Sospensione Fornitura</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Interruzione Fornitura</fullName>
-        <default>false</default>
-        <label>Interruzione Fornitura</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Risoluzione No Disalimentabile</fullName>
-        <default>false</default>
-        <label>Risoluzione No Disalimentabile</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Risoluzione Punto Sospeso</fullName>
-        <default>false</default>
-        <label>Risoluzione Punto Sospeso</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Risoluzione No Punto Sospeso</fullName>
-        <default>false</default>
-        <label>Risoluzione No Punto Sospeso</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Riattivazione Fornitura</fullName>
-        <default>false</default>
-        <label>Riattivazione Fornitura</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Gestione Disalimentabilità</fullName>
-        <default>false</default>
-        <label>Gestione Disalimentabilità</label>
-    </standardValue>
-    <standardValue>
         <fullName>Votive Modena Pagamenti Morosità</fullName>
         <default>false</default>
         <label>Votive Modena Pagamenti Morosità</label>
     </standardValue>
     <standardValue>
-        <fullName>Allineamento Anagrafica</fullName>
+        <fullName>Fiscale</fullName>
         <default>false</default>
-        <label>Allineamento Anagrafica</label>
+        <label>Fiscale</label>
     </standardValue>
     <standardValue>
-        <fullName>Esercizio Diritti Privacy</fullName>
+        <fullName>Dichiarazione di intento</fullName>
         <default>false</default>
-        <label>Esercizio Diritti Privacy</label>
+        <label>Dichiarazione di intento</label>
     </standardValue>
     <standardValue>
-        <fullName>Modifica Alert</fullName>
+        <fullName>Modifica Portale SOL Gestione Energia</fullName>
         <default>false</default>
-        <label>Modifica Alert</label>
+        <label>Modifica Portale SOL Gestione Energia</label>
     </standardValue>
     <standardValue>
-        <fullName>Modifica Privacy</fullName>
+        <fullName>Marcatura/Uso PdR</fullName>
         <default>false</default>
-        <label>Modifica Privacy</label>
+        <label>Marcatura/Uso PdR</label>
     </standardValue>
     <standardValue>
-        <fullName>Variazione Anagrafica Cliente</fullName>
+        <fullName>Gestione Calamità</fullName>
         <default>false</default>
-        <label>Variazione Anagrafica Cliente</label>
+        <label>Gestione Calamità</label>
     </standardValue>
     <standardValue>
-        <fullName>Variazione su Amministratore</fullName>
+        <fullName>Modifica Tariffa Residente/Non Residente</fullName>
         <default>false</default>
-        <label>Variazione su Amministratore</label>
+        <label>Modifica Tariffa Residente/Non Residente</label>
     </standardValue>
     <standardValue>
-        <fullName>Disassociazione Utente Web</fullName>
+        <fullName>Condizioni Contrattuali Errate</fullName>
         <default>false</default>
-        <label>Disassociazione Utente Web</label>
+        <label>Condizioni Contrattuali Errate</label>
     </standardValue>
     <standardValue>
-        <fullName>Autolettura da cliente</fullName>
+        <fullName>Split Payment</fullName>
         <default>false</default>
-        <label>Autolettura da cliente</label>
+        <label>Split Payment</label>
     </standardValue>
     <standardValue>
-        <fullName>Autolettura da processo</fullName>
+        <fullName>Modifica Layout di dettaglio</fullName>
         <default>false</default>
-        <label>Autolettura da processo</label>
+        <label>Modifica Layout di dettaglio</label>
     </standardValue>
     <standardValue>
-        <fullName>Verifica Dati al DL</fullName>
+        <fullName>Variazione indirizzo di fornitura</fullName>
         <default>false</default>
-        <label>Verifica Dati al DL</label>
+        <label>Variazione indirizzo di fornitura</label>
     </standardValue>
     <standardValue>
-        <fullName>Reclamo Scritto/Rich. Info</fullName>
+        <fullName>Cambio cont. non registrato</fullName>
         <default>false</default>
-        <label>Reclamo Scritto/Rich. Info</label>
+        <label>Cambio cont. non registrato</label>
     </standardValue>
     <standardValue>
-        <fullName>Comportamento Altri Venditori</fullName>
+        <fullName>Mancata Telelettura/lettura</fullName>
         <default>false</default>
-        <label>Comportamento Altri Venditori</label>
+        <label>Mancata Telelettura/lettura</label>
     </standardValue>
     <standardValue>
-        <fullName>Comportamento Venditori HC</fullName>
+        <fullName>Modifica/Azzeramento Consumo Annuo</fullName>
         <default>false</default>
-        <label>Comportamento Venditori HC</label>
+        <label>Modifica/Azzeramento Consumo Annuo</label>
     </standardValue>
     <standardValue>
-        <fullName>Votive Modena Cessazione</fullName>
+        <fullName>Dettaglio Bolletta</fullName>
         <default>false</default>
-        <label>Votive Modena Cessazione</label>
+        <label>Dettaglio Bolletta</label>
     </standardValue>
     <standardValue>
-        <fullName>Informazioni servizi Hera</fullName>
+        <fullName>Account/Billing Profile - errata categoria</fullName>
         <default>false</default>
-        <label>Informazioni servizi Hera</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Informazioni ambientali</fullName>
-        <default>false</default>
-        <label>Informazioni ambientali</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Comunicazione di Fallimento</fullName>
-        <default>false</default>
-        <label>Comunicazione di Fallimento</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Caduta Linea/Chiamata Muta</fullName>
-        <default>false</default>
-        <label>Caduta Linea/Chiamata Muta</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Pagamento Online</fullName>
-        <default>false</default>
-        <label>Pagamento Online</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Pagamento ClickPay</fullName>
-        <default>false</default>
-        <label>Pagamento ClickPay</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Errore Chiamata</fullName>
-        <default>false</default>
-        <label>Errore Chiamata</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Informative</fullName>
-        <default>false</default>
-        <label>Informative</label>
+        <label>Account/Billing Profile - errata categoria</label>
     </standardValue>
 </StandardValueSet>
