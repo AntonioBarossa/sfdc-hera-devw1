@@ -65,7 +65,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
         wrts_prcgvr.Interfaces_1_0.ICalloutClient client = 
             (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance('CalloutClient');
+        //Da riabilitare quando sarà chiaro che la response venga correttamente valorizzata.
         //responseMrr  =  (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
+        //Da riabilitare quando sarà chiaro che la response venga correttamente valorizzata.
        /*HttpRequest req = new HttpRequest();
          req.setEndpoint(endpoint);
          req.setMethod('POST');
