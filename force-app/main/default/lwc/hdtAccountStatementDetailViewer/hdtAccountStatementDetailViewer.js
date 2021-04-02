@@ -10,6 +10,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @track columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
+    @track buttonList;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
     sortedBy;
@@ -38,14 +39,19 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             console.log('# getSecondLevelColumns #');
 
             if(result.success){
+
                 console.log('# getSecondLevelColumns: ' + result.message);
+
                 this.columns = result.columnObj;//columns;
+                this.buttonList = result.buttonList;
+
                 this.columns.forEach((i) => {
                     filterObject[i.fieldName] = '';
                     if(i.isFilter){
                         this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label});
                     }
                 });
+
             } else {
                 this.showError = true;
                 this.showErrorMessage = result.message;
@@ -67,7 +73,17 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         });
     }
 
-    applyOperation(){
+    buttonHandler(event){
+        try {
+            this[event.target.name](event);
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
+        }
+    }
+
+    serviceCatalog(){
         var el = this.template.querySelector('lightning-datatable');
         var selected = el.getSelectedRows();
         var i;
@@ -104,8 +120,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         this.sortedBy = sortedBy;
     }
 
-    handleClick(event) {
-        console.log('# handleClick #');
+    interrogation(event) {
+        console.log('# interrogation #');
         this.bShowModal = true;
     }
 

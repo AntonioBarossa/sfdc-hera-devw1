@@ -90,12 +90,12 @@ public inherited sharing class HDT_QR_AccountStatement {
         return accList;
     }
 
-    public static List<HDT_ButtonDetails__mdt> getButtonMetadataList(List<HDT_ButtonDetails__mdt> mdtButtonList, String tabValue){
+    public static List<HDT_ButtonDetails__mdt> getButtonMetadataList(List<HDT_ButtonDetails__mdt> mdtButtonList, String tabValue, String level){
         mdtButtonList = new List<HDT_ButtonDetails__mdt>();
         mdtButtonList = [
             SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, Tab__r.DeveloperName
             FROM HDT_ButtonDetails__mdt	
-            WHERE Tab__r.DeveloperName = :tabValue
+            WHERE Tab__r.DeveloperName = :tabValue AND ButtonLevel__c = :level
             ORDER BY ButtonOrder__c ASC
         ];
         return mdtButtonList;

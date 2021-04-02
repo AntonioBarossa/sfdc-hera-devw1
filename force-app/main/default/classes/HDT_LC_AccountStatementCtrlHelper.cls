@@ -83,7 +83,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             return columnsObj;
         }
 
-        System.debug('# HDT_WRP_ColumnsObj > ' + JSON.serialize(columnsObj));
         return columnsObj;
     }
 
@@ -105,7 +104,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         objDetail.hasAmountField = mdtTabConfList[0].HasAmountField__c;
         
         List<HDT_ButtonDetails__mdt> mdtButtonList;
-        mdtButtonList = HDT_QR_AccountStatement.getButtonMetadataList(mdtButtonList, tabValue);
+        mdtButtonList = HDT_QR_AccountStatement.getButtonMetadataList(mdtButtonList, tabValue, '1');
 
         if(mdtButtonList.size()==0){
             return objDetail;
@@ -114,7 +113,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
             objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c));
         }
-        System.debug('# ButtonDetails > ' + JSON.serialize(objDetail));
+
         return objDetail;
     }
 
@@ -127,7 +126,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         if(colSecList.size()==0){
             obj.success = false;
-            obj.message = 'No data for Second level';
+            obj.message = 'No data for Second level Columns';
+            return obj;
         }
 
         obj.columnObj = new List<HDT_WRP_AccountStatement.HDT_WRP_SingleSecCol>();
@@ -143,8 +143,23 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             obj.columnObj.add(colObj);
         }
 
+        List<HDT_ButtonDetails__mdt> mdtButtonList;
+        mdtButtonList = HDT_QR_AccountStatement.getButtonMetadataList(mdtButtonList, tabValue, '2');
+
+        if(mdtButtonList.size()==0){
+            obj.success = false;
+            obj.message = 'No data for Second level button';
+            return obj;
+        }
+
+        obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
+
+        for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c));
+        }
+
         obj.success = true;
-        System.debug('# HDT_WRP_SecLevColumnsObj > ' + JSON.serialize(obj));
+
         return obj;
     }
 
@@ -284,8 +299,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
        String body = JSON.serialize(dbr, true);
-       System.debug('>>> body obj > ');
-       System.debug(body);
+       System.debug('>>> body obj > ' + body);
+
        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
 
        if(!responseCtrl.success){

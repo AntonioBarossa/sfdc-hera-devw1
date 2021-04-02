@@ -67,6 +67,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public List<HDT_WRP_SingleSecCol> columnObj;
+        @AuraEnabled public List<HDT_WRP_ButtonObjDetail> buttonList;
     }
 
     public class HDT_WRP_SingleSecCol {

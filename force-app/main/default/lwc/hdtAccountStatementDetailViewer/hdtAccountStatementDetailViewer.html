@@ -15,11 +15,13 @@
                     Dettaglio
                 </div>
                 <div class="slds-col slds-size_3-of-12">
-                    <lightning-button-group>
-                        <lightning-button label="Interrogazione" onclick={handleClick} ></lightning-button>
-                        <lightning-button label="Operazione" onclick={applyOperation} ></lightning-button>
-                        <lightning-button if:true={filterApplied} label="Rimuovi filtro" onclick={removeFilter} ></lightning-button>
-                    </lightning-button-group>
+
+                    <div class="slds-button-group" role="group">
+                        <template for:each={buttonList} for:item="c">
+                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} name={c.name} >{c.label}</button>
+                        </template>
+                    </div>
+
                 </div>
                 <div class="slds-col slds-size_1-of-12">
                     <span if:true={filterApplied} class="slds-pill slds-pill_link" style="background-color: #f2f2f2">
