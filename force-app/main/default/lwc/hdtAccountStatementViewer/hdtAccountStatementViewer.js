@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import getTabConfiguration from '@salesforce/apex/HDT_LC_AccountStatementController.getTabConfiguration';
 //import callMulesoft from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.callMulesoftAsync';
 import callMulesoft from '@salesforce/apex/HDT_LC_AccountStatementController.callMulesoft';
-import operationBackend from '@salesforce/apex/HDT_LC_AccountStatementController.operationBackend';
+//import operationBackend from '@salesforce/apex/HDT_LC_AccountStatementController.operationBackend';
 import sendFileToPrint from '@salesforce/apex/HDT_LC_AccountStatementController.sendFileToPrint';
 import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
@@ -22,7 +22,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @track accountData;
     @track columns;//++++ = columns;
     @track joinFilterModal = false;
-    @track error; // to show error message from apex controller.
+    //@track error; // to show error message from apex controller.
     @track hasRendered = true;
     @track secondLevelList;
     showSecondLevel;
@@ -32,7 +32,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     };
     @track interObj = {};
     techObj = {};
-    secondLevelFilter;
+    //secondLevelFilter;
     showError = false;
     showErrorMessage = '';
     allData = [];
@@ -44,8 +44,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     totAmount = 0;
     checkboxCount = 0;
     
-    error;
-    showAccountData = true;
+    //error;
+    //showAccountData = true;
     @track modalObj = {
         isVisible: false,
         header: '',
@@ -135,7 +135,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             if(result.success){
                 this.columns = result.columnObj;
                 this.confObj = result.confObj.buttonList;
-                console.log('----------> ' + result.confObj.customerCode);
+                console.log('>>> customerCode: ' + result.confObj.customerCode);
                 this.techObj.customerCode = result.confObj.customerCode;
                 this.backendCall('home', '');// Chiamata in backend
                 this.columns.forEach((i) => {
@@ -144,12 +144,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
                 if(result.confObj.hasAmountField){
                     this.amountField = this.columns.filter(c => { return c.detail.isAmount == true })[0].fieldName;
-                    console.log('### I have found for amount -> ' + this.amountField);
+                    console.log('>>> Amount metadata name: ' + this.amountField);
                 }
 
                 this.uniqueId = 'id';
                 this.detailTable = result.confObj.secondLevelAPIname;//'secondoLivello';
-                console.log('### Has second level? -> ' + result.confObj.hasSecondLevel);
+                console.log('>>> Has second level? -> ' + result.confObj.hasSecondLevel);
                 this.showSecondLevel = result.confObj.hasSecondLevel;
             } else {
                 this.showError = true;
@@ -189,14 +189,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.allData = [];
         this.accountData = [];
         this.filteredData = [];
-        console.log('# length -> ' + this.allData.length);
+        console.log('>>> length -> ' + this.allData.length);
     }
 
     @api reopenTab(){
         console.log('# reopenTab #');
 
         if(this.allData.length == 0){
-            console.log('# reload allData');
             if(this.showError){
                 this.showError = false;
             }
@@ -269,9 +268,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 return true;
             });
 
-            selectedRecord.forEach(r => {
-                r[this.detailTable] = [];
-            });
+            //selectedRecord.forEach(r => {
+            //    r[this.detailTable] = [];
+            //});
 
             var recordsString = JSON.stringify(selectedRecord);
             this.serviceCatalogBackendOperation(recordsString);
@@ -290,9 +289,10 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     serviceCatalogBackendOperation(recordsString){
         console.log('# serviceCatalogBackendOperation #');
-        console.log(recordsString);
 
-        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.recordid, records: recordsString, context: '1'})
+        this.openMainSpinner();
+
+        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.recordid, records: recordsString, level: '1'})
         .then(result => {
             console.log('# service Catalog BackenHandler #');
 
@@ -307,7 +307,16 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             } else {
                 console.log('>>> result > ' + result.message);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: result.message,
+                        variant: 'warning'
+                    })
+                );
             }
+
+            this.closeMainSpinner();
 
         })
         .catch(error => {
@@ -481,7 +490,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     handleRowAction(event) {
         var e = event.currentTarget.dataset.id;
-        console.log('# Select row -> ' + e);
+        console.log('>>> Select row: ' + e);
 
         this.accountData.forEach(li => {
             this.template.querySelector('[data-id="' + li[this.uniqueId] + '"]').style.background = '#ffffff';
@@ -513,17 +522,19 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         this.techObj.requestType = requestType;
 
+        console.log('# -- config to call mulesoft -- #');
         console.log(JSON.stringify(this.techObj));
+        console.log('--------------------------');
 
         callMulesoft({techObj: JSON.stringify(this.techObj), requestObj: requestObj})
             .then(result => {
                 console.log('# Mulesoft result #');
-                console.log('# success: ' + result.success);
+                console.log('>>> success: ' + result.success);
 
                 if(result.success){
                     
                     var obj = JSON.parse(result.data);
-                    console.log('---> data ' + obj.data.length);
+                    console.log('>>> data ' + obj.data.length);
                     
                     if(obj.data.length===0){
                         this.closeMainSpinner();
@@ -581,7 +592,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     setPages(dataLength){
         this.pages = [];
         let numberOfPages = Math.ceil(dataLength / this.perpage);
-        console.log('# tot recs -> ' + dataLength + ', numberOfPages -> ' + numberOfPages);
+        console.log('>> tot recs: ' + dataLength + ', numberOfPages: ' + numberOfPages);
 
         for (let index = 1; index <= numberOfPages; index++) {
             this.pages.push(index);
@@ -603,7 +614,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     onPageClick(event){
-        console.log('@ ' + parseInt(event.target.dataset.id, 10));
         this.page = parseInt(event.target.dataset.id, 10);
         this.pageData();
     }
@@ -634,7 +644,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     onNext(){
-        console.log('+++ ' + this.page);
         this.page++;
         let mid = Math.floor(this.set_size / 2) + 1;
 
@@ -647,7 +656,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     onLast(){
-        console.log('+++ ' + this.page);
         this.page = this.pages[this.pages.length-1];
         let mid = Math.floor(this.set_size / 2) + 1;
 
@@ -684,7 +692,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     pageData(){
-        console.log('# pageData #');
         let page = this.page;
         let perpage = this.perpage;
         let startIndex = (page * perpage) - perpage;
@@ -711,7 +718,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     pagesList(){
-        console.log('# pagesList #');
         let mid = Math.floor(this.set_size / 2) + 1;
 
         if (this.page > mid) {
@@ -723,15 +729,15 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
     //Pagination --- END ---
 
-    setIntParam(event){
+    /*setIntParam(event){
         /// with child component
         var fieldId = event.detail.fieldId;
         console.log('# fieldId ' + fieldId + ', value: ' + event.detail.value);
         this.interObj[fieldId] = event.detail.value;
-    }
+    }*/
 
     applyInterFromChild(event){
-        console.log(JSON.parse(event.detail.value));
+        console.log('# applyInterFromChild #');
         //var currentFilter = {};
         var interObj = JSON.parse(event.detail.value);
         /*for (var key in interObj) {
@@ -924,7 +930,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             var sortField = event.target.name;
             var asc;
             this.avoidSort = sortField;
-            console.log('## sort by -> ' + sortField);
+            console.log('>>> sort by: ' + sortField);
 
             var listToConsider;
             if(!this.filterOn){
@@ -1007,7 +1013,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         var currentFilter = {};
 
         if(filterString != undefined && filterString != ''){
-            console.log('@ yes we have to filter');
             applySecondFilter = true;
             var myObj = JSON.parse(filterString);
 
@@ -1056,7 +1061,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         sendFileToPrint({dataList: JSON.stringify(listToPrint)})
         .then(result => {
             console.log('# save success #');
-            console.log('# resp -> ' + result.success);
+            console.log('>>> resp: ' + result.success);
     
             var toastObj = {
                 title: '',
@@ -1154,7 +1159,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.blobURL = URL.revokeObjectURL();
     }
 
-    closeOpModal(event){
+    /*closeOpModal(event){
         console.log('# operation on father');
         
         if(event.detail.runflow){
@@ -1188,11 +1193,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             .catch(error => {
                 this.handleError(error);
             });
-    }
+    }*/
 
     applyFilter(event){
         console.log('# applyFilter #');
-        console.log('# filterobj -> ' + event.detail.filterobj);
+        console.log('>>> filterobj: ' + event.detail.filterobj);
 
         this.handleButtonClick('joinFilter', event.detail.filterobj);
         this.focusOnButton('joinFilter');

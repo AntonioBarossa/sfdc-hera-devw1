@@ -127,4 +127,14 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String serviceCatalogId;
     }
 
+    public class HDT_WRP_DeserializeObj {
+        public String contoContrattuale;
+        public String rateizzato;
+        public String numeroFattura;
+        public String residuo;
+        public String societa;
+        public String fatturaPrescrivibile;
+        public String fatturaPrescritta;
+    }
+
 }

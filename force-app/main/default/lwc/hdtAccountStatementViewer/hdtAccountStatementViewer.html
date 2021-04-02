@@ -1,7 +1,11 @@
 <template>
 
     <template if:true={showAcctStmt} >
-        <c-hdt-acct-stmt-type-choise stmt-type={statementType} onclosestmtchoise={closestmtchoise} onchoisestmt={setNewChoise}></c-hdt-acct-stmt-type-choise>
+        <c-hdt-acct-stmt-type-choise
+            stmt-type={statementType}
+            onclosestmtchoise={closestmtchoise}
+            onchoisestmt={setNewChoise}
+        ></c-hdt-acct-stmt-type-choise>
     </template>
 
     <template if:true={modalObj.isVisible} >
@@ -180,15 +184,17 @@
                 <thead>
                     <tr>
                         <th style="width:3.25rem;">
-                            <template if:true={showAccountData} >
+                            <!--<template if:true={showAccountData} >-->
                                 <!-- checkbox header -->
-                                <lightning-input name="headerCheckbox"
-                                                 value="0"
-                                                 type="checkbox"
-                                                 label=" "
-                                                 onchange={checkboxHeaderHandler}
+                                <lightning-input
+                                    name="headerCheckbox"
+                                    value="0"
+                                    type="checkbox"
+                                    label="headerCheckbox"
+                                    variant="label-hidden"
+                                    onchange={checkboxHeaderHandler}
                                 ></lightning-input>
-                           </template>
+                           <!--</template>-->
                         </th>
 
                         <template for:each={columns} for:item="c">
@@ -197,22 +203,24 @@
                                     <p>{c.label}</p>
                                     <p if:true={c.showAmount}>
                                         &nbsp;-&nbsp;
-                                        <lightning-formatted-number value={totAmount}
-                                                                    format-style="currency"
-                                                                    currency-code="EUR"
-                                                                    currency-display-as="symbol"
+                                        <lightning-formatted-number
+                                            value={totAmount}
+                                            format-style="currency"
+                                            currency-code="EUR"
+                                            currency-display-as="symbol"
                                         ></lightning-formatted-number>
                                     </p>
 
                                     <template if:true={c.showSort} >
                                         &nbsp;&nbsp;&nbsp;
-                                        <lightning-button-icon name={c.fieldName}
-                                                               icon-name="utility:sort"
-                                                               variant="bare"
-                                                               alternative-text="Order"
-                                                               title="Order"
-                                                               class="slds-float_right"
-                                                               onclick={sort}
+                                        <lightning-button-icon
+                                            name={c.fieldName}
+                                            icon-name="utility:sort"
+                                            variant="bare"
+                                            alternative-text="Order"
+                                            title="Order"
+                                            class="slds-float_right"
+                                            onclick={sort}
                                         ></lightning-button-icon>
                                     </template>
                                 </div>
@@ -244,7 +252,8 @@
                     </template>-->
 
                     <!-- Table to show account statement -->
-                    <template if:true={showAccountData} iterator:it={accountData} >
+                    <!-- <template if:true={showAccountData} iterator:it={accountData} > -->
+                    <template iterator:it={accountData} >
                         
                         <tr key={it.value.id} data-id={it.value.id} onclick={handleRowAction} >
                             
@@ -252,7 +261,8 @@
                                 <lightning-input
                                     data-id={it.value.id}
                                     type="checkbox"
-                                    label=" "
+                                    label="rowCheckbox"
+                                    variant="label-hidden"
                                     name={it.value.id}
                                     onclick={checkboxHandler}
                                 ></lightning-input>

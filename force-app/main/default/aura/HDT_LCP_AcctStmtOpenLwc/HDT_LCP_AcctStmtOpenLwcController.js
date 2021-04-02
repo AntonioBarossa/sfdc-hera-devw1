@@ -5,11 +5,9 @@
         component.set('v.recordid', recordid);
     },
 
-    closeModal:function(component,event,helper){    
-        var cmpTarget = component.find('modalbox');
-        var cmpBack = component.find('modalbackdrop');
-        $A.util.removeClass(cmpBack,'slds-backdrop--open');
-        $A.util.removeClass(cmpTarget, 'slds-fade-in-open'); 
+    closeModal:function(component,event,helper){
+        component.set("v.body", []);
+        helper.closeModal(component,event,helper);
     },
 
     openmodal: function(component,event,helper) {
@@ -26,11 +24,8 @@
                     var body = component.get("v.body");
                     body.push(lwcCmp);
                     component.set("v.body", body);
-                    
-                    var cmpTarget = component.find('modalbox');
-                    var cmpBack = component.find('modalbackdrop');
-                    $A.util.addClass(cmpTarget, 'slds-fade-in-open');
-                    $A.util.addClass(cmpBack, 'slds-backdrop--open');
+
+                    helper.openModal(component,event,helper);
 
                 }
                 else if (status === "INCOMPLETE") {
@@ -40,9 +35,25 @@
                     console.error("Error: " + errorMessage);
                 }
             }
-          );
+        );
 
+    },
 
-    }
+    change: function(component,event,helper) {
+        console.log('>>> change action...');
+        component.set("v.body", []);
+        helper.closeModal(component,event,helper);
+    },
+
+    locationChange: function(component,event,helper) {
+        console.log('>>> locationChange action...');
+        component.set("v.body", []);
+        helper.closeModal(component,event,helper);
+    },
+
+    onTabClosed : function(component, event, helper) {
+        var tabId = event.getParam('tabId');
+        console.log("Tab closed: " + tabId);
+    } 
 
 })

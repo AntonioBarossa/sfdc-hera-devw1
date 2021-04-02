@@ -37,7 +37,7 @@ public inherited sharing class HDT_QR_AccountStatement {
     public static List<HDT_TabConfiguration__mdt> getTabConfigurationMetaData(List<HDT_TabConfiguration__mdt> endPointMDT, String tabCode){
         endPointMDT = new List<HDT_TabConfiguration__mdt>();
         endPointMDT = [
-            SELECT EndpointService__c
+            SELECT EndpointService__c, UseMockService__c
             FROM HDT_TabConfiguration__mdt
             WHERE DeveloperName = :tabCode
             WITH SECURITY_ENFORCED

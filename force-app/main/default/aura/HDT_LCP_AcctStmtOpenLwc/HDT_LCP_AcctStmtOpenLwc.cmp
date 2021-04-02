@@ -1,8 +1,12 @@
 <aura:component implements="lightning:isUrlAddressable" >
 
-    <aura:attribute name="recordid" type="String"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.change}" />
+    <aura:handler event="aura:locationChange" action="{!c.locationChange}"/>
+    <aura:handler event="lightning:tabClosed" action="{!c.onTabClosed}"/> 
 
+    <aura:attribute name="recordid" type="String"/>
+    
     <c:hdtAccountStatementTabs recordId="{!v.recordid}" onservicecatalog="{!c.openmodal}" ></c:hdtAccountStatementTabs>
 
     <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="modalbox" class="slds-modal">

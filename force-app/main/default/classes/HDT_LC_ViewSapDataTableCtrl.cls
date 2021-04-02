@@ -17,14 +17,22 @@ public without sharing class HDT_LC_ViewSapDataTableCtrl {
                 return retObj;
             }
 
-            if(type.equalsIgnoreCase('cmor')){
+            retObj.tables = (List<HDT_WRP_TableMetadata>)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, List<HDT_WRP_TableMetadata>.class);
+
+            if(retObj.tables.size()==0){
+                retObj.success = false;
+                retObj.message = 'Something goes wrong converting metadata';
+                return retObj;
+            }
+
+            /*if(type.equalsIgnoreCase('cmor')){
                 retObj.tables = (List<HDT_WRP_TableMetadata>)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, List<HDT_WRP_TableMetadata>.class);
             } else {
                 HDT_WRP_TableMetadata tdata = new HDT_WRP_TableMetadata();
                 tdata.columns = new List<HDT_WRP_ColumnObj>();
                 tdata = (HDT_WRP_TableMetadata)JSON.deserialize(enrichmentbMetadataList[0].ColumnData__c, HDT_WRP_TableMetadata.class);
                 retObj.tables.add(tdata);
-            }
+            }*/
 
             retObj.success = true;
 
