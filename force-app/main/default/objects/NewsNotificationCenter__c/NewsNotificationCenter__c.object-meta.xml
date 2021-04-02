@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Oggetto di configurazione per la determinazione di Rete Category e Contract Template nella funzionalità di configurazione offerta tecnica</description>
+    <description>Oggetto per la gestione dell&apos;invio delle notifiche alla pubblicazione di una news verso specifici ruoli in base alle DataCategories associate all&apos;articolo di News</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -153,14 +153,15 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <gender>Feminine</gender>
-    <label>Rate Template</label>
+    <label>Regola Notifiche News</label>
     <nameField>
-        <label>Rate Category </label>
-        <type>Text</type>
+        <displayFormat>NNC-{00000}</displayFormat>
+        <label>Name</label>
+        <type>AutoNumber</type>
     </nameField>
-    <pluralLabel>Rate Templates</pluralLabel>
+    <pluralLabel>Regole Notifiche News</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>

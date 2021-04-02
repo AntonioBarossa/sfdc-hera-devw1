@@ -12,9 +12,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>To define</fullName>
+                <fullName>Rimozione temporanea dalla blacklist</fullName>
                 <default>false</default>
-                <label>To define</label>
+                <label>Rimozione temporanea dalla blacklist</label>
+            </value>
+            <value>
+                <fullName>Rimozione definitiva dalla blacklist</fullName>
+                <default>false</default>
+                <label>Rimozione definitiva dalla blacklist</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -8,6 +8,7 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>AlertType__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -42,5 +43,29 @@
                 <label>Periodo autolettura (senza push)</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione bolletta cartacea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione fattura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione fattura elettronica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodo autolettura</controllingFieldValue>
+            <valueName>Periodo autolettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodo autolettura</controllingFieldValue>
+            <valueName>Periodo autolettura (senza push)</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
