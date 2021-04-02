@@ -772,6 +772,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CorrectionPlannedTiqv__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
             <fullName>Cliente Aggressivo</fullName>
@@ -2581,6 +2592,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Allineamento RCU Concluso</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -2622,6 +2637,10 @@
         </values>
         <values>
             <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2689,11 +2708,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Procedurale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>IR010</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>IR020</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento RCU</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2706,6 +2733,22 @@
         </values>
         <values>
             <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Data Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3918,7 +3961,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Autolettura da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura da processo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP%2FCA - errata categoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Blocco Sollecito%2FInteressi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caduta Linea%2FChiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio contatore non registrato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3938,6 +4001,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione di Fallimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contenzioso In Corso</fullName>
             <default>false</default>
         </values>
@@ -3950,7 +4025,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Dettaglio Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disassociazione Utente Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Doppi Pagamenti%2FIncassi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Chiamata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3958,7 +4045,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esercizio Diritti Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiscale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3966,7 +4065,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni servizi Hera</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3978,11 +4093,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancata Telelettura%2Flettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marcatura%2FUso PdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Alert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Layout di dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Portale SOL Gestione Energia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Tariffa Residente%2FNon Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento ClickPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4038,6 +4193,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta lettura cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ricostruzione Consumi</fullName>
             <default>false</default>
         </values>
@@ -4082,7 +4241,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Spostamento Contatore - Cavi</fullName>
+            <fullName>Sost%2E contatore cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Split Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4110,6 +4277,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Variazione Anagrafica Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Variazione Domiciliazione</fullName>
             <default>false</default>
         </values>
@@ -4130,6 +4301,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Variazione indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione su Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica Dati al DL</fullName>
             <default>false</default>
         </values>
@@ -4146,7 +4325,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Votive Modena Cessazione</fullName>
+            <fullName>Votive Modena Contestazione Fattura</fullName>
             <default>false</default>
         </values>
         <values>
