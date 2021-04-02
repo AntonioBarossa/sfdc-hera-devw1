@@ -8742,6 +8742,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>PushTracking__c.IdLog__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>PushTracking__c.InboxMessageDownloaded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8783,6 +8788,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>PushTracking__c.MessageOpened__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PushTracking__c.MessageText__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12902,6 +12912,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SMSTracking__c.IdLog__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SMSTracking__c.Inbound__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13957,6 +13972,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>et4ae5__IndividualEmailResult__c.BounceSubCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>et4ae5__IndividualEmailResult__c.CampaignID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13972,12 +13992,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>et4ae5__IndividualEmailResult__c.OrderID__c</field>
+        <field>et4ae5__IndividualEmailResult__c.IdLog__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>et4ae5__IndividualEmailResult__c.BounceSubCategory__c</field>
+        <field>et4ae5__IndividualEmailResult__c.OrderID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
