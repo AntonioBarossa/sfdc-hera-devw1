@@ -757,6 +757,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CopyType__c</picklist>
+        <values>
+            <fullName>Copia contratto firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copia contratto non firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copia della registrazione</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
             <fullName>Cliente Aggressivo</fullName>
@@ -1166,6 +1181,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ElectronicInvoicingMethod__c</picklist>
+        <values>
+            <fullName>Estero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML %2B carta%2Femail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML PA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>EndCustomerRequestType__c</picklist>
         <values>
             <fullName>Reclamo scritto</fullName>
@@ -1173,6 +1207,17 @@
         </values>
         <values>
             <fullName>Richiesta info</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EnergyService__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2405,6 +2450,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OperationSubType__c</picklist>
+        <values>
+            <fullName>Prezzo energia negoziato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso parziale bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso totale bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risarcimenti danni</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OperationType__c</picklist>
         <values>
             <fullName>Separazione CA</fullName>
@@ -2789,6 +2853,21 @@
         </values>
         <values>
             <fullName>TCP Comune no Int</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ReassignmentReason__c</picklist>
+        <values>
+            <fullName>Attesa approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione per lavorazione in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standby per attesa cessazione contratto</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3238,7 +3317,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Modifica Dati di Contatto%C2%A0%C2%A0</fullName>
+            <fullName>Modifica Dati di Contatto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3720,6 +3799,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>UseChangeCharge__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>UseTypeEnergy__c</picklist>
         <values>
             <fullName>03 Illuminazione Pubblica</fullName>
@@ -3982,6 +4072,17 @@
         </values>
         <values>
             <fullName>In Corso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>XMLType__c</picklist>
+        <values>
+            <fullName>Dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sintetico</fullName>
             <default>false</default>
         </values>
     </picklistValues>
