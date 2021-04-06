@@ -3,7 +3,7 @@
     <fullName>AlternativeAddress__c</fullName>
     <description>Campo che permette all&apos;operatore di inserire un indirizzo alternativo a quello ereditato dal sistema</description>
     <externalId>false</externalId>
-    <label>Indirizzo di recapito/email alternativo</label>
+    <label>Indirizzo di recapito alternativo</label>
     <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>

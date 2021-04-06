@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>PerformanceType__c</fullName>
+    <fullName>AlternativeEmail__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(ISPICKVAL(Type, &quot;Allineamento Canone Rai&quot;),IF(Resident__c = true, &quot;Conferma Residenza&quot;, &quot;Conferma Non Residenza&quot;),null)</formula>
-    <label>Tipo Prestazione</label>
+    <label>Indirizzo email alternativo</label>
     <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Email</type>
     <unique>false</unique>
 </CustomField>
