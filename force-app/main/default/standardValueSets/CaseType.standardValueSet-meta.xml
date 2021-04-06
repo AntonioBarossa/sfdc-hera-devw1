@@ -506,4 +506,29 @@
         <default>false</default>
         <label>Cambio cont. non registrato</label>
     </standardValue>
+    <standardValue>
+        <fullName>Notifica Attivazione POD</fullName>
+        <default>false</default>
+        <label>Notifica Attivazione POD</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Notifica Variazione Stato PDR SII</fullName>
+        <default>false</default>
+        <label>Notifica Variazione Stato PDR SII</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Riattivazione a seguito di cessato pericolo</fullName>
+        <default>false</default>
+        <label>Riattivazione a seguito di cessato pericolo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione a seguito di potenziale pericolo</fullName>
+        <default>false</default>
+        <label>Sospensione a seguito di potenziale pericolo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Trasmissione Dati Cliente Finale SII</fullName>
+        <default>false</default>
+        <label>Trasmissione Dati Cliente Finale SII</label>
+    </standardValue>
 </StandardValueSet>
