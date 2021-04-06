@@ -2969,6 +2969,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Charge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.ClientCategory__c</field>
         <readable>true</readable>
@@ -4569,11 +4574,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.UseChangeCharge__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-<fieldPermissions>
         <editable>false</editable>
         <field>Case.UserRequest__c</field>
         <readable>true</readable>
