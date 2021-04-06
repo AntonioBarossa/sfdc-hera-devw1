@@ -1035,6 +1035,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Charge__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
             <fullName>Annullamento</fullName>
@@ -4725,7 +4736,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Spostamento Contatore - Cavi</fullName>
+            <fullName>Spostamento Contatore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5134,6 +5145,21 @@
         </values>
         <values>
             <fullName>MT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>WithdrawalClass__c</picklist>
+        <values>
+            <fullName>001 - 7 giorni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
