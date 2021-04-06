@@ -417,74 +417,14 @@
         <label>Account/Billing Profile - errata categoria</label>
     </standardValue>
     <standardValue>
-        <fullName>Fiscale</fullName>
-        <default>false</default>
-        <label>Fiscale</label>
-    </standardValue>
-    <standardValue>
         <fullName>Fiscale  - IVA Esenzione/Revoca</fullName>
         <default>false</default>
         <label>Fiscale  - IVA Esenzione/Revoca</label>
     </standardValue>
     <standardValue>
-        <fullName>Modifica Portale SOL Gestione Energia</fullName>
-        <default>false</default>
-        <label>Modifica Portale SOL Gestione Energia</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Marcatura/Uso PdR</fullName>
-        <default>false</default>
-        <label>Marcatura/Uso PdR</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Gestione Calamità</fullName>
-        <default>false</default>
-        <label>Gestione Calamità</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Modifica Tariffa Residente/Non Residente</fullName>
-        <default>false</default>
-        <label>Modifica Tariffa Residente/Non Residente</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Condizioni Contrattuali Errate</fullName>
-        <default>false</default>
-        <label>Condizioni Contrattuali Errate</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Split Payment</fullName>
-        <default>false</default>
-        <label>Split Payment</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Modifica Layout di dettaglio</fullName>
-        <default>false</default>
-        <label>Modifica Layout di dettaglio</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Variazione indirizzo di fornitura</fullName>
-        <default>false</default>
-        <label>Variazione indirizzo di fornitura</label>
-    </standardValue>
-    <standardValue>
         <fullName>Cambio contatore non registrato</fullName>
         <default>false</default>
         <label>Cambio contatore non registrato</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Mancata Telelettura/lettura</fullName>
-        <default>false</default>
-        <label>Mancata Telelettura/lettura</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Modifica/Azzeramento Consumo Annuo</fullName>
-        <default>false</default>
-        <label>Modifica/Azzeramento Consumo Annuo</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Dettaglio Bolletta</fullName>
-        <default>false</default>
-        <label>Dettaglio Bolletta</label>
     </standardValue>
     <standardValue>
         <fullName>BP/CA - errata categoria</fullName>
