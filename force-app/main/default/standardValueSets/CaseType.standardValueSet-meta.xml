@@ -491,4 +491,19 @@
         <default>false</default>
         <label>Sost. contatore cliente</label>
     </standardValue>
+    <standardValue>
+        <fullName>Account/Billing Profile - errata categoria</fullName>
+        <default>false</default>
+        <label>Account/Billing Profile - errata categoria</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dichiarazione di intento</fullName>
+        <default>false</default>
+        <label>Dichiarazione di intento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cambio cont. non registrato</fullName>
+        <default>false</default>
+        <label>Cambio cont. non registrato</label>
+    </standardValue>
 </StandardValueSet>
