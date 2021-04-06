@@ -12,7 +12,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>SOL-APP</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>SOL-APP</label>
             </value>
         </valueSetDefinition>

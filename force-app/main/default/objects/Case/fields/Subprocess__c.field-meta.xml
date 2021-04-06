@@ -43,6 +43,11 @@
                 <default>false</default>
                 <label>Modifica Dati Fiscali</label>
             </value>
+            <value>  
+                <fullName>Modifica Dati di Contatto</fullName>
+                <default>false</default>
+                <label>Modifica Dati di Contatto</label>
+            </value>
             <value>
                 <fullName>Variazione Gruppo IVA</fullName>
                 <default>false</default>
