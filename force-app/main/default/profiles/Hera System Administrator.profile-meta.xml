@@ -4635,6 +4635,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.WithdrawalClass__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.WorkStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
