@@ -157,9 +157,8 @@
     <gender>Feminine</gender>
     <label>Offerta Tecnica</label>
     <nameField>
-        <displayFormat>TOI-{00000000}</displayFormat>
-        <label>TechnicalOffer Name</label>
-        <type>AutoNumber</type>
+        <label>Name</label>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Technical Offer</pluralLabel>
     <searchLayouts/>

@@ -25,26 +25,34 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
             //update child orders
             for (Order childOrder : childOrders) {
-                ordersToUpdate.add(new Order(
-                    Id = childOrder.Id,
-                    Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
+
+                if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
+                    ordersToUpdate.add(new Order(
+                        Id = childOrder.Id,
+                        //EVERIS: AGGIUNTA CASISTICA VOLTURA
+                        Phase__c = childOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' ? childOrder.Phase__c : 
+                        checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                    ));
+                }
+
             }
 
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico inviato da validare'
+                Phase__c = 'Plico da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
             ));
 
         } else {
 
             //update child orders
             for (Order childOrder : childOrders) {
-                ordersToUpdate.add(new Order(
-                    Id = childOrder.Id,
-                    Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
-                ));
+                if (childOrder.RecordType.DeveloperName != 'HDT_RT_ScontiBonus') {
+                    ordersToUpdate.add(new Order(
+                        Id = childOrder.Id,
+                        Phase__c = checkRequiredDocs(childOrder) ? 'Documentazione Validata': 'In attesa validazione'
+                    ));
+                }
             }
 
             //update parent order
@@ -102,7 +110,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     */
     public static Boolean checkRequiredDocs(Order ord){
 
-        Boolean check;
+        Boolean check = true;
 
         if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null)
         {

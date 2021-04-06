@@ -335,296 +335,267 @@
             <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Ammissibilità KO</label>
             </value>
             <value>
                 <fullName>Annullamento - Ammissibilità OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Ammissibilità OK</label>
             </value>
             <value>
                 <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Comunicazione verso Heroku OK</label>
             </value>
             <value>
                 <fullName>Annullamento - Da inviare</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Da inviare</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito KO da DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Esito KO da DL</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito OK da DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Esito OK da DL</label>
             </value>
             <value>
                 <fullName>Annullamento - Inviato al DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento - Inviato al DL</label>
             </value>
             <value>
                 <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento SII - Errore Lavorazione SAP</label>
             </value>
             <value>
                 <fullName>Annullamento SII - Ricezione</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento SII - Ricezione</label>
             </value>
             <value>
                 <fullName>Annullato SII</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullato SII</label>
             </value>
             <value>
                 <fullName>Blocco Effettuato</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Blocco Effettuato</label>
             </value>
             <value>
                 <fullName>Blocco Non Effettuato</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Blocco Non Effettuato</label>
             </value>
             <value>
                 <fullName>Bozza Annullata</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Bozza Annullata</label>
             </value>
             <value>
                 <fullName>Comunicazioni con il DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Comunicazioni con il DL</label>
             </value>
             <value>
                 <fullName>Dati Tecnici Ricevuti</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Dati Tecnici Ricevuti</label>
             </value>
             <value>
                 <fullName>Fattura messa a perdita</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Fattura messa a perdita</label>
             </value>
             <value>
                 <fullName>In Attesa possibile contratto</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>In Attesa possibile contratto</label>
             </value>
             <value>
                 <fullName>In Classificazione</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>In Classificazione</label>
             </value>
             <value>
                 <fullName>In Lavorazione - Inviare Comunicazione Disconoscimento</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>In Lavorazione - Inviare Comunicazione Disconoscimento</label>
             </value>
             <value>
                 <fullName>In Lavorazione - Inviare Lettera di Legittimità</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>In Lavorazione - Inviare Lettera di Legittimità</label>
             </value>
             <value>
                 <fullName>In attesa risposta parere</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>In attesa risposta parere</label>
             </value>
             <value>
                 <fullName>Istruttoria Creata</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Istruttoria Creata</label>
             </value>
             <value>
                 <fullName>Istruttoria non necessaria</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Istruttoria non necessaria</label>
             </value>
             <value>
                 <fullName>Lavori Sospesi</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Lavori Sospesi</label>
             </value>
             <value>
                 <fullName>Pratica Riclassificata</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Pratica Riclassificata</label>
             </value>
             <value>
                 <fullName>Pratica non gestita per il DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Pratica non gestita per il DL</label>
-            </value>
-            <value>
-                <fullName>Presa in Carico KO</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Presa in Carico KO</label>
-            </value>
-            <value>
-                <fullName>Presa in Carico OK</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Presa in Carico OK</label>
             </value>
             <value>
                 <fullName>Prescrizione concessa</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Prescrizione concessa</label>
             </value>
             <value>
                 <fullName>Prescrizione non concessa</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Prescrizione non concessa</label>
-            </value>
-            <value>
-                <fullName>Ricezione 0152</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ricezione 0152</label>
-            </value>
-            <value>
-                <fullName>Ricezione 0153</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ricezione 0153</label>
             </value>
             <value>
                 <fullName>Richiesta Preventivo Extra Sistema</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Richiesta Preventivo Extra Sistema</label>
             </value>
             <value>
                 <fullName>Ripensamento - Ammissibilità KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Ammissibilità KO</label>
             </value>
             <value>
                 <fullName>Ripensamento - Ammissibilità OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Ammissibilità OK</label>
             </value>
             <value>
                 <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Comunicazione verso Heroku KO</label>
             </value>
             <value>
                 <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Comunicazione verso Heroku OK</label>
             </value>
             <value>
                 <fullName>Ripensamento - Da inviare</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Da inviare</label>
             </value>
             <value>
                 <fullName>Ripensamento - Esito KO da DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Esito KO da DL</label>
             </value>
             <value>
                 <fullName>Ripensamento - Esito OK da DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Esito OK da DL</label>
             </value>
             <value>
                 <fullName>Ripensamento - Inviato al DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento - Inviato al DL</label>
             </value>
             <value>
                 <fullName>Ripensato</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensato</label>
             </value>
             <value>
                 <fullName>Risposta Inviata</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Risposta Inviata</label>
             </value>
             <value>
                 <fullName>Risposta Inviata - Attesa Rettifica</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Risposta Inviata - Attesa Rettifica</label>
             </value>
             <value>
                 <fullName>Risposta ricevuta</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Risposta ricevuta</label>
             </value>
             <value>
                 <fullName>Sospesa</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Sospesa</label>
             </value>
             <value>
                 <fullName>Sospeso manualmente</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Sospeso manualmente</label>
             </value>
             <value>
                 <fullName>Sospeso per richiesta parere</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Sospeso per richiesta parere</label>
             </value>
             <value>
                 <fullName>Sospeso per verifica DL</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Sospeso per verifica DL</label>
+            </value>
+            <value>
+                <fullName>In attesa validazione</fullName>
+                <default>false</default>
+                <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In attesa Documentazione</fullName>
+                <default>false</default>
+                <label>In attesa Documentazione</label>
+            </value>
+            <value>
+                <fullName>Gestione Procedurale</fullName>
+                <default>false</default>
+                <label>Gestione Procedurale</label>
+            </value>
+            <value>
+                <fullName>In attesa risposta Mail</fullName>
+                <default>false</default>
+                <label>In attesa risposta Mail</label>
+            </value>
+            <value>
+                <fullName>Allineamento RCU Concluso</fullName>
+                <default>false</default>
+                <label>Allineamento RCU Concluso</label>
+            </value>
+            <value>
+                <fullName>In attesa Data Decorrenza</fullName>
+                <default>false</default>
+                <label>In attesa Data Decorrenza</label>
+            </value>
+            <value>
+                <fullName>In Attesa Allineamento RCU</fullName>
+                <default>false</default>
+                <label>In Attesa Allineamento RCU</label>
+            </value>
+            <value>
+                <fullName>Completata</fullName>
+                <default>false</default>
+                <label>Completata</label>
             </value>
         </valueSetDefinition>
     </valueSet>

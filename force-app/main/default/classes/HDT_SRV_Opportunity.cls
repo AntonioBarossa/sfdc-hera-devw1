@@ -114,10 +114,18 @@ public inherited sharing class HDT_SRV_Opportunity {
      */
     public void deleteRecord(String opportunityId){
         List<SaleServiceItem__c> saleServiceItemRecords = saleServiceItemQuery.getRecordsByOpportunityId(opportunityId);
-        String quoteId = saleServiceItemRecords[0].Quote__c;
-        saleServiceItemService.deleteRecords(saleServiceItemRecords);
-        quoteService.deleteRecord(quoteId);
+        
+        if (!saleServiceItemRecords.isEmpty()) {
+            saleServiceItemService.deleteRecords(saleServiceItemRecords);
+        }
 
+        Opportunity opp = opportunityQuery.getRecordById(opportunityId);
+        
+        quoteService.deleteRecord(opp.SBQQ__PrimaryQuote__c);
         HDT_UTL_DatabaseService.deleteSObject(opportunityId);
+    }
+
+    public void deleteRecords(List<String> opportunities){
+        HDT_UTL_DatabaseService.deleteSObject(opportunities);
     }
 }

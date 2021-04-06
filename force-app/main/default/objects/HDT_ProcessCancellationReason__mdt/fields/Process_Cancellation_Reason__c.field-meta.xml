@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Process_Cancellation_Reason__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Process Cancellation Reason</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Annullamento da cliente</fullName>
+                <default>true</default>
+                <label>Annullamento da cliente</label>
+            </value>
+            <value>
+                <fullName>Disattivazione in corso</fullName>
+                <default>false</default>
+                <label>Disattivazione in corso</label>
+            </value>
+            <value>
+                <fullName>Pratica errata</fullName>
+                <default>false</default>
+                <label>Pratica errata</label>
+            </value>
+            <value>
+                <fullName>Firma falsa</fullName>
+                <default>false</default>
+                <label>Firma falsa</label>
+            </value>
+            <value>
+                <fullName>Revoca ai sensi del comma 14.3 del TIMOE</fullName>
+                <default>false</default>
+                <label>Revoca ai sensi del comma 14.3 del TIMOE</label>
+            </value>
+            <value>
+                <fullName>Revoca ai sensi del comma 6.3 del TIMOE</fullName>
+                <default>false</default>
+                <label>Revoca ai sensi del comma 6.3 del TIMOE</label>
+            </value>
+            <value>
+                <fullName>Revoca ai sensi del comma 8.2 del TIMG</fullName>
+                <default>false</default>
+                <label>Revoca ai sensi del comma 8.2 del TIMG</label>
+            </value>
+            <value>
+                <fullName>Ripensamento da cliente</fullName>
+                <default>false</default>
+                <label>Ripensamento da cliente</label>
+            </value>
+            <value>
+                <fullName>Ripensamento da cliente oltre i termini</fullName>
+                <default>false</default>
+                <label>Ripensamento da cliente oltre i termini</label>
+            </value>
+            <value>
+                <fullName>Ripensamento tramite quality call</fullName>
+                <default>false</default>
+                <label>Ripensamento tramite quality call</label>
+            </value>
+            <value>
+                <fullName>No conferma Cliente</fullName>
+                <default>false</default>
+                <label>No conferma Cliente</label>
+            </value>
+            <value>
+                <fullName>Volontà estorta</fullName>
+                <default>false</default>
+                <label>Volontà estorta</label>
+            </value>
+            <value>
+                <fullName>Annullo cambio offerta</fullName>
+                <default>false</default>
+                <label>Annullo cambio offerta</label>
+            </value>
+            <value>
+                <fullName>Annullo voltura</fullName>
+                <default>false</default>
+                <label>Annullo voltura</label>
+            </value>
+            <value>
+                <fullName>Mancanza titolarità</fullName>
+                <default>false</default>
+                <label>Mancanza titolarità</label>
+            </value>
+            <value>
+                <fullName>PDR/POD errato</fullName>
+                <default>false</default>
+                <label>PDR/POD errato</label>
+            </value>
+            <value>
+                <fullName>Quality - Annullo cambio offerta</fullName>
+                <default>false</default>
+                <label>Quality - Annullo cambio offerta</label>
+            </value>
+            <value>
+                <fullName>Codice ABI obsoleto</fullName>
+                <default>false</default>
+                <label>Codice ABI obsoleto</label>
+            </value>
+            <value>
+                <fullName>Contattare banca</fullName>
+                <default>false</default>
+                <label>Contattare banca</label>
+            </value>
+            <value>
+                <fullName>Domiciliazione già presente</fullName>
+                <default>false</default>
+                <label>Domiciliazione già presente</label>
+            </value>
+            <value>
+                <fullName>Classificazione errata</fullName>
+                <default>false</default>
+                <label>Classificazione errata</label>
+            </value>
+            <value>
+                <fullName>Multi-ricezione</fullName>
+                <default>false</default>
+                <label>Multi-ricezione</label>
+            </value>
+            <value>
+                <fullName>Sollecito</fullName>
+                <default>false</default>
+                <label>Sollecito</label>
+            </value>
+            <value>
+                <fullName>Gestione Scarto</fullName>
+                <default>false</default>
+                <label>Gestione Scarto</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
