@@ -50,10 +50,10 @@
   <members>*</members>
   <name>CompactLayout</name>
 </types>
-<!--<<types>
+<types>
   <members>*</members>
   <name>CustomField</name>
-</types> -->
+</types>
 <types>
   <members>*</members>
   <name>CustomLabels</name>
