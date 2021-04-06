@@ -33,9 +33,9 @@
                 <label>Modifica Dati di Recapito Votiva Modena</label>
             </value>
             <value>
-                <fullName>Modifica Dati di Contatto  </fullName>
+                <fullName>Modifica Dati di Contatto</fullName>
                 <default>false</default>
-                <label>Modifica Dati di Contatto  </label>
+                <label>Modifica Dati di Contatto</label>
             </value>
             <value>
                 <fullName>Cambio Amministratore</fullName>
