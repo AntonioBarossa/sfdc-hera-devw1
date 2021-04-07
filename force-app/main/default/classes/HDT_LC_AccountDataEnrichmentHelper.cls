@@ -7,7 +7,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
         
         try {
 
-            List<AccountDataEnrichment__mdt> enrichmentbMetadataList;
+            List<HDT_AccountDataEnrichment__mdt> enrichmentbMetadataList;
             enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
 
             if(enrichmentbMetadataList.size()==0){
@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
 
         String httpBody = '';
 
-        List<AccountDataEnrichment__mdt> enrichmentbMetadataList;
+        List<HDT_AccountDataEnrichment__mdt> enrichmentbMetadataList;
         enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, type);
 
         if(enrichmentbMetadataList.size()==0){

@@ -5,7 +5,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata columnsMetadata = new HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata();
 
         try{
-            List<AccountDataEnrichment__mdt> contractMetadataList;
+            List<HDT_AccountDataEnrichment__mdt> contractMetadataList;
             contractMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(contractMetadataList, 'contract');
 
             if(contractMetadataList.size()==0){
@@ -14,7 +14,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return columnsMetadata;
             }
 
-            List<AccountDataEnrichment__mdt> meterRadingMetadataList;
+            List<HDT_AccountDataEnrichment__mdt> meterRadingMetadataList;
             meterRadingMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(meterRadingMetadataList, 'meterReading');
 
             if(meterRadingMetadataList.size()==0){
