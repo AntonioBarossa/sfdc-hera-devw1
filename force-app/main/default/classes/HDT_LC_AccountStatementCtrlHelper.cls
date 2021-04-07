@@ -181,7 +181,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                - customerCode
         */
 
-        /* >>> RequestObj contains
+        /* >>> RequestObj contains (based on tObj.requestType)
                - viewResult -> numeroFattura
                - joinFilter -> aggregazione
                                numeroFattura
@@ -219,7 +219,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 return wrapObj;
             }*/
 
-            dbr.applicativo = 'AL';//possible value -> ML, MT, AL --> Default=AL only for WAVE1
+            dbr.applicativo = 'ML';//possible value -> ML, MT, AL --> Default=ML only for WAVE1
             dbr.codiceCliente = tObj.customerCode;
             dbr.tipoEstrattoConto = tObj.statementType;
             dbr.loginId = '0-1';
@@ -402,8 +402,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
         
-        List<HDT_ColumnsFirstLevel__mdt> column_mdtList;
-        column_mdtList = HDT_QR_AccountStatement.getColumnMetaDataList(column_mdtList, tabValue);
+        //List<HDT_ColumnsFirstLevel__mdt> column_mdtList;
+        //column_mdtList = HDT_QR_AccountStatement.getColumnMetaDataList(column_mdtList, tabValue);
 
 
         try{
@@ -412,11 +412,11 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             System.debug('> RecordId > ' + recordId);
             System.debug('> Records > ' + records);
 
-            if(column_mdtList.size()==0){
-                serviceCatalogResponse.success = false;
-                serviceCatalogResponse.message = 'NO ColumnsFirstLevel metadata found';
-                return serviceCatalogResponse;
-            }
+            //if(column_mdtList.size()==0){
+            //    serviceCatalogResponse.success = false;
+            //    serviceCatalogResponse.message = 'NO ColumnsFirstLevel metadata found';
+            //    return serviceCatalogResponse;
+            //}
 
             Id currentUserId = UserInfo.getUserId();
             ServiceCatalog__c serviceCatalog = new ServiceCatalog__c();
@@ -439,6 +439,9 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'EC1L';
             } else if(level.equalsIgnoreCase('2')){
                 serviceCatalog.Context__c = 'EC2L';
+                serviceCatalogResponse.success = true;
+                serviceCatalogResponse.serviceCatalogId = 'seconLevelId';
+                return serviceCatalogResponse;
             }
 
             if(tabValue.equalsIgnoreCase('EC4')){

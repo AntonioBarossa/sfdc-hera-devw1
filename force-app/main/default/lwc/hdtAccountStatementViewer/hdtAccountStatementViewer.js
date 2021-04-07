@@ -299,11 +299,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             if(result.success){
                 console.log('>>> result > ' + result.serviceCatalogId);
 
-                const serviceCatalog = new CustomEvent("servicecatalog", {
-                    detail: this.recordid
-                });
-                // Dispatches the event.
-                this.dispatchEvent(serviceCatalog);
+                this.serviceCatalogEvent('serviceCatalogId');
+                //const serviceCatalog = new CustomEvent("servicecatalog", {
+                //    detail: this.recordid
+                //});
+                //// Dispatches the event.
+                //this.dispatchEvent(serviceCatalog);
 
             } else {
                 console.log('>>> result > ' + result.message);
@@ -326,6 +327,21 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             this.closeMainSpinner();
         });
 
+    }
+
+    serviceCatalogEvent(serviceCatalogId){
+        const serviceCatalog = new CustomEvent("servicecatalog", {
+            //serviceCatalogId
+            detail: this.recordid
+        });
+        // Dispatches the event.
+        this.dispatchEvent(serviceCatalog);
+    }
+
+    serviceCatalogEventFromChild(event){
+        console.log('>>> serviceCatalog from child > ');
+        console.log('>>> serviceCatalog from child > ' + event.detail);
+        this.serviceCatalogEvent('serviceCatalogId');
     }
 
     home(event) {

@@ -1,8 +1,8 @@
 import { LightningElement, api } from 'lwc';
-import callSap from '@salesforce/apexContinuation/HDT_LC_ViewSapDataTableCtrl.startRequest';
-import getTableConfig from '@salesforce/apex/HDT_LC_ViewSapDataTableCtrl.getTableConfig';
+import callSap from '@salesforce/apexContinuation/HDT_LC_AccountDataEnrichment.startRequest';
+import getTableConfig from '@salesforce/apex/HDT_LC_AccountDataEnrichment.getTableConfig';
 
-export default class HdtViewSapDataTable extends LightningElement {
+export default class HdtAccountDataEnrichment extends LightningElement {
     data = [];
     columns;
     tableTitle;
@@ -68,23 +68,33 @@ export default class HdtViewSapDataTable extends LightningElement {
     
         callSap({recordId: this.recordId, type: this.type}).then(result => {
             console.log('# SAP result #');
-
             var obj = JSON.parse(result);
             console.log('# success: ' + obj.status);
 
-            if(this.type != 'cmor'){
-                this.data = obj.data;
+            if(obj.status==='failed'){
+                console.log('# SAP result failed #');
+                this.showError = true;
+                this.showErrorMessage = obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message;
+                this.showSpinner = false;            
             } else {
-                this.showSecondTable = true;
-                this.data = obj.dataSellIn;
-                this.data2 = obj.dataSellOut;
+                if(this.type != 'cmor'){
+                    this.data = obj.data.posizioni;
+                } else {
+                    this.showSecondTable = true;
+                    this.data = obj.data.venditoreEntrante;
+                    this.data2 = obj.data.venditoreUscente;
+                }
             }
 
             this.showSpinner = false;
             
         }).catch(error => {
-            console.error('# error -> ' + error);
+            //var obj = JSON.parse(error.body.message);
             this.showError = true;
+            //var s = '';
+            //obj.errorDetails.forEach(element => {
+            //    s += element.code + ': ' + element.message;
+            //});
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
         });

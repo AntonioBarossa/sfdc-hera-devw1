@@ -1,5 +1,7 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import getSecondLevelColumns from '@salesforce/apex/HDT_LC_AccountStatementController.getSecondLevelColumns';
+import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const filterObject = {};
 
@@ -81,16 +83,6 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             console.error('# Message => ' + e.message );
             console.error('# Stack => ' + e.stack );
         }
-    }
-
-    serviceCatalog(){
-        var el = this.template.querySelector('lightning-datatable');
-        var selected = el.getSelectedRows();
-        var i;
-        for(i=0; i<=selected.length; i++){
-            console.log('-> selection: ' + selected[i].idSecondoLivelloSAP);
-        }
-              
     }
 
     // Used to sort the 'Age' column
@@ -183,6 +175,95 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         });
         // Dispatches the event.
         this.dispatchEvent(removeFilter);
+    }
+
+    serviceCatalog(){
+        console.log('# serviceCatalogHandler #');
+
+        var el = this.template.querySelector('lightning-datatable');
+        var selected = el.getSelectedRows();
+
+        if(selected.length > 0){
+            //this.showOperationModal = true;
+
+            //var i;
+            //for(i=0; i<=selected.length; i++){
+            //    if(selected[i]!=undefined){
+            //        console.log('>' + JSON.stringify(selected[i]));
+            //    }
+            //}
+
+            var recordsString = JSON.stringify(selected);
+            this.serviceCatalogBackendOperation(recordsString);
+
+        } else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Non hai selezionato nessun record',
+                    variant: 'warning'
+                })
+            );
+        }
+ 
+    }
+
+    serviceCatalogBackendOperation(recordsString){
+
+        console.log('# serviceCatalogBackendOperation #');
+
+        this.openMainSpinner();
+
+        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: '', records: recordsString, level: '2'})
+        .then(result => {
+            console.log('# service Catalog BackenHandler #');
+
+            if(result.success){
+                console.log('>>> result > ' + result.serviceCatalogId);
+
+                const serviceCatalog = new CustomEvent("servicecatalog", {
+                    detail: result.serviceCatalogId
+                });
+                // Dispatches the event.
+                this.dispatchEvent(serviceCatalog);
+
+            } else {
+                console.log('>>> result > ' + result.message);
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: result.message,
+                        variant: 'warning'
+                    })
+                );
+            }
+
+            this.closeMainSpinner();
+
+        })
+        .catch(error => {
+            //this.handleError(error);
+            //this.showError = true;
+            //this.showErrorMessage = JSON.stringify(error);
+            this.closeMainSpinner();
+        });
+
+    }
+
+    openMainSpinner(){
+        const openSpinner = new CustomEvent("openmainspinner", {
+            detail:  ''
+        });
+        // Dispatches the event.
+        this.dispatchEvent(openSpinner);        
+    }
+
+    closeMainSpinner(){
+        const removeSpinner = new CustomEvent("closemainspinner", {
+            detail:  ''
+        });
+        // Dispatches the event.
+        this.dispatchEvent(removeSpinner);
     }
 
 }

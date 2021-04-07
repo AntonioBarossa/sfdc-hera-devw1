@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>HDT_LC_ViewSapDataTableCtrl</members>
+		<members>HDT_LC_AccountDataEnrichment</members>
+		<members>HDT_LC_AccountDataEnrichmentHelper</members>
 		<members>HDT_QR_AccountDataEnrichment</members>
 		<name>ApexClass</name>
 	</types>
@@ -13,7 +14,7 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
-		<members>hdtViewSapDataTable</members>
+		<members>hdtAccountDataEnrichment</members>
 		<name>LightningComponentBundle</name>
 	</types>
    	<types>
