@@ -206,11 +206,10 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         if(!String.isEmpty(quote.SupplyCity__c)){
             List<List<SObject>> searchList = [
-                FIND :quote.SupplyCity__c
-                IN ALL FIELDS
+                FIND :quote.SupplyCity__c IN ALL FIELDS
                 RETURNING
                         eligibleMunicipality__c(EligibilityCriteria__r.Product__c
-                                                WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
+                                                where EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
                                                 AND EligibilityCriteria__r.Product__r.IsActive = true
                                                 AND EligibilityCriteria__r.Product__r.Family in :familyList
                                                 )

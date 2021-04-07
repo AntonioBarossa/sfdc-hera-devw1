@@ -23,7 +23,16 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
         myQuery += ' WITH SECURITY_ENFORCED';
 
-        List<RateTemplate__c> lookUpList = database.query(myQuery);
+        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOfferItem__c');
+ 
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        List<RateTemplate__c> lookUpList;
+        if(objRes.isAccessible()){
+            lookUpList = database.query(myQuery);
+        } else {
+            lookUpList = new List<RateTemplate__c>();
+        }
 
         return lookUpList;
     }
