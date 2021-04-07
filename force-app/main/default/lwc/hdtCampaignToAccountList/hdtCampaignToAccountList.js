@@ -1,4 +1,6 @@
 import { LightningElement, track, wire, api } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
+import { NavigationMixin } from 'lightning/navigation';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
 
 
@@ -8,23 +10,30 @@ const columns = [
     { label: 'Canale', fieldName: 'Channel__c' },
     { label: 'Close Date', fieldName: 'EndDate', type: 'date' },
 ];
-export default class PopoverContainer extends LightningElement {
+export default class PopoverContainer extends NavigationMixin(LightningElement) {
     @api campaignType;
-    @api objectName;
+    @api objectApiName;
     @api entityId;
+    @api campaignCategory;
+    @api campaignChannel;
     @track allCampaigns = [];
     @track rowdata;
     @track isSale = false;
     @track selectedCampaignId = null;
     @track campaignsNumber = 0;
     @track listResults = false;
-    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectName' }) campaigns({ error, data }) {
-        if (error) {
+    @track campaignsResult = [];
+
+    @wire(getAllCampaigns, { id: '$entityId', objectName: '$objectApiName', category: '$campaignCategory', channel: '$campaignChannel' }) campaigns(result) {
+        this.campaignsResult = result;
+        this.allCampaigns = [];
+        this.campaignsNumber = 0;
+        if (result.error) {
             console.log(error);
-        } else if (data) {
-            if (data.length !== 0) {
-                data.forEach(item => {
-                    this.allCampaigns.push(item.Campaign);
+        } else if (result.data) {
+            if (result.data.length !== 0) {
+                result.data.forEach(item => {
+                    this.allCampaigns.push(item);
                     this.campaignsNumber++;
                 });
                 this.rowdata = this.allCampaigns;
@@ -44,6 +53,10 @@ export default class PopoverContainer extends LightningElement {
         this.isSale = this.campaignType == "sale" ? true : false;
     }
 
+    handleCampaignsUpdate() {
+        refreshApex(this.campaignsResult);
+    }
+
     handleRowSelection(event) {
         this.selectedCampaignId = event.target.selectedRows[0];
 
@@ -55,19 +68,14 @@ export default class PopoverContainer extends LightningElement {
         }));
     }
 
-    openPopover(e) {
-        const campaignId = e.currentTarget.dataset.id;
-        const popoverObj = this.template.querySelector(`c-hdt-popover[data-id="${campaignId}"]`);
-        if (popoverObj) {
-            popoverObj.classList.remove('slds-hide');
-        }
-    }
-
-    closePopover(e) {
-        const campaignId = e.currentTarget.dataset.id;
-        const popoverObj = this.template.querySelector(`c-hdt-popover[data-id="${campaignId}"]`);
-        if (popoverObj) {
-            popoverObj.classList.add('slds-hide');
-        }
+    redirectToCampaign(event) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: event.target.getAttribute("data-id"),
+                objectApiName: 'CampaignMember',
+                actionName: 'view'
+            },
+        });
     }
 }
