@@ -6501,6 +6501,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>NewsNotificationCenter__c.Cluster__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>NewsNotificationCenter__c.EntryChannel__c</field>
         <readable>true</readable>
     </fieldPermissions>
