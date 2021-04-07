@@ -12,7 +12,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         //criteria.Product__c = productId;
 
         try{
-            insert criteria;
+            //insert criteria;
+            HDT_UTL_DatabaseService.insertSObject(criteria);
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
@@ -72,7 +73,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         System.debug('# clone this -> ' + newCriteria);
 
         try{
-            insert newCriteria;
+            //insert newCriteria;
+            HDT_UTL_DatabaseService.insertSObject(newCriteria);
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
@@ -106,33 +108,39 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     public static List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError> databaseInsert(List<EligibleMunicipality__c> itemList, List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError> errorData){
 
-        List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+        SObjectType objtype = Schema.getGlobalDescribe().get('EligibleMunicipality__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
 
-        for(Integer n=0; n<insertResults.size(); n++){
-            Database.SaveResult sr = insertResults[n];
+            List<Database.SaveResult> insertResults = Database.insert(itemList, false);
 
-            if (!sr.isSuccess()) {
-                // Operation failed
-                String errorString = '';
-                HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
-                for(Database.Error err : sr.getErrors()) {
-                    lineError.rowId = itemList[n].Name;
-                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+            for(Integer n=0; n<insertResults.size(); n++){
+                Database.SaveResult sr = insertResults[n];
+
+                if (!sr.isSuccess()) {
+                    // Operation failed
+                    String errorString = '';
+                    HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
+                    for(Database.Error err : sr.getErrors()) {
+                        lineError.rowId = itemList[n].Name;
+                        lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                    }
+                    errorData.add(lineError);
                 }
-                errorData.add(lineError);
             }
         }
-   
+
         return errorData;
     }
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities2(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj){
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities2(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
 
         System.debug('# getExistingEligibleMunicipalities2 > ' + eligibilityId);
 
         Map<String, Set<String>> existingMuniMap = new Map<String, Set<String>>();
 
-        CityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
+        cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
         List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
         muniList = [
             SELECT Id, Name, AreaCode__c, JSON_Code__c
@@ -157,9 +165,9 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
             
             StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
-            CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+            cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
 
-            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province prov : CityZipCodeObj.regionList[0].provinceList){
+            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province prov : cityZipCodeObj.regionList[0].provinceList){
 
                 if(existingMuniMap.containsKey(prov.value)){
                     Set<String> avalilableCityCode = existingMuniMap.get(prov.value);
@@ -188,11 +196,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             }
 
 
-            CityZipCodeObj.success = true;
-            CityZipCodeObj.message = '';
+            cityZipCodeObj.success = true;
+            cityZipCodeObj.message = '';
 
         } catch (Exception e){
-            CityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
+            cityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
             HDT_WRP_EligibilityCriteria.HDT_WRP_Region singleRegion = new HDT_WRP_EligibilityCriteria.HDT_WRP_Region();
             singleRegion.regionName = 'EmiliaRomagna';
             singleRegion.regionCode = 'EMR';
@@ -204,19 +212,19 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                 singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
                 singleRegion.provinceList.add(singleProv);
             }
-            CityZipCodeObj.regionList.add(singleRegion);
-            CityZipCodeObj.success = true;
-            CityZipCodeObj.message = '';
+            cityZipCodeObj.regionList.add(singleRegion);
+            cityZipCodeObj.success = true;
+            cityZipCodeObj.message = '';
         }
 
-        return CityZipCodeObj;
+        return cityZipCodeObj;
 
     }
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj){
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
 
         System.debug('# getExistingEligibleMunicipalities > ' + eligibilityId);
-        CityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
+        cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
         try{
             List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
             muniList = [
@@ -227,7 +235,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             ];
             
             
-            CityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
+            cityZipCodeObj.regionList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_Region>();
             HDT_WRP_EligibilityCriteria.HDT_WRP_Region singleRegion = new HDT_WRP_EligibilityCriteria.HDT_WRP_Region();
             singleRegion.regionName = 'EmiliaRomagna';
             singleRegion.regionCode = 'EMR';
@@ -239,15 +247,15 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                 singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
                 singleRegion.provinceList.add(singleProv);
             }
-            CityZipCodeObj.regionList.add(singleRegion);
-            CityZipCodeObj.success = true;
-            CityZipCodeObj.message = '';
+            cityZipCodeObj.regionList.add(singleRegion);
+            cityZipCodeObj.success = true;
+            cityZipCodeObj.message = '';
         } catch (Exception e){
-            CityZipCodeObj.success = false;
-            CityZipCodeObj.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            cityZipCodeObj.success = false;
+            cityZipCodeObj.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
         }
 
-        return CityZipCodeObj;
+        return cityZipCodeObj;
 
     }
 
@@ -257,19 +265,25 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         saveResponse.errorData = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError>();
         Savepoint sp = Database.setSavepoint();
 
-        List<Database.DeleteResult> deleteResults = Database.delete(criteriaListToDelete, false);
+        SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
 
-        for(Integer n=0; n<deleteResults.size(); n++){
-            Database.DeleteResult dr = deleteResults[n];
+            List<Database.DeleteResult> deleteResults = Database.delete(criteriaListToDelete, false);
 
-            if (!dr.isSuccess()) {
-                // Operation failed
-                String errorString = '';
-                HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
-                for(Database.Error err : dr.getErrors()) {
-                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+            for(Integer n=0; n<deleteResults.size(); n++){
+                Database.DeleteResult dr = deleteResults[n];
+
+                if (!dr.isSuccess()) {
+                    // Operation failed
+                    String errorString = '';
+                    HDT_WRP_EligibilityCriteria.HDT_WRP_LineError lineError = new HDT_WRP_EligibilityCriteria.HDT_WRP_LineError();
+                    for(Database.Error err : dr.getErrors()) {
+                        lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                    }
+                    saveResponse.errorData.add(lineError);
                 }
-                saveResponse.errorData.add(lineError);
             }
         }
 

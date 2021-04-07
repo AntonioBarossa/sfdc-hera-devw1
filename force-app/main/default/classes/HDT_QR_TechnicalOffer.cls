@@ -20,6 +20,8 @@ public inherited sharing class HDT_QR_TechnicalOffer {
             myQuery += ' WHERE Name LIKE \'%' + queryTerm + '%\'';
         }
 
+        myQuery += ' WITH SECURITY_ENFORCED';
+
         List<RateTemplate__c> lookUpList = database.query(myQuery);
 
         return lookUpList;

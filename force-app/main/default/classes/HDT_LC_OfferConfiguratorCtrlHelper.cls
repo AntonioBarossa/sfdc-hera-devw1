@@ -19,7 +19,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOff.RateCategory__c = rateId;
         
         try{
-            insert tecOff;
+            //insert tecOff;
+            HDT_UTL_DatabaseService.insertSObject(tecOff);
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
@@ -54,23 +55,30 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     public static List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> databaseInsert(List<TechnicalOfferItem__c> itemList, List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> errorData){
 
-        List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOfferItem__c');
+ 
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
 
-        for(Integer n=0; n<insertResults.size(); n++){
-            Database.SaveResult sr = insertResults[n];
+            List<Database.SaveResult> insertResults = Database.insert(itemList, false);
 
-            if (!sr.isSuccess()) {
-                // Operation failed
-                String errorString = '';
-                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
-                for(Database.Error err : sr.getErrors()) {
-                    lineError.rowId = itemList[n].RowId__c;
-                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+            for(Integer n=0; n<insertResults.size(); n++){
+                Database.SaveResult sr = insertResults[n];
+
+                if (!sr.isSuccess()) {
+                    // Operation failed
+                    String errorString = '';
+                    HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+                    for(Database.Error err : sr.getErrors()) {
+                        lineError.rowId = itemList[n].RowId__c;
+                        lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                    }
+                    errorData.add(lineError);
                 }
-                errorData.add(lineError);
             }
         }
-   
+
         return errorData;
     }
 
@@ -159,7 +167,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         System.debug('# clone this -> ' + newTechOff);
 
         try{
-            insert newTechOff;
+            //insert newTechOff;
+            HDT_UTL_DatabaseService.insertSObject(newTechOff);
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
@@ -227,19 +236,26 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
         Savepoint sp = Database.setSavepoint();
 
-        List<Database.DeleteResult> deleteResults = Database.delete(techOffListToDelete, false);
+        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+ 
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
 
-        for(Integer n=0; n<deleteResults.size(); n++){
-            Database.DeleteResult dr = deleteResults[n];
+            List<Database.DeleteResult> deleteResults = Database.delete(techOffListToDelete, false);
 
-            if (!dr.isSuccess()) {
-                // Operation failed
-                String errorString = '';
-                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
-                for(Database.Error err : dr.getErrors()) {
-                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+            for(Integer n=0; n<deleteResults.size(); n++){
+                Database.DeleteResult dr = deleteResults[n];
+
+                if (!dr.isSuccess()) {
+                    // Operation failed
+                    String errorString = '';
+                    HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+                    for(Database.Error err : dr.getErrors()) {
+                        lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                    }
+                    saveResponse.errorData.add(lineError);
                 }
-                saveResponse.errorData.add(lineError);
             }
         }
 
