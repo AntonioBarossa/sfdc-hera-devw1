@@ -18,10 +18,11 @@
     <members>*</members>
     <name>AuraDefinitionBundle</name>
   </types>
-  <types>
-        <members>*</members>
-        <name>StaticResource</name>
-    </types>
+<types>
+  <members>campaignIcons</members>
+  <members>SiteSamples</members>
+  <name>StaticResource</name>
+</types>
 <types>
   <members>*</members>
   <name>ApprovalProcess</name>
