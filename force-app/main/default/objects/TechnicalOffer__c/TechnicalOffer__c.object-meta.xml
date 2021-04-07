@@ -164,7 +164,7 @@
     <gender>Feminine</gender>
     <label>Offerta Tecnica</label>
     <nameField>
-        <label>TechnicalOffer Name</label>
+        <label>Name</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Technical Offer</pluralLabel>

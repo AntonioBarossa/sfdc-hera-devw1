@@ -6,6 +6,9 @@
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_RangeConsumptionGas</valueSetName>
+    </valueSet>
 </CustomField>
