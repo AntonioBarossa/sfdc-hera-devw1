@@ -205,21 +205,29 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         List<String> familyList = getFamilyList();
 
         if(!String.isEmpty(quote.SupplyCity__c)){
-            List<List<SObject>> searchList = [
-                FIND :quote.SupplyCity__c IN ALL FIELDS
-                RETURNING
-                        eligibleMunicipality__c(EligibilityCriteria__r.Product__c
-                                                where EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
-                                                AND EligibilityCriteria__r.Product__r.IsActive = true
-                                                AND EligibilityCriteria__r.Product__r.Family in :familyList
-                                                )
-            ];
 
-            List<EligibleMunicipality__c> eligibleMunicipality = ((List<EligibleMunicipality__c>)searchlist[0]);
+            SObjectType objtype = Schema.getGlobalDescribe().get('EligibleMunicipality__c');
 
-            for(EligibleMunicipality__c e : eligibleMunicipality){
-                System.debug('# > Prod id: ' + e.EligibilityCriteria__r.Product__c);
-                idList.add(e.EligibilityCriteria__r.Product__c);
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+    
+            if(objRes.isAccessible()){
+
+                List<List<SObject>> searchList = [
+                    FIND :quote.SupplyCity__c IN ALL FIELDS
+                    RETURNING
+                            EligibleMunicipality__c(EligibilityCriteria__r.Product__c
+                                                    WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
+                                                    AND EligibilityCriteria__r.Product__r.IsActive = true
+                                                    AND EligibilityCriteria__r.Product__r.Family IN :familyList
+                                                    )
+                ];
+
+                List<EligibleMunicipality__c> eligibleMunicipality = ((List<EligibleMunicipality__c>)searchlist[0]);
+
+                for(EligibleMunicipality__c e : eligibleMunicipality){
+                    System.debug('# > Prod id: ' + e.EligibilityCriteria__r.Product__c);
+                    idList.add(e.EligibilityCriteria__r.Product__c);
+                }
             }
         }
 
