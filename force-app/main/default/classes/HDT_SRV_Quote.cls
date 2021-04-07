@@ -89,6 +89,11 @@ public inherited sharing class HDT_SRV_Quote {
         HDT_UTL_DatabaseService.deleteSObject(quoteId);
     }
 
+    public void deleteRecords(List<String> quotes){
+        // checkDeleteAccess();
+        HDT_UTL_DatabaseService.deleteSObject(quotes);
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 19/11/2020

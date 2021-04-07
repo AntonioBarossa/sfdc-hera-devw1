@@ -5,6 +5,8 @@
     <aura:attribute name="subTabToClose" type="String"/>
     <aura:attribute name="accountTabId" type="String"/>
     <aura:attribute name="enableRefresh" type="Boolean"/>
+    <aura:attribute name="resumeFromDraft" type="Boolean"/>
+    
 
     <aura:attribute name="processType" type="String" />
     <aura:attribute name="recordTypeName" type="String" />
@@ -13,6 +15,9 @@
     <!--aura:attribute name="cluster" type="String" /-->
     <aura:attribute name="recordToCancell" type="String" />
     <aura:attribute name="sObjectRecordToCancell" type="String" />
+
+    <!--Attributi Informative-->
+    <aura:attribute name="context" type="String"/>
 
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <lightning:workspaceAPI aura:id="workspace" />

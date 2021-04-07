@@ -19,7 +19,7 @@ public inherited sharing class HDT_QR_Sale {
     public Sale__c getRecordById(String id, String fields){
 
         String query = 'SELECT '+ fields +
-                ' FROM Sale__c WHERE Id = :id LIMIT 1';
+                ' FROM Sale__c WHERE Id = :id WITH SECURITY_ENFORCED LIMIT 1';
         List<Sale__c> sales = Database.query(query);
 
         return sales[0];

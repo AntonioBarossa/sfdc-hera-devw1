@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AlertRule__c</fullName>
+    <description>Tipologia Alert: periodo dell&apos;autolettura o l&apos;emissione della bolletta/fattura</description>
+    <externalId>false</externalId>
+    <label>Regola Alert</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>AlertType__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Emissione bolletta</fullName>
+                <default>false</default>
+                <label>Emissione bolletta</label>
+            </value>
+            <value>
+                <fullName>Emissione bolletta cartacea</fullName>
+                <default>false</default>
+                <label>Emissione bolletta cartacea</label>
+            </value>
+            <value>
+                <fullName>Emissione fattura</fullName>
+                <default>false</default>
+                <label>Emissione fattura</label>
+            </value>
+            <value>
+                <fullName>Emissione fattura elettronica</fullName>
+                <default>false</default>
+                <label>Emissione fattura elettronica</label>
+            </value>
+            <value>
+                <fullName>Periodo autolettura</fullName>
+                <default>false</default>
+                <label>Periodo autolettura</label>
+            </value>
+            <value>
+                <fullName>Periodo autolettura (senza push)</fullName>
+                <default>false</default>
+                <label>Periodo autolettura (senza push)</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione bolletta cartacea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione fattura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emissione bolletta/fattura</controllingFieldValue>
+            <valueName>Emissione fattura elettronica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodo autolettura</controllingFieldValue>
+            <valueName>Periodo autolettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodo autolettura</controllingFieldValue>
+            <valueName>Periodo autolettura (senza push)</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
