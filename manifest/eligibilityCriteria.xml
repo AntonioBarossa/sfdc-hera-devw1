@@ -30,7 +30,13 @@
 	<types>
 		<members>EligibilityCriteria__c</members>
 		<name>CustomObject</name>
-	</types>	
+	</types>
+	<types>
+		<members>DataHelper</members>
+		<members>MatrixConfiguration</members>
+		<members>Municipalities</members>
+		<name>StaticResource</name>
+	</types>
 	<!--<types>
 		<members>EligibilityCriteria__c.ATCGas__c</members>
 		<members>EligibilityCriteria__c.Agency__c</members>
