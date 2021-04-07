@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         SObjectType objtype = Schema.getGlobalDescribe().get('EligibleMunicipality__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
-        if(objRes.isAccessible()){
+        if(objRes.isCreateable()){
 
             List<Database.SaveResult> insertResults = Database.insert(itemList, false);
 
@@ -268,7 +268,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
-        if(objRes.isAccessible()){
+        if(objRes.isDeletable()){
 
             List<Database.DeleteResult> deleteResults = Database.delete(criteriaListToDelete, false);
 

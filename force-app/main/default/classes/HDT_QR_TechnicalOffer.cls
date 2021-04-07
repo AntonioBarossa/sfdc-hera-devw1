@@ -14,7 +14,8 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static List<RateTemplate__c> getRateList(String queryTerm) {
 
-        String myQuery = 'SELECT Id, Name, ContractTemplate__c FROM RateTemplate__c';
+        String myQuery = 'SELECT Id, Name, ContractTemplate__c';
+        myQuery += ' FROM RateTemplate__c';
 
         if(!String.isEmpty(queryTerm)){
             myQuery += ' WHERE Name LIKE \'%' + queryTerm + '%\'';

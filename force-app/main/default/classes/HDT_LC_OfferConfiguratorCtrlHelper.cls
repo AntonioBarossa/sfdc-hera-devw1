@@ -59,7 +59,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
  
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
-        if(objRes.isAccessible()){
+        if(objRes.isCreateable()){
 
             List<Database.SaveResult> insertResults = Database.insert(itemList, false);
 
@@ -201,9 +201,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
-    public static void sendTechOfferToSAP(){
-        
-    }
+    //public static void sendTechOfferToSAP(){
+    //    
+    //}
 
     public static Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> crateComplexMatrix(){
 
@@ -240,7 +240,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
  
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
-        if(objRes.isAccessible()){
+        if(objRes.isDeletable()){
 
             List<Database.DeleteResult> deleteResults = Database.delete(techOffListToDelete, false);
 

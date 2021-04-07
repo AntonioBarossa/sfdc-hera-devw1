@@ -209,10 +209,10 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
                 FIND :quote.SupplyCity__c
                 IN ALL FIELDS
                 RETURNING
-                        EligibleMunicipality__c(EligibilityCriteria__r.Product__c
+                        eligibleMunicipality__c(EligibilityCriteria__r.Product__c
                                                 WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
                                                 AND EligibilityCriteria__r.Product__r.IsActive = true
-                                                AND EligibilityCriteria__r.Product__r.Family IN :familyList
+                                                AND EligibilityCriteria__r.Product__r.Family in :familyList
                                                 )
             ];
 
