@@ -26,6 +26,8 @@
             
         <property name="selectionType" type="String" label="selectionType" description="selectionType" role="inputOnly" required="true"/>
             
+        <property name="concatenate" type="Boolean" label="concatenateContractCodes" description="Abilita la concatenazione dei codici contratto come output." role="inputOnly"/>
+
         <property name="results" type="String" label="results" description="results" role="outputOnly"/>
             
         </targetConfig>

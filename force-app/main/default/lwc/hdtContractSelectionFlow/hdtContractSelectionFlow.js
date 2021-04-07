@@ -10,6 +10,7 @@ export default class HdtContractProfileSelectionFlow extends LightningElement {
     @api results;
     @api accountId;
     @api selectionType;
+    @api concatenate;
     
     @track queryParams;
     @track maxRow;
@@ -51,11 +52,20 @@ export default class HdtContractProfileSelectionFlow extends LightningElement {
     }
 
     handleRecordSelection(event){
-        this.results = event.detail.selectedRows[0].Id;
+        if (this.concatenate === true) {
+            console.log('Concatenazione di tutti i codici contratto selezionati...');
+            this.results = '';
+            for (var selectedRow in event.detail.selectedRows) {
+                this.results += event.detail.selectedRows[0].SAPContractCode__c + '; ';
+            }
+        } else {
+            this.results = event.detail.selectedRows[0].Id;
+        }
     }
    
     handleNext(event){
         if(this.results != null && this.results != "" && this.results != "undefined"){
+            console.log('results: ' + this.results);
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
         }else{
