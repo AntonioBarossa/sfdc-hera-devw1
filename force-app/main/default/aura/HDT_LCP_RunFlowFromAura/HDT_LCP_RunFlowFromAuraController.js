@@ -107,7 +107,6 @@
     handleStatusChange : function (component, event) {
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
-
        //TODO getire eventuali errori provenienti dal flow 
        //event.getParam("status") === "ERROR" 
 
@@ -137,6 +136,8 @@
                 newCaseId=component.get("v.recordid");
             }
 
+
+        if(!enableRefresh){
             workspaceAPI.openSubtab({
                 parentTabId: accountTabId,
                 pageReference: {
@@ -152,10 +153,9 @@
 
                 workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                     console.log('# Refresh page -> ' + enableRefresh);
-                    if(enableRefresh){
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                    }
+                    console.log('# OK Refresh page #');
+                    $A.get('e.force:refreshView').fire();
+                    
     
                     //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
                     //    workspaceAPI.refreshTab({
@@ -166,38 +166,34 @@
                     //    });
                     //});
     
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+                });
+            }else{
+
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                        console.log('# Refresh page -> ' + enableRefresh);
+                      
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                    
+        
+                        workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                        workspaceAPI.refreshTab({
+                                tabId: subTabToRefresh,
+                                includeAllSubtabs: true
+                            }).catch(function(error) {
+                                console.log(error);
+                            });
+                        });
+        
                 }).catch(function(error) {
                     console.log(error);
                 });
 
 
-            
-
-            //} else {
-
-                /*orkspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                    console.log('# Refresh page -> ' + enableRefresh);
-                    if(enableRefresh){
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                    }
-    
-                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                    //    workspaceAPI.refreshTab({
-                    //        tabId: subTabToRefresh,
-                    //        includeAllSubtabs: true
-                    //    }).catch(function(error) {
-                    //        console.log(error);
-                    //    });
-                    //});*/
-    
-            }).catch(function(error) {
-                console.log(error);
-            });
-
-
             }
-
-       }
-    
+        }
+    }
 })
