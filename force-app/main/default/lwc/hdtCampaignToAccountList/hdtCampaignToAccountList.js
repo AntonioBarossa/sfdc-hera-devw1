@@ -1,5 +1,6 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
+import { NavigationMixin } from 'lightning/navigation';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
 
 
@@ -9,7 +10,7 @@ const columns = [
     { label: 'Canale', fieldName: 'Channel__c' },
     { label: 'Close Date', fieldName: 'EndDate', type: 'date' },
 ];
-export default class PopoverContainer extends LightningElement {
+export default class PopoverContainer extends NavigationMixin(LightningElement) {
     @api campaignType;
     @api objectApiName;
     @api entityId;
@@ -67,19 +68,14 @@ export default class PopoverContainer extends LightningElement {
         }));
     }
 
-    openPopover(e) {
-        const campaignId = e.currentTarget.dataset.id;
-        const popoverObj = this.template.querySelector(`c-hdt-popover[data-id="${campaignId}"]`);
-        if (popoverObj) {
-            popoverObj.classList.remove('slds-hide');
-        }
-    }
-
-    closePopover(e) {
-        const campaignId = e.currentTarget.dataset.id;
-        const popoverObj = this.template.querySelector(`c-hdt-popover[data-id="${campaignId}"]`);
-        if (popoverObj) {
-            popoverObj.classList.add('slds-hide');
-        }
+    redirectToCampaign(event) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: event.target.getAttribute("data-id"),
+                objectApiName: 'CampaignMember',
+                actionName: 'view'
+            },
+        });
     }
 }

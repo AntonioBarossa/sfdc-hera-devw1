@@ -1,6 +1,3 @@
 .popover-section {
-    background-color: rgb(242, 242, 242);
     display: inline-flex;
-    position: absolute;
-    z-index: 99;
 }

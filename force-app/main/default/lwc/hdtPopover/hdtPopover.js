@@ -10,10 +10,6 @@ export default class Popover extends LightningElement {
     @track showNewCaseButton;
     @track showNewSaleButton;
 
-    closeButton() {
-        this.dispatchEvent(new CustomEvent('closepopover'));
-    }
-
     statusUpdate() {
         this.dispatchEvent(new CustomEvent('statusupdate'));
     }

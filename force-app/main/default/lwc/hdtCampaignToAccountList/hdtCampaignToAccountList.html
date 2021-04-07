@@ -45,43 +45,16 @@
                                             <h3 class="slds-tile__title slds-truncate campaignName"
                                                 data-required={c.Campaign.Required__c} data-id={c.Id}
                                                 title={c.Campaign.Name}>
-                                                <a href="#" onmouseover={openPopover}
+                                                <a onclick={redirectToCampaign}
                                                     data-id={c.Id}>{c.Campaign.Name}</a>
                                             </h3>
-                                            <c-hdt-popover class="slds-hide" campaign-id={c.CampaignId}
-                                                record-id={entityId} campaign-member-id={c.Id} data-id={c.Id}
+                                            <c-hdt-popover campaign-id={c.CampaignId} record-id={entityId}
+                                                campaign-member-id={c.Id} data-id={c.Id}
                                                 process-type={c.Campaign.ProcessType__c}
                                                 case-cluster={c.Campaign.CaseCategory__c}
                                                 case-type={c.Campaign.CaseSubCategory__c}
-                                                onmouseover={openPopover} onclosepopover={closePopover}
-                                                onmouseout={closePopover} onstatusupdate={handleCampaignsUpdate}>
+                                                onstatusupdate={handleCampaignsUpdate}>
                                             </c-hdt-popover>
-                                        </div>
-                                        <div class="slds-tile__detail">
-                                            <dl class="slds-list_horizontal slds-wrap">
-                                                <dt class="slds-item_label slds-text-color_weak slds-truncate"
-                                                    title="Status">
-                                                    Stato:</dt>
-                                                <dd class="slds-item_detail slds-truncate" title={c.Status}>
-                                                    {c.Status}</dd>
-                                                <dt class="slds-item_label slds-text-color_weak slds-truncate"
-                                                    title="Channel">
-                                                    Canale:</dt>
-                                                <dd class="slds-item_detail slds-truncate"
-                                                    title={c.Campaign.Channel__c}>
-                                                    {c.Campaign.Channel__c}
-                                                </dd>
-                                                <dt class="slds-item_label slds-text-color_weak slds-truncate"
-                                                    title="Closing Date">
-                                                    Close Date:</dt>
-                                                <dd class="slds-item_detail slds-truncate" title={c.Campaign.EndDate}>
-                                                    {c.Campaign.EndDate}</dd>
-                                                <dt class="slds-item_label slds-text-color_weak slds-truncate"
-                                                    title="Contact">
-                                                    Contact Name:</dt>
-                                                <dd class="slds-item_detail slds-truncate" title={c.Contact.Name}>
-                                                    {c.Contact.Name}</dd>
-                                            </dl>
                                         </div>
                                     </article>
                                 </div>

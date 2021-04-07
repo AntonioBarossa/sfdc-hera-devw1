@@ -34,8 +34,6 @@ export default class HdtCreateCampaign extends LightningElement {
 
         if (event.detail.value === 'Pianificata') {
             this.startDateFieldRequired = true;
-            this.targetingModeFieldRequired = true;
-            this.processTypeFieldRequired = true;
 
             this.campaignInboundFields = categoryField === 'Campagna CRM' ? true : false;
             this.reitekFieldRequired = channelField.includes('Telefonico Outbound') ? true : false;
@@ -46,8 +44,6 @@ export default class HdtCreateCampaign extends LightningElement {
             this.recurringCampaignFieldsRequired = recurringField;
         } else {
             this.startDateFieldRequired = false;
-            this.targetingModeFieldRequired = false;
-            this.processTypeFieldRequired = false;
             this.recurringCampaignFieldsRequired = false;
             this.reitekFieldRequired = false;
             this.campaignMemberAssignmentTypeRequired = false;
@@ -82,6 +78,18 @@ export default class HdtCreateCampaign extends LightningElement {
         this.campaignMemberAssignmentRequired = (event.detail.value === 'Peso Percentuale' && this.statusField !== 'Bozza') ? true : false;
     }
 
+    handleGenerationPeriodChange(event) {
+        let value = event.detail.value;
+        let endDate;
+        if (value > 0) {
+            let startDate = this.template.querySelector('.startDate > lightning-input-field').value;
+            const date = new Date(startDate);
+            date.setDate(date.getDate() + 7 * value);
+            endDate = date.toISOString().slice(0, 10);
+            this.template.querySelector('.endDate > lightning-input-field').value = endDate;
+        }
+    }
+
     handleChangeCampaignMemberAssignment(event) {
         let selectedMemberAssignmentId = event.detail.value[0];
 
@@ -96,16 +104,18 @@ export default class HdtCreateCampaign extends LightningElement {
                 console.log(this.percentageAllocationSum);
                 //check the sum of PercentageAllocation__c
                 if (this.percentageAllocationSum !== 100) {
-                    this.dispatchEvent(
+                    let toastMsg;
+                    toastMsg = this.dispatchEvent(
                         new ShowToastEvent({
                             title: "",
                             message: `Peso Percentuale di questa assegnazione è ${this.percentageAllocationSum}%`,
-                            variant: "error"
+                            variant: "error",
+                            mode: "sticky"
                         })
                     );
                 }
             }).catch(err => {
-                console.log(err.body.message);
+                console.log(err);
             });
         } else {
             this.percentageAllocationSum = 0;
@@ -120,7 +130,8 @@ export default class HdtCreateCampaign extends LightningElement {
                 new ShowToastEvent({
                     title: "",
                     message: `Peso Percentuale di questa assegnazione è ${this.percentageAllocationSum}%`,
-                    variant: "error"
+                    variant: "error",
+                    mode: "sticky"
                 })
             );
         } else {
