@@ -4,6 +4,11 @@
 		<members>HDT_LC_AccountDataEnrichment</members>
 		<members>HDT_LC_AccountDataEnrichmentHelper</members>
 		<members>HDT_QR_AccountDataEnrichment</members>
+		<!-- MeterReading -->
+		<members>HDT_LC_MeterReadingController</members>
+		<members>HDT_LC_MeterReadingControllerHelper</members>
+		<members>HDT_QR_MeterReading</members>
+		<members>HDT_WRP_MeterReading</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -11,10 +16,16 @@
 		<members>HDT_LCP_ViewLwcSubTab</members>
 		<members>HDT_LCP_OpenRaiFeeSubtab</members>
 		<members>HDT_LCP_OpenSocialBonusSubtab</members>
+		<!-- MeterReading -->
+		<members>HDT_LCP_OpenMeterReadingLwc</members>
+		<members>HDT_LCP_OpenMeterReadingSubtab</members>
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
 		<members>hdtAccountDataEnrichment</members>
+		<members>hdtMeterReading</members>
+		<!-- MeterReading -->
+		<members>hdtMeterReadingDetailTable</members>		
 		<name>LightningComponentBundle</name>
 	</types>
    	<types>
@@ -33,6 +44,9 @@
 		<members>AccountDataEnrichment.cmor</members>
 		<members>AccountDataEnrichment.raiFee</members>
 		<members>AccountDataEnrichment.socialBonus</members>
+		<!-- MeterReading -->
+		<members>AccountDataEnrichment.contract</members>
+		<members>AccountDataEnrichment.meterReading</members>		
 		<name>CustomMetadata</name>
 	</types>
 	<types>
