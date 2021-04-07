@@ -4,23 +4,15 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
         Case currentCase = new Case();
 
-        try{
-
-            currentCase = [SELECT Id, 
-            Phase__c, 
-            Type,
-            CaseNumber, 
-            RecordTypeId 
-            FROM Case 
-            WHERE Id = :recordId
-            WITH SECURITY_ENFORCED
-            LIMIT 1];
-
-        } catch(Exception e){
-
-            System.debug(e.getMessage());
-
-        }
+        currentCase = [SELECT Id, 
+        Phase__c, 
+        Type,
+        CaseNumber, 
+        RecordTypeId 
+        FROM Case 
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
 
         return currentCase;
 
