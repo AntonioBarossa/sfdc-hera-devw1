@@ -131,7 +131,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             SELECT Id, Name, RateCategory__r.Name, (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
-                    FROM TechnicalOfferItems__r ORDER BY RowId__c
+                    FROM RigheOffertaTecnica__r ORDER BY RowId__c
                 )
             FROM TechnicalOffer__c
             WHERE Id =: recId
@@ -169,7 +169,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         List<TechnicalOfferItem__c> newItemsList = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c newItem;
-        for(TechnicalOfferItem__c item : recToClone.TechnicalOfferItems__r){
+        for(TechnicalOfferItem__c item : recToClone.RigheOffertaTecnica__r){
             newItem = new TechnicalOfferItem__c();
             newItem = item.clone(false, true, false, false);
             newItem.TechnicalOffer__c = newTechOff.Id;

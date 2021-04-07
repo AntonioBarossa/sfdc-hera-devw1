@@ -59,7 +59,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         EligibilityCriteria__c crtiteriaToClone = [
             SELECT Id, Name,
-                   (SELECT Id, Name, AreaCode__c, JSON_Code__c FROM EligibilityCriteria__r)
+                   (SELECT Id, Name, AreaCode__c, JSON_Code__c FROM Comuni_Eleggibili__r)
             FROM EligibilityCriteria__c
             WHERE Id =: recIdToClone
             WITH SECURITY_ENFORCED
@@ -82,7 +82,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         List<EligibleMunicipality__c> newItemsList = new List<EligibleMunicipality__c>();
         EligibleMunicipality__c newItem;
-        for(EligibleMunicipality__c itemToClone : crtiteriaToClone.EligibilityCriteria__r){
+        for(EligibleMunicipality__c itemToClone : crtiteriaToClone.Comuni_Eleggibili__r){
             newItem = itemToClone.clone(false, true, false, false);
             newItem.EligibilityCriteria__c = newCriteria.Id;
             newItemsList.add(newItem);

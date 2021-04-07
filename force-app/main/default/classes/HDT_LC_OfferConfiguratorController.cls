@@ -131,7 +131,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 if(!String.isEmpty(technicalOfferId)){
                     TechnicalOffer__c techOff = HDT_LC_OfferConfiguratorCtrlHelper.queryTechnicalOfferRecord(technicalOfferId);
                     Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
-                    for(TechnicalOfferItem__c item : techOff.TechnicalOfferItems__r){
+                    for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){
                         itemsMap.put(item.RowId__c, item);
                     }
 
@@ -236,7 +236,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
-        return recToView.TechnicalOfferItems__r;
+        return recToView.RigheOffertaTecnica__r;
     }
 
     @AuraEnabled
