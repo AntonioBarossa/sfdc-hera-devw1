@@ -22,7 +22,7 @@ global with sharing class HDT_WS_MrrRequest {
 
         //INIZIO SVILUPPI EVERIS
         
-        HDT_UTL_PostSalesManager psmUtl = new HDT_UTL_PostSalesManager();
+        HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
 
         //FINE SVILUPPI EVERIS
 
@@ -43,7 +43,7 @@ global with sharing class HDT_WS_MrrRequest {
 
                         if(header.fields.get(0).value == 'postsales'){
 
-                            psmUtl.handleInboundRequest(request);
+                            hpsmSrv.handleInboundRequest(request);
 
                             responseGen.writeStringField('status', 'success');
                             

@@ -9,6 +9,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         wrts_prcgvr.MRR_1_0.MultiResponse responseMrr  = new wrts_prcgvr.MRR_1_0.MultiResponse();
         wrts_prcgvr__CalloutTemplate__c record = new wrts_prcgvr__CalloutTemplate__c();
         Map<String,Object> arg = new Map<String,Object>();
+        List<Case> caseToUpdate = new List<Case>();
         Case currentCase = new Case();
         String ticket;
         String code;
@@ -55,7 +56,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
         wrts_prcgvr.MRR_1_0.MultiRequest mrrList = (wrts_prcgvr.MRR_1_0.MultiRequest) argsMap.get('multirequest');
         
-        
 
         arg.put('endpoint', endpoint);
         arg.put('timeout', 12000);
@@ -65,9 +65,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
         wrts_prcgvr.Interfaces_1_0.ICalloutClient client = 
             (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance('CalloutClient');
-        //Da riabilitare quando sarà chiaro che la response venga correttamente valorizzata.
-        //responseMrr  =  (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
-        //Da riabilitare quando sarà chiaro che la response venga correttamente valorizzata.
+        responseMrr  =  (wrts_prcgvr.MRR_1_0.MultiResponse) client.send(arg);
        /*HttpRequest req = new HttpRequest();
          req.setEndpoint(endpoint);
          req.setMethod('POST');
@@ -80,12 +78,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
          System.debug(res.getStatus());*/
 
 
-        //fake code
-
-        mrrResponse = hpsmUtl.createFakeResponse(currentCase);
-
-        //fake code
-
        
 
     }catch(Exception ex){
@@ -95,26 +87,53 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
     }
 
-    wrpResponses = hpsmUtl.manipulateResponse(mrrResponse);
-    outputResult = hpsmUtl.handleResponse(wrpResponses, currentCase);
-    
-
     System.debug('ResponseMrr --> '+responseMrr);
 
-    /*for (wrts_prcgvr.MRR_1_0.Response responseTry : responseMrr.responses){
+    wrpResponses = hpsmUtl.manipulateResponse(responseMrr);
 
+    System.debug('WRPResponse --> '+wrpResponses);
+    caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
+    
+    if(caseToUpdate.size() > 0){
 
-        System.debug('#Header Response --> '+responseTry.header);
-        System.debug('#Code Response --> '+responseTry.code);
-        System.debug('#Description Response --> '+responseTry.description);
-        System.debug('#Object Response --> '+responseTry.objects);
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
-    }*/
+    }
+
+    
 
     response.success = true;
     response.message = 'OK';
     return response;
      
+    }
+
+
+    public String handleInboundRequest(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+
+        HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
+
+        Case currentCase = new Case();
+
+        currentCase = hpsmQr.getCurrentCaseById(reqWrp.requestMap.get('recordId'));
+
+        switch on reqWrp.requestMap.get('flowType'){
+
+            when 'esito_intermedio'{
+
+                currentCase.Phase__c = reqWrp.requestMap.get('phase');
+
+            }
+            when 'esito_finale'{
+
+            }
+
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(currentCase);
+
+        return null;
+
     }
 
  }

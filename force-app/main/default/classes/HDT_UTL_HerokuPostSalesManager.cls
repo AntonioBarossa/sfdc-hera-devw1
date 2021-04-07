@@ -46,7 +46,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
 
 
-    public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse responseMrr){
+    public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
         List<HDT_WRP_HerokuPostSalesManager> responseResults = new List<HDT_WRP_HerokuPostSalesManager>();
 
@@ -57,13 +57,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String communicationChannel;
         String reqId;
 
-        for(HDT_WRP_HerokuPostSalesProva.HDT_WRP_Response response : responseMrr.responses){
+        for(wrts_prcgvr.MRR_1_0.Response response : responseMrr.responses){
 
             requestType = response.header.requestType;
 
-            for(HDT_WRP_HerokuPostSalesProva.HDT_WRP_Wobject wobject : response.objects){
+            for(wrts_prcgvr.MRR_1_0.WObject wobject : response.objects){
 
-                for(HDT_WRP_HerokuPostSalesProva.HDT_WRP_Field fld : wobject.fields){
+                for(wrts_prcgvr.MRR_1_0.Field fld : wobject.fields){
 
                     switch on fld.name{
 
@@ -108,8 +108,42 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     }
 
+    public HDT_WRP_HerokuPostSalesManager manipulateRequest(HDT_WRP_MrrRequest.HDT_WRP_Request request){
 
-    public String handleResponse(List<HDT_WRP_HerokuPostSalesManager> responseResults, Case currentCase){
+        String flowType;
+        String phase;
+        String recordId;
+
+        for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects[0].fields){
+
+            switch on field.name{
+
+                when 'FLOW_TYPE'{
+
+                    flowType = field.value;
+
+                }
+                when 'RECORD_ID'{
+
+                    recordId = field.value;
+
+                }
+                when 'RECORD_PHASE'{
+
+                    phase = field.value;
+
+                }
+
+            }
+
+        }
+        
+        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId);
+
+    }
+
+
+    public List<Case> handleResponse(List<HDT_WRP_HerokuPostSalesManager> responseResults, Case currentCase){
 
         String phase;
 
@@ -159,16 +193,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         }
 
-        if(caseUpdate.size() > 0){
-
-            System.debug('updating');
-
-            HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-
-        }
-
-
-        return null;
+        return caseUpdate;
 
     }
 

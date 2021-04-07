@@ -184,11 +184,14 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleError(event){
-        console.log(event.detail);
+        let obj = event.detail.output.fieldErrors;
+
+        let message = obj[Object.keys(obj)[0]][0].message;
+
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Errore',
-                message: event.detail.message,
+                message: message,
                 variant: 'error',
             }),
         );
