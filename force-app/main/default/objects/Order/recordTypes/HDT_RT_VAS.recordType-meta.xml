@@ -209,6 +209,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Cluster__c</picklist>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ConnectionMandate__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -440,6 +447,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>InstanceSelfCertification__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Market__c</picklist>
         <values>
             <fullName>Default</fullName>
@@ -483,6 +501,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
+        <values>
+            <fullName>Accettato Motore Vas</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accettazione pagamento a DL</fullName>
             <default>false</default>
@@ -529,6 +551,14 @@
         </values>
         <values>
             <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -629,6 +659,14 @@
         </values>
         <values>
             <fullName>Invio allegato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ko prodotto vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Motore vas ko</fullName>
             <default>false</default>
         </values>
         <values>
@@ -822,11 +860,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>01</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>02</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -861,6 +899,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SupplyType__c</picklist>
         <values>
             <fullName>A-Domestico</fullName>
@@ -888,6 +933,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>TemporaryConnectionRequired__c</picklist>
+        <values>
+            <fullName>Non Validato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>VoltureType__c</picklist>
         <values>
             <fullName>Incorporazione societaria</fullName>
@@ -898,22 +962,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Oridnaria</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Volture__c</picklist>
-        <values>
-            <fullName>Con Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retroattiva</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Standard</fullName>
+            <fullName>Ordinaria</fullName>
             <default>false</default>
         </values>
     </picklistValues>

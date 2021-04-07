@@ -210,6 +210,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Cluster__c</picklist>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ConnectionMandate__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -910,11 +917,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>01</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>02</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -945,6 +952,13 @@
         </values>
         <values>
             <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>Standard</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1005,22 +1019,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Oridnaria</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Volture__c</picklist>
-        <values>
-            <fullName>Con Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Retroattiva</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Standard</fullName>
+            <fullName>Ordinaria</fullName>
             <default>false</default>
         </values>
     </picklistValues>
