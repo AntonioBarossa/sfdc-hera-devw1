@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
+		<members>Product2.HDT_Eligibility</members>
+		<members>Product2.HDT_TechnicalOffer</members>
+		<name>QuickAction</name>
+	</types>
+	<types>
+		<members>DataHelper</members>
+		<members>MatrixConfiguration</members>
+		<members>Municipalities</members>
+		<name>StaticResource</name>
+	</types>
+	<types>
+		<members>Technical_Offer_Page1</members>
+		<members>Product_Record_Page1</members>
+		<members>Criterio_di_Eleggibilit_Record_Page1</members>
+		<name>FlexiPage</name>
+	</types>
+
+	<types>
+		<members>SBQQ__Quote__c-Quote Layout</members>
+		<members>Product2-CPQ Product Layout New</members>
+		<members>TechnicalOffer__c-Technical Offer Layout</members>
+		<members>TechnicalOfferItem__c-Technical Offer Item Layout</members>
+		<members>EligibilityCriteria__c-Criterio di Eleggibilità Layout</members>
+		<name>Layout</name>
+	</types>
+	<types>
+		<members>Product2.HighlightsPanelFields</members>
+		<name>CompactLayout</name>
+	</types>
+	<types>
+		<members>MatrixConfiguration</members>
+		<members>DataHelper</name>
+		<name>StaticResource</name>
+	</types>
+	<types>
+		<members>RateTemplate__c</members>
+		<members>TecnicalOffer__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>Product2.SBQQ__ConfiguratorFilter</members>
+		<members>Product2.SBQQ__ConfiguratorLookup</members>
+		<members>Product2.SBQQ__SearchFilters</members>
+		<members>Product2.SBQQ__SearchResults</members>
+		<members>SBQQ__ProductOption__c.Bonus_EE</members>
+		<members>SBQQ__ProductOption__c.Bonus_Gas</members>
+		<members>SBQQ__ProductOption__c.Contributo_EE</members>
+		<members>SBQQ__ProductOption__c.Contributo_Gas</members>
+		<members>SBQQ__ProductOption__c.SBQQ__OptionConfiguration</members>
+		<members>SBQQ__ProductOption__c.SBQQ__OptionLookup</members>
+		<members>SBQQ__ProductOption__c.SBQQ__SearchFilters</members>
+		<members>SBQQ__ProductOption__c.VAS_Fatturabili</members>
+		<members>SBQQ__ProductOption__c.VAS_Non_Fatturabili</members>
+		<members>SBQQ__ProductOption__c.VAS_Prodotti</members>
+		<members>SBQQ__ProductOption__c.VAS_Servizio</members>
+		<name>FieldSet</name>
+	</types>	
+	<!--<types>
 		<members>Product2.Family</members>
 		<members>Product2.CategoryFamily__c</members>
 		<members>Product2.DelayDayGas__c</members>
@@ -47,10 +105,6 @@
 		<members>SBQQ__ProductOption__c.VAS_Prodotti</members>
 		<members>SBQQ__ProductOption__c.VAS_Servizio</members>
 		<name>FieldSet</name>
-	</types>	
-	<types>
-		<members>Product2-CPQ Product Layout New</members>
-		<name>Layout</name>
-	</types>
+	</types>-->
 	<version>50.0</version>
 </Package>

@@ -38,32 +38,32 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceF0__c</field>
+        <field>PercentageF0__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceF1__c</field>
+        <field>PercentageF1__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceF2__c</field>
+        <field>PercentageF2__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceF3__c</field>
+        <field>PercentageF3__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceFP__c</field>
+        <field>PercentageFP__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>PriceFV__c</field>
+        <field>PercentageFV__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FieldSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>VAS_Prodotti</fullName>
-    <description>Layout CPQ per VAS Prodotti</description>
+    <fullName>VAS_Non_Fatturabili</fullName>
+    <description>VAS_Non_Fatturabili</description>
     <displayedFields>
         <field>SBQQ__ProductName__c</field>
         <isFieldManaged>false</isFieldManaged>
@@ -13,12 +13,7 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>SBQQ__MinQuantity__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>SBQQ__MaxQuantity__c</field>
+        <field>SBQQ__ProductDescription__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
@@ -27,10 +22,5 @@
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
-    <displayedFields>
-        <field>SBQQ__UnitPrice__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <label>VAS Prodotti</label>
+    <label>VAS_Non_Fatturabili</label>
 </FieldSet>

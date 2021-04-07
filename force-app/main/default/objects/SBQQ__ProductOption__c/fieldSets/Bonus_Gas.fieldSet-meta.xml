@@ -33,6 +33,11 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
+        <field>Percentage__c</field>
+        <isFieldManaged>false</isFieldManaged>
+        <isRequired>false</isRequired>
+    </displayedFields>
+    <displayedFields>
         <field>PriceGas__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
