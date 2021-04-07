@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
-    <assignments>
-        <name>Diritto_Rettifica_True</name>
-        <label>Diritto Rettifica True</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <assignmentItems>
-            <assignToReference>DirittoRettifica</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Diritto_Rettifica_True_0</name>
-        <label>Diritto Rettifica True</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
-        <assignmentItems>
-            <assignToReference>DirittoRettifica</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_0</targetReference>
         </defaultConnector>
@@ -71,7 +39,7 @@
         <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>Diritto_Rettifica_True_0</targetReference>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -85,7 +53,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Diritto_Rettifica_True</targetReference>
+                <targetReference>Cerca_Case_reiterazione</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -113,7 +81,7 @@
         </rules>
     </decisions>
     <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info
---&gt; Modifiche per prima release</description>
+--&gt; Modifiche per change DM</description>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
@@ -144,7 +112,7 @@
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -207,7 +175,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -220,12 +188,6 @@
             <field>ChangePhaseDate__c</field>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CorrectionRight__c</field>
-            <value>
-                <elementReference>DirittoRettifica</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -258,7 +220,7 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -271,12 +233,6 @@
             <field>ChangePhaseDate__c</field>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>CorrectionRight__c</field>
-            <value>
-                <elementReference>DirittoRettifica</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -409,6 +365,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

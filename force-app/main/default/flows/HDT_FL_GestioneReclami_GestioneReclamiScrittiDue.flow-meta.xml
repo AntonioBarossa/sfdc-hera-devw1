@@ -2,42 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>Assegna_Diritto_Rettifica</name>
-        <label>Assegna Diritto Rettifica</label>
-        <locationX>726</locationX>
-        <locationY>638</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.CorrectionRight__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Diritto_Rettifica</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Diritto_Rettifica_0</name>
-        <label>Assegna Diritto Rettifica</label>
-        <locationX>990</locationX>
-        <locationY>638</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.CorrectionRight__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Diritto_Rettifica</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Id_Contenitore</name>
         <label>Assegna Id Contenitore</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +21,7 @@
         <name>Assegna_Id_Contenitore_0</name>
         <label>Assegna Id Contenitore</label>
         <locationX>314</locationX>
-        <locationY>1694</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +37,7 @@
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
         <locationX>594</locationX>
-        <locationY>2678</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -85,7 +53,7 @@
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
         <locationX>1122</locationX>
-        <locationY>2678</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -101,7 +69,7 @@
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
         <locationX>858</locationX>
-        <locationY>2678</locationY>
+        <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -117,7 +85,7 @@
         <name>Non_Rimuovere_Link_Reiterazione</name>
         <label>Non Rimuovere Link Reiterazione</label>
         <locationX>380</locationX>
-        <locationY>1334</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>CaseReiterazione</assignToReference>
             <operator>Assign</operator>
@@ -140,12 +108,12 @@
         <name>Rimuovi_Link_Reiterazione</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>842</locationX>
-        <locationY>1334</locationY>
+        <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>CaseReiterazione</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -163,12 +131,12 @@
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>1106</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>CaseReiterazione</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue></stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -207,7 +175,7 @@
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito?</label>
         <locationX>858</locationX>
-        <locationY>3134</locationY>
+        <locationY>3014</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case</targetReference>
         </defaultConnector>
@@ -232,7 +200,7 @@
         <name>Case_Contenitore_esiste</name>
         <label>Case Contenitore esiste?</label>
         <locationX>182</locationX>
-        <locationY>1574</locationY>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>Assegna_Id_Contenitore_0</targetReference>
         </defaultConnector>
@@ -264,7 +232,7 @@
         <name>Case_Vecchio_Scaduto</name>
         <label>Case Vecchio Scaduto?</label>
         <locationX>380</locationX>
-        <locationY>1454</locationY>
+        <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Sollecito_Vecchio_Reclamo</targetReference>
         </defaultConnector>
@@ -291,7 +259,7 @@
         <locationX>858</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Diritto_Rettifica_0</targetReference>
+            <targetReference>Aggiorna_Diritto_Rettifica</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Diritto alla Rettifica</defaultConnectorLabel>
         <rules>
@@ -305,7 +273,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Diritto_Rettifica</targetReference>
+                <targetReference>Aggiorna_Diritto_Rettifica</targetReference>
             </connector>
             <label>Diritto alla Rettifica</label>
         </rules>
@@ -314,7 +282,7 @@
         <name>Presenza_Reiterazione</name>
         <label>Presenza Reiterazione?</label>
         <locationX>858</locationX>
-        <locationY>974</locationY>
+        <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
         </defaultConnector>
@@ -339,7 +307,7 @@
         <name>Reclamo_Scritto_Richiesta_Info</name>
         <label>Reclamo Scritto/Richiesta Info?</label>
         <locationX>858</locationX>
-        <locationY>2558</locationY>
+        <locationY>2438</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0</targetReference>
         </defaultConnector>
@@ -379,7 +347,7 @@
         <name>Reiterazione_Confermata</name>
         <label>Reiterazione Confermata?</label>
         <locationX>611</locationX>
-        <locationY>1214</locationY>
+        <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione</targetReference>
         </defaultConnector>
@@ -401,7 +369,7 @@
         </rules>
     </decisions>
     <description>Flow per la seconda classificazione dei Reclami Scritti/Rich. Info
---&gt; Modifiche per primo release devw1</description>
+--&gt; Modifiche per cambio DM</description>
     <dynamicChoiceSets>
         <name>PrimoLivello</name>
         <dataType>Picklist</dataType>
@@ -472,7 +440,7 @@
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
         <locationX>726</locationX>
-        <locationY>3374</locationY>
+        <locationY>3254</locationY>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
@@ -501,7 +469,7 @@
         <name>Crea_Case_Contenitore_0</name>
         <label>Crea Case Contenitore</label>
         <locationX>50</locationX>
-        <locationY>1694</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Assegna_Id_Contenitore</targetReference>
         </connector>
@@ -626,7 +594,7 @@
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato Seconda Classificazione</label>
         <locationX>858</locationX>
-        <locationY>3014</locationY>
+        <locationY>2894</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Blocco_Sollecito_0</targetReference>
@@ -647,7 +615,7 @@
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
         <locationX>726</locationX>
-        <locationY>3254</locationY>
+        <locationY>3134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -675,7 +643,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>858</locationX>
-        <locationY>3590</locationY>
+        <locationY>3470</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -714,7 +682,7 @@
         <name>Aggiorna_Diritto_Rettifica</name>
         <label>Aggiorna Diritto Rettifica</label>
         <locationX>858</locationX>
-        <locationY>854</locationY>
+        <locationY>734</locationY>
         <connector>
             <targetReference>Presenza_Reiterazione</targetReference>
         </connector>
@@ -724,7 +692,7 @@
         <name>Chiudi_il_Case</name>
         <label>Annulla il Case</label>
         <locationX>578</locationX>
-        <locationY>1694</locationY>
+        <locationY>1574</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -757,7 +725,7 @@
         <name>Link_a_Case_Contenitore</name>
         <label>Link a Case Contenitore</label>
         <locationX>182</locationX>
-        <locationY>2030</locationY>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Link_a_Case_Contenitore_0</targetReference>
         </connector>
@@ -781,7 +749,7 @@
         <name>Link_a_Case_Contenitore_0</name>
         <label>Link a Case Contenitore</label>
         <locationX>182</locationX>
-        <locationY>2150</locationY>
+        <locationY>2030</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
         </connector>
@@ -887,6 +855,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -897,7 +866,7 @@
         <name>Inserimento_Sollecito_Vecchio_Reclamo</name>
         <label>Inserimento Sollecito Vecchio Reclamo</label>
         <locationX>578</locationX>
-        <locationY>1574</locationY>
+        <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -949,6 +918,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -959,7 +929,7 @@
         <name>Screen_Conferma_Reiterazione</name>
         <label>Screen Conferma Reiterazione</label>
         <locationX>611</locationX>
-        <locationY>1094</locationY>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1005,6 +975,7 @@
                     <stringValue>Scegliere se confermare o meno la reiterazione</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1048,6 +1019,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1058,7 +1030,7 @@
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
         <locationX>858</locationX>
-        <locationY>2894</locationY>
+        <locationY>2774</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1152,6 +1124,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
