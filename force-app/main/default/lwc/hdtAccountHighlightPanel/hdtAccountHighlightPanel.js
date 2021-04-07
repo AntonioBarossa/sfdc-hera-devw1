@@ -1,5 +1,5 @@
-import { LightningElement, api, track, wire } from 'lwc';
-import CAMPAIGN_ICONS from '@salesforce/resourceUrl/campaignIcons';
+import { LightningElement, api, track } from 'lwc';
+import CampaignIcons from '@salesforce/resourceUrl/campaignIcons';
 import getAllCampaigns from '@salesforce/apex/HDT_LC_CampaignsController.getCampaigns';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -10,9 +10,9 @@ export default class HdtAccountHighlightPanel extends LightningElement {
     @api campaignCategory = 'Campagna CRM';
     @api campaignChannel = '';
 
-    inactiveCampaignsIcon = CAMPAIGN_ICONS + "/inactiveCampaigns.png";
-    activeCampaignsIcon = CAMPAIGN_ICONS + "/activeCampaigns.png";
-    requiredCampaignsIcon = CAMPAIGN_ICONS + "/requiredCampaigns.jpg";
+    inactiveCampaignsIcon = CampaignIcons + "/inactiveCampaigns.png";
+    activeCampaignsIcon = CampaignIcons + "/activeCampaigns.png";
+    requiredCampaignsIcon = CampaignIcons + "/requiredCampaigns.jpg";
 
     @track iconStatus;
     activeCampaigns = [];
