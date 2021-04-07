@@ -18,8 +18,16 @@ public inherited sharing class HDT_UTL_NewsNotificationCenter {
         String result;
 
 
-        dataCategories = qrKb.getDataCategories(article.Id);
+        try{
+            
+            dataCategories = qrKb.getDataCategories(article.Id);
 		
+        } catch(Exception e){
+
+            System.debug(e.getMessage());
+
+        }
+
         if(dataCategories.size() > 0){
         
         
