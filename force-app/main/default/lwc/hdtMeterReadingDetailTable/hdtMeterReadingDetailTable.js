@@ -1,7 +1,7 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getMeterReadingRecords from '@salesforce/apex/HDT_LC_MeterReadingController.getMeterReadingRecords';
 
-const columns = [
+/*const columns = [
     { label: 'Data lettura', fieldName: 'lectureDate', initialWidth: 150},
     { label: 'Fascia', fieldName: 'slot', initialWidth: 150},
     { label: 'Lettura (Interi)', fieldName: 'lectureInt', initialWidth: 150},
@@ -21,18 +21,23 @@ const columns = [
     { label: 'Settore merceologico', fieldName: 'sector', initialWidth: 150},
     { label: 'Flag lettura', fieldName: 'consumed', initialWidth: 150},
     { label: 'Motivazione', fieldName: 'reasonWhy', initialWidth: 150}
-];
+];*/
 
 export default class HdtMeterReadingDetailTable extends LightningElement {
 
+    @api columnsobj;
     @api contractNumber;
     @api loadData;
     @api hideCheckboxColumn;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
-    @track columns = columns;
+    @track columns;// = columns;
     meterReadingError = false;
     meterReadingErrorMessage = '';
+
+    connectedCallback(){
+        this.columns = this.columnsobj;
+    }
 
     @api loadingData(){
         this.loadData = false;
@@ -44,7 +49,8 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     wiredRecords({ error, data }) {
         if(data) {
             if(data.success){
-                this.meterReadingData = data.data;
+                var obj = JSON.parse(data.data);
+                this.meterReadingData = obj.data;
                 this.detailTableHeader = 'Letture contratto > ' + this.contractNumber;
                 this.loadData = true;
             } else {

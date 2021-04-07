@@ -9,7 +9,8 @@ public inherited sharing class HDT_WRP_MeterReading {
     public class HDT_WRP_MeterReadingObj {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
-        @AuraEnabled public List<HDT_WRP_MeterReadingDetail> data;
+        //@AuraEnabled public List<HDT_WRP_MeterReadingDetail> data;
+        @AuraEnabled public String data;
     }
 
     public class HDT_WRP_ContractDetail {
@@ -22,7 +23,7 @@ public inherited sharing class HDT_WRP_MeterReading {
         @AuraEnabled public String service;
     }
 
-    public class HDT_WRP_MeterReadingDetail {
+    /*public class HDT_WRP_MeterReadingDetail {
         @AuraEnabled public String id; 
         @AuraEnabled public String contractId; 
         @AuraEnabled public String lectureDate;
@@ -41,7 +42,7 @@ public inherited sharing class HDT_WRP_MeterReading {
         @AuraEnabled public String consumedType;
         @AuraEnabled public String sector;
         @AuraEnabled public String reasonWhy;
-    }
+    }*/
 
     public class HDT_WRP_HttpBody {
         public String codiceContratto;
@@ -50,6 +51,13 @@ public inherited sharing class HDT_WRP_MeterReading {
         public String dataInizioLettura;
         public String dataFineLettura;
         public String letturaReale;
+    }
+
+    public class HDT_WRP_ColumnsMetadata {
+        @AuraEnabled public Boolean success;
+        @AuraEnabled public String message;
+        @AuraEnabled public String contractTable;
+        @AuraEnabled public String meterReadingTable;
     }
 
 }

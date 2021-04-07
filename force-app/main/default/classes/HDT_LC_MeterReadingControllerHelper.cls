@@ -1,5 +1,42 @@
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
+    public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDataHelper(){
+
+        HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata columnsMetadata = new HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata();
+
+        try{
+            List<AccountDataEnrichment__mdt> contractMetadataList;
+            contractMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(contractMetadataList, 'contract');
+
+            if(contractMetadataList.size()==0){
+                columnsMetadata.success = false;
+                columnsMetadata.message = 'No metadata found for contract';
+                return columnsMetadata;
+            }
+
+            List<AccountDataEnrichment__mdt> meterRadingMetadataList;
+            meterRadingMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(meterRadingMetadataList, 'meterReading');
+
+            if(meterRadingMetadataList.size()==0){
+                columnsMetadata.success = false;
+                columnsMetadata.message = 'No metadata found for meterRading';
+                return columnsMetadata;
+            }
+
+            columnsMetadata.success = true;
+            columnsMetadata.contractTable = contractMetadataList[0].ColumnData__c;
+            columnsMetadata.meterReadingTable = meterRadingMetadataList[0].ColumnData__c;
+
+            return columnsMetadata;
+
+        } catch(Exception e){
+            columnsMetadata.success = false;
+            columnsMetadata.message = e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()) + ']';
+            return columnsMetadata;
+        }
+
+    }
+
     public static HDT_WRP_MeterReading.HDT_WRP_ContractObj getContractRecordsHelper(String accountId) {
         HDT_WRP_MeterReading.HDT_WRP_ContractObj contrObj = new HDT_WRP_MeterReading.HDT_WRP_ContractObj();
 
@@ -47,16 +84,16 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj();
 
         try{
-            meterReadingObj.data = new List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail>();
+            //meterReadingObj.data = new List<HDT_WRP_MeterReading.HDT_WRP_MeterReadingDetail>();
 
             HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject();
 
             HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
-            bodyWrp.codiceContratto = contractCode;
-            bodyWrp.codiceImpianto = '';
+            bodyWrp.codiceContratto = '';//contractCode;
+            bodyWrp.codiceImpianto = '4002460003';
             bodyWrp.codicePod = '';
-            bodyWrp.dataInizioLettura = '';
-            bodyWrp.dataFineLettura = '';
+            bodyWrp.dataInizioLettura = '01/12/2005';
+            bodyWrp.dataFineLettura = '31/12/2005';
             bodyWrp.letturaReale = '';
 
             String body = JSON.serialize(bodyWrp, true);
@@ -81,10 +118,11 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             }
     
             //here we have to deserialize body to wrapper obj
-            HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingData = (HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj.class);
+            //HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingData = (HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj.class);
 
             meterReadingObj.success = true;
-            meterReadingObj.data = meterReadingData.data;
+            //meterReadingObj.data = meterReadingData.data;
+            meterReadingObj.data = responseCtrl.body;
 
         } catch (Exception e){
             meterReadingObj.success = false;
@@ -99,9 +137,12 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
-        httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
-        httpObj.httpMethod = 'POST';            
-        httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+        //httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
+        //httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+        httpObj.endPoint = 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/service-console/readings/search';
+        httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');
+       
+        httpObj.httpMethod = 'POST';
         httpObj.headersMap.put('Content-Type', 'application/json');
 
         return httpObj;

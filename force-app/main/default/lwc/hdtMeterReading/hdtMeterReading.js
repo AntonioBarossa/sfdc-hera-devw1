@@ -1,12 +1,14 @@
 import { LightningElement, api, track } from 'lwc';
 import getContractRecords from '@salesforce/apex/HDT_LC_MeterReadingController.getContractRecords';
+import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
 //import getMeterReadingRecords from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.getMeterReadingRecords';
 
 export default class HdtMeterReading extends LightningElement {
     
     @api recordid;
-    @track contractColumns = contractColumns;
+    @track contractColumns;
     @track contractNumber;
+    @track meterReadingColumns;
     hideCheckboxColumn = false;
     loadData = false;
     queryTerm = '';
@@ -18,7 +20,29 @@ export default class HdtMeterReading extends LightningElement {
     contractDataToView = [];
 
     connectedCallback() {
+        this.configurationData();
         this.contractBackendCall();
+    }
+
+    configurationData(){
+        getConfigurationData({type: 'meterReading'}).then(result => {
+
+            if(result.success){
+                //console.log('>>> ' + result.contractTable);
+                var obj = JSON.parse(result.contractTable);
+                this.contractColumns = contractColumns.concat(obj.data);
+                this.meterReadingColumns = JSON.parse(result.meterReadingTable);
+            } else {
+                console.log('>>>> ERROR > getContractRecords');
+                this.error = true;
+                this.errorMessage = result.message;
+                this.spinner = false;                
+            }
+
+        }).catch(error => {
+            console.log('>>>> ERROR - catch');
+            console.log(JSON.stringify(error));
+        });
     }
 
     contractBackendCall(){
@@ -79,11 +103,11 @@ const contractColumns = [
                             variant: 'border-filled',
                             alternativeText: 'Seleziona'
                         }
-    },
+    }/*,
     {label: 'Numero Contratto', fieldName: 'contractNumber', initialWidth: 200},
     {label: 'Stato', fieldName: 'status'},
     {label: 'Data inizio', fieldName: 'startDate'},
     {label: 'Data fine', fieldName: 'endDate'},
     {label: 'Fornitura', fieldName: 'asset'},
-    {label: 'Servizio', fieldName: 'service'}
+    {label: 'Servizio', fieldName: 'service'}*/
 ];

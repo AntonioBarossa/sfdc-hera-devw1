@@ -42,7 +42,8 @@
 
     <div if:false={error} class="slds-m-top_x-small" >
         <template if:true={contractNumberAvailable} >
-            <c-hdt-meter-reading-detail-table 
+            <c-hdt-meter-reading-detail-table
+                columnsobj={meterReadingColumns}
                 contract-number={contractNumber}
                 ondataload={dataload}
                 load-data={loadData}

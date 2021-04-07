@@ -1,5 +1,17 @@
 public inherited sharing class HDT_QR_MeterReading {
     
+    public static List<AccountDataEnrichment__mdt> getAccountDataEnrichment(List<AccountDataEnrichment__mdt> enrichmentbMetadataList, String code){
+        enrichmentbMetadataList = new List<AccountDataEnrichment__mdt>();
+        enrichmentbMetadataList = [
+            SELECT Label, DeveloperName, Authorization__c, ColumnData__c, Credential__c, UseMock__c
+            FROM AccountDataEnrichment__mdt
+            WHERE DeveloperName = :code
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+        return enrichmentbMetadataList;       
+    }
+
     public static List<Contract> getAccountContracts(List<Contract> contractList, String accountId){
         contractList = new List<Contract>();
         contractList = [
