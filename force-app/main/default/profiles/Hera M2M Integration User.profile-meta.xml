@@ -4927,6 +4927,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contract.BillingProfile__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contract.SAPContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12527,6 +12532,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.CommissioningCampaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.ContractReference__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13683,6 +13693,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Sale__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.CommissioningCampaign__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
