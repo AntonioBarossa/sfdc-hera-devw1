@@ -156,8 +156,9 @@
     <gender>Feminine</gender>
     <label>Assegnazione Campaign Member Item</label>
     <nameField>
-        <label>Assegnazione Campaign Member Item Name</label>
-        <type>Text</type>
+        <displayFormat>CMAI-{00000000}</displayFormat>
+        <label>Name</label>
+        <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Assegnazioni Campaign Member Item</pluralLabel>
     <searchLayouts/>
