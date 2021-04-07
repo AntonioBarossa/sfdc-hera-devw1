@@ -3,7 +3,7 @@ import getConfiguration from '@salesforce/apex/HDT_LC_GenericRecordSelection.get
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class HdtContractProfileSelectionFlow extends LightningElement {
+export default class HdtContractSelectionFlow extends LightningElement {
     @api searchLabel;
     @api searchVariant;
     @api searchPlaceholder;
