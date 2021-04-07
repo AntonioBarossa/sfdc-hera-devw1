@@ -24,15 +24,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if (caseType == 'Variazione Anagrafica Cliente' && currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
             result = validateModificaDatiContatto(fields);
 
-        } else if(caseType == 'Gestione Disalimentabilità'){
+        } else if(caseType == 'Gestione Disalimentabilità' || caseType == 'Riattivazione Fornitura'){
 
-            result = validateMorosita(fields, recordId);
+            result = validateMorosita(fields, recordId, caseType);
 
-        } /*else if(caseType == 'Marcatura/Uso PdR'){
+        } else if(caseType == 'Marcatura/Uso PdR' 
+        || caseType == 'Condizioni Contrattuali Errate' 
+        || caseType == 'BP/CA - errata categoria'
+        || caseType == 'Modifica/Azzeramento Consumo Annuo'){
 
-            result = validateVariazioni(fields,recordId);
+            result = validateVariazioni(fields,recordId,caseType);
 
-        }*/
+        }
 
         return result;
 
@@ -50,6 +53,50 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile modificare tipo processo'));
 
+        } else if(caseType == 'Piano Rateizzazione'){
+            
+            Boolean applicationInterests = Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'));
+            Integer requestedInstall = Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'));
+            String clientCategory = getFieldValue(fields, 'ClientCategory__c');
+            String reason = getFieldValue(fields, 'Reason__c');
+            Double amountInstall = Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'));
+            Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
+            ? System.today() + 365
+            : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
+
+            if(clientCategory.contains('SME')){
+
+                if(!applicationInterests && requestedInstall > 6){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 6'));
+
+                } else if(applicationInterests && requestedInstall > 2){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 2'));
+
+                } else {
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+            
+            }else{
+
+                if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
+                    'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
+                    
+                } else {
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+
+
+            }
+    
+        
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -113,32 +160,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug('SendDate value:' +sendDate);
 
-        System.debug('#DelegateName '+getFieldValue(fields, 'DelegateName__c') != null);
-
-        System.debug('#DelegateAddress '+getFieldValue(fields, 'DelegateAddressEmail__c') != null);
-
-        if((getFieldValue(fields, 'DelegateName__c') != null && getFieldValue(fields, 'DelegateName__c') != '')  
-        || (getFieldValue(fields, 'DelegateAddressEmail__c') != null && getFieldValue(fields, 'DelegateName__c') != '')){
-
-            List<ContentDocumentLink> attachedDocument = 
-            [SELECT Id 
-            FROM ContentDocumentLink 
-            WHERE LinkedEntityId = :recordId 
-            WITH SECURITY_ENFORCED];
-
-            System.debug(attachedDocument.size() == 0);
-
-            if(attachedDocument.size() == 0){
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Documenti Delegato'));
-
-            } else {
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-
-            }
-
-        }else if((getFieldValue(fields, 'ComplaintEntryChannel__c') == 'Email' || getFieldValue(fields, 'ComplaintEntryChannel__c') == 'PEC')
+        if((getFieldValue(fields, 'ComplaintEntryChannel__c') == 'Email' || getFieldValue(fields, 'ComplaintEntryChannel__c') == 'PEC')
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
@@ -181,7 +203,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     
-    public String validateMorosita(String fields, string recordId){
+    public String validateMorosita(String fields, string recordId, String caseType){
 
         String result;
 
@@ -191,19 +213,45 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String phonePesse = getFieldValue(fields, 'MobilePhonePersonalizedNoticePesse__c');
 
-        List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
-        WHERE LinkedEntityId = :recordId 
-        WITH SECURITY_ENFORCED];
 
-        if(disconnectable == 'false' 
-        && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
-        || (phonePesse == 'null' || phonePesse == '') 
-        || (attachedDocument.size() == 0))){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
-                'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
-                'Il telefono Pesse\nEd è necessario inserire un allegato'));
+        if(caseType == 'Riattivazione Fornitura'){
 
+            Date paymentDate = date.ValueOf(getFieldValue(fields, 'PaymentDate__c'));
+
+            if(paymentDate > System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una data futura'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+
+        }else if(caseType == 'Gestione Disalimentabilità'){
+
+            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId 
+            WITH SECURITY_ENFORCED];
+
+
+
+            if(disconnectable == 'false' 
+            && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
+            || (phonePesse == 'null' || phonePesse == '') 
+            || (attachedDocument.size() == 0))){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
+                    'Se Disalimentabilità è NO bisogna valorizzare:\nCategoria Disalimentabilità\n'+
+                    'Il telefono Pesse\nEd è necessario inserire un allegato'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -214,27 +262,85 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    /*public String validateVariazioni(String fields, String recordId){
+    public String validateVariazioni(String fields, String recordId, String caseType){
 
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String useCategory = getFieldValue(fields, 'UseCategory__c');
         String servicePointType = getFieldValue(fields, 'ServicePointType__c');
 
+        
+
         String result;
 
-        if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
+        if(caseType == 'Marcatura/Uso PdR'){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+            if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
+
+            }
+        
+        }else if(caseType == 'BP/CA - errata categoria'){
+
+            String billingProblem = getFieldValue(fields, 'BillingProblem__c');
+            String bill = getFieldValue(fields, 'Bill__c');
+            String dlNote = getFieldValue(fields, 'Note__c');
+            String customerAggreement = getFieldValue(fields, 'CustomerAggreement__c');
+
+            if(billingProblem == 'Si' 
+            && (
+                (bill == null || bill == '')
+                ||(dlNote == null || dlNote == '')
+                ||(customerAggreement == null || customerAggreement == '')
+                )
+            ){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizzare: Fattura, Note al DL e Accordi con il Cliente'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        } else if(caseType == 'Modifica/Azzeramento Consumo Annuo'){
+
+            Date validityDate = Date.valueOf(getFieldValue(fields, 'EndValidityDate__c'));
+
+            Date effectiveDate = Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'));
+
+            if((validityDate > System.today().addYears(3)) || (validityDate <= effectiveDate)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Data Fine Validità incorretta'));
+
+            } else if(effectiveDate < System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Data Decorrenza incorretta'));
+
+            }else{
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        } else if(getFieldValue(fields, 'BillingProblem__c') == 'Si' && 
+        (getFieldValue(fields, 'CustomerAggreement__c') == null || getFieldValue(fields, 'CustomerAggreement__c') == '')){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
 
         } else {
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
         }
 
         return result;
 
-    }*/
+    }
 
 
     public String getFieldValue(String fields, String fieldToGet){

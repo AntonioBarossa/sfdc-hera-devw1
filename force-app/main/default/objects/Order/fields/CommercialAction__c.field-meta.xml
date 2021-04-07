@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CommercialAction__c</fullName>
+    <externalId>false</externalId>
+    <label>Azione commerciale</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CALL BACK SOL</fullName>
+                <default>false</default>
+                <label>CALL BACK SOL</label>
+            </value>
+            <value>
+                <fullName>CALL BACK WEB NEOEN</fullName>
+                <default>false</default>
+                <label>CALL BACK WEB NEOEN</label>
+            </value>
+            <value>
+                <fullName>campagna SALVAGUARDIA</fullName>
+                <default>false</default>
+                <label>campagna SALVAGUARDIA</label>
+            </value>
+            <value>
+                <fullName>campagna SEGNALAZIONE</fullName>
+                <default>false</default>
+                <label>campagna SEGNALAZIONE</label>
+            </value>
+            <value>
+                <fullName>CNA</fullName>
+                <default>false</default>
+                <label>CNA</label>
+            </value>
+            <value>
+                <fullName>CONVENZIONE ANLA</fullName>
+                <default>false</default>
+                <label>CONVENZIONE ANLA</label>
+            </value>
+            <value>
+                <fullName>CONVENZIONE CONAD</fullName>
+                <default>false</default>
+                <label>CONVENZIONE CONAD</label>
+            </value>
+            <value>
+                <fullName>CONVENZIONE COOP ESTENSE</fullName>
+                <default>false</default>
+                <label>CONVENZIONE COOP ESTENSE</label>
+            </value>
+            <value>
+                <fullName>CORE PL</fullName>
+                <default>false</default>
+                <label>CORE PL</label>
+            </value>
+            <value>
+                <fullName>CORE PL AZ</fullName>
+                <default>false</default>
+                <label>CORE PL AZ</label>
+            </value>
+            <value>
+                <fullName>Lampadine kit doppio</fullName>
+                <default>false</default>
+                <label>Lampadine kit doppio</label>
+            </value>
+            <value>
+                <fullName>Lampadine kit singolo</fullName>
+                <default>false</default>
+                <label>Lampadine kit singolo</label>
+            </value>
+            <value>
+                <fullName>PROMO DUAL</fullName>
+                <default>false</default>
+                <label>PROMO DUAL</label>
+            </value>
+            <value>
+                <fullName>PROMO ENERGY</fullName>
+                <default>false</default>
+                <label>PROMO ENERGY</label>
+            </value>
+            <value>
+                <fullName>Promo HC POINT</fullName>
+                <default>false</default>
+                <label>Promo HC POINT</label>
+            </value>
+            <value>
+                <fullName>PROVENIENZA ENEGAN</fullName>
+                <default>false</default>
+                <label>PROVENIENZA ENEGAN</label>
+            </value>
+            <value>
+                <fullName>Provenienza Sven</fullName>
+                <default>false</default>
+                <label>Provenienza Sven</label>
+            </value>
+            <value>
+                <fullName>UPGRADE OFFERTA</fullName>
+                <default>false</default>
+                <label>UPGRADE OFFERTA</label>
+            </value>
+            <value>
+                <fullName>XLISTA AZ</fullName>
+                <default>false</default>
+                <label>XLISTA AZ</label>
+            </value>
+            <value>
+                <fullName>XLISTA FAM</fullName>
+                <default>false</default>
+                <label>XLISTA FAM</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

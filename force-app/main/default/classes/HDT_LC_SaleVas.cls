@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_SaleVas {
     public static List<Order> getOrdersList(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status');
-        return orderQr.getActiveRecordsByAccountId(accountId);
+        return orderQr.getRecordsForVasSelection(accountId);
     }
 
     /**
@@ -89,15 +89,18 @@ public inherited sharing class HDT_LC_SaleVas {
             Sale__c = sale.Id,
             OrderReference__c = order.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
-            SBQQ__Account__c = order.AccountId,
+            SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
-            Agency__c = order.Agency__c,
-            Market__c = order.Market__c,
-            Channel__c = order.Channel__c,
-            FriendCode__c = order.FriendCode__c,
-            CampaignCode__c = order.CampaignCode__c,
-            CreatedBy__c = order.CreatedBy__c,
-            SupplyCity__c = supplyCity
+            Agency__c = sale.Agency__c,
+            Market__c = sale.Market__c,
+            Channel__c = sale.Channel__c,
+            FriendCode__c = sale.FriendCode__c,
+            CampaignCode__c = sale.CampaignCode__c,
+            CreatedBy__c = sale.CreatedBy__c,
+            SupplyCity__c = supplyCity,
+            SalesCompany__c = sale.SalesCompany__c,
+            Campaign__c = sale.Campaign__c,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -129,15 +132,18 @@ public inherited sharing class HDT_LC_SaleVas {
             Sale__c = sale.Id,
             ContractReference__c = contract.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
-            SBQQ__Account__c = contract.AccountId,
+            SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
-            Agency__c = contract.SBQQ__Order__r.Agency__c,
-            Market__c = contract.SBQQ__Order__r.Market__c,
-            Channel__c = contract.SBQQ__Order__r.Channel__c,
-            FriendCode__c = contract.SBQQ__Order__r.FriendCode__c,
-            CampaignCode__c = contract.SBQQ__Order__r.CampaignCode__c,
-            CreatedBy__c = contract.SBQQ__Order__r.CreatedBy__c,
-            SupplyCity__c = supplyCity
+            Agency__c = sale.Agency__c,
+            Market__c = sale.Market__c,
+            Channel__c = sale.Channel__c,
+            FriendCode__c = sale.FriendCode__c,
+            CampaignCode__c = sale.CampaignCode__c,
+            CreatedBy__c = sale.CreatedBy__c,
+            SalesCompany__c = sale.SalesCompany__c,
+            Campaign__c = sale.Campaign__c,
+            SupplyCity__c = supplyCity,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -170,7 +176,15 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Opportunity2__c = newOpportunity.Id,
             SBQQ__Account__c = accountId,
             SBQQ__Primary__c = true,
-            SupplyCity__c = supplyCity
+            SupplyCity__c = supplyCity,
+            Agency__c = sale.Agency__c,
+            Market__c = sale.Market__c,
+            Channel__c = sale.Channel__c,
+            FriendCode__c = sale.FriendCode__c,
+            CampaignCode__c = sale.CampaignCode__c,
+            CreatedBy__c = sale.CreatedBy__c,
+            SalesCompany__c = sale.SalesCompany__c,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

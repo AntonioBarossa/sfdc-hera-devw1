@@ -2,9 +2,41 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>Assegna_Id_Contenitore</name>
+        <label>Assegna Id Contenitore</label>
+        <locationX>314</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>IdContenitore</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetAccountStessoReclamo.ParentId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Linka_Case_Corrente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Id_Contenitore_0</name>
+        <label>Assegna Id Contenitore</label>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
+        <assignmentItems>
+            <assignToReference>IdContenitore</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Contenitore</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Linka_Case_Corrente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>578</locationX>
+        <locationX>1458</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -20,7 +52,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>842</locationX>
+        <locationX>1722</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -36,7 +68,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1106</locationX>
+        <locationX>1986</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -52,7 +84,7 @@
     <decisions>
         <name>Altri_Venditori_o_Venditori_HC</name>
         <label>Altri Venditori o Venditori HC?</label>
-        <locationX>710</locationX>
+        <locationX>1590</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0</targetReference>
@@ -75,9 +107,81 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Altro_Reclamo_Esiste</name>
+        <label>Altro Reclamo Esiste?</label>
+        <locationX>875</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Esiste</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAccountStessoReclamo</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Alert</targetReference>
+            </connector>
+            <label>Esiste</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Esiste_Contenitore</name>
+        <label>Esiste Contenitore?</label>
+        <locationX>446</locationX>
+        <locationY>998</locationY>
+        <defaultConnector>
+            <targetReference>Crea_Case_Contenitore</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Esiste</defaultConnectorLabel>
+        <rules>
+            <name>Esiste_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetAccountStessoReclamo.ParentId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Id_Contenitore</targetReference>
+            </connector>
+            <label>Esiste</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Navigazione</name>
+        <label>Navigazione?</label>
+        <locationX>644</locationX>
+        <locationY>878</locationY>
+        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <rules>
+            <name>Avanti</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Esiste_Contenitore</targetReference>
+            </connector>
+            <label>Avanti</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>710</locationX>
+        <locationX>1150</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Nessun_Processo</targetReference>
@@ -109,7 +213,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Processo_Reclami_Scritti_Richieste_Info</targetReference>
+                <targetReference>Riprendi_Bozza</targetReference>
             </connector>
             <label>Reclami Scritti/Rich. Info</label>
         </rules>
@@ -152,10 +256,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Riprendi_Bozza</name>
+        <label>Riprendi Bozza?</label>
+        <locationX>1078</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Riprendi Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Non_Riprendi_Bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetAccountStessoReclamo</targetReference>
+            </connector>
+            <label>Non Riprendi Bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>710</locationX>
-        <locationY>950</locationY>
+        <locationX>1150</locationX>
+        <locationY>2438</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -195,10 +324,81 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Crea_Case_Contenitore</name>
+        <label>Crea Case Contenitore</label>
+        <locationX>578</locationX>
+        <locationY>1118</locationY>
+        <connector>
+            <targetReference>Assegna_Id_Contenitore_0</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>Get_Input_Case.AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Get_Input_Case.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>IsContainer__c</field>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <elementReference>Get_Input_Case.Origin</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Get_Input_Case.PhoneNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_Input_Case.RecordTypeId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedEmail</field>
+            <value>
+                <elementReference>Get_Input_Case.SuppliedEmail</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SuppliedPhone</field>
+            <value>
+                <elementReference>Get_Input_Case.SuppliedPhone</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>710</locationX>
+        <locationX>1150</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -216,11 +416,53 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetAccountStessoReclamo</name>
+        <label>GetAccountStessoReclamo</label>
+        <locationX>875</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Altro_Reclamo_Esiste</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.AccountId</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Fase_in_Lavorazione</name>
         <label>Aggiorna Fase in Lavorazione</label>
-        <locationX>578</locationX>
-        <locationY>1070</locationY>
+        <locationX>1018</locationX>
+        <locationY>2558</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -237,10 +479,58 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Linka_Case_Corrente</name>
+        <label>Linka Case Corrente</label>
+        <locationX>446</locationX>
+        <locationY>1454</locationY>
+        <connector>
+            <targetReference>Linka_Case_Corrente_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>IdContenitore</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Linka_Case_Corrente_0</name>
+        <label>Linka Case Corrente</label>
+        <locationX>446</locationX>
+        <locationY>1574</locationY>
+        <connector>
+            <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetAccountStessoReclamo.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>IdContenitore</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>Nessun_Processo</name>
         <label>Nessun Processo</label>
-        <locationX>1370</locationX>
+        <locationX>2250</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -254,10 +544,72 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Alert</name>
+        <label>Screen Alert</label>
+        <locationX>644</locationX>
+        <locationY>758</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Navigazione</targetReference>
+        </connector>
+        <fields>
+            <name>DiplayHeader_1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Esiste un altro Case di Reclamo per lo stesso Account.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Alla pressione del tasto &quot;Avanti&quot; verrà creato il Case Contenitore o linkato se questo è già presente a sistema&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtFlowNavigationButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_inserimento_dati</name>
         <label>Screen inserimento dati</label>
-        <locationX>710</locationX>
-        <locationY>830</locationY>
+        <locationX>1150</locationX>
+        <locationY>2318</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -340,18 +692,18 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>584</locationX>
+        <locationX>1024</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
-        <name>Processo_Reclami_Scritti_Richieste_Info</name>
+        <name>Processo_Reclami_Scritti_Richieste_Info_0</name>
         <label>Processo Reclami Scritti/Richieste Info</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
+        <locationX>1078</locationX>
+        <locationY>1982</locationY>
         <flowName>HDT_FL_GestioneReclami_ReclamiScritti</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -374,6 +726,13 @@
         </inputAssignments>
     </subflows>
     <variables>
+        <name>IdContenitore</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -386,5 +745,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>

@@ -94,7 +94,7 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Aumenta_Counter_0_0_0_0</name>
+        <name>Aumenta_Counter_0_0_0_0_0</name>
         <label>Aumenta Counter</label>
         <locationX>1854</locationX>
         <locationY>671</locationY>
@@ -116,15 +116,31 @@
             <targetReference>Loop_sui_case_nel_Contenitore</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Aumenta_Counter_1</name>
+        <label>Aumenta Counter</label>
+        <locationX>2118</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>CounterElements</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_sui_case_nel_Contenitore</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Quale_Fase</name>
         <label>Quale Fase?</label>
-        <locationX>1326</locationX>
+        <locationX>1458</locationX>
         <locationY>551</locationY>
         <defaultConnector>
-            <targetReference>Aumenta_Counter_0_0_0_0</targetReference>
+            <targetReference>Aumenta_Counter_1</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Chiuso</defaultConnectorLabel>
+        <defaultConnectorLabel>Altro</defaultConnectorLabel>
         <rules>
             <name>In_Lavorazione</name>
             <conditionLogic>and</conditionLogic>
@@ -205,6 +221,21 @@
                 <targetReference>Aumenta_Counter_0_0_0</targetReference>
             </connector>
             <label>Annullato</label>
+        </rules>
+        <rules>
+            <name>Chiuso</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Loop_sui_case_nel_Contenitore.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiuso</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aumenta_Counter_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Chiuso</label>
         </rules>
     </decisions>
     <decisions>
@@ -322,7 +353,7 @@
                 <leftValueReference>CounterChiuso</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>CounterChiuso</elementReference>
+                    <elementReference>CounterElements</elementReference>
                 </rightValue>
             </conditions>
             <connector>

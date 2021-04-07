@@ -28,8 +28,8 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
         List<Map<String,List<SObject>>> resultsList = new List<Map<String,List<SObject>>>();
 
-        quoteSrv.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c');
-        quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
+        quoteSrv.checkReadAccess('Name,SBQQ__Opportunity2__r.Name,SBQQ__Type__c,AmendmentAllowed__c,ContractReference__c');
+        quoteLineSrv.checkReadAccess('Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,BillingProfile__c,BillingProfile__r.Name,AmendmentAllowed__c,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
 
         List<SBQQ__Quote__c> quoteList = quoteQr.getActiveRecords(saleId);
         List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getRecordsBySale(saleId);
@@ -176,6 +176,30 @@ public inherited sharing class HDT_LC_ConfigureProduct {
     public static void performChecks(Sale__c sale){
         checkQuotesHaveQuoteLines(sale);
         checkServicePointAssocs(sale);
+    }
+
+    // Create an amendment context
+    private with sharing class HDT_WRP_AmendmentContext {
+        public Boolean returnOnlyQuoteId;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Amend contract
+     * @param String contractId
+     * @return (SBQQ__Quote__c) JSON.deserialize(quoteJSON, SBQQ__Quote__c.class)
+     */
+    @AuraEnabled
+    public static SBQQ__Quote__c amendContract(String contractId){
+
+        HDT_WRP_AmendmentContext context = new HDT_WRP_AmendmentContext();
+        context.returnOnlyQuoteId = true;
+        String contextJson = JSON.serialize(context);
+        System.debug('contextJson: ' + contextJson);
+
+        String quoteJson = SBQQ.ServiceRouter.load('SBQQ.ContractManipulationAPI.ContractAmender', contractId, contextJson);
+        System.debug('amendContract: ' + quoteJson);
+        return (SBQQ__Quote__c) JSON.deserialize(quoteJson, SBQQ__Quote__c.class);
     }
 
     /**

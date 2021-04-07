@@ -112,7 +112,8 @@
             <label>Conferma</label>
         </rules>
     </decisions>
-    <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info</description>
+    <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info
+--&gt; Modifiche per prima release</description>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
@@ -234,15 +235,15 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>Cerca_Case_reiterazione.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>In Classificazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RelatedCase__c</field>
+            <value>
+                <elementReference>Cerca_Case_reiterazione.Id</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -402,6 +403,12 @@
                     <stringValue>success</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -419,6 +426,13 @@
     <variables>
         <name>DirittoRettifica</name>
         <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DirittoRettificaPicklist</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

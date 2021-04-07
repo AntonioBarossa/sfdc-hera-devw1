@@ -71,27 +71,31 @@ public inherited sharing class HDT_LC_ProcessesContainer {
     }
 
     @AuraEnabled
-    public static map<string,object> controllerInitRedirect(String orderParentId) {
-        System.debug('********recordid :' +orderParentId);
+    public static map<string,object> controllerInitRedirect(String orderId) {
         
         Boolean check = true;
 
         Map<String,Object> mapResponse = new Map<String,Object>();
 
-        // Ordine_di_vendita__c ordven = [Select id,account__c,stato__c from ordine_di_vendita__c where id = :ordineVenditaId];
-        orderSrv.checkReadAccess('AccountId,Sale__c,Status');
-        Order orderParent = orderQr.getRecordById(orderParentId);
+        orderSrv.checkReadAccess('AccountId,Sale__c,ParentOrder__c,Status,Phase__c');
+        Order order = orderQr.getRecordById(orderId);
 
-        if(orderParent.Status == 'Activated'){
+        String orderParentId = order.ParentOrder__c == null ? order.Id : order.ParentOrder__c;
+        String parentPhase = order.ParentOrder__c == null ? order.Phase__c : order.ParentOrder__r.Phase__c;
+        String status = order.ParentOrder__c == null ? order.Status : order.ParentOrder__r.Status;
+        String accountId = order.AccountId;
+        String saleId = order.Sale__c;
+
+        if(status == 'Annullato' || (parentPhase == 'Plico inviato da validare' || parentPhase == 'Plico Firmato da validare')){
             check = false;
         }
 
         mapResponse.put('check',check);
-        mapResponse.put('orderParent',orderParent.Id);
-        mapResponse.put('accountId',orderParent.AccountId);
-        mapResponse.put('saleId',orderParent.Sale__c);
+        mapResponse.put('orderParent', orderParentId);
+        mapResponse.put('accountId', accountId);
+        mapResponse.put('saleId', saleId);
         
-        return mapResponse;     
+        return mapResponse;
     }
 
 }

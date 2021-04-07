@@ -11,6 +11,7 @@ export default class HdtSupplySelectionFlow extends LightningElement {
     @api saveButton;
     @api cancelButton;
     @api labelSaveButton;
+    @api cancelCase;
 
     handleServicePointSelection(event){
         this.selectedServicePointFlow = event.detail["Codice Punto"];
@@ -29,6 +30,10 @@ export default class HdtSupplySelectionFlow extends LightningElement {
 
     }
     handleCancell(event){
+
+        this.cancelCase = true;
+
+        this.handleSave();
         
     }
 }

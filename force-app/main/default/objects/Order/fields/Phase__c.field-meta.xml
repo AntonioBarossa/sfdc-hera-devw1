@@ -255,6 +255,31 @@
                 <default>false</default>
                 <label>Plico validato Firmato</label>
             </value>
+            <value>
+                <fullName>Comunicazione verso Motore VAS OK</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Motore VAS OK</label>
+            </value>
+            <value>
+                <fullName>Comunicazione verso Motore VAS KO</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Motore VAS KO</label>
+            </value>
+            <value>
+                <fullName>Accettato Motore Vas</fullName>
+                <default>false</default>
+                <label>Accettato Motore Vas</label>
+            </value>
+            <value>
+                <fullName>Ko prodotto vas</fullName>
+                <default>false</default>
+                <label>Ko prodotto vas</label>
+            </value>
+            <value>
+                <fullName>Motore vas ko</fullName>
+                <default>false</default>
+                <label>Motore vas ko</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

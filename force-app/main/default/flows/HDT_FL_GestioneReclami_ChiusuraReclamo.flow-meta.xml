@@ -42,7 +42,7 @@
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Sospesa</stringValue>
+                <stringValue>Sospeso manualmente</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -62,7 +62,23 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Get_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Chiusura_Activity</name>
+        <label>Chiusura Activity</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Activity</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -141,10 +157,10 @@
             <name>Sospeso_Cliente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Motivazione_Sospensione</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>hdtCustomPicklist.outcome</leftValueReference>
+                <operator>Contains</operator>
                 <rightValue>
-                    <elementReference>ContattoClienteChoice</elementReference>
+                    <stringValue>contatto</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -183,6 +199,27 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Get_Activity</name>
+        <label>Get Activity</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Chiusura_Activity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
         <locationX>512</locationX>
@@ -204,10 +241,20 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Aggiorna_Activity</name>
+        <label>Aggiorna Activity</label>
+        <locationX>578</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+        <inputReference>Get_Activity</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>998</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -230,80 +277,78 @@
         </connector>
         <fields>
             <name>DisplayHeader_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Chiusura Case&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila il campo sottostante per procedere alla chiusura del Relcamo/Rich. Info&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Sospensione Case&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila il campo sottostante per procedere alla chiusura del Reclamo/Rich. Info&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Motivazione_Sospensione</name>
-            <choiceReferences>ContattoClienteChoice</choiceReferences>
-            <choiceReferences>AltraRichiestaChoice</choiceReferences>
-            <dataType>String</dataType>
-            <fieldText>Motivazione Sospensione</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
-            <name>hdtRecordEditFormFlow</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <name>hdtCustomPicklist</name>
+            <extensionName>c:hdtCustomPicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>cancelButton</name>
+                <name>label</name>
+                <value>
+                    <stringValue>Motivazione Sospensione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>options</name>
+                <value>
+                    <stringValue>[{&quot;value&quot;:&quot;contatto&quot;,&quot;label&quot;:&quot;Sospeso contatto cliente&quot;},{&quot;value&quot;:&quot;altro&quot;,&quot;label&quot;:&quot;Sospeso per altra richiesta&quot;}]</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>Selezionare motivo sospensione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>required</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavigationButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
+                <name>isDraft</name>
                 <value>
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelSaveButton</name>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
                 <value>
                     <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>GetInputCase.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variantSaveButton</name>
+                <name>nextVariant</name>
                 <value>
                     <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -420,6 +465,12 @@
                     <stringValue>success</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>GetInputCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -434,6 +485,16 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>CaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>GetInputCase.Id</elementReference>
+        </value>
+    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>

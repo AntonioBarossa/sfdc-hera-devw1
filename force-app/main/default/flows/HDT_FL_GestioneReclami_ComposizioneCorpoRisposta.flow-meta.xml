@@ -37,7 +37,10 @@
         <name>Case_Contenitore_0</name>
         <label>Case Contenitore?</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>Composizione_Risposta_Reclamo_0_0</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Non Contenitore</defaultConnectorLabel>
         <rules>
             <name>Contenitore_0</name>
@@ -91,6 +94,13 @@
             <operator>EqualTo</operator>
             <value>
                 <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </filters>
         <object>Case</object>
@@ -180,7 +190,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Composizione_Risposta_Reclamo</targetReference>
+            <targetReference>Case_Contenitore_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -202,23 +212,52 @@
         <inputReference>CaseContenutiRecord</inputReference>
     </recordUpdates>
     <screens>
-        <name>Composizione_Risposta_Reclamo</name>
+        <name>Composizione_Risposta_Reclamo_0</name>
         <label>Composizione Risposta Reclamo</label>
-        <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Case_Contenitore_0</targetReference>
+            <targetReference>Get_Case_Contenitore</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Componi Corpo Risposta Relcamo&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Seleziona i Template e premi il tasto &quot;Componi Corpo Risposta&quot; per generare il corpo della risposta; dopodiché effettua le modifiche necessarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Classificazione 4° Livello: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!Get_Input_Case.FourthLevelComplaintClassification__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>DisplayHeader_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Componi Corpo Risposta Reclamo&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Seleziona i Template e premi il tasto &quot;Componi Corpo Risposta&quot; per generare il corpo della risposta; dopodiché effettua le modifiche necessarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtComposeBodyResponse</name>
+            <name>hdtComposeBodyResponse_0</name>
+            <extensionName>c:hdtComposeBodyResponse</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Composizione_Risposta_Reclamo_0_0</name>
+        <label>Composizione Risposta Reclamo</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>DisplayHeader_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Componi Corpo Risposta Reclamo&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Seleziona i Template e premi il tasto &quot;Componi Corpo Risposta&quot; per generare il corpo della risposta; dopodiché effettua le modifiche necessarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Classificazione 4° Livello: &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;{!Get_Input_Case.FourthLevelComplaintClassification__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtComposeBodyResponse_0_0</name>
             <extensionName>c:hdtComposeBodyResponse</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -237,23 +276,23 @@
         <name>Seleziona_Case_Contenuti_0</name>
         <label>Seleziona Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_Case_Contenitore</targetReference>
+            <targetReference>Composizione_Risposta_Reclamo_0</targetReference>
         </connector>
         <fields>
             <name>SelectChildCases</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Seleziona i Case contenuti nel Contenitore &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Seleziona i Case contenuti nel Contenitore per cui vuoi inviare un&apos;unica risposta complessiva.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Seleziona i Case contenuti nel Contenitore &lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Seleziona i Case contenuti nel Contenitore per i quali vuoi utilizzare il medesimo corpo della risposta al Reclamo&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Selezione_Case_contenitori_0</name>
             <choiceReferences>CaseContenuti</choiceReferences>
             <dataType>String</dataType>
-            <fieldText>Selezione Case contenitori</fieldText>
+            <fieldText>Selezione Case contenuti</fieldText>
             <fieldType>MultiSelectCheckboxes</fieldType>
             <isRequired>true</isRequired>
         </fields>
@@ -275,6 +314,16 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>CaseId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <value>
+            <elementReference>Get_Input_Case.Id</elementReference>
+        </value>
     </variables>
     <variables>
         <name>InputCase</name>

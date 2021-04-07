@@ -1,11 +1,11 @@
-public class HDT_LC_CustomLookupController {
+public inherited sharing class HDT_LC_CustomLookupController {
 
     @AuraEnabled(cacheable=true)
-    public static List<ObjDetail> lookUp(String searchTerm, string myObject, String filter, String searchBy, String setAsKey, List<String> detailFields) {
+    public static List<HDT_UTL_ObjDetail> lookUp(String searchTerm, string myObject, String filter, String searchBy, String setAsKey, List<String> detailFields) {
 
         Boolean enableDetails = (detailFields != null && detailFields.size()>0 && !detailFields.isEmpty()) ? true : false;
         String myQuery = null;
-        List<ObjDetail> objList = new List<ObjDetail>();
+        List<HDT_UTL_ObjDetail> objList = new List<HDT_UTL_ObjDetail>();
 
         System.debug('# Filter -> ' + filter);
 
@@ -54,9 +54,9 @@ public class HDT_LC_CustomLookupController {
                 fieldMap = getFieldLabel(detailFields, myObject);
             }
             
-            ObjDetail obj;
+            HDT_UTL_ObjDetail obj;
             for(sObject so : lookUpList){
-                obj = new ObjDetail();
+                obj = new HDT_UTL_ObjDetail();
                 obj.id = (String)so.get('Id');
                 obj.name = (String)so.get(searchBy);
                 obj.code = (String)so.get(setAsKey);
@@ -88,7 +88,7 @@ public class HDT_LC_CustomLookupController {
         return fieldMap;
     }
 
-    public class ObjDetail {
+    public class HDT_UTL_ObjDetail {
         @AuraEnabled public String id;
         @AuraEnabled public String name;
         @AuraEnabled public String code;

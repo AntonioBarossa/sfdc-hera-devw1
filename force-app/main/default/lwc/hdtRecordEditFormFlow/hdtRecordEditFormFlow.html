@@ -33,7 +33,13 @@
                         <div class="slds-grid">
                             <div class="slds-col slds-size_1-of-3">
                                 <template for:each={firstColumn} for:item="field">
-                                    <lightning-input-field field-name={field.FieldName} key={field.FieldName} required={field.Required} disabled={field.ReadOnly}>
+                                    <lightning-input-field 
+                                    data-id={field.FieldName}
+                                    field-name={field.FieldName} 
+                                    key={field.FieldName} 
+                                    required={field.Required} 
+                                    disabled={field.ReadOnly}
+                                    onchange={handleChange}>
                                     </lightning-input-field>
                                 </template>
                             </div>
@@ -41,7 +47,13 @@
                             </div>
                             <div class="slds-col slds-size_1-of-3">
                                 <template for:each={secondColumn} for:item="field">
-                                    <lightning-input-field field-name={field.FieldName} key={field.FieldName} required={field.Required} disabled={field.ReadOnly}>
+                                    <lightning-input-field
+                                    data-id={field.FieldName} 
+                                    field-name={field.FieldName} 
+                                    key={field.FieldName} 
+                                    required={field.Required} 
+                                    disabled={field.ReadOnly}
+                                    onchange={handleChange}>
                                     </lightning-input-field>
                                 </template>
                             </div>
@@ -126,7 +138,7 @@
                     </template>
                     <template if:true={cancelButton}>
                         <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                            variant="destructive" type="button" name="cancel" label="Annulla" onclick={handleDraft}>
+                            variant="brand" type="button" name="cancel" label="Annulla" onclick={handleDraft}>
                         </lightning-button>
                     </template>
                 </div>

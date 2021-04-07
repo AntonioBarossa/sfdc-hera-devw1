@@ -42,12 +42,12 @@
 {
 &quot;FieldName&quot; : &quot;RecipientStructure__c&quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 2
 },
 {
 &quot;FieldName&quot; : &quot;OpinionRequest__c&quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 2
 }
 ]</value>
     </values>

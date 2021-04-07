@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
     <apiVersion>50.0</apiVersion>
+    
     <isExposed>true</isExposed>
+    
     <targets>
+        
         <target>lightning__FlowScreen</target>
+        
     </targets>
+    
     <targetConfigs>
+        
         <targetConfig targets="lightning__FlowScreen">
+            
             <property name="processType" type="String" label="Tipo Processo" description="Tipologia del processo" role="inputOnly"/>
+            
             <property name="quoteType" type="String" label="Tipo Preventivo" description="Tipologia del preventivo" role="inputOnly"/>
+            
+            <property name="nextLabel" type="String" label="Next Label" description="Label next Button" role="inputOnly" default="Conferma Pratica"/>
+            
+            <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="success"/>
+            
             <property name="outcome" type="String" label="outcome" description="outcome" role="outputOnly"/>
+            
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
+            
         </targetConfig>
+        
     </targetConfigs>
+    
 </LightningComponentBundle>
