@@ -737,7 +737,7 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>01</fullName>
             <default>false</default>
         </values>
         <values>
