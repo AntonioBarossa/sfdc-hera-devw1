@@ -15,6 +15,10 @@
                 <behavior>Edit</behavior>
                 <field>ProductCode</field>
             </layoutItems>
+            <!--<layoutItems>
+                <behavior>Edit</behavior>
+                <field>DescrIzione_SAP__c</field>
+            </layoutItems>-->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Version__c</field>
@@ -225,13 +229,13 @@
                 <behavior>Edit</behavior>
                 <field>DelayDay__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Price__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
+            <!--<layoutItems>
                 <behavior>Edit</behavior>
                 <field>PercentageF0__c</field>
             </layoutItems>
@@ -254,7 +258,7 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PercentagePickOut__c</field>
-            </layoutItems>
+            </layoutItems>-->
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
