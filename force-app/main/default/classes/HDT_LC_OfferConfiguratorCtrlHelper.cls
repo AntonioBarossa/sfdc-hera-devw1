@@ -18,15 +18,28 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOff.Product__c = productId;
         tecOff.RateCategory__c = rateId;
         
-        try{
-            //insert tecOff;
-            HDT_UTL_DatabaseService.insertSObject(tecOff);
-        } catch (Exception e){
+        
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+    
+        if(objRes.isCreateable()){
+            try{
+                insert tecOff;
+            } catch (Exception e){
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+                saveResponse.dataError = false;
+                return saveResponse;
+            }
+        } else {
             saveResponse.success = false;
-            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.message = '# ERROR: you don\'t have permission on this obj';
             saveResponse.dataError = false;
-            return saveResponse;
+            return saveResponse;                
         }
+
+
 
         List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c tecOffItem;
@@ -167,8 +180,18 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         System.debug('# clone this -> ' + newTechOff);
 
         try{
-            //insert newTechOff;
-            HDT_UTL_DatabaseService.insertSObject(newTechOff);
+            SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+     
+            if(objRes.isCreateable()){
+                insert newTechOff;
+            } else {
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.dataError = false;
+                return saveResponse;                
+            }
+
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';

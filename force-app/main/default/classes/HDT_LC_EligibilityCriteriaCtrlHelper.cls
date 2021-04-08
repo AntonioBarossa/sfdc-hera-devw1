@@ -13,7 +13,18 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         try{
             //insert criteria;
-            HDT_UTL_DatabaseService.insertSObject(criteria);
+            SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+     
+            if(objRes.isCreateable()){
+                insert criteria;
+            } else {
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.dataError = false;
+                return saveResponse;                
+            }
+
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
@@ -74,7 +85,18 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         try{
             //insert newCriteria;
-            HDT_UTL_DatabaseService.insertSObject(newCriteria);
+            SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+     
+            if(objRes.isCreateable()){
+                insert newCriteria;
+            } else {
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.dataError = false;
+                return saveResponse;                
+            }
+
         } catch (Exception e){
             saveResponse.success = false;
             saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';

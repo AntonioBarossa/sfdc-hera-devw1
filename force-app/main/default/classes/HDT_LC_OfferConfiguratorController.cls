@@ -186,14 +186,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
             if(saveResponse.techOffId != null){
                 //send this tech off to SAP
-                HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP();
+                //HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP();
             }
 
             if(!saveResponse.success){
                 System.debug('# on controller #');
-                for(HDT_WRP_TechnicalOffer.HDT_WRP_LineError le : saveResponse.errorData){
-                    System.debug('# ' + le);
-                }
+                //for(HDT_WRP_TechnicalOffer.HDT_WRP_LineError le : saveResponse.errorData){
+                //    System.debug('# ' + le);
+                //}
             }
 
 
