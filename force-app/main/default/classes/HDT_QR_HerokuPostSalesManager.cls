@@ -8,7 +8,8 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Phase__c, 
         Type,
         CaseNumber, 
-        RecordTypeId 
+        RecordTypeId,
+        HerokuPracticeCode__c
         FROM Case 
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
@@ -47,17 +48,21 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     }
 
 
-    public List<wrts_prcgvr__AsyncJob__c> getAsyncJobByJobItem(String recordId){
+    public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
-        List<wrts_prcgvr__AsyncJob__c> asyncJobList = new List<wrts_prcgvr__AsyncJob__c>();
+        wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
 
         try{
             
-            asyncJobList = [SELECT Id
+            asyncJobRec = [SELECT Id, 
+        wrts_prcgvr__Details__c,
+        wrts_prcgvr__Status__c
         FROM wrts_prcgvr__AsyncJob__c
         WHERE wrts_prcgvr__JobItem__c = :recordId
-        AND wrts_prcgvr__Status__c = 'Completed'
-        WITH SECURITY_ENFORCED];
+        AND (wrts_prcgvr__Status__c = 'Completed'
+            OR wrts_prcgvr__Status__c = 'Queued')
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
 
         }catch(Exception e){
 
@@ -65,7 +70,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
         }
 
-        return asyncJobList;
+        return asyncJobRec;
 
     }
 

@@ -56,6 +56,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String refReq;
         String communicationChannel;
         String reqId;
+        String herokuCode;
 
         for(wrts_prcgvr.MRR_1_0.Response response : responseMrr.responses){
 
@@ -92,6 +93,16 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             communicationChannel = fld.value;
 
                         }
+                        when 'COD_PRAT_UTENTE'{
+                            
+                            herokuCode = fld.value;    
+
+                        }
+                        when else{
+
+                            //blank code
+
+                        }
 
                     }
 
@@ -100,7 +111,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
 
             responseResults.add(
-                new HDT_WRP_HerokuPostSalesManager(requestType,result,errorMessage,refReq,communicationChannel,reqId));
+                new HDT_WRP_HerokuPostSalesManager(requestType,result,errorMessage,refReq,communicationChannel,reqId,herokuCode));
 
         }
 
@@ -157,6 +168,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
                     if(responseResult.responseMap.get('refReq') == String.valueOf(currentCase.CaseNumber)){
 
+                        System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
+
                         switch on responseResult.responseMap.get('result'){
 
                             when 'OK'{
@@ -187,6 +200,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         if(currentCase.Phase__c  == 'Da Inviare'){
 
+            System.debug('SRV_Class_Phase--> '+phase);
+
             currentCase.Phase__c = phase;
 
             caseUpdate.add(currentCase);
@@ -200,21 +215,30 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
 
-        List<wrts_prcgvr__AsyncJob__c> asyncJobList = new List<wrts_prcgvr__AsyncJob__c>();
+        wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
         String result;
 
-        asyncJobList = hpsmQr.getAsyncJobByJobItem(recordId);
+        asyncJobRec = hpsmQr.getAsyncJobByJobItem(recordId);
 
-        if(asyncJobList.size() > 0 ){
+        if(asyncJobRec != null){
+            if(asyncJobRec.wrts_prcgvr__Status__c == 'Completed'){
 
-            result = 'OK';
+                result = 'OK';
 
+            }else if(asyncJobRec.wrts_prcgvr__Status__c == 'Queued' && asyncJobRec.wrts_prcgvr__Details__c != null){
+                
+                result = 'Error';
+
+            } else {
+
+                result = 'KO';
+
+            }
         } else {
-            
+
             result = 'KO';
 
         }
-
 
         return result;
 
