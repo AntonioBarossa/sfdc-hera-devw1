@@ -17,10 +17,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DescrIzione_SAP__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Version__c</field>
             </layoutItems>
             <layoutItems>
