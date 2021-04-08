@@ -84,8 +84,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.techObj.statementType = this.statementType;
         this.techObj.recordId = this.recordid;
         this.techObj.tabCode = this.tabCode;
-        this.techObj.aggregation = '03';
-        this.techObj.transactionType = 'EC1';
+        //this.techObj.aggregation = '03';
 
         this.acctStmt = this.statementType;
         this.openMainSpinner();

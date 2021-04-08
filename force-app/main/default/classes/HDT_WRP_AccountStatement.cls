@@ -91,7 +91,7 @@ public class HDT_WRP_AccountStatement {
         public String tabCode;
         public String statementType;
         public String aggregation;
-        public String transactionType;
+        //public String transactionType;
     }
 
     public class HDT_WRP_HttpDataBodyRow {
