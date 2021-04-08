@@ -39,9 +39,9 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 WITH SECURITY_ENFORCED
             ];
 
-            //HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj;
+            //HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
             //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
-            //CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+            //cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
 
             HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
             for(EligibleMunicipality__c muni : muniList){
@@ -81,7 +81,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
         System.debug('# eligibilityId >>> ' + eligibilityId);
 
-        HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode CityZipCodeObj;
+        HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
 
         try{
 
@@ -89,32 +89,32 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 // eligibilityId IS NULL, so get all Municipalities code
                 StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
 
-                CityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+                cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
     
-                CityZipCodeObj.success = true;
-                CityZipCodeObj.message = '';
+                cityZipCodeObj.success = true;
+                cityZipCodeObj.message = '';
             } else {
                 // eligibilityId IS NOT NULL, so get eligibility database records
-                //CityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(eligibilityId, CityZipCodeObj);
+                //cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(eligibilityId, cityZipCodeObj);
 
                 // eligibilityId IS NOT NULL, so get eligibility database records ---> returns 2 list: cityAvailable and cityRemoved 
-                CityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities2(eligibilityId, CityZipCodeObj);
+                cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities2(eligibilityId, cityZipCodeObj);
 
-                if(!CityZipCodeObj.success){
-                    return CityZipCodeObj;
+                if(!cityZipCodeObj.success){
+                    return cityZipCodeObj;
                 }
 
-                CityZipCodeObj.success = true;
-                CityZipCodeObj.message = '';
+                cityZipCodeObj.success = true;
+                cityZipCodeObj.message = '';
             }
 
-            System.debug('# result -> ' +  CityZipCodeObj.regionList[0].provinceList);
+            System.debug('# result -> ' +  cityZipCodeObj.regionList[0].provinceList);
 
         } catch (Exception e){
             System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
             throw new AuraHandledException(e.getMessage());
         } 
-        return CityZipCodeObj;
+        return cityZipCodeObj;
 
     }
 
