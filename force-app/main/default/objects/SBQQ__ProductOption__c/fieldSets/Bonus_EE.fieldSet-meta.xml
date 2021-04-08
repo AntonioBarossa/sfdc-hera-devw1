@@ -37,7 +37,7 @@
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>
-    <displayedFields>
+    <!--<displayedFields>
         <field>PercentageF0__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
@@ -66,6 +66,6 @@
         <field>PercentageFV__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
-    </displayedFields>
+    </displayedFields>-->
     <label>Bonus EE</label>
 </FieldSet>
