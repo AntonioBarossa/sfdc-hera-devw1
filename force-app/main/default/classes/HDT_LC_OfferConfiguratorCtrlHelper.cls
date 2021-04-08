@@ -18,8 +18,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOff.Product__c = productId;
         tecOff.RateCategory__c = rateId;
         
-        
-
         SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
     
@@ -29,6 +27,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             } catch (Exception e){
                 saveResponse.success = false;
                 saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+                saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+                lineError.rowId = '0';
+                lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+                saveResponse.errorData.add(lineError);
                 saveResponse.dataError = false;
                 return saveResponse;
             }
@@ -38,8 +41,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             saveResponse.dataError = false;
             return saveResponse;                
         }
-
-
 
         List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c tecOffItem;
