@@ -23,8 +23,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         
             if(objRes.isCreateable()){
-                
-                    insert tecOff;
+                insert tecOff;
             } else {
                 saveResponse.success = false;
                 saveResponse.message = '# ERROR: you don\'t have permission on this obj';

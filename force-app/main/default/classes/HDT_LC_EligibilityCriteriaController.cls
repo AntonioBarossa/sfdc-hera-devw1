@@ -33,7 +33,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
             List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
             muniList = [
-                SELECT Id, Name, AreaCode__c, JSON_Code__c
+                SELECT Id, Name, AreaCode__c, JSONCode__c
                 FROM EligibleMunicipality__c
                 WHERE EligibilityCriteria__c =: recordId
                 WITH SECURITY_ENFORCED
@@ -46,7 +46,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
             for(EligibleMunicipality__c muni : muniList){
 
-                HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv  = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+                HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv  = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
 
                 treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
                 treeItem.label = singleProv.label + ' (' + singleProv.value + ')';

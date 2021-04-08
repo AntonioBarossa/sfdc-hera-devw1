@@ -41,7 +41,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                 muni.Name = singleProv.label;
                 muni.AreaCode__c =  singleProv.value;
                 //singleProv.cityRemoved = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_City>();
-                muni.JSON_Code__c = JSON.serialize(singleProv);
+                muni.JSONCode__c = JSON.serialize(singleProv);
                 muniList.add(muni);
             }
         }
@@ -71,7 +71,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         EligibilityCriteria__c crtiteriaToClone = [
             SELECT Id, Name,
-                   (SELECT Id, Name, AreaCode__c, JSON_Code__c FROM Comuni_Eleggibili__r)
+                   (SELECT Id, Name, AreaCode__c, JSONCode__c FROM Comuni_Eleggibili__r)
             FROM EligibilityCriteria__c
             WHERE Id =: recIdToClone
             WITH SECURITY_ENFORCED
@@ -165,7 +165,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
         List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
         muniList = [
-            SELECT Id, Name, AreaCode__c, JSON_Code__c
+            SELECT Id, Name, AreaCode__c, JSONCode__c
             FROM EligibleMunicipality__c
             WHERE EligibilityCriteria__c =: eligibilityId
             WITH SECURITY_ENFORCED
@@ -175,7 +175,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
             for(EligibleMunicipality__c muni : muniList){
                 singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
-                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
 
                 Set<String> tempSet = new Set<String>();
                 for(HDT_WRP_EligibilityCriteria.HDT_WRP_City city : singleProv.cityAvailable){
@@ -231,7 +231,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
             for(EligibleMunicipality__c muni : muniList){
                 singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
-                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
                 singleRegion.provinceList.add(singleProv);
             }
             cityZipCodeObj.regionList.add(singleRegion);
@@ -250,7 +250,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         try{
             List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
             muniList = [
-                SELECT Id, Name, AreaCode__c, JSON_Code__c
+                SELECT Id, Name, AreaCode__c, JSONCode__c
                 FROM EligibleMunicipality__c
                 WHERE EligibilityCriteria__c =: eligibilityId
                 WITH SECURITY_ENFORCED
@@ -266,7 +266,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
             for(EligibleMunicipality__c muni : muniList){
                 singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
-                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSON_Code__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
                 singleRegion.provinceList.add(singleProv);
             }
             cityZipCodeObj.regionList.add(singleRegion);
