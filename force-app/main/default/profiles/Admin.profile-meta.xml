@@ -2650,6 +2650,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.AccountClassCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.AccountClass__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.AccountCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6511,6 +6521,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>NewsNotificationCenter__c.Active__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>NewsNotificationCenter__c.Cluster__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
