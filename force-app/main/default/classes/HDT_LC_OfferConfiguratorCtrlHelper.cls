@@ -18,28 +18,30 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOff.Product__c = productId;
         tecOff.RateCategory__c = rateId;
         
-        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
-        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-    
-        if(objRes.isCreateable()){
-            try{
-                insert tecOff;
-            } catch (Exception e){
+        try{
+            SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        
+            if(objRes.isCreateable()){
+                
+                    insert tecOff;
+            } else {
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-                saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
-                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
-                lineError.rowId = '0';
-                lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-                saveResponse.errorData.add(lineError);
+                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
                 saveResponse.dataError = false;
-                return saveResponse;
+                return saveResponse;                
             }
-        } else {
+
+        } catch (Exception e){
             saveResponse.success = false;
-            saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+            HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+            lineError.rowId = '0';
+            lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.errorData.add(lineError);
             saveResponse.dataError = false;
-            return saveResponse;                
+            return saveResponse;
         }
 
         List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
