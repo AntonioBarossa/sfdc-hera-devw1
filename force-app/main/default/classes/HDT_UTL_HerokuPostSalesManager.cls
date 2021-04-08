@@ -157,6 +157,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     public List<Case> handleResponse(List<HDT_WRP_HerokuPostSalesManager> responseResults, Case currentCase){
 
         String phase;
+        String herokuCode;
 
         List<Case> caseUpdate = new List<Case>();
 
@@ -166,25 +167,26 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
                 when 'CREA_RIC'{
 
-                    if(responseResult.responseMap.get('refReq') == String.valueOf(currentCase.CaseNumber)){
+                    //if(responseResult.responseMap.get('refReq') == String.valueOf(currentCase.CaseNumber)){
 
-                        System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
+                    herokuCode = responseResult.responseMap.get('herokuCode');
+                    System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
 
-                        switch on responseResult.responseMap.get('result'){
+                    switch on responseResult.responseMap.get('result'){
 
-                            when 'OK'{
+                        when 'OK'{
 
-                                phase = 'Comunicazione verso Heroku OK';
+                            phase = 'Comunicazione verso Heroku OK';
 
-                            } 
-                            when else{
+                        } 
+                        when else{
 
-                                phase = 'Comunicazione verso Heroku KO';
-                            }
-
+                            phase = 'Comunicazione verso Heroku KO';
                         }
 
                     }
+
+                    //}
 
                 } when else {
 
@@ -203,6 +205,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('SRV_Class_Phase--> '+phase);
 
             currentCase.Phase__c = phase;
+            currentCase.HerokuPracticeCode__c = herokuCode;
 
             caseUpdate.add(currentCase);
 
