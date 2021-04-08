@@ -33,6 +33,22 @@
             <targetReference>Check_Record_Type</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>NoChoice</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>YesChoice</name>
+        <choiceText>Si</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Si</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Check_Case_Correlato</name>
         <label>Case Correlato?</label>
@@ -78,6 +94,31 @@
                 <targetReference>Show_Error_No_Case</targetReference>
             </connector>
             <label>No Input Case</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Inserire_Letture</name>
+        <label>Inserire Letture?</label>
+        <locationX>1242</locationX>
+        <locationY>843</locationY>
+        <defaultConnector>
+            <targetReference>Next_Step</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ReadingsRadioButtons</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>YesChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Letture</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <decisions>
@@ -153,6 +194,46 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Processo</name>
+        <label>Quale Processo?</label>
+        <locationX>1237</locationX>
+        <locationY>485</locationY>
+        <defaultConnector>
+            <targetReference>Next_Step</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Gestione_Bonus_Sociale</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.RecordType.DeveloperName</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_GestioneBonusSociale</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Motivo_Richiesta</targetReference>
+            </connector>
+            <label>Gestione Bonus Sociale</label>
+        </rules>
+        <rules>
+            <name>Sollecito_Emissione_Bolletta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdatedCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sollecito Emissione Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Inserire_letture</targetReference>
+            </connector>
+            <label>Sollecito Emissione Bolletta</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Record_Type</name>
         <label>Quale Processo?</label>
         <locationX>683</locationX>
@@ -190,6 +271,21 @@
                 <targetReference>Gestione_Letture</targetReference>
             </connector>
             <label>Rettifica Consumi</label>
+        </rules>
+        <rules>
+            <name>Unificazione_Seperazione_BP_CA_Bolletta</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unificazione/Separazione CA-Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Unificazione_Separazione_BP_CA_Bolletta</targetReference>
+            </connector>
+            <label>Unificazione/Seperazione BP-CA-Bolletta</label>
         </rules>
     </decisions>
     <decisions>
@@ -269,31 +365,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Is_Gestione_Bonus_Sociale</name>
-        <label>Gestione Bonus Sociale?</label>
-        <locationX>1237</locationX>
-        <locationY>485</locationY>
-        <defaultConnector>
-            <targetReference>Next_Step</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Gestione_Bonus_Sociale</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Query_Case.RecordType.DeveloperName</leftValueReference>
-                <operator>StartsWith</operator>
-                <rightValue>
-                    <stringValue>HDT_RT_GestioneBonusSociale</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Check_Motivo_Richiesta</targetReference>
-            </connector>
-            <label>Gestione Bonus Sociale</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>1616</locationX>
@@ -340,10 +411,10 @@
             <name>Avvisare_Cliente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>UpdatedCase.RecordType.DeveloperName</leftValueReference>
-                <operator>StartsWith</operator>
+                <leftValueReference>UpdatedCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HDT_RT_SollecitoEmissioneBolletta</stringValue>
+                    <stringValue>Sollecito Emissione Bolletta</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -430,7 +501,7 @@
         <locationY>483</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Is_Gestione_Bonus_Sociale</targetReference>
+            <targetReference>Check_Processo</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -996,6 +1067,124 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Inserire_letture</name>
+        <label>Inserire letture?</label>
+        <locationX>1249</locationX>
+        <locationY>670</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Check_Inserire_Letture</targetReference>
+        </connector>
+        <fields>
+            <name>DT1</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ReadingsRadioButtons</name>
+            <choiceReferences>YesChoice</choiceReferences>
+            <choiceReferences>NoChoice</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>NoChoice</defaultSelectedChoiceReference>
+            <fieldText>Si desidera inserire le letture?</fieldText>
+            <fieldType>RadioButtons</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Letture</name>
+        <label>Screen Letture</label>
+        <locationX>1471</locationX>
+        <locationY>1077</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Next_Step</targetReference>
+        </connector>
+        <fields>
+            <name>hdtSelfReading</name>
+            <extensionName>c:hdtSelfReading</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>commodity</name>
+                <value>
+                    <elementReference>UpdatedCase.CommodityFormula__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledReadingDate</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isVolture</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>object</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>UpdatedCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveDraft</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Show_Error_No_Case</name>
         <label>Show Error No Case</label>
         <locationX>59</locationX>
@@ -1043,8 +1232,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>1625</locationX>
-        <locationY>703</locationY>
+        <locationX>1734</locationX>
+        <locationY>788</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1068,6 +1257,19 @@
             <targetReference>InputFieldsFatturazione</targetReference>
         </connector>
         <flowName>HDT_FL_GestioneFatturazione_GestioneLetture</flowName>
+    </subflows>
+    <subflows>
+        <name>Gestione_Unificazione_Separazione_BP_CA_Bolletta</name>
+        <label>Gestione Unificazione/Separazione BP-CA-Bolletta</label>
+        <locationX>530</locationX>
+        <locationY>712</locationY>
+        <flowName>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Set_Argomento</name>
