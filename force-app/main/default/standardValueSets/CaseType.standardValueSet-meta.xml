@@ -112,7 +112,7 @@
         <label>Recesso per Altri Motivi</label>
     </standardValue>
     <standardValue>
-        <fullName>Recesso per Rifiuto Voltura</fullName>
+        <fullName>Recesso per Rifiuto Voltura</fullName> 
         <default>false</default>
         <label>Recesso per Rifiuto Voltura</label>
     </standardValue>
