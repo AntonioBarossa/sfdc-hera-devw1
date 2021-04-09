@@ -13,6 +13,7 @@
                                             object-api-name={objectName}
                                             onsuccess={handleSuccess}
                                             onsubmit ={handleSubmit}
+                                            onerror={handleError}
                                             density={density}>
                 <template if:true={showInputSection}>
                     <div class="slds-section slds-is-open">
@@ -144,8 +145,6 @@
                         </div>
                     </div>
                 </template>
-                <lightning-messages>
-                </lightning-messages>
                 <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
                     <div class="actionsLeft">
 
