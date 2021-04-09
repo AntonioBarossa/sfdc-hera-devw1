@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CodeValidityEndDate__c</fullName>
+    <description>Data, opzionale, oltre la quale i codici non hanno più validità</description>
+    <externalId>false</externalId>
+    <label>Data fine validità Codice Commerciale</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

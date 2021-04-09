@@ -3,6 +3,7 @@ import { LightningElement, api } from 'lwc';
 export default class hdtConfirmationDialogDropdown extends LightningElement {
 
     @api objectApiName; //object apiname on which it will be used
+    @api recordTypeId; //record type id
     @api picklistApiName; //picklist field apiname that will be displayed
     @api visible; //used to hide/show dialog
     @api title; //modal title

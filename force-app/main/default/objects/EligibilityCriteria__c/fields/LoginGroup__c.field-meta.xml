@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LoginGroup__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Campo di configurazione usato per indicare i gruppi di User del record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
+    <externalId>false</externalId>
+    <label>Raggruppamento di Login</label>
+    <referenceTo>LoginGroup__c</referenceTo>
+    <relationshipLabel>Criteri di Eleggibilita</relationshipLabel>
+    <relationshipName>Criteri_di_Eleggibilita</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

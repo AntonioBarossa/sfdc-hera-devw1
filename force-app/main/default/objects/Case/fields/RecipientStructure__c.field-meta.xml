@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RecipientStructure__c</fullName>
+    <externalId>false</externalId>
+    <label>Struttura Destinataria</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>SecondLevelOpinion__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>OM</fullName>
+                <default>false</default>
+                <label>OM</label>
+            </value>
+            <value>
+                <fullName>CDO</fullName>
+                <default>false</default>
+                <label>CDO</label>
+            </value>
+            <value>
+                <fullName>Gestione credito</fullName>
+                <default>false</default>
+                <label>Gestione credito</label>
+            </value>
+            <value>
+                <fullName>Escalation dal service ad Hera</fullName>
+                <default>false</default>
+                <label>Escalation dal service ad Hera</label>
+            </value>
+            <value>
+                <fullName>Escalation da Hera a Hera</fullName>
+                <default>false</default>
+                <label>Escalation da Hera a Hera</label>
+            </value>
+            <value>
+                <fullName>Costing e Forecasting</fullName>
+                <default>false</default>
+                <label>Costing e Forecasting</label>
+            </value>
+            <value>
+                <fullName>DAFC</fullName>
+                <default>false</default>
+                <label>DAFC</label>
+            </value>
+            <value>
+                <fullName>DISCO</fullName>
+                <default>false</default>
+                <label>DISCO</label>
+            </value>
+            <value>
+                <fullName>Clienti servizi regolati</fullName>
+                <default>false</default>
+                <label>Clienti servizi regolati</label>
+            </value>
+            <value>
+                <fullName>Fatturazione e incassi</fullName>
+                <default>false</default>
+                <label>Fatturazione e incassi</label>
+            </value>
+            <value>
+                <fullName>CVMBO_CFBS</fullName>
+                <default>false</default>
+                <label>CVMBO_CFBS</label>
+            </value>
+            <value>
+                <fullName>Legale H.SPA Speciale</fullName>
+                <default>false</default>
+                <label>Legale H.SPA Speciale</label>
+            </value>
+            <value>
+                <fullName>Legale HC Schiavo</fullName>
+                <default>false</default>
+                <label>Legale HC Schiavo</label>
+            </value>
+            <value>
+                <fullName>Vendita diretta</fullName>
+                <default>false</default>
+                <label>Vendita diretta</label>
+            </value>
+            <value>
+                <fullName>Vendita indiretta</fullName>
+                <default>false</default>
+                <label>Vendita indiretta</label>
+            </value>
+            <value>
+                <fullName>Vendita Condomini e PA</fullName>
+                <default>false</default>
+                <label>Vendita Condomini e PA</label>
+            </value>
+            <value>
+                <fullName>CRM</fullName>
+                <default>false</default>
+                <label>CRM</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Verifica fattura Sap</controllingFieldValue>
+            <controllingFieldValue>Pagamenti e incassi</controllingFieldValue>
+            <controllingFieldValue>Domiciliazioni</controllingFieldValue>
+            <controllingFieldValue>Fattura SD</controllingFieldValue>
+            <controllingFieldValue>Fatturazione Elettronica</controllingFieldValue>
+            <valueName>Fatturazione e incassi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <controllingFieldValue>Storno iva detraibile</controllingFieldValue>
+            <controllingFieldValue>Recupero diretto</controllingFieldValue>
+            <controllingFieldValue>Recupero indiretto</controllingFieldValue>
+            <controllingFieldValue>Fondo svalutazione crediti</controllingFieldValue>
+            <controllingFieldValue>Credit Management</controllingFieldValue>
+            <valueName>DAFC</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Iva e accise</controllingFieldValue>
+            <valueName>CVMBO_CFBS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendita diretta</controllingFieldValue>
+            <valueName>Vendita diretta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Vendita indiretta</controllingFieldValue>
+            <valueName>Vendita indiretta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condomini e PA</controllingFieldValue>
+            <valueName>Vendita Condomini e PA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piani di rientro</controllingFieldValue>
+            <controllingFieldValue>Supporto Pratiche legali</controllingFieldValue>
+            <controllingFieldValue>Rateizzazioni</controllingFieldValue>
+            <controllingFieldValue>Verifiche clienti TOP</controllingFieldValue>
+            <controllingFieldValue>Morosità riattivazione</controllingFieldValue>
+            <controllingFieldValue>Morosità sospensione</controllingFieldValue>
+            <valueName>Gestione credito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Call Center</controllingFieldValue>
+            <controllingFieldValue>Gestione Sportello</controllingFieldValue>
+            <valueName>CRM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parere Legale</controllingFieldValue>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Legale H.SPA Speciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Parere Normativo</controllingFieldValue>
+            <valueName>Legale HC Schiavo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Comunicazioni vs DL</controllingFieldValue>
+            <controllingFieldValue>Comunicazioni vs SII</controllingFieldValue>
+            <controllingFieldValue>Verifiche portali</controllingFieldValue>
+            <controllingFieldValue>CMOR</controllingFieldValue>
+            <valueName>DISCO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto HC</controllingFieldValue>
+            <valueName>Escalation dal service ad Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Responsabile HC</controllingFieldValue>
+            <valueName>Escalation da Hera a Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Costing e Forecasting</controllingFieldValue>
+            <valueName>Costing e Forecasting</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone RAI</controllingFieldValue>
+            <controllingFieldValue>Bonus Sociale</controllingFieldValue>
+            <valueName>Clienti servizi regolati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratto Siebel</controllingFieldValue>
+            <controllingFieldValue>Contratto SAP</controllingFieldValue>
+            <valueName>OM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>CDO</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

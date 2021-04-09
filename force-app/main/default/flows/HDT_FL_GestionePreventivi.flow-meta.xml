@@ -35,7 +35,7 @@
         <inputParameters>
             <name>commodity</name>
             <value>
-                <elementReference>Get_Input_Case_0.Commodity__c</elementReference>
+                <elementReference>Get_Input_Case_0.CommodityFormula__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -152,10 +152,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</name>
+        <label>Assegna Fase Attesa Conferma Preventivo Cliente</label>
+        <locationX>1141</locationX>
+        <locationY>3953</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa conferma preventivo cliente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Servizio</name>
         <label>Assegna Servizio</label>
-        <locationX>1841</locationX>
-        <locationY>509</locationY>
+        <locationX>1851</locationX>
+        <locationY>441</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Commodity__c</assignToReference>
             <operator>Assign</operator>
@@ -170,8 +193,8 @@
     <assignments>
         <name>Assegna_Valori_0</name>
         <label>Assegna Valori</label>
-        <locationX>1474</locationX>
-        <locationY>1509</locationY>
+        <locationX>1473</locationX>
+        <locationY>1508</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -195,6 +218,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Preventivo_Rapido</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaPotenzaImpegnata</name>
+        <label>AssegnaPotenzaImpegnata</label>
+        <locationX>1274</locationX>
+        <locationY>306</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.PowerCommitted__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.ServicePoint__r.PowerAvailable__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -312,8 +351,8 @@
     <assignments>
         <name>Pratica_non_gestita_per_DL</name>
         <label>Pratica non gestita per DL</label>
-        <locationX>1421</locationX>
-        <locationY>3974</locationY>
+        <locationX>1419</locationX>
+        <locationY>3983</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -321,8 +360,22 @@
                 <stringValue>Pratica non gestita per il DL</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.Subject</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Non gestito DL</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>RiepilogoRapidoScreen</targetReference>
+            <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -334,11 +387,18 @@
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>Comunicazione verso Heroku OK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>RiepilogoRapidoScreen</targetReference>
+            <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -519,28 +579,6 @@
                 <targetReference>Calcola_Info_Preventivo</targetReference>
             </connector>
             <label>Continua</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Credit_Check_Ok_or_KO</name>
-        <label>Credit Check Ok or KO?</label>
-        <locationX>1810</locationX>
-        <locationY>278</locationY>
-        <defaultConnectorLabel>Credit Check KO</defaultConnectorLabel>
-        <rules>
-            <name>Credit_Check_OK</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Esito_Credit_Check</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <elementReference>CreditCheckOK</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Get_Input_Case</targetReference>
-            </connector>
-            <label>Credit Check OK</label>
         </rules>
     </decisions>
     <decisions>
@@ -752,9 +790,31 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Preventivo_da_inviare</targetReference>
+                <targetReference>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</targetReference>
             </connector>
             <label>Rapido</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Salva_In_Bozza_O_Conferma</name>
+        <label>Salva In Bozza O Conferma</label>
+        <locationX>1284</locationX>
+        <locationY>3513</locationY>
+        <defaultConnectorLabel>Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Conferma</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Documentale</targetReference>
+            </connector>
+            <label>Conferma</label>
         </rules>
     </decisions>
     <decisions>
@@ -920,14 +980,19 @@
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>FormulaCodicePrestazione</name>
+        <dataType>String</dataType>
+        <expression>IF(ISNULL({!Calcola_Info_Preventivo.OperationCode__c}),&quot;&quot;,{!Calcola_Info_Preventivo.OperationCode__c} )</expression>
+    </formulas>
+    <formulas>
         <name>ProcessTypeCommodity</name>
         <dataType>String</dataType>
-        <expression>TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!CommodityPicklist}</expression>
+        <expression>IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;), ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeRecapFormula</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!CommodityPicklist} + &quot; &quot; + &quot;Riepilogo&quot;, TEXT({!Get_Input_Case.Type}) + &quot; &quot; + &quot;Riepilogo&quot;)</expression>
+        <expression>IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;), ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}+ &quot; &quot; + &quot;Riepilogo&quot;, TEXT({!Get_Input_Case.Type}) + &quot; &quot; + &quot;Riepilogo&quot;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePreventivi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Preventivi</label>
@@ -958,7 +1023,7 @@
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Tipo_Processo</targetReference>
+            <targetReference>AssegnaPotenzaImpegnata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -975,8 +1040,8 @@
     <recordLookups>
         <name>Get_Input_Case_0</name>
         <label>Get Input Case</label>
-        <locationX>1474</locationX>
-        <locationY>744</locationY>
+        <locationX>1476</locationX>
+        <locationY>825</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bozza_o_Continua</targetReference>
@@ -997,8 +1062,8 @@
         <description>Check if the current service is managed by the local dispatcher</description>
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
-        <locationX>1227</locationX>
-        <locationY>3516</locationY>
+        <locationX>953</locationX>
+        <locationY>3518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
@@ -1043,7 +1108,7 @@
             <field>DistributorCode__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Get_Input_Case_0.DistributorName__c</elementReference>
+                <elementReference>Get_Input_Case_0.PODPDRFormula__c</elementReference>
             </value>
         </filters>
         <filters>
@@ -1060,17 +1125,17 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>1161</locationX>
-        <locationY>4436</locationY>
+        <locationX>1168</locationX>
+        <locationY>4194</locationY>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_1</name>
         <label>Aggiorna Case</label>
-        <locationX>2019</locationX>
-        <locationY>509</locationY>
+        <locationX>1946</locationX>
+        <locationY>554</locationY>
         <connector>
-            <targetReference>Input_Data_0</targetReference>
+            <targetReference>Processo_Screen</targetReference>
         </connector>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
@@ -1080,7 +1145,7 @@
         <locationX>1219</locationX>
         <locationY>3344</locationY>
         <connector>
-            <targetReference>Prestazione_Distrubutore</targetReference>
+            <targetReference>RiepilogoRapidoScreen</targetReference>
         </connector>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
@@ -1111,12 +1176,22 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase</name>
+        <label>AggiornaCase</label>
+        <locationX>1121</locationX>
+        <locationY>319</locationY>
+        <connector>
+            <targetReference>Tipo_Processo</targetReference>
+        </connector>
+        <inputReference>Get_Input_Case</inputReference>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>CommodityScreen</name>
         <label>CommodityAddressScreen</label>
-        <locationX>1679</locationX>
-        <locationY>509</locationY>
+        <locationX>1698</locationX>
+        <locationY>426</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1154,42 +1229,13 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Credit_Check_Screen</name>
-        <label>Credit Check Screen</label>
-        <locationX>1810</locationX>
-        <locationY>158</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Credit_Check_Ok_or_KO</targetReference>
-        </connector>
-        <fields>
-            <name>CreditCheckScreenText</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;Credit Check Cliente&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Esito_Credit_Check</name>
-            <choiceReferences>CreditCheckOK</choiceReferences>
-            <choiceReferences>CreditCheckKO</choiceReferences>
-            <dataType>String</dataType>
-            <defaultSelectedChoiceReference>CreditCheckOK</defaultSelectedChoiceReference>
-            <fieldText>Esito Credit Check</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>ErrorConfigurationScreen</name>
         <label>ErrorConfigurationScreen</label>
         <locationX>1754</locationX>
         <locationY>1294</locationY>
         <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
+        <allowFinish>false</allowFinish>
+        <allowPause>false</allowPause>
         <fields>
             <name>ErrorConfigurationText</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Attenzione!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Non esiste alcun tipo preventivo configurato, tornare indietro per modificare i dati o chiudi il Preventivo&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!$Flow.FaultMessage}&lt;/b&gt;&lt;/p&gt;</fieldText>
@@ -1215,129 +1261,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Input_Data_0</name>
-        <label>Input Data</label>
-        <locationX>2018</locationX>
-        <locationY>746</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Get_Input_Case_0</targetReference>
-        </connector>
-        <fields>
-            <name>InputDataDisplayText</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i campi sottostanti.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>RecordEditFormScreen</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>ProcessTypeCommodity</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>InputCase</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>addContentDocument</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva in Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelPreviousButton</name>
-                <value>
-                    <stringValue>Indietro</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>SaveInDraft</assignToReference>
-                <name>saveInDraft</name>
-            </outputParameters>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Processo_Screen</name>
         <label>Input Dati Screen</label>
-        <locationX>1134</locationX>
-        <locationY>520</locationY>
+        <locationX>1474</locationX>
+        <locationY>719</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1356,7 +1283,7 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1380,13 +1307,13 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>Get_Input_Case.Type</elementReference>
+                    <elementReference>ProcessTypeCommodity</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1449,13 +1376,13 @@
     <screens>
         <name>RiepilogoRapidoScreen</name>
         <label>RiepilogoRapidoScreen</label>
-        <locationX>1160</locationX>
-        <locationY>4220</locationY>
+        <locationX>1439</locationX>
+        <locationY>3427</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Salva_In_Bozza_O_Conferma</targetReference>
         </connector>
         <fields>
             <name>RiepilogoRapidoText</name>
@@ -1536,6 +1463,44 @@
                 <name>labelDraftButton</name>
                 <value>
                     <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Documentale</name>
+        <label>Screen Documentale</label>
+        <locationX>1111</locationX>
+        <locationY>3449</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Prestazione_Distrubutore</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_00</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case_0.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignature</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -1646,7 +1611,7 @@
         <locationX>1684</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Credit_Check_Screen</targetReference>
+            <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
     <status>Active</status>

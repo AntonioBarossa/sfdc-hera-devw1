@@ -6,14 +6,14 @@
         <div class="actionsRight">
             <lightning-button
                 class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="success" type="button" name="save" label="Conferma pratica" onclick={handleGoNext}>
+                variant={variantButton} type="button" name="save" label={labelButton} onclick={handleGoNext}>
             </lightning-button>
             <lightning-button
             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
             variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
         </lightning-button>
             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                variant="destructive" type="button" name="cancel" label="Annulla pratica" onclick={handleCancell}>
+                variant="destructive" type="button" name="cancel" label="Annulla pratica" onclick={handleCancel}>
             </lightning-button>
         </div>
     </div>

@@ -49,7 +49,7 @@ public inherited sharing class HDT_LC_SellingWizardController {
         Sale__c newSale = saleService.createRecord(sale);
 
         saleService.checkReadAccess('Id,Name,Account__r.Name,Account__r.FiscalCode__c,CurrentStep__c,CreatedDate');
-        Sale__c retrievedSale = saleQuery.getRecordById(newSale.id, 'Id,Name,Account__r.Name,Account__r.FiscalCode__c,CurrentStep__c,CreatedDate');
+        Sale__c retrievedSale = saleQuery.getRecordById(newSale.id, 'Id,Name,Account__r.RecordType.DeveloperName,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,CreatedDate,Campaign__c,SalesCompany__c');
 
         return retrievedSale;
     }

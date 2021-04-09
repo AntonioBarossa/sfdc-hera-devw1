@@ -1,8 +1,9 @@
 trigger HDT_Order on Order (before insert, before update, before delete, 
 	                          after insert, after update, after delete, after undelete) {
 
-	HDT_TRH_Order handler = new HDT_TRH_Order();
-
+	new HDT_TRH_Order().run();
+                                  
+	/*
 	if (Trigger.isUpdate && Trigger.isBefore){
 		System.debug('order trigger: do before update');
     	handler.OnBeforeUpdate();       
@@ -15,5 +16,5 @@ trigger HDT_Order on Order (before insert, before update, before delete,
 	} else if(Trigger.isInsert && Trigger.isAfter){
 		System.debug('order trigger: do after insert');
 		handler.OnAfterInsert();
-	}
+	}*/
 }

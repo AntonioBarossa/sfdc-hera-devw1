@@ -4,6 +4,8 @@ import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
+import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
+
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -44,22 +46,96 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     connectedCallback() {
+        if(this.processtype === undefined || this.processtype === ''){
+            console.log('processType non popolato');
+        }
+        else
+        {
         console.log('targetObject'+ JSON.stringify(this.targetobject));
         console.log('processType'+ JSON.stringify(this.processtype));
-        if(this.processtype ==='Modifica'){
-            console.log('entra qui Modifica***************');
-            this.submitFornitura();
-        }
-        else if(this.processtype==='Cessazioni'){
-            console.log('entra qui Cessazioni***************');
+        console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
+        getCustomMetadata({processType:this.processtype}).then(data =>{
+            console.log('data custom metadata '+JSON.stringify(data));
+            console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
+            console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
+            console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
 
-            this.submitContract();
+            let statusSplit=[];
+            let TipoServizioSplit=[];
+
+
+            if(data.ContrattiCliente__c =='SI'){
+
+                if(data.StatoContratto__c != undefined && data.StatoContratto__c!='')
+                {
+
+                    statusSplit = data.StatoContratto__c.split(",");
+                    console.log('statusSplit *****'+JSON.stringify(statusSplit));
+                }
+            }
+            if(data.FornitureCliente__c == 'SI'){
+                
+                if(data.TipoServizio__c!= undefined&&data.TipoServizio__c!='')
+                {
+                    TipoServizioSplit = data.TipoServizio__c.split(",");
+                    console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                }
+                
+            }
+
+            if(statusSplit.length > 1){
+            
+                this.additionalfilter= 'AND (status =\''+statusSplit[0]+'\''+'OR status = \''+statusSplit[1]+'\')';
+                console.log('entra in contratti si');
+                this.handleAdditionalFilter(this.processtype);
+            
+           }
+           else if(statusSplit.length > 0)
+           {
+
+                this.additionalfilter= 'AND status =\''+data.StatoContratto__c+'\''; 
+                this.handleAdditionalFilter(this.processtype);
+           }
+           if(TipoServizioSplit.length >1){
+
+                    this.additionalfilter='AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    this.handleAdditionalFilter(this.processtype);
+            }
+            else if(TipoServizioSplit.length >0)
+            {     
+                    this.additionalfilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    this.handleAdditionalFilter(this.processtype);
         }
+
+
+        });
+    }
 
         if (this.maxRowSelected ===false){
             this.maxRowSelected= 1
         }else {
             this.maxRowSelected = this.originalData.length
+        }
+    }
+
+    @api
+    handleAdditionalFilter(processtype){
+        let processT = processtype;
+        console.log('enter in handleAdditionalFilter');
+        console.log('processType******************'+JSON.stringify(processT));
+
+        if(processT ==='Voltura Tecnica'){
+            console.log('entra qui Modifica***************');
+          
+            this.submitFornitura();
+        }
+        else if(processT==='Annullamento contratti')
+        {
+            console.log('entra qui Cessazioni***************');
+            this.submitContract();
+            
         }
     }
 
@@ -192,7 +268,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.preloading = true;
         console.log('executing query search', this.accountid);
         console.log('additionalFilter************:'+JSON.stringify(this.additionalfilter));
-        //aggiungere parametro additionalFilter a getContracts
+
             getContracts({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
                 this.preloading = false;
                 if (data.length > 0) {
@@ -203,7 +279,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     this.openmodel = true;
                     this.isLoaded = true;
                 } else {
-                    this.alert('Dati tabela','Nessun record trovato','warn')
+                    this.alert('Dati tabella','Nessun record trovato','warn')
                     this.tableData = data;
                 }
             });
@@ -227,7 +303,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.openmodel = true;
                 this.isLoaded = true;
             } else {
-                this.alert('Dati tabela','Nessun record trovato','warn')
+                this.alert('Dati tabella','Nessun record trovato','warn')
                 this.tableData = data;
             }
         });
@@ -235,7 +311,6 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     /**
      * 
-
      * Calling Apex callWebService method
      * TODO this method is not finished yet need webserivce.
      */
@@ -268,7 +343,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
         this.preloading = true;
         let qty = this.queryType;
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalFilter}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter}).then(data => {
             console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
@@ -281,7 +356,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.apiSearchButtonStatus=true;
                 this.searchInputValue= null;
             } else {
-                this.alert('Dati tabela',this.notFoundMsg[qty],'warn')
+                this.alert('Dati tabella',this.notFoundMsg[qty],'warn')
                 this.tableData = data;
                 this.apiSearchButtonStatus=false;
             }

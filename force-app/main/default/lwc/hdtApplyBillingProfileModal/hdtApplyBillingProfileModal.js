@@ -14,14 +14,15 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
 
     columns = [
         {label: 'Nome', fieldName: 'Name', type: 'text'},
-        {label: 'Prodotto', fieldName: 'ProductName', type: 'text'}
+        {label: 'Billing Profile', fieldName: 'BillingProfile', type: 'text'},
+        {label: 'Prodotto', fieldName: 'ProductName', type: 'text'},
+        {label: 'POD/PDR', fieldName: 'ServicePointCode', type: 'text'}
     ];
 
     getModalData(){
         this.loading = true;
 
-
-        console.log('this.selectedBillingProfile.PaymentMethod__c: ', this.selectedBillingProfile.PaymentMethod__c);
+        console.log('this.selectedBillingProfile: ', JSON.parse(JSON.stringify(this.selectedBillingProfile)));
 
         let paymentMethodRaw = this.selectedBillingProfile.PaymentMethod__c;
         let paymentMethodToSend = paymentMethodRaw.includes("Bollettino") ? 'Bollettino' : this.selectedBillingProfile.PaymentMethod__c;
@@ -34,7 +35,7 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                 this.handleCancelEvent();
                 const event = ShowToastEvent({
                     title: '',
-                    message:  'Nessun record trovato',
+                    message:  'Nessun Prodotto selezionato è compatibile con questo metodo di pagamento',
                     variant: 'warn'
                 });
                 dispatchEvent(event);
@@ -42,11 +43,15 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
             } else {
                 let quoteBundleArray = [];
 
+                console.log('hdtApplyBillingProfileModal: ', JSON.parse(JSON.stringify(data)));
+
                 data.forEach(el => {
                     quoteBundleArray.push({
-                        "Id"                   :el.Id,
-                        "Name"                 :el.Name,
-                        "ProductName"          :el.SBQQ__Product__r.Name
+                        "Id"                   :el.SBQQ__RequiredBy__c,
+                        "Name"                 :el.SBQQ__RequiredBy__r.Name,
+                        "BillingProfile"       :el.SBQQ__RequiredBy__r.BillingProfile__c !== undefined ? el.SBQQ__RequiredBy__r.BillingProfile__r.Name : '',
+                        "ProductName"          :el.SBQQ__RequiredBy__r.SBQQ__Product__r.Name !== undefined ? el.SBQQ__RequiredBy__r.SBQQ__Product__r.Name : '',
+                        "ServicePointCode"     :el.ServicePoint__c !== undefined ? el.ServicePoint__r.ServicePointCode__c : ''
                     });
                 });
 
@@ -78,7 +83,12 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
                 message:  'Quote line Bundle aggiornati con successo',
                 variant: 'success'
             });
-            dispatchEvent(event);
+            this.dispatchEvent(event);
+
+            this.dispatchEvent(new CustomEvent('salewizard__refreshproductstable', {
+                bubbles: true,
+                composed: true
+            }));
 
         }).catch(error => {
             this.loading = false;
