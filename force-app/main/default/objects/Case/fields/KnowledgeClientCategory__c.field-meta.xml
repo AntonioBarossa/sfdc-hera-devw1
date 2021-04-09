@@ -3,7 +3,12 @@
     <fullName>KnowledgeClientCategory__c</fullName>
     <description>Campo formula utilizzato per la funzione di Suggested Article</description>
     <externalId>false</externalId>
-    <formula>&quot;TEMP&quot;</formula>
+    <formula>CASE(Account.Category__c,
+&quot;Famiglie&quot;, &quot;Famiglie&quot;,
+&quot;Aziende&quot;, &quot;Aziende&quot;,
+&quot;Aziende SME&quot;, &quot;Aziende&quot;,
+&quot;Anziede Soho&quot;, &quot;Aziende&quot;,
+null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Tipologia Cliente Knowledge</label>
     <required>false</required>
