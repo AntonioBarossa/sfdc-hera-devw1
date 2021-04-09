@@ -10,7 +10,7 @@
         <fullName>Altre Verifiche</fullName>
         <default>false</default>
         <label>Altre Verifiche</label>
-    </standardValue>
+    </standardValue> 
     <standardValue>
         <fullName>Annullamento Contratti</fullName>
         <default>false</default>
