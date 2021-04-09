@@ -7,7 +7,6 @@
 
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
-    
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 17/03/2021

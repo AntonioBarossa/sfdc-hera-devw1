@@ -1,0 +1,170 @@
+<template>
+
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
+    <lightning-card title="Ricerca e clonazione di un'offerta Tecnica" icon-name="standard:proposition" >
+
+        <div if:true={spinnerObj.spinner} class="progress">
+            <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+
+        <p if:false={error.show} slot="actions" >
+            <lightning-button-group>
+                <lightning-button label="Cerca" onclick={searchClick} icon-name="utility:search" title="search"  class="slds-m-left_x-small" ></lightning-button>
+                <lightning-button label="Clona" name="cloneData" onclick={openConfirmation} icon-name="utility:copy" variant="success"></lightning-button>
+                <lightning-button label="Chiudi" name="closeSearch" onclick={openConfirmation} icon-name="utility:delete" variant="destructive" ></lightning-button>
+            </lightning-button-group>
+        </p>
+
+        <p if:true={error.show} slot="actions" >
+            <lightning-button label="Indietro" onclick={back} variant="destructive" ></lightning-button>
+        </p>
+
+        <div if:false={error.show} class="slds-card__body slds-card__body_inner">
+            
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                  <span class="slds-truncate slds-p-horizontal_small" title="Cerca">Stai creando un'offerta tecnica per questo prodotto</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                    <lightning-record-view-form record-id={productid} object-api-name="Product2" >
+                
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <div class="slds-form slds-m-top_x-large " >
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
+                                            <div class="slds-box slds-box_x-small  lgc-bg" >
+                                                <lightning-output-field field-name="ProductCode" variant="label-hidden" ></lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt2}></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
+                                        <div class="slds-form-element__control">
+                                            <!--<lightning-input disabled value={product.version} type="text" label=" "></lightning-input>-->
+                                            <div class="slds-box slds-box_x-small  lgc-bg" >
+                                                <lightning-output-field field-name="Version__c" variant="label-hidden" ></lightning-output-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="slds-col">
+                                <div class="slds-form slds-m-top_x-large " >
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Template</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-box slds-box_x-small lgc-bg" >
+                                                <div class="slds-text-body_regular">{rateObj.rateName}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-form-element slds-form-element_horizontal">
+                                        <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                                        <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
+                                        <div class="slds-form-element__control">
+                                            <div class="slds-box slds-box_x-small  lgc-bg" >
+                                                <div class="slds-text-body_regular">{rateObj.rateTemplate}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>            
+
+                    </lightning-record-view-form>
+
+                </div>
+            </div>
+
+            <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                  <span class="slds-truncate slds-p-horizontal_small" title="Cerca">Cerca un'offerta tecnica esistente</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-4">
+                            <div class="slds-form slds-m-top_medium slds-m-bottom_medium" >
+                                <div class="slds-form-element"><!--slds-form-element_horizontal-->
+                                    <lightning-helptext content="Nome Offerta...Select the right choice"></lightning-helptext>
+                                    <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-01">Nome offerta</label>
+        
+                                    <div class="slds-form-element__control slds-m-top_medium">
+                                        <c-hdt-custom-lookup   
+                                            unique-key={item.code}
+                                            value-id={item.selectedId}
+                                            obj-name="TechnicalOffer__c"
+                                            search-by="Name"
+                                            set-as-key="Id"
+                                            detail-fields={detailFields}
+                                            filter={filter}
+                                            icon-name="custom:custom57"
+                                            label-name="labelName"
+                                            onvalueselect={handleSelection}
+                                            placeholder="Seleziona offerta..."
+                                        ></c-hdt-custom-lookup>
+                                    </div>
+                                    <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div if:false={showTable} class="slds-box" >
+                        <c-hdt-custom-illustration
+                            message="I risultati verranno mostrati qui"
+                            style-class="slds-text-heading_large"
+                        ></c-hdt-custom-illustration>
+                    </div>
+        
+                    <div if:true={showTable} class="slds-box  slds-box_xx-small" >
+                        <lightning-datatable
+                                key-field="id"
+                                data={data}
+                                columns={columns}
+                                hide-checkbox-column
+                        ></lightning-datatable>
+                    </div>
+        
+                    <!--<div class="slds-box">
+                        <p>This is a regular-sized box.</p>
+                    </div>-->
+        
+                </div>
+        
+                <div if:true={error.show} class="slds-card__body slds-card__body_inner">
+                    <div class="slds-box">
+                        <div class="slds-text-color_error">ATTENZIONE</div>
+                        <div class="slds-text-heading_large">{error.message}</div>
+                    </div>
+                </div>
+
+
+                </div>
+              </div>
+
+
+
+    </lightning-card>
+</template>
