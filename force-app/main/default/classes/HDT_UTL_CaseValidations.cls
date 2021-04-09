@@ -35,6 +35,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateVariazioni(fields,recordId,caseType);
 
+        } else if(caseType == 'Chiusura Contatore'){
+
+            result = validateDisattivazioni(fields);
+
         }
 
         return result;
@@ -339,6 +343,34 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
 
         return result;
+
+    }
+
+
+    public String validateDisattivazioni(String fields){
+
+        String result;
+
+        Date notBeforeDate = Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c'));
+        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
+
+        if(notBeforeDate < System.today()){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
+
+        } else if(requestDate > System.today()){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
+
+
+        return result;
+
 
     }
 
