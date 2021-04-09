@@ -23,6 +23,11 @@
                 <label>Acconto Paperless Pagato</label>
             </value>
             <value>
+                <fullName>Allineamento RCU Concluso</fullName>
+                <default>false</default>
+                <label>Allineamento RCU Concluso</label>
+            </value>
+            <value>
                 <fullName>Ammissibilità KO</fullName>
                 <default>false</default>
                 <label>Ammissibilità KO</label>
@@ -91,6 +96,11 @@
                 <fullName>Chiuso</fullName>
                 <default>false</default>
                 <label>Chiuso</label>
+            </value>
+            <value>
+                <fullName>Completata</fullName>
+                <default>false</default>
+                <label>Completata</label>
             </value>
             <value>
                 <fullName>Comunicazione verso Heroku KO</fullName>
@@ -188,9 +198,39 @@
                 <label>Esito OK da SII</label>
             </value>
             <value>
+                <fullName>Gestione Procedurale</fullName>
+                <default>false</default>
+                <label>Gestione Procedurale</label>
+            </value>
+            <value>
+                <fullName>In Attesa Allineamento RCU</fullName>
+                <default>false</default>
+                <label>In Attesa Allineamento RCU</label>
+            </value>
+            <value>
                 <fullName>In Attesa Approvazione</fullName>
                 <default>false</default>
                 <label>In Attesa Approvazione</label>
+            </value>
+            <value>
+                <fullName>In attesa Data Decorrenza</fullName>
+                <default>false</default>
+                <label>In attesa Data Decorrenza</label>
+            </value>
+            <value>
+                <fullName>In attesa Documentazione</fullName>
+                <default>false</default>
+                <label>In attesa Documentazione</label>
+            </value>
+            <value>
+                <fullName>In attesa risposta Mail</fullName>
+                <default>false</default>
+                <label>In attesa risposta Mail</label>
+            </value>
+            <value>
+                <fullName>In attesa validazione</fullName>
+                <default>false</default>
+                <label>In attesa validazione</label>
             </value>
             <value>
                 <fullName>In Lavorazione</fullName>
@@ -333,39 +373,14 @@
                 <label>Verifica in laboratorio</label>
             </value>
             <value>
-                <fullName>In attesa validazione</fullName>
+                <fullName>Accettazione Voltura Tecnica</fullName>
                 <default>false</default>
-                <label>In attesa validazione</label>
+                <label>Accettazione Voltura Tecnica</label>
             </value>
             <value>
-                <fullName>In attesa Documentazione</fullName>
+                <fullName>Attesa Lavorazione BO</fullName>
                 <default>false</default>
-                <label>In attesa Documentazione</label>
-            </value>
-            <value>
-                <fullName>Gestione Procedurale</fullName>
-                <default>false</default>
-                <label>Gestione Procedurale</label>
-            </value>
-            <value>
-                <fullName>In attesa risposta Mail</fullName>
-                <default>false</default>
-                <label>In attesa risposta Mail</label>
-            </value>
-            <value>
-                <fullName>Allineamento RCU Concluso</fullName>
-                <default>false</default>
-                <label>Allineamento RCU Concluso</label>
-            </value>
-            <value>
-                <fullName>In attesa Data Decorrenza</fullName>
-                <default>false</default>
-                <label>In attesa Data Decorrenza</label>
-            </value>
-            <value>
-                <fullName>In Attesa Allineamento RCU</fullName>
-                <default>false</default>
-                <label>In Attesa Allineamento RCU</label>
+                <label>Attesa Lavorazione BO</label>
             </value>
             <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
@@ -524,6 +539,18 @@
                 <label>Pratica non gestita per il DL</label>
             </value>
             <value>
+                <fullName>Presa in Carico KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico KO</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico OK</label>
+            </value>
+            <value>
                 <fullName>Prescrizione concessa</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -534,6 +561,18 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Prescrizione non concessa</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0152</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0152</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0153</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0153</label>
             </value>
             <value>
                 <fullName>Richiesta Preventivo Extra Sistema</fullName>
@@ -636,11 +675,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Sospeso per verifica DL</label>
-            </value>
-            <value>
-                <fullName>Completata</fullName>
-                <default>false</default>
-                <label>Completata</label>
             </value>
         </valueSetDefinition>
     </valueSet>
