@@ -46,17 +46,6 @@ public inherited sharing class HDT_LC_AccountStatementController {
 
     }
 
-    @AuraEnabled
-    public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj operationBackend(String operation, List<String> idlist){
-
-        System.debug('>>> Operation -> ' + operation + ' >>> idlist -> ' + idlist);
-
-        HDT_WRP_AccountStatement.HDT_WRP_ResponseObj respObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
-        respObj.success = true;
-        respObj.message = '';
-        return respObj;
-    }
-
     @AuraEnabled(Cacheable=true)
     public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValues(){
         HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj;
@@ -70,6 +59,17 @@ public inherited sharing class HDT_LC_AccountStatementController {
         serviceCatalogResponse = HDT_LC_AccountStatementCtrlHelper.serviceCatalogBackendHelper(tabValue, recordId, records, serviceCatalogResponse, level);
         return serviceCatalogResponse;
     }
+
+    //@AuraEnabled
+    //public static HDT_WRP_AccountStatement.HDT_WRP_ResponseObj operationBackend(String operation, List<String> idlist){
+
+    //    System.debug('>>> Operation -> ' + operation + ' >>> idlist -> ' + idlist);
+
+    //    HDT_WRP_AccountStatement.HDT_WRP_ResponseObj respObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
+    //    respObj.success = true;
+    //    respObj.message = '';
+    //    return respObj;
+    //}
 
     //------------------------------------------------------------------------------------------------------------------
     /*@AuraEnabled(continuation=true)//Async caller method
