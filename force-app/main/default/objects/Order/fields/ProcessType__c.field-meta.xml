@@ -110,6 +110,11 @@
                 <default>false</default>
                 <label>Switch in Ele</label>
             </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
