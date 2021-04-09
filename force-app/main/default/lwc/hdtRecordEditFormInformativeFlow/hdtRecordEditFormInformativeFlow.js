@@ -359,6 +359,21 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
         this.handleGoNext();
     }
 
+    handleError(event){
+
+        let obj = event.detail.output.fieldErrors;
+
+        let message = obj[Object.keys(obj)[0]][0].message;
+
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Errore',
+                message: message,
+                variant: 'error',
+            }),
+        );
+    }
+
     handleDraft(event){
         console.log('draft handle');
         const fields = event.detail.fields;

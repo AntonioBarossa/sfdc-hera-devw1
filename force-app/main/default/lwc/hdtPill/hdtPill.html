@@ -1,0 +1,42 @@
+<template>
+    <template if:true={showPill} >
+        <!--<lightning-pill title={pillLabel} label={pillLabel} onremove={handleRemove} >
+            <lightning-icon icon-name={pillIcon} variant="circle"  alternative-text="valore"></lightning-icon>
+        </lightning-pill>-->
+
+
+        <div class="slds-box slds-box_xx-small slds-grid slds-wrap">
+            <span class="slds-size_1-of-5">
+                <lightning-icon icon-name={pillIcon} size="x-small" alternative-text="Icon" ></lightning-icon>
+                <!--<span class="slds-assistive-text">Description of icon when needed</span>-->
+            </span>
+            <span class="slds-size_3-of-5 slds-float_left">
+                <p class="slds-truncate" title={pillLabel}>{pillLabel}</p>
+            </span>
+            <span class="slds-size_1-of-5">
+                <lightning-button-icon onclick={handleRemove} class="slds-float_right" icon-name="utility:close" variant="bare" alternative-text="Close" title="Close"></lightning-button-icon>
+            </span>
+        </div>
+
+
+    </template >
+    <template if:false={showPill} >    
+        <div onclick={openModal} class="pointer slds-box slds-box_small slds-truncate slds-form-element__control slds-grow" >
+            <!--<lightning-pill-container
+                items={items}
+                onitemremove={handleItemRemove}
+            ></lightning-pill-container>-->
+        </div>
+    </template>
+
+    <template if:true={showTable}>
+        <c-hdt-modal-data-table
+            field-name={fieldName}
+            row-id={rowId}
+            icon={pillIcon}
+            onclosemodal={hanldeCloseMOdal}
+            onsetvalue={hanldeSetValue}
+        ></c-hdt-modal-data-table>
+    </template>
+
+</template>

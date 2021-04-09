@@ -13,6 +13,8 @@
             <property name="isDraft" type="Boolean" label="Is Draft?" description="if the Case is Draft" role="inputOnly"/>
             <property name="isCancel" type="Boolean" label="Is Cancel?" description="if the Case is Cancel" role="inputOnly"/>
             <property name="isPrevious" type="Boolean" label="Is Previous?" description="if the Case is Previous" role="inputOnly"/>
+            <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>
+            <property name="loadingSpinner" type="Boolean" label="Loading Spinner" description="If true a loading spinner is shown" role="inputOnly"/>
             <property name="saveDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
             <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
         </targetConfig>
