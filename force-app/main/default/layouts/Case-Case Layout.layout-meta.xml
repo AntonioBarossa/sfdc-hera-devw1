@@ -193,10 +193,10 @@
                 <behavior>Edit</behavior>
                 <field>Campaign__c</field>
             </layoutItems>
-            <layoutItems>
+<!--             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Cluster__c</field>
-            </layoutItems>
+            </layoutItems> -->
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Subprocess__c</field>

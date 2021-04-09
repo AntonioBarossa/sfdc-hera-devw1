@@ -28,17 +28,7 @@
         <isRequired>false</isRequired>
     </displayedFields>
     <displayedFields>
-        <field>IVA__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>PriceNet__c</field>
-        <isFieldManaged>false</isFieldManaged>
-        <isRequired>false</isRequired>
-    </displayedFields>
-    <displayedFields>
-        <field>PriceNetDiscounted__c</field>
+        <field>SBQQ__UnitPrice__c</field>
         <isFieldManaged>false</isFieldManaged>
         <isRequired>false</isRequired>
     </displayedFields>

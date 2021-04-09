@@ -7,18 +7,24 @@
 
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
-    
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 17/03/2021
     * @description HDT_WS_MrrRequest.doPost() – Manages the POST Method requests
     * @return Descrizione di quanto ritorna il metodo​
     */
+
     @HttpPost
     webservice static void doPost() {
 
         JSONGenerator responseGen = JSON.createGenerator(true);
         responseGen.writeStartObject();
+
+        //INIZIO SVILUPPI EVERIS
+        
+        HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
+
+        //FINE SVILUPPI EVERIS
 
         try {
 
@@ -33,7 +39,21 @@ global with sharing class HDT_WS_MrrRequest {
                 switch on header.requestType {
                     when 'NOTIF_ES'{
 
-                        if (request.objects.get(0).fields.get(0).name == 'SALESFORCE_KEY') {
+                        //INIZIO SVILUPPI EVERIS
+
+                        if(header.fields.get(0).value == 'postsales'){
+
+                            hpsmSrv.handleInboundRequest(request);
+
+                            responseGen.writeStringField('status', 'success');
+                            
+                            RestContext.response.statusCode = 200;
+
+                        } 
+
+                        //FINE SVILUPPI EVERIS
+
+                        else if (request.objects.get(0).fields.get(0).name == 'SALESFORCE_KEY') {
 
                             responseGen.writeStringField('status', 'success');
                             
