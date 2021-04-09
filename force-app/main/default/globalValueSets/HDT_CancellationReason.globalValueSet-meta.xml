@@ -115,6 +115,11 @@
         <default>false</default>
         <label>Volontà estorta</label>
     </customValue>
+    <customValue>
+        <fullName>Gestione Scarto</fullName>
+        <default>false</default>
+        <label>Gestione Scarto</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
