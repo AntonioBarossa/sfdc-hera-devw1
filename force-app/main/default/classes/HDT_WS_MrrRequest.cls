@@ -14,6 +14,7 @@ global with sharing class HDT_WS_MrrRequest {
     * @description HDT_WS_MrrRequest.doPost() – Manages the POST Method requests
     * @return Descrizione di quanto ritorna il metodo​
     */
+
     @HttpPost
     webservice static void doPost() {
 
@@ -29,6 +30,12 @@ global with sharing class HDT_WS_MrrRequest {
 
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+
+        //INIZIO SVILUPPI EVERIS
+        
+        HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
+
+        //FINE SVILUPPI EVERIS
 
         try {
 
@@ -49,7 +56,26 @@ global with sharing class HDT_WS_MrrRequest {
                 switch on header.requestType {
                     when 'NOTIF_ES'{
 
-                        if (request.objects.get(0).fields.get(0).name == 'SALESFORCE_KEY') {
+                        //INIZIO SVILUPPI EVERIS
+
+                        if(header.fields.get(0).value == 'postsales'){
+
+                            hpsmSrv.handleInboundRequest(request);
+
+                            responseField.fieldType = 'TEXT';
+                            responseField.name = 'ESITO';
+                            responseField.value = 'OK';
+
+                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
+                            mrrResponseItem.objects.add(responseObject);
+                            
+                            RestContext.response.statusCode = 200;
+
+                        } 
+
+                        //FINE SVILUPPI EVERIS
+
+                        else if (request.objects.get(0).fields.get(0).name == 'SALESFORCE_KEY') {
 
                             responseField.fieldType = 'TEXT';
                             responseField.name = 'ESITO';
