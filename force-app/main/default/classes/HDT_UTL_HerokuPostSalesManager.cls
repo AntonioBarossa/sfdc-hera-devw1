@@ -124,6 +124,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String flowType;
         String phase;
         String recordId;
+        String herokuCode;
+
+        System.debug('UTL_CLASS_Request--> '+request);
 
         for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects[0].fields){
 
@@ -134,12 +137,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     flowType = field.value;
 
                 }
+                when 'COD_PRAT_UTENTE'{
+
+                    herokuCode = field.value;
+
+                }
                 when 'RECORD_ID'{
 
                     recordId = field.value;
 
                 }
-                when 'RECORD_PHASE'{
+                when 'FASE'{
 
                     phase = field.value;
 
@@ -149,7 +157,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         }
         
-        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId);
+        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId,herokuCode);
 
     }
 
@@ -169,7 +177,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
                     //if(responseResult.responseMap.get('refReq') == String.valueOf(currentCase.CaseNumber)){
 
-                    herokuCode = responseResult.responseMap.get('herokuCode');
+                    herokuCode = responseResult.responseMap.get('reqId');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
 
                     switch on responseResult.responseMap.get('result'){
@@ -203,6 +211,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if(currentCase.Phase__c  == 'Da Inviare'){
 
             System.debug('SRV_Class_Phase--> '+phase);
+            System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             currentCase.Phase__c = phase;
             currentCase.HerokuPracticeCode__c = herokuCode;
@@ -213,6 +222,35 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         return caseUpdate;
 
+    }
+
+    public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
+
+        List<Case> caseUpdate = new List<Case>();
+        Case currentCase = new Case();
+
+        currentCase = hpsmQr.getCurrentCaseById(reqWrp.requestMap.get('recordId'));
+        
+        switch on reqWrp.requestMap.get('flowType'){
+
+            when 'esito_intermedio'{
+
+                currentCase.Phase__c = reqWrp.requestMap.get('phase');
+
+            }
+            when 'esito_finale'{
+
+                currentCase.Phase__c = reqWrp.requestMap.get('phase');
+                //handleFinalOutcome
+
+
+            }
+
+        }
+
+        caseUpdate.add(currentCase);
+
+        return caseUpdate;
     }
 
     @AuraEnabled

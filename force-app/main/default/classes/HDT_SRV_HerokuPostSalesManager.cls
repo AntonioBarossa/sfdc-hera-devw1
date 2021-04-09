@@ -113,26 +113,17 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
     public String handleInboundRequest(HDT_WRP_MrrRequest.HDT_WRP_Request request){
 
+        List<Case> caseUpdate = new List<Case>();
+
         HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
+        
+        caseUpdate = hpsmUtl.handleRequest(reqWrp);
 
-        Case currentCase = new Case();
-
-        currentCase = hpsmQr.getCurrentCaseById(reqWrp.requestMap.get('recordId'));
-
-        switch on reqWrp.requestMap.get('flowType'){
-
-            when 'esito_intermedio'{
-
-                currentCase.Phase__c = reqWrp.requestMap.get('phase');
-
-            }
-            when 'esito_finale'{
-
-            }
+        if(caseUpdate.size() > 0){
+            
+            HDT_UTL_DatabaseService.updateSObject(caseUpdate);
 
         }
-
-        HDT_UTL_DatabaseService.updateSObject(currentCase);
 
         return null;
 
