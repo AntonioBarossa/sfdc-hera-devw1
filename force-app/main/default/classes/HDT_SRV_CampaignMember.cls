@@ -43,4 +43,11 @@ public inherited sharing class HDT_SRV_CampaignMember {
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
     }
+
+    public void updateRecord(CampaignMember cMember){
+        List<String> fields = helperMethods.getObjAttrList(cMember);
+        checkUpdateAccess(String.join(fields, ','));
+
+        HDT_UTL_DatabaseService.updateSObject(cMember);
+    }
 }

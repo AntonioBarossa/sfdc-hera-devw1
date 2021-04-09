@@ -1,17 +1,18 @@
 <template>
     <section aria-label="Dialog Title" class="popover-section" role="dialog">
-        <div class="slds-popover__body">
-            <c-hdt-popover-settings-menu></c-hdt-popover-settings-menu>
-            <c-hdt-refresh-button></c-hdt-refresh-button>
-            <c-hdt-new-campaign-case></c-hdt-new-campaign-case>
-            <c-hdt-new-campaign-sale></c-hdt-new-campaign-sale>
-            <c-hdt-not-proposed></c-hdt-not-proposed>
-            <c-hdt-negative-outcome></c-hdt-negative-outcome>
+        <div class="slds-popover__body slds-p-left--none">
+            <!-- <c-hdt-popover-settings-menu></c-hdt-popover-settings-menu>
+            <c-hdt-refresh-button></c-hdt-refresh-button> -->
+            <template if:true={showNewCaseButton}>
+                <c-hdt-new-campaign-case account-id={recordId} campaign-id={campaignId} case-cluster={caseCluster} case-type={caseType}></c-hdt-new-campaign-case>
+            </template>
+            <template if:true={showNewSaleButton}>
+                <c-hdt-new-campaign-sale campaign-id={campaignId} record-id={recordId}></c-hdt-new-campaign-sale>
+            </template>
+            <c-hdt-not-proposed campaign-member-id={campaignMemberId} onstatusupdate={statusUpdate}>
+            </c-hdt-not-proposed>
+            <c-hdt-negative-outcome campaign-member-id={campaignMemberId} onstatusupdate={statusUpdate}>
+            </c-hdt-negative-outcome>
         </div>
-        <lightning-button-icon icon-name="utility:close" variant="bare"
-            alternative-text="Close dialog"
-            class="slds-m-left_xx-small slds-float_right slds-popover__close" title="Close dialog"
-            onclick={closeButton}>
-        </lightning-button-icon>
     </section>
 </template>
