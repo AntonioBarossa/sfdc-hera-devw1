@@ -78,11 +78,9 @@ public inherited sharing class HDT_QR_Knowledge {
 
         news = [SELECT Role__c 
         FROM NewsNotificationCenter__c 
-        WHERE EntryChannel__c IN :channel
-        AND Active__c = true
-        /*WHERE Cluster__c IN :cluster
+        WHERE Cluster__c IN :cluster
         AND EntryChannel__c IN :channel
-        AND Active__c = true*/
+        AND Active__c = true
         WITH SECURITY_ENFORCED
         LIMIT 1
         ];
@@ -98,11 +96,9 @@ public inherited sharing class HDT_QR_Knowledge {
         newsDup = [ SELECT Id, 
         Name
         FROM NewsNotificationCenter__c
-        WHERE EntryChannel__c = :news.EntryChannel__c
-        AND Active__c = true
-        /*WHERE Cluster__c = :news.Cluster__c
+        WHERE Cluster__c = :news.Cluster__c
         AND EntryChannel__c = :news.EntryChannel__c
-        AND Active__c = true*/
+        AND Active__c = true
         WITH SECURITY_ENFORCED
         LIMIT 1
         ];
