@@ -21,17 +21,17 @@
 &quot;Column&quot; : 1
 },	
 {
-&quot;FieldName&quot; : &quot;CustomerPresence__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 2
-},
-{
 &quot;FieldName&quot; : &quot;AlternativeAddress__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 2
 },
 {
-&quot;FieldName&quot; : &quot;Note__c&quot;,
+&quot;FieldName&quot; : &quot;AlternativeEmail__c&quot;,
+&quot;Required&quot; : false,
+&quot;Column&quot; : 2
+},
+{
+&quot;FieldName&quot; : &quot;DistributorNote__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 2
 }
@@ -43,7 +43,12 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:type="xsd:string">[
+        <value xsi:type="xsd:string">[ 
+   {
+      &quot;FieldName&quot;:&quot;AccountId&quot;,
+      &quot;Column&quot;:1
+   },  
+
    {
       &quot;FieldName&quot;:&quot;PODPDRFormula__c&quot;,
       &quot;Column&quot;:1
@@ -54,6 +59,10 @@
    },
    {
       &quot;FieldName&quot;:&quot;AddressFormula__c&quot;,
+      &quot;Column&quot;:1
+   },
+   {
+      &quot;FieldName&quot;:&quot;DeliveryAddress__c&quot;,
       &quot;Column&quot;:1
    },
    {
@@ -73,7 +82,7 @@
       &quot;Column&quot;:1
    },
    {
-      &quot;FieldName&quot;:&quot;AccountId&quot;,
+      &quot;FieldName&quot;:&quot;Email__c&quot;,
       &quot;Column&quot;:1
    },
    {
