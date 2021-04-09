@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Licenza elementare</fullName>
+        <default>false</default>
+        <label>Licenza elementare</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma scuola media inferiore</fullName>
+        <default>false</default>
+        <label>Diploma scuola media inferiore</label>
+    </customValue>
+    <customValue>
+        <fullName>Diploma scuola media superiore</fullName>
+        <default>false</default>
+        <label>Diploma scuola media superiore</label>
+    </customValue>
+    <customValue>
+        <fullName>Laurea</fullName>
+        <default>false</default>
+        <label>Laurea</label>
+    </customValue>
+    <customValue>
+        <fullName>Master</fullName>
+        <default>false</default>
+        <label>Master</label>
+    </customValue>
+    <customValue>
+        <fullName>Nessun titolo</fullName>
+        <default>false</default>
+        <label>Nessun titolo</label>
+    </customValue>
+    <masterLabel>Titolo Studio</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

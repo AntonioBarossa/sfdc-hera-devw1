@@ -49,4 +49,18 @@ public inherited sharing class HDT_QR_Contact {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public List<String> getContactsIdByAccountId(String accountId) {
+        List <AccountContactRelation> accountContact = [
+            SELECT ContactId from AccountContactRelation 
+            WHERE AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+
+        List <String> res = new List <String>();
+        for (AccountContactRelation acc : accountContact) {
+            res.add(acc.ContactId);
+        }
+        return res;
+    }
 }

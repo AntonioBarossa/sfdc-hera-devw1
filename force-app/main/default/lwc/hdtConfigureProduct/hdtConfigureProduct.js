@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getQuotes from '@salesforce/apex/HDT_LC_ConfigureProduct.getQuotes';
 import cancelQuote from '@salesforce/apex/HDT_LC_ConfigureProduct.cancelQuote';
 import updateSale from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSale';
+import amendContract from '@salesforce/apex/HDT_LC_ConfigureProduct.amendContract';
 
 export default class hdtConfigureProduct extends LightningElement {
     
@@ -11,6 +12,7 @@ export default class hdtConfigureProduct extends LightningElement {
     loaded = false;
     showEditQuote = false;
     selectedQuoteId;
+    selectedContractId = '';
     cancelQuoteId;
     cancelQuoteOpportunityId;
     dialogTitle;
@@ -18,6 +20,8 @@ export default class hdtConfigureProduct extends LightningElement {
     isDialogVisible = false;
     currentStep = 3;
     nextStep = 4;
+    showAmend = false;
+    iframeSrcAmend = '';
 
     get hiddenEdit(){
         let result = true;
@@ -82,6 +86,8 @@ export default class hdtConfigureProduct extends LightningElement {
                     "Type"                 :el.quote[0].SBQQ__Type__c,
                     "OpportunityName"      :el.quote[0].SBQQ__Opportunity2__r.Name,
                     "OpportunityId"        :el.quote[0].SBQQ__Opportunity2__r.Id,
+                    "AmendmentAllowed"     :el.quote[0].AmendmentAllowed__c !== undefined && el.quote[0].AmendmentAllowed__c && el.quote[0].SBQQ__Type__c === 'Quote' ? true : false,
+                    "ContractReference"    :el.quote[0].ContractReference__c !== undefined ? el.quote[0].ContractReference__c : '',
                     "QuoteLines"           :el.quoteLines
                 });
             });
@@ -112,9 +118,42 @@ export default class hdtConfigureProduct extends LightningElement {
         this.showEditQuote = false;
     }
 
+    handleAmend(event){
+        this.selectedContractId = event.currentTarget.dataset.id;
+        // this.selectedContractId = '8007Y000002vCnkQAE'; //used for testing
+        console.log('this.selectedContractId: ', this.selectedContractId);
+        //'/apex/sbqq__sb?scontrolCaching=1&amp;id=' + quoteId +'#quote/le?qId='+ quoteId;
+        // this.iframeSrcAmend = '/apex/sbqq__AmendContract?id=8007Y000002vCnkQAE';
+        this.showAmend = true;
+
+        // this.loaded = false;
+        // amendContract({contractId: this.selectedContractId}).then(data =>{
+        //     this.loaded = true;
+
+        //     console.log('amendContract: ', JSON.stringify(data));
+
+        // }).catch(error => {
+        //     this.loaded = true;
+        //     const toastErrorMessage = new ShowToastEvent({
+        //         title: 'Errore',
+        //         message: error.message,
+        //         variant: 'error'
+        //     });
+        //     this.dispatchEvent(toastErrorMessage);
+        // });
+
+    }
+
+    handleCloseAmendContract(){
+        this.showAmend = false;
+        this.dispatchEvent(new CustomEvent('refresh_tiles'));
+    }
+
     handleQuoteDelete(event){
         this.cancelQuoteId = event.currentTarget.dataset.id;
         this.cancelQuoteOpportunityId = event.currentTarget.dataset.opportunityid;
+        console.log('this.cancelQuoteId: ', this.cancelQuoteId);
+        console.log('this.cancelQuoteOpportunityId: ', this.cancelQuoteOpportunityId);
         let quoteName = event.currentTarget.dataset.name;
         this.dialogTitle = "Cancella la Quote " + quoteName;
         this.dialogMessage = "Scegli una causale per procedere: ";

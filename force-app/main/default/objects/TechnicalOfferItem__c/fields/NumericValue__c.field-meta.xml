@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NumericValue__c</fullName>
-    <description>Valore numerico (usato per fattori moltiplicativi/numerici, consumi, per valori di potenza, valori numerici dei prezzi, altri numerici..)</description>
+    <description>valore numerico (usato per fattori moltiplicativi/numerici, consumi, per valori di potenza, valori numerici dei prezzi, altri numerici..)</description>
     <externalId>false</externalId>
     <label>Valore Numerico</label>
     <length>100</length>

@@ -30,7 +30,7 @@
                 </template>
             </div>
             <br/>
-            <div class="slds-grid slds-gutters">
+            <div if:true={showEsitoCheck} class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_4-of-12">
                     <div class="slds-text-title slds-truncate" title="order status">Esito Check POD/PDR contendibile</div>
                     <template if:true={precheck}>
