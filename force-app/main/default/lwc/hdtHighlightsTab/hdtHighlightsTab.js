@@ -1,24 +1,27 @@
 import { LightningElement, track, api } from 'lwc';
 
 const fields = [
-    'DataEnrichmentLastUpdate__c'//,
-/*     'ActiveServices__c',
-    'ActiveCampaigns__c',
-    'CreditFormula__c',
-    'RecallerFormula__c',
-    'ComplaintRateFormula__c',
-    'SatisfactionIndex__c' */
+    'DataEnrichmentLastUpdate__c',
+    'AssistedCustomer__c',
+    'ChurnkRisk__c',
+    'AccountRating__c'
+];
+
+const clcEnergyFields = [
+    'CustomerLifeCycleEle__c',
+    'CustomerLifeCycleGas__c'
 ];
 
 export default class HdtHighlightsTab extends LightningElement {
     @api recordId;
     @track fields = fields;
+    @track clcEnergyFields = clcEnergyFields;
     gridClass = '';
+    clcEnergyGridClass = '';
 
     connectedCallback(){
-        var arraySize = fields.length;
-        this.gridClass = 'slds-col slds-size_1-of-' + arraySize.toString();
-        console.log(this.gridClass);
+        this.gridClass = 'slds-col slds-size_1-of-' + fields.length.toString();
+        this.clcEnergyGridClass = 'slds-col slds-size_1-of-' + clcEnergyFields.length.toString();
     }
 
 
