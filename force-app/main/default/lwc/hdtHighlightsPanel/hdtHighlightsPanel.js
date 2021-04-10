@@ -1,7 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 
 const fields = [
-    'DataEnrichmentLastUpdate__c',
     'ActiveServices__c',
     'ActiveCampaigns__c',
     'CreditFormula__c',
