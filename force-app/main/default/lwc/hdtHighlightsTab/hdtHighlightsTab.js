@@ -1,4 +1,11 @@
-import { LightningElement, track, api } from 'lwc';
+import { LightningElement, track, api, wire } from 'lwc';
+import { getRecord } from 'lightning/uiRecordApi';
+import ROOT_CLC from '@salesforce/schema/Account.CustomerLifeCycle__c';
+import ENERGY_CLC from '@salesforce/schema/Account.CustomerLifeCycleEnergy__c';
+import EE_CLC from '@salesforce/schema/Account.CustomerLifeCycleEle__c';
+import GAS_CLC from '@salesforce/schema/Account.CustomerLifeCycleGas__c';
+import VAS_CLC from '@salesforce/schema/Account.CustomerLifeCycleVAS__c';
+
 
 const fields = [
     'DataEnrichmentLastUpdate__c',
@@ -7,22 +14,80 @@ const fields = [
     'AccountRating__c'
 ];
 
-const clcEnergyFields = [
-    'CustomerLifeCycleEle__c',
-    'CustomerLifeCycleGas__c'
-];
+var items = [{
+    "label": "Customer Life Cicle: ",
+    "name": "clc",
+    "expanded": false,
+    "items": [{
+        "label": "Customer Life Cicle Energy: ",
+        "name": "clcEnergy",
+        "expanded": false,
+        "items": [{
+            "label": "Customer Life Cicle EE: ",
+            "name": "clcEE",
+            "expanded": true,
+            "items" :[]
+        }, {
+            "label": "Customer Life Cicle Gas: ",
+            "name": "clcGas",
+            "expanded": true,
+            "items" :[]
+        }, {
+            "label": "Customer Life Cicle VAS: ",
+            "name": "clcVAS",
+            "expanded": true,
+            "items" :[]
+        }]
+    }]
+}];
 
 export default class HdtHighlightsTab extends LightningElement {
+    
     @api recordId;
+    @track record;
     @track fields = fields;
-    @track clcEnergyFields = clcEnergyFields;
-    gridClass = '';
-    clcEnergyGridClass = '';
+    @track openCasesNumber = 3;
+    @track openOptyNumber = 1;
+    @track koCasesNumber = 2;
+    @track clcItems;
 
-    connectedCallback(){
-        this.gridClass = 'slds-col slds-size_1-of-' + fields.length.toString();
-        this.clcEnergyGridClass = 'slds-col slds-size_1-of-' + clcEnergyFields.length.toString();
+    gridClass = '';
+
+    @wire(getRecord, { recordId: '$recordId', fields: [ROOT_CLC, ENERGY_CLC, EE_CLC, GAS_CLC, VAS_CLC] })
+    wiredAccount({ error, data }) {
+        if (data) {
+            this.record = data;
+            this.error = undefined;
+            this.updateClc();
+        } else if (error) {
+            console.log('wire failed to fetch data: ' + error);
+            this.error = error;
+            this.record = undefined;
+        }
     }
 
+    connectedCallback() {
+        this.gridClass = 'slds-col slds-size_1-of-' + fields.length.toString();
+    }
 
+    updateClc() {
+
+        this.updateClcLabel(items[0], this.record.fields.CustomerLifeCycle__c);
+        this.updateClcLabel(items[0].items[0], this.record.fields.CustomerLifeCycleEnergy__c);
+        this.updateClcLabel(items[0].items[0].items[0], this.record.fields.CustomerLifeCycleEle__c);
+        this.updateClcLabel(items[0].items[0].items[1], this.record.fields.CustomerLifeCycleGas__c);
+        this.updateClcLabel(items[0].items[0].items[2], this.record.fields.CustomerLifeCycleVAS__c);
+
+        this.clcItems = items;
+
+    } 
+
+    updateClcLabel(clcObject, clcField) {
+        var clcValue = clcField.value;
+        if (clcValue == null) {
+            clcValue = 'N/A';
+        } 
+
+        clcObject.label += clcValue;
+    }
 }

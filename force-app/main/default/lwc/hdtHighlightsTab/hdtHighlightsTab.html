@@ -15,29 +15,46 @@
 
         </div>
 
+        <!-- Aggiungiamo slds-form-element_stacked per avere lo stesso padding del lightning-record-view-form di sopra. -->
+        <div class="slds-grid slds-gutters slds-m-left_small slds-form-element_stacked">
+
+            <div class={gridClass}>
+                <p>
+                    <label class="slds-form-element__label">Presenza opportunità aperte:</label>
+                </p>
+
+                <p>
+                    <lightning-formatted-number value={openOptyNumber}></lightning-formatted-number>
+                </p>
+            </div>
+
+            <div class={gridClass}>
+                <p>
+                    <label class="slds-form-element__label">Presenza pratiche aperte:</label>
+                </p>
+
+                <p>
+                    <lightning-formatted-number value={openCasesNumber}></lightning-formatted-number>
+                </p>
+            </div>
+            
+            <div class={gridClass}>
+                <p>
+                    <label class="slds-form-element__label">Presenza pratiche KO:</label>
+                </p>
+
+                <p>
+                    <lightning-formatted-number value={koCasesNumber}></lightning-formatted-number>
+                </p>
+            </div>
+
+        </div>
+
         <div class="slds-col slds-size_1-of-1">
-            <lightning-output-field field-name='CustomerLifeCycle__c'>
-            </lightning-output-field>
+
+            <lightning-tree items={clcItems}></lightning-tree>
+            
         </div>
-
-        <div class="slds-col slds-p-left_medium slds-size_1-of-1">
-            <lightning-output-field field-name='CustomerLifeCycleEnergy__c'>
-            </lightning-output-field>
-        </div>
-
-        <div class="slds-grid slds-p-left_medium slds-gutters slds-m-left_small">
-
-            <template iterator:it={clcEnergyFields}>
-
-                <div key={it.value} >
-                    <lightning-output-field field-name={it.value}>
-                    </lightning-output-field>
-                </div>
-
-            </template>
-
-        </div>
-
     
     </lightning-record-view-form>
 
