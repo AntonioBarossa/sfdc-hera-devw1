@@ -215,7 +215,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             return wrapObj;
         }
 
-        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject(tObj.tabCode);
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = HDT_LC_AccountStatementCtrlUtility.setHttpObject(tObj.tabCode, tObj.requestType);
 
         if(httpObj == null){
             wrapObj.success = false;

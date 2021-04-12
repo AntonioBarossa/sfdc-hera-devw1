@@ -53,6 +53,9 @@
 		<members>hdtCustomLookup</members>
 		<members>hdtMockCmp</members>
 		<members>hdtCustomCombobox</members>
+		<members>hdtBillList</members>
+		<members>hdtViewResult</members>
+		<members>hdtAccountStatementFilters</name>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>

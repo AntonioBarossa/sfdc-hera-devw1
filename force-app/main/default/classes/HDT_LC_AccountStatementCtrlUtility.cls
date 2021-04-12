@@ -4,31 +4,20 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
         try{
 
+            dbr.codiceCliente = tObj.customerCode;
+            dbr.tipoTransazione = tObj.tabCode;
+            dbr.applicativo = 'ML';
+            dbr.tipoEstrattoConto = tObj.statementType;
+            dbr.loginId = '0-1';
+
             switch on tObj.requestType {
                 //Tasto Home
                 when 'home' {
-                    //applicativo
-                    //aggregazione
-                    //codiceCliente
-                    //tipoTransazione
-                    //tipoEstrattoConto
-                    //loginId
-                    //dbr.aggregazione = tObj.aggregation;//01|02|03|04
                     dbr = setDefaultHttpDataBodyRow(tObj, dbr);
                 }
                 //Tasto Tutte le partite recenti:
                 when 'allRecentItems' {
-                    //dataFine
-                    //dataInizio
-                    //applicativo
-                    //aggregazione
-                    //codiceCliente
-                    //tipoTransazione
-                    //tipoEstrattoConto
-                    //loginId
-
-                    dbr.aggregazione = tObj.aggregation;//01|02|03|04
-                    //dbr.tipoTransazione = tObj.tabCode;
+                    dbr.aggregazione = tObj.aggregation;
                     Date todayDate = date.today();
                     Date minusDate = todayDate.addYears(-5);                    
                     dbr.dataFine = String.valueOf(todayDate.day()) + '/' + String.valueOf(todayDate.month()) + '/' + String.valueOf(todayDate.year());
@@ -36,37 +25,42 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
-                    //numeroFattura
-                    //applicativo
-                    //aggregazione
-                    //codiceCliente
-                    //tipoTransazione
-                    //tipoEstrattoConto
-                    //loginId
-
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                 }
+                //Tasto Filtri 
+                when 'filters' {
+                    dbr.applicativo = 'ML';
+                    dbr.aggregazione = null;
+                    dbr.codiceCliente = tObj.customerCode;
+                    dbr.tipoTransazione = tObj.tabCode;//EC5
+                    dbr.tipoEstrattoConto = 'ORDINARIO';//tObj.statementType;
+                    dbr.dataInizio = convertDateFormat(dbr.dataInizio);
+                    dbr.dataFine = convertDateFormat(dbr.dataFine);
+                    dbr.numeroFattura = null;
+                    dbr.numeroBollettino = null;
+                    dbr.contoContrattuale = null;
+                    dbr.societa = null;
+                    dbr.contratto = null;
+                    dbr.loginId = '0-1';
+                }
                 //Tasto Visualizza Esito
                 when 'viewResult' {
-                    dbr.aggregazione = tObj.aggregation;//01|02|03|04
-                    //numeroFattura - ok
-                    //applicativo - ok
-                    //aggregazione - ok
-                    //codiceCliente - ok
-                    //tipoTransazione - ok
-                    //tipoEstrattoConto - ok
-                    //loginId - ok
+                    dbr.applicativo = null;
+                    dbr.aggregazione = null;
+                    dbr.codiceCliente = null;
+                    dbr.tipoEstrattoConto = null;
+                    dbr.dataInizio = null;
+                    dbr.dataFine = null;
+                    dbr.numeroBollettino = null;
+                    dbr.contoContrattuale = null;
+                    dbr.societa = null;
+                    dbr.contratto = null;
+                    dbr.loginId = null;
+                    dbr.tipoTransazione = 'EC4';
                 }
 
             }
-
-            dbr.codiceCliente = tObj.customerCode;
-            dbr.tipoTransazione = tObj.tabCode;
-
-            dbr.applicativo = 'ML';//possible value -> ML, MT, AL --> Default=ML only for WAVE1
-            dbr.tipoEstrattoConto = tObj.statementType;
-            dbr.loginId = '0-1';
 
             return dbr;
 
@@ -81,7 +75,19 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         switch on tObj.tabCode {
             //Estratto conto
             when 'EC' {
+                dbr.applicativo = 'ML';
                 dbr.aggregazione = '03';
+                dbr.codiceCliente = tObj.customerCode;
+                dbr.tipoTransazione = tObj.tabCode;
+                dbr.tipoEstrattoConto = tObj.statementType;
+                dbr.dataInizio = null;
+                dbr.dataFine = null;
+                dbr.numeroFattura = null;
+                dbr.numeroBollettino = null;
+                dbr.contoContrattuale = null;
+                dbr.societa = null;
+                dbr.contratto = null;
+                dbr.loginId = '0-1';
             }
             //Gestione del credito
             when 'EC1' {
@@ -143,7 +149,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         return day + '/' + month + '/' + year;
     }
 
-    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(String tabCode){
+    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(String tabCode, String requestType){
 
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
@@ -160,11 +166,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
                 httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
             }
+
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');
+
         } else {
             httpObj = null;
         }
+
+        //if(requestType.equalsIgnoreCase('viewResult')){
+        //    httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0';
+        //}
 
         return httpObj;
     }

@@ -74,6 +74,10 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showAcctStmt = false;;
     @track acctStmt = 'label';
     @track confObj = [];
+    showBillList = false;
+    showViewResult = false;
+    @track viewResultData = {};
+    showFilters = false;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -90,6 +94,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.openMainSpinner();
         this.getTabConfigurationData();
         this.isLoaded = true;
+
     }
 
     renderedCallback() {
@@ -136,7 +141,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 this.confObj = result.confObj.buttonList;
                 console.log('>>> customerCode: ' + result.confObj.customerCode);
                 this.techObj.customerCode = result.confObj.customerCode;
-                this.backendCall('home', '');// Chiamata in backend
+                
+                if(this.tabCode === 'EC5'){
+                    this.openFilters();
+                    this.closeMainSpinner();
+                } else {
+                    this.backendCall('home', '');// Chiamata in backend
+                }
+
                 this.columns.forEach((i) => {
                     this.interObj[i.fieldName] = '';   
                 });
@@ -200,7 +212,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             }
             
             this.openMainSpinner();
-            this.backendCall('home', '');// Chiamata in backend
+
+            if(this.tabCode === 'EC5'){
+                this.openFilters();
+                this.closeMainSpinner();
+            } else {
+                this.backendCall('home', '');// Chiamata in backend
+            }
+
             this.focusOnButton('home');
         }
 
@@ -391,8 +410,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             return;            
         }
 
-        this.handleButtonClick(event.target.name, JSON.stringify({numeroFattura: nf}));
-        this.focusOnButton(event.target.name);
+        //this.handleButtonClick(event.target.name, JSON.stringify({numeroFattura: nf}));
+
+        this.openMainSpinner();
+        this.resetIdList();
+        this.backendCall(event.target.name, JSON.stringify({numeroFattura: nf}));
+        //this.focusOnButton(event.target.name);
+
     }
 
     printOperation(){
@@ -547,48 +571,18 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 console.log('>>> success: ' + result.success);
 
                 if(result.success){
-                    
                     var obj = JSON.parse(result.data);
-                    console.log('>>> data ' + obj.data.length);
-                    
-                    if(obj.data.length===0){
-                        this.closeMainSpinner();
-                        return;
-                    }
 
-                    this.totAmount = 0;
-                    if(this.amountField != null && this.amountField != ''){
-                        obj.data.forEach((e) => { 
-                            e.id = e['idPrimoLivelloSAP'];
-                            this.totAmount += parseFloat(e[this.amountField]);
-                        });
+                    console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
+
+                    if(this.techObj.requestType==='viewResult'){
+                        // viewResult logic goes here
+                        this.viewResultMulesoftResponse(obj);
                     } else {
-                        obj.data.forEach((e) => { 
-                            e.id = e['idPrimoLivelloSAP'];
-                        });
+                        // other requestType logic goes here
+                        this.handleMulesoftResponse(obj);
                     }
 
-                    this.allData = obj.data;//result.data;
-
-                    if(result.data.length > this.perpage){
-                        this.accountData = obj.data.slice(0, this.perpage);
-                    } else {
-                        this.accountData = this.allData;
-                    }
-
-                    this.totAmountStored = this.totAmount;
-                    this.secondLevelList = obj.data[0][this.detailTable];
-                    this.totRecs = this.allData.length;
-                    this.fromRec = 1;
-
-                    if(obj.data.length > this.perpage){
-                        this.toRec = this.perpage;
-                    } else {
-                        this.toRec = obj.data.length;
-                    }
-
-                    this.setPages(this.allData.length);
-                    this.closeMainSpinner();
                 } else {
                     this.showError = true;
                     this.showErrorMessage = result.message;
@@ -601,6 +595,58 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 this.closeMainSpinner();
             });
 
+    }
+
+    handleMulesoftResponse(obj){
+        console.log('>>> data ' + obj.data.length);
+        
+        if(obj.data.length===0){
+            this.closeMainSpinner();
+            return;
+        }
+
+        this.totAmount = 0;
+        if(this.amountField != null && this.amountField != ''){
+            obj.data.forEach((e) => { 
+                e.id = e['idPrimoLivelloSAP'];
+                this.totAmount += parseFloat(e[this.amountField]);
+            });
+        } else {
+            obj.data.forEach((e) => { 
+                e.id = e['idPrimoLivelloSAP'];
+            });
+        }
+
+        this.allData = obj.data;//result.data;
+
+        if(obj.data.length > this.perpage){
+            this.accountData = obj.data.slice(0, this.perpage);
+        } else {
+            this.accountData = this.allData;
+        }
+
+        this.totAmountStored = this.totAmount;
+        this.secondLevelList = obj.data[0][this.detailTable];
+        this.totRecs = this.allData.length;
+        this.fromRec = 1;
+
+        if(obj.data.length > this.perpage){
+            this.toRec = this.perpage;
+        } else {
+            this.toRec = obj.data.length;
+        }
+
+        this.setPages(this.allData.length);
+        this.closeMainSpinner();
+    }
+
+    viewResultMulesoftResponse(obj){
+        console.log('>>> viewResult Mulesoft Response');
+        this.viewResultData.id = '1';
+        this.viewResultData.resultDate = '01/01/2020'
+        this.viewResultData.resultDetail = 'and the oscar goes to...';
+        this.showViewResult = true;
+        this.closeMainSpinner();
     }
 
     //Pagination --- START ---
@@ -1267,6 +1313,30 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         var requestType = 'home';//event.target.name
         this.handleButtonClick(requestType);
         this.focusOnButton(requestType);
+    }
+
+    billList(event){
+        this.showBillList = true;
+    }
+
+    closeBillList(){
+        this.showBillList = false;
+    }
+
+    closeViewResult(){
+        this.showViewResult = false;
+    }
+
+    openFilters(){
+        this.showFilters = true;
+    }
+
+    closeStatementFilters(){
+        this.showFilters = false;
+    }
+
+    homeTabEC5(){
+
     }
 
 }

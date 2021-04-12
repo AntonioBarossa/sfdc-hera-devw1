@@ -33,6 +33,25 @@
         ></c-hdt-filter-first-level-modal>
     </template>
 
+    <template if:true={showBillList} >
+        <c-hdt-bill-list
+            onclosemodal={closeBillList}
+        ></c-hdt-bill-list>
+    </template>
+
+    <template if:true={showViewResult} >
+        <c-hdt-view-result
+            result-data={viewResultData}
+            onclosemodal={closeViewResult}
+        ></c-hdt-view-result>
+    </template>
+
+    <template if:true={showFilters} >
+        <c-hdt-account-statement-filters
+            onclosemodal={closeStatementFilters}
+        ></c-hdt-account-statement-filters>
+    </template>
+
     <!--<template if:true={showOperationModal} >    
         <c-hdt-operation-modal
             oncloseopmodal={closeOpModal}
