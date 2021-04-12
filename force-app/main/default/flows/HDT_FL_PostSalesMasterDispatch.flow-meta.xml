@@ -634,12 +634,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Verifiche</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -723,12 +723,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Preventivi</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -812,12 +812,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Disattivazioni</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -895,12 +895,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <elementReference>Votive_Modena</elementReference>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -978,12 +978,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Pagamenti</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1055,12 +1055,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Autolettura</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1120,12 +1120,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Canone Rai</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1209,12 +1209,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Fatturazione</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1268,12 +1268,12 @@
         <connector>
             <targetReference>Assegna_Case_Id_Informative</targetReference>
         </connector>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Informative</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1321,12 +1321,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Modifiche Anagrafiche</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1392,12 +1392,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Morosità</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -1481,12 +1481,12 @@
                 <elementReference>AccountId</elementReference>
             </value>
         </inputAssignments>
-<!--         <inputAssignments>
+        <inputAssignments>
             <field>Cluster__c</field>
             <value>
                 <stringValue>Reclami</stringValue>
             </value>
-        </inputAssignments> -->
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
