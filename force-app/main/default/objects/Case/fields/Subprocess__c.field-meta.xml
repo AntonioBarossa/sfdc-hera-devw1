@@ -135,6 +135,18 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Ordinaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Mortis Causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Incorporazione societaria</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Fiscale</controllingFieldValue>
             <valueName>Accise - Agevolazione cliente</valueName>
         </valueSettings>
@@ -155,6 +167,18 @@
             <valueName>IVA - Errata applicazione</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Revoca Esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>Rettifica per segnalazione cassetto fiscale</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
             <valueName>Elementi di dettaglio</valueName>
         </valueSettings>
@@ -165,6 +189,18 @@
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
             <valueName>Report storno di adeguamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
+            <valueName>Account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
+            <valueName>Account e Billing Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
+            <valueName>Billing Profile</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
