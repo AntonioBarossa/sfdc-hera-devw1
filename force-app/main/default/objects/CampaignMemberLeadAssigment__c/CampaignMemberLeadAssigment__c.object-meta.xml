@@ -156,7 +156,7 @@
     <gender>Feminine</gender>
     <label>Assegnazione Campaign Member su base Lea</label>
     <nameField>
-        <label>Assegnazione Campaign Member su base Lea Name</label>
+        <label>Assegnazione Campaign Member su base Lea</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Assegnazioni Campaign Member su base Lea</pluralLabel>

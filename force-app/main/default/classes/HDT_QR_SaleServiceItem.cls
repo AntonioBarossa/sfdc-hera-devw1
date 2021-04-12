@@ -12,10 +12,11 @@ public inherited sharing class HDT_QR_SaleServiceItem {
      * @description Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
      * @param String saleId
      * @param String ServicePoint__r.SupplyCity__c
-     * @param String ServicePoint__r.RecordType.Name
+     * @param String ServicePoint__r.RecordType.DeveloperName
+     * @param String ServicePoint__r.MarketOrigin__c
      * @return List<SaleServiceItem__c>
      */
-    public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type){
+    public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type, String marketOrigin){
 
         return [SELECT Id,
         Opportunity__c,
@@ -23,19 +24,22 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Quote__c,
         ServicePoint__c,
         ServicePoint__r.SupplyCity__c,
-
+        ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.MarketOrigin__c,
         Opportunity__r.Sale__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
         AND ServicePoint__r.SupplyCity__c = :city
         AND ServicePoint__r.RecordType.DeveloperName = :type
+        AND ServicePoint__r.MarketOrigin__c = :marketOrigin
+        AND Quote__r.AmendmentAllowed__c = false
+        AND Opportunity__r.StageName NOT IN ('Closed Lost')
         WITH SECURITY_ENFORCED];
     }
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-
      * @description Get records filtered by Opportunity__r.Sale__c
      * @param String saleId
      * @return List<SaleServiceItem__c>
@@ -47,14 +51,46 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         Opportunity__c,
         Opportunity__r.Sale__c,
         Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
         Quote__c,
         Quote__r.Name,
         ServicePoint__c,
         ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c,
+        ServicePoint__r.MarketOrigin__c
+        FROM SaleServiceItem__c
+        WHERE Opportunity__r.Sale__c = :saleId
+        WITH SECURITY_ENFORCED
+        ORDER BY Opportunity__r.CreatedDate ASC
+        ];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get active records filtered by Opportunity__r.Sale__c
+     * @param String saleId
+     * @return List<SaleServiceItem__c>
+     */
+    public List<SaleServiceItem__c> getActiveRecordsBySaleId(String saleId){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
         ServicePoint__r.RecordType.DeveloperName,
         ServicePoint__r.SupplyCity__c
         FROM SaleServiceItem__c
         WHERE Opportunity__r.Sale__c = :saleId
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
         WITH SECURITY_ENFORCED
         ORDER BY Opportunity__r.CreatedDate ASC
         ];
@@ -83,7 +119,7 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 16/11/2020
-    * @description Get single record by quote id that has ServicePoint__r.RecordType.Name
+    * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
     * @param String quoteId – SBQQ__Quote__c.Id
     * @return List<SaleServiceItem__c>
     */
@@ -93,10 +129,58 @@ public inherited sharing class HDT_QR_SaleServiceItem {
             SELECT  
             Quote__c,
             ServicePoint__c,
+            ServicePoint__r.RecordType.Name,
             ServicePoint__r.RecordType.DeveloperName
             FROM SaleServiceItem__c
             WHERE Quote__c = :quoteId
             WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 13/03/2021
+    * @description Get single record by quote id that has ServicePoint__r.RecordType.DeveloperName
+    * @param String contractId – Quote__r.ContractReference__c
+    * @return List<SaleServiceItem__c>
+    */
+    public List<SaleServiceItem__c> getRecordsByContract(String contractId, String saleId){
+
+        return [
+            SELECT  
+            Quote__c,
+            ServicePoint__c,
+            ServicePoint__r.RecordType.Name,
+            ServicePoint__r.RecordType.DeveloperName
+            FROM SaleServiceItem__c
+            WHERE Quote__r.ContractReference__c = :contractId
+            AND Quote__r.Sale__c = :saleId
+            AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SaleServiceItem__c> getActiveRecordsByQuoteAndOpportunity(List<String> quotes, List<String> opportunities){
+
+        return [SELECT 
+        Id,
+        Opportunity__c,
+        Opportunity__r.Sale__c,
+        Opportunity__r.Name,
+        Opportunity__r.CreatedDate,
+        Quote__c,
+        Quote__r.Name,
+        ServicePoint__c,
+        ServicePoint__r.ServicePointCode__c,
+        ServicePoint__r.RecordType.Name,
+        ServicePoint__r.RecordType.DeveloperName,
+        ServicePoint__r.SupplyCity__c
+        FROM SaleServiceItem__c
+        WHERE Quote__c IN :quotes
+        AND Opportunity__c IN :opportunities
+        AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+        WITH SECURITY_ENFORCED
+        ORDER BY Opportunity__r.CreatedDate ASC
         ];
     }
 }

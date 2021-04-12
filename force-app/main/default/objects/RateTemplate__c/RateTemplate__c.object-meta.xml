@@ -157,9 +157,8 @@
     <gender>Feminine</gender>
     <label>Rate Template</label>
     <nameField>
-        <displayFormat>RTP-{00000000}</displayFormat>
-        <label>Rate Template</label>
-        <type>AutoNumber</type>
+        <label>Rate Category </label>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Rate Templates</pluralLabel>
     <searchLayouts/>

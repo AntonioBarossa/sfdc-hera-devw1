@@ -3,6 +3,10 @@ import getServicePoints from '@salesforce/apex/HDT_LC_AdvancedSearch.getServiceP
 import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import callWebService from '@salesforce/apex/HDT_LC_AdvancedSearch.callWebService';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
+import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
+import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
+
+
 
 export default class HdtAdvancedSearch extends LightningElement {
 
@@ -22,12 +26,19 @@ export default class HdtAdvancedSearch extends LightningElement {
     totalPage = 0;
     customSetting = null;
     confirmButtonDisabled = true;
+    @api servicePointRetrievedData;
+    @api additionalfilter;
     rowToSend;
     @api maxRowSelected=false;
     @api disabledinput;
     @api accountid;
-    apiSearchButtonStatus=true;
+    @api processtype;
+    apiSearchButtonStatus= true;
     apiSearchInputValue=null;
+    @api targetobject;
+    @api outputContract=[];
+    @api showbuttoncontract ;
+    @api showbuttonforniture ;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -35,12 +46,99 @@ export default class HdtAdvancedSearch extends LightningElement {
     }
 
     connectedCallback() {
+        if(this.processtype === undefined || this.processtype === ''){
+            console.log('processType non popolato');
+        }
+        else
+        {
+        console.log('targetObject'+ JSON.stringify(this.targetobject));
+        console.log('processType'+ JSON.stringify(this.processtype));
+        console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
+        getCustomMetadata({processType:this.processtype}).then(data =>{
+            console.log('data custom metadata '+JSON.stringify(data));
+            console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
+            console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
+            console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
+
+            let statusSplit=[];
+            let TipoServizioSplit=[];
+
+
+            if(data.ContrattiCliente__c =='SI'){
+
+                if(data.StatoContratto__c != undefined && data.StatoContratto__c!='')
+                {
+
+                    statusSplit = data.StatoContratto__c.split(",");
+                    console.log('statusSplit *****'+JSON.stringify(statusSplit));
+                }
+            }
+            if(data.FornitureCliente__c == 'SI'){
+                
+                if(data.TipoServizio__c!= undefined&&data.TipoServizio__c!='')
+                {
+                    TipoServizioSplit = data.TipoServizio__c.split(",");
+                    console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
+                }
+                
+            }
+
+            if(statusSplit.length > 1){
+            
+                this.additionalfilter= 'AND (status =\''+statusSplit[0]+'\''+'OR status = \''+statusSplit[1]+'\')';
+                console.log('entra in contratti si');
+                this.handleAdditionalFilter(this.processtype);
+            
+           }
+           else if(statusSplit.length > 0)
+           {
+
+                this.additionalfilter= 'AND status =\''+data.StatoContratto__c+'\''; 
+                this.handleAdditionalFilter(this.processtype);
+           }
+           if(TipoServizioSplit.length >1){
+
+                    this.additionalfilter='AND (CommoditySector__c = \''+TipoServizioSplit[0]+'\''+'OR CommoditySector__c = \''+TipoServizioSplit[1]+'\')';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    this.handleAdditionalFilter(this.processtype);
+            }
+            else if(TipoServizioSplit.length >0)
+            {     
+                    this.additionalfilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
+                    console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                    this.handleAdditionalFilter(this.processtype);
+        }
+
+
+        });
+    }
+
         if (this.maxRowSelected ===false){
             this.maxRowSelected= 1
         }else {
             this.maxRowSelected = this.originalData.length
         }
     }
+
+    @api
+    handleAdditionalFilter(processtype){
+        let processT = processtype;
+        console.log('enter in handleAdditionalFilter');
+        console.log('processType******************'+JSON.stringify(processT));
+
+        if(processT ==='Voltura Tecnica'){
+            console.log('entra qui Modifica***************');
+          
+            this.submitFornitura();
+        }
+        else if(processT==='Annullamento contratti')
+        {
+            console.log('entra qui Cessazioni***************');
+            this.submitContract();
+            
+        }
+    }
+
 
     /**
      * Filter Data-Table
@@ -76,6 +174,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.submitButtonStatus = false;
         } else {
             this.submitButtonStatus = true;
+
         }
     }
 
@@ -89,6 +188,9 @@ export default class HdtAdvancedSearch extends LightningElement {
     searchAction(event) {
         this.submitButtonStatus = true;
         this.apiSearchButtonStatus = true;
+
+        console.log('event value: '+ event.target.value);
+
         if (event.target.value.length > 3) {
             this.submitButtonStatus = false;
             this.searchInputValue = event.target.value;
@@ -125,6 +227,9 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
+
+        console.log('tableData********'+ JSON.stringify(this.tableData));
+
     }
 
     nextPage() {
@@ -151,16 +256,44 @@ export default class HdtAdvancedSearch extends LightningElement {
         return this.currentPage + 1;
     }
 
+    
     onselected(value){
         this.queryType = value.detail;
         this.apiSearchButtonStatus= true;
     }
 
-    submitContract(event){
-        event.preventDefault();
+
+@api
+    submitContract(){
         this.preloading = true;
         console.log('executing query search', this.accountid);
-        getContracts({accountid:this.accountid}).then(data =>{
+        console.log('additionalFilter************:'+JSON.stringify(this.additionalfilter));
+
+            getContracts({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
+                this.preloading = false;
+                if (data.length > 0) {
+                    this.originalData = JSON.parse(JSON.stringify(data));
+                    this.createTable(data);
+                    this.formatTableHeaderColumns(data);
+                    this.submitButtonStatus = true;
+                    this.openmodel = true;
+                    this.isLoaded = true;
+                } else {
+                    this.alert('Dati tabella','Nessun record trovato','warn')
+                    this.tableData = data;
+                }
+            });
+       
+        
+    }
+
+@api
+    submitFornitura(){
+        this.preloading = true;
+        console.log('executing query search', this.accountid);
+        console.log('additionlFilter**********************************'+this.additionalfilter)
+        
+        getForniture({accountid:this.accountid,additionalFilter:this.additionalfilter}).then(data =>{
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -170,13 +303,14 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.openmodel = true;
                 this.isLoaded = true;
             } else {
-                this.alert('Dati tabela','Nessun record trovato','warn')
+                this.alert('Dati tabella','Nessun record trovato','warn')
                 this.tableData = data;
             }
         });
     }
 
     /**
+     * 
      * Calling Apex callWebService method
      * TODO this method is not finished yet need webserivce.
      */
@@ -204,9 +338,13 @@ export default class HdtAdvancedSearch extends LightningElement {
      */
     submitSearch(event) {
         event.preventDefault();
+
+        console.log('event value submitSearch() '+ event.target.value);
+
         this.preloading = true;
         let qty = this.queryType;
-        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType}).then(data => {
+        getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter}).then(data => {
+            console.log('getServicePoint data *******'+ JSON.stringify(data));
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
@@ -218,7 +356,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.apiSearchButtonStatus=true;
                 this.searchInputValue= null;
             } else {
-                this.alert('Dati tabela',this.notFoundMsg[qty],'warn')
+                this.alert('Dati tabella',this.notFoundMsg[qty],'warn')
                 this.tableData = data;
                 this.apiSearchButtonStatus=false;
             }
@@ -230,17 +368,19 @@ export default class HdtAdvancedSearch extends LightningElement {
             }
             this.alert('',errorMsg,'error')
         });
+
     }
      /**
      * Get selected record from table
      */
     getSelectedServicePoint(event){
+        console.log('getSelectedServicePoint START');
         this.preloading = true;
         let selectedRows = event.detail.selectedRows;
         this.confirmButtonDisabled = (selectedRows === undefined || selectedRows.length == 0) ? true : false;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         this.preloading = false;
-        console.log('selectedRows: ', JSON.parse(JSON.stringify(selectedRows)));
+        console.log('getSelectedServicePoint END');
     }
 
     /**
@@ -249,10 +389,19 @@ export default class HdtAdvancedSearch extends LightningElement {
     handleConfirm(){
         this.preloading = true;
         this.closeModal();
-        this.dispatchEvent(new CustomEvent('servicepointselection', {
-            detail: this.rowToSend
-        }));
+
+            this.dispatchEvent(new CustomEvent('servicepointselection', {
+                detail: this.rowToSend
+            }));       
         this.confirmButtonDisabled = true;
         this.preloading = false;
+
     }
+
+@api
+    getTargetObject(targetObject){
+        this.targetObject = targetObject;
+    }
+    
+
 }

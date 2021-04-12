@@ -11,6 +11,8 @@ assets/
 .github/*
 assets/*
 manifest/package.xml
+manifest/*
+manifest/
 .gitignore
 
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ValidityStartDate__c</fullName>
+    <description>Campo di configurazione usato per indicare i date inizio validità dei prezzi usati nella funzionalità di Configurazione Offerta Tecnica</description>
+    <externalId>false</externalId>
+    <label>Data Inizio Validita</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
+</CustomField>

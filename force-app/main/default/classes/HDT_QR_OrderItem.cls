@@ -15,7 +15,8 @@ public inherited sharing class HDT_QR_OrderItem {
     */
     public List<OrderItem> getRecordsByOrderIdListFilteredPdrPod(List<Id> listOrderId){
         return [
-            SELECT 
+            SELECT
+            ServicePoint__c,
             ServicePoint__r.Name,
             ServicePoint__r.ServicePointCode__c,
             OrderId,
@@ -24,7 +25,7 @@ public inherited sharing class HDT_QR_OrderItem {
             OrderItem 
             WHERE
             OrderId IN :listOrderId 
-            AND Product2.Name IN ('PDR','POD')
+            AND (Product2.Name IN ('PDR','POD') OR (Product2.Family = 'VAS Opzione prodotto' AND (NOT Product2.Description LIKE '%Sconto%')))
             WITH SECURITY_ENFORCED
         ];
     }
@@ -48,6 +49,74 @@ public inherited sharing class HDT_QR_OrderItem {
             WHERE
             OrderId = :orderId 
             AND Product2.Name IN ('PDR','POD')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 10/02/2021
+    * @description Get record that have BillingProfile__c value set
+    * @param List<Id> listOrderId
+    * @return List<OrderItem>
+    */
+    public List<OrderItem> getRecordsWithBillingProfile(List<Id> listOrderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c
+            FROM 
+            OrderItem 
+            WHERE
+            OrderId IN :listOrderId  
+            AND BillingProfile__c != null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getRecordsWithAmend(List<Id> listOrderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c
+            FROM 
+            OrderItem 
+            WHERE
+            OrderId IN :listOrderId  
+            AND Order.SBQQ__Quote__r.SBQQ__Type__c = 'Amendment'
+            AND Product2.Name IN ('PDR','POD')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getMainItem(String orderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c,
+            Product2Id,
+            Product2.Family,
+            Product2.Name
+            FROM 
+            OrderItem 
+            WHERE OrderId = :orderId
+            AND SBQQ__RequiredBy__c = null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<OrderItem> getAnalisiConsumi(String orderId){
+        return [
+            SELECT 
+            OrderId,
+            BillingProfile__c,
+            Product2Id,
+            Product2.Family,
+            Product2.Name
+            FROM 
+            OrderItem 
+            WHERE OrderId = :orderId
+            AND Product2.Name = 'Analisi Consumi'
             WITH SECURITY_ENFORCED
         ];
     }

@@ -574,6 +574,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Gender__c</picklist>
+        <values>
+            <fullName>Femmina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Maschio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Industry</picklist>
         <values>
             <fullName>Agriculture</fullName>

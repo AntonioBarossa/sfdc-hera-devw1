@@ -3,7 +3,7 @@
     <fullName>CustomerRequestDate__c</fullName>
     <description>Data richiesta Cliente</description>
     <externalId>false</externalId>
-    <label>Data richiesta Cliente</label>
+    <label>Data inserimento richiesta</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

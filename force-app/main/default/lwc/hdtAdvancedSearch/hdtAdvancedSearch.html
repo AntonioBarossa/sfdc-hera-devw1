@@ -1,10 +1,21 @@
 <template>
 
-    <lightning-layout>
-        <lightning-layout-item padding="around-small" size="9">
+    <lightning-layout >
+        <lightning-layout-item padding="around-small" size="9" style="margin-bottom:15px;" >
             <c-hdt-advanced-search-selection-feild-radio-group disabledinput={disabledinput} onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
         </lightning-layout-item>
         <lightning-layout-item padding="around-small" size="3" style="margin-left:-5px;font-size: 11px;">
+        
+    <div style="margin-top:20px;" if:true={showbuttonforniture}>
+            <lightning-button
+                    disabled={disabledinput}
+                    label="Forniture Cliente"
+                    onclick={submitFornitura}
+                    title="Forniture Cliente"
+                    variant="brand"
+                    class="slds-m-left_x-small searchGo"></lightning-button>
+    </div>
+    <div style="margin-top:20px;" if:true={showbuttoncontract}>
             <lightning-button
                     disabled={disabledinput}
                     label="Contratti Cliente"
@@ -12,6 +23,7 @@
                     title="Contratti Cliente"
                     variant="brand"
                     class="slds-m-left_x-small searchGo"></lightning-button>
+    </div>
         </lightning-layout-item>
     </lightning-layout>
     <lightning-layout>
@@ -30,7 +42,7 @@
         </lightning-layout-item>
         <lightning-layout-item padding="around-small" size="3">
             <lightning-button
-                    label="search"
+                    label="Cerca"
                     disabled={submitButtonStatus}
                     onclick={submitSearch}
                     title="Search action"

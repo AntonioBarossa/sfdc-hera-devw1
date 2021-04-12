@@ -21,18 +21,19 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param Contract contract
      * @param String supplyCity
      * @param String accountId
+     * @param Sale sale
      */
     @AuraEnabled
-    public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId){
+    public static void confirmAction(String selectedOption, Order order, Contract contract, String supplyCity, String accountId, Sale__c sale){
         switch on selectedOption {
             when  'Ordini in corso'{
-                handleActiveOrderConfirm(order, supplyCity);
+                handleActiveOrderConfirm(order, supplyCity, sale);
             }
             when 'Contratti Attivi'{
-                handleActiveContractConfirm(contract, supplyCity);
+                handleActiveContractConfirm(contract, supplyCity, sale);
             }
             when 'VAS stand alone'{
-                handleVasStandAloneConfirm(supplyCity, accountId);
+                handleVasStandAloneConfirm(supplyCity, accountId, sale);
             }
             
         }
@@ -48,7 +49,7 @@ public inherited sharing class HDT_LC_SaleVas {
     public static List<Order> getOrdersList(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
         orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status');
-        return orderQr.getActiveRecordsByAccountId(accountId);
+        return orderQr.getRecordsForVasSelection(accountId);
     }
 
     /**
@@ -70,31 +71,36 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param Order order
      * @param String supplyCity
      */
-    public static void handleActiveOrderConfirm(Order order, String supplyCity){
+    public static void handleActiveOrderConfirm(Order order, String supplyCity, Sale__c sale){
         
         if (order.Id == null || supplyCity == '') {
             throw new AuraHandledException('Devi scegliere un ordine e compilare il comune!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
-            Name = 'VAS Opportunity Order',
+            Sale__c = sale.Id,
+            Name = opportunitySrv.generateName(sale) + ' VAS',
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = order.AccountId
         ));
 
         SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+            Sale__c = sale.Id,
             OrderReference__c = order.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
-            SBQQ__Account__c = order.AccountId,
+            SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
-            Agency__c = order.Agency__c,
-            Market__c = order.Market__c,
-            Channel__c = order.Channel__c,
-            FriendCode__c = order.FriendCode__c,
-            CampaignCode__c = order.CampaignCode__c,
-            CreatedBy__c = order.CreatedBy__c,
-            SupplyCity__c = supplyCity
+            Agency__c = sale.Agency__c,
+            Market__c = sale.Market__c,
+            Channel__c = sale.Channel__c,
+            FriendCode__c = sale.FriendCode__c,
+            CampaignCode__c = sale.CampaignCode__c,
+            CreatedBy__c = sale.CreatedBy__c,
+            SupplyCity__c = supplyCity,
+            SalesCompany__c = sale.SalesCompany__c,
+            Campaign__c = sale.Campaign__c,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -108,31 +114,36 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param Contract contract
      * @param String supplyCity
      */
-    public static void handleActiveContractConfirm(Contract contract, String supplyCity){
+    public static void handleActiveContractConfirm(Contract contract, String supplyCity, Sale__c sale){
         
         if (contract.Id == null || supplyCity == '') {
             throw new AuraHandledException('Devi scegliere un contrato e compilare il comune!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
-            Name = 'VAS Opportunity Contract',
+            Sale__c = sale.Id,
+            Name = opportunitySrv.generateName(sale) + ' VAS',
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = contract.AccountId
         ));
 
         SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+            Sale__c = sale.Id,
             ContractReference__c = contract.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
-            SBQQ__Account__c = contract.AccountId,
+            SBQQ__Account__c = sale.Account__c,
             SBQQ__Primary__c = true,
-            Agency__c = contract.SBQQ__Order__r.Agency__c,
-            Market__c = contract.SBQQ__Order__r.Market__c,
-            Channel__c = contract.SBQQ__Order__r.Channel__c,
-            FriendCode__c = contract.SBQQ__Order__r.FriendCode__c,
-            CampaignCode__c = contract.SBQQ__Order__r.CampaignCode__c,
-            CreatedBy__c = contract.SBQQ__Order__r.CreatedBy__c,
-            SupplyCity__c = supplyCity
+            Agency__c = sale.Agency__c,
+            Market__c = sale.Market__c,
+            Channel__c = sale.Channel__c,
+            FriendCode__c = sale.FriendCode__c,
+            CampaignCode__c = sale.CampaignCode__c,
+            CreatedBy__c = sale.CreatedBy__c,
+            SalesCompany__c = sale.SalesCompany__c,
+            Campaign__c = sale.Campaign__c,
+            SupplyCity__c = supplyCity,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -146,24 +157,34 @@ public inherited sharing class HDT_LC_SaleVas {
      * @param String supplyCity
      * @param String accountId
      */
-    public static void handleVasStandAloneConfirm(String supplyCity, String accountId){
+    public static void handleVasStandAloneConfirm(String supplyCity, String accountId, Sale__c sale){
         
         if (supplyCity == '') {
             throw new AuraHandledException('Devi compilare il comune!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
-            Name = 'VAS Opportunity Stand Alone',
+            Sale__c = sale.Id,
+            Name = opportunitySrv.generateName(sale) + ' VAS',
             CloseDate = Date.today().addDays(30),
             StageName = 'Proposal',
             AccountId = accountId
         ));
 
         SBQQ__Quote__c newQuote = quoteSrv.createRecord(new SBQQ__Quote__c(
+            Sale__c = sale.Id,
             SBQQ__Opportunity2__c = newOpportunity.Id,
             SBQQ__Account__c = accountId,
             SBQQ__Primary__c = true,
-            SupplyCity__c = supplyCity
+            SupplyCity__c = supplyCity,
+            Agency__c = sale.Agency__c,
+            Market__c = sale.Market__c,
+            Channel__c = sale.Channel__c,
+            FriendCode__c = sale.FriendCode__c,
+            CampaignCode__c = sale.CampaignCode__c,
+            CreatedBy__c = sale.CreatedBy__c,
+            SalesCompany__c = sale.SalesCompany__c,
+            IsVAS__c = true
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

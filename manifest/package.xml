@@ -4,6 +4,25 @@
   <members>*</members>
   <name>ApexClass</name>
 </types>
+ <types>
+  <members>OrderStatus</members>
+  <members>CaseOrigin</members>
+  <members>CasePriority</members>
+  <members>CaseReason</members>
+  <members>CaseStatus</members>
+  <members>CaseType</members>
+  <members>KnowledgeValidationStatus</members>
+  <name>StandardValueSet</name>
+</types>
+  <types>
+    <members>*</members>
+    <name>AuraDefinitionBundle</name>
+  </types>
+<types>
+  <members>campaignIcons</members>
+  <members>SiteSamples</members>
+  <name>StaticResource</name>
+</types>
 <types>
   <members>*</members>
   <name>ApprovalProcess</name>
@@ -38,12 +57,8 @@
 </types>
 <types>
   <members>*</members>
-  <name>CustomApplication</name>
-</types>
-<!--<<types>
-  <members>*</members>
   <name>CustomField</name>
-</types> -->
+</types>
 <types>
   <members>*</members>
   <name>CustomLabels</name>
@@ -157,6 +172,10 @@
 <types>
   <members>*</members>
   <name>TopicsForObjects</name>
+</types>
+<types>
+   <members>*</members>
+   <name>CustomMetadata</name>
 </types>
 <types>
   <members>*</members>

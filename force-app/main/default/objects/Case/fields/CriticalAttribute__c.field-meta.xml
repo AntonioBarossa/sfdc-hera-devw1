@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CriticalAttribute__c</fullName>
+    <externalId>false</externalId>
+    <label>Attributo Criticità</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Segnalato a/da Vertici Aziendali e/o Enti</fullName>
+                <default>false</default>
+                <label>Segnalato a/da Vertici Aziendali e/o Enti</label>
+            </value>
+            <value>
+                <fullName>Minaccia visibilità media/Disdetta</fullName>
+                <default>false</default>
+                <label>Minaccia visibilità media/Disdetta</label>
+            </value>
+            <value>
+                <fullName>Cliente Aggressivo</fullName>
+                <default>false</default>
+                <label>Cliente Aggressivo</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

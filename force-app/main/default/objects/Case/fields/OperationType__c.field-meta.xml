@@ -3,7 +3,7 @@
     <fullName>OperationType__c</fullName>
     <description>Picklist specifica per il processo &quot;Unificazione/Separazione CA-Bolletta&quot;.</description>
     <externalId>false</externalId>
-    <label>Tipologia Operazione</label>
+    <label>Tipo operatività</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -32,6 +32,21 @@
                 <fullName>Separazione bolletta</fullName>
                 <default>false</default>
                 <label>Separazione bolletta</label>
+            </value>
+            <value>
+                <fullName>Unificazione BP</fullName>
+                <default>false</default>
+                <label>Unificazione BP</label>
+            </value>
+            <value>
+                <fullName>Accollo parziale</fullName>
+                <default>false</default>
+                <label>Accollo parziale</label>
+            </value>
+            <value>
+                <fullName>Bonus commerciale</fullName>
+                <default>false</default>
+                <label>Bonus commerciale</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -397,6 +397,12 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei pagamenti</description>
+    <formulas>
+        <description>Formula per calcolare l&apos;ID Ente per il QR Code Paperless: si tratta della PIVA della Società Tesoriera (Hera SpA oppure MMS), ricavata in base al company owner dell&apos;Account.</description>
+        <name>IdEnteFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!Get_Input_Case.Account.CompanyOwner__c}) = &apos;MMS&apos; , &apos;02059030417&apos;, &apos;03819031208&apos;)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti</label>
     <processMetadataValues>
@@ -492,6 +498,12 @@
             <field>Status</field>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>VatNumber__c</field>
+            <value>
+                <elementReference>IdEnteFormula</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

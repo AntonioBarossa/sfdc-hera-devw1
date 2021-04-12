@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>1430</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
@@ -22,7 +22,7 @@
     <assignments>
         <name>AI</name>
         <label>Assegna Iban It</label>
-        <locationX>50</locationX>
+        <locationX>281</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -73,14 +73,81 @@
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProcessTypeFormFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Validazione_Iban</targetReference>
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Intestatario</name>
+        <label>Assegna Intestatario</label>
+        <locationX>512</locationX>
+        <locationY>2486</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFiscalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Account.FiscalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountFirstName</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryLastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AccountLastName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Intestatario_0</name>
+        <label>Assegna Intestatario</label>
+        <locationX>248</locationX>
+        <locationY>2486</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFiscalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue/>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue/>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryLastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue/>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Valori_Predefaultati</name>
         <label>Assegna Valori Predefaultati</label>
-        <locationX>182</locationX>
+        <locationX>413</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -131,7 +198,7 @@
     <assignments>
         <name>Assign_Iban_Ex</name>
         <label>Assign Iban Ex.</label>
-        <locationX>314</locationX>
+        <locationX>545</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -147,6 +214,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProcessTypeFormFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Domiciliazione - Estero</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Validazione_Iban</targetReference>
         </connector>
@@ -154,7 +228,7 @@
     <assignments>
         <name>Assign_Iban_Selezionato</name>
         <label>Assign Iban Selezionato</label>
-        <locationX>578</locationX>
+        <locationX>809</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
@@ -163,68 +237,15 @@
                 <elementReference>Ibans</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>ProcessTypeFormFlow</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Validazione_Iban</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Intestatario</name>
-        <label>Assign Intestatario</label>
-        <locationX>50</locationX>
-        <locationY>2606</locationY>
-        <assignmentItems>
-            <assignToReference>CFIntestatarioCC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Codice_Fiscale_Intestatario</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NomeIntestatarioCC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Nome_Intestatario_c_c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CognomeIntestatario</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Cognome_Intestatario_c_c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Iban_Italiano_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Intestatario_0</name>
-        <label>Assign Intestatario</label>
-        <locationX>314</locationX>
-        <locationY>2486</locationY>
-        <assignmentItems>
-            <assignToReference>CFIntestatarioCC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Case_Aggiornato.Account.FiscalCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>NomeIntestatarioCC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountFirstName</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CognomeIntestatario</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>AccountLastName</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Iban_Italiano_0</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -251,7 +272,7 @@
     <decisions>
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
-        <locationX>182</locationX>
+        <locationX>413</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Insert_Iban_Ex</targetReference>
@@ -277,7 +298,7 @@
         <name>Iban_Italiano_0</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>2822</locationY>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Passa_a_Elaborazione_Manuale</targetReference>
         </defaultConnector>
@@ -301,7 +322,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>743</locationX>
+        <locationX>990</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -345,10 +366,10 @@
     <decisions>
         <name>Inserimento_Dati_Manualmente</name>
         <label>Inserimento Dati Manualmente?</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>2366</locationY>
         <defaultConnector>
-            <targetReference>Assign_Intestatario_0</targetReference>
+            <targetReference>Assegna_Intestatario</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Inserimento Automatico</defaultConnectorLabel>
         <rules>
@@ -390,7 +411,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Inserimento_Dati_Manuale</targetReference>
+                <targetReference>Assegna_Intestatario_0</targetReference>
             </connector>
             <label>Inserimento Manuale</label>
         </rules>
@@ -398,7 +419,7 @@
     <decisions>
         <name>Inserimento_Manuale</name>
         <label>Inserimento Manuale?</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assign_Iban_Selezionato</targetReference>
@@ -421,9 +442,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Salva_in_Bozza_o_Conferma</name>
+        <label>Salva in Bozza o Conferma?</label>
+        <locationX>380</locationX>
+        <locationY>2942</locationY>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Conferma</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormFlow_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Document_Signature_Screen</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>2126</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -445,7 +488,7 @@
     <decisions>
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
             <targetReference>Screen_IBAN_non_validato</targetReference>
@@ -541,7 +584,7 @@
     <recordLookups>
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
-        <locationX>182</locationX>
+        <locationX>380</locationX>
         <locationY>2246</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -562,7 +605,7 @@
     <recordLookups>
         <name>Get_Ibans</name>
         <label>Get Ibans</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -581,9 +624,29 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Aggiorna_Case</name>
+        <label>Aggiorna Case</label>
+        <locationX>512</locationX>
+        <locationY>2606</locationY>
+        <connector>
+            <targetReference>Inserimento_Dati_Manuale_0</targetReference>
+        </connector>
+        <inputReference>Get_Case_Aggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>248</locationX>
+        <locationY>2606</locationY>
+        <connector>
+            <targetReference>Inserimento_Dati_Manuale_0</targetReference>
+        </connector>
+        <inputReference>Get_Case_Aggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case_Bozza</name>
         <label>Aggiorna Iban Case Bozza</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>1886</locationY>
         <connector>
             <targetReference>Screen_Mostra_Dati</targetReference>
@@ -644,7 +707,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>50</locationX>
-        <locationY>2942</locationY>
+        <locationY>3302</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -653,24 +716,6 @@
                 <elementReference>CaseInput.Id</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>BankAccountSignatoryFirstName__c</field>
-            <value>
-                <elementReference>NomeIntestatarioCC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BankAccountSignatoryFiscalCode__c</field>
-            <value>
-                <elementReference>CFIntestatarioCC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BankAccountSignatoryLastName__c</field>
-            <value>
-                <elementReference>CognomeIntestatario</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -689,7 +734,7 @@
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>314</locationX>
-        <locationY>2942</locationY>
+        <locationY>3302</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -698,24 +743,6 @@
                 <elementReference>CaseInput.Id</elementReference>
             </value>
         </filters>
-        <inputAssignments>
-            <field>BankAccountSignatoryFirstName__c</field>
-            <value>
-                <elementReference>NomeIntestatarioCC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BankAccountSignatoryFiscalCode__c</field>
-            <value>
-                <elementReference>CFIntestatarioCC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>BankAccountSignatoryLastName__c</field>
-            <value>
-                <elementReference>CognomeIntestatario</elementReference>
-            </value>
-        </inputAssignments>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
@@ -731,53 +758,133 @@
         <object>Case</object>
     </recordUpdates>
     <screens>
-        <name>Inserimento_Dati_Manuale</name>
-        <label>Inserimento Dati Manuale</label>
-        <locationX>50</locationX>
-        <locationY>2486</locationY>
+        <name>Document_Signature_Screen</name>
+        <label>Document Signature Screen</label>
+        <locationX>182</locationX>
+        <locationY>3062</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
+        <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assign_Intestatario</targetReference>
+            <targetReference>Iban_Italiano_0</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader_6</name>
+            <name>DisplayProcessType</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Codice_Fiscale_Intestatario</name>
-            <dataType>String</dataType>
-            <fieldText>Codice Fiscale Intestatario c/c</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>DocumentSignature</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
             <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Codice Fiscale non valido&lt;/p&gt;</errorMessage>
-                <formulaExpression>REGEX({!Codice_Fiscale_Intestatario},&quot;^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$&quot;)</formulaExpression>
-            </validationRule>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Inserimento_Dati_Manuale_0</name>
+        <label>Inserimento Dati Manuale</label>
+        <locationX>380</locationX>
+        <locationY>2822</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_6_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Nome_Intestatario_c_c</name>
-            <dataType>String</dataType>
-            <fieldText>Nome Intestatario c/c</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>hdtRecordEditFormFlow_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Richiesta Domiciliazione - Intestatario</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variantSaveButton</name>
+                <value>
+                    <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case_Aggiornato.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <fields>
-            <name>Cognome_Intestatario_c_c</name>
-            <dataType>String</dataType>
-            <fieldText>Cognome Intestatario c/c</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Insert_Iban_Ex</name>
         <label>Insert Iban Ex.</label>
-        <locationX>314</locationX>
+        <locationX>545</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -806,7 +913,7 @@
     <screens>
         <name>Insert_Iban_IT</name>
         <label>Insert Iban IT</label>
-        <locationX>50</locationX>
+        <locationX>281</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -895,7 +1002,7 @@
     <screens>
         <name>Paese_IBAN</name>
         <label>Paese IBAN</label>
-        <locationX>182</locationX>
+        <locationX>413</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -924,7 +1031,7 @@
     <screens>
         <name>Screen_IBAN_non_validato</name>
         <label>Screen IBAN non validato</label>
-        <locationX>468</locationX>
+        <locationX>699</locationX>
         <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -943,7 +1050,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1020,7 +1127,7 @@
     <screens>
         <name>Screen_Mostra_Dati</name>
         <label>Screen Mostra Dati</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1088,7 +1195,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Richiesta Domiciliazione 2</stringValue>
+                    <elementReference>ProcessTypeFormFlow</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1124,7 +1231,7 @@
     <screens>
         <name>Show_Ibans</name>
         <label>Show Ibans</label>
-        <locationX>380</locationX>
+        <locationX>611</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1151,7 +1258,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>617</locationX>
+        <locationX>864</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
@@ -1238,6 +1345,13 @@
     </variables>
     <variables>
         <name>NomeIntestatarioCC</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ProcessTypeFormFlow</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
