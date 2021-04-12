@@ -157,11 +157,11 @@
     <gender>Feminine</gender>
     <label>Rate Template</label>
     <nameField>
-        <label>Rate Category </label>
+        <label>Rate Template</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Rate Templates</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
