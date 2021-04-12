@@ -59,7 +59,7 @@ global with sharing class HDT_WS_MrrRequest {
 
                         if(header.fields.get(0).value == 'postsales'){
 
-                            //hpsmSrv.handleInboundRequest(request);
+                            hpsmSrv.handleInboundRequest(request);
 
                             responseField.fieldType = 'TEXT';
                             responseField.name = 'ESITO';
