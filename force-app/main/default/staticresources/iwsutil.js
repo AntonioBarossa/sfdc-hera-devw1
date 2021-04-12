@@ -7,7 +7,7 @@ class Util {
 		ConnectorEntityController.createActivity(JSON.stringify(message), (result, req) => {
 			if(result.startsWith("Error")) {
 				// WIP IMPROVE ERROR HANDLING
-				console.log("### iwsutil.createActivity() | RESULT STARTS WITH ERROR");
+				console.error("### iwsutil.createActivity() | ERROR: " + result);
 			} else {
 				var resultObj = JSON.parse(result.replaceAll("&quot;","\""));
 				iwscommand.SetAttachdataById(message.ConnectionID, {"sf_activity_id": resultObj.activityId});
@@ -21,10 +21,10 @@ class Util {
 		});
 	}
 	closeActivity(message) {
-		ConnectorEntityController.closeActivity(JSON.stringify(message), (error, req) => {
-			if(error) {
+		ConnectorEntityController.closeActivity(JSON.stringify(message), (result, req) => {
+			if(result) {
 				// WIP
-				console.log("### iwsutil.closeActivity() | RESULT STARTS WITH ERROR");
+				console.error("### iwsutil.closeActivity() | ERROR: " + error);
 			} else {
 				console.log("### iwsutil.closeActivity() | ACTIVITY CLOSED!");
 			}
@@ -39,7 +39,7 @@ class Util {
 		if(message.attachdata.CRM == 'sfdc') {
 			this.createActivity(message);
 		} else {
-			this.closeActivity(message, true, false);
+			this.closeActivity(message);
 		}
 	}
 	addTabFocusListener() {
