@@ -75,6 +75,16 @@
         <default>false</default>
         <label>Variazioni</label>
     </customValue>
+    <customValue>
+        <fullName>Ambiente</fullName>
+        <default>false</default>
+        <label>Ambiente</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA</fullName>
+        <default>false</default>
+        <label>HERA</label>
+    </customValue>
     <masterLabel>Cluster</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
