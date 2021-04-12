@@ -4,7 +4,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
         Case currentCase = new Case();
 
-        currentCase = [SELECT Id, 
+        /*currentCase = [SELECT Id, 
         Phase__c, 
         Type,
         CaseNumber, 
@@ -13,7 +13,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         FROM Case 
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
-        LIMIT 1];
+        LIMIT 1];*/
 
         return currentCase;
 
