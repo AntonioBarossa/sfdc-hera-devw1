@@ -142,7 +142,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 console.log('>>> customerCode: ' + result.confObj.customerCode);
                 this.techObj.customerCode = result.confObj.customerCode;
                 
-                if(this.tabCode === 'EC5'){
+                if(this.checkBeforeOpenTab()){
                     this.openFilters();
                     this.closeMainSpinner();
                 } else {
@@ -203,6 +203,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('>>> length -> ' + this.allData.length);
     }
 
+    checkBeforeOpenTab(){
+        if(this.tabCode === 'EC5'){
+            return true;
+        } else {
+            return false;
+        }        
+    }
+
     @api reopenTab(){
         console.log('# reopenTab #');
 
@@ -213,7 +221,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             
             this.openMainSpinner();
 
-            if(this.tabCode === 'EC5'){
+            if(this.checkBeforeOpenTab()){
                 this.openFilters();
                 this.closeMainSpinner();
             } else {
