@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChurnkRisk__c</fullName>
+    <description>KPI Propensione abbandono</description>
+    <externalId>false</externalId>
+    <formula>IF(ChurnkRiskCtrl__c = 0,
+        IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.SmileyGreen.URL__c, $CustomMetadata.HDT_ImageURL__mdt.SmileyGreen.AlternateText__c, 30, 30),
+        IF(ChurnkRiskCtrl__c = 2,
+            IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.SmileyRed.URL__c, $CustomMetadata.HDT_ImageURL__mdt.SmileyRed.AlternateText__c, 30, 30),
+            IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.SmileyYellow.URL__c, $CustomMetadata.HDT_ImageURL__mdt.SmileyYellow.AlternateText__c, 30, 30)
+        )
+    )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Propensione abbandono</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
