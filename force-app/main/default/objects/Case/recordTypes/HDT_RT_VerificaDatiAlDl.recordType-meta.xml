@@ -17,7 +17,7 @@
         </values>
         <values>
             <fullName>Pagatore Alternativo</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Rappresentante Legale</fullName>

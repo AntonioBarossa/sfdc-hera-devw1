@@ -3384,7 +3384,7 @@
         </values>
         <values>
             <fullName>Risarcimenti danni</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
     </picklistValues>
     <picklistValues>

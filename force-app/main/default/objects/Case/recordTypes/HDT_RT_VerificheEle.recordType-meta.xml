@@ -17,7 +17,7 @@
         </values>
         <values>
             <fullName>Applicazione della legge</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Assicuratore</fullName>

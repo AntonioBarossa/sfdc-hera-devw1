@@ -3499,7 +3499,7 @@
         <picklist>SendMode__c</picklist>
         <values>
             <fullName>Consegna a mano</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Email</fullName>

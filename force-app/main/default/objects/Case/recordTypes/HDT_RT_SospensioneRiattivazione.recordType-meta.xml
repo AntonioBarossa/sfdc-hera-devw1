@@ -4183,7 +4183,7 @@
         </values>
         <values>
             <fullName>Fatturazione</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Mercato</fullName>

@@ -13,7 +13,7 @@
         </values>
         <values>
             <fullName>Erede</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Pagatore Alternativo</fullName>

@@ -12,7 +12,7 @@
         </values>
         <values>
             <fullName>Agenzia di confisca</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Applicazione della legge</fullName>

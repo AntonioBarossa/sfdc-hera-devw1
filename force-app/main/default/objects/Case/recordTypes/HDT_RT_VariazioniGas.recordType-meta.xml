@@ -4143,7 +4143,7 @@
         </values>
         <values>
             <fullName>Connessioni%2C lavori e qualità tecnica</fullName>
-            <default>false</default>
+            <default>false</default> 
         </values>
         <values>
             <fullName>Contratti</fullName>
