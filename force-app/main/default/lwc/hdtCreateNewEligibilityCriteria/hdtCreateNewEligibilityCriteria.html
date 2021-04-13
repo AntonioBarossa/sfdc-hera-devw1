@@ -1,0 +1,22 @@
+<template>
+    <template if:true={showWelcom} >
+        <c-hdt-welcome-mat-modal
+            icon-name="standard:product_service_campaign"
+            main-title-label="Eleggibilità"
+            new-title-label="Crea un criterio"
+            search-title-label="Cerca e copia un criterio"
+            onclosemodal={closeModal}
+            oncreatenew={createNew}
+            onsearch={search}
+        ></c-hdt-welcome-mat-modal>
+    </template>
+
+    <template if:true={showSearchOffer} >
+        <c-hdt-search-eligibility-criteria productid={productid} template={template} ongoback={closeSearch}></c-hdt-search-eligibility-criteria>
+    </template>
+
+    <template if:true={showCreateOffer} >
+        <c-hdt-eligibility-criteria-configuration productid={productid} eligibility-id={eligibilityId} ongoback={closeModal} ></c-hdt-eligibility-criteria-configuration>
+    </template>
+
+</template>

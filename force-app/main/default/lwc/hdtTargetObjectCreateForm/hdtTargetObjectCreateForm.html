@@ -3,7 +3,7 @@
         <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-modal_large slds-fade-in-open">
             <div class="slds-modal__container">
                 <header class="slds-modal__header">
-                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeCreateTargetObjectModal}>
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  title="Close" onclick={closeCreateTargetObjectModal}>
                         <lightning-icon icon-name="utility:close" variant="inverse" size="small">
                         </lightning-icon>
                         <span class="slds-assistive-text">Close</span>
@@ -30,14 +30,14 @@
                                     </div>
                                 </div>
 
-                                <c-hdt-target-object-address-fields  onverifyaddressonupdate={handleVerifyAddressOnUpdate} servicepointretrieveddata={servicePointRetrievedData} wrapaddressobject={wrapAddressObject} selectedservicepoint={selectedservicepoint} onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} ></c-hdt-target-object-address-fields>
+                                <c-hdt-target-object-address-fields  onverifyaddressonupdate={handleVerifyAddressOnUpdate} servicepointretrieveddata={servicePointRetrievedData} wrapaddressobject={wrapAddressObject} selectedservicepoint={selectedservicepoint} onaddressverification={handleAddressVerification} ongetaddressfields={getSubmitedAddressFields} objectapiname={objectApiName} accountid={accountid} ></c-hdt-target-object-address-fields>
                         </lightning-record-edit-form>
 
                     </template>
                 </div>
                 <footer class="slds-modal__footer">
                     <lightning-button label="Annulla" variant="neutral" onclick={closeCreateTargetObjectModal}></lightning-button>
-                    <lightning-button disabled={saveBtnDisabled} label="Conferma" variant="brand" onclick={save} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button disabled={saveBtnDisabled} label="Conferma" variant="success" onclick={save} class="slds-m-left_x-small"></lightning-button>
                 </footer>
             </div>
         </section>

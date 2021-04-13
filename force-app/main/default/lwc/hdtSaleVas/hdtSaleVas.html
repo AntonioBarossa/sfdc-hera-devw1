@@ -1,47 +1,83 @@
 <template>
-    <div class="slds-m-top_xx-large">
-        <lightning-button disabled={disabledInput} onclick={handleModalVisibility} variant="brand" label="VAS" title="VAS"></lightning-button>
+
+    <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Saving..." size="large"></lightning-spinner>
+
+    <div class="slds-media__body slds-m-top_small slds-p-left_small">
+        <h2 class="slds-card__header-title">
+            <span class="slds-text-heading_small slds-truncate">Selezione VAS</span>
+        </h2>
     </div>
 
-    <template if:true={isModalVisible}>
-        <div class="demo-only" style="height: 640px;">
-            <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-modal_small slds-fade-in-open">
-                <div class="slds-modal__container">
-                    <header class="slds-modal__header">
-                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCancelEvent}>
-                            <lightning-icon icon-name="utility:close" variant="inverse" size="small">
-                            </lightning-icon>
-                            <span class="slds-assistive-text">Close</span>
-                        </button>
-                        <h2 class="slds-text-heading_medium slds-hyphenate">VAS</h2>
-                    </header>
-                    <div data-id="modal-body" class="slds-modal__content slds-p-around_medium modal-body-height">
-                        <lightning-spinner variant="brand" if:true={isLoading} alternative-text="Saving..." size="large"></lightning-spinner>
-                        
-                        <lightning-layout>
-                            <lightning-layout-item flexibility="auto" padding="around-small">
-                                <lightning-radio-group
-                                    label="Seleziona"
-                                    options={radioGroupOptions}
-                                    onchange={handleRadioGroupChange}>
-                                </lightning-radio-group>
-                            </lightning-layout-item>
-                            <lightning-layout-item if:true={isInputVisible} flexibility="auto" padding="around-small">
-                                <div class="slds-p-around_medium lgc-bg">
-                                    <lightning-input type="text" label="Comune" onchange={handleInputText}></lightning-input>
-                                </div>
-                            </lightning-layout-item>
-                        </lightning-layout>
-    
-                    </div>
-                    <footer class="slds-modal__footer">
-                        <lightning-button onclick={handleCancelEvent} label="Annulla" variant="neutral"></lightning-button>
-                        <lightning-button onclick={handleConfirmEvent} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
-                    </footer>
+    <div class="slds-float_right slds-m-top_small">
+        <lightning-button disabled={isConfirmDisabled} onclick={handleConfirmEvent} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>
+    </div>
+
+    <div class="slds-card__body slds-m-top_xx-large">
+        <div class="slds-grid">
+            <div class="slds-size_1-of-2">
+                <div class="slds-m-left_large">
+                    <lightning-radio-group
+                        disabled={disabledInput}
+                        label="Selezionare una delle seguenti tipologie"
+                        options={radioGroupOptions}
+                        onchange={handleRadioGroupChange}>
+                    </lightning-radio-group>
                 </div>
-            </section>
-            <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+            <div if:true={isInputVisible} class="slds-size_1-of-2">
+                <lightning-input disabled={disabledInput} type="text" label="Comune" onchange={handleInputText}></lightning-input>
+            </div>
         </div>
-    </template>
+        
+        <div if:true={isOrderListVisible} class="slds-grid slds-m-top_large">
+            <div if:true={showEmptyOrdersMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno ordini attivi</div>
+            </div>
+            <div if:false={showEmptyOrdersMessage} class="slds-size_1-of-1">
+                <lightning-datatable
+                    hide-checkbox-column={disabledInput}
+                    key-field="Id"
+                    data={tableData}
+                    columns={ordersListcolumns}
+                    max-row-selection=1
+                    onrowselection={getSelectedOrder}>
+                </lightning-datatable>
+            </div>
+        </div>
     
+        <div if:true={isContractsListVisible} class="slds-grid slds-m-top_large">
+            <div if:true={showEmptyContractsMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno contratti attivi</div>
+            </div>
+            <div if:false={showEmptyContractsMessage} class="slds-size_1-of-1">
+                <lightning-datatable
+                    key-field="Id"
+                    data={tableData}
+                    columns={contractsListcolumns}
+                    max-row-selection=1
+                    onrowselection={getSelectedContract}>
+                </lightning-datatable>
+            </div>
+        </div>
+
+        <template if:true={showPaginationButtons}>
+            <div class="slds-grid slds-grid_align-center slds-m-top_small">
+                <div class="slds-col">
+                    <button disabled={disabledInput} onclick={previousPage} class="slds-button slds-button_neutral pagination-button">
+                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft"></use>
+                        </svg>Previous</button>
+                </div>
+                <div class="slds-col">
+                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPages}</p>
+                </div>
+                <div class="slds-col">
+                    <button disabled={disabledInput} onclick={nextPage} class="slds-button slds-button_neutral pagination-button next">Next
+                        <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright"></use>
+                        </svg></button>
+                </div>
+            </div>
+        </template>
+    </div>
 </template>

@@ -19,9 +19,11 @@
     </template>
     <template if:false={error}>
         <lightning-record-edit-form record-id={recordId}
+                                        record-type-id={recordType}
                                         object-api-name={objectName}
                                         onsuccess={handleSuccess}
                                         onsubmit ={handleSubmit}
+                                        onerror={handleError}
                                         density={density}>
             <template if:true={showInputSection}>
                 <div class="slds-section slds-is-open">
@@ -32,7 +34,13 @@
                         <div class="slds-grid">
                             <div class="slds-col slds-size_1-of-3">
                                 <template for:each={firstColumn} for:item="field">
-                                    <lightning-input-field field-name={field.FieldName} key={field.FieldName} required={field.Required} readonly={field.ReadOnly}>
+                                    <lightning-input-field 
+                                    data-id={field.FieldName}
+                                    field-name={field.FieldName} 
+                                    key={field.FieldName} 
+                                    required={field.Required} 
+                                    disabled={field.ReadOnly}
+                                    onchange={handleChange}>
                                     </lightning-input-field>
                                 </template>
                             </div>
@@ -40,7 +48,13 @@
                             </div>
                             <div class="slds-col slds-size_1-of-3">
                                 <template for:each={secondColumn} for:item="field">
-                                    <lightning-input-field field-name={field.FieldName} key={field.FieldName} required={field.Required} readonly={field.ReadOnly}>
+                                    <lightning-input-field
+                                    data-id={field.FieldName} 
+                                    field-name={field.FieldName} 
+                                    key={field.FieldName} 
+                                    required={field.Required} 
+                                    disabled={field.ReadOnly}
+                                    onchange={handleChange}>
                                     </lightning-input-field>
                                 </template>
                             </div>
@@ -97,8 +111,6 @@
                     </div>
                 </div>
             </template>
-            <lightning-messages>
-            </lightning-messages>
                 <!-- buttons -->
                 <!--div class="slds-clearfix slds-modal__footer slds-p-top_xsmall slds-m-bottom_small slds-theme_default"-->
             <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
@@ -109,23 +121,23 @@
                     <template if:true={saveButton}> 
                         <lightning-button
                             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                            variant="brand" type="submit" name="save" label={labelSaveButton}>
+                            variant={variantButton} type="submit" name="save" label={labelSaveButton}>
                         </lightning-button>
                     </template>
                     <template if:true={draftButton}>
                         <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                            variant="neutral" type="button" name="cancel" label={labelDraftButton} onclick={handleDraft}>
+                            variant="neutral" type="button" name="draft" label={labelDraftButton} onclick={handleDraft}>
                         </lightning-button>
                     </template>
                     <template if:true={previousButton}> 
                         <lightning-button
                             class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                            variant="neutral" type="button" name="save" label={labelPreviousButton} onclick={handlePrevious}>
+                            variant="neutral" type="button" name="previous" label={labelPreviousButton} onclick={handlePrevious}>
                         </lightning-button>
                     </template>
                     <template if:true={cancelButton}>
                         <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                            variant="destructive" type="button" name="cancel" label="Annulla Pratica">
+                            variant="brand" type="button" name="cancel" label="Annulla" onclick={handleDraft}>
                         </lightning-button>
                     </template>
                 </div>

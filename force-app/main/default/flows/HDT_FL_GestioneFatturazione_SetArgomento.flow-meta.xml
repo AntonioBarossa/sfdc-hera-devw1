@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Set_Argument_to_Spese_Accessorie</name>
+        <label>Set Argument to Spese Accessorie</label>
+        <locationX>908</locationX>
+        <locationY>50</locationY>
+        <assignmentItems>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Spese Accessorie</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Argumento_to</name>
+        <label>Set Argumento to Spese Sollecito</label>
+        <locationX>970</locationX>
+        <locationY>273</locationY>
+        <assignmentItems>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Spese sollecito</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Argumento_to_Interessi</name>
+        <label>Set Argumento to Interessi</label>
+        <locationX>904</locationX>
+        <locationY>492</locationY>
+        <assignmentItems>
+            <assignToReference>InputCase.BillingErrorArgument__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Interessi</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Tipo_Documento_to_Uppercase</name>
+        <label>Tipo Documento to Uppercase</label>
+        <locationX>574</locationX>
+        <locationY>273</locationY>
+        <assignmentItems>
+            <assignToReference>TipoDocumento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ConvertTipoDocumentoToUppercase</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Check_Tipo_Documento</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Verifica il tipo documento selezionato dall&apos;operatore sull&apos;estratto conto. A seconda del tipo documento selezionato dovrà essere opportunamento valorizzato il campo Argomento del Case di Errore Fatturazione.</description>
+        <name>Check_Tipo_Documento</name>
+        <label>Check Tipo Documento</label>
+        <locationX>781</locationX>
+        <locationY>275</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Spese_Accessorie</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>FATTURAZIONE SD</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BOLLO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>FATTURA FORNITORI SERVIZI</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>VAS INTERNO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>VAS ESTERNO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>TRATTENUTA PA</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Argument_to_Spese_Accessorie</targetReference>
+            </connector>
+            <label>Spese Accessorie</label>
+        </rules>
+        <rules>
+            <name>Spese_Sollecito</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>COMMISSIONI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Argumento_to</targetReference>
+            </connector>
+            <label>Spese Sollecito</label>
+        </rules>
+        <rules>
+            <name>Interessi</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DEPOSITO CAUZIONALE CONTANTI</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>INTERESSI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Argumento_to_Interessi</targetReference>
+            </connector>
+            <label>Interessi</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <name>ConvertTipoDocumentoToUppercase</name>
+        <dataType>String</dataType>
+        <expression>UPPER({!TipoDocumento})</expression>
+    </formulas>
+    <interviewLabel>HDT_FL_GestioneFatturazione_SetArgomento {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>HDT_FL_GestioneFatturazione_SetArgomento</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordUpdates>
+        <name>Update_Case</name>
+        <label>Update Case</label>
+        <locationX>1258</locationX>
+        <locationY>273</locationY>
+        <inputReference>InputCase</inputReference>
+    </recordUpdates>
+    <start>
+        <locationX>139</locationX>
+        <locationY>256</locationY>
+        <connector>
+            <targetReference>Tipo_Documento_to_Uppercase</targetReference>
+        </connector>
+    </start>
+    <status>Draft</status>
+    <variables>
+        <name>InputCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>TipoDocumento</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

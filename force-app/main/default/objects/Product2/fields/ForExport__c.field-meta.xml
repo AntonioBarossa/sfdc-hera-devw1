@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ForExport__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Indica se il prodotto deve essere migrato su altro ambiente</description>
+    <externalId>false</externalId>
+    <label>Da Esportare</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

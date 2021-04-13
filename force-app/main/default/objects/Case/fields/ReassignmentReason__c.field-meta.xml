@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ReassignmentReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Causale Riassegnazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Standby per attesa cessazione contratto</fullName>
+                <default>false</default>
+                <label>Standby per attesa cessazione contratto</label>
+            </value>
+            <value>
+                <fullName>Attesa approvazione</fullName>
+                <default>false</default>
+                <label>Attesa approvazione</label>
+            </value>
+            <value>
+                <fullName>Sospensione per lavorazione in corso</fullName>
+                <default>false</default>
+                <label>Sospensione per lavorazione in corso</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

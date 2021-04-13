@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FourthLevelComplaintClassification__c</fullName>
+    <externalId>false</externalId>
+    <label>4° Livello</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>ThirdLevelComplaintClassification__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_FourthLevelComplaintClassification</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
+            <controllingFieldValue>Recesso</controllingFieldValue>
+            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Indennizzi</controllingFieldValue>
+            <controllingFieldValue>Erogazioni</controllingFieldValue>
+            <controllingFieldValue>Cessazioni</controllingFieldValue>
+            <controllingFieldValue>Validazioni</controllingFieldValue>
+            <controllingFieldValue>Cambio misuratore</controllingFieldValue>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <controllingFieldValue>Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
+            <controllingFieldValue>Consumi stimati errati</controllingFieldValue>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <valueName>Mancata ricezione Welcome letter</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <valueName>Penali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <valueName>Tempistiche e modalità switch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
+            <valueName>Venditore entrante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
+            <valueName>Venditore uscente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Spese di sollecito/interessi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Riattivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Sezionamento presa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Sospensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Sospensione non legittima</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
+            <valueName>Spese</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
+            <valueName>Modifiche unilaterali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
+            <valueName>Scivoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Recesso</controllingFieldValue>
+            <valueName>Modalità recesso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <valueName>Causa Arera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <valueName>Causa Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <valueName>Causa Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Importi per consumi risalenti a più di due anni</controllingFieldValue>
+            <valueName>Causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
+            <valueName>Mancato utilizzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
+            <valueName>Modalità autolettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Compensazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Deposito cauzionale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Domiciliazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Doppio incasso/doppio pagamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Pagamenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rateizzazione - diniego piano di rientro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rateizzazione - numero rate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rimborsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sicurezza</controllingFieldValue>
+            <valueName>Assicurazione contro incidenti da gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sicurezza</controllingFieldValue>
+            <valueName>Impianti fuganti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Indennizzi</controllingFieldValue>
+            <valueName>Mancata/ritardata erogazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
+            <valueName>Pressione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
+            <valueName>Tensione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>APP - Accessibilità canale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>APP - Funzionalità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>CRM (call center) - Comportamento, informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>CRM (sp+cc) - Accessibilità canale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>CRM (sportelli) - Comportamento, informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>Mancata risposta a richiesta cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SOL - Accessibilità canale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>SOL - Funzionalità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>Vendita - Agente - Comportamento/Informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>Vendita - Call Center - Comportamento/Informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>Vendita - Sportello CRM - Comportamento/Informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <valueName>Vendita - Teleselling - Comportamento/Informazioni non corrette</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Erogazioni</controllingFieldValue>
+            <valueName>Conferma erogazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Erogazioni</controllingFieldValue>
+            <valueName>Tempistiche,modalità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cessazioni</controllingFieldValue>
+            <valueName>Cessazione non corretta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validazioni</controllingFieldValue>
+            <valueName>Ko causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validazioni</controllingFieldValue>
+            <valueName>Ko causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Validazioni</controllingFieldValue>
+            <valueName>Ritardo/KO Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni- non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni - non eseguita causa Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni - non eseguita causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni - tempistiche/modalità/costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Cessazioni - non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Cessazioni - non eseguita causa Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Cessazioni - non eseguita causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Cessazioni - tempistiche/modalità/costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Lavori - non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Lavori - non eseguita causa Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Lavori - non eseguita causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Lavori - non eseguita causa Venditore precedente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Lavori - tempistiche,modalità,costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Presunti danni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Preventivi - non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Preventivi - non eseguita causa Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Preventivi - non eseguita causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Preventivi - tempistiche/modalità/costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Preventivi- tempistiche/modalità/costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Continuità</controllingFieldValue>
+            <valueName>Interruzione servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mancate letture</controllingFieldValue>
+            <valueName>Contatore accessibile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mancate letture</controllingFieldValue>
+            <valueName>Contatore non accessibile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Mancate letture</controllingFieldValue>
+            <valueName>Telegestione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <valueName>Contatore guasto/fermo/correttore malfunzionante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <valueName>Invito verifica cassa metrica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <valueName>Prelievi fraudolenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <valueName>Prelivo abusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <valueName>Ricostruzione consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Tempistiche,modalità,costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cambio misuratore</controllingFieldValue>
+            <valueName>Cambio contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Accise</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Bolletta - chiarezza espositiva</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Bolletta - dettaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Canone Rai</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Certificati GO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Consumo annuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>CTS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Domestico - Non Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Inversione contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>IVA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Lettura di switch in</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Lettura di switch out</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Mancato utilizzo letture Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Modifica indirizzo di fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Pdr errato (cliente ha firmato)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Pdr errato (cliente inconsapevole)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Piano casa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Pod errato (cliente ha firmato)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Pod errato (cliente inconsapevole)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Quote fisse</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Recapito - causa vettore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Recapito - indirizzo non corretto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Recapito - ritardo consegna</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Residente - Non Residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Tariffa al kwh</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Tariffa al metro cubo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Tipo impianto (gas)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Unificazione/separazione CA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Venditore terzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Accollo Totale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Condizioni negoziate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Del. 228 passiva</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Falso procurato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>MUI_ disconoscimento parziale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>MUI_ disconoscimento totale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 228</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 229</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 230</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Proposto del. 231</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Ripensamento gestito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Ripensamento senza dati cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Ripristino condizioni precedenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <valueName>Doppia Fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
+            <valueName>Venditore ha titolarità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
+            <valueName>Emissione prima bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
+            <valueName>Fattura di chiusura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
+            <valueName>Frequenza fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Consumi stimati errati</controllingFieldValue>
+            <valueName>Fatturazione in stima/acconto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modulistica</controllingFieldValue>
+            <valueName>Informazioni su compilazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Decorrenza voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Diniego</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Diritti fissi e costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Documentazione mancante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Lettura contestata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Non richiesto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>PdR errato sui sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>POD errato sui sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Voltura con richiesta accessoria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Accesso ai dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Cancellazione dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Limitazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Opposizione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Portabilità dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Privacy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Privacy</controllingFieldValue>
+            <valueName>Rettifica dati personali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <valueName>Adeguamento normativa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <valueName>Fatturazione a conguaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <valueName>Recupero quote non fatturate</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Applicazione offerta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Bonus_Sconti_Promo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Tariffe diverse dalle aspettative</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

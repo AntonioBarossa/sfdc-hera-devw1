@@ -12,9 +12,39 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Null</fullName>
+                <fullName>Approvazione Quote</fullName>
                 <default>false</default>
-                <label>Null</label>
+                <label>Approvazione Quote</label>
+            </value>
+            <value>
+                <fullName>Gestione dati discordanti</fullName>
+                <default>false</default>
+                <label>Gestione dati discordanti</label>
+            </value>
+            <value>
+                <fullName>Modifica Contratti PreAttivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Gestione Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Gestione Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
+            <value>
+                <fullName>Gestione Iva e Accise</fullName>
+                <default>false</default>
+                <label>Gestione Iva e Accise</label>
             </value>
         </valueSetDefinition>
     </valueSet>

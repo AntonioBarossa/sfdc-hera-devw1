@@ -1,18 +1,128 @@
 <template>
     <lightning-record-edit-form object-api-name={objectapiname}>
+        
         <div class="slds-border_bottom slds-m-top_large">
             <h3 class="slds-text-heading_medium slds-hyphenate">Indirizzo di Fornitura</h3>
+            <lightning-button   label="Copia Residenza" variant="brand" onclick={handleAddressFromAccount} ></lightning-button>            
+            <lightning-button  style="margin-left:10px;" label="Selezione Indirizzi " variant="brand"  onclick={submitIndirizzo}></lightning-button>
         </div>
+
+
         <div class="slds-grid slds-wrap slds-m-top_small">
-            <template for:each={wrapAddressObject} for:item="fieldAddress">
-                <lightning-input type="Text" key={fieldAddress.fieldname} name={fieldAddress.fieldname} value={fieldAddress.value} label={fieldAddress.fieldname} class="slds-size_1-of-3" variant="label-stacked" ></lightning-input>
-            </template>
+            <!--<template for:each={wrapAddressObject} for:item="fieldAddress">
+                <lightning-input type="Text" key={fieldAddress.fieldname} name={fieldAddress.fieldname} value={fieldAddress.value} label={fieldAddress.fieldname} class="slds-size_1-of-3" variant="label-stacked" onchange={handleFieldsDataChange} ></lightning-input>
+                <lightning-input-field value={fieldAddress.value} required={fieldAddress.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3" data-name={fieldAddress.fieldname} key={fieldAddress.fieldname} field-name={fieldAddress.fieldname} variant="label-stacked"></lightning-input-field>
+            </template>-->
+            <lightning-input type="Text"  name='Stato' value={stato} label='Stato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"  name='Provincia' value={provincia} label='Provincia' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"  name='Comune' value={comune} label='Comune' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"  name='CAP' value={cap} label='CAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"  name='Via' value={via} label='Via' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"  name='Civico' value={civico} label='Civico' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"  name='Estens.Civico' value={estensCivico} label='Estens.Civico' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
+            <lightning-input type="Text"  name='Codice Comune SAP' value={codComuneSAP} label='Codice Comune SAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
+            <lightning-input type="Text"  name='Codice Via Stradario SAP' value={codStradarioSAP} label='Codice Via Stradario SAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
+            <lightning-input type="Checkbox"  name='Indirizzo Estero' value={IndEstero} label='Indirizzo Estero' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input>
+            <lightning-input type="Checkbox"  name='Flag Verificato' value={flagVerifiacto} label='Flag Verificato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input>
+
         </div>
         <div class="slds-clearfix">
             <div class="slds-float_right">
                 <lightning-button disabled={verifyFieldsAddressDisabled} onclick={handleAddressVerification} label="Verifica Indirizzo" variant="brand"></lightning-button>
             </div>
         </div>
+        <template if:true={openmodel} style="height: auto;">  
+            <div>    
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" size="medium">
+                                </lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Seleziona Indirizzo</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <lightning-layout>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-layout horizontal-align="end">
+                                    <lightning-layout-item padding="around-small" size="4" >
+                                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">								
+                                            <lightning-input type="text" value={filterInputWord} label="Filtra Ricerca" onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Affina Ricerca"></lightning-input>									
+                                            <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
+                                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
+                                            </svg>
+                                        </div>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                             <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">Indirizzi Di Fatturazione</span>
+                             <lightning-layout-item padding="around-small" size="12">
+                                 <lightning-datatable selectable-row={disableCheckBoxFatturazione} max-row-selection=1 class="table-section" key-field="id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint} ></lightning-datatable>
+                                 <div class="slds-grid slds-grid_align-center">
+                                    <div class="slds-col">
+                                        <button onclick={previousPage} class="slds-button slds-button_neutral pagination-button">
+                                            <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft"></use>
+                                            </svg>Previous</button>
+                                    </div>
+                                    <div class="slds-col">
+                                        <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPage}</p>
+                                    </div>
+                                    <div class="slds-col">
+                                        <button onclick={nextPage} class="slds-button slds-button_neutral pagination-button next">Next
+                                            <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright"></use>
+                                            </svg></button>
+                                    </div>
+                                </div>
+                             </lightning-layout-item>
+                            </div>
+                            <div class="slds-border_right"></div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-layout horizontal-align="end">
+                                    <lightning-layout-item padding="around-small" size="4" >
+                                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">								
+                                            <lightning-input type="text" value={filterInputWordFornitura} label="Filtra Ricerca" onchange={handleFilterDataTableFornitura} id="text-input-id-2" placeholder="Affina Ricerca"></lightning-input>
+                                            <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
+                                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
+                                            </svg>
+                                        </div>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                                <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">Indirizzi Di Fornitura</span>
+                                <lightning-layout-item padding="around-small" size="12">
+                                    <lightning-datatable selectable-row={disableCheckBoxFornitura} max-row-selection=1 class="table-section" key-field="id" data={tableDataFornitura} columns={tableColumnsFornitura} onrowselection={getSelectedAddress} ></lightning-datatable>
+                                    <div class="slds-grid slds-grid_align-center">
+                                        <div class="slds-col">
+                                            <button onclick={previousPageFornitura} class="slds-button slds-button_neutral pagination-button">
+                                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                                    <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft"></use>
+                                                </svg>Previous</button>
+                                        </div>
+                                        <div class="slds-col">
+                                            <p style="font-size: 12px;margin:5px;">Page {getCurrentPageFornitura} / {totalPageFornitura}</p>
+                                        </div>
+                                        <div class="slds-col">
+                                            <button onclick={nextPageFornitura} class="slds-button slds-button_neutral pagination-button next">Next
+                                                <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                                    <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright"></use>
+                                                </svg></button>
+                                        </div>
+                                    </div>
+                                </lightning-layout-item> 
+                            </div>
+                            </lightning-layout>
+                            </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Cancel" variant="neutral" onclick={closeModal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="Conferma" variant="success" onclick={handleConfirm}  class="slds-m-left_x-small" ></lightning-button>
+                        </footer>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+        </div> 
+    </template>	
     </lightning-record-edit-form>
     
 </template>
