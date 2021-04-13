@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActiveServices__c</fullName>
+    <description>KPI Servizi attivi</description>
+    <externalId>false</externalId>
+    <formula>IF(INCLUDES(ActiveServicesCtrl__c, &apos;1&apos;), IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.Service1.URL__c, $CustomMetadata.HDT_ImageURL__mdt.Service1.AlternateText__c, 30, 30), &apos;&apos;)
+&amp;
+IF(INCLUDES(ActiveServicesCtrl__c, &apos;2&apos;), IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.Service2.URL__c, $CustomMetadata.HDT_ImageURL__mdt.Service2.AlternateText__c, 30, 30), &apos;&apos;)
+&amp;
+IF(INCLUDES(ActiveServicesCtrl__c, &apos;3&apos;), IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.Service3.URL__c, $CustomMetadata.HDT_ImageURL__mdt.Service3.AlternateText__c, 30, 30), &apos;&apos;)
+&amp;
+IF(INCLUDES(ActiveServicesCtrl__c, &apos;4&apos;), IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.Service4.URL__c, $CustomMetadata.HDT_ImageURL__mdt.Service4.AlternateText__c, 30, 30), &apos;&apos;)
+&amp;
+IF(INCLUDES(ActiveServicesCtrl__c, &apos;5&apos;), IMAGE(IF($User.UITheme=&apos;Theme3&apos;, &apos;/sfsites/c&apos;, &apos;&apos;) &amp; $CustomMetadata.HDT_ImageURL__mdt.Service5.URL__c, $CustomMetadata.HDT_ImageURL__mdt.Service5.AlternateText__c, 30, 30), &apos;&apos;)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Servizi attivi</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

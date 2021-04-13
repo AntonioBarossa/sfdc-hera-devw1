@@ -74,7 +74,7 @@ global with sharing class HDT_WS_MrrRequest {
 
                         //FINE SVILUPPI EVERIS
 
-                        else if (request.objects.get(0).fields.get(0).name == 'SALESFORCE_KEY') {
+                        else if (request.objects.get(0).fields.get(0) != null) {
 
                             responseField.fieldType = 'TEXT';
                             responseField.name = 'ESITO';
