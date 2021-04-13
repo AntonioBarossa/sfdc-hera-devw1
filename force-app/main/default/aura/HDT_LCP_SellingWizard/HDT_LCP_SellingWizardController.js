@@ -11,6 +11,7 @@
                 console.log(res);
                 var accountId;
                 var saleId;
+                var campaignId;
                 component.set('v.isCommunity', res);
 
                 if (res){
@@ -32,6 +33,11 @@
                         if (testParam[0] == 'c__saleId'){
                             saleId = testParam[1];
                         }
+
+                        if (testParam[0] == 'c__campaignId'){
+                            campaignId = testParam[1];
+                            component.set("v.campaignId", campaignId);
+                        }
                         
                     }
                     
@@ -40,6 +46,11 @@
                     var pageReference = component.get("v.pageReference");
                     accountId = pageReference.state.c__accountId;
                     saleId = pageReference.state.c__saleId ;
+
+                    if(pageReference.state.c__campaignId !== undefined){
+                        component.set("v.campaignId", pageReference.state.c__campaignId);
+                        campaignId = pageReference.state.c__campaignId;
+                    }
 
                 }
                 
@@ -55,6 +66,11 @@
                         'CurrentStep__c' : 1
                         
                     };
+
+                    if(campaignId !== undefined && campaignId !== ''){
+                        saleObject.Campaign__c = campaignId;
+                    }
+
                     helper.createSaleRecord(component, saleObject);
                 } 
             } 
