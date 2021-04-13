@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SendMode__c</fullName>
-    <description>Modalità invio</description>
+    <fullName>DocusignURL__c</fullName>
+    <description>URL Docusign	Contiene il link generato da Docusign per l&apos;accesso all&apos;envelope</description>
     <externalId>false</externalId>
-    <label>Modalità invio</label>
+    <label>URL Docusign</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>HDT_SendMode</valueSetName>
-    </valueSet>
+    <type>Url</type>
 </CustomField>
