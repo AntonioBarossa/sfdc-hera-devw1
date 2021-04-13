@@ -15,25 +15,25 @@ const fields = [
 ];
 
 var items = [{
-    "label": "Customer Life Cicle: ",
+    "label": "Customer Life Cycle: ",
     "name": "clc",
     "expanded": false,
     "items": [{
-        "label": "Customer Life Cicle Energy: ",
+        "label": "Life Cycle Energy: ",
         "name": "clcEnergy",
         "expanded": false,
         "items": [{
-            "label": "Customer Life Cicle EE: ",
+            "label": "Commodity Life Cycle EE: ",
             "name": "clcEE",
             "expanded": true,
             "items" :[]
         }, {
-            "label": "Customer Life Cicle Gas: ",
+            "label": "Commodity Life Cycle Gas: ",
             "name": "clcGas",
             "expanded": true,
             "items" :[]
         }, {
-            "label": "Customer Life Cicle VAS: ",
+            "label": "Commodity Life Cycle VAS: ",
             "name": "clcVAS",
             "expanded": true,
             "items" :[]
@@ -46,7 +46,7 @@ export default class HdtHighlightsTab extends LightningElement {
     @api recordId;
     @track record;
     @track fields = fields;
-    @track openCasesNumber = 3;
+    @track openCasesNumber = 4;
     @track openOptyNumber = 1;
     @track koCasesNumber = 2;
     @track clcItems;
