@@ -1,12 +1,4 @@
-public inherited sharing class HDT_QR_GenerateJsonSAP {
-   
-    /**
-        Author: Everis
-        Method Name : getGenericRecords
-        Method Description : Return a generic list of records according to the target sObject and Where conditions
-        @parms : fields, objectName, conditions  
-    **/
-    
+public inherited sharing class HDT_QR_GenericSapIntegrationAdapter {
     public List<sObject> getGenericRecords(String fields, String objectName, String conditions){
         List<sObject> sobjList = new List<sObject>();
         System.debug(fields + ' ' + objectName + ' ' + conditions);

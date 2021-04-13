@@ -1,6 +1,5 @@
-public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
-
-    public static HDT_WRP_GenericSapIntegration generateJSON(HDT_WRP_GenericSapIntegration sapIntegrationWrapper){
+public inherited sharing class HDT_SRV_GenericSapIntegrationAdapter {
+    public static HDT_WRP_GenericSapIntegration generateJson(HDT_WRP_GenericSapIntegration sapIntegrationWrapper){
         String body = '';
         try {
             List<sObject> configSettings = getConfiguration(sapIntegrationWrapper.requestType);
@@ -14,7 +13,7 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
     }
 
     private static List<SObject> getConfiguration(String requestType){
-        HDT_QR_GenerateJsonSAP queryClass = new HDT_QR_GenerateJsonSAP();
+        HDT_QR_GenericSapIntegrationAdapter queryClass = new HDT_QR_GenericSapIntegrationAdapter();
         String fields = 'Id, DeveloperName, JSON__c,NamedCredential__c';
         String objectName = 'HDT_SapWsConfiguration__mdt';
         String conditions = 'DeveloperName = \''+ requestType + '\'';
@@ -41,24 +40,25 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
         HDT_WRP_SetupParameter setupParameters = new HDT_WRP_SetupParameter();
         try{
             if(stringStructure != null && String.isNotBlank(stringStructure)){
-                HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPRequest jsonStructure = (HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPRequest) JSON.deserialize(stringStructure, HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPRequest.Class);
+                HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest jsonStructure = 
+                (HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest) JSON.deserialize(stringStructure, HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest.Class);
                 String parentObject = jsonStructure.objects[0].objectName;
                 String[] parentFieldsArray = new List<String>();
-                for(HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPFields singleField : jsonStructure.objects[0].fields){
+                for(HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields singleField : jsonStructure.objects[0].fields){
                     parentFieldsArray.add(singleField.apiName);
                 }
                 String parentFields = String.join(parentFieldsArray, ',');
                 setupParameters.objectName = parentObject;
                 setupParameters.fields = parentFields;
                 List<HDT_WRP_SetupParameter> childParametersList = new List<HDT_WRP_SetupParameter>();
-                for(HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPChildObjects child : jsonStructure.objects[0].childObjects){
+                for(HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapChildObjects child : jsonStructure.objects[0].childObjects){
                     HDT_WRP_SetupParameter childParameters = new HDT_WRP_SetupParameter();
                     String childObject = child.objectName;
                     String childRelation = child.relationName;
                     String childStaticConditions = child.staticCondition;
                     String childControllingField = child.controllingField;
                     String[] childFieldsArray = new List<String>();
-                    for(HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPFields singleChildField : child.fields){
+                    for(HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields singleChildField : child.fields){
                         childFieldsArray.add(singleChildField.apiName);
                     }
                     String childFields = String.join(childFieldsArray, ',');
@@ -82,6 +82,7 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
     private static HDT_WRP_QueryParameter getQuery(HDT_WRP_SetupParameter setupParameters, Id recordId){
         HDT_WRP_QueryParameter queryParameters = new HDT_WRP_QueryParameter();
         List<HDT_WRP_QueryParameter> childs = new List<HDT_WRP_QueryParameter>();
+        String conditions;
         try {
             String[] nestedQueryArray = new List<String>();
             String nestedQuery = '';
@@ -89,10 +90,12 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
                 HDT_WRP_QueryParameter child = new HDT_WRP_QueryParameter();
                 child.fields = singleElement.fields;
                 child.objectName = singleElement.objectName;
-                String conditions = singleElement.controllingField + ' = \''+recordId + '\'';
-                if(singleElement.staticConditions != null && String.isNotBlank(singleElement.staticConditions)){
-                    conditions += ' AND ' + singleElement.staticConditions;
-                }
+                if(singleElement.controllingField != null && String.isNotBlank(singleElement.controllingField)){
+                    conditions = singleElement.controllingField + ' = \''+recordId + '\'';
+                    if(singleElement.staticConditions != null && String.isNotBlank(singleElement.staticConditions)){
+                        conditions += ' AND ' + singleElement.staticConditions;
+                    }
+                } 
                 child.conditions = conditions;
                 child.relationName = singleElement.relationName;
                 childs.add(new HDT_WRP_QueryParameter(child));
@@ -108,7 +111,7 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
     }
     private static Map<String,List<SObject>> getGenericRecords(HDT_WRP_QueryParameter queryParameters){
         Map<String,List<SObject>> recordMap = new Map<String,List<SObject>>();
-        HDT_QR_GenerateJsonSAP queryClass = new HDT_QR_GenerateJsonSAP();
+        HDT_QR_GenericSapIntegrationAdapter queryClass = new HDT_QR_GenericSapIntegrationAdapter();
         try {
             List<SObject> records = queryClass.getGenericRecords(queryParameters.fields, queryParameters.objectName, queryParameters.conditions);
             recordMap.put('parent', records);
@@ -125,18 +128,19 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
         Map<String,Object> bodyMap = new Map<String,Object>();
         try {
             if(stringStructure != null && String.isNotBlank(stringStructure)){
-                HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPRequest jsonStructure = (HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPRequest) JSON.deserialize(stringStructure, HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPRequest.Class);
+                HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest jsonStructure = 
+                (HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest) JSON.deserialize(stringStructure, HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapRequest.Class);
                 SObject parentRecord = records.get('parent')[0];
-                for(HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPFields field : jsonStructure.objects[0].fields){
+                for(HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields field : jsonStructure.objects[0].fields){
                     bodyMap.put(field.label, parentRecord.get(field.apiName));
                 }
                 List<Object> listChild = new List<Object>();
-                for(HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPChildObjects singleChild : jsonStructure.objects[0].childObjects){
+                for(HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapChildObjects singleChild : jsonStructure.objects[0].childObjects){
                     List<SObject> childrecords = records.get(singleChild.relationName);
                     Map<String,Object> child = new Map<String,Object>();
                     listChild = new List<Object>();
                     for(SObject singleChildRecord : childrecords){
-                        for(HDT_WRP_GenerateJsonSAP.HDT_WRP_SAPFields fieldChild : singleChild.fields){
+                        for(HDT_WRP_GenericSapIntegrationAdapter.HDT_WRP_SapFields fieldChild : singleChild.fields){
                             child.put(fieldChild.label, singleChildRecord.get(fieldChild.apiName));
                         }
                         listChild.add(new Map<String,Object>(child));
@@ -190,3 +194,4 @@ public inherited sharing class HDT_SRV_GenerateJsonSAPFacade {
         }
     }
 }
+
