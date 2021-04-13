@@ -4288,15 +4288,15 @@
     <picklistValues>
         <picklist>SendMode__c</picklist>
         <values>
-            <fullName>Consegna a mano</fullName>
+            <fullName>Posta Cartacea</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Email</fullName>
+            <fullName>E-mail</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Posta</fullName>
+            <fullName>Stampa Cartacea</fullName>
             <default>false</default>
         </values>
     </picklistValues>
