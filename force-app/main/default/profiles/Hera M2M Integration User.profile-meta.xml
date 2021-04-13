@@ -3727,6 +3727,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.GraveCoordinates__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5153,6 +5158,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.BillingProfile__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7078,6 +7088,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.FriendCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14763,6 +14778,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.FlowComputerSN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

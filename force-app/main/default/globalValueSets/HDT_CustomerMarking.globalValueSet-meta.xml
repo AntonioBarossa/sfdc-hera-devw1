@@ -410,6 +410,46 @@
         <default>false</default>
         <label>UNION-Persona fisica</label>
     </customValue>
+    <customValue>
+        <fullName>D1 - Persona fisica</fullName>
+        <default>false</default>
+        <label>D1 - Persona fisica</label>
+    </customValue>
+    <customValue>
+        <fullName>D2 - Ditta individuale</fullName>
+        <default>false</default>
+        <label>D2 - Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>D3 - Azienda</fullName>
+        <default>false</default>
+        <label>D3 - Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>D4 - Parti comuni</fullName>
+        <default>false</default>
+        <label>D4 - Parti comuni</label>
+    </customValue>
+    <customValue>
+        <fullName>D5 - Condominio</fullName>
+        <default>false</default>
+        <label>D5 - Condominio</label>
+    </customValue>
+    <customValue>
+        <fullName>D6 - Associazione</fullName>
+        <default>false</default>
+        <label>D6 - Associazione</label>
+    </customValue>
+    <customValue>
+        <fullName>D7 - BP Doppio</fullName>
+        <default>false</default>
+        <label>D7 - BP Doppio</label>
+    </customValue>
+    <customValue>
+        <fullName>D8 - Marcatura nulla</fullName>
+        <default>false</default>
+        <label>D8 - Marcatura nulla</label>
+    </customValue>
     <description>Rappresenta una segmentazione del cliente</description>
     <masterLabel>Marcatura Cliente</masterLabel>
     <sorted>false</sorted>
