@@ -38,7 +38,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.numeroFattura = null;
-                    dbr.numeroBollettino = null;
+                    dbr.numeroBollettino = dbr.numeroBollettino;
                     dbr.contoContrattuale = null;
                     dbr.societa = null;
                     dbr.contratto = null;

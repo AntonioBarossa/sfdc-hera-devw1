@@ -78,6 +78,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     showViewResult = false;
     @track viewResultData = {};
     showFilters = false;
+    title;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -245,6 +246,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     interrogation(event){
+        this.title = 'Interrogazione dei dati';
+        this.filterLabel = 'Interroga';
         this.showFilterFirstLevel = true;
         this.totAmount = 0;
     }
@@ -1267,16 +1270,27 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     applyFilter(event){
         console.log('# applyFilter #');
         console.log('>>> filterobj: ' + event.detail.filterobj);
+        console.log('>>> requestType: ' + event.detail.requestType);
+        
+        this.handleButtonClick(event.detail.requestType, event.detail.filterobj);
+        this.focusOnButton(event.detail.requestType);
 
-        this.handleButtonClick('joinFilter', event.detail.filterobj);
-        this.focusOnButton('joinFilter');
+        //this.handleButtonClick('joinFilter', event.detail.filterobj);
+        //this.focusOnButton('joinFilter');
     }
     
     handleButtonClick(requestType, requestObj) {
         if(requestType != null && requestType != undefined){
 
             this.openMainSpinner();
-            this.onFirst();
+            
+            try{
+                this.onFirst();
+            } catch (e){
+                console.log('we have an error boss');
+                console.log(JSON.stringify(e));
+            }            
+            
             this.allData = [];
             this.accountData = [];
             this.filteredData = [];

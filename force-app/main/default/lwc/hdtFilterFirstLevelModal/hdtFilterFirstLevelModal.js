@@ -3,6 +3,8 @@ import { LightningElement, track, api } from "lwc";
 export default class HdtFilterFirstLevelModal extends LightningElement {
   
     @api columns;
+    @api modalTitle;
+    @api confirmLabel;
     @track filterObj = [];
     error;
 

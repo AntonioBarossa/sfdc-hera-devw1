@@ -174,7 +174,7 @@ export default class HdtJoinFilterModal extends LightningElement {
 
         const selectedObj = new CustomEvent("setobjfilter", {
             detail:  {
-                filterobj: JSON.stringify(this.filterObject)
+                requestType: 'joinFilter', filterobj: JSON.stringify(this.filterObject)
             }
         });
         // Dispatches the event.
