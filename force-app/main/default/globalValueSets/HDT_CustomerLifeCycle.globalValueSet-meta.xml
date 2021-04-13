@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>ENGAGEMENT</fullName>
+        <default>false</default>
+        <label>ENGAGEMENT</label>
+    </customValue>
+    <customValue>
+        <fullName>GROWTH</fullName>
+        <default>false</default>
+        <label>GROWTH</label>
+    </customValue>
+    <customValue>
+        <fullName>LEAVING</fullName>
+        <default>false</default>
+        <label>LEAVING</label>
+    </customValue>
+    <customValue>
+        <fullName>LOST</fullName>
+        <default>false</default>
+        <label>LOST</label>
+    </customValue>
+    <customValue>
+        <fullName>ONBOARDING</fullName>
+        <default>false</default>
+        <label>ONBOARDING</label>
+    </customValue>
+    <customValue>
+        <fullName>PROSPECT</fullName>
+        <default>false</default>
+        <label>PROSPECT</label>
+    </customValue>
+    <customValue>
+        <fullName>USAGE</fullName>
+        <default>false</default>
+        <label>USAGE</label>
+    </customValue>
+    <customValue>
+        <fullName>WELCOME</fullName>
+        <default>false</default>
+        <label>WELCOME</label>
+    </customValue>
+    <masterLabel>Customer Life Cycle</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,25 +1,25 @@
 /**​
 * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
-* @date 17/03/2021
-* @description HDT_WRP_MrrRequest – Wrapper class for JSON string in the Mrr format
+* @date 09/04/2021
+* @description HDT_WRP_MrrResponse – Wrapper class for JSON string in the Mrr format
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
 
-public with sharing class HDT_WRP_MrrRequest {
-
+public with sharing class HDT_WRP_MrrResponse {
+    
     Public with sharing class HDT_WRP_Header {
         Public String requestId;
         Public String requestTimeStamp;
         Public String requestType;
-        //INIZIO SVILUPPI EVERIS
         Public List<HDT_WRP_Field> fields;
-        //FINE SVILUPPI EVERIS
     }
 
     Public with sharing class HDT_WRP_Field {
         Public String fieldType;
         Public String name;
         Public String value;
+        Public String rdo;
+        Public String rds;
     }
 
     Public with sharing class HDT_WRP_Object {
@@ -31,7 +31,7 @@ public with sharing class HDT_WRP_MrrRequest {
 
     }
 
-    Public with sharing class HDT_WRP_Request {
+    Public with sharing class HDT_WRP_Response {
         
         Public HDT_WRP_Header header;
         Public String code;
@@ -40,6 +40,5 @@ public with sharing class HDT_WRP_MrrRequest {
 
     }
 
-    Public List<HDT_WRP_Request> requests;
-    
+    Public List<HDT_WRP_Response> responses;
 }
