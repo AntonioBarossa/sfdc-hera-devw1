@@ -572,6 +572,46 @@
             <fullName>UNION-Persona fisica</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>MIWA ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Persona fisica</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Gender__c</picklist>
