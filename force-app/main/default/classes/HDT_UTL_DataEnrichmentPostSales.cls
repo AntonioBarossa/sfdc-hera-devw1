@@ -75,7 +75,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                             }
                             when 'getBillingProfileIdBySapCode'{
 
-                                billingProfilesfdcField = transcodeConfig.SapField__c;
+                                billingProfilesfdcField = transcodeConfig.SfdcField__c;
                                 billingProfileCode = position.valore;
 
                             }
