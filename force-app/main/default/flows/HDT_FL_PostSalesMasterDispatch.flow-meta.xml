@@ -46,7 +46,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Subflow_Gestione_Disattivazioni</targetReference>
+            <targetReference>Arricchimento_Dati</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -95,6 +95,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Votive_Modena_SubFlow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Annullamento</name>
+        <label>Assegna Case Id</label>
+        <locationX>4516</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Annullamento</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_Annullamento_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -191,6 +207,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Gestione_Morosita_Subflow</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Case_Id_Notifiche</name>
+        <label>Assegna Case Id</label>
+        <locationX>4252</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>CaseId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Crea_Case_Notifiche</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_Notifiche_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -404,7 +436,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>2151</locationX>
+        <locationX>2415</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -444,10 +476,38 @@
             <name>Cluster_Pagamenti</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Richiesta Domiciliazione</stringValue>
+                    <stringValue>HDT_RT_Domiciliazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_PianoRateizzazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ComunicazionePagamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_Rimborso</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_AltriProcessiPagamenti</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -500,6 +560,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Inversione del Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_UnificazioneSeparazioneCABolletta</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -596,6 +663,36 @@
                 <targetReference>Selezione_Fornitura_Autolettura_0</targetReference>
             </connector>
             <label>Canone Rai</label>
+        </rules>
+        <rules>
+            <name>Cluster_Notifiche</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Riattivazione a seguito di cessato pericolo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Notifiche</targetReference>
+            </connector>
+            <label>Cluster Notifiche</label>
+        </rules>
+        <rules>
+            <name>Cluster_Annullamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_Annullamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Selezione_Fornitura_Notifiche_0</targetReference>
+            </connector>
+            <label>Cluster Annullamento</label>
         </rules>
     </decisions>
     <description>Flow richiamato dal Catalogo Servizi che si occupa di innescare il corretto Flow di processo</description>
@@ -831,6 +928,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Origin</field>
             <value>
                 <stringValue>Phone</stringValue>
@@ -1030,6 +1133,83 @@
             <field>SuppliedPhone</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Crea_Case_Annullamento</name>
+        <label>Crea Case</label>
+        <locationX>4516</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Annullamento</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Annullamento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Annullamento.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1468,6 +1648,83 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
+        <name>Crea_Case_Notifiche</name>
+        <label>Crea Case</label>
+        <locationX>4252</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Assegna_Case_Id_Notifiche</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Notifiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Mobile__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Origin</field>
+            <value>
+                <stringValue>Phone</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>PhoneNumber__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Phone</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>Get_RT_Notifiche.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ServicePoint__c</field>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Crea_Case_Reclamo</name>
         <label>Crea Case Reclamo</label>
         <locationX>2932</locationX>
@@ -1559,7 +1816,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>2151</locationX>
+        <locationX>2415</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1589,6 +1846,27 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>AccountContactRelation</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Annullamento</name>
+        <label>Get RT Annullamento</label>
+        <locationX>4516</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Annullamento</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1823,6 +2101,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_RT_Notifiche</name>
+        <label>Get RT Notifiche</label>
+        <locationX>4252</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Notifiche</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_RT_Pagamenti</name>
         <label>Get RT Pagamenti</label>
         <locationX>908</locationX>
@@ -1888,7 +2187,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>4252</locationX>
+        <locationX>4780</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1932,13 +2231,61 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>2025</locationX>
+        <locationX>2289</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati</name>
+        <label>Arricchimento Dati</label>
+        <locationX>644</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Subflow_Gestione_Disattivazioni</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento_Subflow</name>
+        <label>Gestione Annullamento Subflow</label>
+        <locationX>4516</locationX>
+        <locationY>878</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Gestione_Autoletture_Subflow</name>
         <label>Gestione Autoletture Subflow</label>
@@ -2026,6 +2373,19 @@
             <name>InputCase</name>
             <value>
                 <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Notifiche_Subflow</name>
+        <label>Gestione Notifiche Subflow</label>
+        <locationX>4252</locationX>
+        <locationY>878</locationY>
+        <flowName>HDT_FL_GestioneNotifiche</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_Notifiche</elementReference>
             </value>
         </inputAssignments>
     </subflows>
@@ -2435,10 +2795,90 @@
         </outputAssignments>
     </subflows>
     <subflows>
+        <name>Selezione_Fornitura_Notifiche</name>
+        <label>Selezione Fornitura</label>
+        <locationX>4252</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Get_RT_Notifiche</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
+        <name>Selezione_Fornitura_Notifiche_0</name>
+        <label>Selezione Fornitura</label>
+        <locationX>4516</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>Get_RT_Annullamento</targetReference>
+        </connector>
+        <flowName>HDT_FL_SupplySelection</flowName>
+        <inputAssignments>
+            <name>AccountId</name>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>TargetObject</name>
+            <value>
+                <stringValue>Fornitura</stringValue>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>Subflow_Gestione_Disattivazioni</name>
         <label>Subflow Gestione Disattivazioni</label>
         <locationX>644</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneDisattivazioni</flowName>
         <inputAssignments>
             <name>InputCase</name>
