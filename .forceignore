@@ -18,3 +18,5 @@ package.xml
 **objects/Case/fields/Cluster__c*
 **objects/Account/fields/Category__c*
 **objects/Account/recordTypes/*
+**applications/*
+**namedCredentials/*
