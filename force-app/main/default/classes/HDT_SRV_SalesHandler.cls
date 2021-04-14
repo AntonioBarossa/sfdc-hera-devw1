@@ -59,8 +59,7 @@ public with sharing class HDT_SRV_SalesHandler {
             }
             when 'RICH_PASS' {
 
-
-                if (request.objects.get(0).fields.get(0).name == 'CODICE_CONTRATTO'){
+                if (request.objects.get(0).fields.get(0) != null){
 
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
