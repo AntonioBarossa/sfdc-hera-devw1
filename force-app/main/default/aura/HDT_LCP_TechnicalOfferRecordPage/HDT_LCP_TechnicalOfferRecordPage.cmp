@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
+
+    <aura:attribute name="pageReference" type="Object"/>
+    <lightning:navigation aura:id="navService"/>      
+    <aura:attribute name="recordId" type="String" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.doInit}" />
+    <aura:handler event="aura:locationChange" action="{!c.update}"/>
+    {!v.body}
+ </aura:component>

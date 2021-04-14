@@ -11,6 +11,9 @@ public with sharing class HDT_WRP_MrrRequest {
         Public String requestId;
         Public String requestTimeStamp;
         Public String requestType;
+        //INIZIO SVILUPPI EVERIS
+        Public List<HDT_WRP_Field> fields;
+        //FINE SVILUPPI EVERIS
     }
 
     Public with sharing class HDT_WRP_Field {
@@ -31,6 +34,8 @@ public with sharing class HDT_WRP_MrrRequest {
     Public with sharing class HDT_WRP_Request {
         
         Public HDT_WRP_Header header;
+        Public String code;
+        Public String description;
         Public List<HDT_WRP_Object> objects;
 
     }

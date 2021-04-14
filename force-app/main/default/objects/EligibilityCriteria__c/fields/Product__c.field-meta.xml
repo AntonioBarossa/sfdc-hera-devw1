@@ -7,7 +7,7 @@
     <label>Prodotto</label>
     <referenceTo>Product2</referenceTo>
     <relationshipLabel>Criteri di Eleggibilita</relationshipLabel>
-    <relationshipName>Criteri_di_Eleggibilita</relationshipName>
+    <relationshipName>EligibilitiesCriteria</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

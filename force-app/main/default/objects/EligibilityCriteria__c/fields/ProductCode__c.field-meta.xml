@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ProductCode__c</fullName>
+    <description>Campo di configurazione usato per indicare la fascia di Consumo EE per il record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
+    <externalId>false</externalId>
+    <formula>Product__r.ProductCode</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Codice Prodotto</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
