@@ -671,10 +671,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non Definito</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Personale</fullName>
             <default>false</default>
         </values>
