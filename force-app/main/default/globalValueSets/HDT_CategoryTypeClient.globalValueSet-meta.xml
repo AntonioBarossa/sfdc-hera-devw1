@@ -16,7 +16,7 @@
         <label>Aziende SME</label>
     </customValue>
     <customValue>
-        <fullName>Aziende Soho</fullName>
+        <fullName>Aziende Soho</fullName> 
         <default>false</default>
         <label>Aziende Soho</label>
     </customValue>
