@@ -29,7 +29,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SalesCompany__c</field>
+                <field>SalesCompanyCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
