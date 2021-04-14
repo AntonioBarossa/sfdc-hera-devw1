@@ -88,6 +88,12 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
             HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = setHttpObject();
 
+            if(httpObj == null){
+                meterReadingObj.success = false;
+                meterReadingObj.message = 'Metadata error!';
+                return meterReadingObj;
+            }
+
             HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
             bodyWrp.codiceContratto = '';//contractCode;
             bodyWrp.codiceImpianto = '4002460003';
@@ -97,8 +103,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             bodyWrp.letturaReale = '';
 
             String body = JSON.serialize(bodyWrp, true);
-            System.debug('>>> body obj > ');
-            System.debug(body);
+            System.debug('>>> body obj > ' + body);
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
      
             if(!responseCtrl.success){
@@ -132,18 +137,30 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return meterReadingObj;
     }
 
-    private static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(){
+    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(){
 
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
-        //httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
-        //httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
-        httpObj.endPoint = 'https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/service-console/readings/search';
-        httpObj.headersMap.put('Authorization', 'Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=');
-       
-        httpObj.httpMethod = 'POST';
-        httpObj.headersMap.put('Content-Type', 'application/json');
+        List<HDT_AccountDataEnrichment__mdt> enrichmentbMetadataList;
+        enrichmentbMetadataList = HDT_QR_AccountDataEnrichment.getAccountDataEnrichment(enrichmentbMetadataList, 'meterReading');
+
+        if(enrichmentbMetadataList.size()>0 && !String.isEmpty(enrichmentbMetadataList[0].Credential__c)){
+
+            httpObj.endPoint = enrichmentbMetadataList[0].Credential__c;
+            httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
+
+            if(enrichmentbMetadataList[0].UseMock__c){
+                httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
+                httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+            }
+
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Content-Type', 'application/json');
+
+        } else {
+            httpObj = null;
+        }
 
         return httpObj;
     }

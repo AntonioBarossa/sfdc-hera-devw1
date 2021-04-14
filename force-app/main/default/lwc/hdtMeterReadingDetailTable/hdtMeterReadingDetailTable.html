@@ -33,6 +33,10 @@
         </lightning-card>
     </div>
     <div if:true={meterReadingError} class="slds-box" style="background:#ffffff" >
-        <p class="slds-text-heading_small slds-text-color_error" >{meterReadingErrorMessage}</p>
+        <!--<p class="slds-text-heading_small slds-text-color_error" >{meterReadingErrorMessage}</p>-->
+        <c-hdt-custom-illustration
+            message={meterReadingErrorMessage}
+            style-class="slds-text-heading_medium"
+        ></c-hdt-custom-illustration>
     </div> 
 </template>
