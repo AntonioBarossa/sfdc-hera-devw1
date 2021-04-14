@@ -15,3 +15,6 @@ package.xml
 **settings
 **profiles/Minimum Access - Salesforce.profile
 #**profiles
+**objects/Case/fields/Cluster__c.field-meta.xml
+**objects/Account/fields/Category__c.field-meta.xml
+**objects/Account/recordTypes/*
