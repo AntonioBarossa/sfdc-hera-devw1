@@ -2377,19 +2377,6 @@
         </inputAssignments>
     </subflows>
     <subflows>
-        <name>Gestione_Notifiche_Subflow</name>
-        <label>Gestione Notifiche Subflow</label>
-        <locationX>4252</locationX>
-        <locationY>878</locationY>
-        <flowName>HDT_FL_GestioneNotifiche</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>Crea_Case_Notifiche</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Gestione_Preventivi_Subflow</name>
         <label>Gestione Preventivi Subflow</label>
         <locationX>1304</locationX>

@@ -3489,7 +3489,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <fullName>Annullamento - Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3497,7 +3497,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <fullName>Annullamento - Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3505,7 +3505,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <fullName>Annullamento - Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>

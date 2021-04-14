@@ -2,7 +2,9 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
     public Case getCurrentCaseById(String recordId){
 
-        return [SELECT Id, 
+        Case currentCase = new Case();
+
+        currentCase = [SELECT Id, 
         Phase__c, 
         Type,
         CaseNumber, 
@@ -12,6 +14,8 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
         LIMIT 1];
+
+        return currentCase;
 
 
     }
