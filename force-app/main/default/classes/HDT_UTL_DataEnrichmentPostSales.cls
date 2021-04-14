@@ -19,6 +19,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         
         String billingProfileCode;
         String billingProfilesfdcField;
+        String billingProfileId;
+
+        String deliveryAddress;
+
+        String salesCompanyCode;
+        String salesCompany;
 
         String method;
         String value;
@@ -95,8 +101,29 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
         }
 
-        transcodeMap.put(billingProfilesfdcField, depsSrv.getBillingProfileIdBySapCode(billingProfileCode));
-        
+        //BILLING PROFILE 
+        try{
+
+            billingProfileId = depsSrv.getBillingProfileIdBySapCode(billingProfileCode);
+            deliveryAddress = depsSrv.getDeliveryAddress(billingProfileId);
+
+            transcodeMap.put(billingProfilesfdcField, billingProfileId);
+
+            transcodeMap.put('DeliveryAddress__c', deliveryAddress);
+
+        } catch(Exception e) {
+
+            System.debug('Billing Profile non presente a sistema');
+
+        }
+
+        //SALESCOMPANY
+        salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
+        salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
+
+        transcodeMap.put('SalesCompany__c', salesCompany);
+
+
         caseList.add(depsSrv.populateCase(transcodeMap, currentCase));
 
         return caseList;
