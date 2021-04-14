@@ -2,12 +2,11 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>RateCategory__c</fullName>
     <deleteConstraint>SetNull</deleteConstraint>
-    <description>Lookup verso l&apos;oggetto Rate template</description>
     <externalId>false</externalId>
     <label>Rate Category</label>
     <referenceTo>RateTemplate__c</referenceTo>
-    <relationshipLabel>Technical Offer</relationshipLabel>
-    <relationshipName>Technical_Offer</relationshipName>
+    <relationshipLabel>Technical Offers</relationshipLabel>
+    <relationshipName>TechnicalOffers</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>

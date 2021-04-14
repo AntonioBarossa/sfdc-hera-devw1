@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DiscountEurMWh__c</fullName>
-    <description>Sconto (Eur/MWh)</description>
+    <description>Sconto applicato per Euro per ogni MWh</description>
     <externalId>false</externalId>
     <label>Sconto (Eur/MWh)</label>
     <precision>18</precision>

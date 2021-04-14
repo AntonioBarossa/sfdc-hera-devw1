@@ -157,11 +157,11 @@
     <gender>Feminine</gender>
     <label>Offerta Tecnica</label>
     <nameField>
-        <label>Name</label>
+        <label>TechnicalOffer Name</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Technical Offer</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

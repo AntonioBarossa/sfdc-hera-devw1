@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CancelableQC__c</fullName>
     <defaultValue>false</defaultValue>
-    <description>Annullabile per mancata QC</description>
+    <description>Indica se il prodotto può essere cancellato per mancato Quality check</description>
     <externalId>false</externalId>
     <label>Annullabile per mancata QC</label>
     <trackHistory>false</trackHistory>
