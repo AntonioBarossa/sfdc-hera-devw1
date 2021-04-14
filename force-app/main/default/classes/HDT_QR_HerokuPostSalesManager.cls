@@ -17,6 +17,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
         return currentCase;
 
+
     }
 
     public wrts_prcgvr__CalloutTemplate__c getCalloutTemplateByCode(String code){

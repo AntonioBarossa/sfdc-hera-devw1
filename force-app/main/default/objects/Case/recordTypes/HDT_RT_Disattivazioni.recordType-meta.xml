@@ -3469,15 +3469,55 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiuso</fullName>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3493,11 +3533,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3509,15 +3561,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>KO Definitivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Rilavorato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
+            <fullName>Inviato al SII</fullName>
             <default>false</default>
         </values>
     </picklistValues>
