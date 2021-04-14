@@ -55,9 +55,9 @@ global with sharing class HDT_WS_MrrRequest {
                 
                 mrrResponseItem.objects.clear();
 
-                //INIZIO SVILUPPI EVERIS
-
                 if(header.fields.get(0).value == 'postsales'){
+
+                    //INIZIO SVILUPPI EVERIS
 
                     hpsmSrv.handleInboundRequest(request);
 
@@ -70,13 +70,13 @@ global with sharing class HDT_WS_MrrRequest {
                     
                     RestContext.response.statusCode = 200;
 
+                    //FINE SVILUPPI EVERIS
+
                 } else if (header.fields.get(0).value == 'sales') {
 
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
                     
                 }
-
-                //FINE SVILUPPI EVERIS
 
             }
             
