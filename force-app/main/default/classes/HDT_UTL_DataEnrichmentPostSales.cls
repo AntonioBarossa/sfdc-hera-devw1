@@ -17,6 +17,9 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String serializedResponse = inputs[0].serializedResponse;
         Case currentCase = inputs[0].currentCase;
         
+        String billingProfileCode;
+        String billingProfilesfdcField;
+
         String method;
         String value;
         Decimal decValue;
@@ -71,8 +74,10 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
                             }
                             when 'getBillingProfileIdBySapCode'{
-                                transcodeMap.put(transcodeConfig.SfdcField__c, 
-                                depsSrv.getBillingProfileIdBySapCode(position.valore));
+
+                                billingProfilesfdcField = transcodeConfig.SapField__c;
+                                billingProfileCode = position.valore;
+
                             }
 
                         }
@@ -90,6 +95,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
         }
 
+        transcodeMap.put(billingProfilesfdcField, depsSrv.getBillingProfileIdBySapCode(billingProfileCode));
         
         caseList.add(depsSrv.populateCase(transcodeMap, currentCase));
 
