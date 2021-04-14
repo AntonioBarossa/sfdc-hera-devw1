@@ -205,33 +205,9 @@
     <tabs>standard-Case</tabs>
     <tabs>standard-Opportunity</tabs>
     <tabs>standard-Contract</tabs>
-    <tabs>QuoteManagement__c</tabs>
-    <tabs>AdminPriceQuote__c</tabs>
-    <tabs>BillingProfile__c</tabs>
-    <tabs>et4ae5__IndividualEmailResult__c</tabs>
-    <tabs>SMSTracking__c</tabs>
-    <tabs>SBQQ__LookupData__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
-        <mappings>
-            <tab>AdminPriceQuote__c</tab>
-        </mappings>
-        <mappings>
-            <tab>BillingProfile__c</tab>
-        </mappings>
-        <mappings>
-            <tab>QuoteManagement__c</tab>
-        </mappings>
-        <mappings>
-            <tab>SBQQ__LookupData__c</tab>
-        </mappings>
-        <mappings>
-            <tab>SMSTracking__c</tab>
-        </mappings>
-        <mappings>
-            <tab>et4ae5__IndividualEmailResult__c</tab>
-        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>
