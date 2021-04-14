@@ -6,7 +6,7 @@
 
     <div if:true={showError} class="slds-text-align_center">
         <lightning-card>
-            <lightning-icon icon-name="utility:wifi"
+            <!--<lightning-icon icon-name="utility:wifi"
                 alternative-text="Warning!"
                 title="Warning"
                 size="large"
@@ -14,14 +14,19 @@
 
         <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
             <p>{showErrorMessage}</p>
-        </div>
+        </div>-->
+
+            <c-hdt-custom-illustration
+                message={showErrorMessage}
+                style-class="slds-text-heading_medium"
+            ></c-hdt-custom-illustration>
 
         </lightning-card>
     </div>
 
     <template if:false={showError} >
         <lightning-card  icon-name={iconName} title={tableTitle}>
-            <div style="height: 28vh;"><!--height: 150px;-->
+            <div class={height1} >
                 <lightning-datatable
                         key-field="id"
                         data={data}
@@ -33,7 +38,7 @@
         <template if:true={showSecondTable} >
             <div class="slds-m-top_large" >
                 <lightning-card  icon-name={iconName2} title={tableTitle2} >
-                    <div style="height: 22vh;"><!--height: 150px;-->
+                    <div class={height2} >
                         <lightning-datatable
                                 key-field="id"
                                 data={data2}

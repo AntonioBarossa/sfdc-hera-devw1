@@ -7,12 +7,14 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     columns;
     tableTitle;
     iconName;
+    height1;
 
     showSecondTable;
     data2 = [];
     columns2;
     tableTitle2;
     iconName2;
+    height2;
 
     showError = false;
     showErrorMessage = '';
@@ -35,21 +37,23 @@ export default class HdtAccountDataEnrichment extends LightningElement {
         .then(result => {
 
             console.log('# getTableConfig #');
-
-
+ 
             if(this.type != 'cmor'){
                 this.tableTitle = result.tables[0].tableTitle;
                 this.iconName = result.tables[0].iconName;
                 this.columns = result.tables[0].columns;
+                this.height1 = 'singleTable';
             } else {
                 this.showSecondTable = true;
                 this.tableTitle = result.tables[0].tableTitle;
                 this.iconName = result.tables[0].iconName;
                 this.columns = result.tables[0].columns;
+                this.height1 = 'topTable';
 
                 this.tableTitle2 = result.tables[1].tableTitle;
                 this.iconName2 = result.tables[1].iconName;
                 this.columns2 = result.tables[1].columns;
+                this.height2 = 'bottomTable';
             }
 
 
@@ -74,7 +78,8 @@ export default class HdtAccountDataEnrichment extends LightningElement {
             if(obj.status==='failed'){
                 console.log('# SAP result failed #');
                 this.showError = true;
-                this.showErrorMessage = obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message;
+                console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
+                this.showErrorMessage = obj.errorDetails[0].message;
                 this.showSpinner = false;            
             } else {
                 if(this.type != 'cmor'){

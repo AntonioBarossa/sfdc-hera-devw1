@@ -17,11 +17,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Tutte le partite recenti:
                 when 'allRecentItems' {
-                    dbr.aggregazione = tObj.aggregation;
                     Date todayDate = date.today();
-                    Date minusDate = todayDate.addYears(-5);                    
-                    dbr.dataFine = String.valueOf(todayDate.day()) + '/' + String.valueOf(todayDate.month()) + '/' + String.valueOf(todayDate.year());
-                    dbr.dataInizio = String.valueOf(minusDate.day()) + '/' + String.valueOf(minusDate.month()) + '/' + String.valueOf(minusDate.year());
+                    Date minusDate = todayDate.addYears(-5);
+                    dbr.dataFine = convertDateFormat(String.valueOf(todayDate));
+                    dbr.dataInizio = convertDateFormat(String.valueOf(minusDate));
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
@@ -33,8 +32,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     dbr.applicativo = 'ML';
                     dbr.aggregazione = null;
                     dbr.codiceCliente = tObj.customerCode;
-                    dbr.tipoTransazione = tObj.tabCode;//EC5
-                    dbr.tipoEstrattoConto = 'ORDINARIO';//tObj.statementType;
+                    dbr.tipoTransazione = tObj.tabCode;
+                    dbr.tipoEstrattoConto = 'ORDINARIO';
                     dbr.dataInizio = convertDateFormat(dbr.dataInizio);
                     dbr.dataFine = convertDateFormat(dbr.dataFine);
                     dbr.numeroFattura = null;
@@ -47,15 +46,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 //Tasto Visualizza Esito
                 when 'viewResult' {
                     dbr.applicativo = null;
-                    dbr.aggregazione = null;
                     dbr.codiceCliente = null;
                     dbr.tipoEstrattoConto = null;
-                    dbr.dataInizio = null;
-                    dbr.dataFine = null;
-                    dbr.numeroBollettino = null;
-                    dbr.contoContrattuale = null;
-                    dbr.societa = null;
-                    dbr.contratto = null;
                     dbr.loginId = null;
                     dbr.tipoTransazione = 'EC4';
                 }
@@ -75,67 +67,47 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         switch on tObj.tabCode {
             //Estratto conto
             when 'EC' {
-                dbr.applicativo = 'ML';
-                dbr.aggregazione = '03';
-                dbr.codiceCliente = tObj.customerCode;
-                dbr.tipoTransazione = tObj.tabCode;
-                dbr.tipoEstrattoConto = tObj.statementType;
-                dbr.dataInizio = null;
-                dbr.dataFine = null;
-                dbr.numeroFattura = null;
-                dbr.numeroBollettino = null;
-                dbr.contoContrattuale = null;
-                dbr.societa = null;
-                dbr.contratto = null;
-                dbr.loginId = '0-1';
+                dbr.aggregazione = null;
+                dbr.tipoTransazione = 'EC1';
             }
             //Gestione del credito
             when 'EC1' {
-                //<Applicativo>AL</Applicativo>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>  
+
             }
             //Indennizzi
             when 'EC8' {
-                //<Applicativo>AL</Applicativo>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>
+
             }
             //Note Var. IVA
-            when 'npi' {
-                //<Applicativo>AL</Applicativo>
-                //<Aggregazione>03</Aggregazione>
-                //<TipoEstrattoConto>NVI</TipoEstrattoConto>
+            when 'NVI' {
+                dbr.aggregazione = '03';
             }
             //Pagamenti e compensazioni
             when 'EC5' {
-                //va usato il tasto 'filtri'
-                //<Applicativo>AL</Applicativo>
-                //<DataInizio>XXXX</DataInizio>
-                //<DataFine>XXXX</DataFine>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>
+
             }
             //Paperless
             when 'paperless' {
-                //<Applicativo>AL</Applicativo>
+                dbr.tipoTransazione = null;
+                dbr.tipoEstrattoConto = null;
             }
             //Parite non fatturate
             when 'EC7' {
-                //<Applicativo>AL</Applicativo>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>
+
             }
             //Rate
             when 'EC4' {
-                //<Applicativo>AL</Applicativo>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>
+
+                
+
             }
             //Scaduto per riattivazione
             when 'EC9' {
-                //<Applicativo>AL</Applicativo>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>
+
             }
             //Solleciti
             when 'EC6' {
-                //<Applicativo>AL</Applicativo>
-                //<TipoEstrattoConto>ORDINARIO</TipoEstrattoConto>
+
             }
         }
         return dbr;
@@ -143,8 +115,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     public static String convertDateFormat(String inputDate){
         Date tempDate = Date.valueOf(inputDate);
-        String day = String.valueOf(tempDate.day());
-        String month = String.valueOf(tempDate.month());
+        String day = (tempDate.day()<10) ? '0' + String.valueOf(tempDate.day()) : String.valueOf(tempDate.day());
+        String month = (tempDate.month()<10) ? '0'+ String.valueOf(tempDate.month()) : String.valueOf(tempDate.month());
         String year = String.valueOf(tempDate.year());
         return day + '/' + month + '/' + year;
     }

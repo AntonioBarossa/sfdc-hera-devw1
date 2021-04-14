@@ -105,6 +105,7 @@ public class HDT_WRP_AccountStatement {
         public String dataFine;
         public String numeroFattura;
         public String numeroBollettino;
+        public String numeroDocumento;
         public String contoContrattuale;
         public String societa;
         public String contratto;

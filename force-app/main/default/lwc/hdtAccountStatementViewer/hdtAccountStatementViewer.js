@@ -653,9 +653,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     viewResultMulesoftResponse(obj){
         console.log('>>> viewResult Mulesoft Response');
-        this.viewResultData.id = '1';
-        this.viewResultData.resultDate = '01/01/2020'
-        this.viewResultData.resultDetail = 'and the oscar goes to...';
+        this.viewResultData.id = obj.data[0].codiceEsito;
+        this.viewResultData.resultDate = obj.data[0].dataEsisto;
+        this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
         this.showViewResult = true;
         this.closeMainSpinner();
     }
@@ -1359,6 +1359,18 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     homeTabEC5(){
 
+    }
+
+    showSingleBill(event){
+        console.log('>>> visualbolletta - showSingleBill');
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Visualizza bolletta',
+                message: 'Questo servizio non è ancora disponibile',
+                variant: 'success',
+                mode: 'sticky'
+            })
+        );
     }
 
 }

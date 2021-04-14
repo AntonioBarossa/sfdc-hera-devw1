@@ -15,6 +15,7 @@ public inherited sharing class HDT_WRP_AccountDataEnrichment {
     public class HDT_WRP_ColumnObj {
         @AuraEnabled public String fieldName;
         @AuraEnabled public String label;
+        @AuraEnabled public Integer initialWidth;
     }
 
     public class HDT_WRP_RequestResponse {

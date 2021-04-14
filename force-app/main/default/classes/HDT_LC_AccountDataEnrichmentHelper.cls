@@ -74,7 +74,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
                     httpBody = '{"bp": "1001475349"}';
                 }
                 when 'raiFee' {
-                    httpBody = '{"bp": "1001642334"}';
+                    httpBody = '{"bp": "1001635149"}';
                 }
                 when 'socialBonus' {
                     httpBody = '{"bp": "1001803014"}';
