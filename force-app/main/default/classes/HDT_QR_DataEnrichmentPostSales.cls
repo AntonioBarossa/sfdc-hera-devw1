@@ -18,13 +18,16 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
     public BillingProfile__c getBillingProfileIdBySapCode(String sapCode){
 
-        return [SELECT Id
+        BillingProfile__c billingProfile = new BillingProfile__c();
+
+        billingProfile = [SELECT Id
         FROM BillingProfile__c
         WHERE ContractAccountCode__c = :sapCode
         WITH SECURITY_ENFORCED
         LIMIT 1
         ];
 
+        return billingProfile;
 
     }
 
