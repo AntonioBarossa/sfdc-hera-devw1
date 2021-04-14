@@ -13,9 +13,6 @@ assets/*
 manifest/package.xml
 manifest/*
 manifest/
-force-app/main/default/objects/Case/fields/Cluster__c.field-meta.xml
-force-app/main/default/objects/Account/fields/Category__c.field-meta.xml
-force-app/main/default/objects/Account/recordTypes/*
 .gitignore
 
 
