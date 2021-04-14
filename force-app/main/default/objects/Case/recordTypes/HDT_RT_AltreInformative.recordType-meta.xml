@@ -59,10 +59,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Intercompany</fullName>
             <default>false</default>
         </values>
