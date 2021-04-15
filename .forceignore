@@ -14,9 +14,3 @@ package.xml
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
 **profiles/Minimum Access - Salesforce.profile
-#**profiles
-**objects/Case/fields/Cluster__c*
-**objects/Account/fields/Category__c*
-**objects/Account/recordTypes/*
-**applications/*
-**namedCredentials/*
