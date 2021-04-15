@@ -11,13 +11,13 @@ public with sharing class HDT_SRV_BpCaVariation {
     }
 
     private static HDT_WRP_GenericSapIntegration manageMA3Disattivazioni(HDT_WRP_GenericSapIntegration inputParams){
-        String fieldQ;
-        String whereQ;
-        String fromQ = 'Case';
+        String fieldq;
+        String whereq;
+        String fromq = 'Case';
         String queryString;
-        fieldQ = 'Id,Account.CustomerCode__c,CaseNumber, BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
-        whereQ = 'Id = \''+inputParams.recordId+'\'';
-        queryString = 'SELECT ' + fieldQ + ' FROM ' + fromQ + ' WHERE ' +  whereQ;
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber, BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
+        whereq = 'Id = \''+inputParams.recordId+'\'';
+        queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         Case caseRecord = (Case) sobjectRecordList[0];
