@@ -39,6 +39,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Output_0</name>
+        <label>Assegna Output</label>
+        <locationX>1106</locationX>
+        <locationY>974</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Status_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
         <locationX>413</locationX>
@@ -272,7 +288,8 @@
             <label>Non Votive</label>
         </rules>
     </decisions>
-    <description>Flow per la gestione delle disattivazioni</description>
+    <description>Flow per la gestione delle disattivazioni
+--&gt; Aggiunta gestione KO</description>
     <interviewLabel>HDT_FL_GestioneDisattivazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Disattivazioni</label>
     <processMetadataValues>
@@ -404,6 +421,16 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_Status_0_0_0_0</name>
+        <label>Aggiorna Fase in Da Inviare</label>
+        <locationX>1106</locationX>
+        <locationY>1094</locationY>
+        <connector>
+            <targetReference>Loading_Spinner_screen_0</targetReference>
+        </connector>
+        <inputReference>Get_Input_Case</inputReference>
+    </recordUpdates>
     <screens>
         <name>Case_Layout</name>
         <label>Case Layout</label>
@@ -516,6 +543,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Output_0</targetReference>
+        </connector>
         <fields>
             <name>DisplayHeader_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
@@ -595,6 +625,36 @@
         <allowPause>true</allowPause>
         <fields>
             <name>hdtLoadingSpinner</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Loading_Spinner_screen_0</name>
+        <label>Loading Spinner screen</label>
+        <locationX>1106</locationX>
+        <locationY>1214</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtLoadingSpinner_0</name>
             <extensionName>c:hdtFlowNavigationButton</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>

@@ -136,6 +136,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
                     flowType = field.value;
 
+                }when 'METHOD'{
+
+                    flowType = field.value;
+
                 }
                 when 'COD_PRAT_UTENTE'{
 
