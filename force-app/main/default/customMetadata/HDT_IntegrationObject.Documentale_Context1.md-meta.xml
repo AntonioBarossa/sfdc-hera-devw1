@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Documentale_Context1</label>
+    <protected>false</protected>
+    <values>
+        <field>JSON__c</field>
+        <value xsi:type="xsd:string">{
+	&quot;objectName&quot; : &quot;Case&quot;,
+	&quot;fields&quot; : &quot;Id,Cluster__c,Type&quot;,
+	&quot;relatedObject&quot; : [
+		{
+			&quot;objectName&quot; : &quot;DocumentSelected__c&quot;,
+			&quot;fields&quot; : &quot;Id,Bill__c,PaymentChannel__c,ContractualAccount__c,PaymentDate__c&quot;,
+			&quot;relation&quot; : &quot;documenti_selezionati__r&quot;
+		}
+	],
+	&quot;lookupObject&quot; : [
+		{
+			&quot;objectName&quot; : &quot;Account&quot;,
+			&quot;fields&quot; : &quot;Id,Name,FiscalCode__c&quot;,
+			&quot;relation&quot; : &quot;Account&quot;
+		},
+		{
+			&quot;objectName&quot; : &quot;Contract&quot;,
+			&quot;fields&quot; : &quot;Id,Status,SAPContractCode__c,StartDate&quot;,
+			&quot;relation&quot; : &quot;Contract__r&quot;
+		}
+	]
+}</value>
+    </values>
+</CustomMetadata>

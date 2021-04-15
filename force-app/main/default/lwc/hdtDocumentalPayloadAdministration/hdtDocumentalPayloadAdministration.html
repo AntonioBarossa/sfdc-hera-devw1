@@ -1,0 +1,99 @@
+<template>
+
+    <template if:true={modalObj.isVisible} >
+        <c-hdt-confirmation-modal
+            modal-header={modalObj.header}
+            modal-body={modalObj.body}
+            operation={modalObj.operation}
+            onconfirm={modalResponse}
+        ></c-hdt-confirmation-modal>
+    </template>
+
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-2">
+            <lightning-card icon-name="standard:settings" title="Amministrazione Payload Documentale" >
+
+                <div if:true={showSpinner}>
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+                
+                <lightning-button label="Generate JSON" slot="actions" name="generateDoc" onclick={openConfirmation} ></lightning-button>
+        
+                <div class="slds-card__body">
+
+                    <div if:true={showError} class="slds-var-m-around_large">
+                        <div class="slds-text-color_error slds-m-bottom_large">Attenzione, si sono verificati degli errori:</div>
+                        <ul class="slds-has-dividers_around-space">
+                            <template for:each={errorDataList} for:item="error">
+                                <li key={error.docName} class="slds-item slds-text-color_error">{error.docName}: {error.errorMessage}</li>   
+                            </template>
+                        </ul>
+                    </div>
+
+                    <div if:true={showEmpty} >
+                        <c-hdt-custom-illustration message="No data found" ></c-hdt-custom-illustration>
+                    </div>
+
+                    <div if:true={showDataList} class="slds-welcome-mat">
+                        <div class="slds-welcome-mat__content">
+                        <ul class="slds-welcome-mat__tiles">
+
+                            <template for:each={documents} for:item="doc">
+                            
+                                <li key={doc.Id} class="slds-welcome-mat__tile slds-m-left_medium">
+                                    <a data-id={doc.Id} class="slds-box slds-box_link slds-media" onclick={navigateToWebPage}>
+                                        <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                        <div class="slds-welcome-mat__tile-figure">
+                                            <div class="slds-welcome-mat__tile-icon-container">
+                                            <span class="slds-icon_container slds-icon-utility-animal_and_nature">
+                                                <lightning-icon icon-name="standard:apex" alternative-text="Utility image" title="Image"></lightning-icon>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="slds-media__body">
+                                        <div class="slds-welcome-mat__tile-body">
+                                            <h3 class="slds-welcome-mat__tile-title">{doc.Name}</h3>
+                                            <p class="slds-welcome-mat__tile-description slds-text-body_regular">
+                                                Created date -> 
+                                                <lightning-formatted-date-time
+                                                    value={doc.CreatedDate}
+                                                    year="numeric"
+                                                    month="numeric"
+                                                    day="numeric"
+                                                    hour="2-digit"
+                                                    minute="2-digit"
+                                                    time-zone-name="short"
+                                                    hour12="true">
+                                                </lightning-formatted-date-time>
+                                            </p>
+                                            <p class="slds-welcome-mat__tile-description slds-text-body_regular">
+                                                Modified date -> 
+                                                <lightning-formatted-date-time
+                                                    value={doc.LastModifiedDate}
+                                                    year="numeric"
+                                                    month="numeric"
+                                                    day="numeric"
+                                                    hour="2-digit"
+                                                    minute="2-digit"
+                                                    time-zone-name="short"
+                                                    hour12="true">
+                                                </lightning-formatted-date-time>
+                                            </p>
+                                        </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </template>
+                        </ul>
+                        </div>
+                    </div>
+
+                </div>
+        
+            </lightning-card>
+        </div>
+
+    </div>
+
+</template>
