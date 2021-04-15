@@ -6,61 +6,6 @@
         <label>Accedi</label>
     </customValue>
     <customValue>
-        <fullName>Agenzia di confisca</fullName>
-        <default>false</default>
-        <label>Agenzia di confisca</label>
-    </customValue>
-    <customValue>
-        <fullName>Applicazione della legge</fullName>
-        <default>false</default>
-        <label>Applicazione della legge</label>
-    </customValue>
-    <customValue>
-        <fullName>Assicuratore</fullName>
-        <default>false</default>
-        <label>Assicuratore</label>
-    </customValue>
-    <customValue>
-        <fullName>Assistenza a lungo termine</fullName>
-        <default>false</default>
-        <label>Assistenza a lungo termine</label>
-    </customValue>
-    <customValue>
-        <fullName>Assistenza gestita</fullName>
-        <default>false</default>
-        <label>Assistenza gestita</label>
-    </customValue>
-    <customValue>
-        <fullName>Associazione grossisti</fullName>
-        <default>false</default>
-        <label>Associazione grossisti</label>
-    </customValue>
-    <customValue>
-        <fullName>Attività bancaria</fullName>
-        <default>false</default>
-        <label>Attività bancaria</label>
-    </customValue>
-    <customValue>
-        <fullName>Auto/Casalinghi</fullName>
-        <default>false</default>
-        <label>Auto/Casalinghi</label>
-    </customValue>
-    <customValue>
-        <fullName>Azienda</fullName>
-        <default>false</default>
-        <label>Azienda</label>
-    </customValue>
-    <customValue>
-        <fullName>Azienda wireline</fullName>
-        <default>false</default>
-        <label>Azienda wireline</label>
-    </customValue>
-    <customValue>
-        <fullName>Azienda/Di passaggio</fullName>
-        <default>false</default>
-        <label>Azienda/Di passaggio</label>
-    </customValue>
-    <customValue>
         <fullName>Aziende</fullName>
         <default>false</default>
         <label>Aziende</label>
@@ -86,114 +31,9 @@
         <label>Banca centrale</label>
     </customValue>
     <customValue>
-        <fullName>Broker</fullName>
-        <default>false</default>
-        <label>Broker</label>
-    </customValue>
-    <customValue>
-        <fullName>BSU ESP</fullName>
-        <default>false</default>
-        <label>BSU ESP</label>
-    </customValue>
-    <customValue>
-        <fullName>Casa progettazione</fullName>
-        <default>false</default>
-        <label>Casa progettazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Casalinghi</fullName>
-        <default>false</default>
-        <label>Casalinghi</label>
-    </customValue>
-    <customValue>
-        <fullName>Centro convegni</fullName>
-        <default>false</default>
-        <label>Centro convegni</label>
-    </customValue>
-    <customValue>
-        <fullName>Centro di assistenza</fullName>
-        <default>false</default>
-        <label>Centro di assistenza</label>
-    </customValue>
-    <customValue>
-        <fullName>Centro di formazione aziendale</fullName>
-        <default>false</default>
-        <label>Centro di formazione aziendale</label>
-    </customValue>
-    <customValue>
-        <fullName>Centro formaz altri produttori</fullName>
-        <default>false</default>
-        <label>Centro formaz altri produttori</label>
-    </customValue>
-    <customValue>
-        <fullName>Chain Drug</fullName>
-        <default>false</default>
-        <label>Chain Drug</label>
-    </customValue>
-    <customValue>
-        <fullName>Chain Food</fullName>
-        <default>false</default>
-        <label>Chain Food</label>
-    </customValue>
-    <customValue>
-        <fullName>Cliente</fullName>
-        <default>false</default>
-        <label>Cliente</label>
-    </customValue>
-    <customValue>
-        <fullName>Cliente azienda</fullName>
-        <default>false</default>
-        <label>Cliente azienda</label>
-    </customValue>
-    <customValue>
-        <fullName>Clinica</fullName>
-        <default>false</default>
-        <label>Clinica</label>
-    </customValue>
-    <customValue>
-        <fullName>Commerciale</fullName>
-        <default>false</default>
-        <label>Commerciale</label>
-    </customValue>
-    <customValue>
-        <fullName>Commerciante</fullName>
-        <default>false</default>
-        <label>Commerciante</label>
-    </customValue>
-    <customValue>
-        <fullName>Commerciante all&apos;ingrosso</fullName>
-        <default>false</default>
-        <label>Commerciante all&apos;ingrosso</label>
-    </customValue>
-    <customValue>
-        <fullName>Commerciante non in negozio</fullName>
-        <default>false</default>
-        <label>Commerciante non in negozio</label>
-    </customValue>
-    <customValue>
-        <fullName>Commercio di massa</fullName>
-        <default>false</default>
-        <label>Commercio di massa</label>
-    </customValue>
-    <customValue>
-        <fullName>Company</fullName>
-        <default>false</default>
-        <label>Company</label>
-    </customValue>
-    <customValue>
         <fullName>Comuni Territorio</fullName>
         <default>false</default>
         <label>Comuni Territorio</label>
-    </customValue>
-    <customValue>
-        <fullName>Concorrente</fullName>
-        <default>false</default>
-        <label>Concorrente</label>
-    </customValue>
-    <customValue>
-        <fullName>Consulente</fullName>
-        <default>false</default>
-        <label>Consulente</label>
     </customValue>
     <customValue>
         <fullName>Default gas</fullName>
@@ -201,74 +41,14 @@
         <label>Default gas</label>
     </customValue>
     <customValue>
-        <fullName>Dettagliante diretto</fullName>
-        <default>false</default>
-        <label>Dettagliante diretto</label>
-    </customValue>
-    <customValue>
-        <fullName>Dettagliante indiretto</fullName>
-        <default>false</default>
-        <label>Dettagliante indiretto</label>
-    </customValue>
-    <customValue>
-        <fullName>Distributore</fullName>
-        <default>false</default>
-        <label>Distributore</label>
-    </customValue>
-    <customValue>
-        <fullName>Ditta individuale</fullName>
-        <default>false</default>
-        <label>Ditta individuale</label>
-    </customValue>
-    <customValue>
-        <fullName>Drogheria</fullName>
-        <default>false</default>
-        <label>Drogheria</label>
-    </customValue>
-    <customValue>
-        <fullName>Elettrodomestici</fullName>
-        <default>false</default>
-        <label>Elettrodomestici</label>
-    </customValue>
-    <customValue>
         <fullName>Enti</fullName>
         <default>false</default>
         <label>Enti</label>
     </customValue>
     <customValue>
-        <fullName>Enti Consip</fullName>
-        <default>false</default>
-        <label>Enti Consip</label>
-    </customValue>
-    <customValue>
-        <fullName>Esperto finanziario</fullName>
-        <default>false</default>
-        <label>Esperto finanziario</label>
-    </customValue>
-    <customValue>
         <fullName>Famiglie</fullName>
         <default>false</default>
         <label>Famiglie</label>
-    </customValue>
-    <customValue>
-        <fullName>Farmacia</fullName>
-        <default>false</default>
-        <label>Farmacia</label>
-    </customValue>
-    <customValue>
-        <fullName>Federale</fullName>
-        <default>false</default>
-        <label>Federale</label>
-    </customValue>
-    <customValue>
-        <fullName>Filiale</fullName>
-        <default>false</default>
-        <label>Filiale</label>
-    </customValue>
-    <customValue>
-        <fullName>Fornitore</fullName>
-        <default>false</default>
-        <label>Fornitore</label>
     </customValue>
     <customValue>
         <fullName>FUI domestico</fullName>
@@ -281,59 +61,9 @@
         <label>FUI non domestico</label>
     </customValue>
     <customValue>
-        <fullName>Funzionario produttore</fullName>
-        <default>false</default>
-        <label>Funzionario produttore</label>
-    </customValue>
-    <customValue>
-        <fullName>Governo</fullName>
-        <default>false</default>
-        <label>Governo</label>
-    </customValue>
-    <customValue>
         <fullName>Grandi Condomini</fullName>
         <default>false</default>
         <label>Grandi Condomini</label>
-    </customValue>
-    <customValue>
-        <fullName>Grossista di prod. farmac.</fullName>
-        <default>false</default>
-        <label>Grossista di prod. farmac.</label>
-    </customValue>
-    <customValue>
-        <fullName>Gruppo di programmazione</fullName>
-        <default>false</default>
-        <label>Gruppo di programmazione</label>
-    </customValue>
-    <customValue>
-        <fullName>Gruppo reparto</fullName>
-        <default>false</default>
-        <label>Gruppo reparto</label>
-    </customValue>
-    <customValue>
-        <fullName>Hotel</fullName>
-        <default>false</default>
-        <label>Hotel</label>
-    </customValue>
-    <customValue>
-        <fullName>HQ</fullName>
-        <default>false</default>
-        <label>HQ</label>
-    </customValue>
-    <customValue>
-        <fullName>In sede</fullName>
-        <default>false</default>
-        <label>In sede</label>
-    </customValue>
-    <customValue>
-        <fullName>Individuale</fullName>
-        <default>false</default>
-        <label>Individuale</label>
-    </customValue>
-    <customValue>
-        <fullName>Industriale</fullName>
-        <default>false</default>
-        <label>Industriale</label>
     </customValue>
     <customValue>
         <fullName>Intercompany</fullName>
@@ -341,99 +71,9 @@
         <label>Intercompany</label>
     </customValue>
     <customValue>
-        <fullName>Investitore</fullName>
-        <default>false</default>
-        <label>Investitore</label>
-    </customValue>
-    <customValue>
-        <fullName>Località</fullName>
-        <default>false</default>
-        <label>Località</label>
-    </customValue>
-    <customValue>
-        <fullName>Luogo di vacanza</fullName>
-        <default>false</default>
-        <label>Luogo di vacanza</label>
-    </customValue>
-    <customValue>
-        <fullName>Magazzino a prezzi scontati</fullName>
-        <default>false</default>
-        <label>Magazzino a prezzi scontati</label>
-    </customValue>
-    <customValue>
-        <fullName>Meeting/Congressi</fullName>
-        <default>false</default>
-        <label>Meeting/Congressi</label>
-    </customValue>
-    <customValue>
-        <fullName>Negozio prod. farmac./propr.</fullName>
-        <default>false</default>
-        <label>Negozio prod. farmac./propr.</label>
-    </customValue>
-    <customValue>
-        <fullName>Non a scopo di lucro</fullName>
-        <default>false</default>
-        <label>Non a scopo di lucro</label>
-    </customValue>
-    <customValue>
-        <fullName>Non Definito</fullName>
-        <default>false</default>
-        <label>Non Definito</label>
-    </customValue>
-    <customValue>
-        <fullName>Normale</fullName>
-        <default>false</default>
-        <label>Normale</label>
-    </customValue>
-    <customValue>
         <fullName>NRI</fullName>
         <default>false</default>
         <label>NRI</label>
-    </customValue>
-    <customValue>
-        <fullName>ODM</fullName>
-        <default>false</default>
-        <label>ODM</label>
-    </customValue>
-    <customValue>
-        <fullName>OEM</fullName>
-        <default>false</default>
-        <label>OEM</label>
-    </customValue>
-    <customValue>
-        <fullName>OEM del concorrente</fullName>
-        <default>false</default>
-        <label>OEM del concorrente</label>
-    </customValue>
-    <customValue>
-        <fullName>Offerta di investimento</fullName>
-        <default>false</default>
-        <label>Offerta di investimento</label>
-    </customValue>
-    <customValue>
-        <fullName>Officina</fullName>
-        <default>false</default>
-        <label>Officina</label>
-    </customValue>
-    <customValue>
-        <fullName>Ospedale</fullName>
-        <default>false</default>
-        <label>Ospedale</label>
-    </customValue>
-    <customValue>
-        <fullName>Paramedici</fullName>
-        <default>false</default>
-        <label>Paramedici</label>
-    </customValue>
-    <customValue>
-        <fullName>Partner</fullName>
-        <default>false</default>
-        <label>Partner</label>
-    </customValue>
-    <customValue>
-        <fullName>Partnership</fullName>
-        <default>false</default>
-        <label>Partnership</label>
     </customValue>
     <customValue>
         <fullName>Personale</fullName>
@@ -446,21 +86,6 @@
         <label>Piccoli Condomini</label>
     </customValue>
     <customValue>
-        <fullName>Polizia</fullName>
-        <default>false</default>
-        <label>Polizia</label>
-    </customValue>
-    <customValue>
-        <fullName>Produttore su contratto</fullName>
-        <default>false</default>
-        <label>Produttore su contratto</label>
-    </customValue>
-    <customValue>
-        <fullName>Reparto</fullName>
-        <default>false</default>
-        <label>Reparto</label>
-    </customValue>
-    <customValue>
         <fullName>Reseller - Extra Gruppo</fullName>
         <default>false</default>
         <label>Reseller - Extra Gruppo</label>
@@ -469,26 +94,6 @@
         <fullName>Reseller - Gruppo</fullName>
         <default>false</default>
         <label>Reseller - Gruppo</label>
-    </customValue>
-    <customValue>
-        <fullName>Residenziale</fullName>
-        <default>false</default>
-        <label>Residenziale</label>
-    </customValue>
-    <customValue>
-        <fullName>Rivenditore</fullName>
-        <default>false</default>
-        <label>Rivenditore</label>
-    </customValue>
-    <customValue>
-        <fullName>Rivenditore del concorrente</fullName>
-        <default>false</default>
-        <label>Rivenditore del concorrente</label>
-    </customValue>
-    <customValue>
-        <fullName>S-Corp</fullName>
-        <default>false</default>
-        <label>S-Corp</label>
     </customValue>
     <customValue>
         <fullName>Salvaguardia Aziende</fullName>
@@ -501,109 +106,602 @@
         <label>Salvaguardia Enti</label>
     </customValue>
     <customValue>
-        <fullName>Servizio affari Internet</fullName>
-        <default>false</default>
-        <label>Servizio affari Internet</label>
-    </customValue>
-    <customValue>
-        <fullName>Società</fullName>
-        <default>false</default>
-        <label>Società</label>
-    </customValue>
-    <customValue>
-        <fullName>Società a resp. limitata</fullName>
-        <default>false</default>
-        <label>Società a resp. limitata</label>
-    </customValue>
-    <customValue>
-        <fullName>Società d&apos;assicurazioni</fullName>
-        <default>false</default>
-        <label>Società d&apos;assicurazioni</label>
-    </customValue>
-    <customValue>
-        <fullName>Società fiduciaria</fullName>
-        <default>false</default>
-        <label>Società fiduciaria</label>
-    </customValue>
-    <customValue>
-        <fullName>Società immobiliare</fullName>
-        <default>false</default>
-        <label>Società immobiliare</label>
-    </customValue>
-    <customValue>
-        <fullName>Società in accomandita</fullName>
-        <default>false</default>
-        <label>Società in accomandita</label>
-    </customValue>
-    <customValue>
         <fullName>Societa Vendita Terze</fullName>
         <default>false</default>
         <label>Societa Vendita Terze</label>
     </customValue>
     <customValue>
+        <fullName>VIP</fullName>
+        <default>false</default>
+        <label>VIP</label>
+    </customValue>
+    <customValue>
+        <fullName>Agenzia di confisca</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Agenzia di confisca</label>
+    </customValue>
+    <customValue>
+        <fullName>Applicazione della legge</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Applicazione della legge</label>
+    </customValue>
+    <customValue>
+        <fullName>Assicuratore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Assicuratore</label>
+    </customValue>
+    <customValue>
+        <fullName>Assistenza a lungo termine</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Assistenza a lungo termine</label>
+    </customValue>
+    <customValue>
+        <fullName>Assistenza gestita</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Assistenza gestita</label>
+    </customValue>
+    <customValue>
+        <fullName>Associazione grossisti</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Associazione grossisti</label>
+    </customValue>
+    <customValue>
+        <fullName>Attività bancaria</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Attività bancaria</label>
+    </customValue>
+    <customValue>
+        <fullName>Auto/Casalinghi</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Auto/Casalinghi</label>
+    </customValue>
+    <customValue>
+        <fullName>Azienda</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>Azienda wireline</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Azienda wireline</label>
+    </customValue>
+    <customValue>
+        <fullName>Azienda/Di passaggio</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Azienda/Di passaggio</label>
+    </customValue>
+    <customValue>
+        <fullName>Broker</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Broker</label>
+    </customValue>
+    <customValue>
+        <fullName>BSU ESP</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>BSU ESP</label>
+    </customValue>
+    <customValue>
+        <fullName>Casa progettazione</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Casa progettazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Casalinghi</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Casalinghi</label>
+    </customValue>
+    <customValue>
+        <fullName>Centro convegni</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Centro convegni</label>
+    </customValue>
+    <customValue>
+        <fullName>Centro di assistenza</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Centro di assistenza</label>
+    </customValue>
+    <customValue>
+        <fullName>Centro di formazione aziendale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Centro di formazione aziendale</label>
+    </customValue>
+    <customValue>
+        <fullName>Centro formaz altri produttori</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Centro formaz altri produttori</label>
+    </customValue>
+    <customValue>
+        <fullName>Chain Drug</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Chain Drug</label>
+    </customValue>
+    <customValue>
+        <fullName>Chain Food</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Chain Food</label>
+    </customValue>
+    <customValue>
+        <fullName>Cliente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Cliente azienda</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Cliente azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>Clinica</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Clinica</label>
+    </customValue>
+    <customValue>
+        <fullName>Commerciale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Commerciale</label>
+    </customValue>
+    <customValue>
+        <fullName>Commerciante</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Commerciante</label>
+    </customValue>
+    <customValue>
+        <fullName>Commerciante all&apos;ingrosso</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Commerciante all&apos;ingrosso</label>
+    </customValue>
+    <customValue>
+        <fullName>Commerciante non in negozio</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Commerciante non in negozio</label>
+    </customValue>
+    <customValue>
+        <fullName>Commercio di massa</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Commercio di massa</label>
+    </customValue>
+    <customValue>
+        <fullName>Company</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Company</label>
+    </customValue>
+    <customValue>
+        <fullName>Concorrente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Concorrente</label>
+    </customValue>
+    <customValue>
+        <fullName>Consulente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Consulente</label>
+    </customValue>
+    <customValue>
+        <fullName>Dettagliante diretto</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dettagliante diretto</label>
+    </customValue>
+    <customValue>
+        <fullName>Dettagliante indiretto</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Dettagliante indiretto</label>
+    </customValue>
+    <customValue>
+        <fullName>Distributore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Ditta individuale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ditta individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>Drogheria</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Drogheria</label>
+    </customValue>
+    <customValue>
+        <fullName>Elettrodomestici</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Elettrodomestici</label>
+    </customValue>
+    <customValue>
+        <fullName>Enti Consip</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Enti Consip</label>
+    </customValue>
+    <customValue>
+        <fullName>Esperto finanziario</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Esperto finanziario</label>
+    </customValue>
+    <customValue>
+        <fullName>Farmacia</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Farmacia</label>
+    </customValue>
+    <customValue>
+        <fullName>Federale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Federale</label>
+    </customValue>
+    <customValue>
+        <fullName>Filiale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Filiale</label>
+    </customValue>
+    <customValue>
+        <fullName>Fornitore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Fornitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Funzionario produttore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Funzionario produttore</label>
+    </customValue>
+    <customValue>
+        <fullName>Governo</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Governo</label>
+    </customValue>
+    <customValue>
+        <fullName>Grossista di prod. farmac.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Grossista di prod. farmac.</label>
+    </customValue>
+    <customValue>
+        <fullName>Gruppo di programmazione</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gruppo di programmazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Gruppo reparto</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Gruppo reparto</label>
+    </customValue>
+    <customValue>
+        <fullName>Hotel</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Hotel</label>
+    </customValue>
+    <customValue>
+        <fullName>HQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>HQ</label>
+    </customValue>
+    <customValue>
+        <fullName>In sede</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>In sede</label>
+    </customValue>
+    <customValue>
+        <fullName>Individuale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Individuale</label>
+    </customValue>
+    <customValue>
+        <fullName>Industriale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Industriale</label>
+    </customValue>
+    <customValue>
+        <fullName>Investitore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Investitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Località</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Località</label>
+    </customValue>
+    <customValue>
+        <fullName>Luogo di vacanza</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Luogo di vacanza</label>
+    </customValue>
+    <customValue>
+        <fullName>Magazzino a prezzi scontati</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Magazzino a prezzi scontati</label>
+    </customValue>
+    <customValue>
+        <fullName>Meeting/Congressi</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Meeting/Congressi</label>
+    </customValue>
+    <customValue>
+        <fullName>Negozio prod. farmac./propr.</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Negozio prod. farmac./propr.</label>
+    </customValue>
+    <customValue>
+        <fullName>Non a scopo di lucro</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Non a scopo di lucro</label>
+    </customValue>
+    <customValue>
+        <fullName>Non Definito</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Non Definito</label>
+    </customValue>
+    <customValue>
+        <fullName>Normale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Normale</label>
+    </customValue>
+    <customValue>
+        <fullName>ODM</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>ODM</label>
+    </customValue>
+    <customValue>
+        <fullName>OEM</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OEM</label>
+    </customValue>
+    <customValue>
+        <fullName>OEM del concorrente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>OEM del concorrente</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta di investimento</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Offerta di investimento</label>
+    </customValue>
+    <customValue>
+        <fullName>Officina</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Officina</label>
+    </customValue>
+    <customValue>
+        <fullName>Ospedale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ospedale</label>
+    </customValue>
+    <customValue>
+        <fullName>Paramedici</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Paramedici</label>
+    </customValue>
+    <customValue>
+        <fullName>Partner</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Partner</label>
+    </customValue>
+    <customValue>
+        <fullName>Partnership</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Partnership</label>
+    </customValue>
+    <customValue>
+        <fullName>Polizia</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Polizia</label>
+    </customValue>
+    <customValue>
+        <fullName>Produttore su contratto</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Produttore su contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>Reparto</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Reparto</label>
+    </customValue>
+    <customValue>
+        <fullName>Residenziale</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Residenziale</label>
+    </customValue>
+    <customValue>
+        <fullName>Rivenditore</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rivenditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Rivenditore del concorrente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rivenditore del concorrente</label>
+    </customValue>
+    <customValue>
+        <fullName>S-Corp</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>S-Corp</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizio affari Internet</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Servizio affari Internet</label>
+    </customValue>
+    <customValue>
+        <fullName>Società</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Società</label>
+    </customValue>
+    <customValue>
+        <fullName>Società a resp. limitata</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Società a resp. limitata</label>
+    </customValue>
+    <customValue>
+        <fullName>Società d&apos;assicurazioni</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Società d&apos;assicurazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Società fiduciaria</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Società fiduciaria</label>
+    </customValue>
+    <customValue>
+        <fullName>Società immobiliare</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Società immobiliare</label>
+    </customValue>
+    <customValue>
+        <fullName>Società in accomandita</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Società in accomandita</label>
+    </customValue>
+    <customValue>
         <fullName>Soggiorno esteso</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Soggiorno esteso</label>
     </customValue>
     <customValue>
         <fullName>Spedizioniere</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Spedizioniere</label>
     </customValue>
     <customValue>
         <fullName>Subcontraente</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Subcontraente</label>
     </customValue>
     <customValue>
         <fullName>Suite</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Suite</label>
     </customValue>
     <customValue>
         <fullName>Supermarket</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Supermarket</label>
     </customValue>
     <customValue>
         <fullName>Supermercato</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Supermercato</label>
     </customValue>
     <customValue>
         <fullName>Ufficio</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Ufficio</label>
     </customValue>
     <customValue>
         <fullName>Ulteriori informazioni</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Ulteriori informazioni</label>
     </customValue>
     <customValue>
         <fullName>Università</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Università</label>
     </customValue>
     <customValue>
         <fullName>Venditore</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Venditore</label>
     </customValue>
     <customValue>
         <fullName>Venditore di varie</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Venditore di varie</label>
     </customValue>
     <customValue>
         <fullName>Vigili del Fuoco</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Vigili del Fuoco</label>
-    </customValue>
-    <customValue>
-        <fullName>VIP</fullName>
-        <default>false</default>
-        <label>VIP</label>
     </customValue>
     <masterLabel>Categoria Tipo Cliente</masterLabel>
     <sorted>false</sorted>
