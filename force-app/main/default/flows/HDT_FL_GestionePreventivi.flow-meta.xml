@@ -1545,12 +1545,6 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>Get_Input_Case.AccountId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
