@@ -1,20 +1,37 @@
 <template>
 
-    <lightning-record-view-form record-id={recordId} object-api-name="Account" density="comfy">
+    <div class="slds-grid slds-gutters slds-m-left_small">
+    
+<!--         <div class={gridClass}>
+            <c-hdt-account-highlight-panel record-id={recordId}></c-hdt-account-highlight-panel>
+        </div> -->
 
-        <div class="slds-grid slds-gutters slds-m-left_small">
+        <div class="slds-col">
 
-            <template iterator:it={fields}>
+            <lightning-record-view-form record-id={recordId} object-api-name="Account" density="comfy">
 
-                <div key={it.value} class={gridClass}>
-                    <lightning-output-field field-name={it.value}>
-                    </lightning-output-field>
+                <div class="slds-grid slds-gutters slds-m-left_small">
+        
+                    <template iterator:it={fields}>
+        
+                        <div key={it.value} class={gridClass}>
+                            <lightning-output-field field-name={it.value}>
+                            </lightning-output-field>
+                        </div>
+        
+                    </template>
+        
                 </div>
-
-            </template>
+            
+            </lightning-record-view-form>
 
         </div>
+
+
     
-    </lightning-record-view-form>
+    </div>
+
+
+    
 
 </template>

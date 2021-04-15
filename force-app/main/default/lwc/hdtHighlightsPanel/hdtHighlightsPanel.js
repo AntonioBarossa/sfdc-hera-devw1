@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 
 const fields = [
     'ActiveServices__c',
-    'ActiveCampaigns__c',
+    'ActiveCampaigns__c', // TODO: sostituire con lwc c-hdt-account-highlight-panel
     'CreditFormula__c',
     'RecallerFormula__c',
     'ComplaintRateFormula__c',
