@@ -6,6 +6,28 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         String result;
 
+        if(fieldName == 'PhaseTypeAvailable__c'){
+
+            Try{   
+                Decimal phaseCondition = Decimal.valueOf(condition);
+                if(phaseCondition <= 1.0 ){
+
+                    condition = 'Monofase';
+
+                }else{
+
+                    condition = 'Trifase';
+
+                }
+            }catch(Exception e){
+
+                System.debug(e.getMessage());
+                return null;
+
+            }
+
+        }
+
         List<PicklistEntry> entryList =
             ((SObject) (Type.forName('Schema.'+objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
 
@@ -89,26 +111,22 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         billingProfile = depsQr.getBillingProfileInvoiceData(recordId);
 
-        streetName = billingProfile.InvoicingStreetName__c;
-        streetNumber = billingProfile.InvoicingStreetNumber__c;
-        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null ? billingProfile.InvoicingStreetNumberExtension__c : '';
-        city = billingProfile.InvoicingCity__c;
-        province = billingProfile.InvoicingProvince__c;
-        postalCode = billingProfile.InvoicingPostalCode__c;
-        country = billingProfile.InvoicingCountry__c;
+        streetName = billingProfile.InvoicingStreetName__c + ', ';
+        streetNumber = billingProfile.InvoicingStreetNumber__c + ', ';
+        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null ? 
+            billingProfile.InvoicingStreetNumberExtension__c + ', '
+            : '';
+        city = billingProfile.InvoicingCity__c + ', ';
+        province = billingProfile.InvoicingProvince__c + ', ';
+        postalCode = billingProfile.InvoicingPostalCode__c + ', ';
+        country = billingProfile.InvoicingCountry__c + ', ';
 
         deliveryAddres = streetName 
-        + ', ' 
         + streetNumber 
-        + ', ' 
         + streetNumberExt 
-        + ', ' 
         + city 
-        + ', ' 
         + province 
-        + ', ' 
         + postalCode 
-        + ', ' 
         + country;
 
         return deliveryAddres;

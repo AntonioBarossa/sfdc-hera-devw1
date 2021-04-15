@@ -44,15 +44,29 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                     if(transcodeConfig.IsNumber__c){
 
                         if(transcodeConfig.Precision__c == 0){
+                            try{
 
-                            transcodeMap.put(transcodeConfig.SfdcField__c,
-                            Integer.valueOf(position.valore));
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                Integer.valueOf(position.valore));
+
+                            }catch(Exception e){
+
+                                System.debug(e.getMessage());
+
+                            }
 
                         }else if(transcodeConfig.Precision__c > 0){
+                            try{
 
-                            decValue = Decimal.valueOf(position.valore);
-                            transcodeMap.put(transcodeConfig.SfdcField__c, 
-                            decValue.setScale(Integer.valueOf(transcodeConfig.Precision__c)));
+                                decValue = Decimal.valueOf(position.valore);
+                                transcodeMap.put(transcodeConfig.SfdcField__c, 
+                                decValue.setScale(Integer.valueOf(transcodeConfig.Precision__c)));
+
+                            }catch(Exception e){
+
+                                System.debug(e.getMessage());
+                                
+                            }
 
                         }
 
