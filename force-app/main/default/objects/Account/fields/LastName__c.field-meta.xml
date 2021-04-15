@@ -3,11 +3,11 @@
     <fullName>LastName__c</fullName>
     <description>Cognome del cliente B2C</description>
     <externalId>false</externalId>
-    <label>Cognome</label>
+    <label>Cognome/Ragione sociale</label>
     <length>100</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <type>Text</type>
     <unique>false</unique>
 </CustomField>

@@ -30,7 +30,24 @@ public inherited sharing class HDT_QR_Opportunity {
         
         String query = 'SELECT '+ fields +
 
-                ' FROM Opportunity WHERE Sale__c = :saleId AND StageName != :stageNameFilter ORDER BY CreatedDate ASC';
+                ' FROM Opportunity WHERE Sale__c = :saleId AND StageName != :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC';
+        return Database.query(query);
+
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get Opportunities by Sale__c filtered by StageName
+     * @param String Sale__c.Id
+     * @param String fields
+     * @param String stageNameFilter
+     * @return List<Opportunity>
+     */
+    public List<Opportunity> getRecordsBySaleFilterStageNameNotVas(String saleId, String fields, String stageNameFilter){
+        
+        String query = 'SELECT '+ fields +
+
+                ' FROM Opportunity WHERE Sale__c = :saleId AND SBQQ__PrimaryQuote__r.IsVAS__c = null AND StageName != :stageNameFilter WITH SECURITY_ENFORCED ORDER BY CreatedDate ASC';
         return Database.query(query);
 
     }
@@ -46,7 +63,8 @@ public inherited sharing class HDT_QR_Opportunity {
         List<Opportunity> records = [
             SELECT
             Id,
-            StageName
+            StageName,
+            SBQQ__PrimaryQuote__c
             FROM Opportunity
             WHERE Id = :opportunityId
             WITH SECURITY_ENFORCED
@@ -77,5 +95,33 @@ public inherited sharing class HDT_QR_Opportunity {
         ];
 
         return records[0];
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get records by Sale and filtered by type VAS
+     * @param String opportunityId
+     * @param String status
+     * @return Opportunity
+     */
+    public List<Opportunity> getRecordsBySaleFilteredVas(String saleId){
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__PrimaryQuote__r.OrderReference__c,
+            SBQQ__PrimaryQuote__r.OrderReference__r.Name,
+            SBQQ__PrimaryQuote__r.OrderReference__r.OrderNumber,
+            SBQQ__PrimaryQuote__r.ContractReference__c,
+            SBQQ__PrimaryQuote__r.ContractReference__r.ContractNumber,
+            SBQQ__PrimaryQuote__r.SupplyCity__c,
+            CreatedDate
+            FROM Opportunity
+            WHERE Sale__c = :saleId
+            AND SBQQ__PrimaryQuote__r.IsVAS__c = true
+            AND StageName != 'Closed Lost'
+            WITH SECURITY_ENFORCED
+            ORDER BY CreatedDate ASC
+        ];
     }
 }

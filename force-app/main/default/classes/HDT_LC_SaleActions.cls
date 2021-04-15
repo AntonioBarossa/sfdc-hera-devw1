@@ -65,11 +65,13 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Accepted';
+            quote.SBQQ__Status__c = 'Accettata';
             quote.SBQQ__Ordered__c = true;
             quote.SBQQ__LineItemsGrouped__c = true;
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
         }
+
+        system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
         Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva');
@@ -99,14 +101,27 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
 
         List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
-        system.debug('allQuoteLines: ' + allQuoteLines);
+        
+        String groupToAssign = null;
+
         for(SBQQ__QuoteLine__c quoteLine : allQuoteLines){
             // system.debug(mapLineGroup.get(quoteLine.Id).Id);
             // quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
 
+            if (quoteLine.SBQQ__RequiredBy__c == null) {
+                groupToAssign = mapLineGroup.get(quoteLine.Id).Id;
+            }
+            else {
+                if (mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c) == null) {
+                    groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c).Id;
+                } else {
+                    groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c).Id;
+                }
+            }
+
             SBQQ__QuoteLine__c quoteLineToUpdate = new SBQQ__QuoteLine__c(
                 Id = quoteLine.Id,
-                SBQQ__Group__c = (quoteLine.SBQQ__RequiredBy__c == null ? mapLineGroup.get(quoteLine.Id).Id : mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c).Id)
+                SBQQ__Group__c = groupToAssign
             );
 
             quoteLinesListToUpdate.add(quoteLineToUpdate);
@@ -114,9 +129,9 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //7 - Execute actions
         opportunitySrv.updateRecords(opps);
-        quoteSrv.updateRecords(quoteList);
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
+        quoteSrv.updateRecords(quoteList);
     }
 
     /**
@@ -142,7 +157,7 @@ public inherited sharing class HDT_LC_SaleActions {
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleCancelEvent(sale.Id); //quotes that have a status of not rejected
 
         for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Rejected';
+            quote.SBQQ__Status__c = 'Rifiutata';
         }
 
         //4 - Excecute actions

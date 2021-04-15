@@ -1,15 +1,15 @@
 <template>
     <lightning-card>
         <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
-        <div class="slds-grid slds-wrap">
-            <div class="slds-col slds-size_11-of-12">
+        <div class="slds-grid slds-wrap slds-p-horizontal_small">
+            <div class="slds-col slds-size_6-of-12">
                 <c-hdt-supply-selection disabled-input={disabledInput} onnewservicepoint={handleNewServicePoint} onconfirmservicepoint={handleConfirmServicePointEvent} process-type="" account-id={accountId} target-object="Fornitura" addititional-param=""></c-hdt-supply-selection>
             </div>
-            <div class="slds-col slds-size_1-of-12">
-                <c-hdt-sale-vas if:true={saleRecord} sale={saleRecord}></c-hdt-sale-vas>
+            <div class="slds-col slds-size_6-of-12">
+                <c-hdt-sale-vas if:true={saleRecord} disabled-input={disabledInput} sale={saleRecord} account-id={saleRecord.Account__c} oncreatevas={refreshTileData}></c-hdt-sale-vas>
             </div>
         </div>
-        <c-hdt-sale-service-items-tiles if:true={saleRecord} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>
+        <c-hdt-sale-service-items-tiles if:true={saleRecord} disabled-input={disabledInput} sale={saleRecord} ontiledelete={handleTileDeleteEvent}></c-hdt-sale-service-items-tiles>
         <div class="slds-clearfix slds-p-around_small">
             <div class="slds-float_right">
                 <lightning-button disabled={disabledNext} onclick={handleNext} label="Avanti" variant="brand" icon-name="utility:right"></lightning-button>
