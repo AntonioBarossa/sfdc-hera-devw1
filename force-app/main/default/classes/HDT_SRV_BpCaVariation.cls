@@ -30,7 +30,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.contoContrattuale = (String) bp.get('ContractAccountCode__c');
         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('InvoicingCity__c');
         requestBody.ordine.indirizzo.nazione = (String) caseRecord.get('InvoicingCountry__c');
-        requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetCode__c');
+        requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('InvoicingStreetNumberExtension__c') != null? (String) caseRecord.get('InvoicingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('InvoicingPostalCode__c');
         requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
