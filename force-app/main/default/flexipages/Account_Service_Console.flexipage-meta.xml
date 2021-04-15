@@ -687,7 +687,7 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
-                <componentName>lastBillsRelatedList</componentName>
+                <componentName>hdtLastBill</componentName>
             </componentInstance>
         </itemInstances>
         <itemInstances>
