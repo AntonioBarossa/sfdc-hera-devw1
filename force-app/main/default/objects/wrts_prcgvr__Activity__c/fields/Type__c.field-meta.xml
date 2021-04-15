@@ -46,6 +46,11 @@
                 <default>false</default>
                 <label>Gestione Iva e Accise</label>
             </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

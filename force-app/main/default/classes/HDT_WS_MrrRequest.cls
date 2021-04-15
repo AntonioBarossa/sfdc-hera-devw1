@@ -7,6 +7,9 @@
 
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
+
+    private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
+
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 17/03/2021
@@ -17,12 +20,24 @@ global with sharing class HDT_WS_MrrRequest {
     @HttpPost
     webservice static void doPost() {
 
-        JSONGenerator responseGen = JSON.createGenerator(true);
-        responseGen.writeStartObject();
+        // JSONGenerator responseGen = JSON.createGenerator(true);
+        // responseGen.writeStartObject();
+
+        HDT_WRP_MrrResponse response = new HDT_WRP_MrrResponse();        
+        response.responses = new List<HDT_WRP_MrrResponse.HDT_WRP_Response>();
+        
+        HDT_WRP_MrrResponse.HDT_WRP_Response mrrResponseItem;
+        
+        HDT_WRP_MrrResponse.HDT_WRP_Object responseObject = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+
+        HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
 
         //INIZIO SVILUPPI EVERIS
         
         HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
+        HDT_WRP_MrrRequest.HDT_WRP_Request postSalesRequest = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        String result;
 
         //FINE SVILUPPI EVERIS
 
@@ -33,91 +48,36 @@ global with sharing class HDT_WS_MrrRequest {
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
 
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
+
+                mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
                 
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
 
-                switch on header.requestType {
-                    when 'NOTIF_ES'{
+                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                
+                mrrResponseItem.objects.clear();
 
-                        //INIZIO SVILUPPI EVERIS
+                if(header.fields.get(0).value == 'postsales'){
 
-                        if(header.fields.get(0).value == 'postsales'){
+                    //INIZIO SVILUPPI EVERIS
 
-                            hpsmSrv.handleInboundRequest(request);
+                    postSalesRequest = request;
 
-                            responseGen.writeStringField('status', 'success');
-                            
-                            RestContext.response.statusCode = 200;
+                    responseField.fieldType = 'TEXT';
+                    responseField.name = 'ESITO';
+                    responseField.value = 'OK';
 
-                        } 
+                    responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
+                    mrrResponseItem.objects.add(responseObject);
+                    
+                    RestContext.response.statusCode = 200;
 
-                        //FINE SVILUPPI EVERIS
+                    //FINE SVILUPPI EVERIS
 
-                        else if (request.objects.get(0).fields.get(0).name == 'SALESFORCE_KEY') {
+                } else if (header.fields.get(0).value == 'sales') {
 
-                            responseGen.writeStringField('status', 'success');
-                            
-                            RestContext.response.statusCode = 200;
-                            
-                        } else {
-
-                            responseGen.writeStringField('status', 'failed');
-                        
-                            responseGen.writeFieldName('errorDetails');
-                            responseGen.writeStartArray();
-                                responseGen.writeStartObject();
-                                    responseGen.writeStringField('code', 'BAD_REQUEST');
-                                    responseGen.writeStringField('message', 'There was an issue with your request message');
-                                responseGen.writeEndObject();
-                            responseGen.writeEndArray();
-                            RestContext.response.statusCode = 400;
-
-                        }                        
-
-                    }
-                    when 'RICH_PASS' {
-
-
-                        if (request.objects.get(0).fields.get(0).name == 'CODICE_CONTRATTO'){
-
-                            responseGen.writeStringField('rdo', '');
-                            responseGen.writeStringField('rds', '');
-                            responseGen.writeStringField('status', 'success');
-                            
-                            RestContext.response.statusCode = 200;
-                            
-                        } else {
-
-                            responseGen.writeStringField('rdo', '');
-                            responseGen.writeStringField('rds', '');
-                            responseGen.writeStringField('status', 'failed');
-
-                            responseGen.writeFieldName('errorDetails');
-                            responseGen.writeStartArray();
-                                responseGen.writeStartObject();
-                                    responseGen.writeStringField('code', 'BAD_REQUEST');
-                                    responseGen.writeStringField('message', 'There was an issue with your request message');
-                                responseGen.writeEndObject();
-                            responseGen.writeEndArray();
-                            RestContext.response.statusCode = 400;
-
-                        }
-
-                    }
-                    when else {
-
-                        responseGen.writeStringField('status', 'failed');
-
-                        responseGen.writeFieldName('errorDetails');
-                        responseGen.writeStartArray();
-                            responseGen.writeStartObject();
-                                responseGen.writeStringField('code', 'BAD_REQUEST');
-                                responseGen.writeStringField('message', 'Unsupported requestType');
-                            responseGen.writeEndObject();
-                        responseGen.writeEndArray();
-                        RestContext.response.statusCode = 400;
-
-                    }
+                    mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
+                    
                 }
 
             }
@@ -128,15 +88,18 @@ global with sharing class HDT_WS_MrrRequest {
             System.debug('errorMessage: ' + jsonEx.getMessage());
             System.debug('errorStack: ' + jsonEx.getStackTraceString());
             
-            responseGen.writeStringField('status', 'failed');
+            mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
-            responseGen.writeFieldName('errorDetails');
-            responseGen.writeStartArray();
-                responseGen.writeStartObject();
-                    responseGen.writeStringField('code', 'BAD_REQUEST');
-                    responseGen.writeStringField('message', 'Malformed JSON body');
-                responseGen.writeEndObject();
-            responseGen.writeEndArray();
+            responseField.fieldType = 'TEXT';
+            responseField.name = 'ESITO';
+            responseField.value = 'KO';
+
+            responseFieldError.fieldType = 'TEXT';
+            responseFieldError.name = 'ERROR_MESSAGE';
+            responseFieldError.value = 'Malformed JSON body';
+
+            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+            mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
 
             RestContext.response.statusCode = 400;
 
@@ -146,23 +109,34 @@ global with sharing class HDT_WS_MrrRequest {
             System.debug('errorMessage: ' + e.getMessage());
             System.debug('errorStack: ' + e.getStackTraceString());
 
-            responseGen.writeStringField('status', 'failed');
+            mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
 
-            responseGen.writeFieldName('errorDetails');
-            responseGen.writeStartArray();
-                responseGen.writeStartObject();
-                    responseGen.writeStringField('code', 'APEX_ERROR');
-                    responseGen.writeStringField('message', 'There was an unexpected error');
-                responseGen.writeEndObject();
-            responseGen.writeEndArray();
+            responseField.fieldType = 'TEXT';
+            responseField.name = 'ESITO';
+            responseField.value = 'KO';
+
+            responseFieldError.fieldType = 'TEXT';
+            responseFieldError.name = 'ERROR_MESSAGE';
+            responseFieldError.value = 'There was an unexpected error';
+
+            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+            mrrResponseItem.objects = new List<HDT_WRP_MrrResponse.HDT_WRP_Object>{responseObject};
 
             RestContext.response.statusCode = 500;
             
         }
 
-        responseGen.writeEndObject();
+        //INIZIO SVILUPPI EVERIS
+        result = hpsmSrv.handleInboundRequest(postSalesRequest);
+        //FINE SVILUPPI EVERIS
 
-        RestContext.response.responseBody = Blob.valueOf(responseGen.getAsString());
+        // responseGen.writeEndObject();
+
+        // RestContext.response.responseBody = Blob.valueOf(responseGen.getAsString());
+
+        response.responses.add(mrrResponseItem);
+        
+        RestContext.response.responseBody = Blob.valueOf(JSON.serialize(response));
         RestContext.response.headers.put('Content-Type', 'application/json');
 
     }

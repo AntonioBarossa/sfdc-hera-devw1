@@ -60,7 +60,7 @@ public with sharing class HDT_QR_InformativeManager {
                     ServicePoint__c, 
                     Market__c, 
                     BillingProfile__c, 
-                    //Cluster__c, 
+                    Cluster__c, 
                     Type,
                     SalesCompany__c,
                     Contract__c
