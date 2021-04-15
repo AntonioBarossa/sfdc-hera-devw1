@@ -6,6 +6,28 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         String result;
 
+        if(fieldName == 'PhaseTypeAvailable__c'){
+
+            Try{   
+                Decimal phaseCondition = Decimal.valueOf(condition);
+                if(phaseCondition <= 1.0 ){
+
+                    condition = 'Monofase';
+
+                }else{
+
+                    condition = 'Trifase';
+
+                }
+            }catch(Exception e){
+
+                System.debug(e.getMessage());
+                return null;
+
+            }
+
+        }
+
         List<PicklistEntry> entryList =
             ((SObject) (Type.forName('Schema.'+objectName).newInstance())).getSobjectType().getDescribe().fields.getMap().get(fieldName).getDescribe().getPicklistValues();
 
