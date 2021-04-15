@@ -65,5 +65,9 @@
 		<members>MockSessionId</members>
 		<name>CustomLabel</name>
 	</types>
+	<types>
+		<members>Mulesoft</members>
+		<name>RemoteSiteSetting</name>
+	</types>
 	<version>50.0</version>
 </Package>
