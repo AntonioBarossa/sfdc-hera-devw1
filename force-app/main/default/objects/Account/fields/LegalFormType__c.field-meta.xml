@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LegalFormType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo Forma Giuridica</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Amministrazione Pubblica</fullName>
+                <default>false</default>
+                <label>Amministrazione Pubblica</label>
+            </value>
+            <value>
+                <fullName>Consorzi di Bonifica</fullName>
+                <default>false</default>
+                <label>Consorzi di Bonifica</label>
+            </value>
+            <value>
+                <fullName>Consorzi di Impresa</fullName>
+                <default>false</default>
+                <label>Consorzi di Impresa</label>
+            </value>
+            <value>
+                <fullName>Ente Morale</fullName>
+                <default>false</default>
+                <label>Ente Morale</label>
+            </value>
+            <value>
+                <fullName>Onlus</fullName>
+                <default>false</default>
+                <label>Onlus</label>
+            </value>
+            <value>
+                <fullName>s.a.p.a.</fullName>
+                <default>false</default>
+                <label>s.a.p.a.</label>
+            </value>
+            <value>
+                <fullName>s.a.s.</fullName>
+                <default>false</default>
+                <label>s.a.s.</label>
+            </value>
+            <value>
+                <fullName>s.c.</fullName>
+                <default>false</default>
+                <label>s.c.</label>
+            </value>
+            <value>
+                <fullName>s.c.p.a.</fullName>
+                <default>false</default>
+                <label>s.c.p.a.</label>
+            </value>
+            <value>
+                <fullName>s.c.r.l.</fullName>
+                <default>false</default>
+                <label>s.c.r.l.</label>
+            </value>
+            <value>
+                <fullName>s.n.c.</fullName>
+                <default>false</default>
+                <label>s.n.c.</label>
+            </value>
+            <value>
+                <fullName>S.p.a</fullName>
+                <default>false</default>
+                <label>S.p.a</label>
+            </value>
+            <value>
+                <fullName>s.r.l.</fullName>
+                <default>false</default>
+                <label>s.r.l.</label>
+            </value>
+            <value>
+                <fullName>s.s.</fullName>
+                <default>false</default>
+                <label>s.s.</label>
+            </value>
+            <value>
+                <fullName>Società Cooperativa Agricola</fullName>
+                <default>false</default>
+                <label>Società Cooperativa Agricola</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
