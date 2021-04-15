@@ -58,7 +58,7 @@ public class HDT_WRP_BpCaVariation {
 		public String via;
 	}
 
-	public class HDT_WRP_BpCaVariationIndirizzoYes {
+	public class HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt {
 		public String comune;
 		public String nazione;
 		public String piano;
@@ -94,13 +94,13 @@ public class HDT_WRP_BpCaVariation {
 		public String creaNuovoCa;
 		public String pecInvioBolletta;
 		public HDT_WRP_BpCaVariationBancari datiBancari;
-		public HDT_WRP_BpCaVariationIndirizzoYes indirizzo;
+		public HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt indirizzo;
 		public HDT_WRP_BpCaVariationDestinatarioDivergente destinatarioDivergente;
 		public HDT_WRP_BpCaVariationFattura fattura;
 		
 		public HDT_WRP_BpCaVariationOrdine(){
 			this.datiBancari = new HDT_WRP_BpCaVariationBancari();
-			this.indirizzo = new HDT_WRP_BpCaVariationIndirizzoYes();
+			this.indirizzo = new HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
 			this.destinatarioDivergente = new HDT_WRP_BpCaVariationDestinatarioDivergente();
 			this.fattura = new HDT_WRP_BpCaVariationFattura();
 		}
@@ -134,10 +134,10 @@ public class HDT_WRP_BpCaVariation {
 		public String telefono;
 		public String idIntegrazione;
 		public String cognome;
-		public HDT_WRP_BpCaVariationIndirizzoYes indirizzo;
+		public HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt indirizzo;
 		
 		public HDT_WRP_BpCaVariationDestinatarioDivergente(){
-			this.indirizzo = new HDT_WRP_BpCaVariationIndirizzoYes();
+			this.indirizzo = new HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
 		}
 	}
 }
