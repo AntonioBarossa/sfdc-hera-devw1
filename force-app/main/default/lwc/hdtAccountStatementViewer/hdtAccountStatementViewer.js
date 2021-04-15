@@ -801,21 +801,10 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
     //Pagination --- END ---
 
-    /*setIntParam(event){
-        /// with child component
-        var fieldId = event.detail.fieldId;
-        console.log('# fieldId ' + fieldId + ', value: ' + event.detail.value);
-        this.interObj[fieldId] = event.detail.value;
-    }*/
-
     applyInterFromChild(event){
         console.log('# applyInterFromChild #');
-        //var currentFilter = {};
+
         var interObj = JSON.parse(event.detail.value);
-        /*for (var key in interObj) {
-            currentFilter[key] = interObj[key].value;
-        }
-        console.log('> ' + JSON.stringify(currentFilter));*/
 
         try {
 
@@ -833,16 +822,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         
 
     }
-
-    /*applyInterrogation(){
-        var currentFilter = {};
-        for (var key in this.interObj) {
-            if(this.interObj[key] != undefined && this.interObj[key] !=''){
-                currentFilter[key] = this.interObj[key];
-            }
-        }
-        this.applyInterrogation(currentFilter);
-    }*/
 
     applyInterrogation(currentFilter){
         console.log('# applyInterrogation # ');
@@ -905,22 +884,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             }
             return true;
         });
-
-        /*this.allDataFiltered = this.allData.filter(function(item) {
-            for (var key in currentFilter) {
-                if (item[key] === undefined || item[key] != currentFilter[key].value)
-                return false;
-            }
-            return true;
-        });
-
-        this.allDataFiltered = this.allData.filter(function(item) {
-            for (var key in currentFilter) {
-                if (item[key] === undefined || item[key] != currentFilter[key])
-                return false;
-            }
-            return true;
-        });*/
 
         if(this.allDataFiltered.length == 0){
             this.dispatchEvent(
@@ -1230,42 +1193,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.blob = null;
         this.blobURL = URL.revokeObjectURL();
     }
-
-    /*closeOpModal(event){
-        console.log('# operation on father');
-        
-        if(event.detail.runflow){
-            console.log('@ ' + idlist.join());
-            this.operationBackendCall(event.detail.op);
-            //todo operation logic goes here
-            this.resetIdList();
-        }
-
-        this.showOperationModal = false;
-
-    }
-
-    operationBackendCall(op){
-        console.log('# operationBackendCall #');
-
-        operationBackend({operation: op, idlist: idlist})
-            .then(result => {
-                console.log('# operation result #');
-                console.log('# result: ' + result.success);
-                console.log('# result: ' + result.message);
-
-                if(result.success){
-
-
-                } else {
-
-                }
-                
-            })
-            .catch(error => {
-                this.handleError(error);
-            });
-    }*/
 
     applyFilter(event){
         console.log('# applyFilter #');

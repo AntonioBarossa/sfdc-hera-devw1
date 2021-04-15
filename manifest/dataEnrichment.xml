@@ -4,6 +4,7 @@
 		<members>HDT_LC_AccountDataEnrichment</members>
 		<members>HDT_LC_AccountDataEnrichmentHelper</members>
 		<members>HDT_QR_AccountDataEnrichment</members>
+		<members>HDT_WRP_AccountDataEnrichment</members>
 		<!-- MeterReading -->
 		<members>HDT_LC_MeterReadingController</members>
 		<members>HDT_LC_MeterReadingControllerHelper</members>
@@ -33,13 +34,12 @@
 		<members>Account.raiFee</members>
 		<members>Account.socialBonus</members>
 		<members>Account.HDT_AccountReadings</members>
-		<members>Account.HDT_AccountStatement</members>
 		<name>QuickAction</name>
 	</types>
-	<!--<types>
-		<members>FakeSAPdata</members>
-		<name>CspTrustedSite</name>
-	</types>-->
+	<types>
+		<members>HDT_AccountDataEnrichment__mdt-Account data enrichment Layout</members>
+		<name>Layout</name>
+	</types>
 	<types>
 		<members>AccountDataEnrichment.cmor</members>
 		<members>AccountDataEnrichment.raiFee</members>
@@ -53,11 +53,17 @@
 		<members>AccountDataEnrichment__mdt.Authorization__c</members>
 		<members>AccountDataEnrichment__mdt.ColumnData__c</members>
 		<members>AccountDataEnrichment__mdt.Credential__c</members>
+		<members>AccountDataEnrichment__mdt.UseMock__c</members>
 		<name>CustomField</name>
 	</types>
 	<types>
 		<members>AccountDataEnrichment__mdt</members>
 		<name>CustomObject</name>
-	</types>	
+	</types>
+	<types>
+		<members>MockEndPointAccountStatement</members>
+		<members>MockSessionId</members>
+		<name>CustomLabel</name>
+	</types>
 	<version>50.0</version>
 </Package>
