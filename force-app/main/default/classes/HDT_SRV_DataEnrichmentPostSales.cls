@@ -89,26 +89,22 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         billingProfile = depsQr.getBillingProfileInvoiceData(recordId);
 
-        streetName = billingProfile.InvoicingStreetName__c;
-        streetNumber = billingProfile.InvoicingStreetNumber__c;
-        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null ? billingProfile.InvoicingStreetNumberExtension__c : '';
-        city = billingProfile.InvoicingCity__c;
-        province = billingProfile.InvoicingProvince__c;
-        postalCode = billingProfile.InvoicingPostalCode__c;
-        country = billingProfile.InvoicingCountry__c;
+        streetName = billingProfile.InvoicingStreetName__c + ', ';
+        streetNumber = billingProfile.InvoicingStreetNumber__c + ', ';
+        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null ? 
+            billingProfile.InvoicingStreetNumberExtension__c + ', '
+            : '';
+        city = billingProfile.InvoicingCity__c + ', ';
+        province = billingProfile.InvoicingProvince__c + ', ';
+        postalCode = billingProfile.InvoicingPostalCode__c + ', ';
+        country = billingProfile.InvoicingCountry__c + ', ';
 
         deliveryAddres = streetName 
-        + ', ' 
         + streetNumber 
-        + ', ' 
         + streetNumberExt 
-        + ', ' 
         + city 
-        + ', ' 
         + province 
-        + ', ' 
         + postalCode 
-        + ', ' 
         + country;
 
         return deliveryAddres;
