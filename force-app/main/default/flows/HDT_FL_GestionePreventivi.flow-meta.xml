@@ -16,7 +16,7 @@
         <description>Calculate some info mandatory for the Case record</description>
         <name>Calcola_Info_Preventivo</name>
         <label>Calcola Info Preventivo</label>
-        <locationX>1469</locationX>
+        <locationX>1468</locationX>
         <locationY>1142</locationY>
         <actionName>HDT_UTL_QuoteManagement</actionName>
         <actionType>apex</actionType>
@@ -154,8 +154,8 @@
     <assignments>
         <name>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</name>
         <label>Assegna Fase Attesa Conferma Preventivo Cliente</label>
-        <locationX>1141</locationX>
-        <locationY>3953</locationY>
+        <locationX>1140</locationX>
+        <locationY>3952</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -221,19 +221,60 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaPotenzaImpegnata</name>
-        <label>AssegnaPotenzaImpegnata</label>
+        <name>AssegnaDaServicePoint</name>
+        <label>AssegnaDaServicePoint</label>
         <locationX>1274</locationX>
         <locationY>306</locationY>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.PowerCommitted__c</assignToReference>
+            <assignToReference>Get_Input_Case.SupplyType__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Get_Input_Case.ServicePoint__r.PowerAvailable__c</elementReference>
+                <elementReference>Get_Input_Case.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Disconnectable__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.ServicePoint__r.Disconnectable__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DisconnectibilityType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.ServicePoint__r.DisconnectibilityType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Permanente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.UseTypeEnergy__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.ServicePoint__r.UseTypeEnergy__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaImportoNullo</name>
+        <label>AssegnaImportoNullo</label>
+        <locationX>1452</locationX>
+        <locationY>2449</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.Amount__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_2</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -387,7 +428,7 @@
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Comunicazione verso Heroku OK</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -751,7 +792,7 @@
         <locationX>1465</locationX>
         <locationY>1725</locationY>
         <defaultConnector>
-            <targetReference>Aggiorna_Case_2</targetReference>
+            <targetReference>AssegnaImportoNullo</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Analitico - Predeterminabile</defaultConnectorLabel>
         <rules>
@@ -1023,7 +1064,7 @@
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaPotenzaImpegnata</targetReference>
+            <targetReference>AssegnaDaServicePoint</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1432,7 +1473,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessTypeRecapFormula</elementReference>
+                    <stringValue>Preventivi Riepilogo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1480,8 +1521,8 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1111</locationX>
-        <locationY>3449</locationY>
+        <locationX>1112</locationX>
+        <locationY>3448</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1501,6 +1542,24 @@
                 <name>quoteType</name>
                 <value>
                     <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -1734,6 +1793,13 @@
         <value>
             <numberValue>23.0</numberValue>
         </value>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>SaveInDraft</name>
