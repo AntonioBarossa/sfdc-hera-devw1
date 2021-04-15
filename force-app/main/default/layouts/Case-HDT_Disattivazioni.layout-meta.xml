@@ -29,7 +29,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SalesCompanyCode__c</field>
+                <field>SalesCompany__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -45,6 +45,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>PODPDRFormula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CommodityFormula__c</field>
             </layoutItems>
             <layoutItems>
@@ -55,16 +59,8 @@
                 <behavior>Readonly</behavior>
                 <field>SupplyType__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PODPDRFormula__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CustomerRequestDate__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>NotPerformedBefore__c</field>
