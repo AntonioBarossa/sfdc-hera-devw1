@@ -125,6 +125,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String phase;
         String recordId;
         String herokuCode;
+        String contractCode;
+        String contractStatus;
 
         System.debug('UTL_CLASS_Request--> '+request);
 
@@ -156,12 +158,22 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     phase = field.value;
 
                 }
+                when 'VERTRAG'{
+
+                    contractCode = field.value;
+
+                }
+                when 'VERTRAG_ST '{
+
+                    contractStatus = field.value;
+
+                }
 
             }
 
         }
         
-        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId,herokuCode);
+        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId,herokuCode,contractCode,contractStatus);
 
     }
 
@@ -289,6 +301,27 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     }
 
+    private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper){
+        String contractCode = wrapper.requestMap.get('contractCode');
+        String contractStatus = wrapper.requestMap.get('contractStatus');
+        if(contractCode != null){
+           handleContractUpdate(contractCode,contractStatus);
+        }
+    }
+
+    private void handleContractUpdate(String contractCode,String contractStatus){
+        try{
+            String queryString = 'SELECT Id, Status FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            String objectQ = 'Contract';
+            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectQ);
+            Contract contracRecord = (Contract) recordList[0];
+            contracRecord.Status = contractStatus;
+            Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
+        }catch(Exception ex){
+            System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
+        }
+        
+    }
 
 
 

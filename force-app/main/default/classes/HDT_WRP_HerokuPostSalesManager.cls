@@ -23,12 +23,14 @@ global inherited sharing class HDT_WRP_HerokuPostSalesManager {
 
     }
 
-    global HDT_WRP_HerokuPostSalesManager(String flowType, String phase, String recordId, String herokuCode){
+    global HDT_WRP_HerokuPostSalesManager(String flowType, String phase, String recordId, String herokuCode,String contractCode,String contractStatus){
         
         this.requestMap.put('flowType', flowType);
         this.requestMap.put('phase', phase);
         this.requestMap.put('recordId', recordId);
         this.requestMap.put('herokuCode', herokuCode);
+        this.requestMap.put('contractCode', contractCode);
+        this.requestMap.put('contractStatus', contractStatus);
 
     }
 
