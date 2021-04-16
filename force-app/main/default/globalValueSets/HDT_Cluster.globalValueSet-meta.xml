@@ -85,6 +85,21 @@
         <default>false</default>
         <label>HERA</label>
     </customValue>
+    <customValue>
+        <fullName>Generiche VAS</fullName>
+        <default>false</default>
+        <label>Generiche VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Generiche Attivazioni</fullName>
+        <default>false</default>
+        <label>Generiche Attivazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>PostSales VAS</fullName>
+        <default>false</default>
+        <label>PostSales VAS</label>
+    </customValue>
     <masterLabel>Cluster</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
