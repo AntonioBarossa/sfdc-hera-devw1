@@ -12,7 +12,7 @@ export default class HdtViewResult extends LightningElement {
     closeModal(event){
         console.log('# closeModal #');
         const closeEvent = new CustomEvent("closemodal", {
-            detail:  ''
+            detail:  {booleanVar: 'showViewResult'}
         });
 
         // Dispatches the event.

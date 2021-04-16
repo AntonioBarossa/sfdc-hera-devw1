@@ -3,7 +3,7 @@
     <template if:true={showAcctStmt} >
         <c-hdt-acct-stmt-type-choise
             stmt-type={statementType}
-            onclosestmtchoise={closestmtchoise}
+            onclosestmtchoise={closeModalHandler}
             onchoisestmt={setNewChoise}
         ></c-hdt-acct-stmt-type-choise>
     </template>
@@ -19,7 +19,7 @@
 
     <template if:true={joinFilterModal} >
         <c-hdt-join-filter-modal
-                onclosemodal={closeModal}
+                onclosemodal={closeModalHandler}
                 fields-to-filter={fieldsToFilter}
                 onsetobjfilter={applyFilter}
         ></c-hdt-join-filter-modal >
@@ -31,28 +31,36 @@
             confirm-label={filterLabel}
             columns={columns}
             onapplyinterrogation={applyInterFromChild}
-            onclosemodal={closeFirstLevelFilter}
+            onclosemodal={closeModalHandler}
         ></c-hdt-filter-first-level-modal>
     </template>
 
     <template if:true={showBillList} >
         <c-hdt-bill-list
-            onclosemodal={closeBillList}
+            onclosemodal={closeModalHandler}
         ></c-hdt-bill-list>
     </template>
 
     <template if:true={showViewResult} >
         <c-hdt-view-result
             result-data={viewResultData}
-            onclosemodal={closeViewResult}
+            onclosemodal={closeModalHandler}
         ></c-hdt-view-result>
     </template>
 
     <template if:true={showFilters} >
         <c-hdt-account-statement-filters
-            onclosemodal={closeStatementFilters}
+            onclosemodal={closeModalHandler}
             onsetobjfilter={applyFilter}
         ></c-hdt-account-statement-filters>
+    </template>
+
+    <template if:true={showFilters2} >
+        <c-hdt-account-statement-filters2
+            filter-type={filterType}
+            onclosemodal={closeModalHandler}
+            onsetobjfilter={applyFilter}
+        ></c-hdt-account-statement-filters2>
     </template>
 
     <!--<template if:true={showOperationModal} >    
@@ -90,7 +98,7 @@
                 <div class="slds-col">
                     <div class="slds-button-group" role="group">
                         <template for:each={confObj} for:item="c">
-                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} name={c.name} >{c.label}</button>
+                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" data-type={c.type} name={c.name} onclick={buttonHandler} >{c.label}</button>
                         </template>
                     </div>
                 </div>

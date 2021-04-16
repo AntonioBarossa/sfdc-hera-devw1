@@ -31,6 +31,15 @@
 		<name>CustomObject</name>
 	</types>
 	<types>
+		<members>HDT_ButtonDetails__mdt.ButtonCode__c</members>
+		<members>HDT_ButtonDetails__mdt.ButtonLevel__c</members>
+		<members>HDT_ButtonDetails__mdt.ButtonOrder__c</members>
+		<members>HDT_ButtonDetails__mdt.IsVisible__c</members>
+		<members>HDT_ButtonDetails__mdt.Parameters__c</members>
+		<members>HDT_ButtonDetails__mdt.Tab__c</members>
+		<name>CustomField</name>
+	</types>
+	<types>
 		<members>HDT_ButtonDetails__mdt-Button Details Layout</members>
 		<members>HDT_ColumnsFirstLevel__mdt-Columns First Level Layout</members>
 		<members>HDT_ColumnsSecondLevel__mdt-Columns Second Level Layout</members>
@@ -55,7 +64,8 @@
 		<members>hdtCustomCombobox</members>
 		<members>hdtBillList</members>
 		<members>hdtViewResult</members>
-		<members>hdtAccountStatementFilters</name>
+		<members>hdtAccountStatementFilters</members>
+		<members>hdtAccountStatementFilters</members>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>

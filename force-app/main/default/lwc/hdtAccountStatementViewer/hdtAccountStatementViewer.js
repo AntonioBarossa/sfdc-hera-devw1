@@ -2,7 +2,6 @@ import { LightningElement, track, api } from 'lwc';
 import getTabConfiguration from '@salesforce/apex/HDT_LC_AccountStatementController.getTabConfiguration';
 //import callMulesoft from '@salesforce/apexContinuation/HDT_LC_AccountStatementController.callMulesoftAsync';
 import callMulesoft from '@salesforce/apex/HDT_LC_AccountStatementController.callMulesoft';
-//import operationBackend from '@salesforce/apex/HDT_LC_AccountStatementController.operationBackend';
 import sendFileToPrint from '@salesforce/apex/HDT_LC_AccountStatementController.sendFileToPrint';
 import serviceCatalogBackendHandler from '@salesforce/apex/HDT_LC_AccountStatementController.serviceCatalogBackendHandler';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
@@ -79,6 +78,8 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     @track viewResultData = {};
     showFilters = false;
     title;
+    showFilters2 = false;
+    filterType;
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -237,12 +238,36 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     //button handler section --- START ---
     buttonHandler(event){
         try {
-            this[event.target.name](event);
+            console.log('>>> BUTTON TYPE > ' + event.currentTarget.dataset.type);
+
+            if(event.currentTarget.dataset.type === undefined){
+                console.log('>>> NO BUTTON TYPE SET');
+                return;
+            }
+
+            switch (event.currentTarget.dataset.type) {
+                case 'webservice':
+                    this.handleButtonClick(event.target.name);
+                    this.focusOnButton(event.target.name);
+                    break;
+                case 'openmodal':
+                    this[event.target.name](event);
+                    break;
+                case 'lwcmethod':
+                    this[event.target.name](event);
+            }
+
         } catch(e){
+            console.error('>>> buttonHandler');
             console.error('# Name => ' + e.name );
             console.error('# Message => ' + e.message );
             console.error('# Stack => ' + e.stack );
         }
+    }
+
+    //+++ openmodal button type
+    changeType(){
+        this.showAcctStmt = true;
     }
 
     interrogation(event){
@@ -252,14 +277,68 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.totAmount = 0;
     }
 
-    closeFirstLevelFilter(event){
-        this.showFilterFirstLevel = false;
-    }
-
     joinFilter(event) {
         console.log('# joinFilter #');
         this.joinFilterModal = true;
     }
+
+    contractService(event){
+        this.filterType = 'contractService';
+        this.showFilters2 = true;
+    }
+
+    openFilters(){
+        this.showFilters = true;
+    }
+
+    paperlessFilters(event){
+        this.filterType = 'paperlessFilters';
+        this.showFilters2 = true;
+    }
+
+    billList(event){
+        this.showBillList = true;
+    }
+
+    //+++ webservice type button
+    /*
+    allRecentItems(event) {
+        var requestType = event.target.name;//event.target.name;
+        this.handleButtonClick(requestType);
+        this.focusOnButton(requestType);
+    }
+
+    home(event) {
+        var requestType = event.target.name;//event.target.name
+        this.handleButtonClick(requestType);
+        this.focusOnButton(requestType);
+    }
+
+    expired(event){
+        var requestType = event.target.name;
+        this.handleButtonClick(requestType);
+        this.focusOnButton(requestType);
+    }
+
+    creditRecovery(event){
+        var requestType = event.target.name;
+        this.handleButtonClick(requestType);
+        this.focusOnButton(requestType);
+    }
+
+    expiredFromDay(event){
+        var requestType = event.target.name;
+        this.handleButtonClick(requestType);
+        this.focusOnButton(requestType);
+    }
+
+    manageableItems(event){
+        var requestType = event.target.name;
+        this.handleButtonClick(requestType);
+        this.focusOnButton(requestType);
+    }
+    */
+    //+++ webservice type button
 
     refreshRecord(){
         //refresh all data in the same service
@@ -327,14 +406,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             if(result.success){
                 console.log('>>> result > ' + result.serviceCatalogId);
-
                 this.serviceCatalogEvent('serviceCatalogId');
-                //const serviceCatalog = new CustomEvent("servicecatalog", {
-                //    detail: this.recordid
-                //});
-                //// Dispatches the event.
-                //this.dispatchEvent(serviceCatalog);
-
             } else {
                 console.log('>>> result > ' + result.message);
                 this.dispatchEvent(
@@ -371,18 +443,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         console.log('>>> serviceCatalog from child > ');
         console.log('>>> serviceCatalog from child > ' + event.detail);
         this.serviceCatalogEvent('serviceCatalogId');
-    }
-
-    home(event) {
-        var requestType = event.target.name;//event.target.name
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
-    }
-
-    allRecentItems(event) {
-        var requestType = event.target.name;//event.target.name;
-        this.handleButtonClick(requestType);
-        this.focusOnButton(requestType);
     }
 
     viewResult(event){
@@ -530,13 +590,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         event.stopPropagation();
     }
     //Checkbox handler section --- END ---
-
-    closeModal() {
-        console.log('# closeModal #');
-        this.joinFilterModal = false;
-        //this.selid = '';
-        this.selectRecordName = '';
-    }
 
     handleRowAction(event) {
         var e = event.currentTarget.dataset.id;
@@ -1022,14 +1075,14 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
      
     }
 
-    refreshSecondLevel(){
-        console.log('# refreshSecondLevel #');
-        var a = [];
-        this.secondLevelList.forEach((i) => {
-            a.push(i);
-        });
-        this.secondLevelList = a;
-    }
+    //refreshSecondLevel(){
+    //    console.log('# refreshSecondLevel #');
+    //    var a = [];
+    //    this.secondLevelList.forEach((i) => {
+    //        a.push(i);
+    //    });
+    //    this.secondLevelList = a;
+    //}
 
     modalResponse(event){
         if(event.detail.decision === 'conf'){
@@ -1195,15 +1248,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     applyFilter(event){
-        console.log('# applyFilter #');
+        console.log('# applyFilter on parent #');
         console.log('>>> filterobj: ' + event.detail.filterobj);
         console.log('>>> requestType: ' + event.detail.requestType);
         
         this.handleButtonClick(event.detail.requestType, event.detail.filterobj);
         this.focusOnButton(event.detail.requestType);
 
-        //this.handleButtonClick('joinFilter', event.detail.filterobj);
-        //this.focusOnButton('joinFilter');
     }
     
     handleButtonClick(requestType, requestObj) {
@@ -1214,13 +1265,13 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             try{
                 this.onFirst();
             } catch (e){
-                console.log('we have an error boss');
-                console.log(JSON.stringify(e));
+                console.log('>>> check method -> onFirst or pageData');
             }            
             
             this.allData = [];
             this.accountData = [];
             this.filteredData = [];
+            this.secondLevelList = [];
             
             this.resetFile();
             this.resetIdList();
@@ -1241,14 +1292,6 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         });
     }
 
-    closestmtchoise(){
-        this.showAcctStmt = false;
-    }
-
-    changeType(){
-        this.showAcctStmt = true;
-    }
-
     setNewChoise(event){
         this.acctStmt = event.detail.stmtLabel;
         this.techObj.statementType = this.acctStmt;
@@ -1257,35 +1300,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         });
         // Dispatches the event.
         this.dispatchEvent(tipoTransazione);
-        this.closestmtchoise();
+        //this.closestmtchoise();
+        this.showAcctStmt = false;
 
         var requestType = 'home';//event.target.name
         this.handleButtonClick(requestType);
         this.focusOnButton(requestType);
-    }
-
-    billList(event){
-        this.showBillList = true;
-    }
-
-    closeBillList(){
-        this.showBillList = false;
-    }
-
-    closeViewResult(){
-        this.showViewResult = false;
-    }
-
-    openFilters(){
-        this.showFilters = true;
-    }
-
-    closeStatementFilters(){
-        this.showFilters = false;
-    }
-
-    homeTabEC5(){
-
     }
 
     showSingleBill(event){
@@ -1298,6 +1318,46 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 mode: 'sticky'
             })
         );
+    }
+
+
+    //ALL CLOSE MODAL LOGIC
+    /*
+    closeBillList(){
+        this.showBillList = false;
+    }
+
+    closeViewResult(){
+        this.showViewResult = false;
+    }
+
+    closeStatementFilters(){
+        this.showFilters = false;
+    }
+
+    closeModal() {
+        this.joinFilterModal = false;
+    }
+
+    closeFirstLevelFilter(event){
+        this.showFilterFirstLevel = false;
+    }
+
+    closeStatementFilters2(){
+        this.showFilters2 = false;
+    }
+
+    closestmtchoise(){
+        this.showAcctStmt = false;
+    }
+    */
+   
+    closeModalHandler(event){
+        try{
+            this[event.detail.booleanVar] = false;
+        } catch(e){
+            console.log('>>>>>> flop ');
+        }        
     }
 
 }

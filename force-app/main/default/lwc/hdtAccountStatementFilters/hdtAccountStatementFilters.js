@@ -11,17 +11,18 @@ export default class HdtAccountStatementFilters extends LightningElement {
         spinner: false,
         spincss: ''
     };
-
-    joinFilterObj = {
-        obj0: {type: 'text', name: 'numeroDocumento', label: 'Nr documento', empty: true, minLength: 2},
-        obj1: {type: 'text', name: 'numeroBollettino', label: 'Nr bollettino', empty: true, minLength: 2},
-        obj2: {type: 'date', name: 'dataInizio', label: 'Data valuta da', empty: true},
-        obj3: {type: 'date', name: 'dataFine', label: 'Data valuta a', empty: true}
-
-    };
+    enableDateControll;
+    joinFilterObj = {};
 
     connectedCallback(){
-        //this.spinnerObj.spinner = true;
+        this.enableDateControll = true;
+        this.joinFilterObj = {
+            obj0: {type: 'text', name: 'numeroDocumento', label: 'Nr documento', empty: true, minLength: 2},
+            obj1: {type: 'text', name: 'numeroBollettino', label: 'Nr bollettino', empty: true, minLength: 2},
+            obj2: {type: 'date', name: 'dataInizio', label: 'Data valuta da', empty: true},
+            obj3: {type: 'date', name: 'dataFine', label: 'Data valuta a', empty: true}
+    
+        };
     }
 
     setFilterParam(event){
@@ -47,7 +48,9 @@ export default class HdtAccountStatementFilters extends LightningElement {
 
     applyFilter(){
         console.log('# applyFilter #');
+
         var respCheck = this.checkValue();
+
         console.log('#### ' + respCheck.success);
 
         if(!respCheck.success){
@@ -61,6 +64,24 @@ export default class HdtAccountStatementFilters extends LightningElement {
             return;
         }
 
+        if(this.enableDateControll){
+            this.dateConfiguration();
+        }
+
+        console.log('# ' + JSON.stringify(this.filterObject));
+
+        const selectedObj = new CustomEvent("setobjfilter", {
+            detail:  {
+                requestType: 'filters', filterobj: JSON.stringify(this.filterObject)
+            }
+        });
+        // Dispatches the event.
+        this.dispatchEvent(selectedObj);
+        this.closeModal();
+
+    }
+
+    dateConfiguration(){
         //dataInizio valorizzato e dataFine null
         //Se l’operatore inserisce solo la DataInizio, allora DataFine = DataInizio + 2 anni 
         if(!this.joinFilterObj.obj2.empty && this.joinFilterObj.obj3.empty){
@@ -97,18 +118,6 @@ export default class HdtAccountStatementFilters extends LightningElement {
             this.filterObject[this.joinFilterObj.obj3.name] = dateArray[0].toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
 
         }
-
-        console.log('# ' + JSON.stringify(this.filterObject));
-
-        const selectedObj = new CustomEvent("setobjfilter", {
-            detail:  {
-                requestType: 'filters', filterobj: JSON.stringify(this.filterObject)
-            }
-        });
-        // Dispatches the event.
-        this.dispatchEvent(selectedObj);
-        this.closeModal();
-
     }
 
     closeModal(event){
@@ -119,7 +128,7 @@ export default class HdtAccountStatementFilters extends LightningElement {
         //}
 
         const closeEvent = new CustomEvent("closemodal", {
-            detail:  ''
+            detail:   {booleanVar: 'showFilters'}
         });
 
         // Dispatches the event.

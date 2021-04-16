@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class HdtAcctStmtTypeChoise extends LightningElement {
 
@@ -23,6 +24,18 @@ export default class HdtAcctStmtTypeChoise extends LightningElement {
         var dataSet = event.currentTarget.dataset;
         this.stmtName = dataSet.id;
 
+        if(this.stmtName != 'ordinario'){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'ATTENZIONE',
+                    message: 'VALORE NON SELEZIONABILE PER QUESTA WAVE',
+                    variant: 'success',
+                    mode: 'sticky'
+                })
+            );
+            return;
+        }
+
         const closeEvent = new CustomEvent("choisestmt", {
             detail:  {
                 stmtName: this.stmtName, stmtLabel: dataSet.label
@@ -37,9 +50,7 @@ export default class HdtAcctStmtTypeChoise extends LightningElement {
     closeModal(event){
         console.log('# closeModal #');
         const closeEvent = new CustomEvent("closestmtchoise", {
-            detail:  {
-                stmtName: ''
-            }
+            detail: {booleanVar: 'showAcctStmt'}
         });
 
         // Dispatches the event.

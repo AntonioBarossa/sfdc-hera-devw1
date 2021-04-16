@@ -80,7 +80,7 @@ export default class HdtJoinFilterModal extends LightningElement {
         }
 
         const closeModal = new CustomEvent("closemodal", {
-            detail:  {action: ''}
+            detail:  {booleanVar: 'joinFilterModal'}
         });
         // Dispatches the event.
         this.dispatchEvent(closeModal);

@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c));
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c));
         }
 
         return objDetail;
@@ -155,7 +155,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c));
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c));
         }
 
         obj.success = true;
@@ -312,17 +312,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             ServiceCatalog__c serviceCatalog = new ServiceCatalog__c();
             serviceCatalog.UserId__c = currentUserId;
 
-
             List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList;
             recordsList = (List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>) JSON.deserialize(records, List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>.class);
-
-            /*
-                - Campo Context:
-                  Dal primo livello dell’Estratto conto => EC1L;
-                  Dal secondo livello => EC2L,
-                  Dalla vista Rate => InstallmentsView; --> il pulsante è presente solo nel primo livello
-                  Da Note Var Iva => NoteVarIVA; --> il pulsante non esiste
-            */
 
             //set context field
             if(level.equalsIgnoreCase('1')){
@@ -338,6 +329,31 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'InstallmentsView';
             }
             
+
+            /*
+                1° livello
+                    - Single Record:
+                            = IsInvoice__c
+                            = OnCredit__c
+                            = Vendor__c
+                            = IsPrescribable__c
+
+                    - Multiple Record:
+                            = Multiselect__c
+                            = IsInstallment__c
+                            = SameCA__c
+                            = OnCredit__c
+
+                2° livello
+                    - Single Record:
+                            = IsRaiFee__c
+
+                    - Multiple Record:
+                            = Multiselect__c
+                            = IsRaiFee__c
+            */
+
+
             System.debug('>>> recordsList: ' + String.valueOf(recordsList.size()));
 
             if(recordsList.size() > 1){
@@ -347,11 +363,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             }
 
             //- Settare nel campo DocumentSelected__c il JSON delle fatture selezionate (sia 1 che 2 livello)
-            serviceCatalog.DocumentSelectedString__c = records;
+            serviceCatalog.DocumentSelected__c = records;
 
             serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
             upsert serviceCatalog UpsertKey__c;
-
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = serviceCatalog.Id;

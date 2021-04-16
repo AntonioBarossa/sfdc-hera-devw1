@@ -14,11 +14,13 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String label;
         @AuraEnabled public String name;
         @AuraEnabled public Boolean enable;
+        @AuraEnabled public String type;
         
-        public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp){
+        public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp){
             label = labelTemp;
             name = nameTemp;
             enable = enableTemp;
+            type = typeTemp;
         }
     }
 
@@ -108,6 +110,7 @@ public class HDT_WRP_AccountStatement {
         public String numeroDocumento;
         public String contoContrattuale;
         public String societa;
+        public String servizio;
         public String contratto;
         public String loginId;
     }
@@ -137,6 +140,7 @@ public class HDT_WRP_AccountStatement {
         public String societa;
         public String fatturaPrescrivibile;
         public String fatturaPrescritta;
+        public String DEL_569;
     }
 
 }

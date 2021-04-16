@@ -9,7 +9,7 @@ export default class HdtMeterReading extends LightningElement {
     @track contractColumns;
     @track contractNumber;
     @track meterReadingColumns;
-    hideCheckboxColumn = false;
+    hideCheckboxColumn = true;
     loadData = false;
     queryTerm = '';
     spinner = true;

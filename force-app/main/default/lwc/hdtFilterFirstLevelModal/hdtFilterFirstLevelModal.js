@@ -76,7 +76,7 @@ export default class HdtFilterFirstLevelModal extends LightningElement {
 
     closeModalEvent(){
         const closeModal = new CustomEvent("closemodal", {
-            detail:  ''
+            detail: {booleanVar: 'showFilterFirstLevel'}
         });
         // Dispatches the event.
         this.dispatchEvent(closeModal); 

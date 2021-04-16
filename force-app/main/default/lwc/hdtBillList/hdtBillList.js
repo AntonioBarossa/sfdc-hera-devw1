@@ -38,7 +38,7 @@ export default class HdtBillList extends LightningElement {
     closeModal(event){
         console.log('# closeModal #');
         const closeEvent = new CustomEvent("closemodal", {
-            detail:  ''
+            detail: {booleanVar: 'showBillList'}
         });
 
         // Dispatches the event.
