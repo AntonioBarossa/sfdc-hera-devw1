@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CampaignSource__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>campo tecnico popolato dall’integrazione con Biz in cui viene inserito l’ID della Campagna Mkt cloud che ha portato il Lead ha compilare il form-web</description>
+    <externalId>false</externalId>
+    <label>Campaign Source</label>
+    <referenceTo>Campaign</referenceTo>
+    <relationshipLabel>Leads</relationshipLabel>
+    <relationshipName>Leads</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

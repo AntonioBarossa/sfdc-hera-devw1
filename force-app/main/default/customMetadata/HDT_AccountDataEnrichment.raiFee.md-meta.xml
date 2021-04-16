@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>raiFee</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=</value>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;Canone RAI&quot;,
+    &quot;iconName&quot;: &quot;standard:expense&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;fieldName&quot;: &quot;statoPratica&quot;,
+        &quot;label&quot;: &quot;Stato&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;soc&quot;,
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;partner&quot;,
+        &quot;label&quot;: &quot;Partner&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;codFiscale&quot;,
+        &quot;label&quot;: &quot;Cod.Fiscale&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;pod&quot;,
+        &quot;label&quot;: &quot;POD&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;contratto&quot;,
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;codImporto&quot;,
+        &quot;label&quot;: &quot;Cod Importo&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;idAddebito&quot;,
+        &quot;label&quot;: &quot;Addebito&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;periodoRiferimento&quot;,
+        &quot;label&quot;: &quot;Riferimento&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;numDoc&quot;,
+        &quot;label&quot;: &quot;Num Doc&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;importo&quot;,
+        &quot;label&quot;: &quot;Importo&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;dataScadenza&quot;,
+        &quot;label&quot;: &quot;Data Scadenza&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;docRif&quot;,
+        &quot;label&quot;: &quot;Doc Rif&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;dataFattura&quot;,
+        &quot;label&quot;: &quot;Data Fattura&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;importoFatturato&quot;,
+        &quot;label&quot;: &quot;Importo Fatturato&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;importoIncDelta&quot;,
+        &quot;label&quot;: &quot;Importo Inc delta&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;importoResiduo&quot;,
+        &quot;label&quot;: &quot;Importo residuo&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;chiusoCont&quot;,
+        &quot;label&quot;: &quot;Chiuso cont&quot;,
+        &quot;initialWidth&quot;: 160
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/tv-licence-fees/search</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>
