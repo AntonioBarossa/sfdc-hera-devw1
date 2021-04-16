@@ -257,7 +257,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             when 'esito_finale'{
 
                 currentCase.Phase__c = reqWrp.requestMap.get('phase');
-                //handleFinalOutcome
+                handleEntityUpdate(reqWrp);
 
 
             }
