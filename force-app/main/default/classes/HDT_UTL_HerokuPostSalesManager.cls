@@ -173,7 +173,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String phase;
         String herokuCode;
         String dlCode;
-        String sendDLDate;
+        String sendDlDate;
 
         List<Case> caseUpdate = new List<Case>();
 
@@ -182,7 +182,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 when 'CREA_RIC'{
                     herokuCode = responseResult.responseMap.get('COD_PRAT_UTENTE');
                     dlCode = responseResult.responseMap.get('COD_PRAT_DISTR');
-                    sendDLDate = responseResult.responseMap.get('DT_INVIO_DL');
+                    sendDlDate = responseResult.responseMap.get('DT_INVIO_DL');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
                     switch on responseResult.responseMap.get('result'){
                         when 'OK'{
@@ -199,7 +199,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }
 
-        if(currentCase.Phase__c  == 'Da Inviare'){
+        if(currentCase.Phase__c  == 'Da Inviare' || currentCase.Phase__c == 'Preventivo accettato'){
 
             System.debug('SRV_Class_Phase--> '+phase);
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
@@ -209,8 +209,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(dlCode != null && dlCode != ''){
                 currentCase.DistributorServiceCode__c = dlCode;
             }
-            if(sendDLDate != null && sendDLDate != ''){
-                currentCase.SendToDistributorDate__c = Date.valueOf(sendDLDate);
+            if(sendDlDate != null && sendDlDate != ''){
+                currentCase.SendToDistributorDate__c = Date.valueOf(sendDlDate);
             }
 
             caseUpdate.add(currentCase);
@@ -291,8 +291,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     private void handleContractUpdate(String contractCode,String contractStatus){
         try{
             String queryString = 'SELECT Id, Status FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
-            String objectQ = 'Contract';
-            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectQ);
+            String objectq = 'Contract';
+            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];
             contracRecord.Status = contractStatus;
             Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
