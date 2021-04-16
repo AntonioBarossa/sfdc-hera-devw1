@@ -12,16 +12,16 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	}
 	private static Boolean isSignNeeded(HDT_WRP_DocumentalResponse response){
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
-		attachmentList.addAll(response.attachmentList);
+		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
 		for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : attachmentList){
-			if(singleAttachment.required == 'Y')
+			if(singleAttachment.mandatory == 'Y')
 				return true;
 		}
 		return false;
 	}
 	public static Boolean updateDocumentalPhase(sObject processRecord, HDT_WRP_DocumentalResponse response ){
-		String archive = response.archive;
-		String result = response.result;
+		String archive = response.deliverPackageResponse.archive;
+		String result = response.deliverPackageResponse.result;
 		if(result == 'OK'){
 			if(archive == 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');

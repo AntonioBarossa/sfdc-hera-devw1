@@ -35,13 +35,13 @@ public class HDT_SRV_DocumentalManagement{
 
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
-			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.requestId, context);
+			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
 			if(context == 'Order' || context == 'Case'){
 				HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response);
 			}
-			if(response.archive != null && response.archive == 'Y' ){
+			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if(response.responseStatus == 200 || response.responseStatus == 201 ){
-					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.message,response.requestId, response.packageId,processRecord);
+					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,response.deliverPackageResponse.requestId, response.deliverPackageResponse.packageIds,processRecord);
 				}
 			}
 		}catch(Exception ex){
