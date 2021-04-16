@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>cmor</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=</value>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;CMOR - Venditore entrante&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Id Rich&quot;,
+        &quot;fieldName&quot;: &quot;idRich&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data agg&quot;,
+        &quot;fieldName&quot;: &quot;dataAgg&quot;
+      },
+      {
+        &quot;label&quot;: &quot;sparte&quot;,
+        &quot;fieldName&quot;: &quot;sparte&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Service id&quot;,
+        &quot;fieldName&quot;: &quot;serviceid&quot;
+      },
+      {
+        &quot;label&quot;: &quot;POD&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;contratto&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;fieldName&quot;: &quot;impianto&quot;
+      },
+      {
+        &quot;label&quot;: &quot;BP&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;
+      },
+      {
+        &quot;label&quot;: &quot;CA&quot;,
+        &quot;fieldName&quot;: &quot;ca&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data com&quot;,
+        &quot;fieldName&quot;: &quot;dataCom&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Stato&quot;,
+        &quot;fieldName&quot;: &quot;stato&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Stato Descr&quot;,
+        &quot;fieldName&quot;: &quot;statoDescr&quot;
+      },
+      {
+        &quot;label&quot;: &quot;cmor&quot;,
+        &quot;fieldName&quot;: &quot;cmor&quot;
+      },
+      {
+        &quot;label&quot;: &quot;cmor stornato&quot;,
+        &quot;fieldName&quot;: &quot;cmorStornato&quot;
+      },
+      {
+        &quot;label&quot;: &quot;cmor rett&quot;,
+        &quot;fieldName&quot;: &quot;cmorRett&quot;
+      }
+    ]
+  },
+  {
+    &quot;tableTitle&quot;: &quot;CMOR - Venditore uscente&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Id esterno&quot;,
+        &quot;fieldName&quot;: &quot;idEsterno&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data flusso&quot;,
+        &quot;fieldName&quot;: &quot;dataFlusso&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Settore descr&quot;,
+        &quot;fieldName&quot;: &quot;settoreDescr&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;fieldName&quot;: &quot;soc&quot;
+      },
+      {
+        &quot;label&quot;: &quot;POD&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;contratto&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data switch&quot;,
+        &quot;fieldName&quot;: &quot;dataSwitch&quot;
+      },
+      {
+        &quot;label&quot;: &quot;BP&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;
+      },
+      {
+        &quot;label&quot;: &quot;CA&quot;,
+        &quot;fieldName&quot;: &quot;ca&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data richiesta&quot;,
+        &quot;fieldName&quot;: &quot;dataRichiesta&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Stato pratica&quot;,
+        &quot;fieldName&quot;: &quot;statoPratica&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Stato descr&quot;,
+        &quot;fieldName&quot;: &quot;statoDescr&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Importo cmor&quot;,
+        &quot;fieldName&quot;: &quot;importoCmor&quot;
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/cmor/search</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>
