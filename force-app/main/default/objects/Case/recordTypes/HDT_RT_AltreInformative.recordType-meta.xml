@@ -774,6 +774,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Generiche Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HERA</fullName>
             <default>false</default>
         </values>
@@ -795,6 +803,10 @@
         </values>
         <values>
             <fullName>Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PostSales VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2548,6 +2560,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>HouseOwner__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HouseType__c</picklist>
+        <values>
+            <fullName>Appartamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casa Indipendente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -3139,113 +3173,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>OLDUseTypeEnergy__c</picklist>
-        <values>
-            <fullName>03 Illuminazione Pubblica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cantiere %28Temp%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cottimo %28Perm%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>For temp abit%28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Illuminaz Monum %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Imp Risalita %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ins Lum Pubb %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inst Non presid %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavim%28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavim%28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Leviga Pavimenti%28Temp Straord%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luminarie %28Temp Straord 16h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luminarie %28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 16h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Manifest %28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non raggiungibile%28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ordinaria %28Perm%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripr cine tv%28Temp Straord 8h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripr cine tv%28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Roulottes simili %28Perm Partic%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp Straord 6h%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp Straord%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spett viagg %28Temp permanente%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ville rifugi simili%28Perm Part%29</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>OperationSubType__c</picklist>
         <values>
             <fullName>Prezzo energia negoziato</fullName>
@@ -3665,6 +3592,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ProcessingStatus__c</picklist>
+        <values>
+            <fullName>annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>da completare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>gestita %28completata%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sospensione %28in attesa pagamento%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ProductTypeVAS__c</picklist>
+        <values>
+            <fullName>HVAC - Caldaia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC - Scaldabagno</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ReadType__c</picklist>
         <values>
             <fullName>Reale</fullName>
@@ -3714,6 +3671,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ReasonAutoeletric__c</picklist>
+        <values>
+            <fullName>Heraricarica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Noleggio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Accesso dei dati</fullName>
@@ -3733,6 +3701,14 @@
         </values>
         <values>
             <fullName>Bonus integrativo solo per non Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CLIENTE NON TROVATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3785,6 +3761,10 @@
         </values>
         <values>
             <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DISATTIVATO%2FDISDETTO %28SERVIZIO%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3856,6 +3836,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>INSTALLAZIONE FALLITA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Incongruenza sui sistemi</fullName>
             <default>false</default>
         </values>
@@ -3900,6 +3884,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RESO %28PRODOTTO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIFIUTATO preventivamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rettifica dati personali</fullName>
             <default>false</default>
         </values>
@@ -3925,6 +3917,10 @@
         </values>
         <values>
             <fullName>TCP Comune no Int</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TEL - CLT NON TROVATO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4390,6 +4386,229 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SignalCategory__c</picklist>
+        <values>
+            <fullName>Comportamento venditore HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diario dei consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Noleggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione al fornitore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalOutcome__c</picklist>
+        <values>
+            <fullName>Eseguita riparazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eseguita sostituzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Id commerciale venditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Respito no cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalato fornitore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalReason__c</picklist>
+        <values>
+            <fullName>Colonnina Guasta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copertura servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Firma %2F registrazione falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Messa in funzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nissan Leaf</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renault Zoe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco coloninna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart For two</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tempi spedizione%2Fattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tesla model 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tessera non funziona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>bolla di spedizione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>condizioni contratto variate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>documentazione manutenzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>il prodotto è diverso da aspettativa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>manutenzione male eseguita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>mq%2Fn%2Eabitanti%2Fpriorietario%2Ftipo abitazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>non riesce a contattare fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>non sono coperto dell%27assicurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>non vedo quanto ho ricaricato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>registrazione catasto caldaia%22</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalSubCategory__c</picklist>
+        <values>
+            <fullName>Colonnina%2Ftessera non funziona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna difforme</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna non avvenuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doppia fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errato addebito per cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore esposizione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lamentela su prodotto %2F servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica  dei dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prodotto non funziona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spiegazione tecnica diario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vas non consegnato%2Fnon attivato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita scorretta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalType__c</picklist>
+        <values>
+            <fullName>Vas Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vas Prodotto%2FServizio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SignatoryType__c</picklist>
         <values>
             <fullName>Legale Rappresentante</fullName>
@@ -4828,6 +5047,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Autolettura da cliente</fullName>
             <default>false</default>
         </values>
@@ -4845,6 +5068,10 @@
         </values>
         <values>
             <fullName>Caduta Linea%2FChiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso Tecnico</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4900,6 +5127,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Doppi Pagamenti%2FIncassi</fullName>
             <default>false</default>
         </values>
@@ -4937,6 +5168,10 @@
         </values>
         <values>
             <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5016,7 +5251,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Proroga Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5072,6 +5315,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripristino Fornitura Interrotta</fullName>
             <default>false</default>
         </values>
@@ -5089,6 +5336,10 @@
         </values>
         <values>
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni VAS</fullName>
             <default>false</default>
         </values>
         <values>
