@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Contract</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">{
+  &quot;data&quot;: [
+    {
+      &quot;label&quot;: &quot;Numero Contratto&quot;,
+      &quot;fieldName&quot;: &quot;contractNumber&quot;,
+      &quot;initialWidth&quot;: 200
+    },
+    {
+      &quot;label&quot;: &quot;Stato&quot;,
+      &quot;fieldName&quot;: &quot;status&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Data inizio&quot;,
+      &quot;fieldName&quot;: &quot;startDate&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Data fine&quot;,
+      &quot;fieldName&quot;: &quot;endDate&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Fornitura&quot;,
+      &quot;fieldName&quot;: &quot;asset&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Servizio&quot;,
+      &quot;fieldName&quot;: &quot;service&quot;
+    }
+  ]
+}</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>
