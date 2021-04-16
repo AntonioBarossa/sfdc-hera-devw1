@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>MockEndPointAccountStatement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MockEndPointAccountStatement</shortDescription>
+        <value>https://monted-dev-ed.my.salesforce.com/services/apexrest/getAccountStatement/0</value>
+    </labels>
+    <labels>
         <fullName>MockSessionId</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>MockSessionId</shortDescription>
-        <value>00D58000000KR1c!AQgAQBYxlt3m0UH3bFCQiIgsKdZZ.cfEfQjgo9Non6SmYiG1U112UtUwsUFeKgsdRv1FCj1tXhkoI33QHTkmeTOtdkUSzeQw</value>
+        <value>00D58000000KR1c!AQgAQJyKK5vLgfE7PGN5RYGw3eh9HuBHBHFbIyFxHlcCa6l1Ju40yJgft9qRroF9NU.cn0RPU_E7XFTNiK5RAETcWY1.6G5y</value>
     </labels>
 </CustomLabels>

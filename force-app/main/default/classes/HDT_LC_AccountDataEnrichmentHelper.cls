@@ -67,7 +67,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
         req.setMethod('POST');
         
         if(enrichmentbMetadataList[0].UseMock__c){
-            req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/' + type);
+/*             req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/' + type);
             req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
             switch on type {
                 when 'cmor' {
@@ -79,7 +79,7 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
                 when 'socialBonus' {
                     httpBody = '{"bp": "1001803014"}';
                 }
-            }
+            } */
         } else {
             req.setEndpoint(enrichmentbMetadataList[0].Credential__c);
             req.setHeader('Authorization', enrichmentbMetadataList[0].Authorization__c);

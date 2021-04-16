@@ -21,6 +21,16 @@
                 <default>false</default>
                 <label>Saldo pagato</label>
             </value>
+            <value>
+                <fullName>Dati corretti forniti dal cliente</fullName>
+                <default>false</default>
+                <label>Dati corretti forniti dal cliente</label>
+            </value>
+            <value>
+                <fullName>Dati corretti forniti dal DL</fullName>
+                <default>false</default>
+                <label>Dati corretti forniti dal DL</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

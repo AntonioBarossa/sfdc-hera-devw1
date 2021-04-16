@@ -43,5 +43,4 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
-ruleset.xml
-# new ruleset
+launch.json

@@ -521,6 +521,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestPhase__c</picklist>
+        <values>
+            <fullName>Monofase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trifase</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SupplyType_Deprecate__c</picklist>
         <values>
             <fullName>A-Domestico</fullName>
