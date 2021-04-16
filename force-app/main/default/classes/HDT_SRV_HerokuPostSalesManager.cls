@@ -32,7 +32,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         Object templateMap = argsMap.get('templateMap');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
        
-        currentCase = hpsmQr.getCurrentCaseById(ticket);
 
      try{
         ticket = (String) obj.get('Id');
