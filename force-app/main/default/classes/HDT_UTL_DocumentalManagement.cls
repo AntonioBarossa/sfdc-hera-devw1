@@ -65,24 +65,24 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		try {
 			String sObjName = requestId.getSObjectType().getDescribe().getName();
 			DocumentSendTracking__c documentalSendTracking = new DocumentSendTracking__c ();
-			/*switch on sObjName {
+			switch on sObjName {
 				when 'Case' {
-					documentalSendTracking.CaseId__c = requestId;
-					documentalSendTracking.AccountId__c = processRecord.get('AccountId ');
-					documentalSendTracking.Receiver__c = processRecord.get('Email__c');
-					documentalSendTracking.SendMode__c = processRecord.get('SendMode__c'); 
+					documentalSendTracking.Case__c = (Id) requestId;
+					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId ');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
 				when 'Order' {
-					documentalSendTracking.OrderId__c = requestId;
-					documentalSendTracking.AccountId__c = processRecord.get('AccountId');
-					documentalSendTracking.SendMode__c = processRecord.get('DocSendingMethod__c'); 
-					documentalSendTracking.Receiver__c = processRecord.get('Email__c');
+					documentalSendTracking.Order__c = (Id) requestId;
+					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
+					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
+					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
 				}
 				when else {
-					documentalSendTracking.AccountId__c = processRecord.get('Id');
-					documentalSendTracking.Receiver__c = processRecord.get('PrimaryEmail__c');
+					documentalSendTracking.Account__c = (Id) processRecord.get('Id');
+					documentalSendTracking.Receiver__c = (String) processRecord.get('PrimaryEmail__c');
 				}
-			}*/
+			}
 			documentalSendTracking.SendDate__c = Date.today();
 			documentalSendTracking.EnvelopeId__c = envelopeId;
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
@@ -344,10 +344,10 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	}
 	public static String getDocumentalContext(String context){
 		switch on context {
-			when 'Order' {
+			when 'Case' {
 				return 'Context1';
 			}
-			when 'Case' {
+			when 'Order' {
 				return 'Context2';
 			}
 			when 'EC' {
