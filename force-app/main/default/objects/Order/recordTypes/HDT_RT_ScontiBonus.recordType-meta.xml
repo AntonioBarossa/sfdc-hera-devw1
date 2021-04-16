@@ -961,15 +961,15 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>Mail</fullName>
+            <fullName>E-mail</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Posta</fullName>
+            <fullName>Posta Cartacea</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Stampa</fullName>
+            <fullName>Stampa Cartacea</fullName>
             <default>false</default>
         </values>
     </picklistValues>
