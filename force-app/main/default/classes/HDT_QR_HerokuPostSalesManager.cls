@@ -9,7 +9,9 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Type,
         CaseNumber, 
         RecordTypeId,
-        HerokuPracticeCode__c
+        HerokuPracticeCode__c,
+        DistributorServiceCode__c,
+        SendToDistributorDate__c
         FROM Case 
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
