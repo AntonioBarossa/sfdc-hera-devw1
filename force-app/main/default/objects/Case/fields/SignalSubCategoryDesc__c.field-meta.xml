@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SignalSubCategoryDesc__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(SignalSubCategory__c,
+					&quot;Consegna difforme&quot;, &quot;il prodotto non è quello ordinato&quot;,
+					&quot;Vas non consegnato/non attivato&quot;, &quot;Il vas non è stato ancora consegnato o non attivato&quot;,
+					&quot;Richiesta documentazione&quot;, &quot;Il cliente richiede della documentazione del servizio/prodotto&quot;,
+					&quot;Lamentela su prodotto / servizio&quot;, &quot;Il cliente si lamenta del servizio o prodotto ricevuto&quot;,
+					&quot;Prodotto non funziona&quot;, &quot;il prodotto non funziona&quot;,
+					&quot;Vendita scorretta&quot;, &quot;Operatore segnala problemi durante la vendita&quot;,
+					&quot;Informazioni errate&quot;, &quot;Operatore segnala che durante la vendita gli sono state fornite indicazioni errate&quot;,
+					&quot;Doppia fattura SD&quot;, &quot;Segnalazione su doppi addebiti VAS&quot;,
+					&quot;Errato addebito per cessazione&quot;, &quot;In caso di cambi offerta o/e cessazioni possono essere addebitati dei costi dei VAS non dovuti&quot;,
+					&quot;Errore esposizione bolletta&quot;, &quot;Nell fatture SD o nelle bollette potrebbero essere riportate delle descrizioni errate&quot;,
+					&quot;Modifica  dei dati&quot;, &quot;Modifica dei dati mq/n.abitanti/ priorietario/ tipo abitazione&quot;,
+					&quot;Spiegazione tecnica diario&quot;, &quot;Il cleinte segnala dei dati incongruenti rispetto al suo stile di consumo&quot;,
+					&quot;Consegna difforme&quot;, &quot;il prodotto non è quello ordinato&quot;,
+					&quot;Consegna non avvenuta&quot;, &quot;Il vas non è stato ancora consegnato o non attivato&quot;,
+					&quot;Colonnina/tessera non funziona&quot;, &quot;La colonnina o la tessera non è funzionante.&quot;,
+					&quot;Lamentela su prodotto / servizio&quot;, &quot;Il cliente non è soddisfato del servizio/ prodotto&quot;,
+					&quot;Errore esposizione bolletta&quot;, &quot;Nell fatture SD o nelle bollette potrebbero essere riportate delle descrizioni errate&quot;,
+					&quot;Form digitale&quot;, &quot;Cliente compila in autonomia il from per richiedere informazioni sul noleggio&quot;,
+					&quot;Richiesta di contatto&quot;, &quot;Cliente contatta il servizio clienti per essere ricontattato sul noleggio&quot;,
+					&quot;&quot;)</formula>
+    <label>Descrizione Sottocateg. Segnalazione</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
