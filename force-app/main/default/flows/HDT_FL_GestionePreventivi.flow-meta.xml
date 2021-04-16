@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Esiste_Importo_Configurato</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
@@ -26,6 +27,7 @@
         <faultConnector>
             <targetReference>ErrorConfigurationScreen</targetReference>
         </faultConnector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caliber</name>
             <value>
@@ -148,7 +150,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_2</targetReference>
+            <targetReference>AssegnaComponenteFissaVariabile</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -218,6 +220,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Preventivo_Rapido</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaComponenteFissaVariabile</name>
+        <label>AssegnaComponenteFissaVariabile</label>
+        <locationX>1053</locationX>
+        <locationY>3325</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.FixedAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DirittiFissi</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.VariableAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ComponenteVariabile</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_2</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -945,7 +970,8 @@
             <label>Variazione Potenza</label>
         </rules>
     </decisions>
-    <description>Flow per la gestione del cluster Preventivi</description>
+    <description>Flow per la gestione del cluster Preventivi
+--&gt; Aggiunte componenti fisse/variabili</description>
     <dynamicChoiceSets>
         <name>ClasseContatoreChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -978,6 +1004,12 @@
         <picklistField>SupplyType__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>ComponenteVariabile</name>
+        <dataType>Number</dataType>
+        <expression>{!Get_Input_Case_0.Amount__c} - {!DirittiFissi}</expression>
+        <scale>2</scale>
+    </formulas>
     <formulas>
         <name>CorrispettivoAumentoFormula</name>
         <dataType>Number</dataType>
