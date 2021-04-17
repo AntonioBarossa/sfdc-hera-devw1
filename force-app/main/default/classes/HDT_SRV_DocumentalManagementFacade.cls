@@ -4,7 +4,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
         HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
         try{
             documentalResponse = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
-            base64 = documentalResponse.composedDocument;
+            base64 = documentalResponse.deliverPackageResponse.composedDocument;
         }catch(Exception ex){
             base64 = ex.getMessage();
         }

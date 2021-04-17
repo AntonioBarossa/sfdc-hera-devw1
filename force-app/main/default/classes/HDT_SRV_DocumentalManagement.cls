@@ -18,21 +18,25 @@ public class HDT_SRV_DocumentalManagement{
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], payloadStructure,formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
-			System.debug(payload);
+			//System.debug(payload);
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
 		body = composeJSON(recordId, driverPayloadListMap);
-		System.debug(body);
+		//System.debug(body);
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		HDT_WS_DocumentalIntegration service = new HDT_WS_DocumentalIntegration();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
-		manageResponse(documentalResponse, context);
-		System.debug(documentalResponse);
+		manageResponseFuture(JSON.serialize(documentalResponse), context);
+		//System.debug(documentalResponse);
 		return documentalResponse;
 	}
-
+	@future
+	private static void manageResponseFuture(String responseString, String context){
+		HDT_WRP_DocumentalResponse response = (HDT_WRP_DocumentalResponse) JSON.deserialize(responseString, HDT_WRP_DocumentalResponse.class);
+		manageResponse(response,context);
+	}
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
@@ -42,6 +46,7 @@ public class HDT_SRV_DocumentalManagement{
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if(response.responseStatus == 200 || response.responseStatus == 201 ){
 					HDT_UTL_DocumentalManagement.createDocumentSendTracking(response.deliverPackageResponse.message,response.deliverPackageResponse.requestId, response.deliverPackageResponse.packageIds,processRecord);
+					HDT_UTL_DocumentalManagement.createDocumentEnvelopeAttachment(response,context);
 				}
 			}
 		}catch(Exception ex){

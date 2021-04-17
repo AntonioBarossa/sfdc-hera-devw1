@@ -10,6 +10,38 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 		}
 	}
+
+	public static void createDocumentEnvelopeAttachment(HDT_WRP_DocumentalResponse response, String context){
+		try {
+			String recordId;
+			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
+			List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem> serviceItemList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem>();
+			serviceItemList.addAll(response.deliverPackageResponse.serviceList);
+			List<DocumentalEnvelopeAttachment__c> envelopeList = new List<DocumentalEnvelopeAttachment__c>();
+			for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseServiceItem serviceItem : serviceItemList){
+				recordId = (Id) serviceItem.serviceId;
+				for(HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment singleAttachment : serviceItem.attachmentList){
+					DocumentalEnvelopeAttachment__c envelope = new DocumentalEnvelopeAttachment__c();
+					envelope.AttachmentCode__c = singleAttachment.code;
+					envelope.Required__c = singleAttachment.mandatory == 'Y'? true:false;
+					envelope.Version__c = singleAttachment.version;
+					if(context.equalsIgnoreCase('Case')){
+						envelope.Case__c = recordId;
+					}else if(context.equalsIgnoreCase('Order')){
+						envelope.Order__c = recordId;
+					}
+					envelopeList.add(envelope);
+				}
+			}
+			if(envelopeList.size()>0){
+				Boolean result = HDT_UTL_DatabaseService.insertSObject(envelopeList);
+			}
+			
+		} catch (Exception ex) {
+			System.debug('Error in class HDT_UTL_DocumentalManagement method createDocumentEnvelopeAttachment at line' + ex.getLineNumber() + '. Error: '+ ex.getMessage());
+		}
+	}
+
 	private static Boolean isSignNeeded(HDT_WRP_DocumentalResponse response){
 		List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment> attachmentList = new List<HDT_WRP_DocumentalResponse.HDT_WRP_DocumentalResponseAttachment>();
 		attachmentList.addAll(response.deliverPackageResponse.serviceList[0].attachmentList);
@@ -23,7 +55,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		if(result == 'OK'){
-			if(archive == 'Y'){
+			if(archive != 'Y'){
 				processRecord.put('DocumentalPhase__c','Preview');
 			}else{
 				if(isSignNeeded(response)){
@@ -68,7 +100,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			switch on sObjName {
 				when 'Case' {
 					documentalSendTracking.Case__c = (Id) requestId;
-					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId ');
+					System.debug('### Account Id: '+processRecord.get('AccountId'));
+					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
@@ -87,7 +120,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			documentalSendTracking.EnvelopeId__c = envelopeId;
 			Boolean result = HDT_UTL_DatabaseService.insertSObject(documentalSendTracking);
 		} catch (Exception ex) {
-			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
 	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){

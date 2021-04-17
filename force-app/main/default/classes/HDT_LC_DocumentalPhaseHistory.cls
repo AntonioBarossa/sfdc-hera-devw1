@@ -16,7 +16,7 @@ public with sharing class HDT_LC_DocumentalPhaseHistory {
                 fromQ = 'OrderHistory';
             }
         }
-        whereQ += ' AND Field =\'Status\'';
+        whereQ += ' AND Field =\'DocumentalPhase__c\'';
         queryString += fieldsQ + ' FROM ' + fromQ + ' WHERE ' + whereQ + ' ORDER BY ' + orderQ;
         System.debug('query ' + queryString);
         return HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
