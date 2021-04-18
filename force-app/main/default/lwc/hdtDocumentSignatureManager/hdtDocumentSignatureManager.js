@@ -22,7 +22,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @api params;
 
     buttonStatefulState = false;
-    @track disableEdit = false;
+    @track enableEdit = false;
     @track emailRequired;
     @track phoneRequired;
     @track addressRequired;
@@ -54,7 +54,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.quoteType = inputWrapper.quoteType;//var addressWrapper = JSON.parse(inputWrapper.addressWrapper);
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
-                this.sendMode = inputWrapper.sendMethod;
+                this.sendMode = inputWrapper.sendMode;
                 if(this.context.localeCompare('Order') === 0 || this.quoteType.localeCompare('Analitico') === 0){
                     this.enablePreview = false;
                 }else{
@@ -85,12 +85,22 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                     });
                     this.signSendMap = signSendModeList; 
                     this.modalitaFirma = signMode;
-                    if(this.sendMode != null && this.sendMode != ''){
-                        this.modalitaInvio = signSendModeList.find(function(post, index) {
-                            if(post.signMode == this.sendMode)
-                                return true;
-                        });
+                    console.log(signSendModeList);
+                    console.log(this.sendMode);
+                    try{
+                        if(this.signMode != null && this.signMode != ''){
+                            console.log('IN')
+                            var temp = this.signSendMap.find(function(post, index) {
+                                if(post.signMode == inputWrapper.signMode)
+                                    return true;
+                            });
+                            console.log('out ' + JSON.stringify(temp));
+                            this.modalitaInvio = temp.sendMode;
+                        }
+                    }catch(error){
+                        console.error(error);
                     }
+                    
                 })
                 .catch(error => {
                     console.log('errore ' +error.body.message);
@@ -168,23 +178,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             var telefono = this.template.querySelector("lightning-input[data-id=telefono]");      
             var email =this.template.querySelector("lightning-input[data-id=email]");      
             var address = this.template.querySelector("lightning-input[data-id=indirizzoRecapito]");
-            /*if(!modFirma.value || !modSpedizione.value || (this.phoneRequired && !telefono.value) || (this.emailRequired && !email.value) || (this.addressRequired && !address.value))
-            {
-                this.showMessage('Errore','Valorizza tutti i campi obbligatori','error'); 
-            }else{
-                this.buttonStatefulState = !this.buttonStatefulState
-                this.enableEdit = this.buttonStatefulState;
-                var wrapperResult = {
-                    signMethod:modFirma,
-                    sendMethod:modSpedizione,
-                    phone:telefono,
-                    email:email,
-                    address:{
-                        completeAddress:address
-                    }
-                }
-                this.dispatchEvent(new CustomEvent('confirmdata'), { detail: wrapperResult });
-            }*/
+            
             const comboValid = [...this.template.querySelectorAll('lightning-combobox')]
                 .reduce((validSoFar, inputCmp) => {
                             inputCmp.reportValidity();
@@ -207,7 +201,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.buttonStatefulState = !this.buttonStatefulState
                         this.enableEdit = this.buttonStatefulState;
                         this.returnWrapper.signMode = modFirma.value;
-                        this.returnWrapper.sendMethod = modSpedizione.value;
+                        this.returnWrapper.sendMode = modSpedizione.value;
                         this.returnWrapper.phone = telefono.value;
                         this.returnWrapper.email = email.value;
                         this.returnWrapper.addressWrapper.completeAddress = address.value;
@@ -232,8 +226,12 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     }
 
     handleButtonStatefulClick() {
-        
-        this.checkForm();
+        if(!this.buttonStatefulState){
+            this.checkForm();
+        }else{
+            this.buttonStatefulState = !this.buttonStatefulState
+            this.enableEdit =this.buttonStatefulState;
+        }  
 
     }
 

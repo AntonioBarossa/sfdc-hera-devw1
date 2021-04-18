@@ -5,6 +5,10 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         String base64 = HDT_SRV_DocumentalManagementFacade.getBase64(recordId, context,formParams);
         return base64;
     }
+    @AuraEnabled
+    public static void sendDocumentFile(String recordId,String context,String formParams){
+        HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, context,formParams);
+    }
 
     @AuraEnabled
     public static string getSignSendMode(String processType, String source){

@@ -10,7 +10,72 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 		}
 	}
+	public static ContentVersion createContectVersion(String base64, String filename){
+		ContentVersion cv = new ContentVersion();
+		cv.VersionData = EncodingUtil.base64Decode(base64);
+		cv.Title = filename;
+		cv.PathOnClient = filename;
+		try {
+			insert cv;
+			return cv;
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
 
+	public static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
+		if (contentVersionId == null || recordId == null) { return null; }
+		ContentDocumentLink cdl = new ContentDocumentLink();
+		cdl.ContentDocumentId = [
+			SELECT ContentDocumentId 
+			FROM ContentVersion 
+			WHERE Id =: contentVersionId
+		].ContentDocumentId;
+		cdl.LinkedEntityId = recordId;
+		// ShareType is either 'V', 'C', or 'I'
+		// V = Viewer, C = Collaborator, I = Inferred
+		cdl.ShareType = 'V';
+		try {
+			insert cdl;
+			return cdl;
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
+	private static String getSharedLink(String cdId){
+		if (cdId == null) { return null; }
+		String queryString = 'SELECT Id,DistributionPublicUrl FROM ContentDistribution WHERE Id = \''+cdId+'\'';
+		try {
+			List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'ContentDistribution');
+			ContentDistribution cd = (ContentDistribution)recordList[0];
+			return cd.DistributionPublicUrl;
+		} catch (Exception e) {
+			System.debug(e);
+			return null;
+		}
+		
+	}
+
+	public static String createContentDistribution(String contentVersionId){
+		if (contentVersionId == null) { return null; }
+		ContentDistribution cd = new ContentDistribution();
+		cd.Name = 'Test';
+		cd.ContentVersionId = contentVersionId;
+		cd.PreferencesAllowViewInBrowser= true;
+		cd.PreferencesLinkLatestVersion=true;
+		cd.PreferencesNotifyOnVisit=true;
+		cd.PreferencesPasswordRequired=false;
+		cd.PreferencesAllowOriginalDownload= true;
+		try {
+			insert cd;
+			return getSharedLink(cd.Id);
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
 	public static void createDocumentEnvelopeAttachment(HDT_WRP_DocumentalResponse response, String context){
 		try {
 			String recordId;
@@ -105,7 +170,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c'); 
 				}
-				when 'Order' {
+				when 'Order','DocumentazioneAnticipata' {
 					documentalSendTracking.Order__c = (Id) requestId;
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c'); 
@@ -391,6 +456,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}
 			when 'Account' {
 				return 'Context4';
+			}
+			when 'DocumentazioneAnticipata'{
+				return 'Context2';
 			}
 			when else {
 				return null;

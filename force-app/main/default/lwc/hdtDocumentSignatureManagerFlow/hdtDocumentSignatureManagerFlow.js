@@ -7,6 +7,10 @@ import PHONE_FIELD from '@salesforce/schema/Case.PhoneNumber__c';
 import EMAIL_FIELD from '@salesforce/schema/Case.Email__c';
 import ADDRESS_FIELD from '@salesforce/schema/Case.DeliveryAddress__c';
 import ID_FIELD from '@salesforce/schema/Case.Id';
+import MOD_FIRMA from '@salesforce/schema/Case.SignMode__c';
+import MOD_INVIO from '@salesforce/schema/Case.SendMode__c';
+import sendDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 const FIELDS = ['Case.ContactMobile', 
                 'Case.ContactEmail',
@@ -14,6 +18,8 @@ const FIELDS = ['Case.ContactMobile',
                 'Case.Email__c',
                 'Case.PhoneNumber__c', 
                 'Case.BillingProfile__c',
+                'Case.SignMode__c',
+                'Case.SendMode__c',
                 'Case.Account.BillingStreetName__c',
                 'Case.Account.BillingStreetNumber__c',
                 'Case.Account.BillingCity',
@@ -143,8 +149,8 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                         FlagForzato  : '',
                         FlagVerificato  : ''
                     },
-                    sendMode:'',
-                    signMode:'' 
+                    sendMode:this.caseRecord.fields.SendMode__c.value,
+                    signMode:this.caseRecord.fields.SignMode__c.value 
                 }
                 this.inputParams = JSON.stringify(inputParams);
                 console.log(this.inputParams);
@@ -155,15 +161,14 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
-         // Create the recordInput object
          const fields = {};
          fields[ID_FIELD.fieldApiName] = this.recordId;
-         console.log('result ' + event.detail);
          var resultWrapper = JSON.parse(event.detail);
-         console.log('telefono ' + resultWrapper.phone);
          fields[PHONE_FIELD.fieldApiName] = resultWrapper.phone;
          fields[EMAIL_FIELD.fieldApiName] = resultWrapper.email;
          fields[ADDRESS_FIELD.fieldApiName] = resultWrapper.addressWrapper.completeAddress;
+         fields[MOD_FIRMA.fieldApiName] = resultWrapper.signMode;
+         fields[MOD_INVIO.fieldApiName] = resultWrapper.sendMode;
 
          const recordInput = { fields };
 
@@ -199,6 +204,14 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                 );
             }else{
                 this.cancelCase = false;
+                var formParams = {
+                    archive:'Y'
+                }
+                sendDocumentFile({
+                    recordId: this.recordId,
+                    context: 'Case',
+                    formParams: JSON.stringify(formParams)
+                }).then(result => {});
 
                 if(this.availableActions.find(action => action === 'NEXT')){
 
@@ -230,6 +243,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
         if(this.availableActions.find(action => action === 'NEXT')){
 
             this.cancelCase = true;
+            
 
             const navigateNextEvent = new FlowNavigationNextEvent();
 

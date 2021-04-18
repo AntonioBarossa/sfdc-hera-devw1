@@ -1,6 +1,6 @@
 public class HDT_SRV_DocumentalManagement{
 	 
-	public static HDT_WRP_DocumentalResponse generateRequest(String recordId, String context, String formParams){
+	public static String generateRequest(String recordId, String context, String formParams){
 		String payload = '';
 		String body = '';
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driver = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
@@ -25,18 +25,50 @@ public class HDT_SRV_DocumentalManagement{
 		}
 		body = composeJSON(recordId, driverPayloadListMap);
 		//System.debug(body);
+		//HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		//HDT_WS_DocumentalIntegration service = new HDT_WS_DocumentalIntegration();
+		//documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		//manageResponseFuture(JSON.serialize(documentalResponse), context);
+		//System.debug(documentalResponse);
+		return body;
+	}
+	@future
+	public static void createPublicLinkFuture(String recordId,String base64,String fileName){
+		String publicLink = createPublicLink(recordId,base64,fileName);
+		//updateOrder con link?
+	}
+	public static String createPublicLink(String recordId,String base64,String fileName){
+		try {
+			ContentVersion cv = HDT_UTL_DocumentalManagement.createContectVersion(base64,fileName);
+			ContentDocumentLink cl = HDT_UTL_DocumentalManagement.createContentLink(cv.Id, recordId);
+			String publicLink =  HDT_UTL_DocumentalManagement.createContentDistribution(cv.Id);
+			return publicLink;
+		} catch (Exception ex) {
+			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+			return null;
+		}
+	}
+
+	@future(callout=true)
+	public static void executeCalloutRequestFuture(String body, String context){
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-		HDT_WS_DocumentalIntegration service = new HDT_WS_DocumentalIntegration();
+		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		manageResponse(documentalResponse, context);
+	}
+	
+	public static HDT_WRP_DocumentalResponse executeCalloutRequest(String body,String context){
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
 		manageResponseFuture(JSON.serialize(documentalResponse), context);
-		//System.debug(documentalResponse);
 		return documentalResponse;
 	}
+
 	@future
 	private static void manageResponseFuture(String responseString, String context){
 		HDT_WRP_DocumentalResponse response = (HDT_WRP_DocumentalResponse) JSON.deserialize(responseString, HDT_WRP_DocumentalResponse.class);
 		manageResponse(response,context);
 	}
+
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((Id) response.deliverPackageResponse.requestId, context);
