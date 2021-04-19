@@ -248,6 +248,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                         this.returnWrapper.phone = telefono.value;
                         this.returnWrapper.email = email.value;
                         this.returnWrapper.addressWrapper.completeAddress = address.value;
+                        this.returnWrapper.dataConfirmed = true;
                         // JSON.stringify(this.returnWrapper)
                         this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
 
