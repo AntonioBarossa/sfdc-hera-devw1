@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 
 const fields = [
     'ActiveServices__c',
-    'ActiveCampaigns__c', // TODO: sostituire con lwc c-hdt-account-highlight-panel
+    //'ActiveCampaigns__c', // sostituito con lwc c-hdt-account-highlight-panel
     'CreditFormula__c',
     'RecallerFormula__c',
     'ComplaintRateFormula__c',
@@ -15,7 +15,7 @@ export default class HdtHighlightsPanel extends LightningElement {
     gridClass = '';
 
     connectedCallback(){
-        var arraySize = fields.length;
+        var arraySize = fields.length + 1; // + 1 per il KPI Campagne Attive che non ha un campo fisico.
         this.gridClass = 'slds-col slds-size_1-of-' + arraySize.toString();
         console.log(this.gridClass);
     }
