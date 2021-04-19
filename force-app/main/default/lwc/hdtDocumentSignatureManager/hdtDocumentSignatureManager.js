@@ -55,7 +55,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
-                if(this.context.localeCompare('Order') === 0 || this.quoteType.localeCompare('Analitico') === 0){
+                if(this.context.localeCompare('Order') === 0 || this.quoteType.localeCompare('Analitico') === 0 || this.quoteType.localeCompare('Predeterminabile') === 0){
                     this.enablePreview = false;
                 }else{
                     this.enablePreview = true;
@@ -115,6 +115,49 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
 
     handleChangeAddress(event){
         this.isModalOpen = !this.isModalOpen;
+    }
+    handleCloseModal(event){
+        var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+        console.log(JSON.stringify(addressWrapper));
+        if((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != ""){
+            console.log('New Address');
+            this.handleNewAddress();
+            this.isModalOpen = false;
+        }else if(addressWrapper.Via == null || addressWrapper.Via==""){
+            this.isModalOpen = false;
+            console.log('No change');
+        }else{
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Errore',
+                    message:'Attenzione! Seleziona un indirizzo valido.',
+                    variant: 'error',
+                }),
+            );
+        }
+        
+    }
+    handleNewAddress() {
+        try{
+            var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+            var estensioneCivico = ((addressWrapper.EstensCivico)? addressWrapper.EstensCivico:'');
+            this.address = addressWrapper.Via + ' ' + addressWrapper.Civico + ' ' + estensioneCivico + ', ' + addressWrapper.Comune + ' ' + addressWrapper.Provincia + ', ' + addressWrapper.CAP + ' ' +addressWrapper.Stato;
+            this.returnWrapper.addressWrapper.CAP = addressWrapper.CAP;
+            this.returnWrapper.addressWrapper.Civico = addressWrapper.Civico;
+            this.returnWrapper.addressWrapper.CodiceComuneSAP = addressWrapper.CodiceComuneSAP;
+            this.returnWrapper.addressWrapper.CodiceViaStradarioSAP = addressWrapper.CodiceViaStradarioSAP;
+            this.returnWrapper.addressWrapper.Comune = addressWrapper.Comune;
+            this.returnWrapper.addressWrapper.EstensCivico = addressWrapper.EstensCivico;
+            this.returnWrapper.addressWrapper.FlagVerificato = addressWrapper['Flag Verificato'];
+            //this.returnWrapper.addressWrapper. = addressWrapper.
+            this.returnWrapper.addressWrapper.Provincia = addressWrapper.Provincia;
+            this.returnWrapper.addressWrapper.Stato = addressWrapper.Stato;
+            //this.returnWrapper.addressWrapper. = addressWrapper.
+            this.returnWrapper.addressWrapper.Via = addressWrapper.Via;
+            this.returnWrapper.addressWrapper.completeAddress = this.address;
+        }catch(error){
+            console.error(error);
+        }
     }
 
     checkRequired(){

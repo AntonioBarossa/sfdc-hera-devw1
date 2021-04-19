@@ -9,6 +9,19 @@ import ADDRESS_FIELD from '@salesforce/schema/Case.DeliveryAddress__c';
 import ID_FIELD from '@salesforce/schema/Case.Id';
 import MOD_FIRMA from '@salesforce/schema/Case.SignMode__c';
 import MOD_INVIO from '@salesforce/schema/Case.SendMode__c';
+import InvoicingPostalCode from '@salesforce/schema/Case.InvoicingPostalCode__c';
+import InvoicingStreetNumber from '@salesforce/schema/Case.InvoicingStreetNumber__c';
+import InvoicingCityCode from '@salesforce/schema/Case.InvoicingCityCode__c';
+import InvoicingStreetCode from '@salesforce/schema/Case.InvoicingStreetCode__c';
+import InvoicingCity from '@salesforce/schema/Case.InvoicingCity__c';
+import InvoicingStreetNumberExtension from '@salesforce/schema/Case.InvoicingStreetNumberExtension__c';
+import IsInvoicingVerified from '@salesforce/schema/Case.IsInvoicingVerified__c';
+import InvoicingPlace from '@salesforce/schema/Case.InvoicingPlace__c';
+import InvoicingStreetName from '@salesforce/schema/Case.InvoicingStreetName__c';
+import InvoicingCountry from '@salesforce/schema/Case.InvoicingCountry__c';
+import InvoicingStreetToponym from '@salesforce/schema/Case.InvoicingStreetToponym__c';
+import InvoicingProvince from '@salesforce/schema/Case.InvoicingProvince__c';
+import AddressFormula from '@salesforce/schema/Case.AddressFormula__c';
 import sendDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
@@ -27,14 +40,21 @@ const FIELDS = ['Case.ContactMobile',
                 'Case.Account.BillingPostalCode',
                 'Case.Account.BillingCountry',
                 'Case.Account.BillingAddressFormula__c',
-                'Case.BillingProfile__r.InvoicingStreetName__c',
-                'Case.BillingProfile__r.InvoicingStreetNumber__c',
-                'Case.BillingProfile__r.InvoicingStreetNumberExtension__c',
-                'Case.BillingProfile__r.InvoicingCityCode__c',
-                'Case.BillingProfile__r.InvoicingProvince__c',
-                'Case.BillingProfile__r.InvoicingPostalCode__c',
-                'Case.BillingProfile__r.InvoicingCountry__c',
-                'Case.BillingProfile__r.InvoicingAddressFormula__c'];
+                'Case.Account.BillingCityCode__c',
+                'Case.Account.BillingStreetNumberExtension__c',
+                'Case.Account.BillingStreetCode__c',
+                'Case.InvoicingPostalCode__c',
+				'Case.InvoicingStreetNumber__c',
+				'Case.InvoicingCityCode__c',
+				'Case.InvoicingStreetCode__c',
+				'Case.InvoicingCity__c',
+				'Case.InvoicingStreetNumberExtension__c',
+				'Case.IsInvoicingVerified__c',
+				'Case.InvoicingPlace__c',
+				'Case.InvoicingStreetName__c',
+				'Case.InvoicingCountry__c',
+				'Case.InvoicingStreetToponym__c',
+                'Case.InvoicingProvince__c'];
 
 export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     @api processType;
@@ -96,6 +116,18 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                 console.log(JSON.stringify(this.caseRecord.fields));
                 var email = '';
                 var phone = '';
+                var cap='';
+                var stato = '';
+                var via='';
+                var comune='';
+                var provincia='';
+                var civico='';
+                var codiceComuneSAP='';
+                var estensCivico='';
+                var codiceViaStradarioSAP='';
+                var flagForzato=false;
+                var flagVerificato=false;
+
                 var contactEmail = this.caseRecord.fields.ContactEmail.value;
                 var caseEmail = this.caseRecord.fields.Email__c.value;
                 if(caseEmail != null && caseEmail != '')
@@ -104,26 +136,39 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     email = contactEmail;
                 var contactPhone = this.caseRecord.fields.ContactMobile.value;
                 var casePhone = this.caseRecord.fields.PhoneNumber__c.value;
-                console.log('casePhone ' + casePhone);
-                console.log('contactPhone ' + contactPhone);
                 if(casePhone != null && casePhone != ''){
                     phone = casePhone;
                 } else{
                     phone = contactPhone;
                 }
-                    
-
-                var BillingProfile__c = this.caseRecord.fields.BillingProfile__c.value;
-                var billingAddress = '';
-                var accountAddress = '';
                 var completeAddress = '';
                 var caseAddress = this.caseRecord.fields.DeliveryAddress__c.value;
                 if(caseAddress != null && caseAddress != ''){
                     completeAddress = caseAddress;
-                }else if(this.caseRecord.fields.BillingProfile__r.value != null){
-                    completeAddress = this.caseRecord.fields.BillingProfile__r.value.fields.InvoicingAddressFormula__c.value;
+                    stato = this.caseRecord.fields.InvoicingCountry__c.value;
+                    provincia = this.caseRecord.fields.InvoicingProvince__c.value;
+                    via  = this.caseRecord.fields.InvoicingStreetName__c.value;
+                    cap = this.caseRecord.fields.InvoicingPostalCode__c.value;
+                    comune  = this.caseRecord.fields.InvoicingCity__c.value;
+                    civico  = this.caseRecord.fields.InvoicingStreetNumber__c.value;
+                    codiceComuneSAP  = this.caseRecord.fields.InvoicingCityCode__c.value;
+                    estensCivico = this.caseRecord.fields.InvoicingStreetNumberExtension__c.value;
+                    codiceViaStradarioSAP  = this.caseRecord.fields.InvoicingStreetCode__c.value;
+                    flagForzato  = false;
+                    flagVerificato  = this.caseRecord.fields.IsInvoicingVerified__c.value
                 } else if(this.caseRecord.fields.Account.value != null){
                     completeAddress = this.caseRecord.fields.Account.value.fields.BillingAddressFormula__c.value;
+                    stato = this.caseRecord.fields.Account.value.fields.BillingCountry.value;
+                    //provincia = this.caseRecord.fields.Account.value.fields..value;
+                    via  = this.caseRecord.fields.Account.value.fields.BillingStreetName__c.value;
+                    cap = this.caseRecord.fields.Account.value.fields.BillingPostalCode.value;
+                    comune  = this.caseRecord.fields.Account.value.fields.BillingCity.value;
+                    civico  = this.caseRecord.fields.Account.value.fields.BillingStreetNumber__c.value;
+                    codiceComuneSAP  = this.caseRecord.fields.Account.value.fields.BillingCityCode__c.value;
+                    estensCivico = this.caseRecord.fields.Account.value.fields.BillingStreetNumberExtension__c.value;
+                    codiceViaStradarioSAP  = this.caseRecord.fields.Account.value.fields.BillingStreetCode__c.value;
+                    flagForzato  = false;
+                    flagVerificato  = true;
                 }
 
                 var inputParams = {
@@ -137,17 +182,17 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                     quoteType : this.quoteType,
                     addressWrapper : {
                         completeAddress : completeAddress,
-                        Stato : '',
-                        Provincia : '',
-                        Via  : '',
-                        CAP : '',
-                        Comune  : '',
-                        Civico  : '',
-                        CodiceComuneSAP  : '',
-                        EstensCivico : '',
-                        CodiceViaStradarioSAP  : '',
-                        FlagForzato  : '',
-                        FlagVerificato  : ''
+                        Stato : stato,
+                        Provincia : provincia,
+                        Via  : via,
+                        CAP : cap,
+                        Comune  : comune,
+                        Civico  : civico,
+                        CodiceComuneSAP  : codiceComuneSAP,
+                        EstensCivico : estensCivico,
+                        CodiceViaStradarioSAP  : codiceViaStradarioSAP,
+                        FlagForzato  : flagForzato,
+                        FlagVerificato  : flagVerificato
                     },
                     sendMode:this.caseRecord.fields.SendMode__c.value,
                     signMode:this.caseRecord.fields.SignMode__c.value 
@@ -161,14 +206,29 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
-         const fields = {};
-         fields[ID_FIELD.fieldApiName] = this.recordId;
-         var resultWrapper = JSON.parse(event.detail);
-         fields[PHONE_FIELD.fieldApiName] = resultWrapper.phone;
-         fields[EMAIL_FIELD.fieldApiName] = resultWrapper.email;
-         fields[ADDRESS_FIELD.fieldApiName] = resultWrapper.addressWrapper.completeAddress;
-         fields[MOD_FIRMA.fieldApiName] = resultWrapper.signMode;
-         fields[MOD_INVIO.fieldApiName] = resultWrapper.sendMode;
+        const fields = {};
+        fields[ID_FIELD.fieldApiName] = this.recordId;
+        var resultWrapper = JSON.parse(event.detail);
+        var estensioneCivico = ((resultWrapper.addressWrapper.EstensCivico)? resultWrapper.addressWrapper.EstensCivico:'');
+        var address = resultWrapper.addressWrapper.Via + ' ' + resultWrapper.addressWrapper.Civico + ' ' + estensioneCivico + ', ' + resultWrapper.addressWrapper.Comune + ' ' + resultWrapper.addressWrapper.Provincia + ', ' + resultWrapper.addressWrapper.CAP + ' ' +resultWrapper.addressWrapper.Stato;
+        console.log('indirizzo completo ' +address);
+        fields[PHONE_FIELD.fieldApiName] = resultWrapper.phone;
+        fields[EMAIL_FIELD.fieldApiName] = resultWrapper.email;
+        fields[ADDRESS_FIELD.fieldApiName] = address;
+        fields[MOD_FIRMA.fieldApiName] = resultWrapper.signMode;
+        fields[MOD_INVIO.fieldApiName] = resultWrapper.sendMode;
+        fields[InvoicingPostalCode.fieldApiName] = resultWrapper.addressWrapper.CAP;
+        fields[InvoicingStreetNumber.fieldApiName] = resultWrapper.addressWrapper.Civico;
+        fields[InvoicingCityCode.fieldApiName] = resultWrapper.addressWrapper.CodiceComuneSAP;
+        fields[InvoicingStreetCode.fieldApiName] = resultWrapper.addressWrapper.CodiceViaStradarioSAP;
+        fields[InvoicingCity.fieldApiName] = resultWrapper.addressWrapper.Comune;
+        fields[InvoicingStreetNumberExtension.fieldApiName] = resultWrapper.addressWrapper.EstensCivico;
+        fields[IsInvoicingVerified.fieldApiName] = resultWrapper.addressWrapper['Flag Verificato'];
+        //fields[InvoicingPlace.fieldApiName] = resultWrapper.addressWrapper.
+        fields[InvoicingProvince.fieldApiName] = resultWrapper.addressWrapper.Provincia;
+        fields[InvoicingCountry.fieldApiName] = resultWrapper.addressWrapper.Stato;
+        //fields[InvoicingStreetToponym.fieldApiName] = resultWrapper.addressWrapper.
+        fields[InvoicingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
 
          const recordInput = { fields };
 
