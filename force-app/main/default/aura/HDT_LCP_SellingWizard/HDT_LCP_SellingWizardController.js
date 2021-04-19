@@ -1,6 +1,7 @@
 ({
     doInit : function(component, event, helper) {
         component.set('v.loading', true);
+        var campaignId = '';
 
         var checkprocess = component.get("c.checkCommunityLogin");
 
@@ -75,6 +76,7 @@
                 } 
             } 
         });
+
         var workspaceAPI = component.find("workspace");
         workspaceAPI.getFocusedTabInfo().then(function(response3) {
             workspaceAPI.setTabLabel({

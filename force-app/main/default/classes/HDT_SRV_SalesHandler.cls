@@ -22,10 +22,12 @@ public with sharing class HDT_SRV_SalesHandler {
 
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+
         HDT_QR_Order quoteQR = new HDT_QR_Order();
         HDT_SRV_Order quoteSRV = new HDT_SRV_Order();
         HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
 		Map<String,String> mapRequestFields = new Map<String,String>();
+
         switch on header.requestType {
             when 'NOTIF_ES'{
 
@@ -51,6 +53,7 @@ public with sharing class HDT_SRV_SalesHandler {
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';
                     }
+
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
                     mrrResponseItem.objects.add(responseObject);
                     
@@ -127,4 +130,5 @@ public with sharing class HDT_SRV_SalesHandler {
 
         return mrrResponseItem;
     }
+
 }

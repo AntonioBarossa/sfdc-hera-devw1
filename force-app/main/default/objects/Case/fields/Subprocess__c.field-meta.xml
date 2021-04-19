@@ -14,6 +14,36 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Accise - Agevolazione cliente</fullName>
+                <default>false</default>
+                <label>Accise - Agevolazione cliente</label>
+            </value>
+            <value>
+                <fullName>Accise - Energia Elettrica</fullName>
+                <default>false</default>
+                <label>Accise - Energia Elettrica</label>
+            </value>
+            <value>
+                <fullName>Accise - Errata applicazione</fullName>
+                <default>false</default>
+                <label>Accise - Errata applicazione</label>
+            </value>
+            <value>
+                <fullName>Account</fullName>
+                <default>false</default>
+                <label>Account</label>
+            </value>
+            <value>
+                <fullName>Account e Billing Profile</fullName>
+                <default>false</default>
+                <label>Account e Billing Profile</label>
+            </value>
+            <value>
+                <fullName>Billing Profile</fullName>
+                <default>false</default>
+                <label>Billing Profile</label>
+            </value>
+            <value>
                 <fullName>Cambio Amministratore</fullName>
                 <default>false</default>
                 <label>Cambio Amministratore</label>
@@ -24,9 +54,34 @@
                 <label>Cambio Intest/Indirizzo Amministratore</label>
             </value>
             <value>
-                <fullName>Modifica Dati di Contatto  </fullName>
+                <fullName>Elementi di dettaglio</fullName>
                 <default>false</default>
-                <label>Modifica Dati di Contatto  </label>
+                <label>Elementi di dettaglio</label>
+            </value>
+            <value>
+                <fullName>IVA - Agevolazione cliente</fullName>
+                <default>false</default>
+                <label>IVA - Agevolazione cliente</label>
+            </value>
+            <value>
+                <fullName>IVA - Errata applicazione</fullName>
+                <default>false</default>
+                <label>IVA - Errata applicazione</label>
+            </value>
+            <value>
+                <fullName>IVA - Esenzione</fullName>
+                <default>false</default>
+                <label>IVA - Esenzione</label>
+            </value>
+            <value>
+                <fullName>IVA - Revoca Esenzione</fullName>
+                <default>false</default>
+                <label>IVA - Revoca Esenzione</label>
+            </value>
+            <value>
+                <fullName>Modifica Dati di Contatto</fullName>
+                <default>false</default>
+                <label>Modifica Dati di Contatto</label>
             </value>
             <value>
                 <fullName>Modifica Dati di Recapito</fullName>
@@ -43,55 +98,10 @@
                 <default>false</default>
                 <label>Modifica Dati Fiscali</label>
             </value>
-            <value>  
-                <fullName>Modifica Dati di Contatto</fullName>
-                <default>false</default>
-                <label>Modifica Dati di Contatto</label>
-            </value>
             <value>
-                <fullName>Variazione Gruppo IVA</fullName>
+                <fullName>Report disaggregato</fullName>
                 <default>false</default>
-                <label>Variazione Gruppo IVA</label>
-            </value>
-            <value>
-                <fullName>IVA - Agevolazione cliente</fullName>
-                <default>false</default>
-                <label>IVA - Agevolazione cliente</label>
-            </value>
-            <value>
-                <fullName>IVA - Errata applicazione</fullName>
-                <default>false</default>
-                <label>IVA - Errata applicazione</label>
-            </value>
-            <value>
-                <fullName>Accise - Energia Elettrica</fullName>
-                <default>false</default>
-                <label>Accise - Energia Elettrica</label>
-            </value>
-            <value>
-                <fullName>Accise - Agevolazione cliente</fullName>
-                <default>false</default>
-                <label>Accise - Agevolazione cliente</label>
-            </value>
-            <value>
-                <fullName>Accise - Errata applicazione</fullName>
-                <default>false</default>
-                <label>Accise - Errata applicazione</label>
-            </value>
-            <value>
-                <fullName>IVA - Esenzione</fullName>
-                <default>false</default>
-                <label>IVA - Esenzione</label>
-            </value>
-            <value>
-                <fullName>IVA - Revoca Esenzione</fullName>
-                <default>false</default>
-                <label>IVA - Revoca Esenzione</label>
-            </value>
-            <value>
-                <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
-                <default>false</default>
-                <label>Rettifica per segnalazione cassetto fiscale</label>
+                <label>Report disaggregato</label>
             </value>
             <value>
                 <fullName>Report storno di adeguamento</fullName>
@@ -99,31 +109,55 @@
                 <label>Report storno di adeguamento</label>
             </value>
             <value>
-                <fullName>Report disaggregato</fullName>
+                <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
                 <default>false</default>
-                <label>Report disaggregato</label>
+                <label>Rettifica per segnalazione cassetto fiscale</label>
             </value>
             <value>
-                <fullName>Elementi di dettaglio</fullName>
+                <fullName>Variazione Gruppo IVA</fullName>
                 <default>false</default>
-                <label>Elementi di dettaglio</label>
+                <label>Variazione Gruppo IVA</label>
             </value>
             <value>
-                <fullName>Account</fullName>
+                <fullName>Ordinaria</fullName>
                 <default>false</default>
-                <label>Account</label>
+                <label>Ordinaria</label>
             </value>
             <value>
-                <fullName>Billing Profile</fullName>
+                <fullName>Mortis Causa</fullName>
                 <default>false</default>
-                <label>Billing Profile</label>
+                <label>Mortis Causa</label>
             </value>
             <value>
-                <fullName>Account e Billing Profile</fullName>
+                <fullName>Incorporazione societaria</fullName>
                 <default>false</default>
-                <label>Account e Billing Profile</label>
+                <label>Incorporazione societaria</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Ordinaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Mortis Causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Incorporazione societaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Agevolazione cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Energia Elettrica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Errata applicazione</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fiscale</controllingFieldValue>
             <valueName>IVA - Agevolazione cliente</valueName>
@@ -133,20 +167,20 @@
             <valueName>IVA - Errata applicazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Energia Elettrica</valueName>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Esenzione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Agevolazione cliente</valueName>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Revoca Esenzione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Errata applicazione</valueName>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>Rettifica per segnalazione cassetto fiscale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report storno di adeguamento</valueName>
+            <valueName>Elementi di dettaglio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
@@ -154,7 +188,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Elementi di dettaglio</valueName>
+            <valueName>Report storno di adeguamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
+            <valueName>Account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
+            <valueName>Account e Billing Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
+            <valueName>Billing Profile</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

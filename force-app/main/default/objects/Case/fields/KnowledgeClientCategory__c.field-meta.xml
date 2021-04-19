@@ -7,7 +7,7 @@
 &quot;Famiglie&quot;, &quot;Famiglie&quot;,
 &quot;Aziende&quot;, &quot;Aziende&quot;,
 &quot;Aziende SME&quot;, &quot;Aziende&quot;,
-&quot;Anziede Soho&quot;, &quot;Aziende&quot;,
+&quot;Aziende Soho&quot;, &quot;Aziende&quot;,
 null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Tipologia Cliente Knowledge</label>

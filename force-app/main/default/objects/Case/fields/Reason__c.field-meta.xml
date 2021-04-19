@@ -280,6 +280,41 @@
                 <label>Caduta Linea</label>
             </value>
             <value>
+                <fullName>TEL - CLT NON TROVATO</fullName>
+                <default>false</default>
+                <label>TEL - CLT NON TROVATO</label>
+            </value>
+            <value>
+                <fullName>RIFIUTATO preventivamente</fullName>
+                <default>false</default>
+                <label>RIFIUTATO preventivamente</label>
+            </value>
+            <value>
+                <fullName>CONSEGNA/Installazione RIFIUTATA</fullName>
+                <default>false</default>
+                <label>CONSEGNA/Installazione RIFIUTATA</label>
+            </value>
+            <value>
+                <fullName>CLIENTE NON TROVATO</fullName>
+                <default>false</default>
+                <label>CLIENTE NON TROVATO</label>
+            </value>
+            <value>
+                <fullName>INSTALLAZIONE FALLITA</fullName>
+                <default>false</default>
+                <label>INSTALLAZIONE FALLITA</label>
+            </value>
+            <value>
+                <fullName>RESO (PRODOTTO)</fullName>
+                <default>false</default>
+                <label>RESO (PRODOTTO)</label>
+            </value>
+            <value>
+                <fullName>DISATTIVATO/DISDETTO (SERVIZIO)</fullName>
+                <default>false</default>
+                <label>DISATTIVATO/DISDETTO (SERVIZIO)</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
