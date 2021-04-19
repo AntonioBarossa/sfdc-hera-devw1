@@ -274,6 +274,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         }else{
             this.buttonStatefulState = !this.buttonStatefulState
             this.enableEdit =this.buttonStatefulState;
+            this.returnWrapper.dataConfirmed = false;
+            this.dispatchEvent(new CustomEvent('confirmdata', { detail: JSON.stringify(this.returnWrapper)}));
         }  
 
     }

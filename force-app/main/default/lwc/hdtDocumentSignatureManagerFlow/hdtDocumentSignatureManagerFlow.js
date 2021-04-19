@@ -172,6 +172,7 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
                 }
 
                 var inputParams = {
+                    dataConfirmed:false,
                     context:'Case',
                     recordId:this.recordId,
                     processType:this.processType,
@@ -206,49 +207,54 @@ export default class HdtDocumentSignatureManagerFlow extends LightningElement {
     }
     handleConfirmData(event){
         console.log('dati confermati ' + event.detail);
+        
         const fields = {};
         fields[ID_FIELD.fieldApiName] = this.recordId;
         var resultWrapper = JSON.parse(event.detail);
-        var estensioneCivico = ((resultWrapper.addressWrapper.EstensCivico)? resultWrapper.addressWrapper.EstensCivico:'');
-        var address = resultWrapper.addressWrapper.Via + ' ' + resultWrapper.addressWrapper.Civico + ' ' + estensioneCivico + ', ' + resultWrapper.addressWrapper.Comune + ' ' + resultWrapper.addressWrapper.Provincia + ', ' + resultWrapper.addressWrapper.CAP + ' ' +resultWrapper.addressWrapper.Stato;
-        console.log('indirizzo completo ' +address);
-        fields[PHONE_FIELD.fieldApiName] = resultWrapper.phone;
-        fields[EMAIL_FIELD.fieldApiName] = resultWrapper.email;
-        fields[ADDRESS_FIELD.fieldApiName] = address;
-        fields[MOD_FIRMA.fieldApiName] = resultWrapper.signMode;
-        fields[MOD_INVIO.fieldApiName] = resultWrapper.sendMode;
-        fields[InvoicingPostalCode.fieldApiName] = resultWrapper.addressWrapper.CAP;
-        fields[InvoicingStreetNumber.fieldApiName] = resultWrapper.addressWrapper.Civico;
-        fields[InvoicingCityCode.fieldApiName] = resultWrapper.addressWrapper.CodiceComuneSAP;
-        fields[InvoicingStreetCode.fieldApiName] = resultWrapper.addressWrapper.CodiceViaStradarioSAP;
-        fields[InvoicingCity.fieldApiName] = resultWrapper.addressWrapper.Comune;
-        fields[InvoicingStreetNumberExtension.fieldApiName] = resultWrapper.addressWrapper.EstensCivico;
-        fields[IsInvoicingVerified.fieldApiName] = resultWrapper.addressWrapper['Flag Verificato'];
-        //fields[InvoicingPlace.fieldApiName] = resultWrapper.addressWrapper.
-        fields[InvoicingProvince.fieldApiName] = resultWrapper.addressWrapper.Provincia;
-        fields[InvoicingCountry.fieldApiName] = resultWrapper.addressWrapper.Stato;
-        //fields[InvoicingStreetToponym.fieldApiName] = resultWrapper.addressWrapper.
-        fields[InvoicingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
+        if(resultWrapper.dataConfirmed){
+            var estensioneCivico = ((resultWrapper.addressWrapper.EstensCivico)? resultWrapper.addressWrapper.EstensCivico:'');
+            var address = resultWrapper.addressWrapper.Via + ' ' + resultWrapper.addressWrapper.Civico + ' ' + estensioneCivico + ', ' + resultWrapper.addressWrapper.Comune + ' ' + resultWrapper.addressWrapper.Provincia + ', ' + resultWrapper.addressWrapper.CAP + ' ' +resultWrapper.addressWrapper.Stato;
+            console.log('indirizzo completo ' +address);
+            fields[PHONE_FIELD.fieldApiName] = resultWrapper.phone;
+            fields[EMAIL_FIELD.fieldApiName] = resultWrapper.email;
+            fields[ADDRESS_FIELD.fieldApiName] = address;
+            fields[MOD_FIRMA.fieldApiName] = resultWrapper.signMode;
+            fields[MOD_INVIO.fieldApiName] = resultWrapper.sendMode;
+            fields[InvoicingPostalCode.fieldApiName] = resultWrapper.addressWrapper.CAP;
+            fields[InvoicingStreetNumber.fieldApiName] = resultWrapper.addressWrapper.Civico;
+            fields[InvoicingCityCode.fieldApiName] = resultWrapper.addressWrapper.CodiceComuneSAP;
+            fields[InvoicingStreetCode.fieldApiName] = resultWrapper.addressWrapper.CodiceViaStradarioSAP;
+            fields[InvoicingCity.fieldApiName] = resultWrapper.addressWrapper.Comune;
+            fields[InvoicingStreetNumberExtension.fieldApiName] = resultWrapper.addressWrapper.EstensCivico;
+            fields[IsInvoicingVerified.fieldApiName] = resultWrapper.addressWrapper['Flag Verificato'];
+            //fields[InvoicingPlace.fieldApiName] = resultWrapper.addressWrapper.
+            fields[InvoicingProvince.fieldApiName] = resultWrapper.addressWrapper.Provincia;
+            fields[InvoicingCountry.fieldApiName] = resultWrapper.addressWrapper.Stato;
+            //fields[InvoicingStreetToponym.fieldApiName] = resultWrapper.addressWrapper.
+            fields[InvoicingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
 
-         const recordInput = { fields };
+            const recordInput = { fields };
 
-         updateRecord(recordInput)
-             .then(() => {
-                 // Display fresh data in the form
-                 console.log('Record aggiornato');
-                 return refreshApex(this.wiredCase);
-             })
-             .catch(error => {
-                 console.log('Errore in aggiornamento');
-                 this.dispatchEvent(
-                     new ShowToastEvent({
-                         title: 'Error creating record',
-                         message: error.body.message,
-                         variant: 'error'
-                     })
-                 );
-             });
-        this.enableNext = true;
+            updateRecord(recordInput)
+                .then(() => {
+                    // Display fresh data in the form
+                    console.log('Record aggiornato');
+                    return refreshApex(this.wiredCase);
+                })
+                .catch(error => {
+                    console.log('Errore in aggiornamento');
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Error creating record',
+                            message: error.body.message,
+                            variant: 'error'
+                        })
+                    );
+                });
+            this.enableNext = true;
+        }else{
+            this.enableNext = false;
+        }
     }
 
     handleGoNext() {
