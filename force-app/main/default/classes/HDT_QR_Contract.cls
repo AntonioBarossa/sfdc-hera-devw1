@@ -135,4 +135,19 @@ public inherited sharing class HDT_QR_Contract {
         return listCon;
     }
 
+
+
+    public List<Contract> getRecordsWithOrders(List<String> contractIds){
+        return [
+            SELECT
+            SBQQ__Order__c,
+            SBQQ__Order__r.BillingProfile__c,
+            SBQQ__Order__r.ServicePoint__c
+            FROM
+            Contract
+            WHERE Id IN :contractIds
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }

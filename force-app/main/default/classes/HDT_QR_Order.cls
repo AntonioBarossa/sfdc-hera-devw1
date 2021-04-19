@@ -156,6 +156,27 @@ public inherited sharing class HDT_QR_Order {
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
+    * @description Get records by IDs
+    * @param List<String> orderIds
+    * @return List<Order>
+    */
+    public List<Order> getRecordsByIds(List<String> orderIds){
+        return [
+            SELECT 
+            RecordTypeId,
+            RecordType.Name,
+            RecordType.DeveloperName,
+            Phase__c,
+            Status
+            FROM Order 
+            WHERE Id IN :orderIds
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
     * @description Get child records by parent order Id
     * @param String parentOrderId
     * @return List<Order>
@@ -195,6 +216,25 @@ public inherited sharing class HDT_QR_Order {
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get child records by list of parent Order Ids
+    * @param String parentOrderId
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersByParentIds(List<String> parentOrderIds){
+        return [
+            SELECT
+            Phase__c
+            FROM
+            Order
+            WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             WITH SECURITY_ENFORCED
         ];
@@ -341,6 +381,22 @@ public inherited sharing class HDT_QR_Order {
             AND SBQQ__Quote__r.IsVAS__c != true
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
             AND Status IN ('In Lavorazione','Draft')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Order> getRecordByOrderNumber(String orderNumber){
+        return [Select id,phase__c from Order where ordernumber = :orderNumber];
+    }
+
+    public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){
+        return [
+            SELECT
+            Id,
+             BillingProfile__c,
+             ServicePoint__c
+             from Order
+            WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
         ];
     }

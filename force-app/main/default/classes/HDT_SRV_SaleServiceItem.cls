@@ -71,8 +71,10 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
 
         system.debug('!isAmendmentAllowed ' + !isAmendmentAllowed(servicePoint, sale));
+        system.debug('!existingSaleServiceItems ' + !existingSaleServiceItems.isEmpty());
+        system.debug('extraParams ' + extraParams);
 
-        if (!existingSaleServiceItems.isEmpty() && !isAmendmentAllowed(servicePoint, sale) && extraParams == null) {
+        if (!existingSaleServiceItems.isEmpty() && !isAmendmentAllowed(servicePoint, sale) && (extraParams == null || extraParams.isEmpty())) {
 
             if (isServicePointConfirmed(existingSaleServiceItems, servicePoint.Id)) {
                 throw new AuraHandledException('Service Point già presente in ' + existingSaleServiceItems[0].Opportunity__r.Name);

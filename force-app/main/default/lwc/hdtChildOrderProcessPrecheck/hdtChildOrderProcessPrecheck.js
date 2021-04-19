@@ -136,6 +136,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
+
+            this.showEsitoCheck = false;
         }
         else if(selectedProcess === 'HDT_RT_AttivazioneConModifica')
         {

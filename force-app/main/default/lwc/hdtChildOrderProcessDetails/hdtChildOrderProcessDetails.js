@@ -32,7 +32,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     currentSection = {};
     currentSectionObjectApi = '';
     currentSectionRecordId = '';
-    fields = {};
+    @track fields = {};
     extraFieldsToSubmit = {}; //fields that are updated before step is advanced
     @api mainOrderItem;
     wrapAddressObjectAttivazione = {};
@@ -220,6 +220,64 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.sectionDataToSubmit[event.target.name] = event.target.value;
         }
 
+        if(event.target.fieldName === 'VATfacilitationFlag__c' && event.target.value) {
+            this.template.querySelector("[data-id='VAT__c']").disabled = false;
+            this.template.querySelector("[data-id='VAT__c']").required = true;
+
+            Promise.resolve().then(() => {
+                const inputEle = this.template.querySelector("[data-id='VAT__c']");
+                inputEle.reportValidity();
+            });
+        } else if(event.target.fieldName === 'VATfacilitationFlag__c' && !event.target.value) {
+            this.template.querySelector("[data-id='VAT__c']").disabled = true;
+            this.template.querySelector("[data-id='VAT__c']").required = false;
+            Promise.resolve().then(() => {
+                const inputEle = this.template.querySelector("[data-id='VAT__c']");
+                inputEle.reportValidity();
+            });
+        }
+
+        if(event.target.fieldName === 'FacilitationExcise__c' && event.target.value) {
+            
+            if(this.template.querySelector("[data-id='ExciseEle__c']") !== null) {
+                this.template.querySelector("[data-id='ExciseEle__c']").disabled = false;
+                this.template.querySelector("[data-id='ExciseEle__c']").required = true;
+                Promise.resolve().then(() => {
+                    const inputEle = this.template.querySelector("[data-id='ExciseEle__c']");
+                    inputEle.reportValidity();
+                });
+            }
+
+            if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null) {
+                this.template.querySelector("[data-id='ExciseGAS__c']").disabled = false;
+                this.template.querySelector("[data-id='ExciseGAS__c']").required = true;
+                Promise.resolve().then(() => {
+                    const inputEle = this.template.querySelector("[data-id='ExciseGAS__c']");
+                    inputEle.reportValidity();
+                });
+                
+            }
+
+        } else if(event.target.fieldName === 'FacilitationExcise__c' && !event.target.value) {
+            if(this.template.querySelector("[data-id='ExciseEle__c']") !== null) {
+                this.template.querySelector("[data-id='ExciseEle__c']").disabled = true;
+                this.template.querySelector("[data-id='ExciseEle__c']").required = false;
+                Promise.resolve().then(() => {
+                    const inputEle = this.template.querySelector("[data-id='ExciseEle__c']");
+                    inputEle.reportValidity();
+                });
+            }
+
+            if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null) {
+                this.template.querySelector("[data-id='ExciseGAS__c']").disabled = true;
+                this.template.querySelector("[data-id='ExciseGAS__c']").required = false;
+                Promise.resolve().then(() => {
+                    const inputEle = this.template.querySelector("[data-id='ExciseGAS__c']");
+                    inputEle.reportValidity();
+                });
+            }
+        }
+
         console.log(JSON.stringify(this.sectionDataToSubmit));
 
         let draftData = this.sectionDataToSubmit;
@@ -292,37 +350,42 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     applyDateOrdineLogic(){
-        let currentSectionIndex = this.availableSteps.findIndex(section => section.name === this.currentSection.name);
-        let nextSection = this.availableSteps[currentSectionIndex + 1];
-        let nextSectionName = this.availableSteps[currentSectionIndex + 1].name;
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ParentOrder__r.ContractSigned__c && nextSectionName === 'dateOrdine'){
+        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
+        let nextSection = this.confirmedSteps[currentSectionIndex];
+        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
 
-            this.extraFieldsToSubmit.Id = this.order.Id;
-            this.extraFieldsToSubmit.objectApiName = 'Order';
+        console.log('applyDateOrdineLogic - this.order.WaiverRightAfterthought__c: ' + this.order.WaiverRightAfterthought__c + ' ' + this.order.ParentOrder__r.ContractSigned__c);
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ParentOrder__r.ContractSigned__c){
+
+            // this.extraFieldsToSubmit.Id = this.order.Id;
+            // this.extraFieldsToSubmit.objectApiName = 'Order';
 
             if(this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale'){
 
                 if(this.order.WaiverRightAfterthought__c == 'Si'){
-                    this.extraFieldsToSubmit.MaxAfterthoughtDate__c = '2021-03-15';
-                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-03-15';
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
 
-                    this.extraFieldsToSubmit.EffectiveDate__c = '2021-04-01';
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
                     // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-04-01';
                 } else {
-                    this.extraFieldsToSubmit.MaxAfterthoughtDate__c = '2021-03-15';
-                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-03-15';
+                    this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                    nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
 
-                    this.extraFieldsToSubmit.EffectiveDate__c = '2021-05-01';
+                    this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
                     // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
                 }
 
             } else {
 
-                this.extraFieldsToSubmit.EffectiveDate__c = '2021-05-01';
+                this.sectionDataToSubmit.EffectiveDate__c = '2021-06-01';
                 // nextSection.data.filter(data => data.apiname === 'EffectiveDate__c')[0].value = '2021-05-01';
+                // this.sectionDataToSubmit.MaxAfterthoughtDate__c = '2021-04-29';
+                //     nextSection.data.filter(data => data.apiname === 'MaxAfterthoughtDate__c')[0].value = '2021-04-29';
             }
         }
-        console.log('applyDateOrdineLogic: ', JSON.stringify(this.extraFieldsToSubmit));
+        console.log('applyDateOrdineLogic: ', JSON.stringify(this.sectionDataToSubmit));
     }
 
     typeVisibility(type){
@@ -777,8 +840,43 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                
+
             }
+        }
+
+        if(currentSectionName === 'ivaAccise'){
+
+            let errorMessageIvaAccise = '';
+
+            if(this.template.querySelector("[data-id='VATfacilitationFlag__c']") === true && this.template.querySelector("[data-id='VAT__c']").value === ''){
+                errorMessageIvaAccise = 'Popolare IVA';
+            }
+
+            if(this.template.querySelector("[data-id='FacilitationExcise__c']") === true){
+                if(this.template.querySelector("[data-id='ExciseEle__c']") !== null && this.template.querySelector("[data-id='ExciseEle__c']").value === ''){
+                    errorMessageIvaAccise = 'Popolare Accise Agevolata Ele';
+                }
+
+                if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null && this.template.querySelector("[data-id='ExciseGAS__c']").value === ''){
+                    errorMessageIvaAccise = 'Popolare Accise Agevolata Gas';
+                }
+            }
+
+            if(errorMessageIvaAccise !== ''){
+                this.loading = false;
+                const toastErrorMessageIvaAccise = new ShowToastEvent({
+                    title: 'Errore',
+                    message: errorMessageIvaAccise,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessageIvaAccise);
+                return;
+            }
+        }
+
+        if(currentSectionName === 'fatturazione') {
+           this.sectionDataToSubmit['AggregateBilling__c'] = this.template.querySelector("[data-id='AggregateBilling__c']").value;
         }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
@@ -1149,7 +1247,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Nome precedente intestatario',
                         'apiname': 'PreviousHolderFirstName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
+                        'typeVisibility': true,
                         'required': false,
                         'disabled': false,
                         'value': '',
@@ -1158,7 +1256,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Cognome precedente intestatario',
                         'apiname': 'PreviousHolderLastName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
+                        'typeVisibility': true,
                         'required': false,
                         'disabled': false,
                         'value': '',
@@ -1167,7 +1265,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'C.F. Precdente intestatario',
                         'apiname': 'PreviousHolderFiscalCode__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
+                        'typeVisibility': true,
                         'required': false,
                         'disabled': false,
                         'value': '',
@@ -1176,7 +1274,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Ragione sociale precedente intestatario',
                         'apiname': 'PreviousHoldeCompanyName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
+                        'typeVisibility': true,
                         'required': false,
                         'disabled': false,
                         'value': '',
@@ -1185,7 +1283,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'P.Iva precedente intestatario',
                         'apiname': 'PreviousHolderVatNumber__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
+                        'typeVisibility': true,
                         'required': false,
                         'disabled': false,
                         'value': '',
@@ -1382,15 +1480,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Residente all\'indirizzo di Fornitura',
-                    'apiname': 'Resident__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
                     'label': 'Località/Codice REMI',
                     'apiname': 'RemiCode__c',
                     'typeVisibility': this.typeVisibility('gas'),
@@ -1490,17 +1579,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     // 'diffRecordId': this.order.Id
                 },
                 {
-                    'label': 'Società uscente',
-                    'apiname': 'PreviousTrader__c',
-                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
-                    'required': false,
+                    'label': 'Residente all\'indirizzo di Fornitura',
+                    'apiname': 'Resident__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': true,
                     'disabled': true,
-                    'value': this.order.PreviousTrader__c,
-                    'processVisibility': '',
-                    'isMockPicklist': true,
-                    'mockOptions': this.previousTraderOptions,
-                    // 'diffObjApi': 'Order',
-                    // 'diffRecordId': this.order.Id
+                    'value': '',
+                    'processVisibility': ''
                 },
                 {
                     'label': 'RequestPower__c',
@@ -1574,7 +1659,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Provincia',
-                        'apiname': 'SupplyProvince__c',
+                        'apiname': 'SupplyState__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -1809,7 +1894,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'POD/PDR',
-                        'apiname': 'ServicePointCodeFormula__c',
+                        'apiname': 'ServicePointCode__c',
+                        // 'apiname': 'ServicePointCodeFormula__c',
                         // 'apiname': 'Service Point.ServicePointCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
@@ -2027,7 +2113,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Comune',
-                        'apiname': 'InvoicingCity__c',
+                        'apiname': 'BillingCity__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2036,7 +2122,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Stato',
-                        'apiname': 'InvoicingCountry__c',
+                        'apiname': 'BillingCountry__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2045,7 +2131,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Provincia',
-                        'apiname': 'InvoicingProvince__c',
+                        'apiname': 'BillingProvince__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2054,7 +2140,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Nome Via',
-                        'apiname': 'InvoicingStreetName__c',
+                        'apiname': 'BillingStreetName__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2063,7 +2149,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Civico',
-                        'apiname': 'InvoicingStreetNumber__c',
+                        'apiname': 'BillingStreetNumber__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2072,7 +2158,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'CAP',
-                        'apiname': 'InvoicingPostalCode__c',
+                        'apiname': 'BillingPostalCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2081,7 +2167,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': 'Codice ISTAT',
-                        'apiname': 'InvoicingCityCode__c',
+                        'apiname': 'BillingCityCode__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': true,
                         'disabled': true,
@@ -2096,7 +2182,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': false,
-                        'value': '',
+                        'value': 'Si',
                         'processVisibility': ''
                     }
                 ]
@@ -2105,11 +2191,55 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 step: 9,
                 label:'Iva e accise',
                 name: 'ivaAccise',
-                objectApiName: '',
-                recordId: '',
-                processVisibility: false,
+                objectApiName: 'Order',
+                recordId: this.order.Id,
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
                 data: [
-                    
+                    {
+                        'label': 'Flag Agevolazione IVA',
+                        'apiname': 'VATfacilitationFlag__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Flag Accise Agevolata',
+                        'apiname': 'FacilitationExcise__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': false,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'IVA',
+                        'apiname': 'VAT__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Accise Agevolata Ele',
+                        'apiname': 'ExciseEle__c',
+                        'typeVisibility': this.typeVisibility('ele'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Accise Agevolata Gas',
+                        'apiname': 'ExciseGAS__c',
+                        'typeVisibility': this.typeVisibility('gas'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
                 ]
             },
             {

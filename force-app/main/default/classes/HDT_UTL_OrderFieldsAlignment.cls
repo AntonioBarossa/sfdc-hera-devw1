@@ -6,6 +6,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
+    private static HDT_SRv_Account accountSrv = new HDT_SRV_Account();
 
     private static void alignBillingProfileFields(String orderId, String billingProfileId){
 
@@ -32,13 +34,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             BillSendMode__c = billingProfile.BillSendingMethod__c,
             PaymentMode__c = billingProfile.PaymentMethod__c,
             InvoiceEmailAddress__c = billingProfile.InvoiceEmailAddress__c,
-            InvoicingCity__c = billingProfile.InvoicingCity__c,
-            InvoicingCountry__c = billingProfile.InvoicingCountry__c,
-            InvoicingProvince__c = billingProfile.InvoicingProvince__c,
-            InvoicingStreetName__c = billingProfile.InvoicingStreetName__c,
-            InvoicingStreetNumber__c = billingProfile.InvoicingStreetNumber__c,
-            InvoicingPostalCode__c = billingProfile.InvoicingPostalCode__c,
-            InvoicingCityCode__c = billingProfile.InvoicingCityCode__c
+            BillingCity__c = billingProfile.InvoicingCity__c,
+            BillingCountry__c = billingProfile.InvoicingCountry__c,
+            BillingProvince__c = billingProfile.InvoicingProvince__c,
+            BillingStreetName__c = billingProfile.InvoicingStreetName__c,
+            BillingStreetNumber__c = billingProfile.InvoicingStreetNumber__c,
+            BillingPostalCode__c = billingProfile.InvoicingPostalCode__c,
+            BillingCityCode__c = billingProfile.InvoicingCityCode__c,
+            SignatoryType__c = billingProfile.SignatoryType__c
         );
 
         orderSrv.updateRecord(order);
@@ -47,8 +50,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignServicePointFields(String orderId, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c');
+        servicePointSrv.checkReadAccess('AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
@@ -72,13 +75,47 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             SupplyPlace__c = servicePoint.SupplyPlace__c,
             SupplyPostalCode__c = servicePoint.SupplyPostalCode__c,
             SupplyCountry__c = servicePoint.SupplyCountry__c,
-            PowerCommitted__c = servicePoint.PowerContractual__c
+            PowerCommitted__c = servicePoint.PowerContractual__c,
+            ServicePointCode__c = servicePoint.ServicePointCode__c,
+            SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345',
+            ImplantType__c = servicePoint.ImplantType__c,
+            SupplyCityCode__c = servicePoint.SupplySAPCityCode__c,
+            SupplyState__c = servicePoint.SupplyProvince__c
+        );
+
+        orderSrv.updateRecord(order);
+    }
+
+    private static void alignAccountFields(String orderId, String accountId){
+
+        accountSrv.checkReadAccess('FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        Account account = accountQr.getRecordById(accountId, 'FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+
+        String customerName = null;
+
+        if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
+            customerName = account.Name;
+        } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+            customerName = account.FirstName__c;
+        }
+
+        Order order = new Order(
+            Id = orderId,
+            CustomerFiscalCode__c = account.FiscalCode__c,
+            CustomerVATNumber__c = account.VATNumber__c,
+            CustomerName__c = customerName,
+            CustomerLastName__c = account.LastName__c,
+            Mail__c = account.PrimaryEmail__c,
+            PhoneNumber__c = account.Phone,
+            EffectiveDate__c = Date.newInstance(2021, 06, 01)
         );
 
         orderSrv.updateRecord(order);
     }
 
     public static void alignFields(Order order) {
+
+        alignAccountFields(order.Id, order.AccountId);
         
         alignBillingProfileFields(order.Id, order.BillingProfile__c);
 
