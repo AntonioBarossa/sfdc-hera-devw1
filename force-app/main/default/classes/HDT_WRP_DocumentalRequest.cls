@@ -3,17 +3,17 @@ public class HDT_WRP_DocumentalRequest{
 	
 	public class HDT_WRP_DocumentalPackage{
 		public List<HDT_WRP_DocumentalDriver> driver;
-		public String payload;
+		public String payloadBase64;
 
         public HDT_WRP_DocumentalPackage(HDT_WRP_DocumentalPackage input){
             this.driver = new List<HDT_WRP_DocumentalDriver>();
             this.driver.addAll(input.driver);
-            this.payload = input.payload;
+            this.payloadBase64 = input.payloadBase64;
         }
         public HDT_WRP_DocumentalPackage(List<HDT_WRP_DocumentalDriver> driver,  String payload){
             this.driver = new List<HDT_WRP_DocumentalDriver>();
             this.driver.addAll(driver);
-            this.payload = payload;
+            this.payloadBase64 = payload;
         }
         public HDT_WRP_DocumentalPackage(){}
 	}
