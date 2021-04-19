@@ -199,7 +199,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }
 
-        if(currentCase.Phase__c  == 'Da Inviare' || currentCase.Phase__c == 'Preventivo accettato'){
+        if(currentCase.Phase__c  == 'Da Inviare' 
+        || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Comunicazione verso Heroku KO'){
 
             System.debug('SRV_Class_Phase--> '+phase);
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
@@ -224,7 +226,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
-        currentCase.Id = reqWrp.requestMap.get('recordId');
+        System.debug(reqWrp.requestMap);
+        System.debug(reqWrp.requestMap.get('RECORD_ID'));
+        currentCase.Id = reqWrp.requestMap.get('RECORD_ID');
         switch on reqWrp.requestMap.get('METHOD'){
             when 'esito_intermedio'{
                 if(reqWrp.requestMap.get('FASE') != null && reqWrp.requestMap.get('FASE') != ''){
