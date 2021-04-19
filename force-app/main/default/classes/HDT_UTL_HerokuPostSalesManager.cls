@@ -199,7 +199,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }
 
-        if(currentCase.Phase__c  == 'Da Inviare' || currentCase.Phase__c == 'Preventivo accettato'){
+        if(currentCase.Phase__c  == 'Da Inviare' 
+        || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Comunicazione verso Heroku KO'){
 
             System.debug('SRV_Class_Phase--> '+phase);
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
@@ -224,7 +226,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
-        currentCase = hpsmQr.getCurrentCaseById(reqWrp.requestMap.get('recordId'));
+        currentCase.Id = reqWrp.requestMap.get('RECORD_ID');
         switch on reqWrp.requestMap.get('METHOD'){
             when 'esito_intermedio'{
                 if(reqWrp.requestMap.get('FASE') != null && reqWrp.requestMap.get('FASE') != ''){
@@ -235,6 +237,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
                 if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
                     currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
+                }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
+                    currentCase.Amount__c = Decimal.valueOf(reqWrp.requestMap.get('IMP_PREV_DIST'));
                 }
             }
             when 'esito_finale'{

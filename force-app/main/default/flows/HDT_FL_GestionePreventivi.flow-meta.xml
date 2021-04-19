@@ -464,7 +464,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>AggiornaCaseDaInviare</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -971,7 +971,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del cluster Preventivi
---&gt; Aggiunte componenti fisse/variabili</description>
+--&gt; Aggiunto Loading Screen per callout</description>
     <dynamicChoiceSets>
         <name>ClasseContatoreChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -1198,7 +1198,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>1168</locationX>
+        <locationX>1170</locationX>
         <locationY>4194</locationY>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
@@ -1259,6 +1259,16 @@
         </connector>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCaseDaInviare</name>
+        <label>AggiornaCaseDaInviare</label>
+        <locationX>844</locationX>
+        <locationY>4203</locationY>
+        <connector>
+            <targetReference>Loading_Screen</targetReference>
+        </connector>
+        <inputReference>Get_Input_Case_0</inputReference>
+    </recordUpdates>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
         <name>CommodityScreen</name>
@@ -1295,6 +1305,7 @@
                     <stringValue>Indirizzo di fornitura</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1331,6 +1342,37 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Loading_Screen</name>
+        <label>Loading Screen</label>
+        <locationX>975</locationX>
+        <locationY>4363</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtFlowNavigationButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case_0.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -1437,6 +1479,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>SaveInDraft</assignToReference>
@@ -1544,6 +1587,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1594,6 +1638,7 @@
                     <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1692,6 +1737,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
