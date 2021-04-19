@@ -111,15 +111,27 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         billingProfile = depsQr.getBillingProfileInvoiceData(recordId);
 
-        streetName = billingProfile.InvoicingStreetName__c + ', ';
-        streetNumber = billingProfile.InvoicingStreetNumber__c + ', ';
-        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null ? 
-            billingProfile.InvoicingStreetNumberExtension__c + ', '
+        streetName = billingProfile.InvoicingStreetName__c != null 
+            ? billingProfile.InvoicingStreetName__c + ', '
             : '';
-        city = billingProfile.InvoicingCity__c + ', ';
-        province = billingProfile.InvoicingProvince__c + ', ';
-        postalCode = billingProfile.InvoicingPostalCode__c + ', ';
-        country = billingProfile.InvoicingCountry__c + ', ';
+        streetNumber = billingProfile.InvoicingStreetNumber__c != null 
+            ? billingProfile.InvoicingStreetNumber__c + ', '
+            : '';
+        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null 
+            ? billingProfile.InvoicingStreetNumberExtension__c + ', '
+            : '';
+        city = billingProfile.InvoicingCity__c != null
+            ? billingProfile.InvoicingCity__c + ', '
+            : '';
+        province = billingProfile.InvoicingProvince__c != null
+            ? billingProfile.InvoicingProvince__c + ', '
+            : '';
+        postalCode = billingProfile.InvoicingPostalCode__c != null 
+            ? billingProfile.InvoicingPostalCode__c + ', '
+            : '' ;
+        country = billingProfile.InvoicingCountry__c != null 
+            ? billingProfile.InvoicingCountry__c + ', '
+            : '';
 
         deliveryAddres = streetName 
         + streetNumber 
