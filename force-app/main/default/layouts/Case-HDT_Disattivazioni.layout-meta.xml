@@ -182,7 +182,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SendToDistributorDate__c</field>
+                <field>OperationCode__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -192,7 +192,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>OperationCode__c</field>
+                <field>SendToDistributorDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

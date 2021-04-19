@@ -5,36 +5,39 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		System.debug('dentro classe' + inputs);
 		
 		List<QuoteManagement__c> toReturnQuoteManagement = new List<QuoteManagement__c>();
+		QuoteManagement__c quoteManagement = new QuoteManagement__c();
         String processType = inputs[0].processType;
 		
 		if(processType != null && processType.equalsIgnoreCase('Verifiche')){
             
-            toReturnQuoteManagement = menageVerifiche(inputs);
+            quoteManagement = menageVerifiche(inputs);
 			
 		}else if(processType != null && processType.equalsIgnoreCase('Preventivi')){
             
-            toReturnQuoteManagement = menagePreventivi(inputs);
+            quoteManagement = menagePreventivi(inputs);
             
         }
+
+		toReturnQuoteManagement.add(quoteManagement);
 
 		return toReturnQuoteManagement;
     }
 	
-	private static List<QuoteManagement__c> menageVerifiche(List<HDT_UTL_FlowInputs> inputs){
+	private static QuoteManagement__c menageVerifiche(List<HDT_UTL_FlowInputs> inputs){
 		String operationType = inputs[0].operationtype;
         String commodity = inputs[0].commodity;
 		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType);
 	}
 	
-	private static List<QuoteManagement__c> menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
+	private static QuoteManagement__c menagePreventivi(List<HDT_UTL_FlowInputs>  inputs){
 
 		String localDispatcher 		= inputs[0].localDispatcher; 
 		String seller 				= inputs[0].seller;
 		String voltage 				= inputs[0].voltage;
-		Double powerAvailable 		= inputs[0].powerAvailable != '' ? Double.valueOf(inputs[0].powerAvailable) : null;
-		Double powerCommitted 		= inputs[0].powerCommitted != '' ? Double.valueOf(inputs[0].powerCommitted) : null;
+		Decimal powerAvailable 		= inputs[0].powerAvailable;
+		Decimal powerCommitted 		= inputs[0].powerCommitted;
 		String connectionType 		= inputs[0].connectionType;
-		Double powerRequested 		= inputs[0].powerRequested != '' ? Double.valueOf(inputs[0].powerRequested) : null;
+		Decimal powerRequested 		= inputs[0].powerRequested;
 		String supplyType 			= inputs[0].supplyType;
 		String phaseType 			= inputs[0].phaseType;
 		String energyUseType		= inputs[0].energyUseType;
@@ -63,7 +66,19 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		rangePr = getRangeValue(powerRequested);
 		rangePc = getRangeValue(powerCommitted);
 		
-		String conditions = '(AdegPotDisp__c =' + powerAdjustment + ' OR AdegPotDisp__c = null) AND (Caliber__c = \''+ caliber + '\' OR Caliber__c = null) AND (ComparePotRi__c = \'' + checkPrPc + '\' OR ComparePotRi__c = null) AND (RequestedPhase__c = \''+ phaseType + '\' OR RequestedPhase__c = null) AND (PowerEngaged__c = \'' + rangePc + '\' OR PowerEngaged__c = null) AND (PowerRequired__c = \'' + rangePr + '\' OR PowerRequired__c = null) AND (GdmMovement__c = \'' + displacementDistance + '\' or GdmMovement__c = null) AND (VoltageRequired__c = \'' + voltage + '\' OR VoltageRequired__c = null) AND (ConnectionType__c = \'' + connectionType + '\' OR ConnectionType__c = null) AND Operation_type__c = \'' + operationType + '\' AND Commodity__c = \'' + commodity + '\' AND (EnergyUseType__c = \'' + energyUseType + '\' OR EnergyUseType__c = null) AND (VendDist__c = \'' + vendDist + '\' OR VendDist__c = null)';
+		String conditions = '(AdegPotDisp__c =' + powerAdjustment + ' OR AdegPotDisp__c = null) '
+		+'AND (Caliber__c = \''+ caliber + '\' OR Caliber__c = null) ' 
+		+'AND (ComparePotRi__c = \'' + checkPrPc + '\' OR ComparePotRi__c = null) '
+		+'AND (RequestedPhase__c = \''+ phaseType + '\' OR RequestedPhase__c = null) '
+		+'AND (PowerEngaged__c = \'' + rangePc + '\' OR PowerEngaged__c = null) '
+		+'AND (PowerRequired__c = \'' + rangePr + '\' OR PowerRequired__c = null) '
+		+'AND (GdmMovement__c = \'' + displacementDistance + '\' or GdmMovement__c = null) '
+		+'AND (VoltageRequired__c = \'' + voltage + '\' OR VoltageRequired__c = null) '
+		+'AND (ConnectionType__c = \'' + connectionType + '\' OR ConnectionType__c = null) '
+		+'AND Operation_type__c = \'' + operationType + '\' '
+		+'AND Commodity__c = \'' + commodity + '\' '
+		+'AND (EnergyUseType__c = \'' + energyUseType + '\' OR EnergyUseType__c = null) '
+		+'AND (VendDist__c = \'' + vendDist + '\' OR VendDist__c = null)';
 		String fields = 'Id,CausalCode__c, QuoteType__c,OperationCode__c';
 		
 		return HDT_QR_QuoteManagement.queryString(fields, conditions);
@@ -82,7 +97,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		return false;
     }
     
-	private static String getRangeValue(Double power){
+	private static String getRangeValue(Decimal power){
 		String result = '';
 		if(power != null){
 			List<HDT_PowerRangeValue__mdt> powerRangeValueList = [SELECT Range__c FROM HDT_PowerRangeValue__mdt WHERE Low__c <=: power AND High__c >= :power WITH SECURITY_ENFORCED];
@@ -121,16 +136,16 @@ public inherited sharing class HDT_UTL_QuoteManagement {
         public String voltage;
 		
 		@InvocableVariable
-        public String powerAvailable;
+        public Decimal powerAvailable;
 		
 		@InvocableVariable
-        public String powerCommitted;
+        public Decimal powerCommitted;
 		
 		@InvocableVariable
         public String connectionType;
 		
 		@InvocableVariable
-        public String powerRequested;
+        public Decimal powerRequested;
 		
 		@InvocableVariable
         public String supplyType;

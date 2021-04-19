@@ -3,26 +3,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
 
     public String getCodeFromPhaseTransition(Case currentCase){
-
         String code;
         Map<Id, List<wrts_prcgvr__PhaseTransition__c>> result = new Map<Id, List<wrts_prcgvr__PhaseTransition__c>>();
         List<wrts_prcgvr__PhaseTransition__c> ptList = new List<wrts_prcgvr__PhaseTransition__c>();
-
         wrts_prcgvr.Interfaces_1_0.IPhaseManagerUtils pMUtils = 
             ((wrts_prcgvr.Interfaces_1_0.IPhaseManagerUtils) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerUtils'));
         result = (Map<Id, List<wrts_prcgvr__PhaseTransition__c>>) 
             pMUtils.getTransitionCalloutsForObjects(new Map<String, Object> {'triggerNew' => new List<Case>{currentCase}});
-
         ptList = result.get(currentCase.Id);
-
         code = ptList[0].wrts_prcgvr__CalloutTemplate__c;
-
         return code;
-
     }
 
     public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
-
         HDT_UserInputFlow__mdt cl = [SELECT FieldsJSON__c 
         FROM HDT_UserInputFlow__mdt 
         WHERE ProcessType__c = 'prova callout' 
@@ -31,20 +24,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
-
         System.debug('Case Phase --> '+currentCase.Phase__c);
-
         if(currentCase.Phase__c == 'Da Inviare'){
-        
             return mrrResponse;
-
         } else {
-
             return null;
-
         }
     }
-
 
     public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
@@ -57,17 +43,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String communicationChannel;
         String reqId;
         String herokuCode;
-
-        for(wrts_prcgvr.MRR_1_0.Response response : responseMrr.responses){
-
+        String dlCode;
+        responseResults.add(new HDT_WRP_HerokuPostSalesManager(responseMrr.responses[0].objects[0].fields, responseMrr.responses[0].header.requestType));
+        return responseResults;
+        /*for(wrts_prcgvr.MRR_1_0.Response response : responseMrr.responses){
             requestType = response.header.requestType;
-
             for(wrts_prcgvr.MRR_1_0.WObject wobject : response.objects){
-
                 for(wrts_prcgvr.MRR_1_0.Field fld : wobject.fields){
-
                     switch on fld.name{
-
                         when 'result'{
 
                             result = fld.value;
@@ -98,6 +81,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             herokuCode = fld.value;    
 
                         }
+                        when 'COD_PRAT_DISTR'{
+                            dlCode = fld.value;
+                        }
+                        when 'COD_PRAT_DISTR'{
+                            dlCode = fld.value;
+                        }
                         when else{
 
                             //blank code
@@ -111,11 +100,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
 
             responseResults.add(
-                new HDT_WRP_HerokuPostSalesManager(requestType,result,errorMessage,refReq,communicationChannel,reqId,herokuCode));
+                new HDT_WRP_HerokuPostSalesManager(requestType,result,errorMessage,refReq,communicationChannel,reqId,herokuCode,dlCode));
+        }*/
 
-        }
-
-        return responseResults;
+        
 
     }
 
@@ -125,10 +113,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String phase;
         String recordId;
         String herokuCode;
+        String contractCode;
+        String contractStatus;
+        String dlCode;
 
         System.debug('UTL_CLASS_Request--> '+request);
-
-        for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects[0].fields){
+        return new HDT_WRP_HerokuPostSalesManager(request.objects[0].fields); 
+       /* for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects[0].fields){
 
             switch on field.name{
 
@@ -156,13 +147,24 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     phase = field.value;
 
                 }
+                when 'VERTRAG'{
+
+                    contractCode = field.value;
+
+                }
+                when 'VERTRAG_ST '{
+
+                    contractStatus = field.value;
+
+                }when 'COD_PRAT_DISTR'{
+                    dlCode = fld.value;
+                }
 
             }
 
         }
         
-        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId,herokuCode);
-
+        return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId,herokuCode,contractCode,contractStatus,dlCode);*/
     }
 
 
@@ -170,55 +172,48 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         String phase;
         String herokuCode;
+        String dlCode;
+        String sendDlDate;
 
         List<Case> caseUpdate = new List<Case>();
 
         for(HDT_WRP_HerokuPostSalesManager responseResult : responseResults){
-
-            switch on responseResult.responseMap.get('requestType'){
-
+            switch on responseResult.responseMap.get('REQUEST_TYPE'){
                 when 'CREA_RIC'{
-
-                    //if(responseResult.responseMap.get('refReq') == String.valueOf(currentCase.CaseNumber)){
-
-                    herokuCode = responseResult.responseMap.get('reqId');
+                    herokuCode = responseResult.responseMap.get('COD_PRAT_UTENTE');
+                    dlCode = responseResult.responseMap.get('COD_PRAT_DISTR');
+                    sendDlDate = responseResult.responseMap.get('DT_INVIO_DL');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
-
                     switch on responseResult.responseMap.get('result'){
-
                         when 'OK'{
-
                             phase = 'Comunicazione verso Heroku OK';
-
                         } 
                         when else{
-
                             phase = 'Comunicazione verso Heroku KO';
                         }
-
                     }
-
-                    //}
-
                 } when else {
-
                     System.debug('Error non existing request');
-
                     return null;
-
                 }
-
             }
-
         }
 
-        if(currentCase.Phase__c  == 'Da Inviare'){
+        if(currentCase.Phase__c  == 'Da Inviare' 
+        || currentCase.Phase__c == 'Preventivo accettato' 
+        || currentCase.Phase__c == 'Comunicazione verso Heroku KO'){
 
             System.debug('SRV_Class_Phase--> '+phase);
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             currentCase.Phase__c = phase;
             currentCase.HerokuPracticeCode__c = herokuCode;
+            if(dlCode != null && dlCode != ''){
+                currentCase.DistributorServiceCode__c = dlCode;
+            }
+            if(sendDlDate != null && sendDlDate != ''){
+                currentCase.SendToDistributorDate__c = Date.valueOf(sendDlDate);
+            }
 
             caseUpdate.add(currentCase);
 
@@ -229,27 +224,29 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
 
     public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
-
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
-
-        currentCase = hpsmQr.getCurrentCaseById(reqWrp.requestMap.get('recordId'));
-        
-        switch on reqWrp.requestMap.get('flowType'){
-
+        System.debug(reqWrp.requestMap);
+        System.debug(reqWrp.requestMap.get('RECORD_ID'));
+        currentCase.Id = reqWrp.requestMap.get('RECORD_ID');
+        switch on reqWrp.requestMap.get('METHOD'){
             when 'esito_intermedio'{
-
-                currentCase.Phase__c = reqWrp.requestMap.get('phase');
-
+                if(reqWrp.requestMap.get('FASE') != null && reqWrp.requestMap.get('FASE') != ''){
+                    currentCase.Phase__c = reqWrp.requestMap.get('FASE');
+                }
+                if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
+                    currentCase.DistributorServiceCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
+                }
+                if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
+                    currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
+                }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
+                    currentCase.Amount__c = Decimal.valueOf(reqWrp.requestMap.get('IMP_PREV_DIST'));
+                }
             }
             when 'esito_finale'{
-
-                currentCase.Phase__c = reqWrp.requestMap.get('phase');
-                //handleFinalOutcome
-
-
+                currentCase.Phase__c = reqWrp.requestMap.get('FASE');
+                handleEntityUpdate(reqWrp);
             }
-
         }
 
         caseUpdate.add(currentCase);
@@ -289,8 +286,24 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     }
 
+    private void handleEntityUpdate(HDT_WRP_HerokuPostSalesManager wrapper){
+        String contractCode = wrapper.requestMap.get('VERTRAG');
+        String contractStatus = wrapper.requestMap.get('VERTRAG_ST');
+        if(contractCode != null){
+           handleContractUpdate(contractCode,contractStatus);
+        }
+    }
 
-
-
-
+    private void handleContractUpdate(String contractCode,String contractStatus){
+        try{
+            String queryString = 'SELECT Id, Status FROM Contract WHERE SAPContractCode__c = \''+contractCode+'\'';
+            String objectq = 'Contract';
+            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
+            Contract contracRecord = (Contract) recordList[0];
+            contracRecord.Status = contractStatus;
+            Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
+        }catch(Exception ex){
+            System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
+        }
+    }
 }
