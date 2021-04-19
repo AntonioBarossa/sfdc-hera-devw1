@@ -240,14 +240,15 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }
         }
 
-        List<Product2> prodWithoutCriteria = new List<Product2>();
-        prodWithoutCriteria = [
-            SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
-            FROM Product2
-            WHERE Status__c = 'Vendibile' AND IsActive = true AND Family IN :familyList
-            WITH SECURITY_ENFORCED
-        ];
-
+        List<Product2> prodWithoutCriteria;// = new List<Product2>();
+        //prodWithoutCriteria = [
+        //    SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
+        //    FROM Product2
+        //    WHERE Status__c = 'Vendibile' AND IsActive = true AND Family IN :familyList
+        //    WITH SECURITY_ENFORCED
+        //];
+        prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, familyList, 'Vendibile');
+        
         if(!String.isEmpty(quote.SupplyCity__c)){
             for(Product2 p : prodWithoutCriteria){
                 if(p.EligibilitiesCriteria__r.size() == 0){
