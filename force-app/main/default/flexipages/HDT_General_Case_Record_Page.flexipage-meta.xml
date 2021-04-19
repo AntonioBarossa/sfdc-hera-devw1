@@ -368,16 +368,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.HDT_ServiceCatalog</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>CONTAINS</operator>
-                                    <rightValue>HDT_RT_Domiciliazione</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>CustomButton.Case.HDT_InfoTracking</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
