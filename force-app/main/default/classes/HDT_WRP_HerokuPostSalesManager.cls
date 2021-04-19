@@ -39,14 +39,14 @@ global inherited sharing class HDT_WRP_HerokuPostSalesManager {
 
     global HDT_WRP_HerokuPostSalesManager(List<wrts_prcgvr.MRR_1_0.Field> fieldList,String requestType){
         for(wrts_prcgvr.MRR_1_0.Field fld : fieldList){
-            responseMap.put(fld.value,fld.value);
+            responseMap.put(fld.name,fld.value);
         }
         responseMap.put('REQUEST_TYPE',requestType);
     }
     
     public HDT_WRP_HerokuPostSalesManager(List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList){
         for(HDT_WRP_MrrRequest.HDT_WRP_Field fld : fieldList){
-            requestMap.put(fld.value,fld.value);
+            requestMap.put(fld.name,fld.value);
         }
     }
 

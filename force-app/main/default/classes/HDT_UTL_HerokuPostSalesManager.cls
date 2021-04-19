@@ -226,6 +226,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
+        System.debug(reqWrp.requestMap);
+        System.debug(reqWrp.requestMap.get('RECORD_ID'));
         currentCase.Id = reqWrp.requestMap.get('RECORD_ID');
         switch on reqWrp.requestMap.get('METHOD'){
             when 'esito_intermedio'{
