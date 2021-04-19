@@ -240,7 +240,7 @@
                 <stringValue>TODAY() + 90</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_4642575516</name>
+        <name>formula_2_myRule_1_A1_3997975564</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 90</expression>
     </formulas>
@@ -255,7 +255,7 @@ IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90,
          IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 180, null)  ) ) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_5_myRule_4_A1_6360738716</name>
+        <name>formula_5_myRule_4_A1_4807006775</name>
         <dataType>Date</dataType>
         <expression>IF(ISBLANK(TEXT({!myVariable_current.VoltageLevelRequested__c}) ) , 
 IF(TEXT({!myVariable_current.VoltageLevelAvailable__c} )=&quot;BT&quot;, TODAY() + 90, 
@@ -263,7 +263,7 @@ IF(TEXT({!myVariable_current.VoltageLevelAvailable__c} )=&quot;BT&quot;, TODAY()
 IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
          IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 180, null)  ) )</expression>
     </formulas>
-    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-7_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-8_InterviewLabel</interviewLabel>
     <label>Calcolo Scadenza Preventivi</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -366,7 +366,7 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_4642575516</elementReference>
+                <elementReference>formula_2_myRule_1_A1_3997975564</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -375,7 +375,7 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
         <processMetadataValues>
             <name>evaluationType</name>
             <value>
-                <stringValue>criteria</stringValue>
+                <stringValue>always</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
@@ -414,55 +414,6 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </filters>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>inputDataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Tipo Preventivo</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>operatorDataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>QuotationType__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Rapido</stringValue>
-            </value>
-        </filters>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -496,7 +447,7 @@ IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY()
             </processMetadataValues>
             <field>QuotationValidityDate__c</field>
             <value>
-                <elementReference>formula_5_myRule_4_A1_6360738716</elementReference>
+                <elementReference>formula_5_myRule_4_A1_4807006775</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
