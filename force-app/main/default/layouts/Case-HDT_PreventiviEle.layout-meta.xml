@@ -45,16 +45,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>VatNumber__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Taxes__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CommodityFormula__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SupplyType__c</field>
@@ -69,14 +67,16 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>VatNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>PhoneNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Resident__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AnnualConsumption__c</field>
@@ -297,6 +297,10 @@
                 <behavior>Readonly</behavior>
                 <field>DistributorServiceCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Description</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -344,10 +348,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Priority</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Description</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -410,12 +410,24 @@
         <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>NAME</fields>
+        <fields>ActivityType__c</fields>
+        <fields>EnvelopeId__c</fields>
+        <fields>AttachmentCode__c</fields>
+        <fields>AttachmentDescription__c</fields>
+        <fields>CREATED_DATE</fields>
         <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>SendDate__c</fields>
+        <fields>SendMode__c</fields>
+        <fields>Receiver__c</fields>
+        <fields>IsBounced__c</fields>
         <relatedList>DocumentSendTracking__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DocumentalEnvelopeAttachment__c.Case__c</relatedList>
     </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
