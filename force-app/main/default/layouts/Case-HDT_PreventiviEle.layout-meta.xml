@@ -77,8 +77,6 @@
                 <behavior>Readonly</behavior>
                 <field>Resident__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AnnualConsumption__c</field>
