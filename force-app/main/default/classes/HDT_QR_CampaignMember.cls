@@ -147,4 +147,14 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    public List<Account> getAccountsforCampaignMembers(){
+        return [
+            SELECT 
+            Id,
+            Name
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 10
+        ];
+    }
 }

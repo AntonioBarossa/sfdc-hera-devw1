@@ -51,4 +51,8 @@ public inherited sharing class HDT_LC_CampaignsController {
         return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccountsforCampaignMembers() {
+        return  campaignMemberQr.getAccountsforCampaignMembers();
+    }
 }
