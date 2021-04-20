@@ -54,9 +54,9 @@
     </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.AccountNumber</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -71,6 +71,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.AccountSource</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ActiveMonitoring__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -119,9 +124,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.AnnualRevenue</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -135,7 +140,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Account.BillingAddessIsForeign__c</field>
+        <field>Account.BillingAddressIsForeign__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -146,12 +151,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.BillingAddressFormula__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.BillingCityCode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -164,9 +169,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.BillingStreetCode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -184,9 +189,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.BillingStreetToponym__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -344,9 +349,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.DataLimitation__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -589,7 +594,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Account.SalesNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5279,19 +5284,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.AssistantName</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.AssistantPhone</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.Birthdate</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5319,9 +5324,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.Description</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5329,9 +5334,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.DoNotCall</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5341,6 +5346,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Fax</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.FavouriteChannel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5359,19 +5369,24 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.HasOptedOutOfEmail</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.HasOptedOutOfFax</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.HomePhone</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.isSandboxRecord__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5385,13 +5400,53 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.MailingCityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingPlace__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingStreetCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingStreetName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingStreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingStreetNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingStreetToponym__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.Jigsaw</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.LeadSource</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5404,14 +5459,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.OtherAddress</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.OtherPhone</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5436,6 +5491,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Title</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Vip__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15102,6 +15162,20 @@
         <layout>Account-Account Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Account-CPQ Account Layout Service Console</layout>
+        <recordType>Account.HDT_RT_Business</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-CPQ Account Layout Service Console</layout>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountBalance__c-Estratto Conto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountBrand-Account Brand Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AccountContactRelation-Account Contact Relationship Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -15143,11 +15217,159 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_CambioUsoTec</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ComportamentoVenditori</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_RichiestaParere</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_Subentro_EE</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_UnificazioneSeparazioneCABolletta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VariazioneAmministratore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VariazioneAnagraficaCliente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VariazioniEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VariazioniGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VerificaTitolaritaPodPdr</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VerificheEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VerificheGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VolturaTecnica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VotiveModena</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_AlertDisassociazioneUtenteWeb</layout>
+        <recordType>Case.HDT_RT_AlertDisassociazioneUtenteWeb</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_AllineamentoAnagrafica</layout>
+        <recordType>Case.HDT_RT_AllineamentoAnagrafica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_AltreInformative</layout>
+        <recordType>Case.HDT_RT_AltreInformative</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Annullamento</layout>
+        <recordType>Case.HDT_RT_Annullamento</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Autolettura</layout>
+        <recordType>Case.HDT_RT_Autolettura</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_CanoneRai</layout>
+        <recordType>Case.HDT_RT_CanoneRai</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ComunicazionePagamento</layout>
+        <recordType>Case.HDT_RT_ComunicazionePagamento</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Disattivazioni</layout>
+        <recordType>Case.HDT_RT_Disattivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Domiciliazione</layout>
+        <recordType>Case.HDT_RT_Domiciliazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_FatturazioneConsumi</layout>
+        <recordType>Case.HDT_RT_FatturazioneConsumi</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GestioneBolletta</layout>
+        <recordType>Case.HDT_RT_GestioneBolletta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GestioneBonusSociale</layout>
+        <recordType>Case.HDT_RT_GestioneBonusSociale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GestionePrivacy</layout>
+        <recordType>Case.HDT_RT_GestionePrivacy</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Informative</layout>
+        <recordType>Case.HDT_RT_Informative</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Morosita</layout>
+        <recordType>Case.HDT_RT_Morosita</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PagamentiAltriProcessi</layout>
+        <recordType>Case.HDT_RT_AltriProcessiPagamenti</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PianoRateizzazione</layout>
+        <recordType>Case.HDT_RT_PianoRateizzazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PreventiviEle</layout>
+        <recordType>Case.HDT_RT_PreventiviEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PreventiviGas</layout>
+        <recordType>Case.HDT_RT_PreventiviGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Rimborso</layout>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
@@ -16070,6 +16292,27 @@
         <object>wrts_prcgvr__Activity__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Account.HDT_RT_Business</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.HDT_RT_Distributore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.HDT_RT_Partner</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_AlertDisassociazioneUtenteWeb</recordType>
