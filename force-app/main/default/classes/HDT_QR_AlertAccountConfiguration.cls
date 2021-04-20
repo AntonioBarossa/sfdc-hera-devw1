@@ -1,6 +1,6 @@
 public with sharing class HDT_QR_AlertAccountConfiguration {
     
-    public List<AlertAccountConfiguration__c> getAccountAlerts(Id accountId) {
+    public List<AlertAccountConfiguration__c> getRecordsByAccountId(Id accountId) {
 
         List<AlertAccountConfiguration__c> accountAlerts = [
             SELECT 
