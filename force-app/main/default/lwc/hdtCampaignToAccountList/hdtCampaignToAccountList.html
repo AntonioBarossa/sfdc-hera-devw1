@@ -1,0 +1,68 @@
+<template>
+    <template if:true={listResults}>
+        <!-- Lighning datatable-->
+        <template if:true={isSale}>
+            <div>
+                <lightning-datatable data-id="campaignsDT" data={rowdata} columns={columns} key-field="Id"
+                    onrowselection={handleRowSelection} max-row-selection=1>
+                </lightning-datatable>
+            </div>
+        </template>
+    </template>
+    <!-- End Lighning datatable-->
+    <template if:false={isSale}>
+        <div class="slds-page-header slds-page-header_record-home">
+            <!-- Header -->
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <lightning-icon icon-name="standard:campaign" alternative-text="Campaign" title="Campaign">
+                            </lightning-icon>
+                        </div>
+                        <div class="slds-media__body slds-m-top_xx-small ">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                    <h1>
+                                        <span class="slds-page-header__title slds-truncate" title="Campaigns">Campaigns
+                                            ({campaignsNumber})</span>
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Header -->
+            <div class="slds-page-header__row slds-page-header__row_gutters">
+                <div class="slds-page-header__col-details">
+                    <div class="slds-page-header__detail-row dblock">
+                        <template if:true={listResults}>
+                            <template for:each={allCampaigns} for:item="c">
+                                <div class="slds-m-around_xx-small" key={c.Id}>
+                                    <article class="slds-tile">
+                                        <div onmouseout={closePopover} data-id={c.Id}>
+                                            <h3 class="slds-tile__title slds-truncate campaignName"
+                                                data-required={c.Campaign.Required__c} data-id={c.Id}
+                                                title={c.Campaign.Name}>
+                                                <a onclick={redirectToCampaign}
+                                                    data-id={c.Id}>{c.Campaign.Name}</a>
+                                            </h3>
+                                            <c-hdt-popover campaign-id={c.CampaignId} record-id={entityId}
+                                                campaign-member-id={c.Id} data-id={c.Id}
+                                                process-type={c.Campaign.ProcessType__c}
+                                                case-cluster={c.Campaign.CaseCategory__c}
+                                                case-type={c.Campaign.CaseSubCategory__c}
+                                                onstatusupdate={handleCampaignsUpdate}>
+                                            </c-hdt-popover>
+                                        </div>
+                                    </article>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

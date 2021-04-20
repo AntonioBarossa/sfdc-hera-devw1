@@ -157,12 +157,11 @@
     <gender>Feminine</gender>
     <label>Rate Template</label>
     <nameField>
-        <displayFormat>RTP-{00000000}</displayFormat>
         <label>Rate Template</label>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Rate Templates</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

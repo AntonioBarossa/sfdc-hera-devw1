@@ -1,0 +1,4 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,lightning:actionOverride" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <c:hdtCreateCampaign aura:id="newCampaignLWC" recordId="{!v.recordId}"></c:hdtCreateCampaign>
+</aura:component>

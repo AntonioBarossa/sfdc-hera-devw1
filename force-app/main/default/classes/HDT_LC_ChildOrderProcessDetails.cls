@@ -1,0 +1,145 @@
+/**
+ * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+ * @date 13/02/2021
+ * @description HDT_LC_ChildOrderProcessDetails.cls - Class that holds methods that are called from hdtChildOrderProcessDetails.js
+ * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
+ */
+public inherited sharing class HDT_LC_ChildOrderProcessDetails {
+    
+    private static HDT_QR_Order orderQr = new HDT_QR_Order();
+    private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
+    private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Update order process step
+    * @param Order order
+    * @param Decimal step
+    * @param String objectApiName
+    * @param SObject objectToUpdate
+    */
+    @AuraEnabled
+    public static void updateProcessStep(Order order, Decimal step, String objectApiName, SObject objectToUpdate, SObject diffObjectToUpdate){
+
+        if (diffObjectToUpdate != null) {
+            Schema.SObjectType diffSobjectType = diffObjectToUpdate.Id.getSObjectType();
+            String diffSobjectName = diffSobjectType.getDescribe().getName();
+            switch on diffSobjectName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)diffObjectToUpdate);
+                }
+                when 'Order' {
+                    system.debug('extraFields: ' + diffObjectToUpdate);
+                    orderSrv.updateRecord((Order)diffObjectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)diffObjectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)diffObjectToUpdate);
+                }
+            }
+        }
+
+        if (objectToUpdate != null) {
+            switch on objectApiName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)objectToUpdate);
+                }
+                when 'Order' {
+                    orderSrv.updateRecord((Order)objectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)objectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)objectToUpdate);
+                }
+            }
+        }
+
+        orderSrv.updateRecord(new Order(
+            Id = order.Id,
+            Step__c = step
+        ));
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Update order process step that has extra fields to update during transition
+    * @param Order order
+    * @param Decimal step
+    * @param SObject extraFields
+    * @param String objectApiName
+    * @param SObject objectToUpdate
+    */
+    @AuraEnabled
+    public static void updateProcessStepWithExtraFields(Order order, Decimal step, SObject extraFields, String objectApiName, SObject objectToUpdate, SObject diffObjectToUpdate){
+
+        if (diffObjectToUpdate != null) {
+            Schema.SObjectType diffSobjectType = diffObjectToUpdate.Id.getSObjectType();
+            String diffSobjectName = diffSobjectType.getDescribe().getName();
+            switch on diffSobjectName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)diffObjectToUpdate);
+                }
+                when 'Order' {
+                    system.debug('extraFields: ' + diffObjectToUpdate);
+                    orderSrv.updateRecord((Order)diffObjectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)diffObjectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)diffObjectToUpdate);
+                }
+            }
+        }
+
+        if (extraFields != null) {
+            Schema.SObjectType sobjectType = extraFields.Id.getSObjectType();
+            String extraSobjectName = sobjectType.getDescribe().getName();
+
+            switch on extraSobjectName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)extraFields);
+                }
+                when 'Order' {
+                    system.debug('extraFields: ' + extraFields);
+                    orderSrv.updateRecord((Order)extraFields);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)extraFields);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)extraFields);
+                }
+            }
+        }
+
+        if (objectToUpdate != null) {
+            switch on objectApiName {
+                when  'Account'{
+                    accountSrv.updateRecord((Account)objectToUpdate);
+                }
+                when 'Order' {
+                    orderSrv.updateRecord((Order)objectToUpdate);
+                }
+                when 'ServicePoint__c' {
+                    servicePointSrv.updateRecord((ServicePoint__c)objectToUpdate);
+                }
+                when 'BillingProfile__c' {
+                    billingProfileSrv.updateRecord((BillingProfile__c)objectToUpdate);
+                }
+            }
+        }
+
+        orderSrv.updateRecord(new Order(
+            Id = order.Id,
+            Step__c = step
+        ));
+    }
+
+}

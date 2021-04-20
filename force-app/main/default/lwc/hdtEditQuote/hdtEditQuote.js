@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 // import createQuoteLine from '@salesforce/apex/HDT_LC_EditQuote.createQuoteLine';
-import assocPodToQuoteLine from '@salesforce/apex/HDT_LC_EditQuote.assocPodToQuoteLine';
+import execModalExitActions from '@salesforce/apex/HDT_LC_EditQuote.execModalExitActions';
 
 export default class hdtEditQuote extends LightningElement {
 
@@ -41,7 +41,7 @@ export default class hdtEditQuote extends LightningElement {
 
     handleCloseModal(){
 
-        assocPodToQuoteLine({saleId: this.sale.Id, quoteId: this.quoteId}).then(data =>{
+        execModalExitActions({saleId: this.sale.Id, quoteId: this.quoteId}).then(data =>{
             this.dispatchEvent(new CustomEvent('closeeditquote'));
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',

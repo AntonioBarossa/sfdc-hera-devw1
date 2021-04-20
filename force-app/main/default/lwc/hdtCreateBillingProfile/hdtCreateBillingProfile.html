@@ -1,5 +1,5 @@
 <template>
     <lightning-button disabled={disabledInput} onclick={handleCreateEvent} variant="brand" label="Crea" title="Crea" class="slds-m-left_large"></lightning-button>
 
-    <c-hdt-billing-profile-form if:true={showForm} oncancel={handleCancelEvent} onnewbillingprofile={handleNewBillingProfileEvent} account-id={accountId}></c-hdt-billing-profile-form>
+    <c-hdt-billing-profile-form if:true={showForm} oncancel={handleCancelEvent} onnewbillingprofile={handleNewBillingProfileEvent} account-id={accountId} record-id={recordId}></c-hdt-billing-profile-form>
 </template>

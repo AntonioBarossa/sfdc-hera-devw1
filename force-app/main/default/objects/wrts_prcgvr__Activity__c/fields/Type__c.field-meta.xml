@@ -16,6 +16,64 @@
                 <default>false</default>
                 <label>Approvazione Quote</label>
             </value>
+            <value>
+                <fullName>Gestione dati discordanti</fullName>
+                <default>false</default>
+                <label>Gestione dati discordanti</label>
+            </value>
+            <value>
+                <fullName>Modifica Contratti PreAttivazione</fullName>
+                <default>false</default>
+                <label>Modifica Contratti PreAttivazione</label>
+            </value>
+            <value>
+                <fullName>Contratti/Bonus Commerciale</fullName>
+                <default>false</default>
+                <label>Contratti/Bonus Commerciale</label>
+            </value>
+            <value>
+                <fullName>Gestione Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Gestione Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Documentale/Copia Contratto</fullName>
+                <default>false</default>
+                <label>Documentale/Copia Contratto</label>
+            </value>
+            <value>
+                <fullName>Gestione Iva e Accise</fullName>
+                <default>false</default>
+                <label>Gestione Iva e Accise</label>
+            </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni VAS</fullName>
+                <default>false</default>
+                <label>Segnalazioni VAS</label>
+            </value>
+            <value>
+                <fullName>Chiamata Callback</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata Callback</label>
+            </value>
+            <value>
+                <fullName>Chiamata inbound</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata inbound</label>
+            </value>
+            <value>
+                <fullName>Chiamata outbound</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata outbound</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

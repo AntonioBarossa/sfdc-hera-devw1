@@ -10,9 +10,14 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>TBD</fullName>
+                <fullName>A priori</fullName>
                 <default>false</default>
-                <label>TBD</label>
+                <label>A priori</label>
+            </value>
+            <value>
+                <fullName>Dinamico</fullName>
+                <default>false</default>
+                <label>Dinamico</label>
             </value>
         </valueSetDefinition>
     </valueSet>

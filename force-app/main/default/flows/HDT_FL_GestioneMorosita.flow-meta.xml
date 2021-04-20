@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_Fase_In_Da_Inviare</name>
         <label>Assegna Fase In Da Inviare</label>
-        <locationX>1106</locationX>
+        <locationX>842</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
@@ -28,7 +28,7 @@
         <name>Assegna_Fase_In_Da_Inviare_0</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -50,7 +50,7 @@
     <assignments>
         <name>Assegna_Fase_In_Lavorazione</name>
         <label>Assegna Fase In Lavorazione</label>
-        <locationX>842</locationX>
+        <locationX>578</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
@@ -73,7 +73,7 @@
     <assignments>
         <name>Assegna_Fase_In_Lavorazione_0</name>
         <label>Assegna Fase In Lavorazione</label>
-        <locationX>1634</locationX>
+        <locationX>1370</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
@@ -93,49 +93,10 @@
             <targetReference>AggiornaCase_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>AssegnaFaseBozzaAnnullata</name>
-        <label>Assegna Fase Bozza Annullata</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Bozza Annullata</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AggiornaCase_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaPreventivo</name>
-        <label>Assegna Preventivo</label>
-        <locationX>182</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.QuotationType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>RicercaPreventivo.QuoteType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.Amount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DefaultAmount</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AggiornaCase</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>IlCaseInBozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>1848</locationX>
+        <locationX>1601</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Non Bozza</defaultConnectorLabel>
         <rules>
@@ -155,34 +116,9 @@
         </rules>
     </decisions>
     <decisions>
-        <name>PreventivoTrovato</name>
-        <label>Preventivo Trovato?</label>
-        <locationX>380</locationX>
-        <locationY>638</locationY>
-        <defaultConnector>
-            <targetReference>ScreenErrore</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Non Trovato</defaultConnectorLabel>
-        <rules>
-            <name>Trovato</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>RicercaPreventivo</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssegnaPreventivo</targetReference>
-            </connector>
-            <label>Trovato</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>QualeProcesso</name>
         <label>Quale Processo?</label>
-        <locationX>1271</locationX>
+        <locationX>1040</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>ScreenErroreType</targetReference>
@@ -199,7 +135,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>RicercaPreventivo</targetReference>
+                <targetReference>InputDati</targetReference>
             </connector>
             <label>Riattivazione Fornitura</label>
         </rules>
@@ -237,7 +173,7 @@
     <decisions>
         <name>SalvaInBozzaOrConferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>1766</locationX>
+        <locationX>1502</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -260,7 +196,7 @@
         <name>SalvaInBozzaOrConferma_0</name>
         <label>Salva In Bozza O Conferma?</label>
         <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <locationY>638</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -281,7 +217,7 @@
     <decisions>
         <name>SalvaInBozzaOrConferma_0_0</name>
         <label>Salva In Bozza O Conferma?</label>
-        <locationX>1172</locationX>
+        <locationX>908</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -303,7 +239,7 @@
     <decisions>
         <name>Serivizio_0</name>
         <label>Serivizio?</label>
-        <locationX>974</locationX>
+        <locationX>710</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_In_Da_Inviare</targetReference>
@@ -356,7 +292,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>1848</locationX>
+        <locationX>1601</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -374,69 +310,24 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>RicercaPreventivo</name>
-        <label>Ricerca Preventivo</label>
-        <locationX>380</locationX>
-        <locationY>518</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>PreventivoTrovato</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Operation_type__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetInputCase.Type</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>Commodity__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetInputCase.CommodityFormula__c</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>QuoteManagement__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordUpdates>
-        <name>AggiornaCase</name>
-        <label>Aggiorna Case</label>
-        <locationX>182</locationX>
-        <locationY>878</locationY>
-        <connector>
-            <targetReference>InputDati</targetReference>
-        </connector>
-        <inputReference>GetInputCase</inputReference>
-    </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>1358</locationY>
-        <inputReference>GetInputCase</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>AggiornaCase_0_0</name>
-        <label>Aggiorna Case</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>974</locationX>
+        <locationX>710</locationX>
         <locationY>1094</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>1634</locationX>
+        <locationX>1370</locationX>
         <locationY>878</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
@@ -444,7 +335,7 @@
         <name>InputDati</name>
         <label>Input Dati</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -493,7 +384,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -535,7 +426,7 @@
     <screens>
         <name>InputDati_0</name>
         <label>Input Dati</label>
-        <locationX>1172</locationX>
+        <locationX>908</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -639,7 +530,7 @@
     <screens>
         <name>InputDati_0_0</name>
         <label>Input Dati</label>
-        <locationX>1766</locationX>
+        <locationX>1502</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -729,28 +620,9 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>ScreenErrore</name>
-        <label>Screen Errore</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>AssegnaFaseBozzaAnnullata</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayError</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Nessun preventivo disponibile. &lt;/p&gt;&lt;p&gt;Alla pressione del tasto Fine la pratica verrà annullata.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>ScreenErroreType</name>
         <label>Screen Errore Type</label>
-        <locationX>2162</locationX>
+        <locationX>1898</locationX>
         <locationY>518</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -764,7 +636,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1722</locationX>
+        <locationX>1475</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>

@@ -11,6 +11,8 @@ assets/
 .github/*
 assets/*
 manifest/package.xml
+manifest/*
+manifest/
 .gitignore
 
 
@@ -41,3 +43,4 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+launch.json

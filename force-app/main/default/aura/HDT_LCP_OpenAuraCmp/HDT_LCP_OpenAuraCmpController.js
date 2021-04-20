@@ -14,6 +14,9 @@
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
 
+        var context = myPageRef.state.c__context;
+
+        console.log('# context -> '+ context);
         console.log('# accId -> ' + accId);
         console.log('# caseId -> ' + caseId);
         console.log('# flowName -> ' + flowName);
@@ -66,6 +69,7 @@
                         c__recordTypeName: recordTypeName,
                         c__recordToCancell: recordToCancell,
                         c__sObjectRecordToCancell: sObjectRecordToCancell,
+                        c__context: context
                     }
                 },
                 focus: true
