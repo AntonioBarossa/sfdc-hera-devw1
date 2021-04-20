@@ -40,6 +40,10 @@
             <valueName>EB</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>HC+HCM+HCNE</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
             <valueName>MMS</valueName>
         </valueSettings>
