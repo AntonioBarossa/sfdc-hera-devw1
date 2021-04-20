@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>01- App. medico terapeutiche</fullName>
+        <default>false</default>
+        <label>01- App. medico terapeutiche</label>
+    </customValue>
+    <customValue>
+        <fullName>02- Pubblica utilità</fullName>
+        <default>false</default>
+        <label>02- Pubblica utilità</label>
+    </customValue>
+    <customValue>
+        <fullName>Rilevanza continuità serv. GAS</fullName>
+        <default>false</default>
+        <label>Rilevanza continuità serv. GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Sempre ap. - Elettromedicale</fullName>
+        <default>false</default>
+        <label>Sempre ap. - Elettromedicale</label>
+    </customValue>
+    <customValue>
+        <fullName>Sempre ap. - Non Disalimentab.</fullName>
+        <default>false</default>
+        <label>Sempre ap. - Non Disalimentab.</label>
+    </customValue>
+    <customValue>
+        <fullName>Sempre ap. - PESSE</fullName>
+        <default>false</default>
+        <label>Sempre ap. - PESSE</label>
+    </customValue>
+    <customValue>
+        <fullName>Sempre ap. - Pubblica utilita</fullName>
+        <default>false</default>
+        <label>Sempre ap. - Pubblica utilita</label>
+    </customValue>
+    <masterLabel>Tipologia Disalimentabilità</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

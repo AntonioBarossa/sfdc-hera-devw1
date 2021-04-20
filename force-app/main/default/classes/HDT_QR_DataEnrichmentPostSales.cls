@@ -31,5 +31,27 @@ public with sharing class HDT_QR_DataEnrichmentPostSales {
 
     }
 
+    public BillingProfile__c getBillingProfileInvoiceData(String recordId){
+
+        BillingProfile__c billingProfile = new BillingProfile__c();
+
+        billingProfile = [SELECT Id,
+        InvoicingStreetName__c,
+        InvoicingStreetNumber__c,
+        InvoicingStreetNumberExtension__c,
+        InvoicingCity__c,
+        InvoicingProvince__c,
+        InvoicingPostalCode__c,
+        InvoicingCountry__c
+        FROM BillingProfile__c
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+
+        return billingProfile;
+
+
+    }
+
 
 }
