@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>DISTRIBUTORE</label>
+    <label>CODICE_ATECO</label>
     <protected>false</protected>
     <values>
         <field>IsNumber__c</field>
@@ -20,10 +20,10 @@
     </values>
     <values>
         <field>SapField__c</field>
-        <value xsi:type="xsd:string">DISTRIBUTORE</value>
+        <value xsi:type="xsd:string">CODICE_ATECO</value>
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">DistributorCode__c</value>
+        <value xsi:type="xsd:string">AtecoCode__c</value>
     </values>
 </CustomMetadata>
