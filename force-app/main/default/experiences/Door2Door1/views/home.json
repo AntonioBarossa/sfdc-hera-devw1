@@ -1,0 +1,86 @@
+{
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "componentName" : "siteforce:sldsTwoCol66Layout",
+  "id" : "21a8cb25-1b8b-4a57-afb8-ed842a2c30ba",
+  "label" : "Home",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "label" : "Preferred Language",
+        "pickerAlignment" : "center"
+      },
+      "componentName" : "forceCommunity:languageSelector43",
+      "id" : "1028a761-6363-472a-bf3e-a4708ef68db3",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "height" : "485",
+        "recordId" : "01Z2o000000jrnpEAA"
+      },
+      "componentName" : "forceCommunity:dashboard",
+      "id" : "886367a9-85c9-4279-9002-238ba79ae922",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "b99c3edc-f170-4c92-b523-21d596f4b522",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "id" : "5a853880-d52a-42be-bdde-7c0cb91ce284",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "numberOfItems" : 5,
+        "showViewCounts" : true,
+        "title" : "Do you have the answer?"
+      },
+      "componentName" : "forceChatter:unansweredQuestions",
+      "id" : "48044149-4195-4285-b4cf-14926c9a423b",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "35ae3d97-ef21-4f53-94bb-989b96965aa5",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "title" : "Home"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "10df3db8-c7f3-452f-99f7-6835b703dc01",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "72e3e646-5b5d-4a48-aedd-b9c53b483eae",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "showCreateNewCalendar" : false,
+        "showOtherCalendars" : false,
+        "showSidebar" : true
+      },
+      "componentName" : "forceCommunity:calendar",
+      "id" : "0537799e-cf0a-4177-abd5-e065e585e64c",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "73be4c6a-83a7-48e0-987c-cc10ef57b7ce",
+    "regionName" : "sidebar",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "home"
+}
