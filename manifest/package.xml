@@ -5,6 +5,7 @@
   <name>ApexClass</name>
 </types>
  <types>
+  <members>AccountType</members>
   <members>OrderStatus</members>
   <members>CaseOrigin</members>
   <members>CasePriority</members>
