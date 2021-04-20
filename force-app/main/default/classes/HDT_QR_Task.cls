@@ -9,4 +9,20 @@ public inherited sharing class HDT_QR_Task {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public List<Task> getCertifiedEmails() {
+        return [
+            SELECT 
+            Id, 
+            WhoId, 
+            Description, 
+            PecAddress__c, 
+            DoxeePecTemplateCode__c 
+            FROM Task 
+            WHERE 
+            IsPec__c = True AND 
+            SentToMulesoft__c = False 
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
