@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VerificaDatiAlDl</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Verifica dati al DL</description>
     <label>Reclami - Verifica Dati al DL</label>
     <picklistValues>
