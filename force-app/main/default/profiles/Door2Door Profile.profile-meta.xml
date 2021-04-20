@@ -958,11 +958,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>BillingProfile__c.OtherPayer_c__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>BillingProfile__c.PaymentConditions__c</field>
         <readable>false</readable>
     </fieldPermissions>
