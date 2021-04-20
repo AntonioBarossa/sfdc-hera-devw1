@@ -48,6 +48,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     showSearchTable = false;
     showEmptyRemovedImmage = true;
     showSearchRemovedTable = false;
+    availableForAllCities = true;
 
 
     connectedCallback(){
@@ -120,6 +121,9 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 po.isEnabled = false;
             });
         }
+
+        this.availableForAllCities = !this.availableForAllCities;
+        console.log('>>> availableForAllCities: ' + this.availableForAllCities);
 
     }
 

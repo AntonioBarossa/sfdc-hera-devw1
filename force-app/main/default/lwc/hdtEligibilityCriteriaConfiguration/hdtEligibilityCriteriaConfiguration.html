@@ -47,14 +47,26 @@
                                                 <tr class="slds-line-height_reset" >
                                                     <th class="headerackground" scope="col">
 
-                                                        <lightning-input
-                                                            name="headerCheckbox"
-                                                            type="checkbox"
-                                                            label="checkboxHeader"
-                                                            variant="label-hidden"
-                                                            checked
-                                                            onchange={checkboxHeaderHandler}
-                                                        ></lightning-input>
+                                                        <template if:true={availableForAllCities} >
+                                                            <lightning-input
+                                                                name="headerCheckbox"
+                                                                type="checkbox"
+                                                                label="checkboxHeader"
+                                                                variant="label-hidden"
+                                                                checked
+                                                                onchange={checkboxHeaderHandler}
+                                                            ></lightning-input>
+                                                        </template>
+
+                                                        <template if:false={availableForAllCities} >
+                                                            <lightning-input
+                                                                name="headerCheckbox"
+                                                                type="checkbox"
+                                                                label="checkboxHeader"
+                                                                variant="label-hidden"
+                                                                onchange={checkboxHeaderHandler}
+                                                            ></lightning-input>
+                                                        </template>
 
                                                     </th>
                                                     <th class="headerackground" scope="col">

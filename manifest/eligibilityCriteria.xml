@@ -8,6 +8,8 @@
 		<members>HDT_LC_EligibilityCriteriaController</members>
 		<members>HDT_LC_EligibilityCriteriaCtrlHelper</members>
 		<members>HDT_WRP_EligibilityCriteria</members>
+		<members>HDT_QR_SearchPlug</members>
+		<members>HDT_UTL_SearchPlug</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
