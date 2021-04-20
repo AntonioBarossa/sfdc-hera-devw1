@@ -91,11 +91,11 @@ global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0
                 	}
             	}
                 else{
-                    ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                    // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
                     ord.Phase__c = 'Comunicazione verso Heroku KO';
                 }
-                HDT_SRV_Order ordSRV = new HDT_SRV_Order();
-                ordSRV.updateRecord(ord);
+                HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                ordSrv.updateRecord(ord);
             }
         }catch(Exception e ){
             System.debug('ERRORE RESPONSE 500 Qualcosa');

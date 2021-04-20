@@ -7,50 +7,28 @@ public inherited sharing class HDT_UTL_ContractProcess {
     
     public static void orderCompletataPhaseManagement(List<Contract> newContractList){
         
-        List<String> contractIds = getContractIds(newContractList);
+        //get List of orderIds from Contract
+        List<String> orderIds = new List<String>();
 
-        system.debug('contractIds: ' + contractIds);
-
-        List<Contract> contractsWithOrders = contractQr.getRecordsWithOrders(contractIds);
-
-        system.debug('****contractsWithOrders: ' + contractsWithOrders);
-
-        // List<Contract> contractsToUpdate = prepareContractToUpdateFieldsFromOrder(contractsToQuery);
-
-        // system.debug('****contractsToUpdate: ' + contractsToUpdate);
-
-        // contractSrv.updateRecords(contractsToUpdate);
-
-    }
-
-    private static List<String> getContractIds(List<Contract> newContractList){
-        List<String> ids = new List<String>();
-
-        for (Contract contract : newContractList) {
-            ids.add(contract.Id);
+        for (Contract newContract : newContractList) {
+            orderIds.add(newContract.SBQQ__Order__c);
         }
 
-        return ids;
+        //retrieve orders with billingProfile and ServicePoint
+        List<Order> orders = orderQr.getRecordsByOrdersIdsBulk(orderIds);
+
+        //update BillingProfile__c & ServicePoint__c on Contract
+        for (Order order : orders) {
+            if (order.BillingProfile__c != null && order.ServicePoint__c != null) {
+                for (Contract newContract : newContractList) {
+                    if (newContract.SBQQ__Order__c == order.Id) {
+                        newContract.BillingProfile__c = order.BillingProfile__c;
+                        newContract.ServicePoint__c = order.ServicePoint__c;
+                    }
+                }
+            }
+        }
+
     }
-
-    // private static List<Contract> prepareContractToUpdateFieldsFromOrder(List<Contract> contracts){
-
-    //     List<Contract> contractsToUpdate = new List<Contract>();
-
-    //     for (Contract contract : contracts) {
-
-    //         if (contract.SBQQ__Order__r.BillingProfile__c != null && contract.SBQQ__Order__r.ServicePoint__c != null) {
-    //             system.debug('***** START if prepareContractToUpdateFieldsFromOrder');
-    //             contractsToUpdate.add(new Contract(
-    //                 Id = contract.Id,
-    //                 BillingProfile__c = contract.SBQQ__Order__r.BillingProfile__c,
-    //                 ServicePoint__c = contract.SBQQ__Order__r.ServicePoint__c
-    //             ));
-    //         }
-    //     }
-
-    //     return contractsToUpdate;
-
-    // }
 
 }

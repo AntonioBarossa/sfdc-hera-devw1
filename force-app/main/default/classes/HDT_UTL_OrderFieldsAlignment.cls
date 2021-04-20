@@ -34,14 +34,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             BillSendMode__c = billingProfile.BillSendingMethod__c,
             PaymentMode__c = billingProfile.PaymentMethod__c,
             InvoiceEmailAddress__c = billingProfile.InvoiceEmailAddress__c,
-            BillingCity__c = billingProfile.InvoicingCity__c,
-            BillingCountry__c = billingProfile.InvoicingCountry__c,
-            BillingProvince__c = billingProfile.InvoicingProvince__c,
-            BillingStreetName__c = billingProfile.InvoicingStreetName__c,
-            BillingStreetNumber__c = billingProfile.InvoicingStreetNumber__c,
-            BillingPostalCode__c = billingProfile.InvoicingPostalCode__c,
+            // BillingCity__c = billingProfile.InvoicingCity__c,
+            // BillingCountry__c = billingProfile.InvoicingCountry__c,
+            // BillingProvince__c = billingProfile.InvoicingProvince__c,
+            // BillingStreetName__c = billingProfile.InvoicingStreetName__c,
+            // BillingStreetNumber__c = billingProfile.InvoicingStreetNumber__c,
+            // BillingPostalCode__c = billingProfile.InvoicingPostalCode__c,
             BillingCityCode__c = billingProfile.InvoicingCityCode__c,
-            SignatoryType__c = billingProfile.SignatoryType__c
+            // SignatoryType__c = billingProfile.SignatoryType__c
         );
 
         orderSrv.updateRecord(order);
@@ -77,7 +77,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             SupplyCountry__c = servicePoint.SupplyCountry__c,
             PowerCommitted__c = servicePoint.PowerContractual__c,
             ServicePointCode__c = servicePoint.ServicePointCode__c,
-            SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345',
+            // SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345',
             ImplantType__c = servicePoint.ImplantType__c,
             SupplyCityCode__c = servicePoint.SupplySAPCityCode__c,
             SupplyState__c = servicePoint.SupplyProvince__c
@@ -104,8 +104,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             CustomerFiscalCode__c = account.FiscalCode__c,
             CustomerVATNumber__c = account.VATNumber__c,
             CustomerName__c = customerName,
-            CustomerLastName__c = account.LastName__c,
-            Mail__c = account.PrimaryEmail__c,
+            // CustomerLastName__c = account.LastName__c,
+            // Mail__c = account.PrimaryEmail__c,
             PhoneNumber__c = account.Phone,
             EffectiveDate__c = Date.newInstance(2021, 06, 01)
         );
