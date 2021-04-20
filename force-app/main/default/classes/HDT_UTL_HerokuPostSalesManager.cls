@@ -176,6 +176,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String sendDlDate;
         String errorMessage;
 
+        Case caseNew = new Case();
+
+
         List<Case> caseUpdate = new List<Case>();
 
         for(HDT_WRP_HerokuPostSalesManager responseResult : responseResults){
@@ -208,17 +211,18 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('SRV_Class_Phase--> '+phase);
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
-            currentCase.Phase__c = phase;
-            currentCase.HerokuPracticeCode__c = herokuCode;
-            currentCase.Description = errorMessage;
+            caseNew.Id = currentCase.Id;
+            caseNew.Phase__c = phase;
+            caseNew.HerokuPracticeCode__c = herokuCode;
+            caseNew.Description = errorMessage;
             if(dlCode != null && dlCode != ''){
-                currentCase.DistributorServiceCode__c = dlCode;
+                caseNew.DistributorServiceCode__c = dlCode;
             }
             if(sendDlDate != null && sendDlDate != ''){
-                currentCase.SendToDistributorDate__c = Date.valueOf(sendDlDate);
+                caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
             }
 
-            caseUpdate.add(currentCase);
+            caseUpdate.add(caseNew);
 
         }
 
