@@ -607,6 +607,26 @@
                 <default>false</default>
                 <label>Sospeso per verifica DL</label>
             </value>
+            <value>
+                <fullName>Da lavorare</fullName>
+                <default>false</default>
+                <label>Da lavorare</label>
+            </value>
+            <value>
+                <fullName>Attesa risposta cliente</fullName>
+                <default>false</default>
+                <label>Attesa risposta cliente</label>
+            </value>
+            <value>
+                <fullName>Attesa risposta fornitore</fullName>
+                <default>false</default>
+                <label>Attesa risposta fornitore</label>
+            </value>
+            <value>
+                <fullName>Lavorazione Sap</fullName>
+                <default>false</default>
+                <label>Lavorazione Sap</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -36,6 +36,8 @@ global with sharing class HDT_WS_MrrRequest {
         //INIZIO SVILUPPI EVERIS
         
         HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
+        HDT_WRP_MrrRequest.HDT_WRP_Request postSalesRequest = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        String result;
 
         //FINE SVILUPPI EVERIS
 
@@ -59,7 +61,8 @@ global with sharing class HDT_WS_MrrRequest {
 
                     //INIZIO SVILUPPI EVERIS
 
-                    hpsmSrv.handleInboundRequest(request);
+                    postSalesRequest = request;
+                    result = hpsmSrv.handleInboundRequest(postSalesRequest);
 
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
@@ -122,7 +125,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             RestContext.response.statusCode = 500;
             
-        }
+        } 
 
         // responseGen.writeEndObject();
 

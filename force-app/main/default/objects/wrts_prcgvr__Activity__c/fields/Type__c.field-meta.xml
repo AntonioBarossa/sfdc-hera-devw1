@@ -51,6 +51,29 @@
                 <default>false</default>
                 <label>Sportello</label>
             </value>
+            <value>
+                <fullName>Segnalazioni VAS</fullName>
+                <default>false</default>
+                <label>Segnalazioni VAS</label>
+            </value>
+            <value>
+                <fullName>Chiamata Callback</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata Callback</label>
+            </value>
+            <value>
+                <fullName>Chiamata inbound</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata inbound</label>
+            </value>
+            <value>
+                <fullName>Chiamata outbound</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata outbound</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

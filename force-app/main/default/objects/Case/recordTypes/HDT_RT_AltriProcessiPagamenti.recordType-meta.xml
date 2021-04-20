@@ -12,50 +12,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agenzia di confisca</fullName>
-            <default>false</default> 
-        </values>
-        <values>
-            <fullName>Applicazione della legge</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assicuratore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza a lungo termine</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza gestita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Associazione grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attività bancaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Auto%2FCasalinghi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda wireline</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda%2FDi passaggio</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aziende</fullName>
             <default>false</default>
         </values>
@@ -72,83 +28,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BSU ESP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Banca centrale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Broker</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Casa progettazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Casalinghi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro convegni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro di assistenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro di formazione aziendale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro formaz altri produttori</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chain Drug</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chain Food</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Clinica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante all%27ingrosso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante non in negozio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commercio di massa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Company</fullName>
             <default>false</default>
         </values>
         <values>
@@ -156,51 +36,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consulente</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Default gas</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Dettagliante diretto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dettagliante indiretto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ditta individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Drogheria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elettrodomestici</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Enti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Enti Consip</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esperto finanziario</fullName>
             <default>false</default>
         </values>
         <values>
@@ -216,63 +56,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Farmacia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Federale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Filiale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fornitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Funzionario produttore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Governo</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Grandi Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Grossista di prod%2E farmac%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gruppo di programmazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gruppo reparto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hotel</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In sede</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Industriale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -280,79 +64,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Investitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Località</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luogo di vacanza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Magazzino a prezzi scontati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Meeting%2FCongressi</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>NRI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Negozio prod%2E farmac%2E%2Fpropr%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Definito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non a scopo di lucro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Normale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ODM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OEM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OEM del concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Offerta di investimento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Officina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ospedale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paramedici</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partnership</fullName>
             <default>false</default>
         </values>
         <values>
@@ -364,39 +76,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Polizia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Produttore su contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reparto</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Reseller - Extra Gruppo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Reseller - Gruppo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Residenziale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rivenditore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rivenditore del concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>S-Corp</fullName>
             <default>false</default>
         </values>
         <values>
@@ -408,87 +92,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizio affari Internet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Societa Vendita Terze</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Società</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società a resp%2E limitata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società d%27assicurazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società fiduciaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società immobiliare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società in accomandita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Soggiorno esteso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spedizioniere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subcontraente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Suite</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supermarket</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supermercato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ufficio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ulteriori informazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Università</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>VIP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venditore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venditore di varie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vigili del Fuoco</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1008,50 +616,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agenzia di confisca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Applicazione della legge</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assicuratore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza a lungo termine</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza gestita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Associazione grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attività bancaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Auto%2FCasalinghi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda wireline</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda%2FDi passaggio</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aziende</fullName>
             <default>false</default>
         </values>
@@ -1068,83 +632,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BSU ESP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Banca centrale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Broker</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Casa progettazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Casalinghi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro convegni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro di assistenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro di formazione aziendale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro formaz altri produttori</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chain Drug</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chain Food</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Clinica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante all%27ingrosso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante non in negozio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commercio di massa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Company</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1152,51 +640,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consulente</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Default gas</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Dettagliante diretto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dettagliante indiretto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ditta individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Drogheria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elettrodomestici</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Enti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Enti Consip</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esperto finanziario</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1212,63 +660,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Farmacia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Federale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Filiale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fornitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Funzionario produttore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Governo</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Grandi Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Grossista di prod%2E farmac%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gruppo di programmazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gruppo reparto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hotel</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In sede</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Industriale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1276,79 +668,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Investitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Località</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luogo di vacanza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Magazzino a prezzi scontati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Meeting%2FCongressi</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>NRI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Negozio prod%2E farmac%2E%2Fpropr%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Definito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non a scopo di lucro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Normale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ODM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OEM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OEM del concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Offerta di investimento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Officina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ospedale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paramedici</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partnership</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1360,39 +680,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Polizia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Produttore su contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reparto</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Reseller - Extra Gruppo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Reseller - Gruppo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Residenziale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rivenditore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rivenditore del concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>S-Corp</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1404,87 +696,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizio affari Internet</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Societa Vendita Terze</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Società</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società a resp%2E limitata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società d%27assicurazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società fiduciaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società immobiliare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società in accomandita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Soggiorno esteso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spedizioniere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subcontraente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Suite</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supermarket</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supermercato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ufficio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ulteriori informazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Università</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>VIP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venditore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venditore di varie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vigili del Fuoco</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1555,6 +771,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Generiche Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Informative</fullName>
             <default>false</default>
         </values>
@@ -1572,6 +796,10 @@
         </values>
         <values>
             <fullName>Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PostSales VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1986,6 +1214,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CorrectionPlannedTiqv__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CorrectionRight__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
             <fullName>Cliente Aggressivo</fullName>
@@ -2092,6 +1342,38 @@
         </values>
         <values>
             <fullName>Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D1 - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D2 - Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D3 - Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D4 - Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D5 - Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D6 - Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D7 - BP Doppio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D8 - Marcatura nulla</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2343,6 +1625,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CustomerRequestAccomplished__c</picklist>
+        <values>
+            <fullName>NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
             <fullName>In Compartecipazione</fullName>
@@ -2377,6 +1674,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Disconnectable__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DisconnectibilityType__c</picklist>
         <values>
             <fullName>01- App%2E medico terapeutiche</fullName>
@@ -2384,6 +1692,26 @@
         </values>
         <values>
             <fullName>02- Pubblica utilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rilevanza continuità serv%2E GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Elettromedicale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Non Disalimentab%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - PESSE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Pubblica utilita</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2399,6 +1727,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ElectronicInvoicingMethod__c</picklist>
+        <values>
+            <fullName>Estero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML %2B carta%2Femail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML PA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>EndCustomerRequestType__c</picklist>
         <values>
             <fullName>Reclamo scritto</fullName>
@@ -2406,6 +1753,17 @@
         </values>
         <values>
             <fullName>Richiesta info</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EnergyService__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3227,6 +2585,395 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>HouseOwner__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>HouseType__c</picklist>
+        <values>
+            <fullName>Appartamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casa Indipendente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>InformationDetail__c</picklist>
+        <values>
+            <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altre voci in fattura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>App non disponibile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approfondimenti consumi fatturati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento sopralluogo e esecuzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza accettazione moduli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza compilazione moduli %28daticatastali%2C legge 80%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiarimenti doppi pagamenti%2Frimborsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiarimento modalità di pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiede come inviare reclamo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiede se reclamo ricevuto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Come accedere ad Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Come fornire un%27autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Come pagare la bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Come richiedere la domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Come variare i dati bancari</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicato saldo per riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma lettura fornita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulenza Offerte o tariffari %28contratti non ancora attivi%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallineamento dati %28Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione lavori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura rettificata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornite date per autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornite info su variazione richiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info PAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info appuntamento apertura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info canone pagato%2Fda pagare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info esito disattivazione %28con appuntamento o senza%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info fatture Vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info mancato Ricontatto Da Canali Di Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info numeri di contatto Hera %28sportelli%2C stazioni ecologiche%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info ritiri %28appuntamento mancato%2Ferrato%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info stato contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su Sol e App %28registrazione%2Ffunzionamento%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su contatto teleselling%2Fagenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su documentazione%E2%80%8B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su errore richiesta disattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su sms ricevuto per rifiuto lettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su tempi consegna prodotti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info%2Fproblemi carta smeraldo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni attivazione non corrette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lamentela su prodotto%2Fservizio%E2%80%8B</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata ricezione Plico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata ricezione bolletta cartacea%2Femail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata ricezione preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità di ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità richiesta attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità richiesta disattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità richiesta preventivo e costi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità richiesta verifica e costi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte prodotti e servizi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Orari stazione ecologica%2Fsegnalazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Periodo fatturato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prenotazione Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi Sol e App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi di Navigazione %28Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi di Pagamento %28Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi di accesso %28Sol%2Fapp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi e chiarimenti Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi pagamento Sol e App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Problemi su autolettura canali automatici %28IVR%2C SMS%2C Sol%2FApp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pronto intervento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione contratto post chiusura per morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnala attesa di risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione contatore rotto%2Fcongelato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sol non disponibile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sopralluogo e preventivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spiegata risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spiegazione Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spiegazione sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spiegazione voci in bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stato pratica attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tempi riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita scorretta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica avanzamento richiesta variazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica compensazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica crediti da rimborsare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica dati anagrafici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica dati canone rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica dati di contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica dati di recapito fatture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica saldo residuo da pagare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica su agente Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche cambio contatore pre attivazione</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LitigationType__c</picklist>
         <values>
             <fullName>Area</fullName>
@@ -3246,6 +2993,77 @@
         </values>
         <values>
             <fullName>Conciliazione</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MacroTopic__c</picklist>
+        <values>
+            <fullName>Consulenza offerte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info Consegna e prodotti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info estratto conto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info fattura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info modalità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info modulistica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info servizi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info stato pratica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info su stato pratica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazione stato pratica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità comunicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3365,6 +3183,17 @@
         </values>
         <values>
             <fullName>Procedura presente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NotJust__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3536,6 +3365,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ProcessingStatus__c</picklist>
+        <values>
+            <fullName>annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>da completare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>gestita %28completata%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>sospensione %28in attesa pagamento%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ProductTypeVAS__c</picklist>
+        <values>
+            <fullName>HVAC - Caldaia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC - Scaldabagno</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ReadType__c</picklist>
         <values>
             <fullName>Reale</fullName>
@@ -3585,6 +3444,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ReasonAutoeletric__c</picklist>
+        <values>
+            <fullName>Heraricarica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Noleggio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Assistenza Sociale</fullName>
@@ -3592,6 +3462,14 @@
         </values>
         <values>
             <fullName>Bolletta Fuga H2O</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CLIENTE NON TROVATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3624,6 +3502,10 @@
         </values>
         <values>
             <fullName>Cliente paga un acconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DISATTIVATO%2FDISDETTO %28SERVIZIO%29</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3691,6 +3573,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>INSTALLAZIONE FALLITA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Incongruenza sui sistemi</fullName>
             <default>false</default>
         </values>
@@ -3715,6 +3601,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RESO %28PRODOTTO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIFIUTATO preventivamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rinuncia piano rate</fullName>
             <default>false</default>
         </values>
@@ -3728,6 +3622,10 @@
         </values>
         <values>
             <fullName>TCP Comune no Int</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TEL - CLT NON TROVATO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4056,11 +3954,11 @@
     <picklistValues>
         <picklist>SendMode__c</picklist>
         <values>
-            <fullName>Posta Cartacea</fullName>
+            <fullName>E-mail</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>E-mail</fullName>
+            <fullName>Posta Cartacea</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4170,6 +4068,248 @@
         </values>
         <values>
             <fullName>13Z0-Grossisti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignMode__c</picklist>
+        <values>
+            <fullName>Cartacea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP Coopresenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP Remoto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vocal Order</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalCategory__c</picklist>
+        <values>
+            <fullName>Comportamento venditore HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diario dei consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Noleggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione al fornitore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalOutcome__c</picklist>
+        <values>
+            <fullName>Eseguita riparazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eseguita sostituzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Id commerciale venditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Respito no cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalato fornitore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalReason__c</picklist>
+        <values>
+            <fullName>Colonnina Guasta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copertura servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Firma %2F registrazione falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Messa in funzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nissan Leaf</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Renault Zoe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco coloninna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Smart For two</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tempi spedizione%2Fattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tesla model 3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tessera non funziona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>bolla di spedizione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>condizioni contratto variate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>documentazione manutenzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>il prodotto è diverso da aspettativa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>manutenzione male eseguita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>mq%2Fn%2Eabitanti%2Fpriorietario%2Ftipo abitazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>non riesce a contattare fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>non sono coperto dell%27assicurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>non vedo quanto ho ricaricato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>registrazione catasto caldaia%22</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalSubCategory__c</picklist>
+        <values>
+            <fullName>Colonnina%2Ftessera non funziona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna difforme</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna non avvenuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doppia fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errato addebito per cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore esposizione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Form digitale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lamentela su prodotto %2F servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica  dei dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prodotto non funziona</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spiegazione tecnica diario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vas non consegnato%2Fnon attivato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita scorretta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SignalType__c</picklist>
+        <values>
+            <fullName>Vas Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vas Prodotto%2FServizio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -4576,7 +4716,15 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Blocco Sollecito%2FInteressi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso Tecnico</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4588,11 +4736,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Feature Request</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4612,7 +4768,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Proroga Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Question</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4621,6 +4785,10 @@
         </values>
         <values>
             <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4637,6 +4805,10 @@
         </values>
         <values>
             <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5031,6 +5203,17 @@
         </values>
         <values>
             <fullName>In Corso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>XMLType__c</picklist>
+        <values>
+            <fullName>Dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sintetico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

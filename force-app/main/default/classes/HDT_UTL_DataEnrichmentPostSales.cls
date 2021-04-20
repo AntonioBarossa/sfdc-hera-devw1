@@ -19,6 +19,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         
         String billingProfileCode;
         String billingProfilesfdcField;
+        String billingProfileId;
+
+        String deliveryAddress;
+
+        String salesCompanyCode;
+        String salesCompany;
 
         String method;
         String value;
@@ -38,15 +44,29 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                     if(transcodeConfig.IsNumber__c){
 
                         if(transcodeConfig.Precision__c == 0){
+                            try{
 
-                            transcodeMap.put(transcodeConfig.SfdcField__c,
-                            Integer.valueOf(position.valore));
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                Integer.valueOf(position.valore));
+
+                            }catch(Exception e){
+
+                                System.debug(e.getMessage());
+
+                            }
 
                         }else if(transcodeConfig.Precision__c > 0){
+                            try{
 
-                            decValue = Decimal.valueOf(position.valore);
-                            transcodeMap.put(transcodeConfig.SfdcField__c, 
-                            decValue.setScale(Integer.valueOf(transcodeConfig.Precision__c)));
+                                decValue = Decimal.valueOf(position.valore);
+                                transcodeMap.put(transcodeConfig.SfdcField__c, 
+                                decValue.setScale(Integer.valueOf(transcodeConfig.Precision__c)));
+
+                            }catch(Exception e){
+
+                                System.debug(e.getMessage());
+                                
+                            }
 
                         }
 
@@ -79,6 +99,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 billingProfileCode = position.valore;
 
                             }
+                            when 'getCaliber'{
+
+                                transcodeMap.put(transcodeConfig.SfdcField__c, 
+                                depsSrv.getCaliber(position.valore));
+
+                            }
 
                         }
 
@@ -95,8 +121,29 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
         }
 
-        transcodeMap.put(billingProfilesfdcField, depsSrv.getBillingProfileIdBySapCode(billingProfileCode));
-        
+        //BILLING PROFILE 
+        try{
+
+            billingProfileId = depsSrv.getBillingProfileIdBySapCode(billingProfileCode);
+            deliveryAddress = depsSrv.getDeliveryAddress(billingProfileId);
+
+            transcodeMap.put(billingProfilesfdcField, billingProfileId);
+
+            transcodeMap.put('DeliveryAddress__c', deliveryAddress);
+
+        } catch(Exception e) {
+
+            System.debug('Billing Profile non presente a sistema');
+
+        }
+
+        //SALESCOMPANY
+        salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
+        salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
+
+        transcodeMap.put('SalesCompany__c', salesCompany);
+
+
         caseList.add(depsSrv.populateCase(transcodeMap, currentCase));
 
         return caseList;
