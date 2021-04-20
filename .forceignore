@@ -16,7 +16,7 @@ package.xml
 **profiles/Minimum Access - Salesforce.profile
 **objects/Case/fields/Cluster__c*
 **objects/Account/fields/Category__c*
-**objects/BillingProfile__c/fields/ElectronicInvoivinMethod__c*
+**objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
 **objects/BillingProfile__c/fields/XMLType__c*
 **objects/Case/fields/DisconnectibilityType__c*
 **objects/Order/fields/DocSendingMethod__c*
