@@ -48,13 +48,13 @@ global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0
         inputTemplateFunction.put('parameters',parameters);
         System.debug('********LOG7');
         
-        wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng TemplateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
+        wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
 		System.debug('********LOG8');
-        Object objTemp = TemplateEngine.getTemplate(inputTemplateFunction);
+        Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
         System.debug('********LOG9');
         //inputTemplateFunction.put('templateObject',objTemp);
         System.debug('********LOG10');
-        Map<String,Object> templateReturn = (Map<String,Object>)TemplateEngine.applyTemplate(objTemp);
+        Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
         wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
         multirequestObj.requests[0].header.fields = headerAttributetoAdd;
         System.debug('********LOG11');
@@ -91,7 +91,7 @@ global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0
                 	}
             	}
                 else{
-                    // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                    ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
                     ord.Phase__c = 'Comunicazione verso Heroku KO';
                 }
                 HDT_SRV_Order ordSrv = new HDT_SRV_Order();

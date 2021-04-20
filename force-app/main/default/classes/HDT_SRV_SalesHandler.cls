@@ -23,8 +23,8 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
 
-        HDT_QR_Order quoteQR = new HDT_QR_Order();
-        HDT_SRV_Order quoteSRV = new HDT_SRV_Order();
+        HDT_QR_Order quoteQr = new HDT_QR_Order();
+        HDT_SRV_Order quoteSrv = new HDT_SRV_Order();
         HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
 		Map<String,String> mapRequestFields = new Map<String,String>();
 
@@ -42,9 +42,9 @@ public with sharing class HDT_SRV_SalesHandler {
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         
-                        Order ord = quoteQR.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        Order ord = quoteQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         ord.Phase__c = mapRequestFields.get('FASE');
-                        quoteSRV.updateRecord(ord);
+                        quoteSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';    
