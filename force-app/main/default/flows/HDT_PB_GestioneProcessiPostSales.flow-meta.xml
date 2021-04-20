@@ -7,7 +7,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision9_myRule_8_Amount_c</targetReference>
+            <targetReference>myDecision</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
@@ -28,41 +28,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision9_myRule_8_Amount_c</targetReference>
-            </connector>
-            <label>isChangedRule_2_myRule_1_Amount_c</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isChangedDecision9_myRule_8_Amount_c</name>
-        <label>isChangedDecision9_myRule_8_Amount_c</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>isChangedRule_9_myRule_8_Amount_c</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>myVariable_old.Amount__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>myVariable_current.Amount__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
-            <label>isChangedRule_9_myRule_8_Amount_c</label>
+            <label>isChangedRule_2_myRule_1_Amount_c</label>
         </rules>
     </decisions>
     <decisions>
@@ -559,31 +527,31 @@
                 <processMetadataValues>
                     <name>inputDataType</name>
                     <value>
-                        <stringValue>Boolean</stringValue>
+                        <stringValue>Picklist</stringValue>
                     </value>
                 </processMetadataValues>
                 <processMetadataValues>
                     <name>leftHandSideType</name>
                     <value>
-                        <stringValue>Currency</stringValue>
+                        <stringValue>Picklist</stringValue>
                     </value>
                 </processMetadataValues>
                 <processMetadataValues>
                     <name>operatorDataType</name>
                     <value>
-                        <stringValue>Currency</stringValue>
+                        <stringValue>String</stringValue>
                     </value>
                 </processMetadataValues>
                 <processMetadataValues>
                     <name>rightHandSideType</name>
                     <value>
-                        <stringValue>Boolean</stringValue>
+                        <stringValue>Picklist</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_9_myRule_8_Amount_c</leftValueReference>
+                <leftValueReference>myVariable_current.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Ammissibilità OK</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -655,7 +623,7 @@
         </rules>
     </decisions>
     <description>Process Builder per la gestione di automazione Post Sales</description>
-    <interviewLabel>HDT_PB_GestioneProcessiPostSales-14_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_GestioneProcessiPostSales-15_InterviewLabel</interviewLabel>
     <label>Gestione Processi Post Sales</label>
     <processMetadataValues>
         <name>ObjectType</name>

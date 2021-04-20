@@ -430,10 +430,17 @@
             <name>Cluster_Verifiche</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Verifica Tensione - Pressione</stringValue>
+                    <stringValue>HDT_RT_VerificheGas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VerificheEle</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -445,10 +452,10 @@
             <name>Cluster_Disattivazioni</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Chiusura Contatore</stringValue>
+                    <stringValue>HDT_RT_Disattivazioni</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -664,8 +671,6 @@
             <label>Cluster Annullamento</label>
         </rules>
     </decisions>
-    <description>Flow richiamato dal Catalogo Servizi che si occupa di innescare il corretto Flow di processo
---&gt; Per deploy devw1 ripristinare versione 62 successivamente</description>
     <interviewLabel>HDT_FL_PostSalesMasterDispatch {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PostSales Master Dispatch</label>
     <processMetadataValues>
