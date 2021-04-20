@@ -78,7 +78,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Preventivi_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -430,10 +430,17 @@
             <name>Cluster_Verifiche</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Verifica Tensione - Pressione</stringValue>
+                    <stringValue>HDT_RT_VerificheGas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VerificheEle</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -445,10 +452,10 @@
             <name>Cluster_Disattivazioni</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Chiusura Contatore</stringValue>
+                    <stringValue>HDT_RT_Disattivazioni</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -664,8 +671,6 @@
             <label>Cluster Annullamento</label>
         </rules>
     </decisions>
-    <description>Flow richiamato dal Catalogo Servizi che si occupa di innescare il corretto Flow di processo
---&gt; Per deploy devw1 ripristinare versione 62 successivamente</description>
     <interviewLabel>HDT_FL_PostSalesMasterDispatch {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PostSales Master Dispatch</label>
     <processMetadataValues>
@@ -806,6 +811,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorNote__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2140,6 +2151,35 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>1304</locationX>
+        <locationY>1214</locationY>
+        <connector>
+            <targetReference>Gestione_Preventivi_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>4252</locationX>
@@ -2252,7 +2292,7 @@
         <name>Gestione_Preventivi_Subflow</name>
         <label>Gestione Preventivi Subflow</label>
         <locationX>1304</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <flowName>HDT_FL_GestionePreventivi</flowName>
         <inputAssignments>
             <name>InputCase</name>
