@@ -21,6 +21,8 @@ export default class HdtAccountHighlightPanel extends LightningElement {
     @track allCampaigns = [];
 
     connectedCallback(event) {
+        this.iconStatus = this.inactiveCampaignsIcon;
+
         getAllCampaigns({ id: this.recordId, objectName: this.objectApiName, category: this.campaignCategory, channel: this.campaignChannel }).then(data => {
             this.allCampaigns = data;
             //check for at least one active Inbound Campaign

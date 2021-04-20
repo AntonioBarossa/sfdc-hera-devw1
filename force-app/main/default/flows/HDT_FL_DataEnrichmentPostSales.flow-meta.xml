@@ -10,6 +10,7 @@
         <connector>
             <targetReference>HandleResponseDataEnrichment</targetReference>
         </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
             <name>contractCode</name>
             <value>
@@ -34,6 +35,7 @@
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>currentCase</name>
             <value>
