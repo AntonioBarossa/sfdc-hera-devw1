@@ -22,11 +22,13 @@ export default class HdtAccountHighlightPanel extends LightningElement {
 
     connectedCallback(event) {
         getAllCampaigns({ id: this.recordId, objectName: this.objectApiName, category: this.campaignCategory, channel: this.campaignChannel }).then(data => {
-            this.allCampaigns = data;
-            //check for at least one active Inbound Campaign
-            this.activeCampaigns = data.filter((item) => {
-                return item.Campaign.Channel__c.includes('Telefonico Inbound');
-            });
+            if (data.length > 0) {
+                this.allCampaigns = data;
+                //check for at least one active Inbound Campaign
+                this.activeCampaigns = data.filter((item) => {
+                    return item.Campaign.Channel__c.includes('Telefonico Inbound');
+                });
+            }
             //check for at least one active Inbound Required Campaign
             if (this.activeCampaigns.length > 0) {
                 this.requiredCampaigns = this.activeCampaigns.some((item) => {

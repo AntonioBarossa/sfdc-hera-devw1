@@ -8,8 +8,6 @@ public inherited sharing class HDT_LC_CampaignsController {
 
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
-        String objIdField;
-
         campaignMemberSrv.checkReadAccess('Campaign.Name,Campaign.Status,Campaign.Channel__c,Campaign.EndDate');
 
         if (objectName == 'Contact') {
@@ -47,4 +45,10 @@ public inherited sharing class HDT_LC_CampaignsController {
         system.debug(newCase);
         return newCase;
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
+        return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
+    }
+
 }
