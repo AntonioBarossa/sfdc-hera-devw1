@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SupplierOutcome__c</fullName>
+    <externalId>false</externalId>
+    <label>Esito Fornitore</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>TEL - CLT NON TROVATO</fullName>
+                <default>false</default>
+                <label>TEL - CLT NON TROVATO</label>
+            </value>
+            <value>
+                <fullName>RIFIUTATO preventivamente</fullName>
+                <default>false</default>
+                <label>RIFIUTATO preventivamente</label>
+            </value>
+            <value>
+                <fullName>CONSEGNA/Installazione RIFIUTATA</fullName>
+                <default>false</default>
+                <label>CONSEGNA/Installazione RIFIUTATA</label>
+            </value>
+            <value>
+                <fullName>CLIENTE NON TROVATO</fullName>
+                <default>false</default>
+                <label>CLIENTE NON TROVATO</label>
+            </value>
+            <value>
+                <fullName>INSTALLAZIONE FALLITA</fullName>
+                <default>false</default>
+                <label>INSTALLAZIONE FALLITA</label>
+            </value>
+            <value>
+                <fullName>Consegnato/installato/attivato</fullName>
+                <default>false</default>
+                <label>Consegnato/installato/attivato</label>
+            </value>
+            <value>
+                <fullName>DA RICHIAMARE</fullName>
+                <default>false</default>
+                <label>DA RICHIAMARE</label>
+            </value>
+            <value>
+                <fullName>USCITA A VUOTO</fullName>
+                <default>false</default>
+                <label>USCITA A VUOTO</label>
+            </value>
+            <value>
+                <fullName>PRESTAZIONE ESEGUITA</fullName>
+                <default>false</default>
+                <label>PRESTAZIONE ESEGUITA</label>
+            </value>
+            <value>
+                <fullName>Richiesta sostituzione</fullName>
+                <default>false</default>
+                <label>Richiesta sostituzione</label>
+            </value>
+            <value>
+                <fullName>SOSTITUITO</fullName>
+                <default>false</default>
+                <label>SOSTITUITO</label>
+            </value>
+            <value>
+                <fullName>RESO (PRODOTTO)</fullName>
+                <default>false</default>
+                <label>RESO (PRODOTTO)</label>
+            </value>
+            <value>
+                <fullName>DISATTIVATO/DISDETTO (SERVIZIO)</fullName>
+                <default>false</default>
+                <label>DISATTIVATO/DISDETTO (SERVIZIO)</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

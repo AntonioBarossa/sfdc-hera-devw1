@@ -6,6 +6,116 @@
         <label>Accedi</label>
     </customValue>
     <customValue>
+        <fullName>Aziende</fullName>
+        <default>false</default>
+        <label>Aziende</label>
+    </customValue>
+    <customValue>
+        <fullName>Aziende SME</fullName>
+        <default>false</default>
+        <label>Aziende SME</label>
+    </customValue>
+    <customValue>
+        <fullName>Aziende Soho</fullName>
+        <default>false</default>
+        <label>Aziende Soho</label>
+    </customValue>
+    <customValue>
+        <fullName>Aziende TOP</fullName>
+        <default>false</default>
+        <label>Aziende TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>Banca centrale</fullName>
+        <default>false</default>
+        <label>Banca centrale</label>
+    </customValue>
+    <customValue>
+        <fullName>Comuni Territorio</fullName>
+        <default>false</default>
+        <label>Comuni Territorio</label>
+    </customValue>
+    <customValue>
+        <fullName>Default gas</fullName>
+        <default>false</default>
+        <label>Default gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Enti</fullName>
+        <default>false</default>
+        <label>Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>Famiglie</fullName>
+        <default>false</default>
+        <label>Famiglie</label>
+    </customValue>
+    <customValue>
+        <fullName>FUI domestico</fullName>
+        <default>false</default>
+        <label>FUI domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>FUI non domestico</fullName>
+        <default>false</default>
+        <label>FUI non domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>Grandi Condomini</fullName>
+        <default>false</default>
+        <label>Grandi Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Intercompany</fullName>
+        <default>false</default>
+        <label>Intercompany</label>
+    </customValue>
+    <customValue>
+        <fullName>NRI</fullName>
+        <default>false</default>
+        <label>NRI</label>
+    </customValue>
+    <customValue>
+        <fullName>Personale</fullName>
+        <default>false</default>
+        <label>Personale</label>
+    </customValue>
+    <customValue>
+        <fullName>Piccoli Condomini</fullName>
+        <default>false</default>
+        <label>Piccoli Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller - Extra Gruppo</fullName>
+        <default>false</default>
+        <label>Reseller - Extra Gruppo</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller - Gruppo</fullName>
+        <default>false</default>
+        <label>Reseller - Gruppo</label>
+    </customValue>
+    <customValue>
+        <fullName>Salvaguardia Aziende</fullName>
+        <default>false</default>
+        <label>Salvaguardia Aziende</label>
+    </customValue>
+    <customValue>
+        <fullName>Salvaguardia Enti</fullName>
+        <default>false</default>
+        <label>Salvaguardia Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>Societa Vendita Terze</fullName>
+        <default>false</default>
+        <label>Societa Vendita Terze</label>
+    </customValue>
+    <customValue>
+        <fullName>VIP</fullName>
+        <default>false</default>
+        <label>VIP</label>
+    </customValue>
+    <customValue>
         <fullName>Agenzia di confisca</fullName>
         <default>false</default>
         <label>Agenzia di confisca</label>
@@ -59,31 +169,6 @@
         <fullName>Azienda/Di passaggio</fullName>
         <default>false</default>
         <label>Azienda/Di passaggio</label>
-    </customValue>
-    <customValue>
-        <fullName>Aziende</fullName>
-        <default>false</default>
-        <label>Aziende</label>
-    </customValue>
-    <customValue>
-        <fullName>Aziende SME</fullName>
-        <default>false</default>
-        <label>Aziende SME</label>
-    </customValue>
-    <customValue>
-        <fullName>Aziende Soho</fullName>
-        <default>false</default>
-        <label>Aziende Soho</label>
-    </customValue>
-    <customValue>
-        <fullName>Aziende TOP</fullName>
-        <default>false</default>
-        <label>Aziende TOP</label>
-    </customValue>
-    <customValue>
-        <fullName>Banca centrale</fullName>
-        <default>false</default>
-        <label>Banca centrale</label>
     </customValue>
     <customValue>
         <fullName>Broker</fullName>
@@ -181,11 +266,6 @@
         <label>Company</label>
     </customValue>
     <customValue>
-        <fullName>Comuni Territorio</fullName>
-        <default>false</default>
-        <label>Comuni Territorio</label>
-    </customValue>
-    <customValue>
         <fullName>Concorrente</fullName>
         <default>false</default>
         <label>Concorrente</label>
@@ -194,11 +274,6 @@
         <fullName>Consulente</fullName>
         <default>false</default>
         <label>Consulente</label>
-    </customValue>
-    <customValue>
-        <fullName>Default gas</fullName>
-        <default>false</default>
-        <label>Default gas</label>
     </customValue>
     <customValue>
         <fullName>Dettagliante diretto</fullName>
@@ -231,11 +306,6 @@
         <label>Elettrodomestici</label>
     </customValue>
     <customValue>
-        <fullName>Enti</fullName>
-        <default>false</default>
-        <label>Enti</label>
-    </customValue>
-    <customValue>
         <fullName>Enti Consip</fullName>
         <default>false</default>
         <label>Enti Consip</label>
@@ -244,11 +314,6 @@
         <fullName>Esperto finanziario</fullName>
         <default>false</default>
         <label>Esperto finanziario</label>
-    </customValue>
-    <customValue>
-        <fullName>Famiglie</fullName>
-        <default>false</default>
-        <label>Famiglie</label>
     </customValue>
     <customValue>
         <fullName>Farmacia</fullName>
@@ -271,16 +336,6 @@
         <label>Fornitore</label>
     </customValue>
     <customValue>
-        <fullName>FUI domestico</fullName>
-        <default>false</default>
-        <label>FUI domestico</label>
-    </customValue>
-    <customValue>
-        <fullName>FUI non domestico</fullName>
-        <default>false</default>
-        <label>FUI non domestico</label>
-    </customValue>
-    <customValue>
         <fullName>Funzionario produttore</fullName>
         <default>false</default>
         <label>Funzionario produttore</label>
@@ -289,11 +344,6 @@
         <fullName>Governo</fullName>
         <default>false</default>
         <label>Governo</label>
-    </customValue>
-    <customValue>
-        <fullName>Grandi Condomini</fullName>
-        <default>false</default>
-        <label>Grandi Condomini</label>
     </customValue>
     <customValue>
         <fullName>Grossista di prod. farmac.</fullName>
@@ -334,11 +384,6 @@
         <fullName>Industriale</fullName>
         <default>false</default>
         <label>Industriale</label>
-    </customValue>
-    <customValue>
-        <fullName>Intercompany</fullName>
-        <default>false</default>
-        <label>Intercompany</label>
     </customValue>
     <customValue>
         <fullName>Investitore</fullName>
@@ -386,11 +431,6 @@
         <label>Normale</label>
     </customValue>
     <customValue>
-        <fullName>NRI</fullName>
-        <default>false</default>
-        <label>NRI</label>
-    </customValue>
-    <customValue>
         <fullName>ODM</fullName>
         <default>false</default>
         <label>ODM</label>
@@ -436,16 +476,6 @@
         <label>Partnership</label>
     </customValue>
     <customValue>
-        <fullName>Personale</fullName>
-        <default>false</default>
-        <label>Personale</label>
-    </customValue>
-    <customValue>
-        <fullName>Piccoli Condomini</fullName>
-        <default>false</default>
-        <label>Piccoli Condomini</label>
-    </customValue>
-    <customValue>
         <fullName>Polizia</fullName>
         <default>false</default>
         <label>Polizia</label>
@@ -459,16 +489,6 @@
         <fullName>Reparto</fullName>
         <default>false</default>
         <label>Reparto</label>
-    </customValue>
-    <customValue>
-        <fullName>Reseller - Extra Gruppo</fullName>
-        <default>false</default>
-        <label>Reseller - Extra Gruppo</label>
-    </customValue>
-    <customValue>
-        <fullName>Reseller - Gruppo</fullName>
-        <default>false</default>
-        <label>Reseller - Gruppo</label>
     </customValue>
     <customValue>
         <fullName>Residenziale</fullName>
@@ -489,16 +509,6 @@
         <fullName>S-Corp</fullName>
         <default>false</default>
         <label>S-Corp</label>
-    </customValue>
-    <customValue>
-        <fullName>Salvaguardia Aziende</fullName>
-        <default>false</default>
-        <label>Salvaguardia Aziende</label>
-    </customValue>
-    <customValue>
-        <fullName>Salvaguardia Enti</fullName>
-        <default>false</default>
-        <label>Salvaguardia Enti</label>
     </customValue>
     <customValue>
         <fullName>Servizio affari Internet</fullName>
@@ -534,11 +544,6 @@
         <fullName>Società in accomandita</fullName>
         <default>false</default>
         <label>Società in accomandita</label>
-    </customValue>
-    <customValue>
-        <fullName>Societa Vendita Terze</fullName>
-        <default>false</default>
-        <label>Societa Vendita Terze</label>
     </customValue>
     <customValue>
         <fullName>Soggiorno esteso</fullName>
@@ -599,11 +604,6 @@
         <fullName>Vigili del Fuoco</fullName>
         <default>false</default>
         <label>Vigili del Fuoco</label>
-    </customValue>
-    <customValue>
-        <fullName>VIP</fullName>
-        <default>false</default>
-        <label>VIP</label>
     </customValue>
     <masterLabel>Categoria Tipo Cliente</masterLabel>
     <sorted>false</sorted>

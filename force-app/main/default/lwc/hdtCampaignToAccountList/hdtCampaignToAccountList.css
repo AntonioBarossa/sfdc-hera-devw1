@@ -1,0 +1,12 @@
+.dblock {
+    display: block;
+}
+
+.campaignName {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.campaignName[data-required='true'] > a {
+    color: rgb(230, 5, 5);
+}

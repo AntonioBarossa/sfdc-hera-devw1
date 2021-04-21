@@ -1,5 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import getAsyncJobByJobItem from '@salesforce/apex/HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtFlowNavigationButton extends LightningElement {
 
@@ -12,9 +14,64 @@ export default class HdtFlowNavigationButton extends LightningElement {
     @api standAlone
     @api cancelCase;
     @api saveDraft;
+    @api loadingSpinner = false;
+    @api recordId;
 
     @api availableActions = [];
 
+
+    connectedCallback(){
+
+        if(this.loadingSpinner){
+
+            var interval = setInterval(() => {
+
+                getAsyncJobByJobItem({recordId: this.recordId})
+                .then(result => {
+
+                    console.log('#Result --> '+result);
+
+                    if(result === 'OK'){
+                        clearInterval(interval);
+                        this.loadingSpinner = false;
+                        this.handleGoNext();
+                    } else if(result === 'Error'){
+                        clearInterval(interval);
+                        this.loadingSpinner = false;
+                        this.showCustomToast();
+                        this.handleGoNext();
+                    }
+
+                }).catch(error => {
+
+                    console.log('#Error --> ' +error);
+
+                });
+
+            }, 5000)
+
+            /*setTimeout(() => {
+
+                this.loadingSpinner = true;
+                this.handleGoNext();
+
+            }, 30000);*/
+
+        }
+
+    }
+
+    showCustomToast(){
+
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Errore',
+                message: 'Comunicazione con Heroku fallita',
+                variant: 'error',
+            }),
+        );
+
+    }
 
     handleClick(event){
 

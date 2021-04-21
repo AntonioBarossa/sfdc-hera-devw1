@@ -13,7 +13,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Inviata OK</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Inviata OK</label>
             </value>
         </valueSetDefinition>

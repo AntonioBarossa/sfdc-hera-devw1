@@ -1,11 +1,17 @@
 ({
     doInit : function(component, event, helper) {
         component.set('v.loading', true);
+        var campaignId = '';
 
         var pageReference = component.get("v.pageReference");
 
         var accountId = pageReference.state.c__accountId;
         component.set("v.recordId", accountId);
+
+        if(pageReference.state.c__campaignId !== undefined){
+            component.set("v.campaignId", pageReference.state.c__campaignId);
+            campaignId = pageReference.state.c__campaignId;
+        }
 
         if(pageReference.state.c__saleId != undefined){
             component.set("v.saleId", pageReference.state.c__saleId)
@@ -16,6 +22,10 @@
                 'Status__c' : 'Bozza',
                 'CurrentStep__c' : 1
             };
+
+            if(campaignId !== undefined && campaignId !== ''){
+                saleObject.Campaign__c = campaignId;
+            }
 
             helper.createSaleRecord(component, saleObject);
         }

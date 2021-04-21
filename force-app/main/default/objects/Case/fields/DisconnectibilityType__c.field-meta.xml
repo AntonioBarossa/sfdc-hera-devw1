@@ -10,19 +10,36 @@
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>Disconnectable__c</controllingField>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>01- App. medico terapeutiche</fullName>
-                <default>false</default>
-                <label>01- App. medico terapeutiche</label>
-            </value>
-            <value>
-                <fullName>02- Pubblica utilità</fullName>
-                <default>false</default>
-                <label>02- Pubblica utilità</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_DisconnectibilityType</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>01- App. medico terapeutiche</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>02- Pubblica utilità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>Rilevanza continuità serv. GAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>Sempre ap. - Elettromedicale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>Sempre ap. - Non Disalimentab.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>Sempre ap. - PESSE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>No</controllingFieldValue>
+            <valueName>Sempre ap. - Pubblica utilita</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

@@ -143,6 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>Oggetto per memorizzare le notifiche SOL</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -157,11 +158,11 @@
     <label>Notifica SOL</label>
     <nameField>
         <displayFormat>LTK-{00000000}</displayFormat>
-        <label>Notifica SOL Name</label>
+        <label>Notifica SOL</label>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Notifiche SOL</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
