@@ -24,16 +24,6 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-<!--     {
-        &quot;FieldName&quot; : &quot;EV_MarketType__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    },
-    {
-        &quot;FieldName&quot; : &quot;EV_AccountPhoneNumber__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    }, -->
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
@@ -48,6 +38,25 @@
         &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactMobile&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Market__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Type&quot;,
+        &quot;Column&quot;   : 2
     }
 ]</value>
     </values>
