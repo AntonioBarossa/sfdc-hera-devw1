@@ -36,8 +36,8 @@ export default class HdtNewCampaignCase extends NavigationMixin(LightningElement
             console.log(error);
             this.dispatchEvent(
                 new ShowToastEvent({
-                    title: `${error.body.pageErrors[0].statusCode}`,
-                    message: `${error.body.pageErrors[0].message}`,
+                    title: `${error.status}`,
+                    message: `${error.body.message}`,
                     variant: "error"
                 })
             );
