@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ActiveMonitoring__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Negli Account di tipo PartnerCommunity, indica se l&apos;Agenzia rientra in blackList e quindi soggetta a monitoraggio</description>
+    <externalId>false</externalId>
+    <label>Monitoraggio attivo</label>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

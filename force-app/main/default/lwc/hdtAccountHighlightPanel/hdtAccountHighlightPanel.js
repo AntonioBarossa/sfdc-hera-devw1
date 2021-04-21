@@ -51,7 +51,8 @@ export default class HdtAccountHighlightPanel extends LightningElement {
                 this.iconStatus = this.inactiveCampaignsIcon;
             }
         }).catch(err => {
-            console.log(err.body.message);
+            //console.log(err.body.message);
+            console.log(err);
         });
     }
 }

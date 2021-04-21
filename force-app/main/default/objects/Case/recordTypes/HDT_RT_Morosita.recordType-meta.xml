@@ -3,6 +3,7 @@
     <fullName>HDT_RT_Morosita</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Record Type che unifica i processi di Morosità</description>
     <label>Morosità</label>
     <picklistValues>

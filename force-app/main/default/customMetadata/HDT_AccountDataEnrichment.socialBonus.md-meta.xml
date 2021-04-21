@@ -14,24 +14,29 @@
     &quot;iconName&quot;: &quot;standard:customer_lifecycle_analytics&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;BP&quot;,
-        &quot;fieldName&quot;: &quot;bp&quot;
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;,
+        &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;POD&quot;,
-        &quot;fieldName&quot;: &quot;pod&quot;
+        &quot;label&quot;: &quot;POD/PDR&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;CONTRATTO&quot;,
-        &quot;fieldName&quot;: &quot;contratto&quot;
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;contratto&quot;,
+        &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;data attivazione contratto&quot;,
-        &quot;fieldName&quot;: &quot;dataAttContr&quot;
+        &quot;label&quot;: &quot;Data Attivazione Contratto&quot;,
+        &quot;fieldName&quot;: &quot;dataAttContr&quot;,
+        &quot;initialWidth&quot;: 220
       },
       {
-        &quot;label&quot;: &quot;data cessazione contratto&quot;,
-        &quot;fieldName&quot;: &quot;dataCessContr&quot;
+        &quot;label&quot;: &quot;Data Cessazione Contratto&quot;,
+        &quot;fieldName&quot;: &quot;dataCessContr&quot;,
+        &quot;initialWidth&quot;: 220
       },
       {
         &quot;label&quot;: &quot;Decodifica Società&quot;,

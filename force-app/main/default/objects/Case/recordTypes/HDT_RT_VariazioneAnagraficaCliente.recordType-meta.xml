@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VariazioneAnagraficaCliente</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Variazione Anagrafica Cliente</description>
     <label>Variazione Anagrafica Cliente</label>
     <picklistValues>
