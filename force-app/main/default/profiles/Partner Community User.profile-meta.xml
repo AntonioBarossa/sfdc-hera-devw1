@@ -9312,10 +9312,10 @@
         <apexPage>MyProfilePage</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
-    <pageAccesses>
+    <!-- <pageAccesses>
         <apexPage>ScriptAiutoVendita</apexPage>
         <enabled>false</enabled>
-    </pageAccesses>
+    </pageAccesses> -->
     <pageAccesses>
         <apexPage>SiteLogin</apexPage>
         <enabled>false</enabled>
