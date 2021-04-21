@@ -8611,11 +8611,11 @@
         <field>ServicePoint__c.RequestPower__c</field>
         <readable>false</readable>
     </fieldPermissions> -->
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.RequestVoltage__c</field>
         <readable>false</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>false</editable>
         <field>ServicePoint__c.Resident__c</field>
