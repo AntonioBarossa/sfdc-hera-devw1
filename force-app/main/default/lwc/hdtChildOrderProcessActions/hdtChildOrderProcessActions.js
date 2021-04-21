@@ -17,13 +17,13 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     get disabledSave(){
         //INIZIO SVILUPPI EVERIS
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        /*if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
 
             console.log(this.lastStepNumber);
 
             return !(this.lastStepNumber === 1);
 
-        }
+        }*/
 
         //FINE SVILUPPI EVERIS
 

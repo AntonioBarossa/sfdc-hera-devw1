@@ -35,6 +35,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         //Get Orders
         List<Order> listOrder = orderQr.getRecordBySale(saleId);
 
+        System.debug('Lista Ordini da Legare ' +listOrder);
+
         //Store orders Id
         List<Id> listOrdersId = new List<Id>();
         
@@ -71,11 +73,19 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     listOrdersId.add(o.Id);
                 }
 
+                System.debug(listOrder != null && !listOrder.isEmpty());
+
                 if(listOrder != null && !listOrder.isEmpty()){
+
+                    System.debug('Entrato nel Loop');
+
                     Map<String, Order> ordersToUpdateMap = new Map<String, Order>();
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+
+                    System.debug('Lista Ordini '+orderItemsList);
+
                     for (OrderItem orderItem : orderItemsList) {
                         ordersToUpdateMap.put(orderItem.OrderId, new Order(
                             Id = orderItem.OrderId,
@@ -121,6 +131,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         mapResponse.put('orderParentRecord',parentOrder);
         mapResponse.put('orderParentName',parentOrder.Name);
         mapResponse.put('accountId',parentOrder.AccountId);
+
+        System.debug(mapResponse);
 
         return mapResponse;
     }
