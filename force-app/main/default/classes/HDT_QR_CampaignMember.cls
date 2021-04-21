@@ -157,4 +157,17 @@ public inherited sharing class HDT_QR_CampaignMember {
             LIMIT 10
         ];
     }
+    public CampaignMember getAccountAndCampaign(String campaignMemberId) {
+        return [
+            SELECT
+            Id,
+            ContactId, 
+            LeadId, 
+            CampaignId, 
+            GenericField1__c 
+            FROM CampaignMember 
+            WHERE Id = :campaignMemberId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }
