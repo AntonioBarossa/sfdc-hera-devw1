@@ -27,7 +27,7 @@ public inherited sharing class HDT_QR_RecordType {
         return recordTypeIds;
     }
     
-    public static RecordType getRecordType(String developerName, String objectType) {
+    public RecordType getRecordType(String developerName, String objectType) {
         
         String query = 'SELECT Id FROM RecordType WHERE DeveloperName = :developerName and SobjectType = :objectType WITH SECURITY_ENFORCED';
         List<RecordType> recordTypes = Database.query(query);

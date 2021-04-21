@@ -88,14 +88,7 @@ public inherited sharing class HDT_QR_Contact {
 
     // FINE SVILUPPI EVERIS
 
-
-
-
-
-
-
-
- public static Contact getRecordByFiscalCode(String fiscalCode) {
+    public Contact getRecordByFiscalCode(String fiscalCode) {
         String query = 'SELECT  Id, Email , MobilePhone , Phone FROM Contact WHERE FiscalCode__c = :fiscalCode WITH SECURITY_ENFORCED';
         List<Contact> contacts = Database.query(query);
         if(contacts.size()>0){
