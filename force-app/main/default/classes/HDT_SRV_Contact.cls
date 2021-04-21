@@ -22,4 +22,33 @@ public inherited sharing class HDT_SRV_Contact {
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
     }
+    /**
+     * @author Sabina Levonja
+     * @description Check if user has create access to fields and throw exception if access not granted
+     */
+
+    public void checkCreateAccess(Contact contact){
+        List<String> fields = helperMethods.getObjAttrList(contact);
+        checkAccessInit(String.join(fields, ','), CREATEPERMISSION);
+    }
+
+    public Contact createRecord(Contact contact){
+        HDT_UTL_DatabaseService.insertSObject(contact);
+        return contact;
+    }
+
+    public void checkUpdateAccess(Contact contact){
+        List<String> fields = helperMethods.getObjAttrList(contact);
+        checkAccessInit(String.join(fields, ','), UPDATEPERMISSION);
+    }
+
+    public Contact updateRecord(Contact contact){
+        HDT_UTL_DatabaseService.updateSObject(contact);
+        return contact;
+
+    }
+    public List<Contact> updateRecord(List<Contact> contacts){
+        HDT_UTL_DatabaseService.updateSObject(contacts);
+        return contacts;
+    }
 }

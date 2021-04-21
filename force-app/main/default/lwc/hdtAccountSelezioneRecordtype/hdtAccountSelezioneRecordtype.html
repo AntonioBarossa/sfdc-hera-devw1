@@ -1,0 +1,32 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-icon slds-button slds-button_icon slds-modal__close closeIcon slds-button_icon-bare slds-button_icon-inverse"
+                        title="close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="medium">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-modal__title slds-hyphenate">Seleziona il tipo di Account</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div if:true={objectInfo.data}>
+                        <lightning-radio-group class="slds-line-height-text" name="recordType"
+                            options={recordTypeOptions} value={defaultRecordType.value} type="radio"
+                            onchange={handleRecordTypeSelection}>
+                        </lightning-radio-group>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" name="createAccount" type="submit" label="Crea"
+                        onclick={openAccountForm}>
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
