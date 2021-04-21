@@ -30,7 +30,7 @@
                             </template>
                         </template>
                         <template if:false={isCampaignInputVisible}>
-                            <c-hdt-campaign-to-account-list campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent} onemitvisibility={handleCampaignVisibility}></c-hdt-campaign-to-account-list>
+                            <c-hdt-campaign-to-account-list campaign-type="sale" object-api-name="Account" entity-id={saleRecord.Account__c} onemitcampaignid={handleEmitCampaignIdEvent} onemitvisibility={handleCampaignVisibility} campaign-category='' campaign-channel='' ></c-hdt-campaign-to-account-list>
                         </template>
                     </lightning-layout-item>
                 </lightning-layout>
