@@ -1688,11 +1688,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>CampaignMember.Marcatura__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>CampaignMember.NumberingValidityEndDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
