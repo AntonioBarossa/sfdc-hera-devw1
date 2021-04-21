@@ -5292,11 +5292,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ContactPointEmail.EmailAddress</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>ContactPointPhone.GlobalMigrationKey__c</field>
         <readable>true</readable>
     </fieldPermissions>
