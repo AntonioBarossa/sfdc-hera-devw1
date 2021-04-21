@@ -214,17 +214,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     }
 
-    public class HDT_WRP_ArricchimentoTestata{
-        public String esito;
-    }
-    
-    public class HDT_WRP_ArricchimentoPosizioni{
-        @InvocableVariable
-        public String campo;
-        @InvocableVariable
-        public String valore;
-    }
-    
+
     public class HDT_WRP_EstrattoLettureData{
         public String campo;
         public String codiceContratto;

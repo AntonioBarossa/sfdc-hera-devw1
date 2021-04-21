@@ -9,7 +9,7 @@ export default class HdtMeterReading extends LightningElement {
     @track contractColumns;
     @track contractNumber;
     @track meterReadingColumns;
-    hideCheckboxColumn = false;
+    hideCheckboxColumn = true;
     loadData = false;
     queryTerm = '';
     spinner = true;
@@ -96,9 +96,9 @@ const contractColumns = [
     {
         label: '',
         type: 'button',
-        initialWidth: 110,
+        initialWidth: 160,
         typeAttributes: {
-                            label: 'Visualizza',
+                            label: 'Visualizza Letture',
                             title: 'Seleziona',
                             variant: 'border-filled',
                             alternativeText: 'Seleziona'
