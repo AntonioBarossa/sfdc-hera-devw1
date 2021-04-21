@@ -8,7 +8,8 @@
             <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
             <ul class="slds-button-group-list slds-float_right">
                 <li>
-                    <lightning-button onclick={handleCancel} disabled={disabledCancel} icon-name="utility:cancel_file_request" variant="destructive" label="Annulla" title="Cancel action"></lightning-button>
+                    <!--EVERIS: Bottone riporato in brand come richiesto BSN-->
+                    <lightning-button onclick={handleCancel} disabled={disabledCancel} icon-name="utility:cancel_file_request" variant="brand" label="Annulla" title="Cancel action"></lightning-button>
                 </li>
                 <li>
                     <lightning-button onclick={handleSaveDraft} disabled={disabledSaveDraft} icon-name="standard:drafts" variant="neutral" label="Salva in bozza" title="Save Draft action"></lightning-button>
