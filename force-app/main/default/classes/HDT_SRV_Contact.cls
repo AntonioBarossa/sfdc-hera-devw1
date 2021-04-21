@@ -1,6 +1,9 @@
 public inherited sharing class HDT_SRV_Contact {
 
+    private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
+    private static final String CREATEPERMISSION = 'create';
+    private static final String UPDATEPERMISSION = 'update';
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)

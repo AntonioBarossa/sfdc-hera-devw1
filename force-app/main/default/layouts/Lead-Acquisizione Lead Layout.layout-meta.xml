@@ -43,7 +43,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Prefix__c</field>
+                <field>PhonePrefix__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
