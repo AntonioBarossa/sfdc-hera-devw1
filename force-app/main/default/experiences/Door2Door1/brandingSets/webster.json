@@ -1,0 +1,28 @@
+{
+  "definitionName" : "webster:branding-webster",
+  "id" : "7c7c0cb2-6d65-4404-a222-67931d12ebe0",
+  "label" : "Webster",
+  "type" : "brandingSet",
+  "values" : {
+    "ActionColor" : "rgb(15, 74, 250)",
+    "BorderColor" : "rgb(9, 5, 5)",
+    "CardBackgroundColor" : "rgba(255, 255, 255, 0)",
+    "CompanyLogo" : "/file-asset/heraimage2?v=1&height=300&width=300",
+    "DetailTextColor" : "rgba(0, 0, 0, 0.66)",
+    "ErrorFontColor" : "#ff9e9e",
+    "HeaderFonts" : "Montserrat",
+    "LinkColor" : "#005FB2",
+    "LoginBackgroundColor" : "#F4F4F4",
+    "LoginBackgroundImage" : "",
+    "OverlayTextColor" : "rgb(26, 15, 15)",
+    "PageBackgroundColor" : "rgb(255, 255, 255)",
+    "PrimaryFont" : "Lato",
+    "TextColor" : "rgba(0, 0, 0, 0.89)",
+    "TextTransformStyle" : "none",
+    "_ActionColorDarker" : "#0438d2",
+    "_ActionColorTrans" : "rgba(15, 74, 250, 0.9)",
+    "_HoverColor" : "rgba(15, 74, 250, 0.05)",
+    "_LinkColorDarker" : "#004989",
+    "_OverlayTextColorShadow" : "#888"
+  }
+}

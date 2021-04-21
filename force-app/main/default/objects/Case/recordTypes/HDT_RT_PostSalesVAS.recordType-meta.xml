@@ -3,6 +3,7 @@
     <fullName>HDT_RT_PostSalesVAS</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Record type i Case di PostSales VAS</description>
     <label>PostSalesVAS</label>
     <picklistValues>

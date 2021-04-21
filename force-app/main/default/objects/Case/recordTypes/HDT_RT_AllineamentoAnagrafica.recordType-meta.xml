@@ -3,6 +3,7 @@
     <fullName>HDT_RT_AllineamentoAnagrafica</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Allineamento Anagrafica</description>
     <label>Allineamento Anagrafica</label>
     <picklistValues>

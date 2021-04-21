@@ -17,7 +17,7 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
     @api campaignCategory;
     @api campaignChannel;
     @track allCampaigns = [];
-    @track rowdata;
+    @track rowdata = [];
     @track isSale = false;
     @track selectedCampaignId = null;
     @track campaignsNumber = 0;
@@ -35,8 +35,17 @@ export default class PopoverContainer extends NavigationMixin(LightningElement) 
                 result.data.forEach(item => {
                     this.allCampaigns.push(item);
                     this.campaignsNumber++;
+                    let row = {
+                        "Id" : item.Campaign.Id,
+                        "Name" : item.Campaign.Name,
+                        "Status" : item.Status,
+                        "Channel__c" : item.Campaign.Channel__c,
+                        "EndDate" : item.Campaign.EndDate
+                    };
+                    this.rowdata.push(row);
                 });
-                this.rowdata = this.allCampaigns;
+                //this.rowdata = this.allCampaigns;
+                console.log(JSON.stringify(this.rowdata));
                 this.listResults = true;
                 
                 //send visibility to parent component
