@@ -1143,11 +1143,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Asset.Discount__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Asset.DurationDayGas__c</field>
         <readable>true</readable>
@@ -17203,9 +17198,9 @@
     <layoutAssignments>
         <layout>ContentVersion-Content Version</layout>
     </layoutAssignments>
-    <!-- <layoutAssignments>
-        <layout>Contract-CPQ Contract Layout</layout>
-    </layoutAssignments> -->
+    <layoutAssignments>
+        <layout>Contract-SBQQ__CPQ Contract Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>DataUseLegalBasis-Data Use Legal Basis Layout</layout>
     </layoutAssignments>
@@ -17239,91 +17234,91 @@
     <layoutAssignments>
         <layout>Macro-Macro Layout</layout>
     </layoutAssignments>
-    <!-- <layoutAssignments>
-        <layout>Opportunity-CPQ Opportunity Layout</layout>
-    </layoutAssignments> -->
+    <layoutAssignments>
+        <layout>Opportunity-SBQQ__CPQ Opportunity Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
-    <!-- <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Attivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_CambioOfferta</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_CambioUso</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Default</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_OrderDossier</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Proroga</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_ScontiBonus</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Subentro</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_SwitchIn</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_VAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-CPQ Order Layout</layout>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Voltura</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>OrderItem-CPQ Order Product</layout>
-    </layoutAssignments> -->
+        <layout>OrderItem-SBQQ__CPQ Order Product Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Pricebook2-Price Book Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>PricebookEntry-Price Book Entry Layout</layout>
     </layoutAssignments>
-    <!-- <layoutAssignments>
-        <layout>Product2-CPQ Product Layout</layout>
-    </layoutAssignments> -->
+    <layoutAssignments>
+        <layout>Product2-SBQQ__CPQ Product Layout</layout>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>ProductConsumptionSchedule-Layout Pianificazione del consumo dei prodotti</layout>
     </layoutAssignments>
