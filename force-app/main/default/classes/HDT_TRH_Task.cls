@@ -71,14 +71,14 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 }
 
                 if (t.PhoneNumber__c != null) {
-                    t.PhoneNumber__c = HDT_UTL_PhoneNumbers.addInternationalPrefixTo(t.PhoneNumber__c);
+                    t.PhoneNumber__c = HDT_UTL_PhoneNumbers.withInternationPrefix(t.PhoneNumber__c);
                 } else if (t.WhoId != null) {
-                    String contactPhone = contactsMap.get(t.WhoId).MobilePhone;
+                    String contactPhone = HDT_UTL_PhoneNumbers.withoutInternationPrefix(contactsMap.get(t.WhoId).MobilePhone);
                     String validateOutcome = HDT_UTL_PhoneNumbers.validateMobileNumber(contactPhone);
                     if (!String.isEmpty(validateOutcome)) {
                         t.addError(validateOutcome + ' Si prega di effettuare una Modifica Anagrafica per correggere il numero di telefono del cliente: ' + contactPhone);
                     } else {
-                        t.PhoneNumber__c = HDT_UTL_PhoneNumbers.addInternationalPrefixTo(contactPhone);
+                        t.PhoneNumber__c = HDT_UTL_PhoneNumbers.withInternationPrefix(contactPhone);
                     }
                 }
 
