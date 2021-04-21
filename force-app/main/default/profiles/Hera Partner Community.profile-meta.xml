@@ -9109,16 +9109,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>TechnicalOfferItem__c.Delay__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>TechnicalOfferItem__c.Duration__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>TechnicalOfferItem__c.FareType__c</field>
         <readable>false</readable>
     </fieldPermissions>
