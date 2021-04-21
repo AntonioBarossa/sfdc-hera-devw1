@@ -14,64 +14,83 @@
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Id Rich&quot;,
-        &quot;fieldName&quot;: &quot;idRich&quot;
+        &quot;label&quot;: &quot;Codice Pratica SII&quot;,
+        &quot;fieldName&quot;: &quot;idRich&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;Data agg&quot;,
-        &quot;fieldName&quot;: &quot;dataAgg&quot;
+        &quot;label&quot;: &quot;Data aggiornamento stato&quot;,
+        &quot;fieldName&quot;: &quot;dataAgg&quot;,
+        &quot;initialWidth&quot;: 220
       },
       {
-        &quot;label&quot;: &quot;sparte&quot;,
-        &quot;fieldName&quot;: &quot;sparte&quot;
+        &quot;label&quot;: &quot;Settore merceologico&quot;,
+        &quot;fieldName&quot;: &quot;sparte&quot;,
+        &quot;initialWidth&quot;: 180
       },
       {
-        &quot;label&quot;: &quot;Service id&quot;,
-        &quot;fieldName&quot;: &quot;serviceid&quot;
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;fieldName&quot;: &quot;serviceid&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;POD&quot;,
-        &quot;fieldName&quot;: &quot;pod&quot;
+        &quot;label&quot;: &quot;POD/PDR&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
         &quot;label&quot;: &quot;Contratto&quot;,
-        &quot;fieldName&quot;: &quot;contratto&quot;
+        &quot;fieldName&quot;: &quot;contratto&quot;,
+        &quot;initialWidth&quot;: 140
       },
       {
         &quot;label&quot;: &quot;Impianto&quot;,
-        &quot;fieldName&quot;: &quot;impianto&quot;
+        &quot;fieldName&quot;: &quot;impianto&quot;,
+        &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;BP&quot;,
-        &quot;fieldName&quot;: &quot;bp&quot;
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;CA&quot;,
-        &quot;fieldName&quot;: &quot;ca&quot;
+        &quot;label&quot;: &quot;Billing Profile&quot;,
+        &quot;fieldName&quot;: &quot;ca&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;Data com&quot;,
-        &quot;fieldName&quot;: &quot;dataCom&quot;
+        &quot;label&quot;: &quot;Data comunicazione pratica distributore&quot;,
+        &quot;fieldName&quot;: &quot;dataCom&quot;,
+        &quot;initialWidth&quot;: 240
       },
       {
-        &quot;label&quot;: &quot;Stato&quot;,
-        &quot;fieldName&quot;: &quot;stato&quot;
+        &quot;label&quot;: &quot;Stato Cmor&quot;,
+        &quot;fieldName&quot;: &quot;stato&quot;,
+        &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;Stato Descr&quot;,
-        &quot;fieldName&quot;: &quot;statoDescr&quot;
+        &quot;label&quot;: &quot;Descrizione Stato CMOR&quot;,
+        &quot;fieldName&quot;: &quot;statoDescr&quot;,
+        &quot;initialWidth&quot;: 220
       },
       {
-        &quot;label&quot;: &quot;cmor&quot;,
-        &quot;fieldName&quot;: &quot;cmor&quot;
+        &quot;label&quot;: &quot;Importo Cmor&quot;,
+        &quot;fieldName&quot;: &quot;cmor&quot;,
+        &quot;initialWidth&quot;: 140,
+        &quot;type&quot;: &quot;currency&quot;
+
       },
       {
-        &quot;label&quot;: &quot;cmor stornato&quot;,
-        &quot;fieldName&quot;: &quot;cmorStornato&quot;
+        &quot;label&quot;: &quot;Importo Cmor stornato&quot;,
+        &quot;fieldName&quot;: &quot;cmorStornato&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;type&quot;: &quot;currency&quot;
       },
       {
-        &quot;label&quot;: &quot;cmor rett&quot;,
-        &quot;fieldName&quot;: &quot;cmorRett&quot;
+        &quot;label&quot;: &quot;Importo Cmor rettificato&quot;,
+        &quot;fieldName&quot;: &quot;cmorRett&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;type&quot;: &quot;currency&quot;
       }
     ]
   },
@@ -80,56 +99,76 @@
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Id esterno&quot;,
-        &quot;fieldName&quot;: &quot;idEsterno&quot;
+        &quot;label&quot;: &quot;Codice pratica SII&quot;,
+        &quot;fieldName&quot;: &quot;idEsterno&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;Data flusso&quot;,
-        &quot;fieldName&quot;: &quot;dataFlusso&quot;
+        &quot;label&quot;: &quot;Data aggiornamento stato&quot;,
+        &quot;fieldName&quot;: &quot;dataFlusso&quot;,
+        &quot;initialWidth&quot;: 220
       },
       {
-        &quot;label&quot;: &quot;Settore descr&quot;,
-        &quot;fieldName&quot;: &quot;settoreDescr&quot;
+        &quot;label&quot;: &quot;Settore merceologico&quot;,
+        &quot;fieldName&quot;: &quot;settoreDescr&quot;,
+        &quot;initialWidth&quot;: 180
       },
       {
         &quot;label&quot;: &quot;Società&quot;,
-        &quot;fieldName&quot;: &quot;soc&quot;
+        &quot;fieldName&quot;: &quot;soc&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;POD&quot;,
-        &quot;fieldName&quot;: &quot;pod&quot;
+        &quot;label&quot;: &quot;POD/PDR&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
         &quot;label&quot;: &quot;Contratto&quot;,
-        &quot;fieldName&quot;: &quot;contratto&quot;
+        &quot;fieldName&quot;: &quot;contratto&quot;,
+        &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;Data switch&quot;,
-        &quot;fieldName&quot;: &quot;dataSwitch&quot;
+        &quot;label&quot;: &quot;Data switch out&quot;,
+        &quot;fieldName&quot;: &quot;dataSwitch&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;BP&quot;,
-        &quot;fieldName&quot;: &quot;bp&quot;
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;CA&quot;,
-        &quot;fieldName&quot;: &quot;ca&quot;
+        &quot;label&quot;: &quot;Billing Profile&quot;,
+        &quot;fieldName&quot;: &quot;ca&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;Data richiesta&quot;,
-        &quot;fieldName&quot;: &quot;dataRichiesta&quot;
+        &quot;label&quot;: &quot;Data Richiesta SII&quot;,
+        &quot;fieldName&quot;: &quot;dataRichiesta&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;Stato pratica&quot;,
-        &quot;fieldName&quot;: &quot;statoPratica&quot;
+        &quot;label&quot;: &quot;Stato Cmor&quot;,
+        &quot;fieldName&quot;: &quot;statoPratica&quot;,
+        &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;Stato descr&quot;,
-        &quot;fieldName&quot;: &quot;statoDescr&quot;
+        &quot;label&quot;: &quot;Descrizione Stato Cmor&quot;,
+        &quot;fieldName&quot;: &quot;statoDescr&quot;,
+        &quot;initialWidth&quot;: 200
       },
       {
-        &quot;label&quot;: &quot;Importo cmor&quot;,
-        &quot;fieldName&quot;: &quot;importoCmor&quot;
+        &quot;label&quot;: &quot;Importo Cmor&quot;,
+        &quot;fieldName&quot;: &quot;importoCmor&quot;,
+        &quot;initialWidth&quot;: 160,
+        &quot;type&quot;: &quot;currency&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Importo Cmor Pregresso&quot;,
+        &quot;fieldName&quot;: &quot;cmor1&quot;,
+        &quot;initialWidth&quot;: 200,
+        &quot;type&quot;: &quot;currency&quot;
       }
     ]
   }

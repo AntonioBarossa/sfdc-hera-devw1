@@ -3,6 +3,7 @@
     <fullName>HDT_RT_ComunicazionePagamento</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Record Type per Comunicazione Pagamenti, Doppi Pagamenti/Incassi</description>
     <label>Pagamenti - Comunicazione Pagamenti</label>
     <picklistValues>

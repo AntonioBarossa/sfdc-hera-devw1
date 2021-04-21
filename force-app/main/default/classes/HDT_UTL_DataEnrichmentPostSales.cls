@@ -99,6 +99,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 billingProfileCode = position.valore;
 
                             }
+                            when 'getCaliber'{
+
+                                transcodeMap.put(transcodeConfig.SfdcField__c, 
+                                depsSrv.getCaliber(position.valore));
+
+                            }
 
                         }
 
