@@ -10,7 +10,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
     protected override void afterInsert() {
         // Il campo WhoId non può essere sbiancato in before insert, quindi dobbiamo farlo in after.
-        removeWhoId();
+        // removeWhoId();  // NOT WORKING
     }
 
     private void doValidation() {
@@ -93,7 +93,8 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
     }
 
-    // Rimuove il WhoId, qualora presente, se l'operatore ha inserito un destinatario alternativo (cellulare o PEC). 
+    // Rimuove il WhoId, qualora presente, se l'operatore ha inserito un destinatario alternativo (cellulare o PEC).
+    // DA FIXARE - al momento rimuovere sempre il WhoId, invece dovrebbe toglierlo solo se il numero alternativo è diverso dal numero del Contact.
     private void removeWhoId() {
 
         Set<Id> taskIds = new Set<Id>();
