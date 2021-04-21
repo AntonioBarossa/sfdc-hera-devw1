@@ -9252,9 +9252,9 @@
         <field>wrts_prcgvr__Activity__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <layoutAssignments>
+    <!-- <layoutAssignments>
         <layout>CampaignMember-Campaign Member Community Layout</layout>
-    </layoutAssignments>
+    </layoutAssignments> -->
     <pageAccesses>
         <apexPage>AnswersHome</apexPage>
         <enabled>true</enabled>
