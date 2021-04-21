@@ -76,7 +76,7 @@ export default class HdtMeterReading extends LightningElement {
         this.contractDataToView = [];
 
         if(event.target.value!=''){
-            var filteredContract = this.contractData.filter(c => { return c.contractNumber == event.target.value });
+            var filteredContract = this.contractData.filter(c => { return c.contractNumber.includes(event.target.value) });
 
             if(filteredContract.length>0){
                 this.contractDataToView = filteredContract;
