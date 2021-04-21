@@ -3776,11 +3776,11 @@
         <field>Knowledge__kav.ToPublishDate__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>false</editable>
         <field>Lead.AgeRange__c</field>
         <readable>false</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Age__c</field>
