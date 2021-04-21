@@ -10,6 +10,7 @@
 		<members>HDT_WRP_EligibilityCriteria</members>
 		<members>HDT_QR_SearchPlug</members>
 		<members>HDT_UTL_SearchPlug</members>
+		<members>HDT_QR_EligibilityCriteria</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -23,6 +24,7 @@
 		<members>hdtCreateNewEligibilityCriteria</members>
 		<members>hdtSearchEligibilityCriteria</name>
 		<members>hdtEligibilityCriteriaParameters</name>
+		<members>hdtEligibilityCriteriaViewForm</name>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>

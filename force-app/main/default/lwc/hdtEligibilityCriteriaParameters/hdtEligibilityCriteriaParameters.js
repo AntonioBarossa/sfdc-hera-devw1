@@ -59,6 +59,10 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         criteriaObj[field.fieldName] = field.value;
       });
 
+      if(this.eligibilityId != undefined){
+        criteriaObj.Id = this.eligibilityId;
+      }
+
       var jsonRecord = JSON.stringify(criteriaObj);
       console.log(jsonRecord);
       const saverecord = new CustomEvent("saverecord", {

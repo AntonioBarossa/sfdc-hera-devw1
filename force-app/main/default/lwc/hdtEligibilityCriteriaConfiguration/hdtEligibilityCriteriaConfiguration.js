@@ -38,8 +38,9 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     @track searchTable = [];
     @track dataRemoved = [];
     @track searchRemovedTable = [];
-    //provinceOptions;// --> used with lightning-input
-    @track provinceOptions;// --> used with input
+    //cityZipCode.provinceOptions;// --> used with lightning-input
+    @track cityZipCode = {};
+    //@track cityZipCode.provinceOptions;// --> used with input
 
     //Boolean to manage show table/image
     showRemovedTable = false;
@@ -48,20 +49,12 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     showSearchTable = false;
     showEmptyRemovedImmage = true;
     showSearchRemovedTable = false;
-    availableForAllCities = true;
+    eligibleForAllCities;
 
 
     connectedCallback(){
         console.log('>>> eligibilityId > ' + this.eligibilityId);
         this.getDataFromApex();
-    }
-
-    renderedCallback(){
-        this.handleShowTables();
-    }
-
-    handleShowTables(){
-
     }
 
     getDataFromApex(){
@@ -85,9 +78,9 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
-                this.provinceOptions = [];
-                this.provinceOptions = result.regionList[0].provinceList;
-
+                this.cityZipCode.provinceOptions = [];
+                this.cityZipCode.provinceOptions = result.regionList[0].provinceList;
+                this.eligibleForAllCities = result.regionList[0].eligibleForAllCities;
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
@@ -109,22 +102,29 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     }
 
     checkboxHeaderHandler(event){
-        var headerChecked = event.target.checked;
+        //var headerChecked = event.target.checked;
+        this.setHeaderCheckbox(event.target.checked);
+    }
+
+    setHeaderCheckbox(headerChecked){
         console.log('# headerCheckbox ' + headerChecked);
 
-        if(headerChecked){
-            this.provinceOptions.forEach(po => {
-                po.isEnabled = true;
-            });
-        } else {
-            this.provinceOptions.forEach(po => {
-                po.isEnabled = false;
-            });
-        }
+        this.cityZipCode.provinceOptions.forEach(po => {
+            po.isEnabled = headerChecked;
+        });
 
-        this.availableForAllCities = !this.availableForAllCities;
-        console.log('>>> availableForAllCities: ' + this.availableForAllCities);
+        //if(headerChecked){
+        //    this.cityZipCode.provinceOptions.forEach(po => {
+        //        po.isEnabled = true;
+        //    });
+        //} else {
+        //    this.cityZipCode.provinceOptions.forEach(po => {
+        //        po.isEnabled = false;
+        //    });
+        //}
 
+        this.eligibleForAllCities = !this.eligibleForAllCities;
+        console.log('>>> eligibleForAllCities: ' + this.eligibleForAllCities);
     }
 
     checkboxHandler(event){
@@ -132,10 +132,24 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         //used with input checkbox
         var rowValue = event.currentTarget.dataset.id
 
-        let foundRow = this.provinceOptions.find(ele  => ele.value === rowValue);
+        let foundRow = this.cityZipCode.provinceOptions.find(ele  => ele.value === rowValue);
         foundRow.isEnabled = event.target.checked;
 
         console.log('# isEnabled > ' + rowValue + ' - ' + foundRow.isEnabled);
+
+        var count = 0;
+        this.cityZipCode.provinceOptions.forEach(po => {
+            if(po.isEnabled){
+                count++;
+            }
+        });
+        
+        
+        if(count != this.cityZipCode.provinceOptions.length){
+            this.eligibleForAllCities = false;
+        } else {
+            this.eligibleForAllCities = true;
+        }
 
         //event.cancelBubble = true;
         //event.stopPropagation();
@@ -161,7 +175,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             }
         }
 
-        this.provinceOptions.forEach(li => {
+        this.cityZipCode.provinceOptions.forEach(li => {
             this.template.querySelector('[data-id="' + li.value + '"]').style.background = '#ffffff';
         });
 
@@ -170,7 +184,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         element.style.background = ' #ecebea';
 
         //get second level list and put in html
-        let foundRow = this.provinceOptions.find(ele  => ele.value === e);
+        let foundRow = this.cityZipCode.provinceOptions.find(ele  => ele.value === e);
         this.dataToView = foundRow.cityAvailable;
         this.dataRemoved = foundRow.cityRemoved;
         
@@ -460,11 +474,15 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         var criteriaRecord = event.detail.record;
         console.log('# criteriaRecord > ' + criteriaRecord);
 
-        for(var i=0; i<this.provinceOptions.length; i++){
-            this.provinceOptions[i].cityRemoved = [];
+        for(var i=0; i<this.cityZipCode.provinceOptions.length; i++){
+            this.cityZipCode.provinceOptions[i].cityRemoved = [];
         }
 
-        saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.provinceOptions)})
+        this.cityZipCode.provinceList = this.cityZipCode.provinceOptions;//++
+        this.cityZipCode.eligibleForAllCities = this.eligibleForAllCities;//++
+
+        //saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode.provinceOptions)})
+        saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode)})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
@@ -549,7 +567,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         this.searchTable = [];
         this.dataRemoved = [];
         this.searchRemovedTable = [];
-        this.provinceOptions = [];
+        this.cityZipCode.provinceOptions = [];
 
         const goback = new CustomEvent("goback", {
             detail: {prodId: this.productid}

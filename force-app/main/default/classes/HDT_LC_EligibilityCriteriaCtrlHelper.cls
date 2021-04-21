@@ -1,23 +1,24 @@
 public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteriaHelper(String productId, String record, List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList){
-        
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveEligibilityCriteriaHelper(String productId, String record, HDT_WRP_EligibilityCriteria.HDT_WRP_Region obj){
+        //List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList
         HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse();
 
         Savepoint sp = Database.setSavepoint();
 
+        Boolean isUpsert = false;
         EligibilityCriteria__c criteria = new EligibilityCriteria__c();
         criteria = (EligibilityCriteria__c)JSON.deserialize(record, EligibilityCriteria__c.class);
-        //criteria.Regions__c = 'EMR';
-        //criteria.Product__c = productId;
+        criteria.EligibleForAllCities__c = obj.eligibleForAllCities;
+
+        isUpsert = !String.isEmpty(criteria.Id);
 
         try{
-            //insert criteria;
             SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
      
             if(objRes.isCreateable()){
-                insert criteria;
+                upsert criteria;
             } else {
                 saveResponse.success = false;
                 saveResponse.message = '# ERROR: you don\'t have permission on this obj';
@@ -32,34 +33,71 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             return saveResponse;
         }
 
-        List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
-        EligibleMunicipality__c muni;
-        for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv : provinceList){
-            if(singleProv.isEnabled){
-                muni = new EligibleMunicipality__c();
-                muni.EligibilityCriteria__c = criteria.Id;
-                muni.Name = singleProv.label;
-                muni.AreaCode__c =  singleProv.value;
-                //singleProv.cityRemoved = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_City>();
-                muni.JSONCode__c = JSON.serialize(singleProv);
-                muniList.add(muni);
+        if(!criteria.EligibleForAllCities__c){
+
+            Boolean deleteResponse = handleRecordDelete(isUpsert, criteria.Id);
+
+            if(!deleteResponse){
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: delete error';
+                return saveResponse;
             }
-        }
 
-        saveResponse.errorData = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError>();
-        saveResponse.errorData = databaseInsert(muniList, saveResponse.errorData);
+            List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
+            EligibleMunicipality__c muni;
+            for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv : obj.provinceList){
+                if(singleProv.isEnabled){
+                    muni = new EligibleMunicipality__c();
+                    muni.EligibilityCriteria__c = criteria.Id;
+                    muni.Name = singleProv.label;
+                    muni.AreaCode__c =  singleProv.value;
+                    //singleProv.cityRemoved = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_City>();
+                    muni.JSONCode__c = JSON.serialize(singleProv);
+                    muniList.add(muni);
+                }
+            }
 
-        if(saveResponse.errorData.size() > 0){
-            Database.rollback(sp);
-            saveResponse.success = false;
-            saveResponse.message = '# ERROR: insert failed';
+            saveResponse.errorData = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError>();
+            saveResponse.errorData = databaseInsert(muniList, saveResponse.errorData);
+
+            if(saveResponse.errorData.size() > 0){
+                Database.rollback(sp);
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: insert failed';
+            } else {
+                saveResponse.success = true;
+                saveResponse.criteriaId = criteria.Id;
+            }
         } else {
+
+            Boolean deleteResponse = handleRecordDelete(isUpsert, criteria.Id);
+
+            if(!deleteResponse){
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: delete error';
+                return saveResponse;
+            }
+
             saveResponse.success = true;
-            saveResponse.criteriaId = criteria.Id;
+            saveResponse.criteriaId = criteria.Id; 
         }
 
         return saveResponse;
 
+    }
+
+    public static Boolean handleRecordDelete(Boolean isUpsert, String criteriaId){
+        if(isUpsert){
+            List<EligibleMunicipality__c> muniList;    
+            muniList = HDT_QR_EligibilityCriteria.getEligibleMunicipalityByCriteriaId(muniList, criteriaId);
+            if(muniList.size()>0){
+                return HDT_UTL_DatabaseService.deleteSObject(muniList);
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
     }
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse cloneEligibilityCriteriaHelper(String recIdToClone, String productId){
@@ -69,14 +107,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         EligibilityCriteria__c newCriteria = new EligibilityCriteria__c();
         Savepoint sp = Database.setSavepoint();
 
-        EligibilityCriteria__c crtiteriaToClone = [
-            SELECT Id, Name,
-                   (SELECT Id, Name, AreaCode__c, JSONCode__c FROM Comuni_Eleggibili__r)
-            FROM EligibilityCriteria__c
-            WHERE Id =: recIdToClone
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
+        EligibilityCriteria__c crtiteriaToClone;
+        crtiteriaToClone = HDT_QR_EligibilityCriteria.getEligibilityCriteriaWithChild(crtiteriaToClone, recIdToClone);
 
         newCriteria = crtiteriaToClone.clone(false, true, false, false);
         newCriteria.Product__c = productId;
@@ -104,24 +136,29 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             return saveResponse;
         }
 
-        List<EligibleMunicipality__c> newItemsList = new List<EligibleMunicipality__c>();
-        EligibleMunicipality__c newItem;
-        for(EligibleMunicipality__c itemToClone : crtiteriaToClone.Comuni_Eleggibili__r){
-            newItem = itemToClone.clone(false, true, false, false);
-            newItem.EligibilityCriteria__c = newCriteria.Id;
-            newItemsList.add(newItem);
-        }
+        if(!crtiteriaToClone.EligibleForAllCities__c){
+            List<EligibleMunicipality__c> newItemsList = new List<EligibleMunicipality__c>();
+            EligibleMunicipality__c newItem;
+            for(EligibleMunicipality__c itemToClone : crtiteriaToClone.Comuni_Eleggibili__r){
+                newItem = itemToClone.clone(false, true, false, false);
+                newItem.EligibilityCriteria__c = newCriteria.Id;
+                newItemsList.add(newItem);
+            }
 
-        saveResponse.errorData = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError>();
-        saveResponse.errorData = databaseInsert(newItemsList, saveResponse.errorData);
+            saveResponse.errorData = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_LineError>();
+            saveResponse.errorData = databaseInsert(newItemsList, saveResponse.errorData);
 
-        if(saveResponse.errorData.size() > 0){
-            Database.rollback(sp);
-            saveResponse.success = false;
-            saveResponse.message = '# ERROR: insert failed';
+            if(saveResponse.errorData.size() > 0){
+                Database.rollback(sp);
+                saveResponse.success = false;
+                saveResponse.message = '# ERROR: insert failed';
+            } else {
+                saveResponse.success = true;
+                saveResponse.criteriaId = newCriteria.Id;
+            }
         } else {
             saveResponse.success = true;
-            saveResponse.criteriaId = newCriteria.Id;
+            saveResponse.criteriaId = newCriteria.Id;          
         }
 
         return saveResponse;
@@ -163,13 +200,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         Map<String, Set<String>> existingMuniMap = new Map<String, Set<String>>();
 
         cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
-        List<EligibleMunicipality__c> muniList = new List<EligibleMunicipality__c>();
-        muniList = [
-            SELECT Id, Name, AreaCode__c, JSONCode__c
-            FROM EligibleMunicipality__c
-            WHERE EligibilityCriteria__c =: eligibilityId
-            WITH SECURITY_ENFORCED
-        ];
+        List<EligibleMunicipality__c> muniList;
+        List<EligibilityCriteria__c> criteria;
+
+        muniList = HDT_QR_EligibilityCriteria.getEligibleMunicipalityByCriteriaId(muniList, eligibilityId);
+        criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, eligibilityId);
 
         try{            
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
@@ -186,8 +221,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             }
 
             
-            StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
-            cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+            //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
+            //cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+            cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
+
+            cityZipCodeObj.regionList[0].eligibleForAllCities = criteria[0].EligibleForAllCities__c;
 
             for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province prov : cityZipCodeObj.regionList[0].provinceList){
 
@@ -243,7 +281,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
     }
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
+    /*public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
 
         System.debug('# getExistingEligibleMunicipalities > ' + eligibilityId);
         cityZipCodeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode();
@@ -279,7 +317,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         return cityZipCodeObj;
 
-    }
+    }*/
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse deleteEligibilityCriteriaHelper(List<EligibilityCriteria__c> criteriaListToDelete, HDT_WRP_EligibilityCriteria.HDT_WRP_SaveResponse saveResponse){
 
@@ -320,6 +358,12 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
         return saveResponse;
 
+    }
+
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode createDefaultCityZipCodeObj(HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
+        StaticResource sr = HDT_QR_EligibilityCriteria.getMunicipalitiesStaticResource();
+        cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
+        return cityZipCodeObj;
     }
 
     /*public static void updateEligibilityCriteria(Id product2Id, Boolean asChild){

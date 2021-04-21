@@ -17,7 +17,7 @@
 
         <p if:false={error.show} slot="actions" >
             <lightning-button-group>
-                <lightning-button label="Cerca" onclick={searchClick} icon-name="utility:search" title="search"  class="slds-m-left_x-small" ></lightning-button>
+                <!--<lightning-button label="Cerca" onclick={searchClick} icon-name="utility:search" title="search"  class="slds-m-left_x-small" ></lightning-button>-->
                 <lightning-button label="Clona" name="cloneData" onclick={openConfirmation} icon-name="utility:copy" variant="success"></lightning-button>
                 <lightning-button label="Chiudi" name="closeSearch" onclick={openConfirmation} icon-name="utility:delete" variant="destructive" ></lightning-button>
             </lightning-button-group>
@@ -119,6 +119,7 @@
                                     <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-01">Nome offerta</label>
         
                                     <div class="slds-form-element__control slds-m-top_medium">
+                                                                                
                                         <c-hdt-custom-lookup   
                                             unique-key={item.code}
                                             value-id={item.selectedId}
@@ -134,16 +135,18 @@
                                     </div>
                                     <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
 
-                                    <lightning-record-view-form
-                                            record-id={item.selectedId}
-                                            object-api-name="EligibilityCriteria__c"
-                                            density="auto">
-                                        <!--<div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">-->
-                                            <lightning-output-field field-name="ProductName__c"></lightning-output-field>
-                                            <lightning-output-field field-name="ProductCode__c"></lightning-output-field>
-                                            <lightning-output-field field-name="Version__c"></lightning-output-field>
-                                        <!--</div>-->
-                                    </lightning-record-view-form>
+                                    <div if:true={showTable} >
+                                        <lightning-record-view-form
+                                                record-id={item.selectedId}
+                                                object-api-name="EligibilityCriteria__c"
+                                                density="auto">
+                                            <!--<div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">-->
+                                                <lightning-output-field field-name="ProductName__c"></lightning-output-field>
+                                                <lightning-output-field field-name="ProductCode__c"></lightning-output-field>
+                                                <lightning-output-field field-name="Version__c"></lightning-output-field>
+                                            <!--</div>-->
+                                        </lightning-record-view-form>
+                                    </div>
 
                                 </div>
                             </div>
@@ -158,10 +161,19 @@
                         </div>
                         
                         <div if:true={showTable} class="slds-col slds-size_1-of-6 slds-box slds-box_x-small">
-                            <div class="slds-scrollable_y" style="height:500px;">
-                                <lightning-tree items={data} header="Comuni eleggibili"></lightning-tree>
+                            <div if:true={showTree} class="slds-scrollable_y" style="height:500px;">
+                                <lightning-tree items={data} header={title} ></lightning-tree>
+                            </div>
+                            <div if:false={showTree} style="height:500px;">
+                                <div class="slds-text-heading_small slds-text-title_bold slds-m-bottom_medium">{title}</div>
+                                <span class="slds-badge slds-theme_success">Valido per tutte le province</span>
                             </div>
                         </div>
+
+                        <div if:true={showTable} >
+                            <c-hdt-eligibility-criteria-view-form record-id={item.selectedId} ></c-hdt-eligibility-criteria-view-form>
+                        </div>
+
                     </div>    
 
                 </div>

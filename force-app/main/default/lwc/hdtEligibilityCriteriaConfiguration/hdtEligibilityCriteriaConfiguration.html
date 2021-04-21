@@ -47,7 +47,7 @@
                                                 <tr class="slds-line-height_reset" >
                                                     <th class="headerackground" scope="col">
 
-                                                        <template if:true={availableForAllCities} >
+                                                        <template if:true={eligibleForAllCities} >
                                                             <lightning-input
                                                                 name="headerCheckbox"
                                                                 type="checkbox"
@@ -58,7 +58,7 @@
                                                             ></lightning-input>
                                                         </template>
 
-                                                        <template if:false={availableForAllCities} >
+                                                        <template if:false={eligibleForAllCities} >
                                                             <lightning-input
                                                                 name="headerCheckbox"
                                                                 type="checkbox"
@@ -79,7 +79,7 @@
                                             </thead>
                                             <tbody>
     
-                                                <template iterator:it={provinceOptions}>
+                                                <template iterator:it={cityZipCode.provinceOptions}>
                                                     <tr key={it.value.value} data-id={it.value.value} class="slds-hint-parent" onclick={handleRowAction} >
                                                         <th data-label={it.value.value} scope="row">
 
