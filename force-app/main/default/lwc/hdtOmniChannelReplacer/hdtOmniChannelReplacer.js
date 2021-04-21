@@ -22,6 +22,7 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
                         wrts_prcgvr__Status__c: response.data.payload.Status__c,
                         completed: response.data.payload.Status__c == 'Completed'
                     });
+                    this.dispatchEvent(new CustomEvent('newactivity'));
                 } else {
                     this.activities.forEach(a => {
                         if(a.Id == response.data.payload.Id__c) {
