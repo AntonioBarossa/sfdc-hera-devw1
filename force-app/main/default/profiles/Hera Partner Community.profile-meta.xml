@@ -1721,11 +1721,11 @@
         <field>CampaignMember.PromoCommercialCode__c</field>
         <readable>false</readable>
     </fieldPermissions>
-    <fieldPermissions>
+    <!-- <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMember.RecallMe__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions> -->
     <fieldPermissions>
         <editable>false</editable>
         <field>CampaignMember.ReitekSendDate__c</field>
