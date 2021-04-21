@@ -95,11 +95,11 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             }
 
             HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
-            bodyWrp.codiceContratto = '';//contractCode;
-            bodyWrp.codiceImpianto = '4002460003';
+            bodyWrp.codiceContratto = contractCode;
+            //bodyWrp.codiceImpianto = '4005362981';
             bodyWrp.codicePod = '';
-            bodyWrp.dataInizioLettura = '01/12/2005';
-            bodyWrp.dataFineLettura = '31/12/2005';
+            //bodyWrp.dataInizioLettura = '01/12/2019';
+            bodyWrp.dataFineLettura = Datetime.now().format('dd/MM/yyyy'); 
             bodyWrp.letturaReale = '';
 
             String body = JSON.serialize(bodyWrp, true);
