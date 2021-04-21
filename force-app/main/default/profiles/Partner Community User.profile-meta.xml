@@ -96,10 +96,6 @@
         <apexClass>SiteRegisterControllerTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
-    <classAccesses>
-        <apexClass>dd</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>false</editable>
