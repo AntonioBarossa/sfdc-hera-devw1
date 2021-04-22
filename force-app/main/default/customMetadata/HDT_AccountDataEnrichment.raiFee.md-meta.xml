@@ -15,8 +15,8 @@
     &quot;columns&quot;: [
       {
         &quot;fieldName&quot;: &quot;statoPratica&quot;,
-        &quot;label&quot;: &quot;Stato&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;label&quot;: &quot;Descrizione Stato Pratica&quot;,
+        &quot;initialWidth&quot;: 220
       },
       {
         &quot;fieldName&quot;: &quot;soc&quot;,
@@ -25,12 +25,12 @@
       },
       {
         &quot;fieldName&quot;: &quot;partner&quot;,
-        &quot;label&quot;: &quot;Partner&quot;,
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;codFiscale&quot;,
-        &quot;label&quot;: &quot;Cod.Fiscale&quot;,
+        &quot;label&quot;: &quot;CF di AU&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
@@ -45,37 +45,38 @@
       },
       {
         &quot;fieldName&quot;: &quot;codImporto&quot;,
-        &quot;label&quot;: &quot;Cod Importo&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;label&quot;: &quot;Mese di attivazione addebito&quot;,
+        &quot;initialWidth&quot;: 240
       },
       {
         &quot;fieldName&quot;: &quot;idAddebito&quot;,
-        &quot;label&quot;: &quot;Addebito&quot;,
+        &quot;label&quot;: &quot;Id Addebito&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;periodoRiferimento&quot;,
-        &quot;label&quot;: &quot;Riferimento&quot;,
+        &quot;label&quot;: &quot;Periodo Riferimento&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;numDoc&quot;,
-        &quot;label&quot;: &quot;Num Doc&quot;,
+        &quot;label&quot;: &quot;Num. Documento&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;importo&quot;,
-        &quot;label&quot;: &quot;Importo&quot;,
+        &quot;label&quot;: &quot;Importo Rata&quot;,
+        &quot;type&quot;: &quot;currency&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;dataScadenza&quot;,
-        &quot;label&quot;: &quot;Data Scadenza&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;label&quot;: &quot;Data Scadenza Rata&quot;,
+        &quot;initialWidth&quot;: 180
       },
       {
         &quot;fieldName&quot;: &quot;docRif&quot;,
-        &quot;label&quot;: &quot;Doc Rif&quot;,
+        &quot;label&quot;: &quot;N. Doc. di Riferim.&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
@@ -86,21 +87,25 @@
       {
         &quot;fieldName&quot;: &quot;importoFatturato&quot;,
         &quot;label&quot;: &quot;Importo Fatturato&quot;,
+        &quot;type&quot;: &quot;currency&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;importoIncDelta&quot;,
-        &quot;label&quot;: &quot;Importo Inc delta&quot;,
+        &quot;label&quot;: &quot;Importo Pagato&quot;,
+        &quot;type&quot;: &quot;currency&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;importoResiduo&quot;,
-        &quot;label&quot;: &quot;Importo residuo&quot;,
+        &quot;label&quot;: &quot;Importo Residuo&quot;,
+        &quot;type&quot;: &quot;currency&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
         &quot;fieldName&quot;: &quot;chiusoCont&quot;,
-        &quot;label&quot;: &quot;Chiuso cont&quot;,
+        &quot;label&quot;: &quot;Chiuso Contabilmente&quot;,
+        &quot;type&quot;: &quot;currency&quot;,
         &quot;initialWidth&quot;: 160
       }
     ]

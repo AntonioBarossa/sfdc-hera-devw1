@@ -120,6 +120,10 @@
                 <behavior>Readonly</behavior>
                 <field>PowerRequested__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PowerLimitation__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

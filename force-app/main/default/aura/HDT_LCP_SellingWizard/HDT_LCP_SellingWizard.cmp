@@ -1,4 +1,5 @@
 <aura:component implements = "force:hasRecordId,flexipage:availableForAllPageTypes,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes" controller="HDT_LC_SellingWizardController">
+    <aura:attribute name="isOnPage" type="Boolean" default="false" />
     <aura:attribute name="loading" type="Boolean" />
     <aura:attribute name="recordId" type="String" />
     <aura:attribute name="saleId" type="String" />
