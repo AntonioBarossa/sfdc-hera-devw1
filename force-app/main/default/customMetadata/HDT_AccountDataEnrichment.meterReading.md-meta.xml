@@ -10,43 +10,53 @@
         <field>ColumnData__c</field>
         <value xsi:type="xsd:string">[
   {
-    &quot;label&quot;: &quot;Apparecchiatura&quot;,
-    &quot;fieldName&quot;: &quot;apparecchiatura&quot;,
-    &quot;initialWidth&quot;: 200
-  },
-  {
-    &quot;label&quot;: &quot;Data pianificata&quot;,
+    &quot;label&quot;: &quot;Data lettura&quot;,
     &quot;fieldName&quot;: &quot;dataLetturaPianificata&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Numeri int&quot;,
+    &quot;label&quot;: &quot;Fascia&quot;,
+    &quot;fieldName&quot;: &quot;tipoNumeratore&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Lettura (Interi)&quot;,
     &quot;fieldName&quot;: &quot;posizioniPrecedentiLaVirgola&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Decimali&quot;,
+    &quot;label&quot;: &quot;Lettura (Decimali)&quot;,
     &quot;fieldName&quot;: &quot;decimali&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Quantita calcolo&quot;,
+    &quot;label&quot;: &quot;Consumo&quot;,
     &quot;fieldName&quot;: &quot;quantitaCalcolo&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Tipo lettura&quot;,
+    &quot;label&quot;: &quot;Codice Apparecchiatura&quot;,
+    &quot;fieldName&quot;: &quot;apparecchiatura&quot;,
+    &quot;initialWidth&quot;: 200
+  },
+  {
+    &quot;label&quot;: &quot;Stato&quot;,
+    &quot;fieldName&quot;: &quot;statoLettura&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Tipo Lettura&quot;,
     &quot;fieldName&quot;: &quot;tipoLettura&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Categoria lettura&quot;,
+    &quot;label&quot;: &quot;Causale&quot;,
     &quot;fieldName&quot;: &quot;categoriaLettura&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Stato lettura&quot;,
-    &quot;fieldName&quot;: &quot;statoLettura&quot;,
+    &quot;label&quot;: &quot;Giorni di fatturazione&quot;,
+    &quot;fieldName&quot;: &quot;giorniConsumo&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
@@ -55,33 +65,28 @@
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Giorni consumo&quot;,
-    &quot;fieldName&quot;: &quot;giorniConsumo&quot;,
-    &quot;initialWidth&quot;: 150
-  },
-  {
-    &quot;label&quot;: &quot;Settore merceologico&quot;,
-    &quot;fieldName&quot;: &quot;settoreMerceologico&quot;,
-    &quot;initialWidth&quot;: 150
-  },
-  {
-    &quot;label&quot;: &quot;Id numeratore&quot;,
+    &quot;label&quot;: &quot;Tipo Registro&quot;,
     &quot;fieldName&quot;: &quot;identificazioneNumeratore&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Unità misura&quot;,
+    &quot;label&quot;: &quot;Unità di misura lettura&quot;,
     &quot;fieldName&quot;: &quot;unitaDiMisura&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Categoria numeratore&quot;,
+    &quot;label&quot;: &quot;Tipo di consumo&quot;,
     &quot;fieldName&quot;: &quot;categoriaNumeratore&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
-    &quot;label&quot;: &quot;Tipo numeratore&quot;,
-    &quot;fieldName&quot;: &quot;tipoNumeratore&quot;,
+    &quot;label&quot;: &quot;Settore Merceologico&quot;,
+    &quot;fieldName&quot;: &quot;settoreMerceologico&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Flag lettura stornata&quot;,
+    &quot;fieldName&quot;: &quot;letturaStornata&quot;,
     &quot;initialWidth&quot;: 150
   },
   {
