@@ -103,6 +103,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_MeterReadingTranscodeMap__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_PowerRangeValue__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -6853,6 +6857,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GeneralTermsCondition__c.Version__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_MeterReadingTranscodeMap__mdt.SalesforceValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_MeterReadingTranscodeMap__mdt.SapValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>HDT_MeterReadingTranscodeMap__mdt.TranscodeType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
