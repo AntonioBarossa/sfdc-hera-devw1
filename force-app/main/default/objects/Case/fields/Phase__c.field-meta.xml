@@ -383,11 +383,6 @@
                 <label>Attesa Lavorazione BO</label>
             </value>
             <value>
-                <fullName>Sospeso parere interno</fullName>
-                <default>false</default>
-                <label>Sospeso parere interno</label>
-            </value>
-            <value>
                 <fullName>Annullamento - Ammissibilità KO</fullName>
                 <default>false</default>
                 <label>Annullamento - Ammissibilità KO</label>

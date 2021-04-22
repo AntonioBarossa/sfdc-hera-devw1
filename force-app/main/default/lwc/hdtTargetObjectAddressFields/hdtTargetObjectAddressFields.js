@@ -29,6 +29,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api codComuneSAP;
     @api codStradarioSAP;
     @api IndEstero ;
+
     @api flagVerifiacto ;
     @track openmodel = false;
     tableData = [];

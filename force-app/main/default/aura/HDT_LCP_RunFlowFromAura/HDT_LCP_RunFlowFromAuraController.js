@@ -5,7 +5,6 @@
         var myPageRef = component.get("v.pageReference");
         var caseId = myPageRef.state.c__recordid;
         var flowName = myPageRef.state.c__flowName;
-        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
         var accId = myPageRef.state.c__accid;
 
         var processType = myPageRef.state.c__processType;
@@ -26,7 +25,6 @@
         component.set("v.recordid", caseId)
         console.log('# component set recordid -> '+component.get("v.recordid"))
         console.log('# flowName -> ' + flowName);
-        console.log('# resumeFromDraft -> ' + resumeFromDraft);
         console.log('# accId -> ' + accId);
         console.log('# processType -> ' + processType);
         console.log('# recordTypeName -> ' + recordTypeName);

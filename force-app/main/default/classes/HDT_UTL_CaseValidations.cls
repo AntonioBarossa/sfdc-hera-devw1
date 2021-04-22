@@ -147,6 +147,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String pecFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoiceCertifiedEmailAddress__c');
         String tipoXml = getFieldValue(fields, 'XMLType__c');
 
+        // TODO: validazione campi billing profile.
+
         return result;
     }
 

@@ -61,7 +61,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     
     
-    
     /**
      * Handle save button availability
      */
@@ -156,7 +155,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         
         console.log('mapFieldReq*****************'+JSON.stringify(mapFieldReq.get('ServicePointCode__c')));
 
-        console.log('fieldsDataReq lenght***************'+JSON.stringify(fieldReq));
         fieldsData.forEach(element => {
             
            if(this.selectedservicepoint != undefined){
@@ -290,6 +288,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     connectedCallback(){
         this.loading = true;
+
         console.log('hdtTargetObjectForm - connectedCallback - recordtype: ', JSON.stringify(this.recordtype));
         getCustomSettings().then(data => {
             //get data fields based on recordtype label

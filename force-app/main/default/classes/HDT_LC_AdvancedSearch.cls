@@ -304,7 +304,6 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		return customContracts;
 	}
 
-
 	/**
 	 * TODO , Call the Webservice
 	 */
