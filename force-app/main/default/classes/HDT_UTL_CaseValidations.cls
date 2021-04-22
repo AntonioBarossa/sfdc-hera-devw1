@@ -159,6 +159,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     public String validateReclamoScritto(String fields, string recordId){
 
         String result;
+        
+        String delegateName = getFieldValue(fields,'DelegateName__c');
 
         String sendDate = getFieldValue(fields, 'SendDate__c') == null ? String.valueOf(System.today()) : getFieldValue(fields, 'SendDate__c');
 
@@ -168,7 +170,22 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
-
+        }else if(delegateName != null && delegateName != ''){
+            
+            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId 
+            WITH SECURITY_ENFORCED];
+            
+            if(attachedDocument.size() == 0){
+            
+                   result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+                
+            }else{
+            
+                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                 
+            }
+       
         } else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
         && (getFieldValue(fields, 'SoldBy__c') != null && getFieldValue(fields, 'SoldBy__c') != '')){
 
@@ -346,7 +363,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-
     public String validateDisattivazioni(String fields){
 
         String result;
@@ -371,9 +387,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         return result;
 
-
     }
-
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
