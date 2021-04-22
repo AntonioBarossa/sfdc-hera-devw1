@@ -140,16 +140,37 @@ public inherited sharing class HDT_QR_Order {
             ContractReference__c,
             OrderReference__c,
             ContractReference__r.ContractNumber,
-            OrderReference__r.OrderNumber
-            // ActivationStreetName__c,
-            // ActivationCity__c,
-            // ActivationPostalCode__c,
-            // ActivationCountry__c,
-            // ActivationProvince__c,
-            // ActivationStreetNumberExtension__c,
-            // ActivationStreetNumber__c
+            OrderReference__r.OrderNumber,
+            ActivationStreetName__c,
+            ActivationCity__c,
+            ActivationPostalCode__c,
+            ActivationCountry__c,
+            ActivationProvince__c,
+            ActivationStreetNumberExtension__c,
+            ActivationStreetNumber__c
             FROM Order 
             WHERE Id = :orderId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get records by IDs
+    * @param List<String> orderIds
+    * @return List<Order>
+    */
+    public List<Order> getRecordsByIds(List<String> orderIds){
+        return [
+            SELECT 
+            RecordTypeId,
+            RecordType.Name,
+            RecordType.DeveloperName,
+            Phase__c,
+            Status
+            FROM Order 
+            WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
         ];
     }
@@ -196,6 +217,25 @@ public inherited sharing class HDT_QR_Order {
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
+            AND Phase__c NOT IN ('Annullato')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 07/01/2020
+    * @description Get child records by list of parent Order Ids
+    * @param String parentOrderId
+    * @return List<Order>
+    */
+    public List<Order> getChildOrdersByParentIds(List<String> parentOrderIds){
+        return [
+            SELECT
+            Phase__c
+            FROM
+            Order
+            WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             WITH SECURITY_ENFORCED
         ];
@@ -346,50 +386,20 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
-    public List<Case> getChageNonRegMeterByOrder(String orderId){
-
-        List<Case> caseList = new List<Case>();
-
-        try{
-            caseList = [SELECT Id
-            FROM Case
-            WHERE Type = 'Cambio contatore non registrato'
-            AND Status = 'Closed'
-            AND VulturePracticeReference__c = :orderId
-            WITH SECURITY_ENFORCED];
-
-        }catch(Exception e){
-
-            System.debug(e.getMessage());
-
-        }
-
-        return caseList;
-
+    public List<Order> getRecordByOrderNumber(String orderNumber){
+        return [Select id,phase__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
 
-    public String getRoleNameByRoleId(){
-
-        String userId = UserInfo.getUserId();
-
-        String roleName;
-
-        try{
-
-            roleName = [SELECT UserRole.Name
-            FROM User
-            WHERE Id = :userId
+    public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){
+        return [
+            SELECT
+            Id,
+             BillingProfile__c,
+             ServicePoint__c
+             from Order
+            WHERE Id IN :orderIds
             WITH SECURITY_ENFORCED
-            LIMIT 1].UserRole.Name;
-
-        }catch(Exception e){
-
-            System.debug(e.getMessage());
-
-        }
-
-        return roleName;
-
+        ];
     }
 
 }
