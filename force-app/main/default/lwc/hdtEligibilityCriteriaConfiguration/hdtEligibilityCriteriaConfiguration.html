@@ -11,7 +11,7 @@
 
     <lightning-card title="Eleggibilità" variant="narrow" icon-name="standard:sales_path">
         
-        <div if:true={spinnerObj.spinner} >
+        <div if:true={spinnerObj.spinner}>
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
         </div>
 
@@ -30,12 +30,28 @@
 
                 <div class="slds-col slds-size_1-of-2">
 
+                    <!--<div class="slds-box slds-box_x-small slds-m-top_medium slds-m-bottom_medium">
+                        <lightning-input
+                            type="toggle"
+                            label={toggleLabel}
+                            name="allProvince"
+                            checked
+                            message-toggle-active="Attivo"
+                            message-toggle-inactive="Disattivo"
+                            onchange={handleToggleChange}
+                        ></lightning-input>
+                    </div>-->
+
                     <div class="slds-section slds-is-open">
+                    <!--<div class="slds-section slds-is-open slds-is-relative">
+
+                        <div if:true={disableCitySelection} class="slds-spinner_container"></div>-->
+
                         <h3 class="slds-section__title slds-theme_shade">
                             <span class="slds-truncate slds-p-horizontal_small" title="Comuni eleggibili">Province eleggibili</span>
                         </h3>
-                        <div aria-hidden="false" class="slds-section__content">
 
+                        <div aria-hidden="false" class="slds-section__content">
 
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col slds-size_3-of-7">

@@ -50,7 +50,9 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     showEmptyRemovedImmage = true;
     showSearchRemovedTable = false;
     eligibleForAllCities;
-
+    headerCheckbox=true;
+    disableCitySelection = true;
+    toggleLabel = 'Valido per tutte le province'
 
     connectedCallback(){
         console.log('>>> eligibilityId > ' + this.eligibilityId);
@@ -101,6 +103,23 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         });
     }
 
+    handleToggleChange() {
+        const checked = Array.from(
+            this.template.querySelectorAll('lightning-input')
+        )
+        .filter(element => element.name==='allProvince')
+        .map(element => element.checked);
+        this.disableCitySelection = checked[0];
+
+        if(this.disableCitySelection){
+            this.toggleLabel = 'Valido per tutte le province';
+            this.eligibleForAllCities = true;
+        } else {
+            this.toggleLabel = 'Selezione manuale';
+            this.eligibleForAllCities = false;
+        }
+    }
+
     checkboxHeaderHandler(event){
         //var headerChecked = event.target.checked;
         this.setHeaderCheckbox(event.target.checked);
@@ -144,11 +163,12 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             }
         });
         
-        
         if(count != this.cityZipCode.provinceOptions.length){
             this.eligibleForAllCities = false;
+            this.headerCheckbox = false;
         } else {
             this.eligibleForAllCities = true;
+            this.headerCheckbox = true;
         }
 
         //event.cancelBubble = true;

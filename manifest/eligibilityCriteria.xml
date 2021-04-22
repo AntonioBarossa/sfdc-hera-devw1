@@ -11,6 +11,8 @@
 		<members>HDT_QR_SearchPlug</members>
 		<members>HDT_UTL_SearchPlug</members>
 		<members>HDT_QR_EligibilityCriteria</members>
+		<members>HDT_QR_Municipality</members>
+		<members>HDT_UTL_GenerateMunicipalityJson</members>
 		<name>ApexClass</name>
 	</types>
 	<types>

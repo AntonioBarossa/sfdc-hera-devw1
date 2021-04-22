@@ -80,7 +80,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                        ClientAgeMin__c, ClientAgeMax__c,
                        ConsumptionRangeEEmin__c, ConsumptionRangeEEmax__c,
                        ConsumptionRangeGASmin__c, ConsumptionRangeGASmax__c,
-                       PowerRangeMin__c, PowerRangeMax__c
+                       PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c
 
                 FROM EligibilityCriteria__c
                 WHERE Product__r.Status__c = 'Vendibile' AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND

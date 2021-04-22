@@ -132,6 +132,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return (input == 'Comune__c')? true : false;
 
     }
+
     global String getInputDefaultValue(SObject quote, String input){
         System.debug('METHOD CALLED: getInputDefaultValue ' + input);
 
@@ -151,11 +152,12 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 		System.debug('isSuggestCustom false');
         return false;
     }
-     global List<PricebookEntry> suggest( sObject query, Map<String,Object> usg ){
-                 system.debug('suggest');
 
+    global List<PricebookEntry> suggest( sObject query, Map<String,Object> usg ){
+        System.debug('suggest');
         return [SELECT Id FROM PricebookEntry WITH SECURITY_ENFORCED LIMIT 1];
     }
+
     global String getAdditionalSuggestFilters( sObject quote, Map<String,Object> suggFilts )
     {
         system.debug('getAdditionalSuggestFilters');
@@ -311,7 +313,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
     public static Boolean checkBooleanCriteria(String booleanString, Boolean checkbox){
 
-        if(booleanString.equalsIgnoreCase('Y') == checkbox){
+        if(!String.isEmpty(booleanString) && booleanString.equalsIgnoreCase('Y') == checkbox){
             return true;
         } else {
             return false;
