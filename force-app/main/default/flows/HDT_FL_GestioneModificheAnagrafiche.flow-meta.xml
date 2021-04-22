@@ -338,6 +338,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>ContactId</field>
+            <value>
+                <elementReference>Get_Target_Contact.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>CustomerMarking__c</field>
             <value>
                 <elementReference>Query_Case.Account.CustomerMarking__c</elementReference>
@@ -350,7 +356,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FAX__c</field>
+            <field>Fax__c</field>
             <value>
                 <elementReference>Get_Target_Contact.Fax</elementReference>
             </value>
@@ -528,8 +534,8 @@
     <recordUpdates>
         <name>Predefault_Invio_Bolletta_Email</name>
         <label>Predefault Invio Bolletta Email</label>
-        <locationX>990</locationX>
-        <locationY>471</locationY>
+        <locationX>996</locationX>
+        <locationY>467</locationY>
         <connector>
             <targetReference>SelectBillingProfileScreen</targetReference>
         </connector>
@@ -664,7 +670,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>TargetContactId</elementReference>
+                <elementReference>Refresh_Case.ContactId</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -676,7 +682,7 @@
         <inputAssignments>
             <field>Fax</field>
             <value>
-                <elementReference>Refresh_Case.FAX__c</elementReference>
+                <elementReference>Refresh_Case.Fax__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -812,7 +818,7 @@ Inserisci manualmente i seguenti campi:</description>
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -873,6 +879,18 @@ Inserisci manualmente i seguenti campi:</description>
                 <name>labelSaveButton</name>
                 <value>
                     <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variantSaveButton</name>
+                <value>
+                    <stringValue>success</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

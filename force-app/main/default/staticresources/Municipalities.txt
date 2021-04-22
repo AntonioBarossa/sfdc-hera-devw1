@@ -1,0 +1,1394 @@
+{
+  "regionList": [
+    {
+      "value": "Emilia-Romagna",
+      "provinceList": [
+        {
+          "value": "PC",
+          "label": "Piacenza",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "33001",
+              "label": "Agazzano"
+            },
+            {
+              "value": "33002",
+              "label": "Alseno"
+            },
+            {
+              "value": "33003",
+              "label": "Besenzone"
+            },
+            {
+              "value": "33004",
+              "label": "Bettola"
+            },
+            {
+              "value": "33005",
+              "label": "Bobbio"
+            },
+            {
+              "value": "33006",
+              "label": "Borgonovo Val Tidone"
+            },
+            {
+              "value": "33007",
+              "label": "Cadeo"
+            },
+            {
+              "value": "33008",
+              "label": "Calendasco"
+            },
+            {
+              "value": "33010",
+              "label": "Caorso"
+            },
+            {
+              "value": "33011",
+              "label": "Carpaneto Piacentino"
+            },
+            {
+              "value": "33012",
+              "label": "Castell'Arquato"
+            },
+            {
+              "value": "33013",
+              "label": "Castel San Giovanni"
+            },
+            {
+              "value": "33014",
+              "label": "Castelvetro Piacentino"
+            },
+            {
+              "value": "33015",
+              "label": "Cerignale"
+            },
+            {
+              "value": "33016",
+              "label": "Coli"
+            },
+            {
+              "value": "33017",
+              "label": "Corte Brugnatella"
+            },
+            {
+              "value": "33018",
+              "label": "Cortemaggiore"
+            },
+            {
+              "value": "33019",
+              "label": "Farini"
+            },
+            {
+              "value": "33020",
+              "label": "Ferriere"
+            },
+            {
+              "value": "33021",
+              "label": "Fiorenzuola d'Arda"
+            },
+            {
+              "value": "33022",
+              "label": "Gazzola"
+            },
+            {
+              "value": "33023",
+              "label": "Gossolengo"
+            },
+            {
+              "value": "33024",
+              "label": "Gragnano Trebbiense"
+            },
+            {
+              "value": "33025",
+              "label": "Gropparello"
+            },
+            {
+              "value": "33026",
+              "label": "Lugagnano Val d'Arda"
+            },
+            {
+              "value": "33027",
+              "label": "Monticelli d'Ongina"
+            },
+            {
+              "value": "33028",
+              "label": "Morfasso"
+            },
+            {
+              "value": "33030",
+              "label": "Ottone"
+            },
+            {
+              "value": "33032",
+              "label": "Piacenza"
+            },
+            {
+              "value": "33033",
+              "label": "Pianello Val Tidone"
+            },
+            {
+              "value": "33034",
+              "label": "Piozzano"
+            },
+            {
+              "value": "33035",
+              "label": "Podenzano"
+            },
+            {
+              "value": "33036",
+              "label": "Ponte dell'Olio"
+            },
+            {
+              "value": "33037",
+              "label": "Pontenure"
+            },
+            {
+              "value": "33038",
+              "label": "Rivergaro"
+            },
+            {
+              "value": "33039",
+              "label": "Rottofreno"
+            },
+            {
+              "value": "33040",
+              "label": "San Giorgio Piacentino"
+            },
+            {
+              "value": "33041",
+              "label": "San Pietro in Cerro"
+            },
+            {
+              "value": "33042",
+              "label": "Sarmato"
+            },
+            {
+              "value": "33043",
+              "label": "Travo"
+            },
+            {
+              "value": "33044",
+              "label": "Vernasca"
+            },
+            {
+              "value": "33045",
+              "label": "Vigolzone"
+            },
+            {
+              "value": "33046",
+              "label": "Villanova sull'Arda"
+            },
+            {
+              "value": "33047",
+              "label": "Zerba"
+            },
+            {
+              "value": "33048",
+              "label": "Ziano Piacentino"
+            },
+            {
+              "value": "33049",
+              "label": "Alta Val Tidone"
+            }
+          ]
+        },
+        {
+          "value": "PR",
+          "label": "Parma",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "34001",
+              "label": "Albareto"
+            },
+            {
+              "value": "34002",
+              "label": "Bardi"
+            },
+            {
+              "value": "34003",
+              "label": "Bedonia"
+            },
+            {
+              "value": "34004",
+              "label": "Berceto"
+            },
+            {
+              "value": "34005",
+              "label": "Bore"
+            },
+            {
+              "value": "34006",
+              "label": "Borgo Val di Taro"
+            },
+            {
+              "value": "34007",
+              "label": "Busseto"
+            },
+            {
+              "value": "34008",
+              "label": "Calestano"
+            },
+            {
+              "value": "34009",
+              "label": "Collecchio"
+            },
+            {
+              "value": "34010",
+              "label": "Colorno"
+            },
+            {
+              "value": "34011",
+              "label": "Compiano"
+            },
+            {
+              "value": "34012",
+              "label": "Corniglio"
+            },
+            {
+              "value": "34013",
+              "label": "Felino"
+            },
+            {
+              "value": "34014",
+              "label": "Fidenza"
+            },
+            {
+              "value": "34015",
+              "label": "Fontanellato"
+            },
+            {
+              "value": "34016",
+              "label": "Fontevivo"
+            },
+            {
+              "value": "34017",
+              "label": "Fornovo di Taro"
+            },
+            {
+              "value": "34018",
+              "label": "Langhirano"
+            },
+            {
+              "value": "34019",
+              "label": "Lesignano de' Bagni"
+            },
+            {
+              "value": "34020",
+              "label": "Medesano"
+            },
+            {
+              "value": "34022",
+              "label": "Monchio delle Corti"
+            },
+            {
+              "value": "34023",
+              "label": "Montechiarugolo"
+            },
+            {
+              "value": "34024",
+              "label": "Neviano degli Arduini"
+            },
+            {
+              "value": "34025",
+              "label": "Noceto"
+            },
+            {
+              "value": "34026",
+              "label": "Palanzano"
+            },
+            {
+              "value": "34027",
+              "label": "Parma"
+            },
+            {
+              "value": "34028",
+              "label": "Pellegrino Parmense"
+            },
+            {
+              "value": "34030",
+              "label": "Roccabianca"
+            },
+            {
+              "value": "34031",
+              "label": "Sala Baganza"
+            },
+            {
+              "value": "34032",
+              "label": "Salsomaggiore Terme"
+            },
+            {
+              "value": "34033",
+              "label": "San Secondo Parmense"
+            },
+            {
+              "value": "34035",
+              "label": "Solignano"
+            },
+            {
+              "value": "34036",
+              "label": "Soragna"
+            },
+            {
+              "value": "34038",
+              "label": "Terenzo"
+            },
+            {
+              "value": "34039",
+              "label": "Tizzano Val Parma"
+            },
+            {
+              "value": "34040",
+              "label": "Tornolo"
+            },
+            {
+              "value": "34041",
+              "label": "Torrile"
+            },
+            {
+              "value": "34042",
+              "label": "Traversetolo"
+            },
+            {
+              "value": "34044",
+              "label": "Valmozzola"
+            },
+            {
+              "value": "34045",
+              "label": "Varano de' Melegari"
+            },
+            {
+              "value": "34046",
+              "label": "Varsi"
+            },
+            {
+              "value": "34049",
+              "label": "Sissa Trecasali"
+            },
+            {
+              "value": "34050",
+              "label": "Polesine Zibello"
+            },
+            {
+              "value": "34051",
+              "label": "Sorbolo Mezzani"
+            }
+          ]
+        },
+        {
+          "value": "RE",
+          "label": "Reggio nell'Emilia",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "35001",
+              "label": "Albinea"
+            },
+            {
+              "value": "35002",
+              "label": "Bagnolo in Piano"
+            },
+            {
+              "value": "35003",
+              "label": "Baiso"
+            },
+            {
+              "value": "35004",
+              "label": "Bibbiano"
+            },
+            {
+              "value": "35005",
+              "label": "Boretto"
+            },
+            {
+              "value": "35006",
+              "label": "Brescello"
+            },
+            {
+              "value": "35008",
+              "label": "Cadelbosco di Sopra"
+            },
+            {
+              "value": "35009",
+              "label": "Campagnola Emilia"
+            },
+            {
+              "value": "35010",
+              "label": "Campegine"
+            },
+            {
+              "value": "35011",
+              "label": "Carpineti"
+            },
+            {
+              "value": "35012",
+              "label": "Casalgrande"
+            },
+            {
+              "value": "35013",
+              "label": "Casina"
+            },
+            {
+              "value": "35014",
+              "label": "Castellarano"
+            },
+            {
+              "value": "35015",
+              "label": "Castelnovo di Sotto"
+            },
+            {
+              "value": "35016",
+              "label": "Castelnovo ne' Monti"
+            },
+            {
+              "value": "35017",
+              "label": "Cavriago"
+            },
+            {
+              "value": "35018",
+              "label": "Canossa"
+            },
+            {
+              "value": "35020",
+              "label": "Correggio"
+            },
+            {
+              "value": "35021",
+              "label": "Fabbrico"
+            },
+            {
+              "value": "35022",
+              "label": "Gattatico"
+            },
+            {
+              "value": "35023",
+              "label": "Gualtieri"
+            },
+            {
+              "value": "35024",
+              "label": "Guastalla"
+            },
+            {
+              "value": "35026",
+              "label": "Luzzara"
+            },
+            {
+              "value": "35027",
+              "label": "Montecchio Emilia"
+            },
+            {
+              "value": "35028",
+              "label": "Novellara"
+            },
+            {
+              "value": "35029",
+              "label": "Poviglio"
+            },
+            {
+              "value": "35030",
+              "label": "Quattro Castella"
+            },
+            {
+              "value": "35032",
+              "label": "Reggiolo"
+            },
+            {
+              "value": "35033",
+              "label": "Reggio nell'Emilia"
+            },
+            {
+              "value": "35034",
+              "label": "Rio Saliceto"
+            },
+            {
+              "value": "35035",
+              "label": "Rolo"
+            },
+            {
+              "value": "35036",
+              "label": "Rubiera"
+            },
+            {
+              "value": "35037",
+              "label": "San Martino in Rio"
+            },
+            {
+              "value": "35038",
+              "label": "San Polo d'Enza"
+            },
+            {
+              "value": "35039",
+              "label": "Sant'Ilario d'Enza"
+            },
+            {
+              "value": "35040",
+              "label": "Scandiano"
+            },
+            {
+              "value": "35041",
+              "label": "Toano"
+            },
+            {
+              "value": "35042",
+              "label": "Vetto"
+            },
+            {
+              "value": "35043",
+              "label": "Vezzano sul Crostolo"
+            },
+            {
+              "value": "35044",
+              "label": "Viano"
+            },
+            {
+              "value": "35045",
+              "label": "Villa Minozzo"
+            },
+            {
+              "value": "35046",
+              "label": "Ventasso"
+            }
+          ]
+        },
+        {
+          "value": "MO",
+          "label": "Modena",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "36001",
+              "label": "Bastiglia"
+            },
+            {
+              "value": "36002",
+              "label": "Bomporto"
+            },
+            {
+              "value": "36003",
+              "label": "Campogalliano"
+            },
+            {
+              "value": "36004",
+              "label": "Camposanto"
+            },
+            {
+              "value": "36005",
+              "label": "Carpi"
+            },
+            {
+              "value": "36006",
+              "label": "Castelfranco Emilia"
+            },
+            {
+              "value": "36007",
+              "label": "Castelnuovo Rangone"
+            },
+            {
+              "value": "36008",
+              "label": "Castelvetro di Modena"
+            },
+            {
+              "value": "36009",
+              "label": "Cavezzo"
+            },
+            {
+              "value": "36010",
+              "label": "Concordia sulla Secchia"
+            },
+            {
+              "value": "36011",
+              "label": "Fanano"
+            },
+            {
+              "value": "36012",
+              "label": "Finale Emilia"
+            },
+            {
+              "value": "36013",
+              "label": "Fiorano Modenese"
+            },
+            {
+              "value": "36014",
+              "label": "Fiumalbo"
+            },
+            {
+              "value": "36015",
+              "label": "Formigine"
+            },
+            {
+              "value": "36016",
+              "label": "Frassinoro"
+            },
+            {
+              "value": "36017",
+              "label": "Guiglia"
+            },
+            {
+              "value": "36018",
+              "label": "Lama Mocogno"
+            },
+            {
+              "value": "36019",
+              "label": "Maranello"
+            },
+            {
+              "value": "36020",
+              "label": "Marano sul Panaro"
+            },
+            {
+              "value": "36021",
+              "label": "Medolla"
+            },
+            {
+              "value": "36022",
+              "label": "Mirandola"
+            },
+            {
+              "value": "36023",
+              "label": "Modena"
+            },
+            {
+              "value": "36024",
+              "label": "Montecreto"
+            },
+            {
+              "value": "36025",
+              "label": "Montefiorino"
+            },
+            {
+              "value": "36026",
+              "label": "Montese"
+            },
+            {
+              "value": "36027",
+              "label": "Nonantola"
+            },
+            {
+              "value": "36028",
+              "label": "Novi di Modena"
+            },
+            {
+              "value": "36029",
+              "label": "Palagano"
+            },
+            {
+              "value": "36030",
+              "label": "Pavullo nel Frignano"
+            },
+            {
+              "value": "36031",
+              "label": "Pievepelago"
+            },
+            {
+              "value": "36032",
+              "label": "Polinago"
+            },
+            {
+              "value": "36033",
+              "label": "Prignano sulla Secchia"
+            },
+            {
+              "value": "36034",
+              "label": "Ravarino"
+            },
+            {
+              "value": "36035",
+              "label": "Riolunato"
+            },
+            {
+              "value": "36036",
+              "label": "San Cesario sul Panaro"
+            },
+            {
+              "value": "36037",
+              "label": "San Felice sul Panaro"
+            },
+            {
+              "value": "36038",
+              "label": "San Possidonio"
+            },
+            {
+              "value": "36039",
+              "label": "San Prospero"
+            },
+            {
+              "value": "36040",
+              "label": "Sassuolo"
+            },
+            {
+              "value": "36041",
+              "label": "Savignano sul Panaro"
+            },
+            {
+              "value": "36042",
+              "label": "Serramazzoni"
+            },
+            {
+              "value": "36043",
+              "label": "Sestola"
+            },
+            {
+              "value": "36044",
+              "label": "Soliera"
+            },
+            {
+              "value": "36045",
+              "label": "Spilamberto"
+            },
+            {
+              "value": "36046",
+              "label": "Vignola"
+            },
+            {
+              "value": "36047",
+              "label": "Zocca"
+            }
+          ]
+        },
+        {
+          "value": "BO",
+          "label": "Bologna",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "37001",
+              "label": "Anzola dell'Emilia"
+            },
+            {
+              "value": "37002",
+              "label": "Argelato"
+            },
+            {
+              "value": "37003",
+              "label": "Baricella"
+            },
+            {
+              "value": "37005",
+              "label": "Bentivoglio"
+            },
+            {
+              "value": "37006",
+              "label": "Bologna"
+            },
+            {
+              "value": "37007",
+              "label": "Borgo Tossignano"
+            },
+            {
+              "value": "37008",
+              "label": "Budrio"
+            },
+            {
+              "value": "37009",
+              "label": "Calderara di Reno"
+            },
+            {
+              "value": "37010",
+              "label": "Camugnano"
+            },
+            {
+              "value": "37011",
+              "label": "Casalecchio di Reno"
+            },
+            {
+              "value": "37012",
+              "label": "Casalfiumanese"
+            },
+            {
+              "value": "37013",
+              "label": "Castel d'Aiano"
+            },
+            {
+              "value": "37014",
+              "label": "Castel del Rio"
+            },
+            {
+              "value": "37015",
+              "label": "Castel di Casio"
+            },
+            {
+              "value": "37016",
+              "label": "Castel Guelfo di Bologna"
+            },
+            {
+              "value": "37017",
+              "label": "Castello d'Argile"
+            },
+            {
+              "value": "37019",
+              "label": "Castel Maggiore"
+            },
+            {
+              "value": "37020",
+              "label": "Castel San Pietro Terme"
+            },
+            {
+              "value": "37021",
+              "label": "Castenaso"
+            },
+            {
+              "value": "37022",
+              "label": "Castiglione dei Pepoli"
+            },
+            {
+              "value": "37024",
+              "label": "Crevalcore"
+            },
+            {
+              "value": "37025",
+              "label": "Dozza"
+            },
+            {
+              "value": "37026",
+              "label": "Fontanelice"
+            },
+            {
+              "value": "37027",
+              "label": "Gaggio Montano"
+            },
+            {
+              "value": "37028",
+              "label": "Galliera"
+            },
+            {
+              "value": "37030",
+              "label": "Granarolo dell'Emilia"
+            },
+            {
+              "value": "37031",
+              "label": "Grizzana Morandi"
+            },
+            {
+              "value": "37032",
+              "label": "Imola"
+            },
+            {
+              "value": "37033",
+              "label": "Lizzano in Belvedere"
+            },
+            {
+              "value": "37034",
+              "label": "Loiano"
+            },
+            {
+              "value": "37035",
+              "label": "Malalbergo"
+            },
+            {
+              "value": "37036",
+              "label": "Marzabotto"
+            },
+            {
+              "value": "37037",
+              "label": "Medicina"
+            },
+            {
+              "value": "37038",
+              "label": "Minerbio"
+            },
+            {
+              "value": "37039",
+              "label": "Molinella"
+            },
+            {
+              "value": "37040",
+              "label": "Monghidoro"
+            },
+            {
+              "value": "37041",
+              "label": "Monterenzio"
+            },
+            {
+              "value": "37042",
+              "label": "Monte San Pietro"
+            },
+            {
+              "value": "37044",
+              "label": "Monzuno"
+            },
+            {
+              "value": "37045",
+              "label": "Mordano"
+            },
+            {
+              "value": "37046",
+              "label": "Ozzano dell'Emilia"
+            },
+            {
+              "value": "37047",
+              "label": "Pianoro"
+            },
+            {
+              "value": "37048",
+              "label": "Pieve di Cento"
+            },
+            {
+              "value": "37050",
+              "label": "Sala Bolognese"
+            },
+            {
+              "value": "37051",
+              "label": "San Benedetto Val di Sambro"
+            },
+            {
+              "value": "37052",
+              "label": "San Giorgio di Piano"
+            },
+            {
+              "value": "37053",
+              "label": "San Giovanni in Persiceto"
+            },
+            {
+              "value": "37054",
+              "label": "San Lazzaro di Savena"
+            },
+            {
+              "value": "37055",
+              "label": "San Pietro in Casale"
+            },
+            {
+              "value": "37056",
+              "label": "Sant'Agata Bolognese"
+            },
+            {
+              "value": "37057",
+              "label": "Sasso Marconi"
+            },
+            {
+              "value": "37059",
+              "label": "Vergato"
+            },
+            {
+              "value": "37060",
+              "label": "Zola Predosa"
+            },
+            {
+              "value": "37061",
+              "label": "Valsamoggia"
+            },
+            {
+              "value": "37062",
+              "label": "Alto Reno Terme"
+            }
+          ]
+        },
+        {
+          "value": "FE",
+          "label": "Ferrara",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "38001",
+              "label": "Argenta"
+            },
+            {
+              "value": "38003",
+              "label": "Bondeno"
+            },
+            {
+              "value": "38004",
+              "label": "Cento"
+            },
+            {
+              "value": "38005",
+              "label": "Codigoro"
+            },
+            {
+              "value": "38006",
+              "label": "Comacchio"
+            },
+            {
+              "value": "38007",
+              "label": "Copparo"
+            },
+            {
+              "value": "38008",
+              "label": "Ferrara"
+            },
+            {
+              "value": "38010",
+              "label": "Jolanda di Savoia"
+            },
+            {
+              "value": "38011",
+              "label": "Lagosanto"
+            },
+            {
+              "value": "38012",
+              "label": "Masi Torello"
+            },
+            {
+              "value": "38014",
+              "label": "Mesola"
+            },
+            {
+              "value": "38017",
+              "label": "Ostellato"
+            },
+            {
+              "value": "38018",
+              "label": "Poggio Renatico"
+            },
+            {
+              "value": "38019",
+              "label": "Portomaggiore"
+            },
+            {
+              "value": "38022",
+              "label": "Vigarano Mainarda"
+            },
+            {
+              "value": "38023",
+              "label": "Voghiera"
+            },
+            {
+              "value": "38025",
+              "label": "Goro"
+            },
+            {
+              "value": "38027",
+              "label": "Fiscaglia"
+            },
+            {
+              "value": "38028",
+              "label": "Terre del Reno"
+            },
+            {
+              "value": "38029",
+              "label": "Riva del Po"
+            },
+            {
+              "value": "38030",
+              "label": "Tresignana"
+            }
+          ]
+        },
+        {
+          "value": "RA",
+          "label": "Ravenna",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "39001",
+              "label": "Alfonsine"
+            },
+            {
+              "value": "39002",
+              "label": "Bagnacavallo"
+            },
+            {
+              "value": "39003",
+              "label": "Bagnara di Romagna"
+            },
+            {
+              "value": "39004",
+              "label": "Brisighella"
+            },
+            {
+              "value": "39005",
+              "label": "Casola Valsenio"
+            },
+            {
+              "value": "39006",
+              "label": "Castel Bolognese"
+            },
+            {
+              "value": "39007",
+              "label": "Cervia"
+            },
+            {
+              "value": "39008",
+              "label": "Conselice"
+            },
+            {
+              "value": "39009",
+              "label": "Cotignola"
+            },
+            {
+              "value": "39010",
+              "label": "Faenza"
+            },
+            {
+              "value": "39011",
+              "label": "Fusignano"
+            },
+            {
+              "value": "39012",
+              "label": "Lugo"
+            },
+            {
+              "value": "39013",
+              "label": "Massa Lombarda"
+            },
+            {
+              "value": "39014",
+              "label": "Ravenna"
+            },
+            {
+              "value": "39015",
+              "label": "Riolo Terme"
+            },
+            {
+              "value": "39016",
+              "label": "Russi"
+            },
+            {
+              "value": "39017",
+              "label": "Sant'Agata sul Santerno"
+            },
+            {
+              "value": "39018",
+              "label": "Solarolo"
+            }
+          ]
+        },
+        {
+          "value": "FC",
+          "label": "Forlì-Cesena",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "40001",
+              "label": "Bagno di Romagna"
+            },
+            {
+              "value": "40003",
+              "label": "Bertinoro"
+            },
+            {
+              "value": "40004",
+              "label": "Borghi"
+            },
+            {
+              "value": "40005",
+              "label": "Castrocaro Terme e Terra del Sole"
+            },
+            {
+              "value": "40007",
+              "label": "Cesena"
+            },
+            {
+              "value": "40008",
+              "label": "Cesenatico"
+            },
+            {
+              "value": "40009",
+              "label": "Civitella di Romagna"
+            },
+            {
+              "value": "40011",
+              "label": "Dovadola"
+            },
+            {
+              "value": "40012",
+              "label": "Forlì"
+            },
+            {
+              "value": "40013",
+              "label": "Forlimpopoli"
+            },
+            {
+              "value": "40014",
+              "label": "Galeata"
+            },
+            {
+              "value": "40015",
+              "label": "Gambettola"
+            },
+            {
+              "value": "40016",
+              "label": "Gatteo"
+            },
+            {
+              "value": "40018",
+              "label": "Longiano"
+            },
+            {
+              "value": "40019",
+              "label": "Meldola"
+            },
+            {
+              "value": "40020",
+              "label": "Mercato Saraceno"
+            },
+            {
+              "value": "40022",
+              "label": "Modigliana"
+            },
+            {
+              "value": "40028",
+              "label": "Montiano"
+            },
+            {
+              "value": "40031",
+              "label": "Portico e San Benedetto"
+            },
+            {
+              "value": "40032",
+              "label": "Predappio"
+            },
+            {
+              "value": "40033",
+              "label": "Premilcuore"
+            },
+            {
+              "value": "40036",
+              "label": "Rocca San Casciano"
+            },
+            {
+              "value": "40037",
+              "label": "Roncofreddo"
+            },
+            {
+              "value": "40041",
+              "label": "San Mauro Pascoli"
+            },
+            {
+              "value": "40043",
+              "label": "Santa Sofia"
+            },
+            {
+              "value": "40044",
+              "label": "Sarsina"
+            },
+            {
+              "value": "40045",
+              "label": "Savignano sul Rubicone"
+            },
+            {
+              "value": "40046",
+              "label": "Sogliano al Rubicone"
+            },
+            {
+              "value": "40049",
+              "label": "Tredozio"
+            },
+            {
+              "value": "40050",
+              "label": "Verghereto"
+            }
+          ]
+        },
+        {
+          "value": "RN",
+          "label": "Rimini",
+          "isEnabled": true,
+          "cityRemoved": [],
+          "cityAvailable": [
+            {
+              "value": "99001",
+              "label": "Bellaria-Igea Marina"
+            },
+            {
+              "value": "99002",
+              "label": "Cattolica"
+            },
+            {
+              "value": "99003",
+              "label": "Coriano"
+            },
+            {
+              "value": "99004",
+              "label": "Gemmano"
+            },
+            {
+              "value": "99005",
+              "label": "Misano Adriatico"
+            },
+            {
+              "value": "99006",
+              "label": "Mondaino"
+            },
+            {
+              "value": "99008",
+              "label": "Montefiore Conca"
+            },
+            {
+              "value": "99009",
+              "label": "Montegridolfo"
+            },
+            {
+              "value": "99011",
+              "label": "Morciano di Romagna"
+            },
+            {
+              "value": "99013",
+              "label": "Riccione"
+            },
+            {
+              "value": "99014",
+              "label": "Rimini"
+            },
+            {
+              "value": "99015",
+              "label": "Saludecio"
+            },
+            {
+              "value": "99016",
+              "label": "San Clemente"
+            },
+            {
+              "value": "99017",
+              "label": "San Giovanni in Marignano"
+            },
+            {
+              "value": "99018",
+              "label": "Santarcangelo di Romagna"
+            },
+            {
+              "value": "99020",
+              "label": "Verucchio"
+            },
+            {
+              "value": "99021",
+              "label": "Casteldelci"
+            },
+            {
+              "value": "99022",
+              "label": "Maiolo"
+            },
+            {
+              "value": "99023",
+              "label": "Novafeltria"
+            },
+            {
+              "value": "99024",
+              "label": "Pennabilli"
+            },
+            {
+              "value": "99025",
+              "label": "San Leo"
+            },
+            {
+              "value": "99026",
+              "label": "Sant'Agata Feltria"
+            },
+            {
+              "value": "99027",
+              "label": "Talamello"
+            },
+            {
+              "value": "99028",
+              "label": "Poggio Torriana"
+            },
+            {
+              "value": "99029",
+              "label": "Montescudo-Monte Colombo"
+            }
+          ]
+        }
+      ],
+      "label": "EMR"
+    }
+  ]
+}

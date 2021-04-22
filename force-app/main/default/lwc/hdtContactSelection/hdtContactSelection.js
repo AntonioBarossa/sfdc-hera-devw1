@@ -69,7 +69,7 @@ export default class HdtContactSelection extends LightningElement {
             { label: 'Telefono', fieldName: 'Phone', type: 'phone' },
             { label: 'Cellulare', fieldName: 'MobilePhone', type: 'phone' },
             { label: 'Email', fieldName: 'Email', type: 'email' },
-            { label: 'PEC', fieldName: 'PEC__c', type: 'email' },
+            { label: 'PEC', fieldName: 'CertifiedEmail__c', type: 'email' },
             { label: 'Fax', fieldName: 'Fax', type: 'phone' }
         ];
         this.getListRecords();

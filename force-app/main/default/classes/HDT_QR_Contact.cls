@@ -4,7 +4,9 @@ public inherited sharing class HDT_QR_Contact {
 
         return [
             SELECT
-            LastName
+            FirstName,
+            LastName,
+            FiscalCode__c
             FROM Contact
             WHERE Id = :id
             WITH SECURITY_ENFORCED
@@ -29,4 +31,53 @@ public inherited sharing class HDT_QR_Contact {
             LIMIT 1
         ];
     }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 27/01/2021
+    * @description Get all contacts related to account
+    * @param String accountid
+    * @return Contact
+    */
+    public List<Contact> getContactsByAccount(String accountId){
+        return [
+            SELECT
+            Id,
+            Email
+            FROM Contact
+            WHERE AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<String> getContactsIdByAccountId(String accountId) {
+        List <AccountContactRelation> accountContact = [
+            SELECT ContactId from AccountContactRelation 
+            WHERE AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+
+        List <String> res = new List <String>();
+        for (AccountContactRelation acc : accountContact) {
+            res.add(acc.ContactId);
+        }
+        return res;
+    }
+
+    // INIZIO SVILUPPI EVERIS
+
+    public LIst<Contact> getRecordsByIds(Set<Id> ids) {
+        return [
+            SELECT 
+            Id,
+            MobilePhone,
+            CertifiedEmail__c,
+            CompanyOwner__c
+            FROM Contact 
+            WHERE Id IN :ids
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    // FINE SVILUPPI EVERIS
 }

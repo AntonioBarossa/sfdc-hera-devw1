@@ -1,27 +1,84 @@
 ({
-    doInit : function(component, event, helper) {
-		let pageRef = component.get("v.pageReference");
-        let saleId = pageRef.state.c__venditaId;
-        let accountId = pageRef.state.c__accountId;
-        component.set("v.saleId",saleId);
+    doInit: function (component, event, helper) {
+        component.set('v.loading', true);
+        let accountId;
+        let saleId;
+        let orderParentId;
 
-        if (pageRef.state.c__orderParent !== undefined) {
-            let orderParentId = pageRef.state.c__orderParent;
-            component.set("v.orderParentId",orderParentId);
-            component.set("v.check", true);
-        } else {
-            component.set("v.check", false);
-        }
+        var checkprocess = component.get("c.checkCommunityLogin");
 
-        component.set("v.accountId",accountId);
-        helper.helperInit(component,event,helper,saleId,accountId);
+        checkprocess.setCallback(this, function (response) {
+            var state = response.getState();
+            if (state == 'SUCCESS') {
+                var res = response.getReturnValue();
+                console.log('res: ', res);
+                component.set('v.isCommunity', res);
+                if (res) {
+                    console.log('community');
+
+                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    testParam = '';
+
+                    for (let i = 0; i < sURLVariables.length; i++) {
+                        testParam = '';
+                        testParam = sURLVariables[i].split('=');
+                        console.log('sURL ' + testParam);
+                        if (testParam[0] == 'c__accountId') {
+                            accountId = testParam[1];
+                        }
+                        if (testParam[0] == 'c__venditaId') {
+                            saleId = testParam[1];
+                        }
+                        if (testParam[0] == 'c__orderParent') {
+                            orderParentId = testParam[1];
+                        }
+                       
+                    }
+
+                    if(orderParentId !== undefined){
+                        component.set("v.orderParentId", orderParentId);
+                        component.set("v.check", true);
+                    } else {
+                        component.set("v.check", false);
+                    }
+                }
+                else
+                {
+                    console.log('crm');
+
+                    let pageRef = component.get("v.pageReference");
+        			saleId = pageRef.state.c__venditaId;
+        			accountId = pageRef.state.c__accountId;
+
+                    if (pageRef.state.c__orderParent !== undefined) {
+                        orderParentId = pageRef.state.c__orderParent;
+                        component.set("v.orderParentId", orderParentId);
+                        component.set("v.check", true);
+                    } else {
+                        component.set("v.check", false);
+                    }
+                }
+                console.log('saleId: ', saleId);
+                console.log('accountId: ', accountId);
+                console.log('c__orderParent: ', orderParentId);
+
+                component.set("v.saleId", saleId);
+                component.set("v.accountId",accountId);
+                helper.helperInit(component, event, helper, saleId, accountId);
+                
+            }
+        });
 
         var workspaceAPI = component.find("workspace");
-        workspaceAPI.getFocusedTabInfo().then(function(response3) {
+        workspaceAPI.getFocusedTabInfo().then(function (response3) {
             workspaceAPI.setTabLabel({
-            tabId: response3.tabId,
-            label: "Wizard Ordine"
-        })});
+                tabId: response3.tabId,
+                label: "Wizard Ordine"
+            })
+        });
+
+        $A.enqueueAction(checkprocess);
     },
     
     handleRowActionEvent : function(component,event,helper){
@@ -75,19 +132,22 @@
         }
     },
 
+    handleOrderRefreshEvent: function(component,event,helper){
+        helper.getOrderParentRecord(component);
+    },
+
     closeModal : function(component,event,helper){
         component.set("v.openModale",false); 
     },
 
-    // cancel: function(component, event, helper) {
-    //     helper.cancelVendite(component);
-    // },
-
-    saveDraft: function(component, event, helper) {
-        helper.saveDraftHelper(component);
+    handleTableRefreshEvent : function(component,event,helper){
+        var tableCmp = component.find("hdtOrderDossierWizardTable");
+        tableCmp.setTableData();
     },
 
-    save: function(component, event, helper){
-      	helper.saveOption(component);
+    redirectToOrderRecordPage : function(component, event, helper){
+        var objectId = component.get("v.orderParentId");
+        var objectApiname = 'Order';
+        helper.redirectToSObjectSubtabFix(component,objectId,objectApiname);
     }
 })

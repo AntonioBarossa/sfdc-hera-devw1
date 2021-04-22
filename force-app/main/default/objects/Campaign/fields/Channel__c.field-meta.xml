@@ -5,8 +5,9 @@
     <externalId>false</externalId>
     <label>Canale</label>
     <required>false</required>
-    <type>Picklist</type>
+    <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>Category__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
@@ -55,6 +56,52 @@
                 <default>false</default>
                 <label>Cartaceo</label>
             </value>
+            <value>
+                <fullName>Bolletta</fullName>
+                <default>false</default>
+                <label>Bolletta</label>
+            </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Campagna CRM</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Telefonico Inbound</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna CRM</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Sportello</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna CRM</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>SOL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <valueName>Telefonico Outbound</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <valueName>Door to Door</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Outbound</controllingFieldValue>
+            <valueName>Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>SMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Campagna Marketing Cloud</controllingFieldValue>
+            <valueName>Push</valueName>
+        </valueSettings>
     </valueSet>
+    <visibleLines>3</visibleLines>
 </CustomField>

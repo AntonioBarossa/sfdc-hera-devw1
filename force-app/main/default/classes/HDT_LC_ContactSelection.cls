@@ -15,7 +15,7 @@ public with sharing class HDT_LC_ContactSelection {
                 contactIds.add(acr.ContactId);
             }
 
-            List<Contact> contactsList = [SELECT Id, Name, Phone, MobilePhone, Email, Fax, PEC__c from Contact WHERE ID IN :contactIds WITH SECURITY_ENFORCED];
+            List<Contact> contactsList = [SELECT Id, Name, Phone, MobilePhone, Email, Fax, CertifiedEmail__c from Contact WHERE ID IN :contactIds WITH SECURITY_ENFORCED];
 
             recordList.add(contactsList);
 

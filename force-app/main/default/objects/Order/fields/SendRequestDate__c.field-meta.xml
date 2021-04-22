@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SendRequestDate__c</fullName>
+    <description>Data dell&apos;invio verso i sistemi a valle per l&apos;accettazione/rifiuto della voltura</description>
+    <externalId>false</externalId>
+    <label>Data Invio Richiesta</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Date</type>
+</CustomField>

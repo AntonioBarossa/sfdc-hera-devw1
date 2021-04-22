@@ -521,6 +521,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestPhase__c</picklist>
+        <values>
+            <fullName>Monofase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trifase</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SupplyType_Deprecate__c</picklist>
         <values>
             <fullName>A-Domestico</fullName>
@@ -758,15 +769,15 @@
     <picklistValues>
         <picklist>WithdrawalClass__c</picklist>
         <values>
-            <fullName>001-7 giorni</fullName>
+            <fullName>001 - 7 giorni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>002-6 giorni %28no dom%2E%2Bfest%2E%29</fullName>
+            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>003-5 giorni%28no sab%2Edom%2Efest%29</fullName>
+            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -22,8 +22,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         Order orderParent = orderQr.getRecordById(orderParentId); // Ordine_di_Vendita__c ordVen = [Select id,account__c,account__r.name,Account__r.VAT_Number__c ,Account__r.Fiscal_Code__c,Name from Ordine_di_vendita__c where id=:ordineVendita];
 
         orderSrv.checkReadAccess('AccountId,Account.Name,Recordtypeid,Recordtype.Name,Recordtype.DeveloperName,Status,OrderNumber');
-        List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.DeveloperName, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
+        List<Order> childOrders = orderQr.getChildOrdersByParentIdAllStatus(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.DeveloperName, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
 
+        System.debug('ChildOrders '+childOrders);
+      
         // for(Order o : ordList){
         //     listaOrderId.add(o.id);
         // }
@@ -40,4 +42,29 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         return mapResponse;
     }
 
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 05/02/2021
+    * @description Handle next action on signature section
+    * @param Order orderUpdates
+    */
+    @AuraEnabled
+    public static void next(Order orderUpdates){
+        orderUpdates.Step__c = 3;
+        orderSrv.updateRecord(orderUpdates);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 05/02/2021
+    * @description Handle "modifica" action on signature section
+    * @param String orderParentId
+    */
+    @AuraEnabled
+    public static void edit(String orderParentId){
+        orderSrv.updateRecord(new Order(
+            Id = orderParentId,
+            Step__c = 2
+        ));
+    }
 }
