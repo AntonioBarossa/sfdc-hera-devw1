@@ -84,12 +84,19 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 ord.id = (id)obj.get('Id');
                 if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
                 	System.debug('********INSIDE RESULT OK');
-                	if(fieldValueResponse.get('FASE') != null){
+                    //INIZIO SVILUPPI EVERIS
+                    ord.Phase__c = 'Comunicazione verso Heroku OK'/*fieldValueResponse.get('FASE')*/;
+                    ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
+                    //FINE SVILUPPI EVERIS
+                    //EVERIS: COMMENTATO POICHE NON SI VIENE RISPOSTI CON LA FASE MA SOLTANTO CON "result":"ok"
+                	/*if(fieldValueResponse.get('FASE') != null){
                     	System.debug('********INSIDE FASE NOT NULL');
                         //EVERIS: Dichiarata esplicitamente la fase in quanto ci viene passato soltanto 'OK' nella response
-                        ord.Phase__c = 'Comunicazione verso Heroku OK'/*fieldValueResponse.get('FASE')*/;
+                        //EVERIS: Aggiunto codice pratica heroku
+                        ord.Phase__c = fieldValueResponse.get('FASE');
+                        ord.HerokuPracticeCode__c = fieldValueResponse.get('')
                         System.debug('********AFTER UPDATE');
-                	}
+                	}*/
             	}
                 else{
                     ord.Description = fieldValueResponse.get('errorMessage'); 
