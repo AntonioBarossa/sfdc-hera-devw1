@@ -65,9 +65,6 @@ global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0
                 map<String,String> fieldValueResponse = new map<String,String>();
                 wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
 
-                
-
-
                 System.debug('********MRRequest:' + responseService);
                 wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
                 for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
