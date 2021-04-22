@@ -11,6 +11,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_SRV_ServicePoint servicePointSrv= new HDT_SRV_ServicePoint();
     private static HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -33,15 +34,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture){
-            if(order.NonRegMeter__c != null && order.NonRegMeter__c == true){
+            //Commentato finche non viene creato campo a DM
+            /*if(order.NonRegMeter__c != null && order.NonRegMeter__c == true){
 
-                if(orderQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
+                if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
 
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 
                 }
 
-            } else if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
+            } else*/ if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
 
                 if(orderQr.getRoleNameByRoleId() != 'CEO'){
 

@@ -402,4 +402,20 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+
+    //INIZIO SVILUPPI EVERIS
+    public String getRoleNameByRoleId(){
+
+        String userId = UserInfo.getUserId();
+
+        return [SELECT UserRole.Name 
+        FROM User 
+        WHERE Id = :userId
+        WITH SECURITY_ENFORCED
+        LIMIT 1].UserRole.Name;
+
+
+    }
+    //FINE SVILUPPI EVERIS
+
 }
