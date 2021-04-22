@@ -2460,7 +2460,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Campaign.Tipology__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
