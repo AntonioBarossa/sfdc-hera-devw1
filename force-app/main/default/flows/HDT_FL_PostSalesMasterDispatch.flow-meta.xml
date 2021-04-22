@@ -259,7 +259,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Morosita_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -828,6 +828,7 @@
             <label>Cluster Annullamento</label>
         </rules>
     </decisions>
+    <description>Aggiunto Arricchimento Morosita</description>
     <interviewLabel>HDT_FL_PostSalesMasterDispatch {!$Flow.CurrentDateTime}</interviewLabel>
     <label>PostSales Master Dispatch</label>
     <processMetadataValues>
@@ -2481,6 +2482,35 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>1700</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Morosita_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>4516</locationX>
@@ -2586,7 +2616,7 @@
         <name>Gestione_Morosita_Subflow</name>
         <label>Gestione Morosita Subflow</label>
         <locationX>1700</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneMorosita</flowName>
         <inputAssignments>
             <name>InputCase</name>
