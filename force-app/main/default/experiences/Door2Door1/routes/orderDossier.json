@@ -1,0 +1,10 @@
+{
+  "activeViewId" : "0ad5ed10-75fe-46b9-a3ec-d23c3864d40f",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "df26ca5c-7c8b-45ed-aca5-683195528a3d",
+  "label" : "OrderDossier",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-orderdossier",
+  "type" : "route",
+  "urlPrefix" : "orderdossier"
+}

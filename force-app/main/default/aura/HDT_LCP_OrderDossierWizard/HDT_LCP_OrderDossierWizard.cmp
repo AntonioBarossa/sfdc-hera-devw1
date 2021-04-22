@@ -1,4 +1,4 @@
-<aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global">
+<aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes" access="global">
 
     <aura:attribute name='check' type="Boolean" default="false"/>
     <aura:attribute name='saleId' type="String"/>
@@ -7,7 +7,7 @@
     <aura:attribute name='parentOrderName' type="String"/>
     <aura:attribute name='accountId' type="String"/>
     <aura:attribute name="orderId" type="String"/>
-
+    <aura:attribute name="isCommunity" type="Boolean" />
     
     <aura:attribute name='accountName' type="String"/>
     <aura:attribute name="fiscalCode" type="String"/>

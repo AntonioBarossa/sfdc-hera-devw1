@@ -18,4 +18,19 @@ public inherited sharing class HDT_UTL_HelperMethods {
 
         return fields;
     }
+
+    /**
+     * Check if current user is community or salesforce crm
+     * @return Boolean true(is community), false(is crm)
+     */
+    public boolean checkCommunityLogin(){
+        boolean check=False;
+        string us= userinfo.getUserType();
+        system.debug(us);
+        if (!'Standard'.Equals(us)){
+            check=True;
+           
+        }
+        return check;
+    }
 }

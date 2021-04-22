@@ -1,43 +1,83 @@
 ({
     doInit : function(component, event, helper) {
         component.set('v.loading', true);
-        var campaignId = '';
 
-        var pageReference = component.get("v.pageReference");
+        var checkprocess = component.get("c.checkCommunityLogin");
 
-        var accountId = pageReference.state.c__accountId;
-        component.set("v.recordId", accountId);
+        checkprocess.setCallback(this, function(response){
+            var state = response.getState();
+            if(state == 'SUCCESS') {
+                var res = response.getReturnValue();
+                console.log(res);
+                var accountId;
+                var saleId;
+                var campaignId;
+                component.set('v.isCommunity', res);
 
-        if(pageReference.state.c__campaignId !== undefined){
-            component.set("v.campaignId", pageReference.state.c__campaignId);
-            campaignId = pageReference.state.c__campaignId;
-        }
+                if (res){
 
-        if(pageReference.state.c__saleId != undefined){
-            component.set("v.saleId", pageReference.state.c__saleId)
-            helper.getSaleRecord(component);
-        } else {
-            var saleObject = {
-                'Account__c' : accountId,
-                'Status__c' : 'Bozza',
-                'CurrentStep__c' : 1
-            };
+                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                        sURLVariables = sPageURL.split('&'),
+                        testParam = '';
+                    
+                    for(let i = 0; i < sURLVariables.length; i++){
+                        
+                        testParam = '';
+                        testParam = sURLVariables[i].split('=');
+                        
+                     
+                        if (testParam[0] == 'c__accountId'){
+                            accountId = testParam[1];
+                        }
 
-            if(campaignId !== undefined && campaignId !== ''){
-                saleObject.Campaign__c = campaignId;
-            }
+                        if (testParam[0] == 'c__saleId'){
+                            saleId = testParam[1];
+                        }
 
-            helper.createSaleRecord(component, saleObject);
-        }
+                        if (testParam[0] == 'c__campaignId'){
+                            campaignId = testParam[1];
+                            component.set("v.campaignId", campaignId);
+                        }
+                        
+                    }
+                    
+                } else {
+                    
+                    var pageReference = component.get("v.pageReference");
+                    accountId = pageReference.state.c__accountId;
+                    saleId = pageReference.state.c__saleId ;
 
+                    if(pageReference.state.c__campaignId !== undefined){
+                        component.set("v.campaignId", pageReference.state.c__campaignId);
+                        campaignId = pageReference.state.c__campaignId;
+                    }
+
+                }
+                
+                component.set("v.recordId", accountId);
+                
+                if(saleId != undefined){
+                    component.set("v.saleId", saleId);
+                    helper.getSaleRecord(component);
+                } else {
+                    var saleObject = {
+                        'Account__c' : accountId,
+                        'Status__c' : 'Bozza',
+                        'CurrentStep__c' : 1,
+                        'Campaign__c' : campaignId
+                    };
+                    helper.createSaleRecord(component, saleObject);
+                } 
+            } 
+        });
         var workspaceAPI = component.find("workspace");
-
         workspaceAPI.getFocusedTabInfo().then(function(response3) {
             workspaceAPI.setTabLabel({
-            tabId: response3.tabId,
-            label: "Wizard Vendita"
-        })});
+                tabId: response3.tabId,
+                label: "Wizard Vendita"
+            })});
         
+        $A.enqueueAction(checkprocess);
     },
 
     handleNewServicePoint : function(component, event) {
@@ -67,19 +107,34 @@
     handleSaveDraftEvent : function(component, event, helper) {
         var saleId = component.get("v.saleId");
         var objectApiName = 'Sale__c';
-        helper.redirectToSObjectSubtab(component, saleId, objectApiName);
+
+        if(component.get("v.isCommunity")){
+            helper.redirectToRecordPageCommunity(saleId);
+        } else {
+            helper.redirectToSObjectSubtab(component, saleId, objectApiName);
+        }
     },
 
     handleCancelSaleEvent : function (component, event, helper){
-        var accountId = component.get("v.recordId");
-        var objectApiName = 'Account';
-        helper.redirectToSObjectSubtab(component, accountId, objectApiName);
+        var saleId = component.get("v.saleId");
+        var objectApiName = 'Sale__c';
+        
+        if(component.get("v.isCommunity")){
+            helper.redirectToRecordPageCommunity(saleId);
+        } else {
+            helper.redirectToSObjectSubtab(component, saleId, objectApiName);
+        }
     },
 
     handleSaveSaleEvent : function(component, event, helper){
         var saleId = component.get("v.saleId");
         var objectApiName = 'Sale__c';
-        helper.redirectToSObjectSubtab(component, saleId, objectApiName);
+
+        if(component.get("v.isCommunity")){
+            helper.redirectToRecordPageCommunity(saleId);
+        } else {
+            helper.redirectToSObjectSubtab(component, saleId, objectApiName);
+        }
     },
 
     handleRefreshProductsTable : function(component, event, helper){
