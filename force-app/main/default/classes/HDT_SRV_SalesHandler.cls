@@ -22,17 +22,37 @@ public with sharing class HDT_SRV_SalesHandler {
 
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
-        
+
+        HDT_QR_Order quoteQr = new HDT_QR_Order();
+        HDT_SRV_Order quoteSrv = new HDT_SRV_Order();
         HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
+		Map<String,String> mapRequestFields = new Map<String,String>();
 
         switch on header.requestType {
             when 'NOTIF_ES'{
 
                 if (request.objects.get(0).fields.get(0) != null) {
-
-                    responseField.fieldType = 'TEXT';
-                    responseField.name = 'ESITO';
-                    responseField.value = 'OK';
+				
+                    For(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects.get(0).fields){
+                        if(mapRequestFields.get(field.name) == null){
+                            mapRequestFields.put(field.name,field.value);
+                        }
+                        
+                    }
+                    
+                    if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
+                        
+                        Order ord = quoteQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        ord.Phase__c = mapRequestFields.get('FASE');
+                        quoteSrv.updateRecord(ord);
+                    	responseField.fieldType = 'TEXT';
+                    	responseField.name = 'ESITO';
+                    	responseField.value = 'OK';    
+                    }else{
+                        responseField.fieldType = 'TEXT';
+                    	responseField.name = 'ESITO';
+                    	responseField.value = 'OK';
+                    }
 
                     responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
                     mrrResponseItem.objects.add(responseObject);
@@ -110,4 +130,5 @@ public with sharing class HDT_SRV_SalesHandler {
 
         return mrrResponseItem;
     }
+
 }

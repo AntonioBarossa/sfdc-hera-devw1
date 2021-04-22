@@ -106,6 +106,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             //INIZIO SVILUPPI EVERIS
+            ContractId,
             ServicePoint__r.CommoditySector__c,
             //FINE SVILUPPI EVERIS
             ServicePoint__r.RecordType.DeveloperName,
@@ -343,6 +344,52 @@ public inherited sharing class HDT_QR_Order {
             AND Status IN ('In Lavorazione','Draft')
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public List<Case> getChageNonRegMeterByOrder(String orderId){
+
+        List<Case> caseList = new List<Case>();
+
+        try{
+            caseList = [SELECT Id
+            FROM Case
+            WHERE Type = 'Cambio contatore non registrato'
+            AND Status = 'Closed'
+            AND VulturePracticeReference__c = :orderId
+            WITH SECURITY_ENFORCED];
+
+        }catch(Exception e){
+
+            System.debug(e.getMessage());
+
+        }
+
+        return caseList;
+
+    }
+
+    public String getRoleNameByRoleId(){
+
+        String userId = UserInfo.getUserId();
+
+        String roleName;
+
+        try{
+
+            roleName = [SELECT UserRole.Name
+            FROM User
+            WHERE Id = :userId
+            WITH SECURITY_ENFORCED
+            LIMIT 1].UserRole.Name;
+
+        }catch(Exception e){
+
+            System.debug(e.getMessage());
+
+        }
+
+        return roleName;
+
     }
 
 }

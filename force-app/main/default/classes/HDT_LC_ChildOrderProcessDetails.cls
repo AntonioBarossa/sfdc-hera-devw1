@@ -21,8 +21,48 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     * @param SObject objectToUpdate
     */
     @AuraEnabled
-    public static void updateProcessStep(Order order){
-        system.debug('updateProcessStep: ' + order);
+    public static void updateProcessStep(Order order,
+        //INIZIO SVILUPPI EVERIS 
+        Boolean isVolture,
+        Boolean isRetroactive,
+        Boolean isReading){
+        //FINE SVILUPPI EVERIS
+
+        System.debug('updateProcessStep: ' + order);
+        System.debug('isVolture: '+isVolture);
+
+        //INIZIO SVILUPPI EVERIS CHECK VOLTURA
+        if(isVolture){
+            if(order.NonRegMeter__c != null && order.NonRegMeter__c == true){
+
+                if(orderQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
+
+                    throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
+                
+                }
+
+            } else if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
+
+                if(orderQr.getRoleNameByRoleId() != 'CEO'){
+
+                    throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
+
+
+                } else{
+
+                    order.RetroactiveDate__c = order.EffectiveDate__c;
+                    order.Subprocess__c = 'Retroattiva';
+
+                }
+
+            } else if(isReading != null && isReading == true && isRetroactive != null && isRetroactive == false){
+
+                order.Subprocess__c = 'Con Autolettura';
+
+            } 
+        }
+        //FINE SVILUPPI EVERIS CHECK VOLTURA 
+
         orderSrv.updateRecord(order);
     }
 
