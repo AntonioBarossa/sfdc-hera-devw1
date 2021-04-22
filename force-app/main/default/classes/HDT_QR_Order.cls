@@ -345,4 +345,8 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getRecordByOrderNumber(String orderNumber){
+        return [Select id,phase__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+    }
+
 }
