@@ -22,6 +22,7 @@
                         label=" "
                         variant="label-hidden"
                         type="search"
+                        placeholder="Filtro numero contratto..."
                         value={searchValue}
                         onchange={handleSearch}
                     ></lightning-input>
@@ -29,7 +30,7 @@
             </div>
 
             <div class="slds-grid slds-gutters" >
-                <div class="slds-col slds-size_1-of-2 slds-scrollable_y slds-m-left_small slds-border_bottom slds-border_top" style="height: 20vh;">
+                <div class="slds-col slds-size_3-of-5 slds-scrollable_y slds-m-left_small slds-border_bottom slds-border_top" style="height: 20vh;">
                     <lightning-datatable
                             key-field="id"
                             data={contractDataToView}
