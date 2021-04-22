@@ -2537,6 +2537,12 @@
                 <elementReference>CaseId</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>TipoDocumento</name>
+            <value>
+                <elementReference>ManageDocumentsFatturazione_0.tipoDocumento</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Informative_SubFlow</name>
