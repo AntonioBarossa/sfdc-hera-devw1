@@ -10,7 +10,7 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
     protected override void afterInsert() {
         // Il campo WhoId non può essere sbiancato in before insert, quindi dobbiamo farlo in after.
-        removeWhoId();
+        // removeWhoId();  // NOT WORKING
     }
 
     private void doValidation() {
@@ -71,14 +71,14 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
                 }
 
                 if (t.PhoneNumber__c != null) {
-                    t.PhoneNumber__c = HDT_UTL_PhoneNumbers.addInternationalPrefixTo(t.PhoneNumber__c);
+                    t.PhoneNumber__c = HDT_UTL_PhoneNumbers.withInternationPrefix(t.PhoneNumber__c);
                 } else if (t.WhoId != null) {
-                    String contactPhone = contactsMap.get(t.WhoId).MobilePhone;
+                    String contactPhone = HDT_UTL_PhoneNumbers.withoutInternationPrefix(contactsMap.get(t.WhoId).MobilePhone);
                     String validateOutcome = HDT_UTL_PhoneNumbers.validateMobileNumber(contactPhone);
                     if (!String.isEmpty(validateOutcome)) {
                         t.addError(validateOutcome + ' Si prega di effettuare una Modifica Anagrafica per correggere il numero di telefono del cliente: ' + contactPhone);
                     } else {
-                        t.PhoneNumber__c = HDT_UTL_PhoneNumbers.addInternationalPrefixTo(contactPhone);
+                        t.PhoneNumber__c = HDT_UTL_PhoneNumbers.withInternationPrefix(contactPhone);
                     }
                 }
 
@@ -93,7 +93,8 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
 
     }
 
-    // Rimuove il WhoId, qualora presente, se l'operatore ha inserito un destinatario alternativo (cellulare o PEC). 
+    // Rimuove il WhoId, qualora presente, se l'operatore ha inserito un destinatario alternativo (cellulare o PEC).
+    // DA FIXARE - al momento rimuovere sempre il WhoId, invece dovrebbe toglierlo solo se il numero alternativo è diverso dal numero del Contact.
     private void removeWhoId() {
 
         Set<Id> taskIds = new Set<Id>();
