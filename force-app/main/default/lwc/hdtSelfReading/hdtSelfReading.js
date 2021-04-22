@@ -58,7 +58,7 @@ export default class HdtSelfReading extends LightningElement {
 
     recordTypeId;
 
-    isSaved = false;
+    @track isSaved = false;
 
     errorAdvanceMessage = '';
 
@@ -105,7 +105,6 @@ export default class HdtSelfReading extends LightningElement {
             console.log(error);
 
         });
-
 
     }
 
@@ -171,11 +170,14 @@ export default class HdtSelfReading extends LightningElement {
     }
 
     // event è definito solo per la voltura (this.isVolture) 
-    handleSaveButton(event){    
+    @api
+    handleSaveButton(){    
 
-        console.log('handleSaveButton ' + event + ' is saved?' + this.isSaved);
+        console.log('Inside Reading Method');
 
-        if(this.isVolture && event != undefined && event.target.name === 'previous'){
+        //console.log('handleSaveButton ' + event + ' is saved?' + this.isSaved);
+
+        /*if(this.isVolture && event != undefined && event.target.name === 'previous'){
 
             let dispObj = {name: event.target.name};
 
@@ -183,7 +185,7 @@ export default class HdtSelfReading extends LightningElement {
 
             return;
 
-        }
+        }*/
 
 
         if(this.advanceError != undefined){

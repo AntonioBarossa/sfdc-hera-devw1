@@ -3,6 +3,7 @@
     <fullName>HDT_RT_AlertDisassociazioneUtenteWeb</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>RT che accorpa i processi di &quot;Modifica Alert&quot; e &quot;Disassociazione Utente Web&quot;</description>
     <label>Modifica Alert - Disassociazione Utente Web</label>
     <picklistValues>

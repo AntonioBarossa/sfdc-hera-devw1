@@ -19,11 +19,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validatePagamenti(fields, caseType);
 
+
+        } else if (caseType == 'Variazione Anagrafica Cliente') {
+            if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
+                result = validateModificaDatiContatto(fields);
+            } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
+                result = validateModificaDatiRecapito(fields);
+            }
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
-        } else if (caseType == 'Variazione Anagrafica Cliente' && currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
-            result = validateModificaDatiContatto(fields);
-
         } else if(caseType == 'Gestione Disalimentabilità' || caseType == 'Riattivazione Fornitura'){
 
             result = validateMorosita(fields, recordId, caseType);
@@ -107,28 +111,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateInversioneContatore(String caseId, String fields, string caseType) {
-
-        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-
-        String relatedCaseId = getFieldValue(fields, 'RelatedCase__c');
-
-        if (relatedCaseId == null || String.isBlank(relatedCaseId) || String.isEmpty(relatedCaseId) || relatedCaseId.equalsIgnoreCase('null')) {
-            return result;
-        }
-
-        Case currentCase = [SELECT Id, CommodityFormula__c, ServicePoint__r.ServicePointCode__c FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED];
-        Case relatedCase = [SELECT Id, CommodityFormula__c, ServicePoint__r.ServicePointCode__c FROM Case WHERE Id = :relatedCaseId WITH SECURITY_ENFORCED];
-
-        if (!relatedCase.CommodityFormula__c.equalsIgnoreCase(currentCase.CommodityFormula__c)) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Servizio incompatibile. Case attuale: ' + currentCase.CommodityFormula__c + ', Case correlato: ' + relatedCase.CommodityFormula__c));
-        } else if (relatedCase.ServicePoint__r.ServicePointCode__c.equalsIgnoreCase(currentCase.ServicePoint__r.ServicePointCode__c)) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è possibile correlare due processi di Inversione Contatore sullo stesso impianto'));
-        } 
-
-        return result;
-    }
-
     private String validateModificaDatiContatto(String fields) {
         String result;
 
@@ -151,6 +133,42 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
+    private String validateModificaDatiRecapito(String fields) {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        String pecInvioBolletta = getFieldValue(fields, 'InvoiceCertifiedEmailAddress__c');
+        String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
+        String modInvioFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoicingMethod__c');
+        String codiceUfficio = getFieldValue(fields, 'OfficeSubjectCode__c');
+        String pecFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoiceCertifiedEmailAddress__c');
+        String tipoXml = getFieldValue(fields, 'XMLType__c');
+
+        // TODO: validazione campi billing profile.
+
+        return result;
+    }
+
+    public String validateInversioneContatore(String caseId, String fields, string caseType) {
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        String relatedCaseId = getFieldValue(fields, 'RelatedCase__c');
+
+        if (relatedCaseId == null || String.isBlank(relatedCaseId) || String.isEmpty(relatedCaseId) || relatedCaseId.equalsIgnoreCase('null')) {
+            return result;
+        }
+
+        Case currentCase = [SELECT Id, CommodityFormula__c, ServicePoint__r.ServicePointCode__c FROM Case WHERE Id = :caseId WITH SECURITY_ENFORCED];
+        Case relatedCase = [SELECT Id, CommodityFormula__c, ServicePoint__r.ServicePointCode__c FROM Case WHERE Id = :relatedCaseId WITH SECURITY_ENFORCED];
+
+        if (!relatedCase.CommodityFormula__c.equalsIgnoreCase(currentCase.CommodityFormula__c)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Servizio incompatibile. Case attuale: ' + currentCase.CommodityFormula__c + ', Case correlato: ' + relatedCase.CommodityFormula__c));
+        } else if (relatedCase.ServicePoint__r.ServicePointCode__c.equalsIgnoreCase(currentCase.ServicePoint__r.ServicePointCode__c)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è possibile correlare due processi di Inversione Contatore sullo stesso impianto'));
+        } 
+
+        return result;
+    }
 
     public String validateReclamoScritto(String fields, string recordId){
 
@@ -359,6 +377,31 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
+    public String validateDisattivazioni(String fields){
+
+        String result;
+
+        Date notBeforeDate = Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c'));
+        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
+
+        if(notBeforeDate < System.today()){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
+
+        } else if(requestDate > System.today()){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
+
+
+        return result;
+
+    }
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);

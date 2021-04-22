@@ -19,6 +19,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
 
             }
 
+            when 'changeQuotationType'{
+
+                psmUtl.changeQuotationType(sender);
+
+            }
+
 
         }
 

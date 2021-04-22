@@ -18,9 +18,9 @@
                                 <lightning-radio-group disabled={disabledInput} name="Indirizzi"
                                     label="Indirizzi"
                                     options={addressOptions}
-                                    value={value}
                                     type="radio"
-                                    class={addrClasses}>
+                                    class={addrClasses}
+                                    onchange={handleDataCollection}>
                                 </lightning-radio-group>
                             </div>
 
