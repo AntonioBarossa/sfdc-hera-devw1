@@ -2,11 +2,12 @@
     <aura:attribute name="recordid" type="String"/>
     <aura:attribute name="accid" type="String"/>
     <aura:attribute name="flowName" type="String"/>
-    <aura:attribute name="resumeFromDraft" type="Boolean" default="false"/>
     <aura:attribute name="subTabToClose" type="String"/>
     <aura:attribute name="accountTabId" type="String"/>
     <aura:attribute name="enableRefresh" type="Boolean"/>
     <aura:attribute name="resumeFromDraft" type="Boolean"/>
+    <aura:attribute name="createDocuments" type="Boolean"/>
+    <aura:attribute name="catalogId" type="String"/>
     
 
     <aura:attribute name="processType" type="String" />

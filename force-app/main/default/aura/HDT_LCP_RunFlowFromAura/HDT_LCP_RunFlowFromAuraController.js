@@ -5,7 +5,6 @@
         var myPageRef = component.get("v.pageReference");
         var caseId = myPageRef.state.c__recordid;
         var flowName = myPageRef.state.c__flowName;
-        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
         var accId = myPageRef.state.c__accid;
 
         var processType = myPageRef.state.c__processType;
@@ -14,7 +13,8 @@
         //var cluster = myPageRef.state.c__cluster;
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
-
+        var createDocuments = myPageRef.state.c__createDocuments;
+        var serviceCatalogId = myPageRef.state.c__catalogId;
         var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
 
         //variabile per informative
@@ -26,7 +26,6 @@
         component.set("v.recordid", caseId)
         console.log('# component set recordid -> '+component.get("v.recordid"))
         console.log('# flowName -> ' + flowName);
-        console.log('# resumeFromDraft -> ' + resumeFromDraft);
         console.log('# accId -> ' + accId);
         console.log('# processType -> ' + processType);
         console.log('# recordTypeName -> ' + recordTypeName);
@@ -95,9 +94,15 @@
         if(resumeFromDraft != null){
             inputVariables.push({ name : 'ResumeFromDraft', type : 'Boolean', value : resumeFromDraft });
         }
-        if(processType === 'Informative')
+        if(processType === 'Informative'){
             inputVariables.push({ name : 'Context', type : 'String', value : context });
-
+        }
+        if(createDocuments != null){
+            inputVariables.push({ name : 'createDocuments', type : 'Boolean', value : createDocuments });
+        }
+        if(serviceCatalogId != null){
+            inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
+        }
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
