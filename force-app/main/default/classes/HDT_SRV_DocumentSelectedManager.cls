@@ -35,7 +35,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             String numeroDocumento = (String) primolivello.get('numeroDocumento');
             String numeroFattura = (String) primolivello.get('numeroFattura');
             String contractCode = (String) secondoLivello.get('contratto');
-
+            String tipoDocumento = (String) secondoLivello.get('tipoDocumento');
             caseRecord.ContractAccountCode__c = (String) primolivello.get('contoContrattuale');
             caseRecord.DocumentExpirationDate__c = dataScadenza;
             caseRecord.DocumentPaymentMethod__c = (String) primolivello.get('modalitaPagamento');
@@ -48,6 +48,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             response.caseRecord = caseRecord;
             response.contractCode = contractCode;
+            response.tipoDocumento = tipoDocumento;
 
             if(inputs[0].createDocuments){
                 List<DocumentSelected__c> documentList = new List<DocumentSelected__c>();
@@ -128,6 +129,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         
         @InvocableVariable
         public List<DocumentSelected__c> documents;
+
+        @InvocableVariable
+        public String tipoDocumento;
         
     }
 
