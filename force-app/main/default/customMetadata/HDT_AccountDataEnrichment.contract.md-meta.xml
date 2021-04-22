@@ -13,27 +13,32 @@
     {
       &quot;label&quot;: &quot;Numero Contratto&quot;,
       &quot;fieldName&quot;: &quot;contractNumber&quot;,
-      &quot;initialWidth&quot;: 200
+      &quot;initialWidth&quot;: 160
     },
     {
-      &quot;label&quot;: &quot;Stato&quot;,
-      &quot;fieldName&quot;: &quot;status&quot;
-    },
-    {
-      &quot;label&quot;: &quot;Data inizio&quot;,
-      &quot;fieldName&quot;: &quot;startDate&quot;
-    },
-    {
-      &quot;label&quot;: &quot;Data fine&quot;,
-      &quot;fieldName&quot;: &quot;endDate&quot;
-    },
-    {
-      &quot;label&quot;: &quot;Fornitura&quot;,
-      &quot;fieldName&quot;: &quot;asset&quot;
+      &quot;label&quot;: &quot;Stato Contratto&quot;,
+      &quot;fieldName&quot;: &quot;status&quot;,
+      &quot;initialWidth&quot;: 140
     },
     {
       &quot;label&quot;: &quot;Servizio&quot;,
-      &quot;fieldName&quot;: &quot;service&quot;
+      &quot;fieldName&quot;: &quot;service&quot;,
+      &quot;initialWidth&quot;: 140
+    },
+    {
+      &quot;label&quot;: &quot;Numero Impianto&quot;,
+      &quot;fieldName&quot;: &quot;asset&quot;,
+      &quot;initialWidth&quot;: 160
+    },
+    {
+      &quot;label&quot;: &quot;Data Inizio Contratto&quot;,
+      &quot;fieldName&quot;: &quot;startDate&quot;,
+      &quot;initialWidth&quot;: 180
+    },
+    {
+      &quot;label&quot;: &quot;Data Fine Contratto&quot;,
+      &quot;fieldName&quot;: &quot;endDate&quot;,
+      &quot;initialWidth&quot;: 180
     }
   ]
 }</value>

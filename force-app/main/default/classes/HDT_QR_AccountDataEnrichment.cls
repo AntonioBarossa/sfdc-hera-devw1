@@ -24,4 +24,14 @@ public  inherited sharing  class HDT_QR_AccountDataEnrichment {
         return accList;
     }
 
+    public static List<HDT_MeterReadingTranscodeMap__mdt> getReadingsTranscodeMap(){
+        List<HDT_MeterReadingTranscodeMap__mdt> transcodeMap = [
+            SELECT TranscodeType__c, SapValue__c, SalesforceValue__c
+            FROM HDT_MeterReadingTranscodeMap__mdt
+            WITH SECURITY_ENFORCED
+        ];
+
+        return transcodeMap;
+    }
+
 }
