@@ -1,6 +1,6 @@
 <aura:component 
     controller="HDT_LC_DocumentValidation"
-    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
     access="global">
     <!-- <aura:attribute name="CILegalRepresentative" type="Boolean" default="true" /> -->
     <!-- <aura:attribute name="CIAccoutn" type="Boolean" default="true" /> -->

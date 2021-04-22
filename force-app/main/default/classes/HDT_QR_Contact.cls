@@ -63,4 +63,21 @@ public inherited sharing class HDT_QR_Contact {
         }
         return res;
     }
+
+    // INIZIO SVILUPPI EVERIS
+
+    public LIst<Contact> getRecordsByIds(Set<Id> ids) {
+        return [
+            SELECT 
+            Id,
+            MobilePhone,
+            CertifiedEmail__c,
+            CompanyOwner__c
+            FROM Contact 
+            WHERE Id IN :ids
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    // FINE SVILUPPI EVERIS
 }
