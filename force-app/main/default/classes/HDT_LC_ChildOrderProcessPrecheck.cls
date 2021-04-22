@@ -8,6 +8,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_UTL_Order orderUtl = new HDT_UTL_Order();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -42,11 +43,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
      * @param String deliberate
      */
     @AuraEnabled
-    public static void next(String orderId, String selectedProcess, String deliberate, Map<String,String> extraParams){
+    public static void next(Order order,String orderId, String selectedProcess, String deliberate, Map<String,String> extraParams){
 
         system.debug('extraParams: ' + extraParams);
         
         String recordTypeId = orderSrv.getRecordTypeIdByDeveloperName(selectedProcess);
+
+        //INIZIO SVILUPPI EVERIS
+        Order newOrder = new Order();    
+        //FINE SVILUPPI EVERIS
 
         String processType = null;
 
@@ -81,7 +86,30 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             when 'HDT_RT_AttivazioneConModifica' {
                 processType = 'Prima Attivazione con modifica';
             }
+            //INIZIO SVILUPPI EVERIS
+            when 'HDT_RT_Voltura'{
+
+                newOrder.ProcessType__c = 'Voltura';
+                newOrder.Id = orderId;
+                newOrder.Step__c = 2;
+                newOrder.RecordTypeId = recordTypeId;
+                newOrder.Deliberation__c = deliberate;
+                newOrder.Phase__c = 'Bozza';
+                newOrder.AccountId = order.AccountId;
+                newOrder.ServicePoint__c = order.ServicePoint__c;
+                newOrder.ContractId = order.ContractId;
+                newOrder.Subprocess__c = 'Standard';
+                newOrder = orderUtl.enrichOrder(newOrder);
+                orderSrv.updateRecord(newOrder);
+
+
+
+            }
+            //FINE SVILUPPI EVERIS
         }
+
+
+        
 
         orderSrv.updateRecord(new Order(
             Id = orderId,

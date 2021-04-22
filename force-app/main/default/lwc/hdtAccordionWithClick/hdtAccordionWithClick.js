@@ -6,4 +6,12 @@ export default class HdtAccordionWithClick extends LightningElement {
     connectedCallback(){
         console.log('HdtAccordionWithClick: ', JSON.stringify(this.sections));
     }
+
+    @api
+    refreshValues(recordId) {
+
+        updateRecord({fields: { Id: recordId }});
+
+    }
+
 }
