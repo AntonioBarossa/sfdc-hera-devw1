@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>QAdCallID__c</fullName>
+    <fullName>UpsertKey__c</fullName>
     <caseSensitive>false</caseSensitive>
-    <description>ID univoco chiamata Qad</description>
-    <externalId>true</externalId>
-    <label>ID Chiamata QAd</label>
-    <length>30</length>
+    <externalId>false</externalId>
+    <label>Upsert Key</label>
+    <length>255</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>true</unique>
