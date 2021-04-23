@@ -1,24 +1,27 @@
 import { LightningElement,track,api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtDocumentSignatureManager extends NavigationMixin(LightningElement) {
-
+    //ProcessType: Required. For Sale pass the value 'Sale', for post sales pass the value of the CaseType.c/hdtAddDocumentSelected.
+    //The variable is used to calculate Modalità Firma & Modalità Spedizione Combobox Values
     @api processType;
-    @api quoteType;
-
-    showSignatureInfo;
-    showPreview;
-
+    //ProcessType: Required. Pass the User Source (Call Center, Sportello). Used to calculate Modalità Firma & Modalità Spedizione Combobox Values
+    @api source;
+    //Phone: Required. Pass the Phone number
+    @api phone;
+    //Phone: Required. Pass the Email.
+    @api email;
+    //Address: Required. This variable is a complex type Name - Value. Pass all the fields that compose an Address and the Complete Address.
+    @api address;
+    //AccountId: Required. Pass the Id of the Account. Used to retreive all the Account Address.
+    @api accountId;
+    buttonStatefulState = false;
+    @track disableEdit = false;
+    @track emailRequired;
+    @track phoneRequired;
+    @track addressRequired;
     connectedCallback(){
-
-        console.log(this.quoteType);
-
-        this.showSignatureInfo = (this.quoteType != null || this.quoteType != undefined) && this.quoteType === "Analitico" ? false : true;
-        this.showPreview = (this.quoteType != null || this.quoteType != undefined) && this.quoteType != "Rapido" ? false : true;
-
-       
-        console.log(this.showSignatureInfo);
-        console.log(this.showPreview);
 
     }
 
@@ -34,13 +37,92 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         return [
             { label: 'Email', value: 'email' },
             { label: 'Posta cartacea', value: 'postaCartacea' },
-            { label: 'Cartacea', value: 'cartacea' },
+            { label: 'Stampa Cartacea', value: 'stampaCartacea' },
         ];
     }
 
+    checkRequired(){
+        try{
+            var modFirma = this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value;
+            var modSpedizione = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value;
+            if(modFirma.localeCompare('otp')===0){
+                this.emailRequired = true;
+                this.phoneRequired = true;
+                this.addressRequired = false;
+            }else if(modSpedizione.localeCompare('stampaCartacea')===0){
+                this.emailRequired = false;
+                this.phoneRequired = false;
+                this.addressRequired = true;
+            }else if(modSpedizione.localeCompare('email')===0){
+                this.phoneRequired = false;
+                this.addressRequired = false;
+                this.emailRequired = true;
+            }else if(modSpedizione.localeCompare('postaCartacea')===0){
+                this.emailRequired = false;
+                this.phoneRequired = false;
+                this.addressRequired = true;
+            }
+        }catch (error) {
+            console.error(error);
+        }
+    }
+
     handleChange(event){
-        //let target = this.template.querySelector(`[data-id="invioDocumentazione"]`);
-        //target.disabled = false
+        this.checkRequired();
+    }
+    
+    checkForm(){
+        try{
+            var modFirma = this.template.querySelector("lightning-combobox[data-id=modalitaFirma]");
+            var modSpedizione = this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]");
+            var telefono = this.template.querySelector("lightning-input[data-id=telefono]");      
+            var email =this.template.querySelector("lightning-input[data-id=email]");      
+            var address = this.template.querySelector("lightning-input[data-id=indirizzoRecapito]");
+            if(!modFirma.value || !modSpedizione.value || (this.phoneRequired && !telefono.value) || (this.emailRequired && !email.value) || (this.addressRequired && !address.value))
+            {
+                this.showMessage('Errore','Valorizza tutti i campi obbligatori','error'); 
+            }else{
+                this.buttonStatefulState = !this.buttonStatefulState
+                this.enableEdit = this.buttonStatefulState;
+                var wrapperResult = {
+                    signMethod:modFirma,
+                    sendMethod:modSpedizione,
+                    phone:telefono,
+                    email:email,
+                    address:{
+                        completeAddress:address
+                    }
+                }
+                this.dispatchEvent(new CustomEvent('confirmdata'), { detail: wrapperResult });
+            }
+            //console.log(modFirma.value + modSpedizione.value + telefono.value + email.value + address.value);
+        }catch (error) {
+            console.error(error);
+        }
+        
+        
+       /* if(modFirma.value && modSpedizione.value && telefono.value && email.value && address.value){
+            this.buttonStatefulState = !this.buttonStatefulState
+            this.enableEdit = this.buttonStatefulState;
+        }else{
+            this.showMessage('Errore','Valorizza tutti i campi obbligatori','error');  
+        }*/
+    }
+
+    showMessage(title,message,variant){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant
+            }),
+        );
+    }
+
+    handleButtonStatefulClick() {
+        
+        this.checkForm();
+
     }
 
     handlePreview(){

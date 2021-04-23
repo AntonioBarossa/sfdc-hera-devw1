@@ -1,10 +1,11 @@
 <template>
-    <lightning-combobox class="slds-col slds-size_1-of-3"
+    <lightning-combobox
             name="Combobox"
             label={label}
             value={value}
             placeholder={placeholder}
             options={listOptions}
             onchange={handleChange}
-            required={required}></lightning-combobox>
+            required={required}
+            disabled={disabled}></lightning-combobox>
 </template>

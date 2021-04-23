@@ -14,27 +14,63 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     deliberation = '';
     showDeliberation = false;
     disabledDeliberation = false;
+    showEsitoCheck = true;
+    vasAmendDisabledInput = false;
     
     get value(){
         let result = '';
-        if (this.order.RecordType.DeveloperName !== 'Default') {
-            result = this.order.RecordType.DeveloperName;
-            this.applySelectionLogic(this.order.RecordType.DeveloperName);
+        console.log('**************************************** ', this.order.RecordType.DeveloperName);
+        //COMMENTATO POICHE GENERAVA ERRORE
+        /*if (this.order.RecordType.DeveloperName !== 'Default') {
+
+            if(this.order.SBQQ__Quote__r.IsVAS__c){
+                result = 'HDT_RT_VAS';
+            } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c) {
+                result = 'HDT_RT_ScontiBonus';
+            } else {
+                result = this.order.RecordType.DeveloperName;
+            }
+
+            this.applySelectionLogic(result);
         } else {
             result = '';
-        }
+        }*/
+        //COMMENTATO POICHE GENERAVA ERRORE
         return result;
     }
 
     get options(){
-        return [
-            {"label":"Attivazione","value":"HDT_RT_Attivazione"},
-            {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
-            // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
-            {"label":"Subentro","value":"HDT_RT_Subentro"},
-            {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
-            // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
-        ];
+
+        let records = [];
+
+        //COMMENTATO POICHE GENERAVA ERRORE
+        /*if(this.order.SBQQ__Quote__r.IsVAS__c){
+            records = [
+                {"label":"VAS","value":"HDT_RT_VAS"}
+            ]
+        } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c){
+            records = [
+                {"label":"Aggiunta Sconti o Bonus VAS","value":"HDT_RT_ScontiBonus"}
+            ]
+        } else {*/
+        //COMMENTATO POICHE GENERAVA ERRORE
+            records = [
+                {"label":"Attivazione","value":"HDT_RT_Attivazione"},
+                {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
+                // {"label":"Riattivazione Non Morose","value":"HDT_RT_RiattivazioniNonMorose"},
+                {"label":"Subentro","value":"HDT_RT_Subentro"},
+                {"label":"SwitchIn","value":"HDT_RT_SwitchIn"},
+                //INIZIO SVILUPPI VOLTURA EVERIS
+                {"label":"Voltura","value":"HDT_RT_Voltura"}
+                //FINE SVILUPPI VOLTURA EVERIS
+                // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
+                
+            ]
+        //COMMENTATO POICHE GENERAVA ERRORE    
+        //}
+       //COMMENTATO POICHE GENERAVA ERRORE    
+
+        return records;
     }
 
     handleShowDeliberation(selectedProcess){
@@ -56,7 +92,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get disabledInput(){
         let result = true;
         console.log('disabledInput - rcordtype', this.order.RecordType.DeveloperName);
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default'){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput){
             result = true;
         } else {
             result = false;
@@ -106,6 +142,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.compatibilita = true;
             this.causale = '';
             this.showDeliberation = false;
+
+            this.showEsitoCheck = false;
         }
         else if(selectedProcess === 'HDT_RT_AttivazioneConModifica')
         {
@@ -114,6 +152,32 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
             this.showDeliberation = false;
         }
+        else if(selectedProcess === 'HDT_RT_VAS')
+        {
+            this.selectedProcess = 'HDT_RT_VAS';
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        else if(selectedProcess === 'HDT_RT_ScontiBonus')
+        {
+            this.selectedProcess = 'HDT_RT_ScontiBonus';
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        //INIZIO SVILUPPI EVERIS
+        else if(selectedProcess === 'HDT_RT_Voltura'){
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        //FINE SVILUPPI EVERIS 
+
+
     }
 
     handleSelectProcess(event){
@@ -121,9 +185,19 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         this.applySelectionLogic(this.selectedProcess);
     }
 
-    goToNextStep(){
+    goToNextStep(extraParams){
         this.loaded = false;
-        next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation}).then(data =>{
+
+        if(Object.keys(extraParams).length === 0) {
+            extraParams = {};
+        }
+
+        //EVERIS
+        console.log('OrderId--> '+this.order.Id);
+        //EVERIS
+
+        //EVERIS: Aggiunta variabile Order
+        next({order: this.order,orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
@@ -143,9 +217,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     handleNext(){
         console.log('handleNext: ' + this.order.Id + ' ' + this.selectedProcess);
 
+        let extraParams = {};
+
+        if(this.order.ServicePoint__r !== undefined){
+            extraParams['servicePointType'] = this.order.ServicePoint__r.RecordType.DeveloperName;
+        }
+
         if (this.showDeliberation === true) {
             if (this.deliberation !== '') {
-                this.goToNextStep();
+                this.goToNextStep(extraParams);
             } else {
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
@@ -156,12 +236,22 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             }
         } else {
-            this.goToNextStep();
+            this.goToNextStep(extraParams);
         }
 
     }
 
     connectedCallback(){
         console.log('this.order: ', JSON.parse(JSON.stringify(this.order)));
+
+        console.log('CallBack start');
+
+        /*if(this.order.SBQQ__Quote__r.IsVAS__c || this.order.SBQQ__Quote__r.AmendmentAllowed__c){
+            this.showEsitoCheck = false;
+            this.vasAmendDisabledInput = true;
+        }*/
+        
+        console.log('CallBack end');
+
     }
 }

@@ -51,9 +51,7 @@
             <property name="acceptedFormats" type="String" label="Accepted Formats" description="Accepted Formats" role="inputOnly"/>
             
             <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
-            
             <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
-            
             <property name="nextStep" type="String" label="Next Step" description="Next Step" role="inputOnly"/>
             
             <property name="showReadOnly" type="Boolean" label="Show ReadOnly Section" description="Show ReadOnly Section" role="inputOnly"/>
@@ -61,13 +59,9 @@
             <property name="labelInputSection" type="String" label="Label Input Section" description="Label Sezione Input" role="inputOnly"/>
             
             <property name="labelReadOnlySection" type="String" label="Label ReadOnly Section" description="Label Sezione ReadOnly" role="inputOnly"/>
-            
             <property name="variantSaveButton" type="String" label="Variant Save Button" description="Variant Save Button" role="inputOnly" default="brand"/>
-            
             <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
-            
         </targetConfig>
         
     </targetConfigs>
-    
 </LightningComponentBundle>

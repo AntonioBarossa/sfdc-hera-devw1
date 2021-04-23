@@ -1,0 +1,69 @@
+{
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "componentName" : "siteforce:sldsTwoCol66Layout",
+  "id" : "775dc56e-7bab-46a3-9031-35c1c418f035",
+  "label" : "Campaign Member Detail",
+  "regions" : [ {
+    "id" : "085cf381-6cee-4b72-987c-dfa2828c9129",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "forceCommunity:recordHeadline",
+      "id" : "7a7be465-d995-4720-9424-f1ec5391c216",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "bba5baab-728f-43e8-8f9d-0333f8a39cb7",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "forceCommunity:recordDetail",
+      "id" : "a477f1cc-0075-4844-be1e-d4f0904417d6",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "8fbe98de-774f-48e3-a0bb-f4f557610eb8",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "f0f8b10d-04d3-48bd-bfe0-8b144c2b2ba2",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "a673922f-162b-4ba9-ae26-f68ffc687245",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:HDT_LCP_CampaignMemberNegativeResult",
+      "id" : "f874fae9-2b01-4967-8431-530e8ce9bcce",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "7d8e45ba-5920-4c52-b75e-5658b4def2d0",
+    "regionName" : "sidebar",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-00v"
+}

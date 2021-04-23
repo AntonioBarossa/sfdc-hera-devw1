@@ -23,7 +23,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         Order orderToUpdate = new Order();
         orderToUpdate.Id = order.Id;
         orderToUpdate.Status = 'In lavorazione';
-        orderToUpdate.Phase__c = 'Da Inviare';
+        //EVERIS: Aggiunto caso Voltura
+        orderToUpdate.Phase__c = order.RecordType.DeveloperName == 'HDT_RT_Voltura' ? 'Accettazione Voltura' : 'Da Inviare'; 
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
         
@@ -101,6 +102,33 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.Instance326__c = 'Richiesto';
                 }
             }
+            //EVERIS: Aggiunto caso Voltura
+            when 'HDT_RT_Voltura'{
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+                    // Carta d’identità;
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
+                    // Documenti relativi alla Legge 80
+                    orderToUpdate.DocumentLow80__c = 'Richiesto';
+                    // Istanza 326
+                    orderToUpdate.Instance326__c = 'Richiesto';
+                    // Accettazione Preventivo rapido.
+                    //orderToUpdate.QuickQuote__c = 'Richiesto';
+                    orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                } else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
+                    // Visura camerale
+                    orderToUpdate.ChamberCommerceRegistration__c = 'Richiesto';
+                    // Carta identità
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
+                    // Accettazione preventivo rapido
+                    //orderToUpdate.QuickQuote__c = 'Richiesto';
+                    // Istanza 326
+                    orderToUpdate.Instance326__c = 'Richiesto';
+                    orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                }
+
+
+            }
+
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);

@@ -93,7 +93,7 @@ export default class hdtOrderDossierWizardTable extends NavigationMixin(Lightnin
                 }
                 ord.pod = '';
                 ord.CustomerName__c = '/lightning/r/Order/' + ord.Id + '/view';
-                ord.pod = ord.ServicePoint__r.ServicePointCode__c;
+                ord.pod = ord.ServicePoint__c !== undefined ? ord.ServicePoint__r.ServicePointCode__c : '';
                 ord.disabledActionButton = this.disabledInput || ord.Step__c === 20 || ord.Phase__c === 'Annullato';
 
             });

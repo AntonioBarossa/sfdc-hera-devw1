@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Oridnaria</fullName>
+                <fullName>Ordinaria</fullName>
                 <default>false</default>
-                <label>Oridnaria</label>
+                <label>Ordinaria</label>
             </value>
             <value>
                 <fullName>Mortis Causa</fullName>

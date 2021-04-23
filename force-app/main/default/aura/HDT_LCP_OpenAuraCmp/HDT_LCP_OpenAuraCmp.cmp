@@ -17,6 +17,10 @@
     <aura:attribute name="recordToCancell" type="String" />
     <aura:attribute name="sObjectRecordToCancell" type="String" />
 
+    <!--aggiunto per capire il context-->
+    <aura:attribute name="context" type="String" />
+
+
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />
 

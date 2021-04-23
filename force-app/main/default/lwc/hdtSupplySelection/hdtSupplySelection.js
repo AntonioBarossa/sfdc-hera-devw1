@@ -13,7 +13,7 @@ export default class hdtSupplySelection extends LightningElement {
     showCreateTargetObjectButton = false;
     showCreateTargetObjectMod = false;
     selectedServicePoint;
-    disabledInput = false;
+    @api disabledInput;
     disabledNext = false;
     hiddenEdit = true;
     @api outputContract;
@@ -135,6 +135,10 @@ export default class hdtSupplySelection extends LightningElement {
     handleServicePointSelection(event){
         console.log('handleServicePointSelection' + JSON.stringify(event.detail));
         this.selectedServicePoint = event.detail;
+        //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
+        this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
+            detail: event.detail
+        }));
         let contractNumber = this.selectedServicePoint['Contract Number'];
         console.log('rowToSend for Contract'+ JSON.stringify(contractNumber));
         
@@ -167,19 +171,19 @@ export default class hdtSupplySelection extends LightningElement {
         this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
     }
 
-    toggle(){
-        this.disabledInput = !this.disabledInput;
-        this.disabledNext = !this.disabledNext;
-        this.hiddenEdit = !this.hiddenEdit;
-    }
+    // toggle(){
+    //     this.disabledInput = !this.disabledInput;
+    //     this.disabledNext = !this.disabledNext;
+    //     this.hiddenEdit = !this.hiddenEdit;
+    // }
 
-    handleNext(){
-        this.toggle();
-    }
+    // handleNext(){
+    //     this.toggle();
+    // }
 
-    handleEdit(){
-        this.toggle();
-    }
+    // handleEdit(){
+    //     this.toggle();
+    // }
        /**
 
      * Dispatch confirmed service point

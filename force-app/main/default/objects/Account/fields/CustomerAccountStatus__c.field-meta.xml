@@ -22,6 +22,11 @@
                 <default>false</default>
                 <label>Customer</label>
             </value>
+            <value>
+                <fullName>Ex-Customer</fullName>
+                <default>false</default>
+                <label>Ex-Customer</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

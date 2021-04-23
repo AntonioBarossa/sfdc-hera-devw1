@@ -17,12 +17,20 @@
         <value xsi:type="xsd:string">Attivo</value>
     </values>
     <values>
+        <field>Distinct__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>Fields__c</field>
         <value xsi:type="xsd:string">Status__c,ContractAccountCode__c,ActivationDate__c,PaymentMethod__c</value>
     </values>
     <values>
         <field>Max_Rows__c</field>
         <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Query_Type__c</field>
+        <value xsi:type="xsd:string">SOSL</value>
     </values>
     <values>
         <field>Row_Limit__c</field>

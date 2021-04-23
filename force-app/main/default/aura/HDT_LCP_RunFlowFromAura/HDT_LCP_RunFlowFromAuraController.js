@@ -13,6 +13,12 @@
         //var cluster = myPageRef.state.c__cluster;
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
+        var createDocuments = myPageRef.state.c__createDocuments;
+        var serviceCatalogId = myPageRef.state.c__catalogId;
+        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
+
+        //variabile per informative
+        var context = myPageRef.state.c__context;
 
         var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
 
@@ -27,6 +33,7 @@
         //console.log('# cluster -> ' + cluster);
         console.log('# recordToCancell -> ' + recordToCancell);
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
+        console.log('# context -> '+context);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -88,6 +95,16 @@
         if(resumeFromDraft != null){
             inputVariables.push({ name : 'ResumeFromDraft', type : 'Boolean', value : resumeFromDraft });
         }
+        if(processType === 'Informative'){
+            inputVariables.push({ name : 'Context', type : 'String', value : context });
+        }
+        if(createDocuments != null){
+            inputVariables.push({ name : 'createDocuments', type : 'Boolean', value : createDocuments });
+        }
+        if(serviceCatalogId != null){
+            inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
+        }
+
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
 
@@ -98,7 +115,6 @@
     handleStatusChange : function (component, event) {
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
-
        //TODO getire eventuali errori provenienti dal flow 
        //event.getParam("status") === "ERROR" 
 
@@ -128,6 +144,8 @@
                 newCaseId=component.get("v.recordid");
             }
 
+
+        if(!enableRefresh){
             workspaceAPI.openSubtab({
                 parentTabId: accountTabId,
                 pageReference: {
@@ -143,10 +161,9 @@
 
                 workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                     console.log('# Refresh page -> ' + enableRefresh);
-                    if(enableRefresh){
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                    }
+                    console.log('# OK Refresh page #');
+                    $A.get('e.force:refreshView').fire();
+                    
     
                     //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
                     //    workspaceAPI.refreshTab({
@@ -157,38 +174,34 @@
                     //    });
                     //});
     
+                    }).catch(function(error) {
+                        console.log(error);
+                    });
+                });
+            }else{
+
+                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                        console.log('# Refresh page -> ' + enableRefresh);
+                      
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                    
+        
+                        workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                        workspaceAPI.refreshTab({
+                                tabId: subTabToRefresh,
+                                includeAllSubtabs: true
+                            }).catch(function(error) {
+                                console.log(error);
+                            });
+                        });
+        
                 }).catch(function(error) {
                     console.log(error);
                 });
 
 
-            
-
-            //} else {
-
-                /*orkspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                    console.log('# Refresh page -> ' + enableRefresh);
-                    if(enableRefresh){
-                        console.log('# OK Refresh page #');
-                        $A.get('e.force:refreshView').fire();
-                    }
-    
-                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                    //    workspaceAPI.refreshTab({
-                    //        tabId: subTabToRefresh,
-                    //        includeAllSubtabs: true
-                    //    }).catch(function(error) {
-                    //        console.log(error);
-                    //    });
-                    //});*/
-    
-            }).catch(function(error) {
-                console.log(error);
-            });
-
-
             }
-
-       }
-    
+        }
+    }
 })

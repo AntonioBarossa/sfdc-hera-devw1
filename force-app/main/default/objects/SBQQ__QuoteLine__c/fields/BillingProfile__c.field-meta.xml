@@ -6,7 +6,7 @@
     <label>Profilo di Fatturazione</label>
     <referenceTo>BillingProfile__c</referenceTo>
     <relationshipLabel>Quote Lines</relationshipLabel>
-    <relationshipName>Quote_Lines</relationshipName>
+    <relationshipName>QuoteLines</relationshipName>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

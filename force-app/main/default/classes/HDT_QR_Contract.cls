@@ -9,8 +9,32 @@ public inherited sharing class HDT_QR_Contract {
     public HDT_QR_Contract() {
 
     }
-        /**
 
+
+    public List<BillingProfile__c> getInd(String accountId) {
+        contractSrv.checkReadAccess('Status__c,Account__c,InvoicingAddressFormula__c');
+        System.debug('accountId ***********' + accountId);
+        System.debug('LISTA BILLINGPROFILE ***********' +[SELECT Status__c,Account__c,InvoicingAddressFormula__c FROM BillingProfile__c WHERE Account__c =: accountId  WITH SECURITY_ENFORCED] );
+		return [SELECT Status__c,Account__c,InvoicingAddressFormula__c FROM BillingProfile__c WHERE Account__c =: accountId WITH SECURITY_ENFORCED];							  
+		  
+	}
+
+    public List<Contract> getRecordById(String contractId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            ContractNumber,
+            BillingProfile__c,
+            Status,
+            SBQQ__Order__r.BillingProfile__c
+            FROM
+            Contract
+            WHERE Id = :contractId
+            WITH SECURITY_ENFORCED
+        ];
+}	
+        /**	   
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get active records by accountId
     * @param String accountId
@@ -21,17 +45,41 @@ public inherited sharing class HDT_QR_Contract {
         return [
             SELECT
             Name,
-            AccountId,
+            AccountId,			
             ContractNumber,
             Status 
             FROM
             Contract
-            WHERE AccountId = :accountId
+            WHERE AccountId = :accountId									 
             AND Status = 'Activated'
             WITH SECURITY_ENFORCED
         ];
     }
 
+	    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Get active records by accountId and servicePointId
+    * @param String accountId
+    * @param String servicePointId
+    * @return List<Contract>
+    */
+    public List<Contract> getActiveRecordsByAccountIdAndServicePointId(String accountId, String servicePointId){
+        return [
+            SELECT
+            Name,
+            AccountId,
+            ServicePoint__c,
+            ContractNumber,
+            Status 
+            FROM
+            Contract
+            WHERE AccountId = :accountId
+            AND ServicePoint__c = :servicePointId
+            AND Status = 'Activated'
+            WITH SECURITY_ENFORCED
+        ];
+    }
+   
     @AuraEnabled(cacheable=true)
     public static Contract getContractFromRow(string cNumber,string accountId){
     system.debug('getContractFromRow START '+ cNumber);
@@ -77,7 +125,7 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
 
-    /*
+ 	/*
 	 * Query for Getting All Account Contracts
 	 */
 	public List<Contract> getAccountContracts(String fields , String accountid) {
@@ -86,5 +134,5 @@ public inherited sharing class HDT_QR_Contract {
 		List<Contract> listCon = Database.query(query);
         return listCon;
     }
-    
+
 }

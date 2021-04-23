@@ -35,6 +35,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         //Get Orders
         List<Order> listOrder = orderQr.getRecordBySale(saleId);
 
+        System.debug('Lista Ordini da Legare ' +listOrder);
+
         //Store orders Id
         List<Id> listOrdersId = new List<Id>();
         
@@ -71,15 +73,23 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     listOrdersId.add(o.Id);
                 }
 
+                System.debug(listOrder != null && !listOrder.isEmpty());
+
                 if(listOrder != null && !listOrder.isEmpty()){
+
+                    System.debug('Entrato nel Loop');
+
                     Map<String, Order> ordersToUpdateMap = new Map<String, Order>();
                     List<Order> ordersToUpdate = new List<Order>();
                     orderItemSrv.checkReadAccess('ServicePoint__c,ServicePoint__r.Name,ServicePoint__r.ServicePointCode__c,OrderId,Product2.Name');
                     List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPod(listOrdersId);
+
+                    System.debug('Lista Ordini '+orderItemsList);
+
                     for (OrderItem orderItem : orderItemsList) {
                         ordersToUpdateMap.put(orderItem.OrderId, new Order(
                             Id = orderItem.OrderId,
-                            ServicePoint__c = orderItem.ServicePoint__c,
+                            ServicePoint__c = orderItem.ServicePoint__c != null ? orderItem.ServicePoint__c : null,
                             ParentOrder__c = parentOrderNew.Id,
                             RecordTypeId = recordTypeIdDefault
                         ));
@@ -87,10 +97,24 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     orderItemSrv.checkReadAccess('OrderId,BillingProfile__c');
                     List<OrderItem> orderItemsListWithBillingProfile = orderItemQr.getRecordsWithBillingProfile(listOrdersId);
                     for (OrderItem orderItem : orderItemsListWithBillingProfile) {
-                        Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
-                        orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c;
-                        ordersToUpdate.add(orderToUpdate);
+                        if (ordersToUpdateMap.get(orderItem.OrderId) != null) {
+                            Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
+                            orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c != null ? orderItem.BillingProfile__c : null;
+                            ordersToUpdate.add(orderToUpdate);
+                        }
                     }
+
+                    /*List<OrderItem> orderItemsAmend = orderItemQr.getRecordsWithAmend(listOrdersId);
+                    system.debug('ordersToUpdate before: ' + ordersToUpdate);
+                    system.debug('orderItemsAmend: ' + orderItemsAmend);
+                    for (OrderItem orderItem : orderItemsAmend) {
+                        Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
+                        system.debug('orderToUpdate: ' + orderToUpdate);
+                        system.debug('ordersToUpdate after: ' + ordersToUpdate);
+                        ordersToUpdate.add(orderToUpdate);
+                    }*/
+
+
                     orderSrv.updateRecords(ordersToUpdate);
                 }
 
@@ -107,6 +131,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         mapResponse.put('orderParentRecord',parentOrder);
         mapResponse.put('orderParentName',parentOrder.Name);
         mapResponse.put('accountId',parentOrder.AccountId);
+
+        System.debug(mapResponse);
 
         return mapResponse;
     }
@@ -125,6 +151,18 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         return orderQr.getRecordById(orderParentId);
     }
 
+    @AuraEnabled
+    public static boolean checkCommunityLogin(){
+        boolean check=False;
+        string us= userinfo.getUserType();
+        system.debug(us);
+        if (!'Standard'.Equals(us)){
+            check=True;
+           
+        }
+        return check;
+    }
+    
     @AuraEnabled
     public static boolean saveProsegui(String orderParentId){
         Boolean check = true;

@@ -9,14 +9,22 @@
                 var newSale = response.getReturnValue();
                 component.set('v.sale', newSale);
                 component.set('v.saleId', newSale.Id);
+                if (component.get('v.isCommunity')){
+                    const url = new URL(window.location.href);
+                    console.log('url' + url);
+                    url.searchParams.set('c__saleId', component.get('v.saleId'));
+                    window.history.replaceState(null, null, url);
+
+                } else {
 
                 var myPageRef = component.get("v.pageReference");
-                var newState = Object.assign({}, myPageRef.state, {c__accountId: component.get("v.recordId"), c__saleId: newSale.Id});
+                var newState = Object.assign({}, myPageRef.state, {c__accountId: component.get("v.recordId"), c__saleId: component.get('v.saleId')});
                 component.find("navService").navigate({
                     type: myPageRef.type,
                     attributes: myPageRef.attributes,
                     state: newState
                 });
+                }
             } else {
                 console.log(response.getError());
             }
@@ -27,7 +35,7 @@
 
     getSaleRecord : function(component) {
         var saleIdParam = component.get("v.saleId");
-        var fieldsParam = 'Id,Name,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c';
+        var fieldsParam = 'Id,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c';
 
         var action = component.get("c.getSale");
         action.setParams({id : saleIdParam, fields: fieldsParam});
@@ -100,5 +108,13 @@
             console.log('******' + error);
         });
         
-    }, 
+    },
+
+    redirectToRecordPageCommunity : function(objectId){
+        var navEvt = $A.get("e.force:navigateToSObject");
+        navEvt.setParams({
+        "recordId": objectId
+        });
+        navEvt.fire();
+    }
 })

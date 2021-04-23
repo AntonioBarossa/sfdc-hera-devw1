@@ -7,7 +7,106 @@ public with sharing class HDT_LC_AdvancedSearch {
 	private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
 	private static CS_SelezioneFornitura__c customSetting = servicePointQr.getCustomSetting();
 
+	
+	
+	@AuraEnabled
+	public static List<Map<String,String>> getIndirizzoFornitura(String accountId) {
+		system.debug('ACCOUNTID **********************'+accountId);
+		Map<String,String> outPutIndirizzo = new Map<String,String>();
+		HDT_QR_ServicePoint sp = new HDT_QR_ServicePoint();
+		List<ServicePoint__c> listBp = new List<ServicePoint__c>();
+		
+		if(accountId != null || accountId != ''){
+			listBp = sp.getAddressFornitura(accountId);
+		}
+		
+		List<Map<String,String>> customBp = new List<Map<String,String>>();
+		
+		if(!listBp.isEmpty()){
+		for (ServicePoint__c servicePoint : listBp) {
+            Map<String,String> row = new Map<String, String>();
+			
+				String value = servicePoint.SupplyAddress__c;
+				String label = 'Indirizzo Fornitura';
 
+				row.put(label,value);
+			
+            customBp.add(row);
+		}
+		}
+
+		return customBp;
+
+	}
+
+	@AuraEnabled
+	public static List<Map<String,String>> getIndirizzo(String accountId) {
+		system.debug('ACCOUNTID **********************'+accountId);
+		Map<String,String> outPutIndirizzo = new Map<String,String>();
+		HDT_QR_Contract bp = new HDT_QR_Contract();
+		List<BillingProfile__c> listBp = new List<BillingProfile__c>();
+		
+		if(accountId != null || accountId != ''){
+			listBp = bp.getInd(accountId);
+		}
+		
+		List<Map<String,String>> customBp = new List<Map<String,String>>();
+		
+		if(!listBp.isEmpty()){
+		for (BillingProfile__c BillingProfile : listBp) {
+            Map<String,String> row = new Map<String, String>();
+			
+				String value = BillingProfile.InvoicingAddressFormula__c;
+				String label = 'Indirizzo';
+
+				row.put(label,value);
+			
+            customBp.add(row);
+		}
+	}
+
+		return customBp;
+	}
+
+	@AuraEnabled
+public static Map<String,String> getAddressFromAccount(String accountId)
+{
+	HDT_QR_Account qr = new HDT_QR_Account();
+	Account ac = new Account();
+	Map<String,String> outPut = new Map<String,String>();
+	if(accountId!=null){
+		ac = qr.getBillingAddressAccount(accountId);
+	}
+	system.debug('BillingAddress******'+ ac.BillingAddress);
+
+	if(ac.BillingAddress!=null){
+
+		if(ac.BillingAddress.getState()!= null){
+			outPut.put('Comune',ac.BillingAddress.getState());
+		}
+		if(ac.BillingAddress.getStreet().split('\\r?\\n').get(1)!= null){
+			outPut.put('Civico', ac.BillingAddress.getStreet().split('\\r?\\n').get(1));
+		}
+		if(ac.BillingAddress.getPostalCode()!= null){
+			outPut.put('CAP',ac.BillingAddress.getPostalCode());
+		}
+		if(ac.BillingAddress.getStreet()!= null){
+			outPut.put('Via',ac.BillingAddress.getStreet().split('\\r?\\n').get(0));
+		}
+		if(ac.BillingAddress.getCity()!= null){
+			outPut.put('Provincia',ac.BillingAddress.getCity());
+		}
+		if(ac.BillingAddress.getCountry()!= null){
+			outPut.put('Stato',ac.BillingAddress.getCountry());
+		}
+	
+	}
+
+	system.debug('outPut *******'+ outPut);
+
+	return outPut;
+
+}	
 
 	/*
 	 * Retrieve data from ServicePoint Object By ServiceCode
@@ -17,13 +116,13 @@ public with sharing class HDT_LC_AdvancedSearch {
 															 String queryType,String additionalFilter) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		system.debug('queryType' + queryType);
-		system.debug('additionalFilter' + additionalFilter);
+		system.debug('additionalFilter' + additionalFilter);												
 		switch on queryType {
 			when 'serialnumber' {
-				//Integer.valueOf(parameter);
-				if(!parameter.isNumeric()){
-					throw new AuraHandledException('La matricola contatore deve contenere solo caratteri numerici');
-				}
+
+							   
+																									 
+	 
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				if(additionalFilter=='' || additionalFilter== null){
 					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumber(parameter, customSetting.OutputServicePoint__c));
@@ -34,8 +133,8 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 			}
 			when 'pod' {
-				if (parameter.length() < 14 || parameter.length() > 14) {
-					throw new AuraHandledException('il codice PDO/PDR deve essere di 14 caratteri');
+				if (parameter.length() < 10 || parameter.length() > 15) {
+					throw new AuraHandledException('il codice PDO/PDR deve essere di 15 caratteri');
 				}
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				system.debug('additionalFilter***********************************' + additionalFilter);
@@ -57,6 +156,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 				}else {
 					servicePoints.addAll(servicePointQr.getRecordFromCodeWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
 
+					
 
 
 				}
@@ -105,7 +205,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 //aggiungi parametro additionalFilter
 	@AuraEnabled(cacheable = true)
 	public static List<Map<String,String>> getContracts(String accountid,String additionalFilter) {
-
+		
 		String type='Contract';
 		String fieldContract = customSetting.Output_Contract__c;
 		List<String> listField = fieldContract != null ? fieldContract.split(',') : new List<String>();
@@ -117,11 +217,11 @@ public with sharing class HDT_LC_AdvancedSearch {
 		List<SBQQ__Subscription__c> subscriptions = servicePointQr.getAccountSubscriptions(accountid);
 		List<Contract> contracts  = new List<Contract>();
 		//if additionalFilter vuoto chiami getAccountContracts
-		System.debug('*****************EmINEM:' + fieldContract);
+		
 		if(additionalFilter== null ||additionalFilter== ''){
 			contracts = contractQr.getAccountContracts(fieldContract,accountid);
 		}else{
-			System.debug('*****************EmINEM:' + fieldContract);
+			
 			contracts = contractQr.getAccountContractsWithFilter(fieldContract,accountId,additionalFilter); 
 			//else chiami getAccountContractWithFilter(accountId,additionalFilter) 
 		}
