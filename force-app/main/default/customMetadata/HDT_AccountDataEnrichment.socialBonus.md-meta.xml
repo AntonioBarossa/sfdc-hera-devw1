@@ -29,6 +29,10 @@
         &quot;initialWidth&quot;: 140
       },
       {
+        &quot;label&quot;: &quot;Settore Merceologico&quot;,
+        &quot;fieldName&quot;: &quot;settoreDescr&quot;
+      },
+      {
         &quot;label&quot;: &quot;Data Attivazione Contratto&quot;,
         &quot;fieldName&quot;: &quot;dataAttContr&quot;,
         &quot;initialWidth&quot;: 220
@@ -39,8 +43,8 @@
         &quot;initialWidth&quot;: 220
       },
       {
-        &quot;label&quot;: &quot;Decodifica Società&quot;,
-        &quot;fieldName&quot;: &quot;settoreDescr&quot;
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;fieldName&quot;: &quot;soc&quot;
       },
       {
         &quot;label&quot;: &quot;Data Attivazione Bonus&quot;,
@@ -51,12 +55,8 @@
         &quot;fieldName&quot;: &quot;dataCessBonus&quot;
       },
       {
-        &quot;label&quot;: &quot;Tipo Compensazione Sap&quot;,
-        &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
-      },
-      {
         &quot;label&quot;: &quot;Descrizione Tipo Compensazione&quot;,
-        &quot;fieldName&quot;: &quot;descrizioneTipo&quot;
+        &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
       }
     ]
   }

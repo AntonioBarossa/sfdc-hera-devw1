@@ -130,20 +130,42 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         }
 
+        // TODO: integrare i controlli definiti sulla CB Lead
+
         return result;
     }
 
     private String validateModificaDatiRecapito(String fields) {
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
+        String modInvioBolletta = getFieldValue(fields, 'BillSendingMethod__c');
+        String emailInvioBolletta = getFieldValue(fields, 'InvoiceEmail__c');
         String pecInvioBolletta = getFieldValue(fields, 'InvoiceCertifiedEmailAddress__c');
-        String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
+        //String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
         String modInvioFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoicingMethod__c');
         String codiceUfficio = getFieldValue(fields, 'OfficeSubjectCode__c');
         String pecFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoiceCertifiedEmailAddress__c');
         String tipoXml = getFieldValue(fields, 'XMLType__c');
 
-        // TODO: validazione campi billing profile.
+        if (modInvioBolletta.contains('Bolletta per e-mail') && String.isBlank(emailInvioBolletta)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la bolletta.'));
+        } else if (modInvioBolletta.equals('Invio tramite PEC') && String.isBlank(pecInvioBolletta)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire un indirizzo PEC a cui inviare la bolletta.'));
+        }
+
+        if (!String.isBlank(modInvioFatturazioneElettronica)) {
+            HDT_UTL_ElectronicInvoicing.HDT_WRP_ElectronicInvoicing electronicInvoicing = new HDT_UTL_ElectronicInvoicing.HDT_WRP_ElectronicInvoicing();
+            electronicInvoicing.sendMode = modInvioFatturazioneElettronica;
+            electronicInvoicing.billSendMode = modInvioBolletta;
+            electronicInvoicing.certifiedEmail = pecFatturazioneElettronica;
+            electronicInvoicing.officeCode = codiceUfficio;
+            electronicInvoicing.xmlType = tipoXml;
+
+            String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
+            if (!String.isEmpty(electronicInvoicingError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', electronicInvoicingError));
+            }
+        }
 
         return result;
     }
