@@ -3708,6 +3708,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.CriticalAttribute__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5029,6 +5034,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Station__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
