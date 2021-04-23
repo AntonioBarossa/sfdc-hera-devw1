@@ -21,7 +21,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase_0_0_0_0</targetReference>
+            <targetReference>AggiornaCase_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -81,7 +81,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase_0_0_0_0</targetReference>
+            <targetReference>AggiornaCase_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -172,6 +172,9 @@
         <label>Il Case è in Bozza?</label>
         <locationX>1601</locationX>
         <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>InputDati_0_0_0</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Non Bozza</defaultConnectorLabel>
         <rules>
             <name>Bozza</name>
@@ -451,13 +454,26 @@
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
         <locationY>1238</locationY>
+        <connector>
+            <targetReference>Loading_Screen</targetReference>
+        </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>AggiornaCase_0_0_0_0</name>
+        <name>AggiornaCase_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>710</locationX>
-        <locationY>1334</locationY>
+        <locationX>2162</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Loading_Screen_0_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -465,6 +481,16 @@
         <label>Aggiorna Case</label>
         <locationX>1370</locationX>
         <locationY>878</locationY>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>842</locationX>
+        <locationY>1238</locationY>
+        <connector>
+            <targetReference>Loading_Screen_0</targetReference>
+        </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <screens>
@@ -553,6 +579,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -657,6 +684,7 @@
                     <stringValue>Inserire Allegati</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -749,6 +777,193 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>InputDati_0_0_0</name>
+        <label>Input Dati</label>
+        <locationX>2162</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>AggiornaCase_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compilare manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtRecordEditFormFlow_0_0_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>GetInputCase.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Loading_Screen</name>
+        <label>Loading Screen</label>
+        <locationX>50</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtFlowNavigationButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Loading_Screen_0</name>
+        <label>Loading Screen</label>
+        <locationX>842</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtFlowNavigationButton_0</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Loading_Screen_0_0</name>
+        <label>Loading Screen</label>
+        <locationX>2162</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtFlowNavigationButton_0_0</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
