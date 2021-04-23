@@ -84,9 +84,9 @@ export default class HdtDocumentValidation extends LightningElement {
 
                 ++size;
 
-                console.log('element.value--> '+element.value);
+                console.log('element.value--> '+element.checked);
 
-                if(element.value){
+                if(element.checked){
                     ++count;
                 }
 
