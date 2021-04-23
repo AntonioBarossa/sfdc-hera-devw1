@@ -9,6 +9,9 @@ export default class HdtDocumentValidation extends LightningElement {
 
 
     @api recordId;
+    @api saveInDraft;
+    @api cancelCase;
+    @api documentValidated;
 
     @track isValidated;
     @track subprocess;
