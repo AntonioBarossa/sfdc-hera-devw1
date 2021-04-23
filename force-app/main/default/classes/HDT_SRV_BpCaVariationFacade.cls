@@ -49,7 +49,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
-                //inserire creazione attività
+                HDT_SRV_BpCaVariation.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
                 output.outcome = false;
             }else {
                 output.outcome = true;

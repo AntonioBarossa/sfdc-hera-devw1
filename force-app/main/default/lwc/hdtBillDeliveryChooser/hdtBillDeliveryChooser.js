@@ -46,10 +46,14 @@ export default class HdtBillDeliveryChooser extends LightningElement {
                 console.log('data error ' +message);
             } else if (data) {
                 console.log('data loaded');
-                this.modInvioBoll = data.fields.BillSendingMethod__c.value;
-                this.email = data.fields.InvoiceEmail__c.value;
-                this.pec = data.fields.InvoiceCertifiedEmailAddress__c.value;
-                this.presso = data.fields.CareOf__c.value;
+                if(!this.modInvioBoll)
+                    this.modInvioBoll = data.fields.BillSendingMethod__c.value;
+                if(!this.email)
+                    this.email = data.fields.InvoiceEmail__c.value;
+                if(!this.pec)
+                    this.pec = data.fields.InvoiceCertifiedEmailAddress__c.value;
+                if(!this.presso)
+                    this.presso = data.fields.CareOf__c.value;
             }
         }
 

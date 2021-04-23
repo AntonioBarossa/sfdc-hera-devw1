@@ -45,4 +45,20 @@ public with sharing class HDT_SRV_BpCaVariation {
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
+
+    public static void createActivity(String recordId, String description, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
+        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(listRecord.size()>0){
+            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Case__c = recordId;
+            activity.CausalError__c = description;
+            activity.wrts_prcgvr__Description__c = description;
+            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
+        }
+    }
 }
