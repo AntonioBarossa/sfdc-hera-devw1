@@ -51,6 +51,15 @@
                 $A.get("e.force:closeQuickAction").fire();
                 $A.get('e.force:refreshView').fire();  
 
+            } else {
+                
+                resultsToast.setParams({
+                    "title": "Error",
+                    "message": "Validazione Non richiesta o Già Effettuata",
+                    "type" : "error"
+                });
+                resultsToast.fire();
+
             }
 
         });

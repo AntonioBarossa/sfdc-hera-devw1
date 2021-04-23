@@ -1,20 +1,25 @@
 <template>
 
-    <lightning-card title="Validazione Documentale">
+    <lightning-card>
+
+        <div slot="title" class="slds-align_absolute-center">Validazione Documentale</div>
 
         <template for:each={columns} for:item="column">
 
-            <lightning-input key={column.id} 
+            <lightning-input key={column.id}
+                class="slds-p-around_small" 
                 type="checkbox"
                 label={column.label}
                 name={column.name}></lightning-input>
 
         </template>
 
-        <div class="slds-float_right">
+        <div class="slds-float_right" slot="footer">
 
-            <lightning-button label={completeButton} name='complete' variant="brand" onclick={handleClick}></lightning-button>
-            <lightning-button label={closeButton} name='close' variant="neutral" onclick={handleClick}></lightning-button>
+
+            <lightning-button class="slds-m-right_xx-small slds-m-top_xx-small slds-m-bottom_xx-small" label={closeButton} name='close' variant="neutral" onclick={handleClick}></lightning-button>
+            <lightning-button clas="slds-m-top_xx-small slds-m-bottom_xx-small" label={completeButton} name='complete' variant="brand" onclick={handleClick}></lightning-button>
+            
 
         </div>
 
