@@ -1295,6 +1295,10 @@
             <fullName>Voltura con Switch</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>QuickQuote__c</picklist>
