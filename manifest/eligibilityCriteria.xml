@@ -22,6 +22,14 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>LoginGroup__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>LoginGroup__c-Login Group Layout</members>
+		<name>Layout</name>
+	</types>	
+	<types>
 		<members>hdtEligibilityCriteriaConfiguration</members>
 		<members>hdtCreateNewEligibilityCriteria</members>
 		<members>hdtSearchEligibilityCriteria</name>

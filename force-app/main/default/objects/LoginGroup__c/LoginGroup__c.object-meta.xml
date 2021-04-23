@@ -150,7 +150,7 @@
     <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
@@ -162,7 +162,14 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Login Groups</pluralLabel>
-    <searchLayouts/>
+    <profileSearchLayouts>
+        <fields>NameGroup__c</fields>
+        <fields>NAME</fields>
+        <profileName>System Administrator</profileName>
+    </profileSearchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>NameGroup__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

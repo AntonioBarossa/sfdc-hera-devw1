@@ -53,7 +53,7 @@ public inherited sharing class HDT_QR_SearchPlug {
         if(objRes.isAccessible()){
 
             myQuote = [
-                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c,
+                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, Campaign__c,
                        Market__c, Channel__c, ClientMarker__c, CategoryTypeClient__c,
                        CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerRange__c,
                        ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, SBQQ__Account__c, UseCategory__c, EquipmenType__c
@@ -77,7 +77,7 @@ public inherited sharing class HDT_QR_SearchPlug {
 
             eligibilityCriteriaList = [
                 SELECT Product__c, EligibleForAllCities__c,
-                       ClientAgeMin__c, ClientAgeMax__c,
+                       ClientAgeMin__c, ClientAgeMax__c, LoginGroup__c,
                        ConsumptionRangeEEmin__c, ConsumptionRangeEEmax__c,
                        ConsumptionRangeGASmin__c, ConsumptionRangeGASmax__c,
                        PowerRangeMin__c, PowerRangeMax__c, ResidentDeliveryAddress__c, NewClient__c
@@ -90,7 +90,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (ClientMarker__c includes (:quote.ClientMarker__c) OR ClientMarker__c = null) AND
                     (CategoryTypeClient__c includes (:quote.CategoryTypeClient__c) OR CategoryTypeClient__c = null) AND
                     (CompanyOwner__c includes (:quote.CategoryTypeClient__c) OR CategoryTypeClient__c = null) AND
-                    //quote.CampaignCode__c ???
+                    (Campaign__c = :quote.Campaign__c OR Campaign__c = null) AND
                     (PromoCode__c = :quote.FriendCode__c OR PromoCode__c = null) AND
                     (Agency__c = :quote.SBQQ__Account__c OR Agency__c = null) AND
                     (UseCategory__c = :quote.UseCategory__c OR UseCategory__c = null) AND
@@ -108,6 +108,14 @@ public inherited sharing class HDT_QR_SearchPlug {
 
         return eligibilityCriteriaList;
 
+    }
+
+    public static Integer getUserForLoginGroup(Id currentUserId, Id loginGroupId){
+        return [
+            SELECT count()
+            FROM LoginGroupItem__c
+            WHERE LoginGroup__c = :loginGroupId AND Login__c = :currentUserId
+        ];
     }
 
 }

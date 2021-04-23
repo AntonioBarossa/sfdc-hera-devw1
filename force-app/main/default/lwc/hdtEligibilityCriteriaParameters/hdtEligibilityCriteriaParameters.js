@@ -6,7 +6,7 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
     @track fieldsList = [
       'Channel__c',            'OriginMarket__c',
       'ClientMarker__c',       'CategoryTypeClient__c',
-      'PromoCode__c',              'LoginGroup__c',
+      'PromoCode__c',          'LoginGroup__c',
       'NewClient__c',          'ResidentDeliveryAddress__c',
       'Agency__c',             'CompanyOwner__c',
       'UseCategory__c',        'Campaign__c',

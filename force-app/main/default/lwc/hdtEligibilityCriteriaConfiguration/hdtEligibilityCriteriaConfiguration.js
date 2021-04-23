@@ -50,13 +50,32 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     showEmptyRemovedImmage = true;
     showSearchRemovedTable = false;
     eligibleForAllCities;
-    headerCheckbox=true;
     disableCitySelection = true;
-    toggleLabel = 'Valido per tutte le province'
+    toggleLabel = 'Valido per tutte le province';
+    alreadyLoaded = false;
 
     connectedCallback(){
         console.log('>>> eligibilityId > ' + this.eligibilityId);
         this.getDataFromApex();
+    }
+
+    controllAllCheckBox(){
+        console.log('> controllAllCheckBox');
+        var i;
+        for (i = 0; i < this.cityZipCode.provinceOptions.length; i++) {
+            if(!this.cityZipCode.provinceOptions[i].isEnabled){
+                this.setCheckboxHeader(false);
+                break;
+            }
+        }
+    }
+
+    setCheckboxHeader(checked){
+        this.template.querySelectorAll('lightning-input').forEach(li => {
+            if(li.name==='headerCheckbox'){
+                li.checked = checked;
+            }
+        });
     }
 
     getDataFromApex(){
@@ -83,6 +102,7 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
                 this.cityZipCode.provinceOptions = [];
                 this.cityZipCode.provinceOptions = result.regionList[0].provinceList;
                 this.eligibleForAllCities = result.regionList[0].eligibleForAllCities;
+                this.controllAllCheckBox();
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
@@ -103,47 +123,34 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         });
     }
 
-    handleToggleChange() {
-        const checked = Array.from(
-            this.template.querySelectorAll('lightning-input')
-        )
-        .filter(element => element.name==='allProvince')
-        .map(element => element.checked);
-        this.disableCitySelection = checked[0];
+    //handleToggleChange() {
+    //    const checked = Array.from(
+    //        this.template.querySelectorAll('lightning-input')
+    //    )
+    //    .filter(element => element.name==='allProvince')
+    //    .map(element => element.checked);
+    //    this.disableCitySelection = checked[0];
 
-        if(this.disableCitySelection){
-            this.toggleLabel = 'Valido per tutte le province';
-            this.eligibleForAllCities = true;
-        } else {
-            this.toggleLabel = 'Selezione manuale';
-            this.eligibleForAllCities = false;
-        }
-    }
+    //    if(this.disableCitySelection){
+    //        this.toggleLabel = 'Valido per tutte le province';
+    //        this.eligibleForAllCities = true;
+    //    } else {
+    //        this.toggleLabel = 'Selezione manuale';
+    //        this.eligibleForAllCities = false;
+    //    }
+    //}
 
     checkboxHeaderHandler(event){
-        //var headerChecked = event.target.checked;
-        this.setHeaderCheckbox(event.target.checked);
+        this.headerHandlerHelper(event.target.checked);
     }
 
-    setHeaderCheckbox(headerChecked){
-        console.log('# headerCheckbox ' + headerChecked);
-
+    headerHandlerHelper(headerChecked){
+        console.log('# HeaderHandlerHelper ' + headerChecked);
         this.cityZipCode.provinceOptions.forEach(po => {
             po.isEnabled = headerChecked;
         });
-
-        //if(headerChecked){
-        //    this.cityZipCode.provinceOptions.forEach(po => {
-        //        po.isEnabled = true;
-        //    });
-        //} else {
-        //    this.cityZipCode.provinceOptions.forEach(po => {
-        //        po.isEnabled = false;
-        //    });
-        //}
-
-        this.eligibleForAllCities = !this.eligibleForAllCities;
-        console.log('>>> eligibleForAllCities: ' + this.eligibleForAllCities);
+        //this.eligibleForAllCities = !this.eligibleForAllCities;
+        //console.log('>>> eligibleForAllCities: ' + this.eligibleForAllCities);
     }
 
     checkboxHandler(event){
@@ -164,11 +171,11 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         });
         
         if(count != this.cityZipCode.provinceOptions.length){
-            this.eligibleForAllCities = false;
-            this.headerCheckbox = false;
+            //this.eligibleForAllCities = false;
+            this.setCheckboxHeader(false);
         } else {
-            this.eligibleForAllCities = true;
-            this.headerCheckbox = true;
+            //this.eligibleForAllCities = true;
+            this.setCheckboxHeader(true);
         }
 
         //event.cancelBubble = true;
@@ -482,7 +489,35 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
 
     saveAction(){
         console.log('# saveAction #');
-        this.template.querySelector('c-hdt-eligibility-criteria-parameters').handleSubmitButtonClick();
+
+        if(this.saveActionControll()){
+            this.template.querySelector('c-hdt-eligibility-criteria-parameters').handleSubmitButtonClick();
+        }
+    }
+
+    saveActionControll(){
+
+        var selectedRecord = this.cityZipCode.provinceOptions.filter(function(item) {
+            if(item.isEnabled){
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        if(selectedRecord.length === 0){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'ATTENZIONE',
+                    message: 'Devi selezionare almeno una Provincia/Comune',
+                    variant: 'warning',
+                    mode: 'sticky'
+                }),
+            );
+            return false;
+        } else {
+            return true;
+        }
     }
 
     sendToApex(event){
@@ -494,12 +529,17 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
         var criteriaRecord = event.detail.record;
         console.log('# criteriaRecord > ' + criteriaRecord);
 
+        var n = 0;
         for(var i=0; i<this.cityZipCode.provinceOptions.length; i++){
+            if(!this.cityZipCode.provinceOptions[i].isEnabled || this.cityZipCode.provinceOptions[i].cityRemoved.length > 0){
+                n++;
+            }
             this.cityZipCode.provinceOptions[i].cityRemoved = [];
         }
 
-        this.cityZipCode.provinceList = this.cityZipCode.provinceOptions;//++
-        this.cityZipCode.eligibleForAllCities = this.eligibleForAllCities;//++
+        this.cityZipCode.provinceList = this.cityZipCode.provinceOptions;
+        //this.cityZipCode.eligibleForAllCities = ((n > 0) ? false : this.eligibleForAllCities);
+        this.cityZipCode.eligibleForAllCities = ((n > 0) ? false : true);
 
         //saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode.provinceOptions)})
         saveEligibilityCriteria({productId: this.productid, record: criteriaRecord, dataReceived: JSON.stringify(this.cityZipCode)})

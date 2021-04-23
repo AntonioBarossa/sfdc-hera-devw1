@@ -135,13 +135,13 @@
                                     </div>
                                     <div if:true={result.show} class="slds-text-color_destructive">{result.message}</div>
 
-                                    <div if:true={showTable} >
+                                    <div if:true={showTable} class="slds-m-top_large" >
                                         <lightning-record-view-form
                                                 record-id={item.selectedId}
                                                 object-api-name="EligibilityCriteria__c"
                                                 density="auto">
                                             <!--<div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">-->
-                                                <lightning-output-field field-name="ProductName__c"></lightning-output-field>
+                                                <!--<lightning-output-field field-name="ProductName__c"></lightning-output-field>-->
                                                 <lightning-output-field field-name="ProductCode__c"></lightning-output-field>
                                                 <lightning-output-field field-name="Version__c"></lightning-output-field>
                                             <!--</div>-->

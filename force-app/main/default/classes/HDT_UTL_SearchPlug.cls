@@ -42,14 +42,6 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         
         // This would add an extra inventory filter if the family is Hardware
         String additionalFilter = '';
-
-        /*
-         * start ciro modification ***
-         * if(fieldValuesMap.get('Family') == 'Hardware'){
-            additionalFilter = 'Product2.Inventory_Level__c > 3';
-        }
-		*** end ciro modification ***
-		*/
         
         //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
@@ -141,9 +133,6 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         SBQQ__Quote__c myQuote;
         myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
-		/*if(input.equalsIgnoreCase('Comune__c'))
-        	return String.valueOf(myQuote.Comune_Fornitura__c);
-        else return null;*/
         return null;
     }
     
@@ -163,16 +152,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         system.debug('getAdditionalSuggestFilters');
         System.debug('METHOD CALLED: getAdditionalSearchFilters');
         
-        // This would add an extra inventory filter if the family is Hardware
         String additionalFilter = '';
-
-        /*
-         * start ciro modification ***
-         * if(fieldValuesMap.get('Family') == 'Hardware'){
-            additionalFilter = 'Product2.Inventory_Level__c > 3';
-        }
-		*** end ciro modification ***
-		*/
         
         //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
@@ -199,39 +179,23 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
         System.debug('>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
-        //here we filter these fields:
-        //OriginMarket__c
-        //Channel__c
-        //ClientMarker__c
-        //CategoryTypeClient__c
-        //CompanyOwner__c
-        //ResidentDeliveryAddress__c
-        //Campaign__c >>>> ???
-        //PromoCode__c
-        //NewClient__c
-        //Agency__c
-        //UseCategory__c
-        //EquipmenType__c
+        //  Here we filter these fields:
+        //  - OriginMarket__c           - Campaign__c
+        //  - Channel__c                - PromoCode__c
+        //  - ClientMarker__c           - Agency__c
+        //  - CategoryTypeClient__c     - UseCategory__c
+        //  - CompanyOwner__c           - EquipmenType__c
         List<EligibilityCriteria__c> filteredEligibleCriteria;
         filteredEligibleCriteria = HDT_QR_SearchPlug.selectEligibleCriteria(filteredEligibleCriteria, familyList, quote);
 
-        //here we filter the NUMBER & checkbox field type
-        //ClientAgeMin__c
-        //ClientAgeMax__c
-        //ConsumptionRangeEEmin__c
-        //ConsumptionRangeEEmax__c
-        //ConsumptionRangeGASmin__c
-        //ConsumptionRangeGASmax__c
-        //PowerRangeMin__c
-        //PowerRangeMax__c
-        //ResidentDeliveryAddress__c
-        //NewClient__c
-        Boolean age;
-        Boolean consumptionRangeEE;
-        Boolean consumptionRangeGAS;
-        Boolean powerRange;
-        Boolean residentDeliveryAddress;
-        Boolean newClient;
+        //  Here we filter the NUMBER & checkbox field type
+        //  - ClientAgeMin__c             - ClientAgeMax__c
+        //  - ConsumptionRangeEEmin__c    - ConsumptionRangeEEmax__c
+        //  - ConsumptionRangeGASmin__c   - ConsumptionRangeGASmax__c
+        //  - PowerRangeMin__c            - PowerRangeMax__c
+        //  - ResidentDeliveryAddress__c  - NewClient__c
+        //  - LoginGroup__c
+        Boolean age, consumptionRangeEE, consumptionRangeGAS, powerRange, residentDeliveryAddress, newClient, login;
 
         for(EligibilityCriteria__c criteria : filteredEligibleCriteria){
 
@@ -239,11 +203,11 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             consumptionRangeEE = checkDecimalCriteria(criteria.ConsumptionRangeEEmin__c , criteria.ConsumptionRangeEEmax__c, quote.ConsumptionRangeEE__c);
             consumptionRangeGAS = checkDecimalCriteria(criteria.ConsumptionRangeGASmin__c , criteria.ConsumptionRangeGASmax__c, quote.ConsumptionRangeGAS__c);
             powerRange = checkDecimalCriteria(criteria.PowerRangeMin__c , criteria.PowerRangeMax__c, quote.PowerRange__c);
-            residentDeliveryAddress = checkBooleanCriteria(quote.ResidentDeliveryAddress__c, criteria.ResidentDeliveryAddress__c);//quote.NewClient__c.equalsIgnoreCase('Y') && criteria.NewClient__c;
+            residentDeliveryAddress = checkBooleanCriteria(quote.ResidentDeliveryAddress__c, criteria.ResidentDeliveryAddress__c);
             newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
-            
+            login = checkLoginGroup(criteria.LoginGroup__c);
 
-            if(age && consumptionRangeEE && consumptionRangeGAS && powerRange && residentDeliveryAddress && newClient){
+            if(age && consumptionRangeEE && consumptionRangeGAS && powerRange && residentDeliveryAddress && newClient && login){
 
                 if(criteria.EligibleForAllCities__c){
                     idList.add(criteria.Product__c);
@@ -255,9 +219,6 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             
         }
 
-        //filter 3: remainig fields
-        //Login__c ???
-        //LoginGroup__c ???
         System.debug('>>>> criteri: ' + idToFilterByMunicipalities);
 
         //>>> FILTER - STEP 2 > FILTER ONLY Municipalities...
@@ -319,6 +280,21 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             return false;
         }
 
+    }
+
+    public static Boolean checkLoginGroup(Id loginGroupId){
+
+        if(String.isEmpty(loginGroupId)){
+            return true;
+        }
+
+        Integer userPresence = HDT_QR_SearchPlug.getUserForLoginGroup(UserInfo.getUserId(), loginGroupId);
+
+        if(userPresence == 0){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public static List<String> getFamilyList(){

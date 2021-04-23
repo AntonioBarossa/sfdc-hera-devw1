@@ -30,17 +30,27 @@
 
                 <div class="slds-col slds-size_1-of-2">
 
-                    <!--<div class="slds-box slds-box_x-small slds-m-top_medium slds-m-bottom_medium">
-                        <lightning-input
-                            type="toggle"
-                            label={toggleLabel}
-                            name="allProvince"
-                            checked
-                            message-toggle-active="Attivo"
-                            message-toggle-inactive="Disattivo"
-                            onchange={handleToggleChange}
-                        ></lightning-input>
-                    </div>-->
+                    <!--
+                    <div class="slds-grid slds-box slds-box_x-small">
+                        <div class="slds-col slds-size_2-of-6">
+                            <div class="slds-text-body_regular slds-m-bottom_small">
+                                Rendi eleggibile per tutte le province
+                            </div>
+                        </div>
+                        <div class="slds-col slds-grow-none">
+                            <lightning-input
+                                type="toggle"
+                                label={customLabel}
+                                name="allProvince"
+                                checked
+                                message-toggle-active="Attivo"
+                                message-toggle-inactive="Disattivo"
+                                variant="label-hidden"
+                                onchange={handleToggleChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+                    -->
 
                     <div class="slds-section slds-is-open">
                     <!--<div class="slds-section slds-is-open slds-is-relative">
@@ -63,7 +73,16 @@
                                                 <tr class="slds-line-height_reset" >
                                                     <th class="headerackground" scope="col">
 
-                                                        <template if:true={eligibleForAllCities} >
+                                                        <lightning-input
+                                                            name="headerCheckbox"
+                                                            type="checkbox"
+                                                            label="checkboxHeader"
+                                                            variant="label-hidden"
+                                                            checked
+                                                            onchange={checkboxHeaderHandler}
+                                                        ></lightning-input>
+
+                                                        <!--<template if:true={headerCheckbox} >
                                                             <lightning-input
                                                                 name="headerCheckbox"
                                                                 type="checkbox"
@@ -74,7 +93,7 @@
                                                             ></lightning-input>
                                                         </template>
 
-                                                        <template if:false={eligibleForAllCities} >
+                                                        <template if:false={headerCheckbox} >
                                                             <lightning-input
                                                                 name="headerCheckbox"
                                                                 type="checkbox"
@@ -82,7 +101,7 @@
                                                                 variant="label-hidden"
                                                                 onchange={checkboxHeaderHandler}
                                                             ></lightning-input>
-                                                        </template>
+                                                        </template>-->
 
                                                     </th>
                                                     <th class="headerackground" scope="col">
