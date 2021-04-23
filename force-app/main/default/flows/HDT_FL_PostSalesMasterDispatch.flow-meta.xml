@@ -1647,7 +1647,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Note__c</field>
+            <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
