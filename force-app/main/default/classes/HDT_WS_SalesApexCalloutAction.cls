@@ -4,7 +4,7 @@
 * @description HDT_WS_SalesApexCalloutAction – Callout action for custom behavior of Sales Phase Manager
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica​
 */
-global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
+global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
@@ -12,7 +12,7 @@ global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0
         wrts_prcgvr__CalloutTemplate__c tm = [select id, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c, wrts_prcgvr__IncludeNullFields__c,wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c from wrts_prcgvr__CalloutTemplate__c where wrts_prcgvr__Code__c = :idTemplate][0];
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
-        Sobject obj = (sObject) argsMap.get('sender');
+        SObject obj = (sObject) argsMap.get('sender');
         wrts_prcgvr.MRR_1_0.field headerAddValue = new  wrts_prcgvr.MRR_1_0.field();
         headerAddValue.fieldType = 'STRING';
         headerAddValue.name = 'PROCESS_CATEGORY';
@@ -100,5 +100,4 @@ global class HDT_WS_SalesApexCalloutAction implements wrts_prcgvr.Interfaces_1_0
         return response;
   		//return responseService;
     }
-
 }

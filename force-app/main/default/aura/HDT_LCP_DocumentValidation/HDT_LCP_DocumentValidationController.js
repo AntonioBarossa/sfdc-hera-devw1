@@ -6,15 +6,9 @@
         action.setCallback(this,function(response){
         	var state = response.getState();
             console.log("first step");
-
-            console.log("#Response --> "+state);
-
             if (state === "SUCCESS") {
                 //component.set("v.formValid",response.getReturnValue());//true);//response.getReturnValue());
             	var res = response.getReturnValue();
-
-                console.log("#Response Value --> "+res);
-
                 if(!res){
                 	var resultsToast = $A.get("e.force:showToast");
                     resultsToast.setParams({

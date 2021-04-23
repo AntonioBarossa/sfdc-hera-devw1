@@ -106,6 +106,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__c,
             ServicePoint__r.ServicePointCode__c,
             //INIZIO SVILUPPI EVERIS
+            ContractId,
             ServicePoint__r.CommoditySector__c,
             //FINE SVILUPPI EVERIS
             ServicePoint__r.RecordType.DeveloperName,
@@ -400,5 +401,20 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    //INIZIO SVILUPPI EVERIS
+    public String getRoleNameByRoleId(){
+
+        String userId = UserInfo.getUserId();
+
+        return [SELECT UserRole.Name 
+        FROM User 
+        WHERE Id = :userId
+        WITH SECURITY_ENFORCED
+        LIMIT 1].UserRole.Name;
+
+
+    }
+    //FINE SVILUPPI EVERIS
 
 }
