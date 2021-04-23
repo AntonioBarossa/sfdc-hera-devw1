@@ -45,8 +45,8 @@ public inherited sharing class HDT_QR_ServicePoint {
 		return listSp;
 	}
     
-    
-    public List<ServicePoint__c> getRecordById(Id id, String fields) {
+    //Modificato in string l'id
+    public List<ServicePoint__c> getRecordById(String id, String fields) {
 		contractSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +
                 ' FROM ServicePoint__c WHERE Id = :id WITH SECURITY_ENFORCED LIMIT 1';
