@@ -35,7 +35,7 @@
 
         console.log('AURA_EVENT--> '+event.getParam('validated'));
 
-        var isValidated = event.getParam('detail');
+        var isValidated = event.getParam('validated');
 
         console.log('AURA: Event Detail--> '+isValidated);
 
