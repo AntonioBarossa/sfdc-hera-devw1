@@ -1,38 +1,23 @@
 <template>
 
-    <lightning-record-edit-form record-id={recordId}
-                            object-api-name="wrts_prcgvr__Activity__c"
-                            onsuccess={handleSuccess}
-                            onsubmit ={handleSubmit}
-                            density="Comfy">
-        <div class="slds-grid slds-wrap">
+    <lightning-card title="Validazione Documentale">
 
-            <template for:each={checkboxField} for:item="check">
+        <template for:each={columns} for:item="column">
 
-                <div key={check.id} class="slds-col slds-size_1-of-3">
+            <lightning-input key={column.id} 
+                type="checkbox"
+                label={column.label}
+                name={column.name}></lightning-input>
 
-                    <lightning-input-field field-name={check.fieldName}></lightning-input-field>
+        </template>
 
-                </div>
+        <div class="slds-float_right">
 
-
-            </template>
+            <lightning-button label={completeButton} name='complete' variant="brand" onclick={handleClick}></lightning-button>
+            <lightning-button label={closeButton} name='close' variant="neutral" onclick={handleClick}></lightning-button>
 
         </div>
 
-        <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
-            <div class="actionsLeft">
-
-            </div>
-            <div class="actionsRight">
-                    <lightning-button
-                        class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                        variant="brand" type="submit" name="save" label="Conferma Pratica">
-                    </lightning-button>
-            </div>
-        </div>
-
-    </lightning-record-edit-form>
-
+    </lightning-card>
     
 </template>

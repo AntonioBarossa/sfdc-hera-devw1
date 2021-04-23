@@ -1,67 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    
     <apiVersion>50.0</apiVersion>
-    
     <isExposed>true</isExposed>
-    
     <masterLabel>Record Edit Form for Screen </masterLabel>
-    
     <description>This is a component that get in input the process type and show the required input field</description>
-    
     <targets>
-        
         <target>lightning__FlowScreen</target>
-        
     </targets>
-    
     <targetConfigs>
-        
         <targetConfig targets="lightning__FlowScreen">
-            
             <property name="processType" type="String" label="Process Type" description="process type passed by the flow" role="inputOnly"/>
-            
             <property name="recordId" type="String" label="Record Id" description="Id of the record to edit" role="inputOnly"/>
-            
             <property name="objectName" type="String" label="Object Name" description="Name of the object to edit" role="inputOnly"/>
-            
             <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
-            
             <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
-            
             <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
-            
             <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
-            
             <property name="cancelButton" type="Boolean" label="Cancel Button" description="Enable Cancel Button" role="inputOnly"/>
-            
             <property name="draftButton" type="Boolean" label="Draft Button" description="Enable Draft Button" role="inputOnly"/>
-            
             <property name="labelDraftButton" type="String" label="Label Draft Button" description="Label Draft Button" role="inputOnly"/>
-            
             <property name="density" type="String" label="Density" description="Layout Density" role="inputOnly"/>
-            
             <property name="recordType" type="String" label="Record Type" description="Record Type" role="inputOnly"/>
-            
             <property name="addContentDocument" type="Boolean" label="Add Content Document" description="Add Content Document" role="inputOnly"/>
-            
             <property name="contentDocumentLabel" type="String" label="Content Document Label" description="Content Document Label" role="inputOnly"/>
-            
             <property name="acceptedFormats" type="String" label="Accepted Formats" description="Accepted Formats" role="inputOnly"/>
-            
             <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
             <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
             <property name="nextStep" type="String" label="Next Step" description="Next Step" role="inputOnly"/>
-            
             <property name="showReadOnly" type="Boolean" label="Show ReadOnly Section" description="Show ReadOnly Section" role="inputOnly"/>
-            
             <property name="labelInputSection" type="String" label="Label Input Section" description="Label Sezione Input" role="inputOnly"/>
-            
             <property name="labelReadOnlySection" type="String" label="Label ReadOnly Section" description="Label Sezione ReadOnly" role="inputOnly"/>
             <property name="variantSaveButton" type="String" label="Variant Save Button" description="Variant Save Button" role="inputOnly" default="brand"/>
             <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
         </targetConfig>
-        
     </targetConfigs>
 </LightningComponentBundle>

@@ -1,114 +1,121 @@
-import { LightningElement, api } from 'lwc';
-import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import { LightningElement, api, track, wire } from 'lwc';
+import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
-const columns = [
-    {id:1, fieldName:'PersonalData__c'},
-    {id:2, fieldName:'SupplyData__c'},
-    {id:3, fieldName:'ServicePointCode__c'},
-    {id:4, fieldName:'CraftsmenRegisterNumber__c'},
-    {id:5, fieldName:'CheckActivityBox__c'},
-    {id:6, fieldName:'AssociationStatute__c'},
-    {id:7, fieldName:'Signature__c'},
-    {id:8, fieldName:'CciaaData__c'},
-    {id:9, fieldName:'CciaaSelfCertModule__c'},
-    {id:10, fieldName:'AtecoCode__c'},
-    {id:11, fieldName:'RequiredOfficeActivity__c'},
-    {id:12, fieldName:'IdentityDocument__c'},
-    {id:13, fieldName:'TaxesModule__c'}
-];
+import SUBPROCESS from '@salesforce/schema/Case.Subprocess__c';
+
+
 
 export default class HdtDocumentValidation extends LightningElement {
 
 
     @api recordId;
-    @api saveInDraft;
-    @api cancelCase;
-    @api documentValidated
 
-    @api availableActions = [];
+    @track isValidated;
+    @track subprocess;
+    @track columns;
 
-    checkboxField = columns;
+    @track completeButton = 'Completa';
+    @track closeButton = 'Chiudi';
 
+    columnsAccise = [
+        {id:1, name:'PersonalData' ,label:'Dati Anagrafici'},
+        {id:2, name:'SupplyData', label: 'Dati Fornitura'},
+        {id:3, name:'ServicePointCode', label: 'Matricola/PdR'},
+        {id:4, name:'CraftsmenRegisterNumber', label: 'N. Iscrizione Albo Artigiani'},
+        {id:5, name:'CheckActivityBox', label: 'Contr. casella attivita'},
+        {id:6, name:'AssociationStatute', label: 'Statuto Ass./Atto Cost.'},
+        {id:7, name:'Signature', label: 'Firma'},
+        {id:8, name:'CciaaData', label: 'Dati CCIAA'},
+        {id:9, name:'RequiredOfficeActivity', label: 'Attività Sede Richiesta'},
+        {id:9, name:'IdentityDocument', label: 'Documento di Indentita'},
+        {id:10, name:'IndustrialUsage', label: 'Comp. Mod. Rich. Aliquota Accise Usi Ind.'},
+        {id:11, name:'SelfCertCciaa', label: 'Modulo Autocert. CCIAA'},
+        {id:12, name:'AtecoCode', label: 'Codice ATECO'}
+    ];
 
-    handleSuccess(){}
+    columnsIva = [
+        {id:1, name:'PersonalData' ,label:'Dati Anagrafici Legale Rapp. Azienda'},
+        {id:2, name:'EconomicCode', label: 'Codice Attività Economica'},
+        {id:3, name:'SupplyAddress', label: 'Indirizzo Fornitura'},
+        {id:4, name:'ServicePointCode', label: 'Matricola Contatore/Presa Punto Fornitura'},
+        {id:5, name:'SignatureInfo', label: 'Luogo Data Firma Legale Rapp.'},
+        {id:6, name:'IdentiyDocCopy', label: 'Copia Documento Identità Legale Rapp.'},
+        {id:7, name:'SchoolCategory', label: 'Categoria Scuola/Parrochie'},
+        {id:8, name:'IncDenom', label: 'Denominazione Incongruente'},
+        {id:9, name:'VatModule', label: 'Compilazione Modulo Iva 10'},
+        {id:9, name:'AtecoCode', label: 'Codice Ateco'},
+    ];
 
-    handleSubmit(event){
+    @wire(getRecord, { recordId: '$recordId', fields: SUBPROCESS })
+    wiredCase({error, data}){
+        if(data){
 
-        event.preventDefault();
+            this.subprocess = getFieldValue(data, SUBPROCESS);
 
-        let count = 0;
+            console.log('LWC_Subprocess--> '+this.subprocess);
 
-        let size = 0;
+            if(this.subprocess!= null && this.subprocess.includes('IVA')){
 
-        var fields = event.detail.fields
+                this.columns = this.columnsIva;
 
-        this.template.querySelectorAll('lightning-input-field').forEach(element =>{
+            } else {
 
-            ++size;
-
-            console.log('Field Value --> '+element.value);
-
-            if(element.value){
-
-                ++count;
+                this.columns = this.columnsAccise;
 
             }
 
+        }else if(error){
 
-        })
+            console.log(error);
 
-        if(count == size){
-
-            this.documentValidated = true;
-
-        }else{
-
-            this.documentValidated = false;
-
-        }
-
-        console.log('Document Validated? --> '+this.documentValidated);
-
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
-
-        this.handleGoNext();
-
-
-        /*fields.forEach(element =>{
-
-            console.log('#Field Value --> '+element.value);
-
-
-        })*/
-
+        }    
 
     }
 
-    handleGoNext(){
+    handleClick(event){
 
-        if(this.availableActions.find(action => action === 'NEXT')){
+        if(event.target.name === 'complete'){
 
-            const navigateNextEvent = new FlowNavigationNextEvent();
+            let count = 0;
 
-            this.dispatchEvent(navigateNextEvent);
+            let size = 0;
+
+            this.template.querySelectorAll('lightning-input').forEach(element =>{
+
+                ++size;
+
+                console.log('element.value--> '+element.value);
+
+                if(element.value){
+                    ++count;
+                }
+
+            });
+
+            if(count == size){
+
+                this.isValidated = true;
+
+            } else {
+
+                this.isValidated = false;
+
+            }
+
+            const validated = this.isValidated;
+
+            this.dispatchEvent(new CustomEvent('complete', {detail: { validated }}));
 
         } else {
 
-            const navigateFinish = new FlowNavigationFinishEvent();
+            this.dispatchEvent(new CustomEvent('closeaction'));
 
-            this.dispatchEvent(navigateFinish);
         }
 
     }
 
-    handleGoBack(){
 
-        const navigateBackEvent = new FlowNavigationBackEvent();
-        
-        this.dispatchEvent(navigateBackEvent);
-
-    }
-    
+   
 
 
 
