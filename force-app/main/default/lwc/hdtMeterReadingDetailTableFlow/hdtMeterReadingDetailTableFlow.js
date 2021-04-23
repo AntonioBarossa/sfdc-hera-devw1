@@ -19,7 +19,7 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
         if(this.nextVariant != null && this.nextVariant !="" && this.nextVariant != "undefined")
             return this.nextVariant;
         else 
-            return "success"
+            return "brand"
     }
 
     @api

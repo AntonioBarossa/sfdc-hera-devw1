@@ -20,7 +20,7 @@
             
             <property name="nextLabel" type="String" label="Next Label" description="Label next Button" role="inputOnly" default="Conferma Pratica"/>
             
-            <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="success"/>
+            <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="brand"/>
             
             <property name="readingValue" type="String" label="Valore Lettura" description="Valore Lettura selezionata" role="outputOnly"/>
             
