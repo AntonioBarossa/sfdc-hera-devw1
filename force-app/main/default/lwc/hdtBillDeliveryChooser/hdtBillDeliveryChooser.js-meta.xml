@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+   <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="nextLabel" type="String" label="Next Label" description="Label next Button" role="inputOnly" default="Conferma Pratica"/>
+            <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="brand"/>
+            <property name="caseId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>           
+            <property name="accountId" type="String" label="Account Id" description="Account Id" role="inputOnly"/>
+            <property name="modInvioBoll" type="String" label="modInvioBoll" description="modInvioBoll" role="outputOnly"/>
+            <property name="email" type="String" label="email" description="email" role="outputOnly"/>
+            <property name="pec" type="String" label="pec" description="pec" role="outputOnly"/>
+            <property name="presso" type="String" label="presso" description="presso" role="outputOnly"/>
+            <property name="indirizzo" type="String" label="indirizzo" description="indirizzo" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
