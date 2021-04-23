@@ -104,7 +104,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                         }
                     }
 
-                    List<OrderItem> orderItemsAmend = orderItemQr.getRecordsWithAmend(listOrdersId);
+                    /*List<OrderItem> orderItemsAmend = orderItemQr.getRecordsWithAmend(listOrdersId);
                     system.debug('ordersToUpdate before: ' + ordersToUpdate);
                     system.debug('orderItemsAmend: ' + orderItemsAmend);
                     for (OrderItem orderItem : orderItemsAmend) {
@@ -112,7 +112,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                         system.debug('orderToUpdate: ' + orderToUpdate);
                         system.debug('ordersToUpdate after: ' + ordersToUpdate);
                         ordersToUpdate.add(orderToUpdate);
-                    }
+                    }*/
 
 
                     orderSrv.updateRecords(ordersToUpdate);
