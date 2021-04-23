@@ -14,6 +14,13 @@ package.xml
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
 **profiles/Minimum Access - Salesforce.profile
+**profiles/Door2Door Profile*
+**profiles/HDT_TelesellingCommunity*
+**profiles/Partner Community User
+**profiles/Hera Partner Community*
+**sites/*
+**layout/AccountBrand-Account*
+**experiences/*
 **objects/Case/fields/Cluster__c*
 **objects/Account/fields/Category__c*
 **objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
@@ -22,3 +29,4 @@ package.xml
 **objects/Order/fields/DocSendingMethod__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
+
