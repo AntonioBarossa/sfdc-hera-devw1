@@ -5,7 +5,7 @@
         <name>Assegna_Fase_In_Da_Inviare</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -28,12 +28,12 @@
         <name>Assegna_Fase_In_Da_Inviare_0</name>
         <label>Assegna Fase In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Comunicazione verso Heroku OK</stringValue>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -51,7 +51,7 @@
         <name>Assegna_Fase_In_Lavorazione</name>
         <label>Assegna Fase In Lavorazione</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -91,6 +91,66 @@
         </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegnazioni</name>
+        <label>Assegnazioni</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ClientIdentificationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.VatNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.Account.VATNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegnazioni_0</name>
+        <label>Assegnazioni</label>
+        <locationX>908</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ClientIdentificationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.VatNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.Account.VATNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -135,7 +195,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>InputDati</targetReference>
+                <targetReference>Assegnazioni</targetReference>
             </connector>
             <label>Riattivazione Fornitura</label>
         </rules>
@@ -150,7 +210,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>InputDati_0</targetReference>
+                <targetReference>Assegnazioni_0</targetReference>
             </connector>
             <label>Gestione Disalimentabilità</label>
         </rules>
@@ -196,7 +256,7 @@
         <name>SalvaInBozzaOrConferma_0</name>
         <label>Salva In Bozza O Conferma?</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -218,7 +278,7 @@
         <name>SalvaInBozzaOrConferma_0_0</name>
         <label>Salva In Bozza O Conferma?</label>
         <locationX>908</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -240,7 +300,7 @@
         <name>Serivizio_0</name>
         <label>Serivizio?</label>
         <locationX>710</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_In_Da_Inviare</targetReference>
         </defaultConnector>
@@ -311,17 +371,37 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Aggiorna_Case</name>
+        <label>Aggiorna Case</label>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>InputDati</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>908</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>InputDati_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>710</locationX>
-        <locationY>1094</locationY>
+        <locationY>1334</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -335,7 +415,7 @@
         <name>InputDati</name>
         <label>Input Dati</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -417,6 +497,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -427,7 +508,7 @@
         <name>InputDati_0</name>
         <label>Input Dati</label>
         <locationX>908</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -521,6 +602,7 @@
                     <stringValue>Inserire Allegati</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -613,6 +695,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
