@@ -1,0 +1,9 @@
+{
+  "activeViewId" : "2d7878de-0bf1-479e-91fc-46eb1b210809",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "07a57674-1e3d-479f-822e-c26c29a81c9b",
+  "label" : "Campaign Detail",
+  "routeType" : "detail-701",
+  "type" : "route",
+  "urlPrefix" : "campaign"
+}

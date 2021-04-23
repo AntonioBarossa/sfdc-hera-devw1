@@ -1,0 +1,1373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_SectionContributesforGasservice</fullName>
+    <active>true</active>
+    <description>Sezione Contributi per servizio Gas</description>
+    <label>HDT RT Sezione Contributi per servizio Gas</label>
+    <picklistValues>
+        <picklist>BillingMode__c</picklist>
+        <values>
+            <fullName>Estero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML %2B carta%2Femail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>XML PA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CategoryFamily__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CategoryTypeClient__c</picklist>
+        <values>
+            <fullName>Accedi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agenzia di confisca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicazione della legge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assicuratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza a lungo termine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione grossisti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività bancaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Auto%2FCasalinghi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda wireline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda%2FDi passaggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende Soho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BSU ESP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca centrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casa progettazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casalinghi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro convegni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro di assistenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro di formazione aziendale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro formaz altri produttori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chain Drug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chain Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clinica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante all%27ingrosso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante non in negozio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercio di massa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comuni Territorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Default gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettagliante diretto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettagliante indiretto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Drogheria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettrodomestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enti Consip</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esperto finanziario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Farmacia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Federale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Funzionario produttore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Governo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grossista di prod%2E farmac%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gruppo di programmazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gruppo reparto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sede</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intercompany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Investitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Località</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luogo di vacanza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Magazzino a prezzi scontati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting%2FCongressi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NRI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negozio prod%2E farmac%2E%2Fpropr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Definito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non a scopo di lucro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Normale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ODM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM del concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta di investimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Officina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paramedici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piccoli Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Polizia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Produttore su contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reparto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller - Extra Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller - Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residenziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivenditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivenditore del concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S-Corp</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio affari Internet</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Societa Vendita Terze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società a resp%2E limitata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società d%27assicurazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società fiduciaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società immobiliare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società in accomandita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soggiorno esteso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spedizioniere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subcontraente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermercato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ulteriori informazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Università</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore di varie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vigili del Fuoco</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ChannelClient__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Channel__c</picklist>
+        <values>
+            <fullName>Agente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>App</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistente Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Camper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da PGM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM POINT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ON-LINE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PARTNER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Postel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Punto Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SFA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUPPORTO AGENZIE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SUPPORTO GDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ServiziSociali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello amministratori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telefono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telefono Outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teleselling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita Diretta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita Indiretta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web-AAA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web-EB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>e-mail</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ClientAge__c</picklist>
+        <values>
+            <fullName>Minore o Uguale a 30 anni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>compreso tra  31 e  65 anni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>maggiore  65 anni</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ComponentPCV__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ContributionsType__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Convention__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CustomerMarking__c</picklist>
+        <values>
+            <fullName>AAS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AAS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACEL-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANTENORE ENERGY-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANTENORE ENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amga-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amga-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BE POWER-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BENACO-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BENACO-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BLU RANTON-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BLU RANTON-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMV E e I - Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CMV E e I - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D1 - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D2 - Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D3 - Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D4 - Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D5 - Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D6 - Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D7 - BP Doppio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D8 - Marcatura nulla</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGETICA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGETICA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIA SOCIALE-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIA SOCIALE-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIECHIARE-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGIECHIARE-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYGAS ITA - Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYGAS ITA - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYPOLIS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ENERGYPOLIS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERMES-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ERMES-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ETRURIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ETRURIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enegan-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enegan-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURA TR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURA TR-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURENERGY-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUTURENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GENESI-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GENESI-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GRAN SASSO-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GRAN SASSO-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GREEN EN-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>GREEN EN-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITALIANGAS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ITALIANGAS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIRENAS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIRENAS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LUCEEG IT SERV-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LUCEEG IT SERV-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MOODS-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MOODS-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOIENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NOIENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NWGENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NWGENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMNIA EN-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OMNIA EN-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONOVA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONOVA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PIUENERGIA SPA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PIUENERGIA SPA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOP ENERGY-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TOP ENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UNION-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>UNION-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DwellingType__c</picklist>
+        <values>
+            <fullName>Appartamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casa Indipendente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EquipmentType__c</picklist>
+        <values>
+            <fullName>Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multiorario</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>GreenCertificateIncluded__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>KeepConsumptionsAnalysis__c</picklist>
+        <values>
+            <fullName>TBD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Origin__c</picklist>
+        <values>
+            <fullName>Libero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regolamentato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OwnerAC__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaymentMode__c</picklist>
+        <values>
+            <fullName>Bollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__AppliedImmediatelyContext__c</picklist>
+        <values>
+            <fullName>Always</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Quantity Change</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>On Selection</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__DefaultPricingTable__c</picklist>
+        <values>
+            <fullName>Segmented</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__QuoteLineVisibility__c</picklist>
+        <values>
+            <fullName>Always</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Document Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Editor Only</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Never</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__SubscriptionScope__c</picklist>
+        <values>
+            <fullName>Both</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Components</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Entire Hierarchy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Package</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__Type__c</picklist>
+        <values>
+            <fullName>Accessory</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Component</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Related Product</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SendingBillMode__c</picklist>
+        <values>
+            <fullName>Email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Typology__c</picklist>
+        <values>
+            <fullName>Prodotto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseCategory__c</picklist>
+        <values>
+            <fullName>001-Uso cottura cibi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>002-Prod%2Eacqua calda sanitaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>003-CotturaCibi%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>004-Uso tecnologico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>005-Uso condizionamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>006-Riscald%2E individ%2E%2Fcentral%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>007-Ris%2EInd%2BCottura%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>008-Ris%2EInd%2E%2BCottura Cibi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>009-Ris%2EInd%2E%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>010-Ris%2ECen%2E%2BCott%2E%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>011-Ris%2ECen%2E%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>012-Uso Tecnologico %2B Riscald%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VASBillingMode__c</picklist>
+        <values>
+            <fullName>A-Rate fisse</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Canone fisso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

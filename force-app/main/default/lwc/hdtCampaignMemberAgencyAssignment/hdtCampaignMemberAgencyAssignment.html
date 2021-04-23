@@ -1,0 +1,42 @@
+<template>
+    <div class="slds-wrap slds-m-top--small">
+        <div class="slds-grid">
+            <div class="slds-col slds-size--1-of-1">
+                <template if:true={isOutbound}>
+                    <template if:true={showResults}>
+                        <div class="slds-p-horizontal--x-small">
+                            <div class="slds-form-element__label slds-p-bottom--x-small">Numerazioni ancora da
+                                assegnare:
+                                {remainingToAssign}</div>
+                        </div>
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2 slds-p-around--x-small">
+                                <lightning-radio-group name="assignmentType" label="Modalità di assegnazione"
+                                    value={assignmentType} options={options} onchange={handleAssignmentTypeChange} >
+                                </lightning-radio-group>
+                            </div>
+                        </div>
+                        <div class="slds-p-around--x-small">
+                            <div class="slds-form-element__label">
+                                Agenzia
+                            </div>
+                            <template for:each={agencies} for:item="agency">
+                                <article class="slds-grid slds-m-vertical--x-small" key={agency.id}>
+                                    <div class="slds-align-bottom slds-col slds-size_1-of-2 slds-m-bottom--xx-small">
+                                        {agency.name}
+                                    </div>
+                                    <div class="inpValue slds-col slds-size_1-of-2">
+                                        <lightning-input data-id={agency.id} type="number" formatter={inputFormatStyle}
+                                            label="Valore" variant="label-hidden" onchange={handleValueChange} min="0"
+                                            max={agency.maxValue} message-when-range-overflow={rangeOverflowMessage}>
+                                        </lightning-input>
+                                    </div>
+                                </article>
+                            </template>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

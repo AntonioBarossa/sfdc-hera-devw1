@@ -20,6 +20,9 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String billingProfileCode;
         String billingProfilesfdcField;
         String billingProfileId;
+        String modInvioBolletta;
+        String pecBolletta;
+        String emailBolletta;
 
         String deliveryAddress;
 
@@ -91,7 +94,6 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                             when 'getDateByYear'{
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
                                 depsSrv.getDateByYear(position.valore));
-
                             }
                             when 'getBillingProfileIdBySapCode'{
 
@@ -123,13 +125,35 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
         //BILLING PROFILE 
         try{
-
-            billingProfileId = depsSrv.getBillingProfileIdBySapCode(billingProfileCode);
-            deliveryAddress = depsSrv.getDeliveryAddress(billingProfileId);
-
+            BillingProfile__c billingRecord = depsQr.getBillingProfileIdBySapCode(billingProfileCode);
+            billingProfileId = billingRecord.Id;
+            //deliveryAddress = depsSrv.getDeliveryAddress(billingProfileId);
+            deliveryAddress = billingRecord.InvoicingAddressFormula__c;
+            String viaRecapito = billingRecord.InvoicingStreetName__c != null? billingRecord.InvoicingStreetName__c :'';
+            String civicoRecapito = billingRecord.InvoicingStreetNumber__c != null? billingRecord.InvoicingStreetNumber__c :'';
+            String comuneRecapito = billingRecord.InvoicingCity__c != null? billingRecord.InvoicingCity__c :'';
+            String capRecapito = billingRecord.InvoicingPostalCode__c != null? billingRecord.InvoicingPostalCode__c :'';
+            String suffissoRecapito = billingRecord.InvoicingStreetNumberExtension__c != null? billingRecord.InvoicingStreetNumberExtension__c :'';
+            String provinciaRecapito = billingRecord.InvoicingProvince__c != null? billingRecord.InvoicingProvince__c :'';
+            String nazioneRecapito = billingRecord.InvoicingCountry__c != null? billingRecord.InvoicingCountry__c :'';
+            nazioneRecapito = nazioneRecapito.length()>0?nazioneRecapito.substring(0,2):nazioneRecapito;
+            modInvioBolletta = billingRecord.BillSendingMethod__c;
+            pecBolletta = billingRecord.InvoiceCertifiedEmailAddress__c;
+            emailBolletta = billingRecord.InvoiceEmailAddress__c;
+            
+            transcodeMap.put('BillSendingMethod__c', modInvioBolletta);
+            transcodeMap.put('InvoiceEmail__c', emailBolletta);
+            transcodeMap.put('InvoiceCertifiedEmailAddress__c', pecBolletta);
             transcodeMap.put(billingProfilesfdcField, billingProfileId);
-
+            transcodeMap.put('InvoicingPostalCode__c', capRecapito);
+            transcodeMap.put('InvoicingProvince__c', provinciaRecapito);
             transcodeMap.put('DeliveryAddress__c', deliveryAddress);
+            transcodeMap.put('InvoicingStreetNumber__c', civicoRecapito);
+            transcodeMap.put('InvoicingCity__c', comuneRecapito);
+            transcodeMap.put('InvoicingStreetNumberExtension__c', suffissoRecapito);
+            transcodeMap.put('InvoicingStreetName__c', viaRecapito);
+            transcodeMap.put('InvoicingCountry__c', nazioneRecapito);
+
 
         } catch(Exception e) {
 
