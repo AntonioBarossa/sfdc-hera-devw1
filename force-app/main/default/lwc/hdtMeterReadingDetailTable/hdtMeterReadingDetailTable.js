@@ -31,12 +31,11 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     @api hideCheckboxColumn;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
-    @track columns;// = columns;
     meterReadingError = false;
     meterReadingErrorMessage = '';
 
     connectedCallback(){
-        this.columns = this.columnsobj;
+        //console.log('HdtMeterReadingDetailTable columns: ' + JSON.stringify(this.columnsobj));
     }
 
     @api loadingData(){
