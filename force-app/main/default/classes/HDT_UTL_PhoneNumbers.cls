@@ -1,5 +1,8 @@
 public inherited sharing class HDT_UTL_PhoneNumbers {
-    
+
+    // N.B. Marketing Cloud può inviare SMS solo a numeri italiani,
+    // quindi l'unico prefisso internazionale valido è '39'
+
     // Un cellulare italiano può avere al massimo 10 cifre.
     // Assumiamo che il numero in input non contiene il prefisso internazionale.
     public static String validateMobileNumber(String phone) {
@@ -23,9 +26,31 @@ public inherited sharing class HDT_UTL_PhoneNumbers {
         return '';
     }
 
-    public static String addInternationalPrefixTo(String phone) {
-        // Marketing Cloud può inviare SMS solo a numeri italiani.
-        return '39' + phone;
+    public static Boolean isValidMobile(String phone) {
+        return String.isEmpty(validateMobileNumber(phone));
     }
+
+    public static Boolean isValidMobileWithPrefix(String phone) {
+        // Rimuoviamo il prefisso 39 e verifichiamo se il numero è valido.
+        return phone.startsWith('39') && isValidMobile(phone.substring(2));
+    }
+
+    public static String withInternationPrefix(String phone) {
+        if (isValidMobile(phone)) {
+            return '39' + phone;
+        }
+
+        return phone;
+    }
+
+    public static String withoutInternationPrefix(String phone) {
+
+        if (isValidMobileWithPrefix(phone)) {
+            return phone.substring(2);
+        }
+
+        return phone;
+    }
+
 
 }

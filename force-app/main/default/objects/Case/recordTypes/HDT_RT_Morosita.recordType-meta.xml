@@ -3,6 +3,7 @@
     <fullName>HDT_RT_Morosita</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Record Type che unifica i processi di Morosità</description>
     <label>Morosità</label>
     <picklistValues>
@@ -3290,14 +3291,6 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Acconto Paperless Non Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acconto Paperless Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -3306,35 +3299,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Approvazione KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Info da Banca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa conferma preventivo cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BL010</fullName>
+            <fullName>Avvenuta Riduzione Potenza</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiuso</fullName>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3350,15 +3359,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>E-Mail Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Non Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elaborazione Manuale</fullName>
+            <fullName>Data Esecuzione Prevista</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3366,19 +3367,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito KO da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK</fullName>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3386,19 +3379,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito OK da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Approvazione</fullName>
+            <fullName>Esito OK da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3410,23 +3391,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inviare preventivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo ricalcolato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>KO</fullName>
+            <fullName>Inviato al SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3438,47 +3407,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paperless Generato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paperless Non Generato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Piano Rata Annullato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo accettato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo scaduto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS Inviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS Non Inviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica in laboratorio</fullName>
+            <fullName>Presenza Atti Autorizzativi</fullName>
             <default>false</default>
         </values>
     </picklistValues>

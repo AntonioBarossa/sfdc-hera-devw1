@@ -40,6 +40,8 @@ export default class HdtSelfReading extends LightningElement {
 
     @api disabledReadingDate;
 
+    @api isSaved = false;
+
     recordKey;
 
     selfReadingObj = [];
@@ -57,8 +59,6 @@ export default class HdtSelfReading extends LightningElement {
     advanceError = undefined;
 
     recordTypeId;
-
-    isSaved = false;
 
     errorAdvanceMessage = '';
 
@@ -105,7 +105,6 @@ export default class HdtSelfReading extends LightningElement {
             console.log(error);
 
         });
-
 
     }
 
@@ -171,11 +170,14 @@ export default class HdtSelfReading extends LightningElement {
     }
 
     // event è definito solo per la voltura (this.isVolture) 
-    handleSaveButton(event){    
+    @api
+    handleSaveButton(){    
 
-        console.log('handleSaveButton ' + event + ' is saved?' + this.isSaved);
+        console.log('Inside Reading Method');
 
-        if(this.isVolture && event != undefined && event.target.name === 'previous'){
+        //console.log('handleSaveButton ' + event + ' is saved?' + this.isSaved);
+
+        /*if(this.isVolture && event != undefined && event.target.name === 'previous'){
 
             let dispObj = {name: event.target.name};
 
@@ -183,7 +185,7 @@ export default class HdtSelfReading extends LightningElement {
 
             return;
 
-        }
+        }*/
 
 
         if(this.advanceError != undefined){
@@ -304,14 +306,6 @@ export default class HdtSelfReading extends LightningElement {
             insertSelfReading({fields : JSON.stringify(this.outputObj)})
             .then(result => { 
                 
-                if (this.isVolture) {
-                    let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
-
-                    console.log('Event Name '+dispObj.name);
-
-                    this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
-                }
-
                 this.isSaved = true;
             
             })
@@ -319,11 +313,14 @@ export default class HdtSelfReading extends LightningElement {
 
         } else {
 
-            if (this.isVolture) {
-                let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+            if(this.isVolture){            
+                
+                let errorVolture = 'Autolettura già inserita';
 
-                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+                this.showToastMessage(errorVolture);
+            
             }
+
         }
     }
 

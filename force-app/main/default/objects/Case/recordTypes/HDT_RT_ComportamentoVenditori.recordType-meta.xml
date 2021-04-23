@@ -3,6 +3,7 @@
     <fullName>HDT_RT_ComportamentoVenditori</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Comportamento Altri Venditori o Venditori HC</description>
     <label>Reclami - Comportamento Venditori</label>
     <picklistValues>

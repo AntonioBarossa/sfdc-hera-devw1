@@ -3,6 +3,7 @@
     <fullName>HDT_RT_Domiciliazione</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Record Typer per Richiesta Domiciliazione, Variazione Domiciliazione, Revoca Domiciliazione, Attivazione Click&amp;Pay</description>
     <label>Pagamenti - Domiciliazione</label>
     <picklistValues>

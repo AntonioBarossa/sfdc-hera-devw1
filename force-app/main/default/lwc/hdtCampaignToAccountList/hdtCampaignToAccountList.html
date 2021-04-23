@@ -41,7 +41,7 @@
                             <template for:each={allCampaigns} for:item="c">
                                 <div class="slds-m-around_xx-small" key={c.Id}>
                                     <article class="slds-tile">
-                                        <div onmouseout={closePopover} data-id={c.Id}>
+                                        <div data-id={c.Id}>
                                             <h3 class="slds-tile__title slds-truncate campaignName"
                                                 data-required={c.Campaign.Required__c} data-id={c.Id}
                                                 title={c.Campaign.Name}>

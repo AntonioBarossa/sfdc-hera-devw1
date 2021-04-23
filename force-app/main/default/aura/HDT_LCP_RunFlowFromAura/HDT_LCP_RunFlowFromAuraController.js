@@ -13,7 +13,8 @@
         //var cluster = myPageRef.state.c__cluster;
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
-
+        var createDocuments = myPageRef.state.c__createDocuments;
+        var serviceCatalogId = myPageRef.state.c__catalogId;
         var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
 
         //variabile per informative
@@ -93,9 +94,15 @@
         if(resumeFromDraft != null){
             inputVariables.push({ name : 'ResumeFromDraft', type : 'Boolean', value : resumeFromDraft });
         }
-        if(processType === 'Informative')
+        if(processType === 'Informative'){
             inputVariables.push({ name : 'Context', type : 'String', value : context });
-
+        }
+        if(createDocuments != null){
+            inputVariables.push({ name : 'createDocuments', type : 'Boolean', value : createDocuments });
+        }
+        if(serviceCatalogId != null){
+            inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
+        }
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
