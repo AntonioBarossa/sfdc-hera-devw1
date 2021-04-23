@@ -19,11 +19,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validatePagamenti(fields, caseType);
 
+
+        } else if (caseType == 'Variazione Anagrafica Cliente') {
+            if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
+                result = validateModificaDatiContatto(fields);
+            } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
+                result = validateModificaDatiRecapito(fields);
+            }
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
-        } else if (caseType == 'Variazione Anagrafica Cliente' && currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
-            result = validateModificaDatiContatto(fields);
-
         } else if(caseType == 'Gestione Disalimentabilità' || caseType == 'Riattivazione Fornitura'){
 
             result = validateMorosita(fields, recordId, caseType);
@@ -34,10 +38,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Modifica/Azzeramento Consumo Annuo'){
 
             result = validateVariazioni(fields,recordId,caseType);
-
-        } else if(caseType == 'Chiusura Contatore'){
-
-            result = validateDisattivazioni(fields);
 
         }
 
@@ -111,6 +111,65 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
+    private String validateModificaDatiContatto(String fields) {
+        String result;
+
+        String newEmail = getFieldValue(fields, 'Email__c');
+        String newMobile = getFieldValue(fields, 'Mobile__c');
+        String newPhone = getFieldValue(fields, 'PhoneNumber__c');
+        System.debug('validateModificaDatiContatto: ' + newEmail + ' - ' + newPhone + ' - ' + newMobile);
+
+        Boolean noEmail = String.isBlank(newEmail) || newEmail.equalsIgnoreCase('null');
+        Boolean noMobile = String.isBlank(newMobile) || newMobile.equalsIgnoreCase('null');
+        Boolean noPhone = String.isBlank(newPhone) || newPhone.equalsIgnoreCase('null');
+        System.debug('validateModificaDatiContatto: ' + noEmail + ' - ' + noMobile + ' - ' + noPhone);
+
+        if (noEmail && noMobile && noPhone) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire almeno un riferimento telefonico o un indirizzo Email.'));
+        } else {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        }
+
+        // TODO: integrare i controlli definiti sulla CB Lead
+
+        return result;
+    }
+
+    private String validateModificaDatiRecapito(String fields) {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        String modInvioBolletta = getFieldValue(fields, 'BillSendingMethod__c');
+        String emailInvioBolletta = getFieldValue(fields, 'InvoiceEmail__c');
+        String pecInvioBolletta = getFieldValue(fields, 'InvoiceCertifiedEmailAddress__c');
+        //String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
+        String modInvioFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoicingMethod__c');
+        String codiceUfficio = getFieldValue(fields, 'OfficeSubjectCode__c');
+        String pecFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoiceCertifiedEmailAddress__c');
+        String tipoXml = getFieldValue(fields, 'XMLType__c');
+
+        if (modInvioBolletta.contains('Bolletta per e-mail') && String.isBlank(emailInvioBolletta)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la bolletta.'));
+        } else if (modInvioBolletta.equals('Invio tramite PEC') && String.isBlank(pecInvioBolletta)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire un indirizzo PEC a cui inviare la bolletta.'));
+        }
+
+        if (!String.isBlank(modInvioFatturazioneElettronica)) {
+            HDT_UTL_ElectronicInvoicing.HDT_WRP_ElectronicInvoicing electronicInvoicing = new HDT_UTL_ElectronicInvoicing.HDT_WRP_ElectronicInvoicing();
+            electronicInvoicing.sendMode = modInvioFatturazioneElettronica;
+            electronicInvoicing.billSendMode = modInvioBolletta;
+            electronicInvoicing.certifiedEmail = pecFatturazioneElettronica;
+            electronicInvoicing.officeCode = codiceUfficio;
+            electronicInvoicing.xmlType = tipoXml;
+
+            String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
+            if (!String.isEmpty(electronicInvoicingError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', electronicInvoicingError));
+            }
+        }
+
+        return result;
+    }
+
     public String validateInversioneContatore(String caseId, String fields, string caseType) {
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -133,32 +192,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    private String validateModificaDatiContatto(String fields) {
-        String result;
-
-        String newEmail = getFieldValue(fields, 'Email__c');
-        String newMobile = getFieldValue(fields, 'Mobile__c');
-        String newPhone = getFieldValue(fields, 'PhoneNumber__c');
-        System.debug('validateModificaDatiContatto: ' + newEmail + ' - ' + newPhone + ' - ' + newMobile);
-
-        Boolean noEmail = String.isBlank(newEmail) || newEmail.equalsIgnoreCase('null');
-        Boolean noMobile = String.isBlank(newMobile) || newMobile.equalsIgnoreCase('null');
-        Boolean noPhone = String.isBlank(newPhone) || newPhone.equalsIgnoreCase('null');
-        System.debug('validateModificaDatiContatto: ' + noEmail + ' - ' + noMobile + ' - ' + noPhone);
-
-        if (noEmail && noMobile && noPhone) {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire almeno un riferimento telefonico o un indirizzo Email.'));
-        } else {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-        }
-
-        return result;
-    }
-
-
     public String validateReclamoScritto(String fields, string recordId){
 
         String result;
+        
+        String delegateName = getFieldValue(fields,'DelegateName__c');
 
         String sendDate = getFieldValue(fields, 'SendDate__c') == null ? String.valueOf(System.today()) : getFieldValue(fields, 'SendDate__c');
 
@@ -168,7 +206,22 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         && (getFieldValue(fields, 'CompliantOriginEmail__c') == null || getFieldValue(fields, 'CompliantOriginEmail__c') == '')){
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
-
+        }else if(delegateName != null && delegateName != ''){
+            
+            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+            WHERE LinkedEntityId = :recordId 
+            WITH SECURITY_ENFORCED];
+            
+            if(attachedDocument.size() == 0){
+            
+                   result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+                
+            }else{
+            
+                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                 
+            }
+       
         } else if((getFieldValue(fields,'FithLevelComplaintClassification__c') == null || getFieldValue(fields,'FithLevelComplaintClassification__c') == '')
         && (getFieldValue(fields, 'SoldBy__c') != null && getFieldValue(fields, 'SoldBy__c') != '')){
 
@@ -346,7 +399,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-
     public String validateDisattivazioni(String fields){
 
         String result;
@@ -371,9 +423,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         return result;
 
-
     }
-
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);

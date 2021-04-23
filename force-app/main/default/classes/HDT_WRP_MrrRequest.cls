@@ -34,6 +34,8 @@ public with sharing class HDT_WRP_MrrRequest {
     Public with sharing class HDT_WRP_Request {
         
         Public HDT_WRP_Header header;
+        Public String code;
+        Public String description;
         Public List<HDT_WRP_Object> objects;
 
     }

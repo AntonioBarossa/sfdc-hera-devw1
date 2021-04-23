@@ -30,14 +30,14 @@
 
     handleOnload: function(component, event, helper) {
         let order = {};
-        let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
-        if (CILegalRepresentative == null) {
-            component.set('v.CILegalRepresentative', false);
-        }
-        let CIAccoutn = component.find('CIAccoutn').get('v.value');
-        if (CIAccoutn == null) {
-            component.set('v.CIAccoutn', false);
-        }
+        // let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
+        // if (CILegalRepresentative == null) {
+        //     component.set('v.CILegalRepresentative', false);
+        // }
+        // let CIAccoutn = component.find('CIAccoutn').get('v.value');
+        // if (CIAccoutn == null) {
+        //     component.set('v.CIAccoutn', false);
+        // }
 
         let QuickQuote = component.find('QuickQuote').get('v.value');
         if (QuickQuote == null) {
@@ -64,7 +64,7 @@
             component.set('v.AutorizationVolturaThirdTrader', false);
         }
 
-        if (CILegalRepresentative || CIAccoutn || QuickQuote || ChamberCommerceRegistration || Instance326 || DocumentLow80 || AutorizationVolturaThirdTrader) {
+        if (QuickQuote || ChamberCommerceRegistration || Instance326 || DocumentLow80 || AutorizationVolturaThirdTrader) {
             component.set('v.formValid', true);
         } else {
             component.set('v.formValid', false);
@@ -79,8 +79,8 @@
         order.AutorizationVolturaThirdTrader__c = AutorizationVolturaThirdTrader;
         
         component.set("v.ordOBJ",order);*/
-        console.log(CILegalRepresentative);
-        console.log(CIAccoutn);
+        // console.log(CILegalRepresentative);
+        // console.log(CIAccoutn);
         console.log(QuickQuote);
         console.log(ChamberCommerceRegistration);
         console.log(Instance326);
@@ -91,16 +91,16 @@
     handleSubmit: function(component, event, helper) {
         //component.find("editForm").submit();
         let order = {};
-        let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
-        let CIAccoutn = component.find('CIAccoutn').get('v.value');
+        // let CILegalRepresentative = component.find('CILegalRepresentative').get('v.value');
+        // let CIAccoutn = component.find('CIAccoutn').get('v.value');
         let QuickQuote = component.find('QuickQuote').get('v.value');
         let ChamberCommerceRegistration = component.find('ChamberCommerceRegistration').get('v.value');
         let Instance326 = component.find('Instance326').get('v.value');
         let DocumentLow80 = component.find('DocumentLow80').get('v.value');
         let AutorizationVolturaThirdTrader = component.find('AutorizationVolturaThirdTrader').get('v.value');
 
-        order.CILegalRepresentative__c = CILegalRepresentative;
-        order.CIAccoutn__c = CIAccoutn;
+        // order.CILegalRepresentative__c = CILegalRepresentative;
+        // order.CIAccoutn__c = CIAccoutn;
         order.QuickQuote__c = QuickQuote;
         order.ChamberCommerceRegistration__c = ChamberCommerceRegistration;
         order.Instance326__c = Instance326;

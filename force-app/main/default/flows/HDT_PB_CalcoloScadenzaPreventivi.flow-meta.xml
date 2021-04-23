@@ -132,7 +132,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_4</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -195,6 +195,37 @@
                     <stringValue>HDT_RT_PreventiviGas</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_4_A1</targetReference>
             </connector>
@@ -209,7 +240,7 @@
                 <stringValue>TODAY() + 90</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_5201052142</name>
+        <name>formula_2_myRule_1_A1_3997975564</name>
         <dataType>Date</dataType>
         <expression>TODAY() + 90</expression>
     </formulas>
@@ -217,16 +248,22 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>IF(TEXT([Case].VoltageLevelAvailable__c) = &quot;BT&quot;, TODAY() + 90, 
-     IF(TEXT([Case].VoltageLevelAvailable__c) = &quot;MT&quot;, TODAY() + 180, null))</stringValue>
+                <stringValue>IF(ISBLANK(TEXT([Case].VoltageLevelRequested__c) ) , 
+IF(TEXT([Case].VoltageLevelAvailable__c )=&quot;BT&quot;, TODAY() + 90, 
+         IF(TEXT([Case].VoltageLevelAvailable__c )=&quot;MT&quot;, TODAY() + 180, null) ) , 
+IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 90, 
+         IF(TEXT([Case].VoltageLevelRequested__c )=&quot;BT&quot;, TODAY() + 180, null)  ) ) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_5_myRule_4_A1_3617380384</name>
+        <name>formula_5_myRule_4_A1_4807006775</name>
         <dataType>Date</dataType>
-        <expression>IF(TEXT({!myVariable_current.VoltageLevelAvailable__c}) = &quot;BT&quot;, TODAY() + 90, 
-     IF(TEXT({!myVariable_current.VoltageLevelAvailable__c}) = &quot;MT&quot;, TODAY() + 180, null))</expression>
+        <expression>IF(ISBLANK(TEXT({!myVariable_current.VoltageLevelRequested__c}) ) , 
+IF(TEXT({!myVariable_current.VoltageLevelAvailable__c} )=&quot;BT&quot;, TODAY() + 90, 
+         IF(TEXT({!myVariable_current.VoltageLevelAvailable__c} )=&quot;MT&quot;, TODAY() + 180, null) ) , 
+IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 90, 
+         IF(TEXT({!myVariable_current.VoltageLevelRequested__c} )=&quot;BT&quot;, TODAY() + 180, null)  ) )</expression>
     </formulas>
-    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-6_InterviewLabel</interviewLabel>
+    <interviewLabel>HDT_PB_CalcoloScadenzaPreventivi-8_InterviewLabel</interviewLabel>
     <label>Calcolo Scadenza Preventivi</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -318,7 +355,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -329,7 +366,7 @@
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_5201052142</elementReference>
+                <elementReference>formula_2_myRule_1_A1_3997975564</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -338,7 +375,7 @@
         <processMetadataValues>
             <name>evaluationType</name>
             <value>
-                <stringValue>criteria</stringValue>
+                <stringValue>always</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
@@ -377,55 +414,6 @@
                 <elementReference>myVariable_current.Id</elementReference>
             </value>
         </filters>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>inputDataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Tipo Preventivo</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue/>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>operatorDataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>QuotationType__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>Rapido</stringValue>
-            </value>
-        </filters>
         <inputAssignments>
             <processMetadataValues>
                 <name>dataType</name>
@@ -448,7 +436,7 @@
             <processMetadataValues>
                 <name>leftHandSideReferenceTo</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -459,7 +447,7 @@
             </processMetadataValues>
             <field>QuotationValidityDate__c</field>
             <value>
-                <elementReference>formula_5_myRule_4_A1_3617380384</elementReference>
+                <elementReference>formula_5_myRule_4_A1_4807006775</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

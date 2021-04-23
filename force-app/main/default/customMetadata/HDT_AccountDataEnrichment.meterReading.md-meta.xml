@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Meter reading</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=</value>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;label&quot;: &quot;Data lettura&quot;,
+    &quot;fieldName&quot;: &quot;dataLetturaPianificata&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Fascia&quot;,
+    &quot;fieldName&quot;: &quot;tipoNumeratore&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Lettura (Interi)&quot;,
+    &quot;fieldName&quot;: &quot;posizioniPrecedentiLaVirgola&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Lettura (Decimali)&quot;,
+    &quot;fieldName&quot;: &quot;decimali&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Consumo&quot;,
+    &quot;fieldName&quot;: &quot;quantitaCalcolo&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Codice Apparecchiatura&quot;,
+    &quot;fieldName&quot;: &quot;apparecchiatura&quot;,
+    &quot;initialWidth&quot;: 200
+  },
+  {
+    &quot;label&quot;: &quot;Stato&quot;,
+    &quot;fieldName&quot;: &quot;statoLettura&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Tipo Lettura&quot;,
+    &quot;fieldName&quot;: &quot;tipoLettura&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Causale&quot;,
+    &quot;fieldName&quot;: &quot;categoriaLettura&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Giorni di fatturazione&quot;,
+    &quot;fieldName&quot;: &quot;giorniConsumo&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Consumo medio giornaliero&quot;,
+    &quot;fieldName&quot;: &quot;consumoMedioGiornaliero&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Tipo Registro&quot;,
+    &quot;fieldName&quot;: &quot;identificazioneNumeratore&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Unità di misura lettura&quot;,
+    &quot;fieldName&quot;: &quot;unitaDiMisura&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Tipo di consumo&quot;,
+    &quot;fieldName&quot;: &quot;categoriaNumeratore&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Settore Merceologico&quot;,
+    &quot;fieldName&quot;: &quot;settoreMerceologico&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Flag lettura stornata&quot;,
+    &quot;fieldName&quot;: &quot;letturaStornata&quot;,
+    &quot;initialWidth&quot;: 150
+  },
+  {
+    &quot;label&quot;: &quot;Motivazione&quot;,
+    &quot;fieldName&quot;: &quot;motivazione&quot;,
+    &quot;initialWidth&quot;: 150
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/service-console/readings/search</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

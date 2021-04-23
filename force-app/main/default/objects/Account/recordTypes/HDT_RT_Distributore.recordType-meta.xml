@@ -238,6 +238,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ex-Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
@@ -334,6 +338,38 @@
         </values>
         <values>
             <fullName>Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D1 - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D2 - Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D3 - Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D4 - Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D5 - Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D6 - Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D7 - BP Doppio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D8 - Marcatura nulla</fullName>
             <default>false</default>
         </values>
         <values>
@@ -570,6 +606,46 @@
         </values>
         <values>
             <fullName>UNION-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Persona fisica</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -970,6 +1046,10 @@
         </values>
         <values>
             <fullName>Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ex-Customer</fullName>
             <default>false</default>
         </values>
         <values>
