@@ -5,7 +5,8 @@ public with sharing class HDT_QR_AlertAccountConfiguration {
         List<AlertAccountConfiguration__c> accountAlerts = [
             SELECT 
             Id, 
-            AlertType__c, 
+            AlertType__c,
+            AlertRule__c,
             IsActive__c, 
             IsEmailChannelActive__c, 
             IsSmsChannelActive__c, 
