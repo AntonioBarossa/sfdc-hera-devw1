@@ -64,7 +64,7 @@ export default class HdtAccountAlerts extends LightningElement {
                 accountCategory: this.accountCategory
                 })
                 .then(result => {
-                    console.log('result: ' + result);
+                    //console.log('result: ' + result);
                     this.availableAlerts = JSON.parse(result);
                     this.updateAlertMenu();
                 })
@@ -91,7 +91,7 @@ export default class HdtAccountAlerts extends LightningElement {
         });
 
         this.availableAlerts.forEach(alert => {
-            console.log('alert: ' + JSON.stringify(alert));
+            //console.log('alert: ' + JSON.stringify(alert));
 
             if (!activeRules.has(alert.AlertRule__c)) {
                 menuItems.push(
@@ -108,11 +108,7 @@ export default class HdtAccountAlerts extends LightningElement {
     }
 
     addAlert(event) {
-        console.log('selected alert: ' + event.detail.label)
-        console.log('selected id: ' + event.detail.id)
-        console.log('selected value: ' + JSON.stringify(event.detail.value));
 
-        
         try{
             addAlertToAccount({
                 alertRule: JSON.stringify(event.detail.value),
