@@ -2,8 +2,7 @@
 
     <c-hdt-meter-reading-detail-table
         columnsobj={meterReadingColumns}
-        contract-number={contractNumber}
-        load-data="true">
+        contract-number={contractNumber}>
     </c-hdt-meter-reading-detail-table>
 
 
@@ -20,7 +19,7 @@
             variant="neutral" type="button" name="previous" label="Indietro" onclick={handleGoBack}>
         </lightning-button>
             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                variant="destructive" type="button" name="cancel" label="Annulla pratica" onclick={handleCancel}>
+                variant="brand" type="button" name="cancel" label="Annulla pratica" onclick={handleCancel}>
             </lightning-button>
         </div>
     </div>
