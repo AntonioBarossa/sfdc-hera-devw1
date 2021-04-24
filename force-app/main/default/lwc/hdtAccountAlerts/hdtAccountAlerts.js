@@ -50,7 +50,7 @@ export default class HdtAccountAlerts extends LightningElement {
                 accountId: this.recordId
                 })
                 .then(result => {
-                    console.log('result: ' + result);
+                    //console.log('getAccountAlerts result: ' + result);
                     this.accountAlerts = JSON.parse(result);
                     
                 })
@@ -74,6 +74,25 @@ export default class HdtAccountAlerts extends LightningElement {
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
+                });
+        }catch(error){
+                console.error(error);
+        }
+    }
+
+    refreshAccountAlertsAndMenu(){
+        try{
+            getAccountAlerts({
+                accountId: this.recordId
+                })
+                .then(result => {
+                    //console.log('getAccountAlerts result: ' + result);
+                    this.accountAlerts = JSON.parse(result);
+                    this.updateAlertMenu();
+                    
+                })
+                .catch(error => {
+                    console.log('failed to get account alerts, accountId: ' + this.recordId);
                 });
         }catch(error){
                 console.error(error);
@@ -119,8 +138,8 @@ export default class HdtAccountAlerts extends LightningElement {
                 accountId: this.recordId
                 })
                 .then(result => {
-                    console.log('result: ' + result);
-                    //this.updateAlertMenu();
+                    console.log('addAlertToAccount result: ' + result);
+                    this.refreshAccountAlertsAndMenu();
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));

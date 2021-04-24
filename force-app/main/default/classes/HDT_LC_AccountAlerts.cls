@@ -1,6 +1,6 @@
 public with sharing class HDT_LC_AccountAlerts {
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static String getAccountAlerts(Id accountId) {
 
         HDT_QR_AlertAccountConfiguration queryHandler = new HDT_QR_AlertAccountConfiguration();
