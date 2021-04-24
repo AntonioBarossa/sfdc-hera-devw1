@@ -22,7 +22,7 @@ export default class HdtAccountAlerts extends LightningElement {
     @track wireError;
     @track alertColumns;
     @track accountAlerts;
-    @track menuItems;
+    @track menuItems = [];
     availableAlerts;
     accountCategory = '';
 
@@ -40,6 +40,10 @@ export default class HdtAccountAlerts extends LightningElement {
         }
     }
 
+    get disableAlertMenu(){
+        return this.menuItems.length === 0;
+    }
+
     getAccountAlerts(){
         try{
             getAccountAlerts({
@@ -51,7 +55,7 @@ export default class HdtAccountAlerts extends LightningElement {
                     
                 })
                 .catch(error => {
-                    console.log('error ' + JSON.stringify(error));
+                    console.log('failed to get account alerts, accountId: ' + this.recordId);
                 });
         }catch(error){
                 console.error(error);
@@ -83,7 +87,6 @@ export default class HdtAccountAlerts extends LightningElement {
     }
 
     updateAlertMenu() {
-
         let menuItems = [];
         let activeRules = new Set();
         this.accountAlerts.forEach(alert => {
@@ -105,6 +108,7 @@ export default class HdtAccountAlerts extends LightningElement {
         });
 
         this.menuItems = menuItems;
+        console.log('updateAlertMenu new menuItems: ' + this.menuItems);
     }
 
     addAlert(event) {
