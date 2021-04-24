@@ -4,10 +4,15 @@
 
         <div class="slds-p-around_medium lgc-bg" slot="actions">
             <lightning-button-menu label="Abilita Alert" alternative-text="Abilita Alert" menu-alignment="right" icon-size="x-small">
-                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
-                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
-                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
-                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+
+                <template for:each={menuItems} for:item="menuItem">  
+                    <lightning-menu-item 
+                        label={menuItem.label}
+                        value={menuItem.value}
+                        key={menuItem.value}>
+                    </lightning-menu-item>
+                </template>
+
             </lightning-button-menu>
         </div>
 

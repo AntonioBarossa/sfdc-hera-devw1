@@ -21,6 +21,7 @@ export default class HdtAccountAlerts extends LightningElement {
     @track wireError;
     @track alertColumns;
     @track accountAlerts;
+    @track menuItems;
     availableAlerts;
     accountCategory = '';
 
@@ -82,8 +83,26 @@ export default class HdtAccountAlerts extends LightningElement {
 
     updateAlertMenu() {
 
+        let menuItems = [];
+        let activeRules = new Set();
+        this.accountAlerts.forEach(alert => {
+            activeRules.add(alert.AlertRule__c);
+        });
 
-        
-    } 
+        this.availableAlerts.forEach(alert => {
+            console.log('alert: ' + JSON.stringify(alert));
+
+            if (!activeRules.has(alert.AlertRule__c)) {
+                menuItems.push(
+                    {
+                        label : alert.AlertRule__c,
+                        value : alert.Id
+                    }
+                );
+            }
+        });
+
+        this.menuItems = menuItems;
+    }
 
 }
