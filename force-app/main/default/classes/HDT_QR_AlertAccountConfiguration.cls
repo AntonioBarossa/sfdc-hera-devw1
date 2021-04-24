@@ -11,7 +11,11 @@ public with sharing class HDT_QR_AlertAccountConfiguration {
             IsEmailChannelActive__c, 
             IsSmsChannelActive__c, 
             IsPushChannelActive__c, 
-            IsSolChannelActive__c 
+            IsSolChannelActive__c,
+            IsEmailChannelAllowed__c, 
+            IsSmsChannelAllowed__c, 
+            IsPushChannelAllowed__c, 
+            IsSolChannelAllowed__c 
             FROM AlertAccountConfiguration__c
             WHERE Account__c = :accountId
             WITH SECURITY_ENFORCED

@@ -1,18 +1,20 @@
 import { api, LightningElement, track, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getAccountAlerts from '@salesforce/apex/HDT_LC_AccountAlerts.getAccountAlerts';
 import getAvailableRules from '@salesforce/apex/HDT_LC_AccountAlerts.getAvailableRulesFor';
 import addAlertToAccount from '@salesforce/apex/HDT_LC_AccountAlerts.addAlertToAccount';
 import ACCOUNT_CATEGORY from '@salesforce/schema/Account.Category__c';
 
 
+
 const columns = [
     { label: 'Regola Alert', fieldName: 'AlertRule__c' },
     { label: 'Alert Attivo', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
-    { label: 'Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
-    { label: 'SOL', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Canale Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Canale SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Canale Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Canale SOL', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
 ];
 
 export default class HdtAccountAlerts extends LightningElement {
@@ -151,6 +153,39 @@ export default class HdtAccountAlerts extends LightningElement {
         }catch(error){
                 console.error(error);
         }
+    }
+
+    handleSave(event) {
+        //this.saveDraftValues = event.detail.draftValues;
+        console.log(event.detail.draftValues);
+        let draftAlert = event.detail.draftValues[0];
+        let oldAlert = this.getAccountAlertById(event.detail.draftValues[0].Id);
+        console.log('oldAlert' + JSON.stringify(oldAlert));
+
+        console.log('push? ' + ('IsPushChannelActive__c' in draftAlert));
+        console.log('push allowed? ' + oldAlert['IsPushChannelAllowed__c']);
+
+        // Verifica se l'operatore sta provando ad abilitare un canale che è disabilitato al livello di regola alert.
+        let channels = ['Email', 'Sms', 'Push', 'Sol'];
+        channels.forEach(channel => {
+            let activeKey = `Is${channel}ChannelActive__c`;
+            let allowedKey = `Is${channel}ChannelAllowed__c`;
+
+            if (activeKey in draftAlert && oldAlert[allowedKey] === false) {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Modifica Alert non valida',
+                        message: 'Il Canale che si vuole modificare non è abilitato per questo gruppo regola',
+                        variant: 'error'
+                    })
+                );
+            }
+        });
+    }
+
+    getAccountAlertById(alertId){
+        let filteredAccountAlerts = this.accountAlerts.filter(alert => alert['Id'] === alertId);
+        return filteredAccountAlerts[0];
     }
 
 }

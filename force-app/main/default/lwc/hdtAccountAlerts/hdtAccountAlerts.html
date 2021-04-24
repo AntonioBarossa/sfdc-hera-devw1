@@ -26,9 +26,10 @@
 
             <template if:true={hasAlerts}>
                 <lightning-datatable
-                    key-field="id"
+                    key-field="Id"
                     data={accountAlerts}
                     columns={alertColumns}
+                    onsave={handleSave}
                     hide-checkbox-column>
                 </lightning-datatable>
             </template>
