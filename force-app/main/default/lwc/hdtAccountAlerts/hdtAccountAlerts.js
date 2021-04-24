@@ -21,7 +21,7 @@ export default class HdtAccountAlerts extends LightningElement {
     @track record;
     @track wireError;
     @track alertColumns;
-    @track accountAlerts;
+    @track accountAlerts = [];
     @track menuItems = [];
     availableAlerts;
     accountCategory = '';
@@ -42,6 +42,10 @@ export default class HdtAccountAlerts extends LightningElement {
 
     get disableAlertMenu(){
         return this.menuItems.length === 0;
+    }
+
+    get hasAlerts(){
+        return this.accountAlerts.length > 0;
     }
 
     getAccountAlerts(){

@@ -24,12 +24,18 @@
 
         <p class="slds-p-horizontal_small">
 
-            <lightning-datatable
-                key-field="id"
-                data={accountAlerts}
-                columns={alertColumns}
-                hide-checkbox-column>
-            </lightning-datatable>
+            <template if:true={hasAlerts}>
+                <lightning-datatable
+                    key-field="id"
+                    data={accountAlerts}
+                    columns={alertColumns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+
+            <template if:false={hasAlerts}>
+                <p><lightning-formatted-text value="Nessun Alert configurato per il Cliente." ></lightning-formatted-text></p>
+            </template>
 
         </p>
 
