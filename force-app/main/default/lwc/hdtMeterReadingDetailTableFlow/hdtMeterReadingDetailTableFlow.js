@@ -1,5 +1,6 @@
 import { LightningElement,track,api } from 'lwc';
 import getConfigurationData from '@salesforce/apex/HDT_LC_MeterReadingController.getConfigurationData';
+import { FlowNavigationNextEvent, FlowNavigationFinishEvent, FlowNavigationBackEvent } from 'lightning/flowSupport';
 
 export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
