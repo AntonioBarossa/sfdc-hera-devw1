@@ -19,4 +19,17 @@ public with sharing class HDT_LC_AccountAlerts {
 
         return JSON.serialize(availableAlerts);
     }
+
+    @AuraEnabled
+    public static Boolean addAlertToAccount(String alertRule, Id accountId) {
+        System.debug('Going to add alert rule ' + alertRule + ' to Account with Id: ' + accountId);
+        AlertConfiguration__c alertRuleObj = (AlertConfiguration__c) JSON.deserialize(alertRule, AlertConfiguration__c.class);
+        
+        AlertAccountConfiguration__c accountAlert = new AlertAccountConfiguration__c();
+        accountAlert.Account__c = accountId;
+        accountAlert.AlertConfiguration__c = alertRuleObj.Id;
+        accountAlert.IsActive__c = false;
+
+        return HDT_UTL_DatabaseService.insertSObject(accountAlert);
+    }
 }

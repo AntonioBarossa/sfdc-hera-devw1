@@ -2,6 +2,7 @@ import { api, LightningElement, track, wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import getAccountAlerts from '@salesforce/apex/HDT_LC_AccountAlerts.getAccountAlerts';
 import getAvailableRules from '@salesforce/apex/HDT_LC_AccountAlerts.getAvailableRulesFor';
+import addAlertToAccount from '@salesforce/apex/HDT_LC_AccountAlerts.addAlertToAccount';
 import ACCOUNT_CATEGORY from '@salesforce/schema/Account.Category__c';
 
 
@@ -52,9 +53,9 @@ export default class HdtAccountAlerts extends LightningElement {
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                 });
-            }catch(error){
+        }catch(error){
                 console.error(error);
-            }
+        }
     }
 
     getAvailableRules(){
@@ -70,9 +71,9 @@ export default class HdtAccountAlerts extends LightningElement {
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
                 });
-            }catch(error){
+        }catch(error){
                 console.error(error);
-            }
+        }
     }
 
     connectedCallback() {
@@ -95,14 +96,38 @@ export default class HdtAccountAlerts extends LightningElement {
             if (!activeRules.has(alert.AlertRule__c)) {
                 menuItems.push(
                     {
+                        id : alert.Id,
                         label : alert.AlertRule__c,
-                        value : alert.Id
+                        value : alert
                     }
                 );
             }
         });
 
         this.menuItems = menuItems;
+    }
+
+    addAlert(event) {
+        console.log('selected alert: ' + event.detail.label)
+        console.log('selected id: ' + event.detail.id)
+        console.log('selected value: ' + JSON.stringify(event.detail.value));
+
+        
+        try{
+            addAlertToAccount({
+                alertRule: JSON.stringify(event.detail.value),
+                accountId: this.recordId
+                })
+                .then(result => {
+                    console.log('result: ' + result);
+                    //this.updateAlertMenu();
+                })
+                .catch(error => {
+                    console.log('error ' + JSON.stringify(error));
+                });
+        }catch(error){
+                console.error(error);
+        }
     }
 
 }
