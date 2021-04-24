@@ -1,9 +1,23 @@
 <template>
-    <div>
-        <lightning-datatable
+
+    <lightning-card title="Alert del Cliente" icon-name="utility:alert">
+
+        <lightning-button label="Aggiungi Alert" slot="actions" onclick={addAlert}></lightning-button>
+
+        <p class="slds-p-horizontal_small">
+
+            <lightning-datatable
                 key-field="id"
                 data={data}
                 columns={alertColumns}>
-        </lightning-datatable>
-    </div>
+            </lightning-datatable>
+
+        </p>
+
+        <!-- <p slot="footer">Card Footer</p> -->
+
+    </lightning-card>
+
+
+
 </template>
