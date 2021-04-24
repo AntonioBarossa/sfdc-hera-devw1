@@ -2,7 +2,14 @@
 
     <lightning-card title="Alert del Cliente" icon-name="utility:alert">
 
-        <lightning-button label="Aggiungi Alert" slot="actions" onclick={addAlert}></lightning-button>
+        <div class="slds-p-around_medium lgc-bg" slot="actions">
+            <lightning-button-menu label="Abilita Alert" alternative-text="Abilita Alert" menu-alignment="right" icon-size="x-small">
+                <lightning-menu-item value="MenuItemOne" label="Menu Item One"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemTwo" label="Menu Item Two"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemThree" label="Menu Item Three"></lightning-menu-item>
+                <lightning-menu-item value="MenuItemFour" label="Menu Item Four"></lightning-menu-item>
+            </lightning-button-menu>
+        </div>
 
         <p class="slds-p-horizontal_small">
 
