@@ -67,14 +67,14 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
         if(this.availableActions.find(action => action === 'NEXT')){
 
-            const navigateNextEvent = new FlowNavigationNextEvent();
+            this.readingValue = this.template.querySelector('c-hdt-meter-reading-detail-table').getSelectedReadingsValue();
+            console.log('selected readings value: ' + this.readingValue);
 
+            const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);
 
         } else {
-
             const navigateFinish = new FlowNavigationFinishEvent();
-
             this.dispatchEvent(navigateFinish);
         }
 
