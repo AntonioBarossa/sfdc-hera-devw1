@@ -19,6 +19,7 @@ package.xml
 **profiles/Partner Community User
 **profiles/Hera Partner Community*
 **sites/*
+**networks/*
 **layout/AccountBrand-Account*
 **experiences/*
 **objects/Case/fields/Cluster__c*
