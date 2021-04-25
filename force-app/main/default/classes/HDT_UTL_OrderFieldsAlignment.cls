@@ -8,85 +8,76 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_SRv_Account accountSrv = new HDT_SRV_Account();
+    private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
+    private static HDT_SRv_Sale saleSrv = new HDT_SRV_Sale();
 
-    private static void alignBillingProfileFields(String orderId, String billingProfileId){
+    private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
         billingProfileSrv.checkReadAccess('SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
         BillingProfile__c billingProfile = billingProfileQr.getRecordById(billingProfileId);
 
-        Order order = new Order(
-            Id = orderId,
-            SubjectCode__c = billingProfile.SubjectCode__c,
-            InvoiceCertifiedEmailAddress__c = billingProfile.InvoiceCertifiedEmailAddress__c,
-            ElectronicInvoicingMethod__c = billingProfile.ElectronicInvoicingMethod__c,
-            XMLType__c = billingProfile.XMLType__c,
-            CIG__c  = billingProfile.CIG__c,
-            CUP__c  = billingProfile.CUP__c,
-            IbanIsForeign__c = billingProfile.IbanIsForeign__c,
-            IbanCIN_IBAN__c = billingProfile.IbanCIN_IBAN__c,
-            IbanCIN__c = billingProfile.IbanCIN__c,
-            IbanABI__c = billingProfile.IbanABI__c,
-            IbanCAB__c = billingProfile.IbanCAB__c,
-            IbanCodeNumber__c = billingProfile.IbanCodeNumber__c,
-            BankAccountSignatoryFiscalCode__c = billingProfile.BankAccountSignatoryFiscalCode__c,
-            BankAccountSignatoryFirstName__c = billingProfile.BankAccountSignatoryFirstName__c,
-            BankAccountSignatoryLastName__c = billingProfile.BankAccountSignatoryLastName__c,
-            BillSendMode__c = billingProfile.BillSendingMethod__c,
-            PaymentMode__c = billingProfile.PaymentMethod__c,
-            InvoiceEmailAddress__c = billingProfile.InvoiceEmailAddress__c,
-            BillingCity__c = billingProfile.InvoicingCity__c,
-            BillingCountry__c = billingProfile.InvoicingCountry__c,
-            BillingProvince__c = billingProfile.InvoicingProvince__c,
-            BillingStreetName__c = billingProfile.InvoicingStreetName__c,
-            BillingStreetNumber__c = billingProfile.InvoicingStreetNumber__c,
-            BillingPostalCode__c = billingProfile.InvoicingPostalCode__c,
-            BillingCityCode__c = billingProfile.InvoicingCityCode__c,
-            SignatoryType__c = billingProfile.SignatoryType__c
-        );
-
-        orderSrv.updateRecord(order);
-
+        orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
+        orderToUpdate.InvoiceCertifiedEmailAddress__c = billingProfile.InvoiceCertifiedEmailAddress__c;
+        orderToUpdate.ElectronicInvoicingMethod__c = billingProfile.ElectronicInvoicingMethod__c;
+        orderToUpdate.XMLType__c = billingProfile.XMLType__c;
+        orderToUpdate.CIG__c  = billingProfile.CIG__c;
+        orderToUpdate.CUP__c  = billingProfile.CUP__c;
+        orderToUpdate.IbanIsForeign__c = billingProfile.IbanIsForeign__c;
+        orderToUpdate.IbanCIN_IBAN__c = billingProfile.IbanCIN_IBAN__c;
+        orderToUpdate.IbanCIN__c = billingProfile.IbanCIN__c;
+        orderToUpdate.IbanABI__c = billingProfile.IbanABI__c;
+        orderToUpdate.IbanCAB__c = billingProfile.IbanCAB__c;
+        orderToUpdate.IbanCodeNumber__c = billingProfile.IbanCodeNumber__c;
+        orderToUpdate.BankAccountSignatoryFiscalCode__c = billingProfile.BankAccountSignatoryFiscalCode__c;
+        orderToUpdate.BankAccountSignatoryFirstName__c = billingProfile.BankAccountSignatoryFirstName__c;
+        orderToUpdate.BankAccountSignatoryLastName__c = billingProfile.BankAccountSignatoryLastName__c;
+        orderToUpdate.BillSendMode__c = billingProfile.BillSendingMethod__c;
+        orderToUpdate.PaymentMode__c = billingProfile.PaymentMethod__c;
+        orderToUpdate.InvoiceEmailAddress__c = billingProfile.InvoiceEmailAddress__c;
+        orderToUpdate.BillingCity__c = billingProfile.InvoicingCity__c;
+        orderToUpdate.BillingCountry__c = billingProfile.InvoicingCountry__c;
+        orderToUpdate.BillingProvince__c = billingProfile.InvoicingProvince__c;
+        orderToUpdate.BillingStreetName__c = billingProfile.InvoicingStreetName__c;
+        orderToUpdate.BillingStreetNumber__c = billingProfile.InvoicingStreetNumber__c;
+        orderToUpdate.BillingPostalCode__c = billingProfile.InvoicingPostalCode__c;
+        orderToUpdate.BillingCityCode__c = billingProfile.InvoicingCityCode__c;
+        orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
     }
 
-    private static void alignServicePointFields(String orderId, String servicePointId) {
+    private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
         servicePointSrv.checkReadAccess('AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
         List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
-        Order order = new Order(
-            Id = orderId,
-            AnnualConsumption__c = servicePoint.AnnualConsumption__c,
-            MarketOrigin__c = servicePoint.MarketOrigin__c,
-            PowerAvailable__c = servicePoint.PowerAvailable__c,
-            VoltageLevel__c = servicePoint.VoltageLevel__c,
-            DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c,
-            MaxRequiredPotential__c = servicePoint.MaxRequiredPotential__c,
-            UseTypeEnergy__c = servicePoint.UseTypeEnergy__c,
-            UseCategory__c = servicePoint.UseCategory__c,
-            WithdrawalClass__c = servicePoint.WithdrawalClass__c,
-            MeterSN__c = servicePoint.MeterSN__c,
-            Resident__c = servicePoint.Resident__c,
-            RemiCode__c = servicePoint.RemiCode__c,
-            SupplyCity__c = servicePoint.SupplyCity__c,
-            SupplyStreet__c = servicePoint.SupplyStreet__c,
-            SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c,
-            SupplyPlace__c = servicePoint.SupplyPlace__c,
-            SupplyPostalCode__c = servicePoint.SupplyPostalCode__c,
-            SupplyCountry__c = servicePoint.SupplyCountry__c,
-            PowerCommitted__c = servicePoint.PowerContractual__c,
-            ServicePointCode__c = servicePoint.ServicePointCode__c,
-            SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345',
-            ImplantType__c = servicePoint.ImplantType__c,
-            SupplyCityCode__c = servicePoint.SupplySAPCityCode__c,
-            SupplyState__c = servicePoint.SupplyProvince__c
-        );
-
-        orderSrv.updateRecord(order);
+        orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
+        orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
+        orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
+        orderToUpdate.MaxRequiredPotential__c = servicePoint.MaxRequiredPotential__c;
+        orderToUpdate.UseTypeEnergy__c = servicePoint.UseTypeEnergy__c;
+        orderToUpdate.UseCategory__c = servicePoint.UseCategory__c;
+        orderToUpdate.WithdrawalClass__c = servicePoint.WithdrawalClass__c;
+        orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
+        orderToUpdate.Resident__c = servicePoint.Resident__c;
+        orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
+        orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
+        orderToUpdate.SupplyStreet__c = servicePoint.SupplyStreet__c;
+        orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
+        orderToUpdate.SupplyPlace__c = servicePoint.SupplyPlace__c;
+        orderToUpdate.SupplyPostalCode__c = servicePoint.SupplyPostalCode__c;
+        orderToUpdate.SupplyCountry__c = servicePoint.SupplyCountry__c;
+        orderToUpdate.PowerCommitted__c = servicePoint.PowerContractual__c;
+        orderToUpdate.ServicePointCode__c = servicePoint.ServicePointCode__c;
+        orderToUpdate.SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345';
+        orderToUpdate.ImplantType__c = servicePoint.ImplantType__c;
+        orderToUpdate.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
+        orderToUpdate.SupplyState__c = servicePoint.SupplyProvince__c;
     }
 
-    private static void alignAccountFields(String orderId, String accountId){
+    private static void alignAccountFields(Order orderToUpdate, String accountId){
 
         accountSrv.checkReadAccess('FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
@@ -99,29 +90,43 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             customerName = account.FirstName__c;
         }
 
-        Order order = new Order(
-            Id = orderId,
-            CustomerFiscalCode__c = account.FiscalCode__c,
-            CustomerVATNumber__c = account.VATNumber__c,
-            CustomerName__c = customerName,
-            CustomerLastName__c = account.LastName__c,
-            Mail__c = account.PrimaryEmail__c,
-            PhoneNumber__c = account.Phone,
-            EffectiveDate__c = Date.newInstance(2021, 06, 01)
-        );
+        orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
+        orderToUpdate.CustomerVATNumber__c = account.VATNumber__c;
+        orderToUpdate.CustomerName__c = customerName;
+        orderToUpdate.CustomerLastName__c = account.LastName__c;
+        orderToUpdate.Mail__c = account.PrimaryEmail__c;
+        orderToUpdate.PhoneNumber__c = account.Phone;
+        orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
 
-        orderSrv.updateRecord(order);
+    }
+
+    private static void alignSaleFields(Order orderToUpdate, String saleId){
+
+        saleSrv.checkReadAccess('SaleBy__c,Campaign__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c');
+
+        orderToUpdate.SaleBy__c = sale.SaleBy__c;
+        orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
     }
 
     public static void alignFields(Order order) {
 
-        alignAccountFields(order.Id, order.AccountId);
+        Order orderToUpdate = new Order();
+        orderToUpdate.Id = order.Id;
+
+        alignAccountFields(orderToUpdate, order.AccountId);
+
+        alignSaleFields(orderToUpdate, order.Sale__c);
         
-        alignBillingProfileFields(order.Id, order.BillingProfile__c);
+        if(order.BillingProfile__c != null) {
+            alignBillingProfileFields(orderToUpdate, order.BillingProfile__c);
+        }
 
         if (order.ServicePoint__c != null) {
-            alignServicePointFields(order.Id, order.ServicePoint__c);
+            alignServicePointFields(orderToUpdate, order.ServicePoint__c);
         }
+
+        orderSrv.updateRecord(orderToUpdate);
 
     }
 }

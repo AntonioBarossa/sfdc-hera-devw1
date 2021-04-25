@@ -55,24 +55,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     //INIZIO SVILUPPI EVERIS
 
-    @track readingCustomerDate;
-    @track disabledReadingDate;
-    @track isRetroactive = false;
-    @track isSavedReading;
-    @track outputFieldObj = {};
-    @track isVolture;
-    @track isReading;
-    //FINE SVILUPPI EVERIS
-
-/*    //INIZIO SVILUPPI EVERIS
-
     availableVoltureSection;
 
     activeVoltureSection = [];
 
     voltureField = [];
 
-    
+    outputFieldObj = {};
     
     goReading = false;
 
@@ -87,6 +76,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastCallFlag = false;
 
     handleVoltureToggle(){}
+
+    sysdate(){
+        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
+    }
 
     handleVoltureChange(event){
 
@@ -170,11 +164,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         }
 
-    }*/
-
-    sysdate(){
-        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
-        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
     @wire(getRecord, { recordId: '$order.Id', fields: RETROACTIVE_DATE })
@@ -212,11 +201,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
 
-    /*refreshValues(recordId){
+    refreshValues(recordId){
 
         updateRecord({fields: { Id: recordId }});
 
-    }*/
+    }
 
     //FINE SVILUPPI EVERIS
 
@@ -468,11 +457,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         return 'OK';
                     }
                     break;
-                case 'HDT_RT_Voltura':
-                    if (fieldName === 'IncomingCreditCheck__c') {
-                        return 'OK';
-                    }
-                    break;
                 default:
                     break;
                 
@@ -482,34 +466,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     getConfirmedSteps(){
-        //EVERIS: MODIFICATO LAYOUT PER RENDERLO PIU FRIENDLY E AGGIUNTE SEZIONI
         // this.confirmedSteps = this.availableSteps.filter(section => section.step < this.order.Step__c);
-        this.confirmedSteps = this.availableStepsFirst.filter(section => (section.name !== 'reading'
-        && section.name !== 'processVariables' 
-        && section.name !== 'creditCheck' 
-        && section.name !== 'dettaglioImpianto' 
-        && section.name !== 'fatturazione' 
-        && section.name !== 'datiPrecedenteIntestatario' 
-        && section.name !== 'indirizzodiAttivazione' 
-        && section.name !== 'indirizzoSpedizione' 
-        && section.name !== 'ivaAccise'));
+        this.confirmedSteps = this.availableStepsFirst.filter(section => (section.name !== 'creditCheck' && section.name !== 'dettaglioImpianto' && section.name !== 'fatturazione' && section.name !== 'datiPrecedenteIntestatario' && section.name !== 'indirizzodiAttivazione' && section.name !== 'indirizzoSpedizione' && section.name !== 'ivaAccise'));
 
         console.log('this.confirmedSteps: ', JSON.stringify(this.confirmedSteps));
     }
 
     getPendingSteps(){
-        //EVERIS: MODIFICATO LAYOUT PER RENDERLO PIU FRIENDLY E AGGIUNTE SEZIONI
         // this.pendingSteps = this.availableSteps.filter(section => section.step >= this.order.Step__c);
-        this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
-        || section.name === 'processVariables'
-        || section.name === 'creditCheck' 
-        || section.name === 'dettaglioImpianto' 
-        || section.name === 'fatturazione' 
-        || section.name === 'datiPrecedenteIntestatario' 
-        || section.name === 'indirizzodiAttivazione' 
-        || section.name === 'indirizzoSpedizione' 
-        || section.name === 'ivaAccise'));
-
+        this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'creditCheck' || section.name === 'dettaglioImpianto' || section.name === 'fatturazione' || section.name === 'datiPrecedenteIntestatario' || section.name === 'indirizzodiAttivazione' || section.name === 'indirizzoSpedizione' || section.name === 'ivaAccise'));
         this.availableSteps = this.pendingSteps; //did this because didn't want to replace available steps with pendingSteps as "availableSteps" is used in to many places
         console.log('this.pendingSteps: ', JSON.stringify(this.pendingSteps));
     }
@@ -525,76 +490,174 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     getFirstStepName(){
+        //INIZIO SVILUPPI EVERIS
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+            console.log('Condizione Verificata');
+
+            this.activeVoltureSection = this.voltureField[this.voltureField.findIndex(p => p.section == 1)].name;
+
+            this.availableVoltureSection = this.voltureField.filter(section => section.active === true);
+
+            this.availableVoltureSection[0].firstStep = true;
+
+            this.availableVoltureSection[this.availableVoltureSection.length - 1].lastStep = true;
+
+            console.log('Sezioni Attive '+this.activeVoltureSection);
+
+            return;
+
+        }
+
+
+        //FINE SVILUPPI EVERIS
 
         this.availableStepsFirst = this.fields.filter(section => section.processVisibility === true);
         // this.availableSteps = this.fields.filter(section => section.processVisibility === true);
         this.loadAccordion();
+        
+        if(this.availableSteps[0] !== undefined) {
+            this.availableSteps[0].firstStep = true;
+            this.availableSteps[this.availableSteps.length - 1].lastStep = true;
+            this.lastStepNumber = this.availableSteps[this.availableSteps.length - 1].step;
 
-        //EVERIS
-        console.log('End loadAccordion callback');
-        console.log('AvailabelSteps--> '+this.availableSteps);
-        //EVERIS
+            this.dispatchEvent(new CustomEvent('emitlaststep', {detail: {lastStepNumber: this.lastStepNumber}}));
 
-        this.availableSteps[0].firstStep = true;
-        this.availableSteps[this.availableSteps.length - 1].lastStep = true;
-        this.lastStepNumber = this.availableSteps[this.availableSteps.length - 1].step;
+            console.log('this.lastStepNumber: ',this.lastStepNumber);
 
-        this.dispatchEvent(new CustomEvent('emitlaststep', {detail: {lastStepNumber: this.lastStepNumber}}));
-
-        console.log('this.lastStepNumber: ',this.lastStepNumber);
-
-        if (this.order.Step__c === 2) {
-            this.currentSectionObjectApi = this.availableSteps[0].objectApiName;
-            this.currentSectionRecordId = this.availableSteps[0].recordId;
-            this.currentSection = this.availableSteps[0];
-        } else {
-            let currentStep = this.availableSteps.filter(section => section.step === this.order.Step__c);
-            console.log('getFirstStepName: ', JSON.stringify(currentStep[0]));
-            this.currentSectionObjectApi = currentStep[0].objectApiName;
-            this.currentSectionRecordId = currentStep[0].recordId;
-            this.currentSection = currentStep[0];
+            if (this.order.Step__c === 2) {
+                this.currentSectionObjectApi = this.availableSteps[0].objectApiName;
+                this.currentSectionRecordId = this.availableSteps[0].recordId;
+                this.currentSection = this.availableSteps[0];
+            } else {
+                let currentStep = this.availableSteps.filter(section => section.step === this.order.Step__c);
+                console.log('getFirstStepName: ', JSON.stringify(currentStep[0]));
+                this.currentSectionObjectApi = currentStep[0].objectApiName;
+                this.currentSectionRecordId = currentStep[0].recordId;
+                this.currentSection = currentStep[0];
+            }
         }
+
     }
+
+    /*handleNext(event){ //EVERIS: COMMENTATA FORSE DEPRECATA?
+
+        console.log('event '+event.target.label);
+
+        this.loading = true;
+
+        //INIZIO SVILUPPI EVERIS
+
+        console.log('here 1');
+
+        this.goReading = event.target.name === 'goReading' ? true : false;
+
+        console.log('here 2');
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+            console.log('here');
+
+            console.log('Nome Sezione: '+event.currentTarget.value);
+
+            let currentVoltureSectionName = event.currentTarget.value;
+    
+            let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name == currentVoltureSectionName);
+
+            let nextVoltureSection = currentVoltureSectionName === 'retroactiveDate' ? 
+            (this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'reading' 
+            && event.target.name === 'goReading'
+            ? this.availableVoltureSection[currentVoltureSectionIndex + 1].name 
+            : this.availableVoltureSection[currentVoltureSectionIndex + 2].name)
+            : this.availableVoltureSection[currentVoltureSectionIndex + 1].name;
+
+            if(Object.keys(this.outputFieldObj).length > 0 || currentVoltureSectionName === 'reading'){
+
+                console.log('here');
+
+                console.log(this.outputFieldObj);
+
+                console.log(JSON.stringify(this.outputFieldObj));
+
+                updateOrder({fields: JSON.stringify(this.outputFieldObj), recordId: this.order.Id, 
+                    isRetroactive: this.isRetroactive, isReading: this.isReading, completed:false})
+                .then(result =>{
+
+                    console.log(result)
+
+                    this.activeVoltureSection = nextVoltureSection;
+        
+                    this.loading = false;
+
+                    this.showReadingButton = this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'retroactiveDate'
+                    ? true : false;
+
+                    this.outputFieldObj = {};
+
+                    this.refreshValues(this.order.Id);
+        
+                    this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+
+                }).catch(error => {
+
+                    this.loading = false;
+                    console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: (error.body.message !== undefined) ? error.body.message : error.message,
+                        variant: 'error',
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+
+                });
+
+            } else {
+
+                this.activeVoltureSection = nextVoltureSection;
+        
+                this.loading = false;
+
+                this.outputFieldObj = {};
+    
+                this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+            }
+
+            return;
+
+        }
+
+
+        //FINE SVILUPPI EVERIS
+
+        let currentSectionName = event.currentTarget.value;
+        let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
+        let currentObjectApiName = currentSection[0].objectApiName;
+        let currentRecordId = currentSection[0].recordId;
+        let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
+        let nextSectionStep = this.availableSteps[currentSectionIndex + 1].step
+        console.log('currentSectionName: ', currentSectionName);
+        console.log('currentSection: ', currentSection);
+        console.log('currentObjectApiName: ', currentObjectApiName);
+        console.log('currentRecordId: ', currentRecordId);
+        this.sectionDataToSubmit['Id'] = currentRecordId;
+        return this.currentSection.name;
+    }*/
 
     updateProcess(currentSectionIndex, nextSectionStep){
         console.log('updateProcess: ', JSON.stringify(this.sectionDataToSubmit));
-        //INIZIO SVILUPPI EVERIS
-        console.log('isVolture: '+this.isVolture);
-        console.log('isRetroactive: '+this.isRetroactive);
-        console.log('isReading: '+this.isReading)
-        //FINE SVILUPPI EVERIS
-        //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
-        updateProcessStep(
-            {order: {Id: this.order.Id, Step__c: nextSectionStep, 
-            ...this.sectionDataToSubmit,
-            },
-            isVolture: this.isVolture,
-            isRetroactive: this.isRetroactive,
-            isReading: this.isReading
-        }).then(data =>{
+        updateProcessStep({order: {Id: this.order.Id, Step__c: nextSectionStep, ...this.sectionDataToSubmit}}).then(data =>{
             this.loading = false;
-            //INIZIO SVILUPPI EVERIS
-            //LA VARIABILE NEXT INDEX RIPORTA L'INDICE CORRETTO PER ANDARE AVANTI
-            let nextIndex = this.availableSteps[currentSectionIndex + 1].step != nextSectionStep
-            ? currentSectionIndex + 2
-            : currentSectionIndex + 1
-            //FINE SVILUPPI EVERIS
-            this.currentSection = this.availableSteps[nextIndex];
-            this.choosenSection = this.availableSteps[nextIndex].name;
-            //INIZIO SVILUPPI EVERIS
-            if(this.choosenSection === 'reading'){
-
-                this.template.querySelector('c-hdt-self-reading').handleClick();
-
-            }
-            //FINE SVILUPPI EVERIS
+            this.currentSection = this.availableSteps[currentSectionIndex + 1];
+            this.choosenSection = this.availableSteps[currentSectionIndex + 1].name;
             this.activeSections = [this.choosenSection];
 
-            this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
-            this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
+            this.currentSectionObjectApi = this.availableSteps[currentSectionIndex + 1].objectApiName;
+            this.currentSectionRecordId = this.availableSteps[currentSectionIndex + 1].recordId;
             this.sectionDataToSubmit = {};            
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
-            this.template.querySelector('c-hdt-accordion-with-click').refreshValues(this.order.Id);
 
         }).catch(error => {
             this.loading = false;
@@ -613,22 +676,110 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.loading = true;
 
+        //INIZIO SVILUPPI EVERIS
+
+        console.log('here 1');
+
+        this.goReading = event.target.name === 'goReading' ? true : false;
+
+        console.log('here 2');
+
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+
+                console.log('here');
+
+                console.log('Nome Sezione: '+event.currentTarget.value);
+
+                let currentVoltureSectionName = event.currentTarget.value;
+        
+                let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name == currentVoltureSectionName);
+
+                let nextVoltureSection = currentVoltureSectionName === 'retroactiveDate' ? 
+                (this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'reading' 
+                && event.target.name === 'goReading'
+                ? this.availableVoltureSection[currentVoltureSectionIndex + 1].name 
+                : this.availableVoltureSection[currentVoltureSectionIndex + 2].name)
+                : this.availableVoltureSection[currentVoltureSectionIndex + 1].name;
+
+                if(Object.keys(this.outputFieldObj).length > 0 || currentVoltureSectionName === 'reading'){
+
+                    console.log('here');
+
+                    console.log(this.outputFieldObj);
+
+                    console.log(JSON.stringify(this.outputFieldObj));
+
+                    updateOrder({fields: JSON.stringify(this.outputFieldObj), recordId: this.order.Id, 
+                        isRetroactive: this.isRetroactive, isReading: this.isReading, completed:false})
+                    .then(result =>{
+
+                        console.log(result);
+
+                        if(nextVoltureSection === 'reading' && !this.lastCallFlag){
+
+                            this.lastCallFlag = true;
+
+                            this.template.querySelector('c-hdt-self-reading').handleClick();
+
+                        }
+
+                        this.activeVoltureSection = nextVoltureSection;
+            
+                        this.loading = false;
+
+                        this.showReadingButton = this.availableVoltureSection[currentVoltureSectionIndex + 1].name === 'retroactiveDate'
+                        ? true : false;
+
+                        this.outputFieldObj = {};
+
+                        this.refreshValues(this.order.Id);
+            
+                        this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+                    }).catch(error => {
+
+                        this.loading = false;
+                        console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: (error.body.message !== undefined) ? error.body.message : error.message,
+                            variant: 'error',
+                        });
+                        this.dispatchEvent(toastErrorMessage);
+
+                    });
+
+                } else {
+
+                    this.activeVoltureSection = nextVoltureSection;
+            
+                    this.loading = false;
+
+                    this.outputFieldObj = {};
+        
+                    this.dispatchEvent(new CustomEvent('refreshorderchild'));
+
+                }
+
+                if(this.availableVoltureSection[currentVoltureSectionIndex + 1].lastStep){
+
+                    this.dispatchEvent(new CustomEvent('emitlaststep', {detail: {lastStepNumber: 1}}));
+
+                }
+
+                return;
+
+            }
+
+
+            //FINE SVILUPPI EVERIS
+
         let currentSectionName = event.currentTarget.value;
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
         let currentRecordId = currentSection[0].recordId;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
-
-        //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
-        let nextSectionStep =  currentSectionName === 'processVariables'
-        ? (event.target.name === 'goReading' 
-        ? this.availableSteps[currentSectionIndex + 1].step
-        : this.availableSteps[currentSectionIndex + 2].step)
-        : this.availableSteps[currentSectionIndex + 1].step;
-
-        this.isReading = currentSectionName === 'reading';
-        //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
-
+        let nextSectionStep = this.availableSteps[currentSectionIndex + 1].step;
         console.log('currentSectionName: ', currentSectionName);
         console.log('currentSection: ', currentSection);
         console.log('currentObjectApiName: ', currentObjectApiName);
@@ -649,7 +800,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.handleWrapAddressObjectSpedizione();
         }
 
-        //this.applyDateOrdineLogic();
+        this.applyDateOrdineLogic();
         
         console.log('+++++++++++test:', this.template.querySelector("[data-id='CommoditySector__c']"));
 
@@ -732,16 +883,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
            this.sectionDataToSubmit['AggregateBilling__c'] = this.template.querySelector("[data-id='AggregateBilling__c']").value;
         }
 
-        if(currentSectionName === 'reading'){
-
-            console.log('Inside reading condition');
-
-            this.template.querySelector('c-hdt-self-reading').handleSaveButton();
-
-            console.log('isSavedReading--> '+this.isSavedReading);
-
-        }
-
         this.updateProcess(currentSectionIndex, nextSectionStep);
 
     }
@@ -757,7 +898,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let currentSectionName = event.currentTarget.value;
 
         //INIZIO SVILUPPI EVERIS
-        /*if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
 
             let currentVoltureSectionIndex = this.availableVoltureSection.findIndex(p => p.name === currentSectionName);
 
@@ -777,29 +918,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
-        }*/
+        }
         //FINE SVILUPPI EVERIS
 
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
 
-        //INIZIO SVILUPPI EVERIS
-        //LA VARIABILE nextIndex RIPORTA L'INDICE CORRETTO
-        let nextIndex = this.availableSteps[currentSectionIndex - 1].name === 'reading'
-        ? currentSectionIndex - 2
-        : currentSectionIndex - 1
-        //FINE SVILUPPI EVERIS
+        let previousSectionStep = this.availableSteps[currentSectionIndex - 1].step;
 
-        let previousSectionStep = this.availableSteps[nextIndex].step;
-
-        updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep},isVolture:this.isVolture}).then(data =>{
+        updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep}}).then(data =>{
             this.loading = false;
-            this.currentSection = this.availableSteps[nextIndex];
-            //EVERIS
-            this.choosenSection = this.availableSteps[nextIndex].name;
-            this.activeSections = [this.choosenSection];
-            //EVERIS
-            this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
-            this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
+            this.currentSection = this.availableSteps[currentSectionIndex - 1];
+
+            this.currentSectionObjectApi = this.availableSteps[currentSectionIndex - 1].objectApiName;
+            this.currentSectionRecordId = this.availableSteps[currentSectionIndex - 1].recordId;
             this.sectionDataToSubmit = {};
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
@@ -818,307 +949,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleFields(){
-
-    //INIZIO SVILUPPI EVERIS
-    if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
-
-        this.fields = [
-            {
-                step: 3,
-                label: 'Variabili di Processo',
-                name: 'processVariables',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                readingButton:true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data:[
-                    {
-                        'label': 'Tipo Voltura',
-                        'apiname': 'VoltureType__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': true,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '', 
-                        'apiname': 'EffectiveDate__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': true,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '', 
-                        'apiname': 'SignedDate__c',
-                        'typeVisibility': this.order.ParentOrder__r.SignedDate__c != null,
-                        'required': true,
-                        'disabled': false,
-                        'value': this.order.ParentOrder__r.SignedDate__c,
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'NonRegMeter__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'AccountId',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'PhoneNumber__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'Email__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'WithdrawalClass__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'AnnualConsumption__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'Market__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'SupplyType__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'Implant__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': '',
-                        'apiname': 'ClientCategory__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    }
-                ]
-            },
-            {
-                step: 4,
-                label: 'Autolettura',
-                name: 'reading',
-                objectApiName: '',
-                recordId: '',
-                isReading: true,
-                processVisibility: true 
-            },
-            {
-                step: 5,
-                label:'Iva e accise',
-                name: 'ivaAccise',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility:this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data: [
-                    {
-                        'label': 'Flag Agevolazione IVA',
-                        'apiname': 'VATfacilitationFlag__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Flag Accise Agevolata',
-                        'apiname': 'FacilitationExcise__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': false,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'IVA',
-                        'apiname': 'VAT__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Ele',
-                        'apiname': 'ExciseEle__c',
-                        'typeVisibility': this.typeVisibility('ele'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Accise Agevolata Gas',
-                        'apiname': 'ExciseGAS__c',
-                        'typeVisibility': this.typeVisibility('gas'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                ]
-            },
-            {
-                step: '',
-                label: 'Credit check',
-                name: 'creditCheckVolture',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data: [
-                    {
-                        'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Esito credit Check Uscente',
-                        'apiname': 'OutgoingCreditCheckResult__c',
-                        'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_VAS',
-                        'required': false,
-                        'disabled': true,
-                        'value': this.applyCreditCheckLogic('OutgoingCreditCheckResult__c'),
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Descrizione esito',
-                        'apiname': 'CreditCheckDescription__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    }
-                ]
-            },
-            {
-                step: '',
-                label: 'Riepilogo e cliente uscente',
-                name: 'recapVolture',
-                objectApiName: 'Order', 
-                recordId: this.order.Id,
-                diffObjApi: 'Account',
-                diffRecordId: this.order.ServicePoint__r.Account__c,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
-                data:[
-                    {
-                    'label': '',
-                    'apiname': 'Subprocess__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': '',
-                    },
-                    {
-                        'label': 'Nome',
-                        'apiname': 'FirstName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    },
-                    {
-                        'label': 'Cognome',
-                        'apiname': 'LastName__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    },
-                    {
-                        'label': 'Codice Fiscale',
-                        'apiname': 'FiscalCode__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    },
-                    {
-                        'label': 'Partita IVA',
-                        'apiname': 'VATNumber__c',
-                        'typeVisibility': this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': '',
-                        'diffObjApi': 'Account',
-                    }
-                ]
-            }
-        ];
-
-        return;
-
-    }
-    //FINE SVILUPPI EVERIS
 
     //INIZIO SVILUPPI EVERIS        
         this.voltureField =[
@@ -2047,6 +1877,22 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'processVisibility': ''
                     },
                     {
+                        'label': 'Venduto Da',
+                        'apiname': 'SaleBy__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'Campagna Commissioning',
+                        'apiname': 'CommissioningCampaign__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'processVisibility': ''
+                    },
+                    {
                         'label': 'Uso energia ele',
                         'apiname': 'UseTypeEnergy__c',
                         // 'apiname': 'Service Point.UseTypeEnergy__c',
@@ -2738,22 +2584,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     connectedCallback(){
-        //EVERIS
-        console.log('Details Callback Start');
-        //EVERIS
-
         console.log('isAccountResidential: ', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? 'Indirizzo di residenza' : 'Indirizzo sede legale');
         console.log('hdtChildOrderProcessDetails: ', JSON.parse(JSON.stringify(this.order)));
-        //COMMENTATO EVERIS POICHE GENERAVA ERRORE
-        //console.log('mainOrderItem: ', JSON.parse(JSON.stringify(this.mainOrderItem)));
-        //console.log('analisiConsumi: ', JSON.parse(JSON.stringify(this.analisiConsumi)));
-        //COMMENTATO EVERIS POICHE GENERAVA ERRORE
+        console.log('mainOrderItem: ', JSON.parse(JSON.stringify(this.mainOrderItem)));
+        console.log('analisiConsumi: ', JSON.parse(JSON.stringify(this.analisiConsumi)));
+        
         
         this.title = 'Processo di ' + this.order.RecordType.Name;
         this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
-        //this.handleShowModuloInformativo();
-        //this.handleShowDelibera40();
-        //this.handleShowInviaModulistica();
+        this.handleShowModuloInformativo();
+        this.handleShowDelibera40();
+        this.handleShowInviaModulistica();
         this.handleFields();
         this.applyCreditCheckLogic();
 
@@ -2761,13 +2602,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.getFirstStepName();
         this.loadAccordion();
 
-        //EVERIS
-        this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
-        console.log('IsVolture--> '+this.isVolture);
-        console.log('ConfirmedSteps--> '+this.confirmedSteps);
-        console.log('Details Callback End');
-        //EVERIS
-        
         // if(this.pendingSteps.length > 0){
         //     this.choosenSection = this.getFirstStepName();
         //     this.activeSections = [this.getFirstStepName()];

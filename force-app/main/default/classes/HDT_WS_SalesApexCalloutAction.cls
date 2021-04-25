@@ -30,7 +30,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         System.debug('********sender:' + obj);
         // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
         
-        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method)) {
+        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method)) {
             //////////// Recupero endpoint in base a contesto di oggetto
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
             String endpoint = endpointUtils.getEndpoint(obj);
@@ -66,31 +66,50 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
 
                 System.debug('********MRRequest:' + responseService);
-                wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
-                for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
-                    fieldValueResponse.put(field.name,field.value);
-                }
-                if(fieldValueResponse.get('result') != null){
-                    Order ord = new Order();
-                    ord.id = (id)obj.get('Id');
-                    if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
-                        System.debug('********INSIDE RESULT OK');
-                        if(fieldValueResponse.get('FASE') != null){
-                            System.debug('********INSIDE FASE NOT NULL');
-                            ord.Phase__c = fieldValueResponse.get('FASE');
-                            System.debug('********AFTER UPDATE');
-                        }
-                    }
-                    else{
-                        ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
-                        ord.Phase__c = 'Comunicazione verso Heroku KO';
-                    }
+                System.debug('********description:' + responseService.responses[0].description);
+                System.debug('********objects:' + responseService.responses[0].objects);
+
+                Order ord = new Order();
+                ord.id = (id)obj.get('Id');
+
+                if (responseService.responses[0].objects == null) {
+                    ord.DiscardReason__c = responseService.responses[0].description;
+                    ord.Phase__c = 'Comunicazione verso Heroku KO';
                     HDT_SRV_Order ordSrv = new HDT_SRV_Order();
                     ordSrv.updateRecord(ord);
+                } else {
+
+                    wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
+                    system.debug('log 1');
+                    for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
+                        
+                        fieldValueResponse.put(field.name,field.value);
+                        system.debug('log 2');
+                    }
+                    if(fieldValueResponse.get('result') != null){
+                        system.debug('log 3');
+                        
+                        system.debug('log 5');
+                        if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
+                            System.debug('********INSIDE RESULT OK');
+                            if(fieldValueResponse.get('FASE') != null){
+                                System.debug('********INSIDE FASE NOT NULL');
+                                ord.Phase__c = fieldValueResponse.get('FASE');
+                                System.debug('********AFTER UPDATE');
+                            }
+                        }
+                        else{
+                            ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            ord.Phase__c = 'Comunicazione verso Heroku KO';
+                        }
+                        HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                        ordSrv.updateRecord(ord);
+                    }
                 }
 
             } catch(Exception e ) {
                 System.debug('ERRORE RESPONSE 500');
+                system.debug(e);
             }
         }
         
