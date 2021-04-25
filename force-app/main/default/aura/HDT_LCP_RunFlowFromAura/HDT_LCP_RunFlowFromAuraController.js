@@ -20,6 +20,7 @@
         //variabile per informative
         var context = myPageRef.state.c__context;
 
+        var resumeFromDraft = myPageRef.state.c__resumeFromDraft;
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
