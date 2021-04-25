@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Modalità invio fatturazione Elettronica</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

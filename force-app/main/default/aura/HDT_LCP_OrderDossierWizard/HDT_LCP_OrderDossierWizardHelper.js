@@ -1,35 +1,63 @@
 ({
     helperInit : function(component,event,helper,saleId,accountId) {
 		var action = component.get('c.controllerInit');
+        console.log('saleId - helperInit '+saleId);
         action.setParams({
             "saleId" : saleId,
         });
         action.setCallback(this, function(response) {
             var state = response.getState();
+
+            console.log('helperInit state: ', state);
+
                 if (state === "SUCCESS") {
 
                     let results = response.getReturnValue();
-                    
-        			component.set("v.parentOrderName", results.orderParentName);
-                    component.set("v.orderParentId", results.orderParent);
-                    component.set("v.orderParentRecord", results.orderParentRecord);
-                    component.set("v.accountId", results.accountId);
-                    component.set("v.check", results.check);
 
-                    var myPageRef = component.get("v.pageReference");
-                    var newState = Object.assign({}, myPageRef.state, {c__accountId: results.accountId, c__venditaId: saleId, c__orderParent: results.orderParent});
-                    component.find("navService").navigate({
-                        type: myPageRef.type,
-                        attributes: myPageRef.attributes,
-                        state: newState
-                    });
+                    console.log('helperInit results data: ', JSON.stringify(results));
 
-                    // component.set("v.accountName", results.accountName); // component.set("v.accountName", results.accountName);
-                    // component.set("v.fiscalCode", results.fiscalCode); // component.set("v.codFi", results.codFi);
-        			// component.set("v.vatNumber", results.vatNumber); // component.set("v.pIv", results.pIv);
+                    if(results.check){
+                        component.set("v.parentOrderName", results.orderParentName);
+                        component.set("v.orderParentId", results.orderParent);
+                        component.set("v.orderParentRecord", results.orderParentRecord);
+                        component.set("v.accountId", results.accountId);
+                        component.set("v.check", results.check);
+
+                        console.log('helperInit isCommunity: ', component.get('v.isCommunity'));
+
+
+                        if (component.get('v.isCommunity')){
+                            console.log('community set orderParentId on link');
+
+                            const url = new URL(window.location.href);
+                            url.searchParams.set('c__orderParent', component.get('v.orderParentId'));
+                            window.history.replaceState(null, null, url); 
+            
+                        }else{
+                            console.log('crm set orderParentId on link');
+
+                            var myPageRef = component.get("v.pageReference");
+                            var newState = Object.assign({}, myPageRef.state, {c__accountId: results.accountId, c__venditaId: saleId, c__orderParent: results.orderParent});
+                            component.find("navService").navigate({
+                                type: myPageRef.type,
+                                attributes: myPageRef.attributes,
+                                state: newState
+                            });
+                        }
+                    } else {
+                        console.log('Si deve concludere il wizard della vendita prima!');
+                        this.showToastError('Si deve concludere il wizard della vendita prima!');
+                        if (component.get('v.isCommunity')){
+                            this.redirectToRecordPageCommunity(saleId);
+                        } else {
+                            this.redirectToSObjectSubtabFix(component, saleId, 'Sale__c');
+                        }
+                    }
+
                 }
                 else {
                     console.log("Failed with state: " + state);
+                    
                 }
             });
             $A.enqueueAction(action);   
@@ -288,5 +316,13 @@
             }
         });
         $A.enqueueAction(action);
+    },
+
+    redirectToRecordPageCommunity : function(objectId){
+        var navEvt = $A.get("e.force:navigateToSObject");
+        navEvt.setParams({
+        "recordId": objectId
+        });
+        navEvt.fire();
     }
 })

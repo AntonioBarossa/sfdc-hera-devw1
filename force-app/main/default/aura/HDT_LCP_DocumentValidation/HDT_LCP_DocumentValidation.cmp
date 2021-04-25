@@ -2,8 +2,8 @@
     controller="HDT_LC_DocumentValidation"
     implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
     access="global">
-    <aura:attribute name="CILegalRepresentative" type="Boolean" default="true" />
-    <aura:attribute name="CIAccoutn" type="Boolean" default="true" />
+    <!-- <aura:attribute name="CILegalRepresentative" type="Boolean" default="true" /> -->
+    <!-- <aura:attribute name="CIAccoutn" type="Boolean" default="true" /> -->
     <aura:attribute name="QuickQuote" type="Boolean" default="true" />
     <aura:attribute name="ChamberCommerceRegistration" type="Boolean" default="true" />
     <aura:attribute name="Instance326" type="Boolean" default="true" />
@@ -33,8 +33,8 @@
                     onload="{!c.handleOnload}"
                     aura:id="editForm" >
                     <lightning:messages />
-                    <lightning:inputField fieldName="CILegalRepresentative__c" aura:id="CILegalRepresentative" class="{!v.CILegalRepresentative == false ? 'slds-hide' : ''}" />
-                    <lightning:inputField fieldName="CIAccoutn__c" aura:id="CIAccoutn" class="{!v.CIAccoutn == false ? 'slds-hide' : ''}" />
+                    <!-- <lightning:inputField fieldName="CILegalRepresentative__c" aura:id="CILegalRepresentative" class="{!v.CILegalRepresentative == false ? 'slds-hide' : ''}" /> -->
+                    <!-- <lightning:inputField fieldName="CIAccoutn__c" aura:id="CIAccoutn" class="{!v.CIAccoutn == false ? 'slds-hide' : ''}" /> -->
                     <lightning:inputField fieldName="QuickQuote__c" aura:id="QuickQuote" class="{!v.QuickQuote == false ? 'slds-hide' : ''}" />
                     <lightning:inputField fieldName="ChamberCommerceRegistration__c" aura:id="ChamberCommerceRegistration" class="{!v.ChamberCommerceRegistration == false ? 'slds-hide' : ''}" />
                     <lightning:inputField fieldName="Instance326__c" aura:id="Instance326" class="{!v.Instance326 == false ? 'slds-hide' : ''}" />

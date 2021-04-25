@@ -8,8 +8,6 @@ public inherited sharing class HDT_LC_CampaignsController {
 
     @AuraEnabled(cacheable=true)
     public static List <CampaignMember> getCampaigns(String id, String objectName, String category, String channel) {
-        String objIdField;
-
         campaignMemberSrv.checkReadAccess('Campaign.Name,Campaign.Status,Campaign.Channel__c,Campaign.EndDate');
 
         if (objectName == 'Contact') {
@@ -34,11 +32,18 @@ public inherited sharing class HDT_LC_CampaignsController {
     }
 
     @AuraEnabled
-    public static void updateCampaignMemberStatus(String campaignMemberId, String statusValue){
-        campaignMemberSrv.updateRecord(new CampaignMember(
-            Id = campaignMemberId,
-            Status = statusValue
-        ));
+    public static CampaignMember updateCampaignMemberStatus(String campaignMemberId, String statusValue){
+        try {
+            CampaignMember cm = new CampaignMember(
+                Id = campaignMemberId,
+                Status = statusValue
+            );
+            campaignMemberSrv.updateRecord(cm);
+            return cm;
+        } catch (Exception e) {
+            System.debug(e.getMessage());
+            return null;
+        }
     }
 
     @AuraEnabled
@@ -46,5 +51,21 @@ public inherited sharing class HDT_LC_CampaignsController {
         Case newCase = caseSrv.createRecord(c);
         system.debug(newCase);
         return newCase;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<CampaignMember> getUnassignedCampaignMembers(String campaignId) {
+        return  campaignMemberQr.getUnassignedCampaignMembers(campaignId);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccountsforCampaignMembers() {
+        return  campaignMemberQr.getAccountsforCampaignMembers();
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static CampaignMember getAccountAndCampaign(String campaignMemberId) {
+        campaignMemberSrv.checkReadAccess('ContactId,LeadId,CampaignId,GenericField1__c');
+        return  campaignMemberQr.getAccountAndCampaign(campaignMemberId);
     }
 }
