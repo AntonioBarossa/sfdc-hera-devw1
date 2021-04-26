@@ -4,12 +4,14 @@ class Util {
 		this.mapInteractions = {};
 	}
 	createActivity(message) {
+		console.log("### iwsutil.createActivity() | MESSAGE: " + JSON.stringify(message));
 		ConnectorEntityController.createActivity(JSON.stringify(message), (result, req) => {
+			var cleanResult = result.replaceAll("&quot;","\"");
 			if(result.startsWith("Error")) {
 				// WIP IMPROVE ERROR HANDLING
-				console.log("### iwsutil.createActivity() | ERROR: " + result);
+				console.log("### iwsutil.createActivity() | " + cleanResult);
 			} else {
-				var resultObj = JSON.parse(result.replaceAll("&quot;","\""));
+				var resultObj = JSON.parse(cleanResult);
 				iwscommand.SetAttachdataById(message.ConnectionID, {"sf_activity_id": resultObj.activityId});
 				console.log("### iwsutil.createActivity() | ACTIVITY CREATED!");
 				if(resultObj.accountId && resultObj.contactId) {
@@ -24,7 +26,7 @@ class Util {
 		ConnectorEntityController.closeActivity(JSON.stringify(message), (result, req) => {
 			if(result) {
 				// WIP
-				console.log("### iwsutil.closeActivity() | ERROR: " + error);
+				console.log("### iwsutil.closeActivity() | Error: " + error);
 			} else {
 				console.log("### iwsutil.closeActivity() | ACTIVITY CLOSED!");
 			}
