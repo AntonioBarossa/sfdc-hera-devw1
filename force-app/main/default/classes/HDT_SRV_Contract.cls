@@ -6,7 +6,9 @@
 */
 public inherited sharing class HDT_SRV_Contract {
     
+    private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
+    private static final String UPDATEPERMISSION = 'update';
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -27,5 +29,29 @@ public inherited sharing class HDT_SRV_Contract {
     public void checkReadAccess(String fields){
 
         checkAccessInit(fields, READPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Check if current user has update permission on object and specified fields
+    * @param String fields - Fields to check for access
+    */
+    public void checkUpdateAccess(String fields){
+        checkAccessInit(fields, UPDATEPERMISSION);
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Update Contract records
+    * @param List<Contract>
+    */
+    public void updateRecords(List<Contract> contracts){
+
+        for (Contract contract : contracts) {
+            List<String> fields = helperMethods.getObjAttrList(contract);
+            checkUpdateAccess(String.join(fields, ','));
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(contracts);
     }
 }

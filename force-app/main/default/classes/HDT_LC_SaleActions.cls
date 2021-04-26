@@ -148,22 +148,33 @@ public inherited sharing class HDT_LC_SaleActions {
         //2- Update Opportunity
         opportunitySrv.checkReadAccess('StageName');
         List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName', 'Proposal');
-        for (Opportunity opp : opps) {
-            opp.StageName = 'Closed Lost';
+        
+        if (!opps.isEmpty()) {
+            for (Opportunity opp : opps) {
+                opp.StageName = 'Closed Lost';
+            }
         }
 
         //3 - Update Quotes
         quoteSrv.checkReadAccess('SBQQ__Status__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleCancelEvent(sale.Id); //quotes that have a status of not rejected
 
-        for (SBQQ__Quote__c quote : quoteList) {
-            quote.SBQQ__Status__c = 'Rifiutata';
+        if (!quoteList.isEmpty()) {
+            for (SBQQ__Quote__c quote : quoteList) {
+                quote.SBQQ__Status__c = 'Rifiutata';
+            }
         }
 
         //4 - Excecute actions
         saleSrv.updateRecord(saleToUpdate);
-        opportunitySrv.updateRecords(opps);
-        quoteSrv.updateRecords(quoteList);
+
+        if (!opps.isEmpty()) {
+            opportunitySrv.updateRecords(opps);
+        }
+
+        if (!quoteList.isEmpty()) {
+            quoteSrv.updateRecords(quoteList);
+        }
 
     }
 }
