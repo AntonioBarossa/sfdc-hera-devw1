@@ -62,15 +62,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DocSendingMethod__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ShippingMail__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Mail__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -244,7 +236,6 @@
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
-        <fields>IncomingCreditCheck__c</fields>
         <fields>OutgoingCreditCheckResult__c</fields>
         <relatedList>Order.ParentOrder__c</relatedList>
     </relatedLists>

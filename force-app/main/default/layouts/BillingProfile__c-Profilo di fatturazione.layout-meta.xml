@@ -40,8 +40,8 @@
                 <field>IbanCodeNumber__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>FormulaIBAN__c</field>
+                <behavior>Edit</behavior>
+                <field>InvoicingStreetCode__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -9,7 +9,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_SRv_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
-    private static HDT_SRv_Sale saleSrv = new HDT_SRV_Sale();
+    private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
+    private static HDT_QR_QuoteLine quoteLineQr = new HDT_QR_QuoteLine();
+    private static HDT_SRV_QuoteLine quoteLineSrv = new HDT_SRV_QuoteLine();
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
@@ -59,7 +61,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.MaxRequiredPotential__c = servicePoint.MaxRequiredPotential__c;
         orderToUpdate.UseTypeEnergy__c = servicePoint.UseTypeEnergy__c;
         orderToUpdate.UseCategory__c = servicePoint.UseCategory__c;
-        orderToUpdate.WithdrawalClass__c = servicePoint.WithdrawalClass__c;
+        // orderToUpdate.WithdrawalClass__c = servicePoint.WithdrawalClass__c;
         orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
         orderToUpdate.Resident__c = servicePoint.Resident__c;
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
@@ -79,8 +81,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
 
-        accountSrv.checkReadAccess('FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        Account account = accountQr.getRecordById(accountId, 'FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        accountSrv.checkReadAccess('BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        Account account = accountQr.getRecordById(accountId, 'BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
 
         String customerName = null;
 
@@ -94,9 +96,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CustomerVATNumber__c = account.VATNumber__c;
         orderToUpdate.CustomerName__c = customerName;
         orderToUpdate.CustomerLastName__c = account.LastName__c;
-        orderToUpdate.Mail__c = account.PrimaryEmail__c;
+        orderToUpdate.Email__c = account.PrimaryEmail__c;
         orderToUpdate.PhoneNumber__c = account.Phone;
         orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
+        // orderToUpdate.CustomerMarking__c = account.CustomerMarking__c; //Is a formula field
+        orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
 
     }
 
@@ -109,6 +113,18 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
     }
 
+    private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
+
+        quoteLineSrv.checkReadAccess('SBQQ__Product__r.ProductCode,SBQQ__Product__r.Version__c');
+        List<SBQQ__QuoteLine__c> quoteLineList = quoteLineQr.getPrimaryRecord(quoteId);
+
+        if (!quoteLineList.isEmpty()) {
+            orderToUpdate.CommercialProductCode__c = quoteLineList[0].SBQQ__Product__r.ProductCode;
+            orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
+        }
+
+    }
+
     public static void alignFields(Order order) {
 
         Order orderToUpdate = new Order();
@@ -117,7 +133,11 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         alignAccountFields(orderToUpdate, order.AccountId);
 
         alignSaleFields(orderToUpdate, order.Sale__c);
-        
+
+        if(order.SBQQ__Quote__c != null) {
+            alignPrimaryProduct(orderToUpdate, order.SBQQ__Quote__c);
+        }
+
         if(order.BillingProfile__c != null) {
             alignBillingProfileFields(orderToUpdate, order.BillingProfile__c);
         }

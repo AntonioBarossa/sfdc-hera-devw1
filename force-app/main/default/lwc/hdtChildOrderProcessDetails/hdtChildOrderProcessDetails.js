@@ -55,7 +55,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     //INIZIO SVILUPPI EVERIS
 
-    availableVoltureSection;
+    availableVoltureSection = [];
 
     activeVoltureSection = [];
 
@@ -291,26 +291,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }}));
     }
 
-    handleSectionDiffDataToSubmitCollection(event){
-        let currentSection = this.availableSteps.filter(section => section.name === this.choosenSection);
+    // handleSectionDiffDataToSubmitCollection(event){
+    //     let currentSection = this.availableSteps.filter(section => section.name === this.choosenSection);
 
-        this.sectionDiffDataToSubmit['Id'] = currentSection[0].diffRecordId;
+    //     this.sectionDiffDataToSubmit['Id'] = currentSection[0].diffRecordId;
 
-        if(event.target.fieldName !== undefined){
-            this.sectionDiffDataToSubmit[event.target.fieldName] = event.target.value;
-        }
+    //     if(event.target.fieldName !== undefined){
+    //         this.sectionDiffDataToSubmit[event.target.fieldName] = event.target.value;
+    //     }
 
-        if(event.target.name !== undefined){
-            this.sectionDiffDataToSubmit[event.target.name] = event.target.value;
-        }
+    //     if(event.target.name !== undefined){
+    //         this.sectionDiffDataToSubmit[event.target.name] = event.target.value;
+    //     }
 
-        console.log('********'+JSON.stringify(this.sectionDiffDataToSubmit));
+    //     console.log('********'+JSON.stringify(this.sectionDiffDataToSubmit));
 
-        this.dispatchEvent(new CustomEvent('emitdiffdraftdata', {detail: {
-            diffObjectApiName: currentSection[0].diffObjApi,
-            diffFields: this.sectionDiffDataToSubmit
-        }}));
-    }
+    //     this.dispatchEvent(new CustomEvent('emitdiffdraftdata', {detail: {
+    //         diffObjectApiName: currentSection[0].diffObjApi,
+    //         diffFields: this.sectionDiffDataToSubmit
+    //     }}));
+    // }
 
     handleShowModuloInformativo(){
         if ((this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
@@ -350,13 +350,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     applyDateOrdineLogic(){
-        let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
-        let nextSection = this.confirmedSteps[currentSectionIndex];
-        let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
-
-        console.log('applyDateOrdineLogic - this.order.WaiverRightAfterthought__c: ' + this.order.WaiverRightAfterthought__c + ' ' + this.order.ParentOrder__r.ContractSigned__c);
-
         if(this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ParentOrder__r.ContractSigned__c){
+
+            let currentSectionIndex = this.confirmedSteps.findIndex(section => section.name === 'dateOrdine');
+
+            let nextSection = this.confirmedSteps[currentSectionIndex];
+            let nextSectionName = this.confirmedSteps[currentSectionIndex].name;
+
+            console.log('applyDateOrdineLogic - this.order.WaiverRightAfterthought__c: ' + this.order.WaiverRightAfterthought__c + ' ' + this.order.ParentOrder__r.ContractSigned__c);
+
 
             // this.extraFieldsToSubmit.Id = this.order.Id;
             // this.extraFieldsToSubmit.objectApiName = 'Order';
@@ -430,7 +432,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.RecordType.DeveloperName !== undefined ){
             switch (this.order.RecordType.DeveloperName) {
                 case 'HDT_RT_Subentro':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     else if (fieldName === 'OutgoingCreditCheckResult__c') {
@@ -438,22 +440,22 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                     break;
                 case 'HDT_RT_Attivazione':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_AttivazioneConModifica':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_SwitchIn':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_VAS':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
@@ -786,7 +788,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('currentRecordId: ', currentRecordId);
 
         if(currentSectionName === 'creditCheck'){
-            this.sectionDataToSubmit['IncomingCreditCheck__c'] = this.applyCreditCheckLogic('IncomingCreditCheck__c');
+            this.sectionDataToSubmit['IncomingCreditCheckResult__c'] = this.applyCreditCheckLogic('IncomingCreditCheckResult__c');
             this.sectionDataToSubmit['OutgoingCreditCheckResult__c'] = this.applyCreditCheckLogic('OutgoingCreditCheckResult__c');
             this.sectionDataToSubmit['CreditCheckDescription__c'] = this.template.querySelector("[data-id='CreditCheckDescription__c']").value;
 
@@ -1213,11 +1215,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 data: [
                     {
                         'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheck__c',
+                        'apiname': 'IncomingCreditCheckResult__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheck__c'),
+                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
                         'processVisibility': ''
                     },
                     {
@@ -1591,15 +1593,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'value': '',
                     'processVisibility': ''
                 },
-                {
-                    'label': 'RequestPower__c',
-                    'apiname': 'RequestPower__c',
-                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
-                    'required': false,
-                    'disabled': false,
-                    'value': '',
-                    'processVisibility': ''
-                },
+                // { // commented because it is missing in DEVW1
+                //     'label': 'RequestPower__c',
+                //     'apiname': 'RequestPower__c',
+                //     'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
+                //     'required': false,
+                //     'disabled': false,
+                //     'value': '',
+                //     'processVisibility': ''
+                // },
                 {
                     'label': 'RequestVoltage__c',
                     'apiname': 'RequestVoltage__c',
@@ -2068,7 +2070,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 ]
             },
             {
-                step: 7,
+                step: 10,
                 label: 'Indirizzo spedizione',
                 name: 'indirizzoSpedizione',
                 hasAddrComp: true,

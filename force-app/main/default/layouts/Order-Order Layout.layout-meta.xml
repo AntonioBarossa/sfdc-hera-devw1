@@ -69,19 +69,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DocSendingMethod__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>ContractSigned__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>BillingProfile__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>IncomingCreditCheck__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -98,14 +90,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ProcessType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DisconnectibilityType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Disconnectable__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
