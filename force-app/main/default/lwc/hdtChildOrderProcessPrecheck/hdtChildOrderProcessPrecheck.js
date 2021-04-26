@@ -196,7 +196,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         console.log('OrderId--> '+this.order.Id);
         //EVERIS
 
-        next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
+        //EVERIS: Aggiunta variabile Order
+        next({order: this.order,orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 

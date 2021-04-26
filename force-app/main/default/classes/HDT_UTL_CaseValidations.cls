@@ -6,6 +6,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         System.debug('HDT_UTL_CaseValidations: validating Case ' + currentCase);
 
         String caseType = currentCase.Type;
+        String subprocess = currentCase.Subprocess__c;
 
         String result;
 
@@ -37,11 +38,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'){
 
-            result = validateVariazioni(fields,recordId,caseType);
-
-        } else if(caseType == 'Chiusura Contatore'){
-
-            result = validateDisattivazioni(fields);
+            result = validateVariazioni(fields,recordId,caseType, subprocess);
 
         }
 
@@ -134,20 +131,42 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         }
 
+        // TODO: integrare i controlli definiti sulla CB Lead
+
         return result;
     }
 
     private String validateModificaDatiRecapito(String fields) {
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
+        String modInvioBolletta = getFieldValue(fields, 'BillSendingMethod__c');
+        String emailInvioBolletta = getFieldValue(fields, 'InvoiceEmail__c');
         String pecInvioBolletta = getFieldValue(fields, 'InvoiceCertifiedEmailAddress__c');
-        String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
+        //String dataConsensoPec = getFieldValue(fields, 'SendCertifiedEmailConsentDate__c');
         String modInvioFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoicingMethod__c');
         String codiceUfficio = getFieldValue(fields, 'OfficeSubjectCode__c');
         String pecFatturazioneElettronica = getFieldValue(fields, 'ElectronicInvoiceCertifiedEmailAddress__c');
         String tipoXml = getFieldValue(fields, 'XMLType__c');
 
-        // TODO: validazione campi billing profile.
+        if (modInvioBolletta.contains('Bolletta per e-mail') && String.isBlank(emailInvioBolletta)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire una Email a cui inviare la bolletta.'));
+        } else if (modInvioBolletta.equals('Invio tramite PEC') && String.isBlank(pecInvioBolletta)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire un indirizzo PEC a cui inviare la bolletta.'));
+        }
+
+        if (!String.isBlank(modInvioFatturazioneElettronica)) {
+            HDT_UTL_ElectronicInvoicing.HDT_WRP_ElectronicInvoicing electronicInvoicing = new HDT_UTL_ElectronicInvoicing.HDT_WRP_ElectronicInvoicing();
+            electronicInvoicing.sendMode = modInvioFatturazioneElettronica;
+            electronicInvoicing.billSendMode = modInvioBolletta;
+            electronicInvoicing.certifiedEmail = pecFatturazioneElettronica;
+            electronicInvoicing.officeCode = codiceUfficio;
+            electronicInvoicing.xmlType = tipoXml;
+
+            String electronicInvoicingError = HDT_UTL_ElectronicInvoicing.validate(electronicInvoicing);
+            if (!String.isEmpty(electronicInvoicingError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', electronicInvoicingError));
+            }
+        }
 
         return result;
     }
@@ -301,7 +320,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateVariazioni(String fields, String recordId, String caseType){
+    public String validateVariazioni(String fields, String recordId, String caseType, String subprocess){
 
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String useCategory = getFieldValue(fields, 'UseCategory__c');
@@ -371,6 +390,30 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
 
+        } else if(caseType == 'Fiscale'){
+
+            if(subprocess != 'IVA - Errata applicazione' && subprocess != 'Accise - Errata applicazione'){
+
+                List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+                WHERE LinkedEntityId = :recordId 
+                WITH SECURITY_ENFORCED];
+
+                if(attachedDocument.size() == 0){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario inserire allegato'));
+
+                } else{
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+ 
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));

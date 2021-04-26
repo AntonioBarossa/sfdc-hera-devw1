@@ -1,6 +1,6 @@
 public inherited sharing class HDT_UTL_ElectronicInvoicing {
 
-    public String electronicInvoicingValidation(HDT_WRP_ElectronicInvoicing electronicInvoicing) {
+    public static String validate(HDT_WRP_ElectronicInvoicing electronicInvoicing) {
 
         if (electronicInvoicing == null) {
             throw new HDT_UTL_HeraException('HDT_UTL_ElectronicInvoicing: HDT_WRP_ElectronicInvoicing input is null');

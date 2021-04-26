@@ -53,11 +53,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         {"label":"ENI GAS & POWER-10V0000012","value":"ENI GAS & POWER-10V0000012"}
     ]};
 
+    //INIZIO SVILUPPI EVERIS
+
     @track readingCustomerDate;
-
     @track disabledReadingDate;
-
     @track isRetroactive = false;
+    @track isSavedReading;
+    @track outputFieldObj = {};
+    @track isVolture;
+    @track isReading;
+    //FINE SVILUPPI EVERIS
 
 /*    //INIZIO SVILUPPI EVERIS
 
@@ -67,7 +72,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     voltureField = [];
 
-    outputFieldObj = {};
+    
     
     goReading = false;
 
@@ -82,11 +87,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastCallFlag = false;
 
     handleVoltureToggle(){}
-
-    sysdate(){
-        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
-        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
-    }
 
     handleVoltureChange(event){
 
@@ -170,6 +170,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         }
 
+    }*/
+
+    sysdate(){
+        var sysdateIso = new Date().toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
     @wire(getRecord, { recordId: '$order.Id', fields: RETROACTIVE_DATE })
@@ -207,7 +212,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
 
-    refreshValues(recordId){
+    /*refreshValues(recordId){
 
         updateRecord({fields: { Id: recordId }});
 
@@ -552,7 +557,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     updateProcess(currentSectionIndex, nextSectionStep){
         console.log('updateProcess: ', JSON.stringify(this.sectionDataToSubmit));
-        updateProcessStep({order: {Id: this.order.Id, Step__c: nextSectionStep, ...this.sectionDataToSubmit}}).then(data =>{
+        //INIZIO SVILUPPI EVERIS
+        console.log('isVolture: '+this.isVolture);
+        console.log('isRetroactive: '+this.isRetroactive);
+        console.log('isReading: '+this.isReading)
+        //FINE SVILUPPI EVERIS
+        //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
+        updateProcessStep(
+            {order: {Id: this.order.Id, Step__c: nextSectionStep, 
+            ...this.sectionDataToSubmit,
+            },
+            isVolture: this.isVolture,
+            isRetroactive: this.isRetroactive,
+            isReading: this.isReading
+        }).then(data =>{
             this.loading = false;
             //INIZIO SVILUPPI EVERIS
             //LA VARIABILE NEXT INDEX RIPORTA L'INDICE CORRETTO PER ANDARE AVANTI
@@ -575,6 +593,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
             this.sectionDataToSubmit = {};            
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
+            this.template.querySelector('c-hdt-accordion-with-click').refreshValues(this.order.Id);
 
         }).catch(error => {
             this.loading = false;
@@ -605,6 +624,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         ? this.availableSteps[currentSectionIndex + 1].step
         : this.availableSteps[currentSectionIndex + 2].step)
         : this.availableSteps[currentSectionIndex + 1].step;
+
+        this.isReading = currentSectionName === 'reading';
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
 
         console.log('currentSectionName: ', currentSectionName);
@@ -716,6 +737,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             this.template.querySelector('c-hdt-self-reading').handleSaveButton();
 
+            console.log('isSavedReading--> '+this.isSavedReading);
+
         }
 
         this.updateProcess(currentSectionIndex, nextSectionStep);
@@ -767,7 +790,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         let previousSectionStep = this.availableSteps[nextIndex].step;
 
-        updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep}}).then(data =>{
+        updateProcessStep({order: {Id: this.order.Id, Step__c: previousSectionStep},isVolture:this.isVolture}).then(data =>{
             this.loading = false;
             this.currentSection = this.availableSteps[nextIndex];
             //EVERIS
@@ -829,10 +852,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': '', 
                         'apiname': 'SignedDate__c',
-                        'typeVisibility': this.typeVisibility('both'),
+                        'typeVisibility': this.order.ParentOrder__r.SignedDate__c != null,
                         'required': true,
                         'disabled': false,
-                        'value': '',
+                        'value': this.order.ParentOrder__r.SignedDate__c,
                         'processVisibility': ''
                     },
                     {
@@ -1032,8 +1055,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 step: '',
                 label: 'Riepilogo e cliente uscente',
                 name: 'recapVolture',
-                objectApiName: 'Account',
-                recordId: this.order.ServicePoint__r.Account__c,
+                objectApiName: 'Order', 
+                recordId: this.order.Id,
+                diffObjApi: 'Account',
+                diffRecordId: this.order.ServicePoint__r.Account__c,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',
                 data:[
                     {
@@ -1044,8 +1069,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': true,
                     'value': '',
                     'processVisibility': '',
-                    'diffObjApi': 'Order',
-                    'diffRecordId': this.order.Id
                     },
                     {
                         'label': 'Nome',
@@ -1054,7 +1077,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'required': false,
                         'disabled': true,
                         'value': '',
-                        'processVisibility': ''
+                        'processVisibility': '',
+                        'diffObjApi': 'Account',
                     },
                     {
                         'label': 'Cognome',
@@ -1063,7 +1087,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'required': false,
                         'disabled': true,
                         'value': '',
-                        'processVisibility': ''
+                        'processVisibility': '',
+                        'diffObjApi': 'Account',
                     },
                     {
                         'label': 'Codice Fiscale',
@@ -1072,7 +1097,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'required': false,
                         'disabled': true,
                         'value': '',
-                        'processVisibility': ''
+                        'processVisibility': '',
+                        'diffObjApi': 'Account',
                     },
                     {
                         'label': 'Partita IVA',
@@ -1081,7 +1107,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'required': false,
                         'disabled': true,
                         'value': '',
-                        'processVisibility': ''
+                        'processVisibility': '',
+                        'diffObjApi': 'Account',
                     }
                 ]
             }
@@ -2734,6 +2761,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
         //EVERIS
+        this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura';
+        console.log('IsVolture--> '+this.isVolture);
         console.log('ConfirmedSteps--> '+this.confirmedSteps);
         console.log('Details Callback End');
         //EVERIS

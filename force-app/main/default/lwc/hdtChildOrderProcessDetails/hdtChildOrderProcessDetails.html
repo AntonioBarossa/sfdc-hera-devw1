@@ -158,8 +158,11 @@
                                     <c-hdt-self-reading commodity={order.ServicePoint__r.CommoditySector__c}
                                     record-id={order.Id} 
                                     object="Order" 
-                                    is-volture="true"
-                                    is-retroactive={isRetroactive}></c-hdt-self-reading>
+                                    is-volture={isVolture}
+                                    is-retroactive={isRetroactive}
+                                    is-saved={isSavedReading}
+                                    reading-customer-date={readingCustomerDate}
+                                    disabled-reading-date={disabledReadingDate}></c-hdt-self-reading>
 
                                 </template>
 

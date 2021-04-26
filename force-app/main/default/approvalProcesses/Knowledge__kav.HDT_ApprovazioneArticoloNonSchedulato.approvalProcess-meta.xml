@@ -45,14 +45,6 @@
             </approver>
         </assignedApprover>
         <description>prima approvazione dell’articolo da parte dell&apos;Approvatore</description>
-        <entryCriteria>
-            <criteriaItems>
-                <field>Knowledge__kav.ValidationStatus</field>
-                <operation>equals</operation>
-                <value>Not Validated,Da Revisionare</value>
-            </criteriaItems>
-        </entryCriteria>
-        <ifCriteriaNotMet>RejectRecord</ifCriteriaNotMet>
         <label>Approvazione Articolo</label>
         <name>Approvazione_Articolo</name>
         <rejectionActions>
@@ -83,16 +75,16 @@
             <type>RejectRequest</type>
         </rejectBehavior>
     </approvalStep>
-    <description>Processo Approvativo per la pubblicazione e la schedulazione di un articolo per una pubblicazione futura</description>
+    <description>Processo Approvativo per la pubblicazione di articoli non schedulati</description>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
-        <criteriaItems>
-            <field>Knowledge__kav.ValidationStatus</field>
-            <operation>equals</operation>
-            <value>Validato Da Pubblicatore,Validato Da Approvatore,Da Revisionare,Not Validated</value>
-        </criteriaItems>
+        <formula>ISNULL(ToPublishDate__c)</formula>
     </entryCriteria>
     <finalApprovalActions>
+        <action>
+            <name>Pubblica</name>
+            <type>KnowledgePublish</type>
+        </action>
         <action>
             <name>Pubblicazione_Approvata</name>
             <type>FieldUpdate</type>
@@ -106,8 +98,8 @@
         </action>
     </finalRejectionActions>
     <finalRejectionRecordLock>false</finalRejectionRecordLock>
-    <label>Approvazione Articolo</label>
-    <processOrder>1</processOrder>
+    <label>Approvazione Articolo Non Schedulato</label>
+    <processOrder>2</processOrder>
     <recordEditability>AdminOrCurrentApprover</recordEditability>
     <showApprovalHistory>true</showApprovalHistory>
 </ApprovalProcess>
