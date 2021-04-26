@@ -1190,19 +1190,71 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>BL010</fullName>
+            <fullName>Accettazione Voltura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>IR010</fullName>
+            <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>IR020</fullName>
+            <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RC010</fullName>
+            <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Accettata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Rifiutata</fullName>
             <default>false</default>
         </values>
     </picklistValues>
