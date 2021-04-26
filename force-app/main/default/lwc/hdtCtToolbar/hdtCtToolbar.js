@@ -1,24 +1,19 @@
-import { LightningElement, track, api } from 'lwc';
-import { loadScript } from 'lightning/platformResourceLoader';
-import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
-//import cttoolbar from '@salesforce/resourceUrl/agentdesktop_widget';
+import { LightningElement} from 'lwc';
+//import { loadScript } from 'lightning/platformResourceLoader';
+//import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 
 var DataObj;
 
 export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
+
     numberToCall = '';
     iconName = '';
     agentStatus = '';
     spinner = true;
     dialing = false;
-    recordid;
     title = 'Scheda cliente';
-
-    renderedCallback(){
-        //window.addEventListener('dialing', this.myFunction);
-    }
 
     connectedCallback() {
         console.log('# connectedCallback #');
@@ -27,10 +22,10 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
         window.addEventListener('toolbarCallBack', this.contactCallback);
 
-        Promise.all([
-            loadScript(this, cttoolbar)//, loadScript(this, socket)
-        ]).then(() => console.log('# javascript Loaded #'))
-        .catch(error => console.log('promise error: ' + error));
+        //Promise.all([
+        //    loadScript(this, cttoolbar)
+        //]).then(() => console.log('# javascript Loaded #'))
+        //.catch(error => console.log('promise error: ' + error));
 
         setTimeout(() => {
             this.enableCallback();
@@ -41,7 +36,6 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
     contactCallback = () => {
         console.log('# RICEVUTO EVENTO ' + DataObj.event + ' #');
-        //console.log('# media_type: ' + DataObj.media_type + '; type: ' + DataObj.type + '; job_type: ' + DataObj.job_type);
 
         if (DataObj !== null) {
             if (typeof DataObj.event !== "undefined") {
@@ -98,19 +92,7 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
             case 'dialing':
                 this.iconName = 'utility:dialing';
                 this.dialing = true;
-                this.recordid = '0015I000003e4w3QAA';
                 this.title = 'Cliente contattato';
-
-
-                //this[NavigationMixin.Navigate](
-                //    {
-                //        type: 'comm__namedPage',
-                //        attributes: {
-                //            name: 'ct-phone-7'
-                //        }
-                //    }
-                //);
-
                 break;
 
             case 'datachanged':
@@ -149,7 +131,6 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
     }
 
     setNumber(event){
-        //var fieldId = event.target.id;
         this.numberToCall = event.target.value;
     }
 
@@ -198,10 +179,7 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
         }
 
         if (data !== null) {
-            //console.log('# ' + JSON.stringify(data));
             if (typeof data.event !== "undefined") {
-                //DataObj = data;
-                //const selectedEvent = new CustomEvent('toolbarCallBack', { detail: data.event });
                 const selectedEvent = new CustomEvent('toolbarCallBack');
                 this.dispatchEvent(selectedEvent);
           }
