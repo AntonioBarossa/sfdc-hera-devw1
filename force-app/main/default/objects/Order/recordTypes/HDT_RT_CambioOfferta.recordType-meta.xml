@@ -1210,6 +1210,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PaymentMode__c</picklist>
+        <values>
+            <fullName>Bollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
             <fullName>Accettazione pagamento a DL</fullName>
@@ -1554,11 +1573,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>01</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>02</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
