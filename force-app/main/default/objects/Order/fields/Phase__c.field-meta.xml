@@ -330,6 +330,11 @@
                 <default>false</default>
                 <label>Accettazione Voltura</label>
             </value>
+            <value>
+                <fullName>Inviato al SII</fullName>
+                <default>false</default>
+                <label>Inviato al SII</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
