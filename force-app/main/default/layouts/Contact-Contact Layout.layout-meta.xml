@@ -37,11 +37,47 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>PEC__c</field>
+                <field>isSandboxRecord__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>VATNumber__c</field>
+                <field>FavouriteChannel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Vip__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingCityCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingIsAddressVerified__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingPlace__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingStreetCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingStreetName__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingStreetNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingStreetNumberExtension__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MailingStreetToponym__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -63,7 +99,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>FiscalCode__c</field>
+                <field>IndividualId</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -87,7 +123,15 @@
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
         <label>Additional Information</label>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>et4ae5__ContactActions</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -172,6 +216,9 @@
         <quickActionListItems>
             <quickActionName>SendEmail</quickActionName>
         </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>Contact.Test</quickActionName>
+        </quickActionListItems>
     </quickActionList>
     <relatedContent>
         <relatedContentItems>
@@ -189,35 +236,20 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>et4ae5__DateSent__c</fields>
-        <fields>CaseID__c</fields>
-        <fields>OrderID__c</fields>
-        <fields>CampaignID__c</fields>
-        <fields>et4ae5__SubjectLine__c</fields>
-        <fields>et4ae5__DateOpened__c</fields>
-        <fields>et4ae5__FromAddress__c</fields>
+        <fields>et4ae5__EmailName__c</fields>
+        <fields>et4ae5__fBusiness_Unit__c</fields>
+        <fields>et4ae5__Created_Date_Time__c</fields>
+        <fields>et4ae5__Send_Status_View__c</fields>
+        <fields>et4ae5__Status_Date_Time__c</fields>
+        <fields>et4ae5__FromName__c</fields>
+        <fields>et4ae5__FromEmail__c</fields>
+        <fields>et4ae5__Campaigns__c</fields>
+        <fields>et4ae5__Reports__c</fields>
+        <relatedList>et4ae5__SendDefinition__c.et4ae5__Contact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.et4ae5__Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>MessageText__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>CaseID__c</fields>
-        <fields>OrderID__c</fields>
-        <fields>CampaignID__c</fields>
-        <fields>Sent__c</fields>
-        <fields>Delivered__c</fields>
-        <relatedList>SMSTracking__c.ContactID__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>DateTimeSend__c</fields>
-        <fields>MessageText__c</fields>
-        <fields>CaseID__c</fields>
-        <fields>OrderID__c</fields>
-        <fields>CampaignID__c</fields>
-        <fields>OpenDate__c</fields>
-        <relatedList>PushTracking__c.ContactKey__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>ACCOUNT.NAME</fields>
@@ -259,13 +291,19 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>wrts_prcgvr__Description__c</fields>
-        <fields>wrts_prcgvr__DueDate__c</fields>
-        <fields>wrts_prcgvr__Status__c</fields>
-        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
-        <fields>OWNER.LAST_NAME</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <relatedList>wrts_prcgvr__Activity__c.Contact__c</relatedList>
+        <relatedList>BillingProfile__c.DivergentSubject__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Sale__c.SalesContact__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>PushTracking__c.ContactKey__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>PaperCommunication__c.Contact__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
