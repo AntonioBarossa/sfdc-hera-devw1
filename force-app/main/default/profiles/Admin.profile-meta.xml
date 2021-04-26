@@ -8861,7 +8861,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>NotRegisteredMeterCase__c</field>
+        <field>Order.NotRegisteredMeterCase__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9046,7 +9046,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>PreviousCustomer__c</field>
+        <field>Order.PreviousCustomer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
