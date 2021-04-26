@@ -207,7 +207,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         return httpObj;
     }
 
-    public static ServiceCatalog__c executeControllForSingleRecord(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj record, ServiceCatalog__c serviceCatalog){
+    public static AccountStatementFilter__c executeControllForSingleRecord(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj record, AccountStatementFilter__c serviceCatalog){
 
         serviceCatalog.Multiselect__c = false;
 
@@ -237,7 +237,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     }
 
-    public static ServiceCatalog__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, ServiceCatalog__c serviceCatalog){
+    public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog){
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCASet = new Set<String>();
         Decimal tot = 0;

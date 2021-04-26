@@ -301,6 +301,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             System.debug('> TabValue > ' + tabValue);
             System.debug('> RecordId > ' + recordId);
             System.debug('> Records > ' + records);
+            System.debug('> level > ' + level);
 
             //if(column_mdtList.size()==0){
             //    serviceCatalogResponse.success = false;
@@ -309,8 +310,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             //}
 
             Id currentUserId = UserInfo.getUserId();
-            ServiceCatalog__c serviceCatalog = new ServiceCatalog__c();
-            serviceCatalog.UserId__c = currentUserId;
+            AccountStatementFilter__c serviceCatalog = new AccountStatementFilter__c();
+            serviceCatalog.User__c = currentUserId;
 
             List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList;
             recordsList = (List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>) JSON.deserialize(records, List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj>.class);
@@ -320,9 +321,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'EC1L';
             } else if(level.equalsIgnoreCase('2')){
                 serviceCatalog.Context__c = 'EC2L';
-                serviceCatalogResponse.success = true;
-                serviceCatalogResponse.serviceCatalogId = 'seconLevelId';
-                return serviceCatalogResponse;
             }
 
             if(tabValue.equalsIgnoreCase('EC4')){
@@ -366,7 +364,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             serviceCatalog.DocumentSelected__c = records;
 
             serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
-            upsert serviceCatalog UpsertKey__c;
+
+            SObjectType objtype = Schema.getGlobalDescribe().get('AccountStatementFilter__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        
+            if(objRes.isCreateable()){
+                upsert serviceCatalog UpsertKey__c;
+            } else {
+                serviceCatalogResponse.success = false;
+                serviceCatalogResponse.message = '> ERROR on object permission';
+                return serviceCatalogResponse;
+            }
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = serviceCatalog.Id;
