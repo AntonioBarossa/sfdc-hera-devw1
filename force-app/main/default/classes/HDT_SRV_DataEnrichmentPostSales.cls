@@ -111,15 +111,27 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         billingProfile = depsQr.getBillingProfileInvoiceData(recordId);
 
-        streetName = billingProfile.InvoicingStreetName__c + ', ';
-        streetNumber = billingProfile.InvoicingStreetNumber__c + ', ';
-        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null ? 
-            billingProfile.InvoicingStreetNumberExtension__c + ', '
+        streetName = billingProfile.InvoicingStreetName__c != null 
+            ? billingProfile.InvoicingStreetName__c + ' '
             : '';
-        city = billingProfile.InvoicingCity__c + ', ';
-        province = billingProfile.InvoicingProvince__c + ', ';
-        postalCode = billingProfile.InvoicingPostalCode__c + ', ';
-        country = billingProfile.InvoicingCountry__c + ', ';
+        streetNumber = billingProfile.InvoicingStreetNumber__c != null 
+            ? billingProfile.InvoicingStreetNumber__c + ' '
+            : '';
+        streetNumberExt = billingProfile.InvoicingStreetNumberExtension__c != null 
+            ? billingProfile.InvoicingStreetNumberExtension__c + ', '
+            : '';
+        city = billingProfile.InvoicingCity__c != null
+            ? billingProfile.InvoicingCity__c + ' '
+            : '';
+        province = billingProfile.InvoicingProvince__c != null
+            ? billingProfile.InvoicingProvince__c + ', '
+            : '';
+        postalCode = billingProfile.InvoicingPostalCode__c != null 
+            ? billingProfile.InvoicingPostalCode__c + ', '
+            : '' ;
+        country = billingProfile.InvoicingCountry__c != null 
+            ? billingProfile.InvoicingCountry__c
+            : '';
 
         deliveryAddres = streetName 
         + streetNumber 
@@ -154,6 +166,102 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         }
 
         return salesCompany;
+
+    }
+
+
+    public String getCaliber(String caliber){
+
+        String result;
+
+        switch on caliber{
+
+            when 'GRT005'{
+
+                result = 'G10';
+
+            }
+            when 'GRT010'{
+
+                result = 'G100';
+
+            }
+            when 'GRT015'{
+
+                result = 'G1000';
+
+            }
+            when 'GRT006'{
+
+                result = 'G16';
+
+            }when 'GRT011'{
+
+                result = 'G160';
+
+            }
+            when 'GRT016'{
+
+                result = 'G1600';
+
+            }
+            when 'GRT002'{
+
+                result = 'G2,5';
+
+            }
+            when 'GRT007'{
+
+                result = 'G25';
+
+            }when 'GRT012'{
+
+                result = 'G250';
+
+            }
+            when 'GRT003'{
+
+                result = 'G4';
+
+            }
+            when 'GRT008'{
+
+                result = 'G40';
+
+            }
+            when 'GRT013'{
+
+                result = 'G400';
+
+            }when 'GRT017'{
+
+                result = 'G4000';
+
+            }
+            when 'GRT004'{
+
+                result = 'G6';
+
+            }
+            when 'GRT009'{
+
+                result = 'G65';
+
+            }
+            when 'GRT014'{
+
+                result = 'G650';
+
+            }when 'GRT018'{
+
+                result = 'G6500';
+
+            }
+
+
+        }
+
+        return result;
 
     }
 

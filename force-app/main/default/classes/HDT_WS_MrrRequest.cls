@@ -62,6 +62,7 @@ global with sharing class HDT_WS_MrrRequest {
                     //INIZIO SVILUPPI EVERIS
 
                     postSalesRequest = request;
+                    result = hpsmSrv.handleInboundRequest(postSalesRequest);
 
                     responseField.fieldType = 'TEXT';
                     responseField.name = 'ESITO';
@@ -124,11 +125,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             RestContext.response.statusCode = 500;
             
-        }
-
-        //INIZIO SVILUPPI EVERIS
-        result = hpsmSrv.handleInboundRequest(postSalesRequest);
-        //FINE SVILUPPI EVERIS
+        } 
 
         // responseGen.writeEndObject();
 

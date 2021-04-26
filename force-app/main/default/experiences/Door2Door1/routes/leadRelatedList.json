@@ -1,0 +1,9 @@
+{
+  "activeViewId" : "6b999df1-d7fa-4222-bbeb-734e0bfd4aa8",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "85402b6f-f3f0-4443-bd40-00b772641535",
+  "label" : "Lead Related List",
+  "routeType" : "relatedlist-00Q",
+  "type" : "route",
+  "urlPrefix" : "lead"
+}

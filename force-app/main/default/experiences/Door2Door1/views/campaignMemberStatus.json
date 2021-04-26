@@ -1,0 +1,45 @@
+{
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "id" : "32ad1005-2429-4024-a296-3a12afa38e3b",
+  "label" : "Campaign Member Status",
+  "regions" : [ {
+    "id" : "6d6684ad-5bdf-4179-b694-e55d4457b68f",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:HDT_LCP_CampaignMemberNegativeResult",
+      "id" : "c8e05115-5808-4b66-a70a-f99813780387",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "415698c8-83d4-4bb3-8df0-aa05e77b05df",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "9fd608f5-3733-4f50-a3b6-98774d805d93",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "description" : "",
+        "metaTags" : "",
+        "title" : "Campaign Member Status"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "077999ed-0420-4fe2-916f-138a22bf98ad",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d85385fb-8201-4e96-84d4-da3c17478277",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-campaign-member-status"
+}
