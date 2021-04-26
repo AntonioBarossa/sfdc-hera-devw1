@@ -1242,6 +1242,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
