@@ -576,4 +576,19 @@
         <default>false</default>
         <label>Disattivazione VAS</label>
     </standardValue>
+    <standardValue>
+        <fullName>Sospensione Canone Rai Calamità</fullName>
+        <default>false</default>
+        <label>Sospensione Canone Rai Calamità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Tensione - Pressione</fullName>
+        <default>false</default>
+        <label>Verifica Tensione - Pressione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Votive Modena Cessazione</fullName>
+        <default>false</default>
+        <label>Votive Modena Cessazione</label>
+    </standardValue>
 </StandardValueSet>
