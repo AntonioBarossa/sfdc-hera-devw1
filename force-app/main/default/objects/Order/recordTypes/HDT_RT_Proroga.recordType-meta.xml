@@ -1259,10 +1259,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
@@ -1324,14 +1320,6 @@
         </values>
         <values>
             <fullName>Gestione appuntamento su portale DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1404,10 +1392,6 @@
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1569,11 +1553,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>01</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>02</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
