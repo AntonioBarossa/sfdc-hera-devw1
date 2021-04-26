@@ -46,6 +46,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @track contentDocument;
     @track formats=[];
     @track showInputSection = false;
+    @track variablesLoaded = false;
     //@track showNotificationMessage = false;
     //@track notificationDescription = '';
     //@track notificationType = '';
@@ -55,7 +56,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @wire(getFields, { processType: '$processType' }) 
         wiredFieldsJSON ({ error, data }) {
             if (data) {
-                console.log(JSON.stringify(data));
+                console.log('### Struttura Form ' + JSON.stringify(data));
+                console.log('### Object Name ' + this.objectName);
+                console.log('### RecordId ' + this.recordId);
+                console.log('### RecordType ' + this.recordType);
                 this.wiredResponse = JSON.parse(data);
                 this.validateClass = this.wiredResponse[0].ValidateClass__c;
                 if(this.wiredResponse[0].hasOwnProperty("FieldsJSON__c")){
@@ -79,6 +83,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }
                     });
                 }
+                this.variablesLoaded = true;
             } else if (error) {
                 this.error = true;
                 this.errorMessage = error;
@@ -129,7 +134,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         if(this.addContentDocument){
             this.selectContentDocument();
         }
-        console.log(this.acceptedFormats);
+        console.log('### Accepted Format ' + this.acceptedFormats);
         if(this.acceptedFormats){
             console.log(this.acceptedFormats);
             this.formats = this.acceptedFormats.split(";");
