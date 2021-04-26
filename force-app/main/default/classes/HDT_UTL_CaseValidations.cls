@@ -6,6 +6,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         System.debug('HDT_UTL_CaseValidations: validating Case ' + currentCase);
 
         String caseType = currentCase.Type;
+        String subprocess = currentCase.Subprocess__c;
 
         String result;
 
@@ -37,7 +38,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'){
 
-            result = validateVariazioni(fields,recordId,caseType);
+            result = validateVariazioni(fields,recordId,caseType, subprocess);
 
         }
 
@@ -319,7 +320,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateVariazioni(String fields, String recordId, String caseType){
+    public String validateVariazioni(String fields, String recordId, String caseType, String subprocess){
 
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String useCategory = getFieldValue(fields, 'UseCategory__c');
@@ -389,6 +390,30 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
 
+        } else if(caseType == 'Fiscale'){
+
+            if(subprocess != 'IVA - Errata applicazione' && subprocess != 'Accise - Errata applicazione'){
+
+                List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
+                WHERE LinkedEntityId = :recordId 
+                WITH SECURITY_ENFORCED];
+
+                if(attachedDocument.size() == 0){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario inserire allegato'));
+
+                } else{
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+ 
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));

@@ -27,10 +27,18 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
-    public static ServicePoint__c confirmServicePoint(ServicePoint__c servicePoint, Sale__c sale){
+    public static Map<String,ServicePoint__c> confirmServicePoint(ServicePoint__c servicePoint, Sale__c sale){
 
-        serviceSp.updateRecord(servicePoint);
+        ServicePoint__c newSp = servicePoint;
+        List<ServicePoint__c> querySp = servicePointQuery.getRecordById(servicePoint.Id, 'UseTypeEnergy__c');
+        ServicePoint__c oldSp = querySp[0];
 
-        return servicePoint;
+        serviceSp.updateRecord(newSp);
+
+        Map<String,ServicePoint__c> result = new Map<String,ServicePoint__c>();
+        result.put('newServicePoint', newSp);
+        result.put('oldServicePoint', oldSp);
+
+        return result;
     }
 }

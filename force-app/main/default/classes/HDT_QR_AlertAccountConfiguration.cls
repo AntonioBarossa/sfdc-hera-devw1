@@ -5,12 +5,17 @@ public with sharing class HDT_QR_AlertAccountConfiguration {
         List<AlertAccountConfiguration__c> accountAlerts = [
             SELECT 
             Id, 
-            AlertType__c, 
+            AlertType__c,
+            AlertRule__c,
             IsActive__c, 
             IsEmailChannelActive__c, 
             IsSmsChannelActive__c, 
             IsPushChannelActive__c, 
-            IsSolChannelActive__c 
+            IsSolChannelActive__c,
+            IsEmailChannelAllowed__c, 
+            IsSmsChannelAllowed__c, 
+            IsPushChannelAllowed__c, 
+            IsSolChannelAllowed__c 
             FROM AlertAccountConfiguration__c
             WHERE Account__c = :accountId
             WITH SECURITY_ENFORCED
