@@ -30,4 +30,6 @@ package.xml
 **objects/Order/fields/DocSendingMethod__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
-
+**objects/Account/recordTypes/HDT_RT_Other*
+**layouts/Contact-Contact*
+**objects/SBQQ__Quote__c/fields/Login__c*
