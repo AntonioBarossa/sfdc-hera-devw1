@@ -84,6 +84,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     });
                 }
                 this.variablesLoaded = true;
+                if(this.recordId != null){
+                    updateRecord({fields: { Id: this.recordId }}).then(() => {
+                       console.log('Record Refreshato');
+                    }).catch(error => {
+                        console.log('Error Refreshing record');
+                    });
+                }
             } else if (error) {
                 this.error = true;
                 this.errorMessage = error;
@@ -140,9 +147,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             this.formats = this.acceptedFormats.split(";");
             console.log(JSON.stringify(this.formats));
         }
-        if(this.recordId != null){
-            updateRecord({fields: { Id: this.recordId }});
-        }
+        
     }
     /*get formats(){
         var formats = [];
@@ -186,6 +191,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             );
         }
         this.handleGoNext();
+    }
+    handleOnLoad(event){
+        var record = event.detail.records;
+        var fields = record[this.recordId].fields;
+        console.log('Edit Form Loaded ' + fields);
     }
 
     handleError(event){

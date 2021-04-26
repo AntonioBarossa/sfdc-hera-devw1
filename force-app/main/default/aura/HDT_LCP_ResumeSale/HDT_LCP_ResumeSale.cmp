@@ -1,4 +1,4 @@
-<aura:component controller="HDT_LC_ResumeSaleController" implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId"  access="global">
+<aura:component controller="HDT_LC_ResumeSaleController" implements="force:lightningQuickAction,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:hasRecordId,lightning:isUrlAddressable" access="global">
     <aura:handler name="init" value="{!this}" action="{!c.init}"/>
     <lightning:navigation aura:id="navService"/>
     <lightning:workspaceAPI aura:id="workspace"/>
