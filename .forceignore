@@ -30,4 +30,4 @@ package.xml
 **objects/Order/fields/DocSendingMethod__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
-
+**layouts/Contact-Contact*
