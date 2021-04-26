@@ -315,6 +315,7 @@
         <div if:true={showSecondLevel} class="slds-col slds-size_1-of-1" style="height: 22vh;" >
             <c-hdt-account-statement-detail-viewer
                 tab-code={tabCode}
+                first-level={firstLevel}
                 accountdetails={secondLevelList}
                 onremovefilter={refreshSecondLevel}
                 filter-applied={filterApplied}

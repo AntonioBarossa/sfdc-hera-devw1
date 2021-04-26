@@ -6,6 +6,7 @@ import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 const filterObject = {};
 
 export default class HdtAccountStatementDetailViewer extends LightningElement {
+    @api firstLevel;
     @api accountdetails;
     @api filterString = '';
     @api tabCode;
@@ -26,6 +27,18 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         if(this.filterApplied){
             this.innerFilterMethod();
         }
+
+        /*if(this.firstLevel === undefined){
+            console.log('#### undefined ###');
+            return [];
+        } else {
+            console.log('#### NOT undefined ###');
+            if(this.firstLevel.secondoLivelloInformativo === undefined){
+                return [];
+            } else {
+                return this.firstLevel.secondoLivelloInformativo;
+            }
+        }*/
 
         return this.accountdetails;
     }
@@ -193,7 +206,17 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
             //    }
             //}
 
-            var recordsString = JSON.stringify(selected);
+            var serviceCatalogObj = [];
+            var catObj = {};
+            for(var i in this.firstLevel){
+                catObj[i] = this.firstLevel[i];
+            }
+
+            catObj.secondoLivelloInformativo = selected;
+
+            serviceCatalogObj.push(catObj);
+
+            var recordsString = JSON.stringify(serviceCatalogObj);
             this.serviceCatalogBackendOperation(recordsString);
 
         } else {

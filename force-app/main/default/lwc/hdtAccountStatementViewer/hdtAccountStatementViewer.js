@@ -442,7 +442,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     serviceCatalogEventFromChild(event){
         console.log('>>> serviceCatalog from child > ');
         console.log('>>> serviceCatalog from child > ' + event.detail);
-        this.serviceCatalogEvent('serviceCatalogId');
+        this.serviceCatalogEvent(event.detail);
     }
 
     viewResult(event){
@@ -606,6 +606,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         //get second level list and put in html
         let foundRow = this.accountData.find(ele  => ele[this.uniqueId] === e);
         this.secondLevelList = foundRow[this.detailTable];
+        this.firstLevel = foundRow;
 
     }
 
@@ -690,6 +691,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         }
 
         this.totAmountStored = this.totAmount;
+        this.firstLevel = obj.data[0];
         this.secondLevelList = obj.data[0][this.detailTable];
         this.totRecs = this.allData.length;
         this.fromRec = 1;
@@ -824,9 +826,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         
         if(this.filterPagination){
             this.accountData = this.allDataFiltered.slice(startIndex, endIndex);
+            this.firstLevel = this.allDataFiltered[0];
             this.secondLevelList = this.allDataFiltered[0][this.detailTable];
         } else {
             this.accountData = this.allData.slice(startIndex, endIndex);
+            this.firstLevel = this.accountData[0];
             this.secondLevelList = this.accountData[0][this.detailTable];
         }
 
@@ -949,6 +953,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             return;
         }
 
+        this.firstLevel = this.allDataFiltered[0];
         this.secondLevelList = this.allDataFiltered[0][this.detailTable];
         if(this.amountField != null && this.amountField != ''){
             this.allDataFiltered.forEach((element) => { this.totAmount +=  parseFloat(element[this.amountField]) });
