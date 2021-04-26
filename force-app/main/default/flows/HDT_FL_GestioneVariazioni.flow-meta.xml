@@ -5,7 +5,7 @@
         <name>Accorpamento_Campi</name>
         <label>Accorpamento Campi</label>
         <locationX>5726</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.DistributorNote__c</assignToReference>
             <operator>Assign</operator>
@@ -135,8 +135,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>7706</locationX>
-        <locationY>974</locationY>
+        <locationX>7904</locationX>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -159,7 +159,7 @@
         <name>Aggiorna_Fase_in_Da_Inviare_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>4802</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -182,7 +182,7 @@
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>5594</locationX>
-        <locationY>1118</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -205,7 +205,7 @@
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>6650</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -228,7 +228,7 @@
         <name>Aggiorna_Fase_in_Elaborazione_Manuale</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>5858</locationX>
-        <locationY>1118</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -251,7 +251,7 @@
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_0</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>6914</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -397,6 +397,86 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Valori_0_0_0_0</name>
+        <label>Assegna Valori</label>
+        <locationX>4802</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_00_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Valori_0_0_0_0_0</name>
+        <label>Assegna Valori</label>
+        <locationX>5726</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Valori_0_0_0_0_0_0</name>
+        <label>Assegna Valori</label>
+        <locationX>6782</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Valori_0_0_0_0_0_0_0_0</name>
+        <label>Assegna Valori</label>
+        <locationX>7904</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaComuneFornitura</name>
+        <label>AssegnaComuneFornitura</label>
+        <locationX>7970</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Valori_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaFoundOtherCase</name>
         <label>Assegna FoundOtherCase</label>
         <locationX>446</locationX>
@@ -426,6 +506,22 @@
         </assignmentItems>
         <connector>
             <targetReference>ScreenInputFiscale</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaModalit_Invio</name>
+        <label>AssegnaModalitàInvio</label>
+        <locationX>7706</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.BillSendingMethod__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.BillingProfile__r.BillSendingMethod__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Valori_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -479,6 +575,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Annullare</name>
+        <label>Annullare?</label>
+        <locationX>7574</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaModalit_Invio</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
+        <rules>
+            <name>Annullare_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtBillDeliveryChooser_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>Annullare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Data_Validit_Nel_futuro</name>
         <label>Data Validità Nel futuro?</label>
         <locationX>3350</locationX>
@@ -506,10 +627,10 @@
     <decisions>
         <name>Dettaglio_Bolletta</name>
         <label>Dettaglio Bolletta?</label>
-        <locationX>7706</locationX>
+        <locationX>7904</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+            <targetReference>Assegna_Valori_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
         <rules>
@@ -527,12 +648,27 @@
             </connector>
             <label>Dettaglio Bolletta</label>
         </rules>
+        <rules>
+            <name>Gestione_Calamita</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gestione Calamità</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaComuneFornitura</targetReference>
+            </connector>
+            <label>Gestione Calamità</label>
+        </rules>
     </decisions>
     <decisions>
         <name>InRete_o_ExtraRete</name>
         <label>InRete o ExtraRete?</label>
         <locationX>5726</locationX>
-        <locationY>998</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale</targetReference>
         </defaultConnector>
@@ -557,7 +693,7 @@
         <name>InRete_o_ExtraRete_0</name>
         <label>InRete o ExtraRete?</label>
         <locationX>6782</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Fase_in_Elaborazione_Manuale_0</targetReference>
         </defaultConnector>
@@ -785,8 +921,8 @@
     <decisions>
         <name>OutcomeForm_0_0_0_0</name>
         <label>OutcomeForm</label>
-        <locationX>7706</locationX>
-        <locationY>854</locationY>
+        <locationX>7904</locationX>
+        <locationY>1550</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0</name>
@@ -888,7 +1024,7 @@
         <name>OutcomeForm_0_0_0_0_0_0</name>
         <label>OutcomeForm</label>
         <locationX>4802</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0_0_0</name>
@@ -939,7 +1075,7 @@
         <name>OutcomeForm_0_0_0_0_0_0_0</name>
         <label>OutcomeForm</label>
         <locationX>5726</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0_0_0_0</name>
@@ -990,7 +1126,7 @@
         <name>OutcomeForm_0_0_0_0_0_0_0_0</name>
         <label>OutcomeForm</label>
         <locationX>6782</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0_0_0_0_0</name>
@@ -1040,7 +1176,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>4406</locationX>
+        <locationX>4505</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1143,7 +1279,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ScreenInputFiscale_0_0_0_0_0</targetReference>
+                <targetReference>Assegna_Valori_0_0_0_0</targetReference>
             </connector>
             <label>Modifica Layout/Consumo</label>
         </rules>
@@ -1158,7 +1294,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ScreenInputFiscale_0_0_0_0_0_0</targetReference>
+                <targetReference>Assegna_Valori_0_0_0_0_0</targetReference>
             </connector>
             <label>Cambio Contatore</label>
         </rules>
@@ -1173,7 +1309,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0</targetReference>
+                <targetReference>Assegna_Valori_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Mancata Telelettura/Lettura</label>
         </rules>
@@ -1246,8 +1382,7 @@
             <label>Uguale</label>
         </rules>
     </decisions>
-    <description>Flow per la gestione dei processi del Cluster Variazioni
---&gt; Versione per primo release su Devw1</description>
+    <description>Flow per la gestione dei processi del Cluster Variazioni</description>
     <formulas>
         <name>DistributorNoteFormula</name>
         <dataType>String</dataType>
@@ -1288,7 +1423,7 @@
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>5726</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Accorpamento_Campi</targetReference>
@@ -1350,7 +1485,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>4406</locationX>
+        <locationX>4505</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1465,6 +1600,46 @@
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Case_00_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>4802</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_00_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>5726</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_00_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>6782</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_00_0_0_0_0_0_0_0</name>
+        <label>Aggiorna Case</label>
+        <locationX>7904</locationX>
+        <locationY>1310</locationY>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Case_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>2426</locationX>
@@ -1481,29 +1656,29 @@
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>7706</locationX>
-        <locationY>1094</locationY>
+        <locationX>7904</locationX>
+        <locationY>1790</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>4802</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>5726</locationX>
-        <locationY>1334</locationY>
+        <locationY>1574</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>6782</locationX>
-        <locationY>974</locationY>
+        <locationY>1214</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1517,7 +1692,7 @@
         <name>AggiornaCaseGetCaseAggiornato</name>
         <label>AggiornaCaseGetCaseAggiornato</label>
         <locationX>5726</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>InRete_o_ExtraRete</targetReference>
         </connector>
@@ -1570,7 +1745,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+            <targetReference>Annullare</targetReference>
         </connector>
         <fields>
             <name>DisplayHeadert_Address_0</name>
@@ -2244,8 +2419,8 @@
     <screens>
         <name>ScreenInputFiscale_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>7706</locationX>
-        <locationY>734</locationY>
+        <locationX>7904</locationX>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2367,7 +2542,7 @@
         <name>ScreenInputFiscale_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
         <locationX>4802</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2489,7 +2664,7 @@
         <name>ScreenInputFiscale_0_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
         <locationX>5726</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2611,7 +2786,7 @@
         <name>ScreenInputFiscale_0_0_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
         <locationX>6782</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2730,7 +2905,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>4280</locationX>
+        <locationX>4379</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -2855,7 +3030,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>4538</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2874,7 +3049,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>5330</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2893,7 +3068,7 @@
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>6386</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2911,8 +3086,27 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
+        <locationX>7640</locationX>
+        <locationY>1670</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</name>
+        <label>Annulla Prestazione</label>
         <locationX>7442</locationX>
-        <locationY>974</locationY>
+        <locationY>758</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2935,6 +3129,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>createDocuments</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>existingCase</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -2950,6 +3151,13 @@
     </variables>
     <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>serviceCatalogId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
