@@ -79,34 +79,26 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     infoCase.ServicePoint__c = contextObj.ServicePoint__c;
                     infoCase.Market__c = contextObj.Market__c;
                     infoCase.BillingProfile__c = contextObj.BillingProfile__c;
-                    //infoCase.InformativeCluster__c = contextObj.Cluster__c;
-                    //infoCase.InformativeType__c = contextObj.Type;
+                    infoCase.InformativeCluster__c = contextObj.Cluster__c;
+                    infoCase.InformativeType__c = contextObj.Type;
                     infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.Contract__c;
                     infoCase.ParentId = contextId;
 
                 }
                 when 'Order'{
-
-                    /*
-
-                    Order contextObj = (Order) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
-
+                    Order contextObj = (Order) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName);
                     infoCase.AccountId = contextObj.AccountId;
                     infoCase.ServicePoint__c = contextObj.ServicePoint__c;
                     infoCase.Market__c = contextObj.Market__c;
                     infoCase.BillingProfile__c = contextObj.BillingProfile__c;
-                    infoCase.Cluster__c = contextObj.Cluster__c;
-                    infoCase.Type = contextObj.Type; //qui capire che campo bisogna prendere
+                    infoCase.InformativeCluster__c = contextObj.Cluster__c;
+                    infoCase.InformativeType__c = contextObj.Subprocess__c; //qui capire che campo bisogna prendere
                     infoCase.SalesCompany__c = contextObj.SalesCompany__c;
-                    infoCase.Contract__c = contextObj.Contract__c; // qui capire che campo bisogna prendere
-
-                    */
-
+                    infoCase.Contract__c = contextObj.ContractId; // qui capire che campo bisogna prendere
+                    infoCase.Order__c = contextId;
                 }
-                when 'Opportunity'{
-
-                    /*
+                /*when 'Opportunity'{
 
                     Opportunity contextObj = (Opportunity) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
 
@@ -118,44 +110,26 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     //infoCase.Type = contextObj.Type; //qui capire che campo bisogna prendere
                     //infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.ContractId; // qui capire che campo bisogna prendere
-
-                    */
-
-                }
+                }*/
                 when 'ServicePoint__c'{
 
-                    /*
-
-                    ServicePoint__c contextObj = (ServicePoint__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
-
+                    ServicePoint__c contextObj = (ServicePoint__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName);
+                    Contract contractObj = (Contract) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, 'Contract');
                     infoCase.AccountId = contextObj.Account__c;
                     infoCase.ServicePoint__c = contextId;
-                    infoCase.Market__c = contextObj.MarketOrigin__c;
-                   //infoCase.BillingProfile__c = contextObj.BillingProfile__c;
+                    //infoCase.Market__c = contextObj.MarketOrigin__c;
+                    infoCase.BillingProfile__c = contractObj.BillingProfile__c;
                     //infoCase.SalesCompany__c = contextObj.SalesCompany__c;
-                    //infoCase.Contract__c = contextObj.Contract__c;
-
-                    */
-
+                    infoCase.Contract__c = contractObj.Id;
                 }
                 when 'BillingProfile__c'{
 
-                    /*
+                    
 
-                    BillingProfile__c contextObj = (BillingProfile__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName)
+                    BillingProfile__c contextObj = (BillingProfile__c) HDT_QR_InformativeManager.getPrePopulationInfo(contextId, sObjName);
 
                     infoCase.AccountId = contextObj.Account__c;
-                    infoCase.Market__c = contextObj.MarketOrigin__c;
                     infoCase.BillingProfile__c = contextId;
-                    if(contextObj.Contract__c != null){
-
-                        infoCase.Contract__c = contextObj.Contract__c;
-                        infoCase.ServicePoint__c = contextObj.ServicePoint__c;
-                        infoCase.SalesCompany__c = contextObj.SalesCompany__c;
-
-                    }
-
-                    */
 
                 }
                 when 'Account'{
