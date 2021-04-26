@@ -73,7 +73,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 ord.id = (id)obj.get('Id');
 
                 if (responseService.responses[0].objects == null) {
-                    ord.DiscardReason__c = responseService.responses[0].description;
+                    // ord.DiscardReason__c = responseService.responses[0].description;
                     ord.Phase__c = 'Comunicazione verso Heroku KO';
                     HDT_SRV_Order ordSrv = new HDT_SRV_Order();
                     ordSrv.updateRecord(ord);
@@ -99,7 +99,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             }
                         }
                         else{
-                            ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
                             ord.Phase__c = 'Comunicazione verso Heroku KO';
                         }
                         HDT_SRV_Order ordSrv = new HDT_SRV_Order();
