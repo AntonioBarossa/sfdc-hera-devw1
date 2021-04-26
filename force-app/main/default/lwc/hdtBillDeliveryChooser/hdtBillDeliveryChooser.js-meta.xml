@@ -16,6 +16,7 @@
             <property name="pec" type="String" label="pec" description="pec" role="outputOnly"/>
             <property name="presso" type="String" label="presso" description="presso" role="outputOnly"/>
             <property name="indirizzo" type="String" label="indirizzo" description="indirizzo" role="outputOnly"/>
+            <property name="cancelCase" type="Boolean" label="Annullamento" description="Annullamento" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
