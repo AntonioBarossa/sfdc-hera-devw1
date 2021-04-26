@@ -24,56 +24,8 @@
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Sale__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ProcessType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Agency__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ImplantType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingCity__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingCountry__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingProvince__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingStreetName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingStreetNumber__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>BillingPostalCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>InvoiceEmailAddress__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RecordTypeName__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ServicePointCode__c</field>
+                <behavior>Required</behavior>
+                <field>EffectiveDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -81,10 +33,34 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>SAPImplantCode__c</field>
+                <field>Sale__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SalesCompany__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SaleBy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Agency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Campaign__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ProcessType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ServicePointCode__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Phase__c</field>
@@ -94,27 +70,42 @@
                 <field>Status</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>EffectiveDate</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ActivatedDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>InvoiceEmailAddress__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SBQQ__Contracted__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Campaign__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SalesCompany__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Dettaglio impianto</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ServicePoint__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ImplantType__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SAPImplantCode__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -230,39 +221,9 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.TextPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>PrintableView</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>12</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>NewEvent</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>13</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ActivateOrder</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>14</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ChangeRecordType</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>15</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>16</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>LogACall</actionName>
@@ -285,11 +246,6 @@
             <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>ChangeOwnerOne</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
@@ -303,6 +259,41 @@
             <actionName>NewLead</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>FeedItem.TextPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>11</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>PrintableView</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>12</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>13</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ActivateOrder</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeRecordType</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ChangeOwnerOne</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>17</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Edit</actionName>

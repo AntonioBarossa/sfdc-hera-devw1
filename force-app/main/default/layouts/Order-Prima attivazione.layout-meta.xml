@@ -72,10 +72,6 @@
                 <field>InvoiceEmailAddress__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RecordTypeName__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>ServicePointCode__c</field>
             </layoutItems>
