@@ -3753,6 +3753,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
             <default>false</default>
         </values>
