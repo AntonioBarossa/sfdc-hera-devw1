@@ -183,4 +183,23 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ORDER BY Opportunity__r.CreatedDate ASC
         ];
     }
+
+    public List<SaleServiceItem__c> getRecordsWithContractsByServicePointAndAccount(String servicePointId, String accountId){
+
+        return [
+            SELECT 
+            Id,
+            Quote__c,
+            Quote__r.ContractReference__c,
+            Opportunity__c,
+            Opportunity__r.CreatedDate
+            FROM SaleServiceItem__c
+            WHERE ServicePoint__c = :servicePointId
+            AND Quote__r.SBQQ__Account__c = :accountId
+            AND Quote__r.ContractReference__c != null
+            AND Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+            ORDER BY Opportunity__r.CreatedDate ASC
+        ];
+    }
 }

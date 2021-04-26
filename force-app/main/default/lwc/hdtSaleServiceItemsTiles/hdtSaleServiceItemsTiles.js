@@ -15,6 +15,7 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
     opportunityToDeleteName;
     dialogTitle;
     dialogMessage;
+    tileIcon = "custom:custom9"; //custom3
 
     @api
     getTilesData(){
@@ -27,6 +28,21 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
 
             if(data.saleServiceItemsTiles !== undefined){
                 data.saleServiceItemsTiles.forEach(el => {
+
+                    let tileIcon = 'standard:opportunity';
+
+                    switch (el[0].ServicePoint__r.RecordType.DeveloperName) {
+                        case 'HDT_RT_Ele':
+                            tileIcon = 'custom:custom9';
+                            break;
+                        
+                        case 'HDT_RT_Gas':
+                            tileIcon = 'custom:custom3';
+                            break;
+                        default:
+                            break;
+                    }
+
                     tilesArray.push({
                         "Id"           :el[0].Opportunity__c,
                         "Name"         :el[0].Opportunity__r.Name,
@@ -34,12 +50,13 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
                         "City"         :el[0].ServicePoint__r.SupplyCity__c,
                         "MarketOrigin" :el[0].ServicePoint__r.MarketOrigin__c,
                         "ServicePoints":el,
-                        "CreatedDate"  : el[0].Opportunity__r.CreatedDate
+                        "CreatedDate"  : el[0].Opportunity__r.CreatedDate,
+                        "TileIcon"     : tileIcon
                     });
                 });
             }
 
-            if(data.vasTiles !== undefined){
+            if(data.vasTiles[0] !== undefined){
                 data.vasTiles[0].forEach(el => {
 
                     let vasType = '';
@@ -60,7 +77,8 @@ export default class hdtSaleServiceItemsTiles extends LightningElement {
                         "Type"         :vasType,
                         "City"         :el.SBQQ__PrimaryQuote__r.SupplyCity__c,
                         "VasEl"        :vasEl,
-                        "CreatedDate"  :el.CreatedDate
+                        "CreatedDate"  :el.CreatedDate,
+                        "TileIcon"     : 'standard:opportunity'
                     });
                 });
             }

@@ -64,7 +64,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
         if(orderUpdates.ContractSigned__c != null && orderUpdates.ContractSigned__c){
             orderUpdates.SignatureMethod__c = 'Stampa';
-            orderUpdates.DocSendingMethod__c = 'Stampa';
+            orderUpdates.DocSendingMethod__c = 'Stampa Cartacea';
         }
 
         orderUpdates.Step__c = 2;

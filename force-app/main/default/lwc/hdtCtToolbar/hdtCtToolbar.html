@@ -1,0 +1,27 @@
+<template>
+
+    <lightning-card  title="CT TOOLBAR 7" icon-name="standard:call" >
+
+        <div if:true={spinner} >
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
+    
+        <div class="slds-p-around_medium" style="background-color: rgb(242, 242, 242)" >
+            <lightning-icon icon-name={iconName} alternative-text="Approved" title="Approved"></lightning-icon>
+            <span if:true={dialing} class="slds-icon-typing slds-is-animated" title="User is typing">
+                <span class="slds-icon-typing__dot"></span>
+                <span class="slds-icon-typing__dot"></span>
+                <span class="slds-icon-typing__dot"></span>
+                <span class="slds-assistive-text">User is typing</span>
+              </span>
+            <lightning-input type="text" id="callNumber" label="Chiama questo numero:" onchange={setNumber} ></lightning-input>
+            <lightning-button label="Chiama questo numero" title="Non-primary action" onclick={callThisNumber} icon-name="utility:call" variant="success" ></lightning-button>
+            <lightning-button label="Chiudi la telefonata" title="Non-primary action" onclick={hangup} icon-name="utility:end_call" variant="destructive" class="slds-m-left_x-small" ></lightning-button>
+        </div>
+    </lightning-card>
+
+    <div class="slds-m-top_medium">
+        <!--<c-child-example record-id={recordid} card-title={title} ></c-child-example>-->
+    </div>
+
+</template>
