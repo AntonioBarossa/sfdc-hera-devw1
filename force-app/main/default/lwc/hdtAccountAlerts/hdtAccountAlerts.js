@@ -160,10 +160,6 @@ export default class HdtAccountAlerts extends LightningElement {
         console.log(event.detail.draftValues);
         let draftAlert = event.detail.draftValues[0];
         let oldAlert = this.getAccountAlertById(event.detail.draftValues[0].Id);
-        console.log('oldAlert' + JSON.stringify(oldAlert));
-
-        console.log('push? ' + ('IsPushChannelActive__c' in draftAlert));
-        console.log('push allowed? ' + oldAlert['IsPushChannelAllowed__c']);
 
         // Verifica se l'operatore sta provando ad abilitare un canale che è disabilitato al livello di regola alert.
         let channels = ['Email', 'Sms', 'Push', 'Sol'];
@@ -175,12 +171,37 @@ export default class HdtAccountAlerts extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Modifica Alert non valida',
-                        message: 'Il Canale che si vuole modificare non è abilitato per questo gruppo regola',
+                        message: 'Il gruppo regola <' + oldAlert['AlertRule__c'] + '> non permette l\'abilitazione di questo canale.',
                         variant: 'error'
                     })
                 );
             }
         });
+
+        let newAlert = JSON.parse(JSON.stringify(oldAlert)); // deep copy
+        Object.keys(draftAlert).forEach(key => {
+            newAlert[key] = draftAlert[key];
+        });
+
+        if (newAlert['IsActive__c'] === true &&
+            newAlert['IsEmailChannelActive__c'] === false &&
+            newAlert['IsSmsChannelActive__c'] === false &&
+            newAlert['IsPushChannelActive__c'] === false &&
+            newAlert['IsSolChannelActive__c'] === false &&
+            newAlert['IsSolChannelActive__c'] === false) {
+
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Modifica Alert non valida',
+                    message: 'Per attivare un Alert è necessario abilitare almeno un canale di comunicazione.',
+                    variant: 'error'
+                })
+            );
+        }
+
+        // TODO: verificare anche se il cliente ha cellulare/mail/contattoSol per poter ricevere l'alert?
+
+        // TODO: update DML for newAlert
     }
 
     getAccountAlertById(alertId){
