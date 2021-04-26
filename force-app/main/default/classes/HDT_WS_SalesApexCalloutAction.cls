@@ -29,101 +29,94 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         
         System.debug('********sender:' + obj);
         // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
+        
+        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method)) {
+            //////////// Recupero endpoint in base a contesto di oggetto
+            wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
+            String endpoint = endpointUtils.getEndpoint(obj);
+            System.debug('********endpoint:' + endpoint);
+        
+            //////////// genero MRR per il payload del servizio
+            Map<String,Object> inputTemplateFunction = new Map<String,Object>();
+            inputTemplateFunction.put('sender',obj);
+            inputTemplateFunction.put('template',tm);
+            inputTemplateFunction.put('parameters',parameters);
+        
+            wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
+            Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
+            //inputTemplateFunction.put('templateObject',objTemp);
+            Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
+            wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
+            multirequestObj.requests[0].header.fields = headerAttributetoAdd;
+        
+            System.debug('********MRRequest:' + multirequestObj);
+        
+            ///////////// instanzio e effettuo la chiamata con la request
+            Map<String,Object> inputClientFunction = new Map<String,Object>();
+            inputClientFunction.put('endpoint',endpoint);
+            inputClientFunction.put('timeout',120);
+            inputClientFunction.put('payload',multirequestObj);
+            inputClientFunction.put('clientType','REST');
+            inputClientFunction.put('contentType','application/json');
+            wrts_prcgvr.Interfaces_1_0.ICalloutClient client = (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance ('CalloutClient');
+        
+            try{
 
-        //////////// Recupero endpoint in base a contesto di oggetto
-        System.debug('********LOG');
-        wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
-        System.debug('********LOG2');
-        String endpoint = endpointUtils.getEndpoint(obj);
-        System.debug('********LOG3');
-        System.debug('********endpoint:' + endpoint);
-        
-        //////////// genero MRR per il payload del servizio
-        Map<String,Object> inputTemplateFunction = new Map<String,Object>();
-        System.debug('********LOG4');
-        inputTemplateFunction.put('sender',obj);
-        System.debug('********LOG5');
-        inputTemplateFunction.put('template',tm);
-        System.debug('********LOG6');
-        inputTemplateFunction.put('parameters',parameters);
-        System.debug('********LOG7');
-        
-        wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng templateEngine = (wrts_prcgvr.Interfaces_1_0.ICalloutTemplateMng) wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
-		System.debug('********LOG8');
-        Object objTemp = templateEngine.getTemplate(inputTemplateFunction);
-        System.debug('********LOG9');
-        //inputTemplateFunction.put('templateObject',objTemp);
-        System.debug('********LOG10');
-        Map<String,Object> templateReturn = (Map<String,Object>)templateEngine.applyTemplate(objTemp);
-        wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = (wrts_prcgvr.MRR_1_0.MultiRequest)templateReturn.get('multirequest');
-        multirequestObj.requests[0].header.fields = headerAttributetoAdd;
-        System.debug('********LOG11');
-        
-        System.debug('********MRRequest:' + multirequestObj);
-        
-        ///////////// instanzio e effettuo la chiamata con la request
-        Map<String,Object> inputClientFunction = new Map<String,Object>();
-        inputClientFunction.put('endpoint',endpoint);
-        inputClientFunction.put('timeout',120);
-        inputClientFunction.put('payload',multirequestObj);
-		inputClientFunction.put('clientType','REST');
-		inputClientFunction.put('contentType','application/json');
-        wrts_prcgvr.Interfaces_1_0.ICalloutClient client = (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance ('CalloutClient');
-        
-        try{
+                map<String,String> fieldValueResponse = new map<String,String>();
+                wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
 
-            map<String,String> fieldValueResponse = new map<String,String>();
-        	wrts_prcgvr.MRR_1_0.MultiResponse responseService = (wrts_prcgvr.MRR_1_0.MultiResponse)client.send(inputClientFunction);
-            System.debug('********MRRequest:' + responseService);
-            wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
-            for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
-                fieldValueResponse.put(field.name,field.value);
-            }
-            if(fieldValueResponse.get('result') != null){
-            	Order ord = new Order();
+                System.debug('********MRRequest:' + responseService);
+                System.debug('********description:' + responseService.responses[0].description);
+                System.debug('********objects:' + responseService.responses[0].objects);
+
+                Order ord = new Order();
                 ord.id = (id)obj.get('Id');
-                if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
-                	System.debug('********INSIDE RESULT OK');
-                    //INIZIO SVILUPPI EVERIS
-                    ord.Phase__c = 'Comunicazione verso Heroku OK'/*fieldValueResponse.get('FASE')*/;
-                    ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
-                    //FINE SVILUPPI EVERIS
-                    //EVERIS: COMMENTATO POICHE NON SI VIENE RISPOSTI CON LA FASE MA SOLTANTO CON "result":"ok"
-                	/*if(fieldValueResponse.get('FASE') != null){
-                    	System.debug('********INSIDE FASE NOT NULL');
-                        //EVERIS: Dichiarata esplicitamente la fase in quanto ci viene passato soltanto 'OK' nella response
-                        //EVERIS: Aggiunto codice pratica heroku
-                        ord.Phase__c = fieldValueResponse.get('FASE');
-                        ord.HerokuPracticeCode__c = fieldValueResponse.get('')
-                        System.debug('********AFTER UPDATE');
-                	}*/
-            	}
-                else{
-                    ord.Description = fieldValueResponse.get('errorMessage'); 
-                    //EVERIS: COMMENTATO POICHE CAMPO NON PRESENTE SUL BRANCH
-                    //ord.DiscardReason__c = fieldValueResponse.get('errorMessage'); 
+
+                if (responseService.responses[0].objects == null) {
+                    // ord.DiscardReason__c = responseService.responses[0].description;
                     ord.Phase__c = 'Comunicazione verso Heroku KO';
+                    HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                    ordSrv.updateRecord(ord);
+                } else {
+
+                    wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
+                    system.debug('log 1');
+                    for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
+                        
+                        fieldValueResponse.put(field.name,field.value);
+                        system.debug('log 2');
+                    }
+                    if(fieldValueResponse.get('result') != null){
+                        system.debug('log 3');
+                        
+                        system.debug('log 5');
+                        if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
+                            System.debug('********INSIDE RESULT OK');
+                            if(fieldValueResponse.get('FASE') != null){
+                                System.debug('********INSIDE FASE NOT NULL');
+                                ord.Phase__c = fieldValueResponse.get('FASE');
+                                System.debug('********AFTER UPDATE');
+                            }
+                        }
+                        else{
+                            // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            ord.Phase__c = 'Comunicazione verso Heroku KO';
+                        }
+                        HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                        ordSrv.updateRecord(ord);
+                    }
                 }
-                HDT_SRV_Order ordSrv = new HDT_SRV_Order();
-                ordSrv.updateRecord(ord);
+
+            } catch(Exception e ) {
+                System.debug('ERRORE RESPONSE 500');
+                system.debug(e);
             }
-        }catch(Exception e ){
-            System.debug('ERRORE RESPONSE 500 Qualcosa');
         }
-        
-        
-        
         
        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         response.success = true;
         response.message = 'OK';
         return response;
   		//return responseService;
-     }
-   
-    
-    
-    
-    
-    
+    }
 }
