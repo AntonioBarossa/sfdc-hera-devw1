@@ -199,10 +199,6 @@
                 <behavior>Edit</behavior>
                 <field>RecessNotice__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>TraderRecessDate__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
