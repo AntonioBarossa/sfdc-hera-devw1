@@ -56,4 +56,9 @@
         <default>false</default>
         <label>Ex-Customer</label>
     </standardValue>
+    <standardValue>
+        <fullName>Distributore</fullName>
+        <default>false</default>
+        <label>Distributore</label>
+    </standardValue>
 </StandardValueSet>
