@@ -627,6 +627,36 @@
                 <default>false</default>
                 <label>Lavorazione Sap</label>
             </value>
+            <value>
+                <fullName>Annullamento - Esito KO da DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Inviato al DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Inviato al DL/SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Esito KO da SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Esito KO da SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Esito OK da SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Esito OK da SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Inviato al SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Inviato al SII</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
