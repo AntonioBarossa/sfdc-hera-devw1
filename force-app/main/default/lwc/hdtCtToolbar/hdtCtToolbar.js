@@ -1,6 +1,6 @@
 import { LightningElement} from 'lwc';
-//import { loadScript } from 'lightning/platformResourceLoader';
-//import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
+import { loadScript } from 'lightning/platformResourceLoader';
+import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 
@@ -22,10 +22,10 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
         window.addEventListener('toolbarCallBack', this.contactCallback);
 
-        //Promise.all([
-        //    loadScript(this, cttoolbar)
-        //]).then(() => console.log('# javascript Loaded #'))
-        //.catch(error => console.log('promise error: ' + error));
+        Promise.all([
+            loadScript(this, cttoolbar)
+        ]).then(() => console.log('# javascript Loaded #'))
+        .catch(error => console.log('promise error: ' + error));
 
         setTimeout(() => {
             this.enableCallback();
