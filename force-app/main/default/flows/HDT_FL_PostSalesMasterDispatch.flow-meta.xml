@@ -523,21 +523,14 @@
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Rettifica Consumi - Errore di Lettura</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Rettifica Consumi - Errore Stima Consumi</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
                     <stringValue>Prescrizione Fatture</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>StartsWith</operator>
+                <rightValue>
+                    <stringValue>Rettifica Consumi</stringValue>
                 </rightValue>
             </conditions>
             <connector>
