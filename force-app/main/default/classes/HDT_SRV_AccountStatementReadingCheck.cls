@@ -30,6 +30,7 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
         }
 
         Boolean isLetturaStimata = false;
+        Boolean isMultiContratto = false;
         Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(responseCtrl.body);
         //System.debug('HDT_SRV_AccountStatementReadingCheck: parsed response body = ' + JSON.serialize(responseBodyMap));
 
@@ -41,6 +42,8 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
             List<Object> secondoLivelloList = (List<Object>) primoLivelloMap.get('secondoLivelloInformativo');
             //System.debug('HDT_SRV_AccountStatementReadingCheck: secondo livello = ' + secondoLivelloList);
 
+            String previousContract = '';
+            String currentContract = '';
             for (Object secondoLivello : secondoLivelloList) {
                 //System.debug('record secondo livello: ' + secondoLivello);
                 Map<String, Object> secondoLivelloMap = (Map<String, Object>) secondoLivello;
@@ -51,19 +54,24 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
                     break;
                 }
 
+                currentContract = (String) secondoLivelloMap.get('contratto');
+                if (!String.isBlank(currentContract) && !String.isBlank(previousContract) && !currentContract.equals(previousContract)) {
+                    isMultiContratto = true;
+                }
+
+                previousContract = currentContract;
             }
         }
 
         HDT_WRP_AccountStatementReadingCheckOutput output = new HDT_WRP_AccountStatementReadingCheckOutput();
         output.isLetturaStimata = isLetturaStimata;
+        output.isMultiContratto = isMultiContratto;
 
         List<HDT_WRP_AccountStatementReadingCheckOutput> outputList = new List<HDT_WRP_AccountStatementReadingCheckOutput>();
         outputList.add(output);
 
         return outputList;
     }
-
-    
 
     public class HDT_WRP_AccountStatementReadingCheckInput {
     
@@ -81,6 +89,9 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
     public class HDT_WRP_AccountStatementReadingCheckOutput {
         
         @InvocableVariable
-        public Boolean isLetturaStimata;
+        public Boolean isLetturaStimata; // Se la fattura ha una lettura stimata
+        @InvocableVariable
+        public Boolean isMultiContratto; // Se la fattura ha contratti diversi al secondo livello.
+
     }
 }
