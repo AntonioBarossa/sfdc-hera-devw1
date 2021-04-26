@@ -79,10 +79,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>DiscardReason__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>SBQQ__Contracted__c</field>
             </layoutItems>
         </layoutColumns>

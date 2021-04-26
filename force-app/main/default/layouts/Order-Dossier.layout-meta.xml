@@ -232,7 +232,6 @@
     </platformActionList>
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
-        <fields>Processo__c</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>Phase__c</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
