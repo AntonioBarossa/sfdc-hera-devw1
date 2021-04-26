@@ -59,14 +59,42 @@
             <value>
                 <fullName>Annullamento</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Annullamento</label>
+            </value>
+            <value>
+                <fullName>Presa Appuntamento</fullName>
+                <default>false</default>
+                <label>Presa Appuntamento</label>
+            </value>
+            <value>
+                <fullName>Sollecito Distributore</fullName>
+                <default>false</default>
+                <label>Sollecito Distributore</label>
             </value>
             <value>
                 <fullName>Anticipo Appuntamento</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Anticipo Appuntamento</label>
+            </value>
+            <value>
+                <fullName>Riapertura urgenti Errori DL</fullName>
+                <default>false</default>
+                <label>Riapertura urgenti Errori DL</label>
+            </value>
+            <value>
+                <fullName>Richiesta informazioni appuntamento</fullName>
+                <default>false</default>
+                <label>Richiesta informazioni appuntamento</label>
+            </value>
+            <value>
+                <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
+                <default>false</default>
+                <label>Richiesta appuntamento DL (fermo sistemi)</label>
+            </value>
+            <value>
+                <fullName>Comunicazione da DL</fullName>
+                <default>false</default>
+                <label>Comunicazione da DL</label>
             </value>
             <value>
                 <fullName>Chiamata Callback</fullName>
@@ -85,42 +113,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Chiamata outbound</label>
-            </value>
-            <value>
-                <fullName>Comunicazione da DL</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Comunicazione da DL</label>
-            </value>
-            <value>
-                <fullName>Presa Appuntamento</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Presa Appuntamento</label>
-            </value>
-            <value>
-                <fullName>Riapertura urgenti Errori DL</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Riapertura urgenti Errori DL</label>
-            </value>
-            <value>
-                <fullName>Richiesta appuntamento DL (fermo sistemi)</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Richiesta appuntamento DL (fermo sistemi)</label>
-            </value>
-            <value>
-                <fullName>Richiesta informazioni appuntamento</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Richiesta informazioni appuntamento</label>
-            </value>
-            <value>
-                <fullName>Sollecito Distributore</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Sollecito Distributore</label>
             </value>
         </valueSetDefinition>
     </valueSet>
