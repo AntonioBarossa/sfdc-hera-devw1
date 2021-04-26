@@ -1,11 +1,19 @@
 public with sharing class HDT_LC_OmniChannelReplacerController {
     @AuraEnabled
-    public static String getSigmaLogin(){
+    public static String getSigmaLogin() {
+        if(!Schema.sObjectType.User.isQueryable()) {
+            return null;
+        }
+
         return [SELECT FederationIdentifier FROM User WHERE Id =: UserInfo.getUserID()].FederationIdentifier;
     }
 
     @AuraEnabled
-    public static List<wrts_prcgvr__Activity__c> getActivities(String qadLogin){
+    public static List<wrts_prcgvr__Activity__c> getActivities(String qadLogin) {
+        if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isQueryable()) {
+            return null;
+        }
+
         return [
             SELECT
                 Id,
