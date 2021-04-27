@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>+39</fullName>
+        <default>false</default>
+        <label>+39</label>
+    </customValue>
+    <description>gli &quot; l ho aggiunti solo per non far scomparire il + davanti al numero</description>
+    <masterLabel>Prefissi</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IbanCIN_IBAN__c</fullName>
+    <description>Indicano il 3° e il 4° carattere dell&apos;Iban (caratteri di controllo)</description>
+    <externalId>false</externalId>
+    <label>CIN-IBAN</label>
+    <length>2</length>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

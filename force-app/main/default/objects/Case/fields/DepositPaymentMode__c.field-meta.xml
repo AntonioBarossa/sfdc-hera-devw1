@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DepositPaymentMode__c</fullName>
+    <description>Modalità Pagamento Acconto</description>
+    <externalId>false</externalId>
+    <label>Modalità Pagamento Acconto</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>In Compartecipazione</fullName>
+                <default>false</default>
+                <label>In Compartecipazione</label>
+            </value>
+            <value>
+                <fullName>Totalmente da Istituzioni pubbliche</fullName>
+                <default>false</default>
+                <label>Totalmente da Istituzioni pubbliche</label>
+            </value>
+            <value>
+                <fullName>Totalmente Dal Cliente</fullName>
+                <default>false</default>
+                <label>Totalmente Dal Cliente</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

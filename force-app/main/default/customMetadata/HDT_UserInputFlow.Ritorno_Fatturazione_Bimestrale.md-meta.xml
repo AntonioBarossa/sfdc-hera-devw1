@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Ritorno Fatturazione Bimestrale</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldsJSON__c</field>
+        <value xsi:type="xsd:string">[
+{
+&quot;FieldName&quot; : &quot;BillingFrequency__c&quot;,
+&quot;Required&quot; : true,
+&quot;Column&quot; : 1
+},
+{
+&quot;FieldName&quot; : &quot;Campaign__c&quot;,
+&quot;Required&quot; : false,
+&quot;Column&quot; : 1
+}
+]</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">Ritorno a Fatturazione Bimestrale/Mensile</value>
+    </values>
+    <values>
+        <field>ReadOnlyFields__c</field>
+        <value xsi:type="xsd:string">[
+    {
+        &quot;FieldName&quot; : &quot;AccountId&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+<!--     {
+        &quot;FieldName&quot; : &quot;EV_MarketType__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;EV_AccountPhoneNumber__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    }, -->
+    {
+        &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingProfile__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    }
+]</value>
+    </values>
+    <values>
+        <field>ValidateClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>

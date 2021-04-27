@@ -1,0 +1,60 @@
+<template>
+
+    <div if:true={error} class="slds-box" style="background:#ffffff" >
+        <!--<p class="slds-text-heading_small slds-text-color_error" >{errorMessage}</p>-->
+        <c-hdt-custom-illustration
+            message={errorMessage}
+            style-class="slds-text-heading_medium"
+        ></c-hdt-custom-illustration>
+    </div>
+
+    <template if:false={error} >
+        <lightning-card  title="Seleziona il contratto">
+
+            <div if:true={spinner} >
+                <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+            </div>
+            
+            <div class="slds-grid slds-gutters slds-m-left_xx-small slds-m-bottom_small">
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-input
+                        name="enter-search"
+                        label=" "
+                        variant="label-hidden"
+                        type="search"
+                        placeholder="Filtro numero contratto..."
+                        value={searchValue}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-gutters" >
+                <div class="slds-col slds-size_3-of-5 slds-scrollable_y slds-m-left_small slds-border_bottom slds-border_top" style="height: 20vh;">
+                    <lightning-datatable
+                            key-field="id"
+                            data={contractDataToView}
+                            columns={contractColumns}
+                            onrowaction={handleRowAction}
+                            hide-checkbox-column
+                            resize-column-disabled
+                    ></lightning-datatable>
+                </div>
+            </div>
+
+        </lightning-card>
+    </template>
+
+    <div if:false={error} class="slds-m-top_x-small" >
+        <template if:true={contractNumberAvailable} >
+            <c-hdt-meter-reading-detail-table
+                columnsobj={meterReadingColumns}
+                contract-number={contractNumber}
+                ondataload={dataload}
+                load-data={loadData}
+                hide-checkbox-column={hideCheckboxColumn}
+            ></c-hdt-meter-reading-detail-table>
+        </template>
+    </div>
+
+</template>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Richiesto</fullName>
+        <default>false</default>
+        <label>Richiesto</label>
+    </customValue>
+    <customValue>
+        <fullName>Validato</fullName>
+        <default>false</default>
+        <label>Validato</label>
+    </customValue>
+    <customValue>
+        <fullName>Non Validato</fullName>
+        <default>false</default>
+        <label>Non Validato</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecitato</fullName>
+        <default>false</default>
+        <label>Sollecitato</label>
+    </customValue>
+    <masterLabel>Document Validation</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

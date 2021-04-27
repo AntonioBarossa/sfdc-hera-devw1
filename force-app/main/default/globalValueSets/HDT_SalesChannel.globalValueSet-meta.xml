@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Telefono</fullName>
+        <default>false</default>
+        <label>Telefono</label>
+    </customValue>
+    <customValue>
+        <fullName>Back office</fullName>
+        <default>false</default>
+        <label>Back office</label>
+    </customValue>
+    <customValue>
+        <fullName>Sportello</fullName>
+        <default>false</default>
+        <label>Sportello</label>
+    </customValue>
+    <customValue>
+        <fullName>HC Point</fullName>
+        <default>false</default>
+        <label>HC Point</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita Condomini</fullName>
+        <default>false</default>
+        <label>Vendita Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Vendita TopBusiness</fullName>
+        <default>false</default>
+        <label>Vendita TopBusiness</label>
+    </customValue>
+    <customValue>
+        <fullName>Business Agent</fullName>
+        <default>false</default>
+        <label>Business Agent</label>
+    </customValue>
+    <customValue>
+        <fullName>Agenzie SME</fullName>
+        <default>false</default>
+        <label>Agenzie SME</label>
+    </customValue>
+    <customValue>
+        <fullName>Agenzie</fullName>
+        <default>false</default>
+        <label>Agenzie</label>
+    </customValue>
+    <customValue>
+        <fullName>Punti Hera</fullName>
+        <default>false</default>
+        <label>Punti Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Teleselling Inbound</fullName>
+        <default>false</default>
+        <label>Teleselling Inbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Teleselling Outbound</fullName>
+        <default>false</default>
+        <label>Teleselling Outbound</label>
+    </customValue>
+    <customValue>
+        <fullName>Web</fullName>
+        <default>false</default>
+        <label>Web</label>
+    </customValue>
+    <customValue>
+        <fullName>Consip</fullName>
+        <default>false</default>
+        <label>Consip</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller</fullName>
+        <default>false</default>
+        <label>Reseller</label>
+    </customValue>
+    <customValue>
+        <fullName>Associazioni</fullName>
+        <default>false</default>
+        <label>Associazioni</label>
+    </customValue>
+    <description>Canale vendita associato all&apos;utente</description>
+    <masterLabel>Canale Vendita</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

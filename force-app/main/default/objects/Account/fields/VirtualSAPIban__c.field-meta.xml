@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VirtualSAPIban__c</fullName>
+    <description>IBAN Virtuale viene calcolato al momento della creazione di un nuovo BP in Sap. Ad oggi viene valorizzato in Siebel dall&apos;allineamento dati Sap-&gt;Siebel notturno.</description>
+    <externalId>false</externalId>
+    <label>IBAN Virtuale</label>
+    <length>50</length>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EnableExpiringDays__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo nascosto, necessario per l&apos;integrazione con i SOL. Valorizzato sempre con False.</description>
+    <externalId>false</externalId>
+    <label>Abilitazione Giorni Scadenza</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

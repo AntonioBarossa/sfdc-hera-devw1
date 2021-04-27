@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FirstLevelClassification__c</fullName>
+    <description>Classificazione Primo Livello</description>
+    <externalId>false</externalId>
+    <label>Classificazione Primo Livello</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_ArticleProblemClassification</valueSetName>
+    </valueSet>
+</CustomField>

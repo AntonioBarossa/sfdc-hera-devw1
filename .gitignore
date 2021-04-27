@@ -12,6 +12,13 @@ force.json
 
 .github/
 assets/
+.github/*
+assets/*
+manifest/package.xml
+manifest/*
+manifest/
+.gitignore
+
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
@@ -40,3 +47,4 @@ Thumbs.db
 ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+launch.json

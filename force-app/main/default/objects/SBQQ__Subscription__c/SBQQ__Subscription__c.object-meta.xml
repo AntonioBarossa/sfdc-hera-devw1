@@ -151,11 +151,12 @@
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
-    <enableLicensing>false</enableLicensing>
+    <enableLicensing>true</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Subscription</label>
     <nameField>
         <displayFormat>SUB-{0000000}</displayFormat>
@@ -163,7 +164,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Subscriptions</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts></searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

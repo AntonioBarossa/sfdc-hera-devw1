@@ -1,0 +1,58 @@
+<aura:component controller="HDT_LC_OrderDossierWizard" implements="lightning:isUrlAddressable,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId,lightning:isUrlAddressable,forceCommunity:availableForAllPageTypes" access="global">
+
+    <aura:attribute name='check' type="Boolean" default="false"/>
+    <aura:attribute name='saleId' type="String"/>
+    <aura:attribute name='orderParentId' type="String"/>
+    <aura:attribute name='orderParentRecord' type="Order"/>
+    <aura:attribute name='parentOrderName' type="String"/>
+    <aura:attribute name='accountId' type="String"/>
+    <aura:attribute name="orderId" type="String"/>
+    <aura:attribute name="isCommunity" type="Boolean" />
+    
+    <aura:attribute name='accountName' type="String"/>
+    <aura:attribute name="fiscalCode" type="String"/>
+    <aura:attribute name="vatNumber" type="String"/>
+    <aura:attribute name="columnsDocumenti" type="List"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <lightning:navigation aura:id="navService"/>
+    <lightning:workspaceAPI aura:id="workspace"/>
+
+    <!-- Header -->
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <c:hdtOrderDossierWizardHeader orderParentRecord="{!v.orderParentRecord}"></c:hdtOrderDossierWizardHeader>
+    </aura:if>
+
+    <!-- lightning path -->
+    <aura:if isTrue="{!v.orderParentId}">
+        <div class="slds-m-top_small">
+            <lightning:path
+                aura:id="path" 
+                recordId="{!v.orderParentId}"
+                variant="non-linear"
+                hideUpdateButton="true"
+            />
+        </div>
+    </aura:if>
+    
+    <!-- Dati firma -->
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <div class="slds-m-top_small">
+            <c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtOrderDossierWizardSignature>
+        </div>
+    </aura:if>
+
+    <!-- Gestione Ordini -->
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <div class="slds-m-top_small">
+            <c:hdtOrderDossierWizardTable aura:id="hdtOrderDossierWizardTable" orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" onhandlerowactionevent="{!c.handleRowActionEvent}"></c:hdtOrderDossierWizardTable>
+        </div>
+    </aura:if>
+
+    <!-- Actions buttons -->
+    <aura:if isTrue="{!v.orderParentRecord}">
+        <c:hdtOrderDossierWizardActions orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}"></c:hdtOrderDossierWizardActions>
+    </aura:if>
+
+</aura:component>

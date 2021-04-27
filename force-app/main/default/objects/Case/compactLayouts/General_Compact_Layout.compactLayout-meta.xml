@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>General_Compact_Layout</fullName>
+    <fields>CaseNumber</fields>
+    <fields>Cluster__c</fields>
+    <fields>Type</fields>
+    <fields>Origin</fields>
+    <fields>Status</fields>
+    <fields>Phase__c</fields>
+    <fields>CreatedById</fields>
+    <label>General Compact Layout</label>
+</CompactLayout>
