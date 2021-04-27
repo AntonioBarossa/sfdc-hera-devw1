@@ -1586,6 +1586,14 @@
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>
+            <fullName>Con Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroattiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Standard</fullName>
             <default>false</default>
         </values>
