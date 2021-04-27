@@ -12,10 +12,6 @@
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>
-		<members>hdtOmniChannelReplacerWrapper</members>
-		<name>AuraDefinitionBundle</name>
-	</types>
-	<types>
 		<members>HDT_PEV_activityReceived__e</members>
 		<name>CustomObject</name>
 	</types>
