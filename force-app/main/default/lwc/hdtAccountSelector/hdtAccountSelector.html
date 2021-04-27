@@ -1,16 +1,16 @@
 <template>
-	<div class="slds-grid slds-wrap slds-grid slds-page-header forceRelatedListCardHeader custom-header">
-		<lightning-icon icon-name="standard:customers" class="slds-m-right_medium"></lightning-icon>
-		<span class="slds-page-header__title">
-			Strumento di ricerca anagrafica
-		</span>
-	</div>
-	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default custom-body">
+	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default">
+		<div class="slds-grid slds-wrap slds-grid slds-page-header forceRelatedListCardHeader">
+			<lightning-icon icon-name="standard:customers"></lightning-icon>
+			<span class="slds-page-header__title">
+				Strumento di ricerca anagrafica
+			</span>
+		</div>
 		<template if:true={showContactSearchPanel}>
 			<div onkeyup={handleKeyUp} class="slds-col slds-size_1-of-1">
 				<lightning-input
 					name="contact_search"
-					label="Inserire nome, numero di telefono o email e premere invio."
+					label="Premere invio per ricercare"
 					type="search"
 				></lightning-input>
 			</div>
@@ -42,9 +42,6 @@
 					</span>
 				</template>
 				<template if:true={accountsFound}>
-					<span>
-						Account correlati:
-					</span>
 					<template for:each={accounts} for:item="account">
 						<div key={account.Id} data-id={account.Id} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
 							<lightning-card title={account.Name} icon-name="standard:account">
