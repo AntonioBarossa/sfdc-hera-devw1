@@ -5,6 +5,10 @@
                 <lightning-layout-item padding="horizontal-large" size="12">
                     <div class="slds-page-header__col-details">
                         <ul class="slds-page-header__detail-row">
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Categoria Cliente">Categoria Cliente</div>
+                                <div class="slds-truncate" title="Categoria Cliente">{saleRecord.Account__r.Category__c}</div>
+                            </li>
                             <li if:true={isAccountBusiness} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Account Name">Account Name</div>
                                 <div class="slds-truncate" title="Account Name">{saleRecord.Account__r.Name}</div>

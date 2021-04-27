@@ -138,6 +138,7 @@ public inherited sharing class HDT_QR_Order {
             Campaign__c,
             Campaign__r.Name,
             ContractReference__c,
+            ContractReference__r.ServicePoint__c,
             OrderReference__c,
             ContractReference__r.ContractNumber,
             OrderReference__r.OrderNumber,
@@ -401,7 +402,6 @@ public inherited sharing class HDT_QR_Order {
             WITH SECURITY_ENFORCED
         ];
     }
-
 
     //INIZIO SVILUPPI EVERIS
     public String getRoleNameByRoleId(){

@@ -6,11 +6,20 @@ export default class HdtQuoteAmendContract extends LightningElement {
     
     @api saleId;
     @api contractId;
+    @api isCommunity;
     iframeSrcAmend = '';;
     
     getIframeSrc(contractId){
-        return '/apex/sbqq__AmendContract?id=' + contractId;
-        // return '/apex/sbqq__AmendContract?id=8007Y000002vCnkQAE'; //used for testing
+
+        let link = '';
+
+        if(this.isCommunity) {
+            console.log('amend - isCommunity');
+        } else {
+            link = '/apex/sbqq__AmendContract?id=' + contractId;
+        }
+
+        return link;
     }
 
     connectedCallback(){

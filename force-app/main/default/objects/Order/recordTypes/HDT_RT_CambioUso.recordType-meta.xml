@@ -917,6 +917,48 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Disconnectable__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DisconnectibilityType__c</picklist>
+        <values>
+            <fullName>01- App%2E medico terapeutiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02- Pubblica utilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rilevanza continuità serv%2E GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Elettromedicale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Non Disalimentab%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - PESSE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Pubblica utilita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
             <fullName>E-mail</fullName>
@@ -1217,10 +1259,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
@@ -1282,14 +1320,6 @@
         </values>
         <values>
             <fullName>Gestione appuntamento su portale DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1362,10 +1392,6 @@
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1531,11 +1557,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>01</fullName>
+            <fullName>1</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>02</fullName>
+            <fullName>2</fullName>
             <default>false</default>
         </values>
     </picklistValues>

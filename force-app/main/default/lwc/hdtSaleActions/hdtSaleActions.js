@@ -80,7 +80,7 @@ export default class hdtSaleActions extends LightningElement {
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
-            this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+            // this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
             this.dispatchEvent(new CustomEvent('cancelsaleevent'));
         }).catch(error => {
             this.loading = false;
