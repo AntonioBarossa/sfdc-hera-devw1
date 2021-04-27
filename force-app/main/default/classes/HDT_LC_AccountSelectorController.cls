@@ -8,7 +8,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	
 	@AuraEnabled
 	public static String init(String recordId) {
-		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isAccessible()) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isQueryable()) {
 			return null;
 		}
 
@@ -33,7 +33,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString) {
-		if(!Schema.sObjectType.Contact.isAccessible()) {
+		if(!Schema.sObjectType.Contact.isQueryable()) {
 			return null;
 		}
 
@@ -61,7 +61,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Account> getAccounts(String contactId) {
-		if(!Schema.sObjectType.Account.isAccessible()) {
+		if(!Schema.sObjectType.Account.isQueryable()) {
 			return null;
 		}
 
