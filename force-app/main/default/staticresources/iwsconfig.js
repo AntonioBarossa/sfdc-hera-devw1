@@ -42,7 +42,7 @@ function addFilters() {
     addFilter("onEmailEventRingingInbound", "action");
     addFilter("onWorkitemEventRingingInbound", "action");
     addFilter("onWorkitemEventRingingInbound", "action");
-    console.log('### iwsconfig.addFilters() | FILTERS LOADED!');
+    console.log('### FILTERS LOADED!');
 }
 
 function action(message)

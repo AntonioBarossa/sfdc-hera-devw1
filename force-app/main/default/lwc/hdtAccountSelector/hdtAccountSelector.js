@@ -5,7 +5,6 @@ import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
 import getContacts from '@salesforce/apex/HDT_LC_AccountSelectorController.getContacts';
 import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccount';
 import updateActivity from '@salesforce/apex/HDT_LC_AccountSelectorController.updateActivity';
-import reset from '@salesforce/apex/HDT_LC_AccountSelectorController.reset';
 
 export default class HdtAccountSelector extends LightningElement {
 	@api recordId;
@@ -13,13 +12,6 @@ export default class HdtAccountSelector extends LightningElement {
 	accountId;
 	contacts;
 	accounts;
-	changesCommitted;
-	get resetButtonDisabled() {
-		return !this.contactId && !this.accountId;
-	}
-	get showResetMessage() {
-		return this.contactId && this.accountId;
-	}
 	get showContactSearchPanel() {
 		return !this.contactId;
 	}
@@ -32,6 +24,7 @@ export default class HdtAccountSelector extends LightningElement {
 	get accountsFound() {
 		return this.accounts;
 	}
+	
 
 	connectedCallback() {
 		init({recordId: this.recordId})
@@ -41,7 +34,6 @@ export default class HdtAccountSelector extends LightningElement {
 			this.accountId = res.accountId;
 			this.contacts = res.contacts;
 			this.accounts = res.accounts;
-			this.changesCommitted = this.contactId && this.accountId;
 		})
 		.catch(error => {
 			// WIP
@@ -61,7 +53,11 @@ export default class HdtAccountSelector extends LightningElement {
 					.catch(error => {
 						// WIP
 						console.log('error ' + error);
-						this.showGenericErrorToast();
+						this.dispatchEvent(new ShowToastEvent({
+							variant: 'error',
+							title: 'Errore',
+							message: 'Si è verificato un errore. Ricaricare la pagina e riprovare.',
+						}));
 					});
 				}
 			}
@@ -76,57 +72,44 @@ export default class HdtAccountSelector extends LightningElement {
 				this.accounts = result;
 				if(result.length == 1) {
 					this.accountId = this.accounts[0].Id;
-					this.changesCommitted = true;
 					getRecordNotifyChange([{recordId: this.recordId}]);
-					this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
+					this.dispatchEvent(new ShowToastEvent({
+						variant: 'success',
+						title: 'Account Trovato',
+						message: 'L\'account è stato automaticamente associato all\'activity corrente.',
+					}));
 				}
 			})
 			.catch(error => {
 				// WIP
 				console.log('error ' + error);
-				this.showGenericErrorToast();
+				this.dispatchEvent(new ShowToastEvent({
+					variant: 'error',
+					title: 'Errore',
+					message: 'Si è verificato un errore. Ricaricare la pagina e riprovare.',
+				}));
 			});
 		} else if(this.showAccountSearchPanel) {
 			this.accountId = event.currentTarget.dataset.id;
 			updateActivity({activityId: this.recordId, contactId: this.contactId, accountId: this.accountId})
 			.then(result => {
-				this.changesCommitted = true;
 				getRecordNotifyChange([{recordId: this.recordId}]);
-				this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
+				this.dispatchEvent(new ShowToastEvent({
+					variant: 'success',
+					title: 'Successo',
+					message: 'L\'activity è stata aggiornata.',
+				}));
 			})
-			.catch(error => {
+			.catch(ERROR => {
 				// WIP
 				console.log('error ' + error);
-				this.showGenericErrorToast();
+				this.dispatchEvent(new ShowToastEvent({
+					variant: 'error',
+					title: 'Errore',
+					message: 'Si è verificato un errore. Ricaricare la pagina e riprovare.',
+				}));
 			});
 		}
-	}
-
-	handleReset(event) {
-		this.contactId = undefined;
-		this.accountId = undefined;
-		if(this.changesCommitted) {
-			reset({activityId: this.recordId})
-			.then(result => {
-				getRecordNotifyChange([{recordId: this.recordId}]);
-			})
-			.catch(error => {
-				// WIP
-				console.log('### ERROR: ' + error)
-			});
-		}
-	}
-
-	showGenericErrorToast() {
-		this.showToast('error', 'Errore', 'Si è verificato un errore. Ricaricare la pagina e riprovare. Se il problema persiste contattare il supporto tecnico.');
-	}
-	
-	showToast(variant, title, message) {
-		this.dispatchEvent(new ShowToastEvent({
-			variant: variant,
-			title: title,
-			message: message
-		}));
 	}
 
 	// WIP
