@@ -728,7 +728,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     },
                     {
                         'label': '',
-                        'apiname': 'NonRegMeter__c',
+                        'apiname': 'NotRegisteredMeterCase__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': false,
