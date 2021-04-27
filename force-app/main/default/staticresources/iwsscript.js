@@ -1,28 +1,3 @@
-/********** CUSTOM **********/
-
-function onEventEstablishedInbound(message) {
-    sfutil.createActivity(message);
-}
-function onEventMarkDoneInbound(message) {
-    sfutil.closeActivity(message, false, false);
-}
-function onEventEstablishedOutbound(message) {
-    sfutil.createActivity(message);
-}
-function onEventMarkDoneOutbound(message) {
-    sfutil.closeActivity(message, false, false);
-}
-function onEventEstablishedInternal(message) {
-    sfutil.createActivity(message);
-}
-function onEventMarkDoneInternal(message) {
-    sfutil.closeActivity(message, false, true);
-}
-function onSwitchCrmInbound(message) {
-    sfutil.closeActivity(message, true, false);
-}
-
-/********* STANDARD *********/
 var softphone_connector_initialized = false;
 function networkError(message) {
     log.error(message);
@@ -92,11 +67,19 @@ function onEventRingingConsult(message) {
 }
 function onEventRingingOutbound(message) {
 }
+function onEventEstablishedInbound(message) {
+    logsf.info("onEventEstablishedInbound , message : ", message);
+    sfutil.createTask(message, 'Phone', message.ANI.replace("tel:", ""), message.MediaType + " - " + message.ConnectionID || message.callId);
+}
 function onEventPartyChangedInbound(message) {
 }
 function onEventPartyChangedOutbound(message) {
 }
+function onEventEstablishedInternal(message) {
+}
 function onEventEstablishedConsult(message) {
+}
+function onEventEstablishedOutbound(message) {
 }
 function onEventHeldInbound(message) {
 }
@@ -243,4 +226,6 @@ function onWorkitemEventMarkDoneInbound(message) {
 }
 function onWorkitemEventRingingInbound(message) {
     log.debug("Called onWorkitemEventRingingInbound: ");
+}
+function onEventMarkDoneOutbound(message) {
 }

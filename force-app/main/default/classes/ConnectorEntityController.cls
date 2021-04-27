@@ -16,15 +16,13 @@ global with sharing class ConnectorEntityController {
 			return 'Error: ' + message.get('ErrorMessage');
 		}
 
-		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Chiamata'];
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-			RecordTypeId = recordType.Id,
+			ConnectionID__c = (String) message.get('ConnectionID'),
 			Type__c = 'Chiamata',
-			wrts_prcgvr__Status__c = 'In Progress',
+			Subtype__c = (String) message.get('CallType'),
 			ActivityStartTime__c = DateTime.now(),
 			CallStartTime__c = DateTime.now(),
-			ConnectionID__c = (String) message.get('ConnectionID'),
-			Subtype__c = (String) message.get('CallType')
+			wrts_prcgvr__Status__c = 'In Progress'
 		);
 
 		switch on (String) message.get('CallType') {
@@ -45,13 +43,12 @@ global with sharing class ConnectorEntityController {
 		Map<String,String> result = new Map<String,String>();
 		List<Contact> contacts = [SELECT Id, AccountId FROM Contact WHERE Phone =: activity.ClientNumber__c OR MobilePhone =: activity.ClientNumber__c];
 		if(contacts.size() == 1) {
-			Contact contact = contact[0];
-			activity.Contact__c = contact.Id;
-			result.put('contactId', contact.Id);
-			List<AccountContactRelation> relations = [SELECT Id FROM AccountContactRelation WHERE ContactId =: contact.Id];
-			if(relations.size() == 1) {
-				activity.Account__c = contact.AccountId;
-				result.put('accountId', contact.AccountId);
+			activity.Contact__c = contacts[0].Id;
+			result.put('contactId', contacts[0].Id);
+			List<AccountContactRelation> relations = [SELECT Id FROM AccountContactRelation WHERE ContactId =: contacts[0].Id];
+			if(relations.isEmpty()) {
+				activity.Account__c = contacts[0].AccountId;
+				result.put('accountId', contacts[0].AccountId);
 			}
 		}
 
