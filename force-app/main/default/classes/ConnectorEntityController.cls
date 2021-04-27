@@ -80,13 +80,7 @@ global with sharing class ConnectorEntityController {
 			return 'ERROR: ' + e.getMessage() + ' After closeActivity';
 		}
 
-		return null;
-	}
-
-	@RemoteAction
-	global static String getPopDestination(String activityId) {
-		wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c FROM wrts_prcgvr__Activity__c WHERE Id =: activityId];
-		return String.isBlank(activity.Account__c) ? activityId : activity.Account__c;
+		return '0';
 	}
 	
 	@RemoteAction

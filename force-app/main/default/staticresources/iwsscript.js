@@ -13,13 +13,12 @@ function onEventMarkDoneOutbound(message) {
     sfutil.closeActivity(message, false, false);
 }
 function onEventEstablishedInternal(message) {
-    handleOperatorSwitch(message);
 }
 function onEventMarkDoneInternal(message) {
     sfutil.closeActivity(message, false, true);
 }
 function onSwitchCrmInbound(message) {
-    sfutil.handleCrmSwitch(message);
+    sfutil.closeActivity(message, true, false);
 }
 function onEventPartyChangedInbound(message) {
 }

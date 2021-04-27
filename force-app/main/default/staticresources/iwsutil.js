@@ -21,24 +21,14 @@ class Util {
 		});
 	}
 	closeActivity(message, crmChange, operatorChange) {
-		ConnectorEntityController.closeActivity(JSON.stringify(message), crmChange, operatorChange, (error, req) => {
-			if(error) {
-				// WIP
+		ConnectorEntityController.closeActivity(JSON.stringify(message), crmChange, operatorChange, (result, req) => {
+			if(result.startsWith('Error')) {
+				// WIP IMPROVE ERRO HANDLING
 				console.log("### iwsutil.closeActivity() | RESULT STARTS WITH ERROR");
 			} else {
 				console.log("### iwsutil.closeActivity() | ACTIVITY CLOSED!");
 			}
 		});
-	}
-	handleOperatorSwitch(message) {
-		this.screenpop(ConnectorEntityController.getPopDestination(message.attachdata.sf_activity_id));
-	}
-	handleCrmSwitch(message) {
-		if(message.attachdata.CRM == 'sfdc') {
-			this.createActivity(message);
-		} else {
-			this.closeActivity(message, true, false);
-		}
 	}
 	addTabFocusListener() {
 		sforce.console.onFocusedPrimaryTab(listened => {
