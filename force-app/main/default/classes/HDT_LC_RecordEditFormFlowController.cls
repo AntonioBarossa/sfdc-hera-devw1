@@ -146,6 +146,8 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
 
                     infoCase.ContactId = contextId;
 
+                }when else{
+                    return null;
                 }
             }
 
