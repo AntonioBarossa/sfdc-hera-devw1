@@ -1211,6 +1211,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PaymentMode__c</picklist>
+        <values>
+            <fullName>Bollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
             <fullName>Accettazione pagamento a DL</fullName>
@@ -1241,15 +1260,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1309,14 +1328,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
@@ -1366,10 +1377,6 @@
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
             <default>false</default>
         </values>
         <values>

@@ -13,7 +13,7 @@
 
     <!--INIZIO SVILUPPI EVERIS-->
 
-                    <!--<lightning-accordion allow-multiple-sections-open  active-section-name={activeVoltureSection} onsectiontoggle={handleVoltureToggle}>
+                    <lightning-accordion allow-multiple-sections-open  active-section-name={activeVoltureSection} onsectiontoggle={handleVoltureToggle}>
 
                         <template if:true={loading}>
                             <lightning-spinner alternative-text="Loading"></lightning-spinner>
@@ -86,13 +86,13 @@
 
                             </lightning-accordion-section>
   
-                     <lightning-accordion-section name="SelfReading" label="Autolettura">
+                      <!--<lightning-accordion-section name="SelfReading" label="Autolettura">
                             <c-hdt-self-reading commodity="Energia Elettrica" record-id={order.Id} object="Order"></c-hdt-self-reading>
-                        </lightning-accordion-section>
+                        </lightning-accordion-section>-->
 
                     </template>
                   
-                </lightning-accordion>-->
+                </lightning-accordion>
 
     <!--FINE SVILUPPI EVERIS-->
                     <lightning-accordion if:true={pendingSteps} allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={handleSectionToggle}>
@@ -153,25 +153,11 @@
                                     </template>
                                 </template>
 
-                                <template if:true={section.isReading}>
-
-                                    <c-hdt-self-reading commodity={order.ServicePoint__r.CommoditySector__c}
-                                    record-id={order.Id} 
-                                    object="Order" 
-                                    is-volture={isVolture}
-                                    is-retroactive={isRetroactive}
-                                    is-saved={isSavedReading}
-                                    reading-customer-date={readingCustomerDate}
-                                    disabled-reading-date={disabledReadingDate}></c-hdt-self-reading>
-
-                                </template>
-
                                 <div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_right">
-                                            <!--<template if:true={section.hasCalculateButton}>
+                                            <template if:true={section.hasCalculateButton}>
                                             <c-hdt-calculate-estimated-cost record-id={section.diffRecordId}></c-hdt-calculate-estimated-cost>
-                                        </template>-->
-                                        <lightning-button if:true={section.readingButton} class="slds-p-around_small" value={section.name} onclick={handleNext} label="Inserisci Autolettura" name='goReading' variant="brand" icon-name="utility:right"></lightning-button>
+                                        </template>
                                         <lightning-button if:false={section.firstStep} value={section.name} onclick={handlePrevious} label="Indietro" variant="brand" icon-name="utility:left" class="slds-m-left_x-small"></lightning-button>
                                         <lightning-button if:false={section.lastStep} value={section.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>

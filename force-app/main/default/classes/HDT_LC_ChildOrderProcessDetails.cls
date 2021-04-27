@@ -32,6 +32,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         System.debug('updateProcessStep: ' + order);
         System.debug('isVolture: '+isVolture);
 
+        if(isVolture == null){
+            isVolture = false;
+        }
+
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture){
             //Commentato finche non viene creato campo a DM

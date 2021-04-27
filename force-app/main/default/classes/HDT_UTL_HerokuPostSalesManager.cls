@@ -6,16 +6,19 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String code;
         Map<Id, List<wrts_prcgvr__PhaseTransition__c>> result = new Map<Id, List<wrts_prcgvr__PhaseTransition__c>>();
         List<wrts_prcgvr__PhaseTransition__c> ptList = new List<wrts_prcgvr__PhaseTransition__c>();
+
         wrts_prcgvr.Interfaces_1_0.IPhaseManagerUtils pMUtils = 
             ((wrts_prcgvr.Interfaces_1_0.IPhaseManagerUtils) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerUtils'));
         result = (Map<Id, List<wrts_prcgvr__PhaseTransition__c>>) 
             pMUtils.getTransitionCalloutsForObjects(new Map<String, Object> {'triggerNew' => new List<Case>{currentCase}});
+
         ptList = result.get(currentCase.Id);
         code = ptList[0].wrts_prcgvr__CalloutTemplate__c;
         return code;
     }
 
     public HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse createFakeResponse(Case currentCase){
+
         HDT_UserInputFlow__mdt cl = [SELECT FieldsJSON__c 
         FROM HDT_UserInputFlow__mdt 
         WHERE ProcessType__c = 'prova callout' 
@@ -24,6 +27,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
+
         System.debug('Case Phase --> '+currentCase.Phase__c);
         if(currentCase.Phase__c == 'Da Inviare'){
             return mrrResponse;
@@ -31,6 +35,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             return null;
         }
     }
+
 
     public List<HDT_WRP_HerokuPostSalesManager> manipulateResponse(wrts_prcgvr.MRR_1_0.MultiResponse responseMrr){
 
@@ -43,6 +48,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String communicationChannel;
         String reqId;
         String herokuCode;
+
         String dlCode;
         responseResults.add(new HDT_WRP_HerokuPostSalesManager(responseMrr.responses[0].objects[0].fields, responseMrr.responses[0].header.requestType));
         return responseResults;
@@ -51,6 +57,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             for(wrts_prcgvr.MRR_1_0.WObject wobject : response.objects){
                 for(wrts_prcgvr.MRR_1_0.Field fld : wobject.fields){
                     switch on fld.name{
+
                         when 'result'{
 
                             result = fld.value;
@@ -81,6 +88,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             herokuCode = fld.value;    
 
                         }
+
                         when 'COD_PRAT_DISTR'{
                             dlCode = fld.value;
                         }
@@ -100,6 +108,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
 
             responseResults.add(
+
                 new HDT_WRP_HerokuPostSalesManager(requestType,result,errorMessage,refReq,communicationChannel,reqId,herokuCode,dlCode));
         }*/
 
@@ -120,6 +129,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         System.debug('UTL_CLASS_Request--> '+request);
         return new HDT_WRP_HerokuPostSalesManager(request.objects[0].fields); 
        /* for(HDT_WRP_MrrRequest.HDT_WRP_Field field : request.objects[0].fields){
+
 
             switch on field.name{
 
@@ -147,6 +157,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     phase = field.value;
 
                 }
+
                 when 'VERTRAG'{
 
                     contractCode = field.value;
@@ -165,6 +176,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
         
         return new HDT_WRP_HerokuPostSalesManager(flowType, phase, recordId,herokuCode,contractCode,contractStatus,dlCode);*/
+
     }
 
 
@@ -215,6 +227,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.Phase__c = phase;
             caseNew.HerokuPracticeCode__c = herokuCode;
             caseNew.Description = errorMessage;
+
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorServiceCode__c = dlCode;
             }
@@ -231,6 +244,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
 
     public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
+
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
         System.debug(reqWrp.requestMap);
@@ -254,6 +268,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = reqWrp.requestMap.get('FASE');
                 handleEntityUpdate(reqWrp);
             }
+
         }
 
         caseUpdate.add(currentCase);
@@ -320,4 +335,5 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');
         }
     }
+
 }

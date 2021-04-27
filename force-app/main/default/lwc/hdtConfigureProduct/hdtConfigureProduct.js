@@ -8,6 +8,7 @@ import amendContract from '@salesforce/apex/HDT_LC_ConfigureProduct.amendContrac
 export default class hdtConfigureProduct extends LightningElement {
     
     @api saleRecord;
+    @api isCommunity;
     quotesData;
     loaded = false;
     showEditQuote = false;

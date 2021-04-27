@@ -9,6 +9,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_UTL_Order orderUtl = new HDT_UTL_Order();
+    private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -60,7 +62,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 processType = 'VAS';
             }
             when 'HDT_RT_ScontiBonus' {
-                processType = 'Aggiunta Sconti o Bonus VAS';
+
+                if(getServicePointTypeFromOrder(orderId) == 'HDT_RT_Ele') {
+                    processType = 'Aggiunta Sconti o Bonus VAS Ele';
+                } else if(getServicePointTypeFromOrder(orderId) == 'HDT_RT_Gas'){
+                    processType = 'Aggiunta Sconti o Bonus VAS Gas';
+                }
+
             }
             when 'HDT_RT_Subentro' {
                 if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
@@ -115,9 +123,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             Id = orderId,
             RecordTypeId = recordTypeId,
             Step__c = 2,
-            Deliberation__c = deliberate, 
+            //Deliberation__c = deliberate //Everis: Commentato poiche Deliberation__c non e' un boolean a DM
             ProcessType__c = processType,
             Phase__c = 'Bozza' //Everis: Aggiunto update fase
         ));
+    }
+
+    private static String getServicePointTypeFromOrder(String orderId) {
+        orderSrv.checkReadAccess('ContractReference__r.ServicePoint__c');
+        Order order = orderQr.getRecordById(orderId);
+
+        servicePointSrv.checkReadAccess('RecordType.DeveloperName');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(order.ContractReference__r.ServicePoint__c, 'RecordType.DeveloperName');
+
+        return servicePointList[0].RecordType.DeveloperName;
     }
 }
