@@ -46,7 +46,7 @@
             <targetReference>Account_by_Fiscal_Code</targetReference>
         </connector>
     </assignments>
-    <assignments>
+    <!-- <assignments>
         <name>Set_Account_and_Contact</name>
         <label>Assegna Account e Contact</label>
         <locationX>50</locationX>
@@ -65,7 +65,7 @@
                 <elementReference>Account_by_BP_Code.PrimaryContact__c</elementReference>
             </value>
         </assignmentItems>
-    </assignments>
+    </assignments> -->
     <decisions>
         <name>Find_Client_By</name>
         <label>Identifica cliente per:</label>
