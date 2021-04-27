@@ -6,7 +6,7 @@ global with sharing class ConnectorEntityController {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 
-		if((Integer) message.get('ErrorCode') > 0) {
+		if((Integer) message.get('ErrorCode') != 0) {
 			return 'Error: ' + JSON.serialize(message);
 		}
 
@@ -17,19 +17,19 @@ global with sharing class ConnectorEntityController {
 			ActivityStartTime__c = DateTime.now(),
 			CallStartTime__c = DateTime.now(),
 			ConnectionID__c = (String) message.get('ConnectionID'),
-			BPCode__c = (String) attachdata.get('ivr_CODICE_CLIENTE')
+			BPCode__c = (String) message.get('ivr_CODICE_CLIENTE')
 		);
 
 		switch on (String) message.get('CallType') {
 			when 'Outbound' {
 				activity.Type__c = 'Chiamata Outbound';
 				activity.CallCenterNumber__c = (String) message.get('ANI');
-				activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
+				activity.ClientNumber__c = ((String) message.get('DNIS')).removeStart('0');
 			}
 			when 'Inbound' {
 				activity.Type__c = 'Chiamata Inbound';
 				activity.CallCenterNumber__c = (String) message.get('DNIS');
-				activity.ClientNumber__c = message.get('ANI') != null ? ((String) message.get('ANI')).removeStart('0') : null;
+				activity.ClientNumber__c = ((String) message.get('ANI')).removeStart('0');
 			}
 		}
 
