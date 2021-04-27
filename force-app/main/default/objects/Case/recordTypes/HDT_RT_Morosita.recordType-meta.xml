@@ -3838,6 +3838,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
@@ -4073,6 +4077,10 @@
         </values>
         <values>
             <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
         <values>

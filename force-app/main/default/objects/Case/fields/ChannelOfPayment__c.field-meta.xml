@@ -4,11 +4,13 @@
     <description>Canale di pagamento</description>
     <externalId>false</externalId>
     <label>Canale di pagamento</label>
-    <length>255</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_PaymentMode</valueSetName>
+    </valueSet>
 </CustomField>
