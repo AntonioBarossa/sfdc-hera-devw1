@@ -7,7 +7,7 @@ class Util {
 		ConnectorEntityController.createActivity(JSON.stringify(message), (result, req) => {
 			if(result.startsWith("Error")) {
 				// WIP IMPROVE ERROR HANDLING
-				console.log("### iwsutil.createActivity() | ERROR: " + result);
+				console.error("### iwsutil.createActivity() | ERROR: " + result);
 			} else {
 				var resultObj = JSON.parse(result.replaceAll("&quot;","\""));
 				iwscommand.SetAttachdataById(message.ConnectionID, {"sf_activity_id": resultObj.activityId});
@@ -24,7 +24,7 @@ class Util {
 		ConnectorEntityController.closeActivity(JSON.stringify(message), (result, req) => {
 			if(result) {
 				// WIP
-				console.log("### iwsutil.closeActivity() | ERROR: " + error);
+				console.error("### iwsutil.closeActivity() | ERROR: " + error);
 			} else {
 				console.log("### iwsutil.closeActivity() | ACTIVITY CLOSED!");
 			}
