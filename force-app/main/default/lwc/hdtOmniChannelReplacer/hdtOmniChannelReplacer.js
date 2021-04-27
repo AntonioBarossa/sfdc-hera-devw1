@@ -1,38 +1,29 @@
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled }  from 'lightning/empApi';
 import getActivities from '@salesforce/apex/HDT_LC_OmniChannelReplacerController.getActivities';
 import getSigmaLogin from '@salesforce/apex/HDT_LC_OmniChannelReplacerController.getSigmaLogin';
+import QAdLogin__c from '@salesforce/schema/HDT_PEV_activityReceived__c.QAdLogin__c';
 
 export default class hdtOmniChannelReplacer extends NavigationMixin(LightningElement) {
+    // subscription = {};
     @api channelName = '/event/HDT_PEV_activityReceived__e';
     qadLogin;
-    @track activities;
+    activities;
 
     async connectedCallback() {
         this.qadLogin = await getSigmaLogin();
+        console.log(await getSigmaLogin());
         this.handleActivities();
         subscribe(this.channelName, -1, function(response) {
+            console.log('### ' + response.data.payload.QAdLogin__c);
+            console.log('### ' + this.qadLogin);
+            console.log(response.data.payload.QAdLogin__c == this.qadLogin);
             if(response.data.payload.QAdLogin__c == this.qadLogin) {
-                if(response.data.payload.isNew__c) {
-                    this.activities.unshift({
-                        Id: response.data.payload.Id__c,
-                        Name: response.data.payload.Name__c,
-                        Account__c: response.data.payload.Account__c,
-                        wrts_prcgvr__Status__c: response.data.payload.Status__c,
-                        completed: response.data.payload.Status__c == 'Completed'
-                    });
-                } else {
-                    this.activities.forEach(a => {
-                        if(a.Id == response.data.payload.Id__c) {
-                            a.Account__c = response.data.payload.Account__c;
-                            a.wrts_prcgvr__Status__c = response.data.payload.Status__c;
-                            a.completed = a.wrts_prcgvr__Status__c == 'Completed';
-                        }
-                    });
-                }
+                this.handleActivities.bind(this);
             }
         }.bind(this));
+        this.registerErrorListener();
     }
 
     async handleActivities() {
@@ -54,15 +45,33 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
         }); 
     }
 
-    getDataId(event) {
-        return event.currentTarget.dataset.id;
-    }
-    
     handleMouseOver(event) {
-        this.template.querySelector(`[data-id="${this.getDataId(event)}"]`).classList.add("hovered");
+        var x = event.currentTarget.dataset.id;
+        this.template.querySelector(`[data-id="${x}"]`).classList.add("hovered");
     }
 
     handleMouseOut(event) {
-        this.template.querySelector(`[data-id="${this.getDataId(event)}"]`).classList.remove('hovered');
+        var x = event.currentTarget.dataset.id;
+        this.template.querySelector(`[data-id="${x}"]`).classList.remove('hovered');
+    }
+
+    /* In case you want to unsubscribe use this
+    // Handles unsubscribe button click
+    handleUnsubscribe() {
+
+        // Invoke unsubscribe method of empApi
+        unsubscribe(this.subscription, response => {
+            console.log('unsubscribe() response: ', JSON.stringify(response));
+            // Response is true for successful unsubscribe
+        });
+    }
+    */
+    
+    registerErrorListener() {
+        // Invoke onError empApi method
+        onError(error => {
+            console.log('Received error from server: ', JSON.stringify(error));
+            // Error contains the server-side error
+        });
     }
 }
