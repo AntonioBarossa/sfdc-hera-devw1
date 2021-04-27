@@ -48,6 +48,11 @@ export default class HdtSelfReading extends LightningElement {
 
     @api newTotalReadingValue;
 
+    @api selectedReadingValue;
+
+    @api isRettificaConsumi;
+
+
     recordKey;
 
     selfReadingObj = [];
@@ -246,6 +251,17 @@ export default class HdtSelfReading extends LightningElement {
                 this.newTotalReadingValue += element.newReadingValue();
                 console.log('oldTotalReadingValue: ' + this.oldTotalReadingValue)
                 console.log('newTotalReadingValue: ' + this.newTotalReadingValue)
+
+                if (this.isRettificaConsumi === true) {
+                    if ((this.newTotalReadingValue > this.oldTotalReadingValue) ||
+                        (this.selectedReadingValue != 0 && this.newTotalReadingValue > this.oldTotalReadingValue && 
+                         this.newTotalReadingValue > this.selectedReadingValue)) {
+                        console.log('Alert per verificare necessità di autolettura.');
+                        this.errorAdvanceMessage = 'Verificare la lettura inserita. Se la lettura risulta corretta, è necessario annullare questo Case e proseguire con una Autolettura.';
+                        this.showToastMessage(this.errorAdvanceMessage);
+                        throw BreakException;
+                    }
+                }
 
                 for(const [key,value] of Object.entries(result)){
 

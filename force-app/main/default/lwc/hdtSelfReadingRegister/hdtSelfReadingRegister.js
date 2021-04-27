@@ -10,7 +10,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api isRetroactive;
     @api isVolture;
     @api isVisible;
-    @api allowSmallerReading;
+    @api allowSmallerReading = false;
     advanceError;
 
     get visibilityClass() {
@@ -45,7 +45,6 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
 
     connectedCallback(){
-        this.allowSmallerReading = false;
 
         this.registerObj = this.commodity === 'Energia Elettrica' ? this.registerObjEle : this.registerObjGas;
 
