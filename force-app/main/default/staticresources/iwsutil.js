@@ -20,8 +20,8 @@ class Util {
 			}
 		});
 	}
-	closeActivity(message) {
-		ConnectorEntityController.closeActivity(JSON.stringify(message), (error, req) => {
+	closeActivity(message, crmChange, operatorChange) {
+		ConnectorEntityController.closeActivity(JSON.stringify(message), crmChange, operatorChange, (error, req) => {
 			if(error) {
 				// WIP
 				console.log("### iwsutil.closeActivity() | RESULT STARTS WITH ERROR");
@@ -31,11 +31,9 @@ class Util {
 		});
 	}
 	handleOperatorSwitch(message) {
-		iwscommand.SetAttachdataById(message.ConnectionID, {"operatorChange": true});
 		this.screenpop(ConnectorEntityController.getPopDestination(message.attachdata.sf_activity_id));
 	}
 	handleCrmSwitch(message) {
-		iwscommand.SetAttachdataById(message.ConnectionID, {"crmChange": true});
 		if(message.attachdata.CRM == 'sfdc') {
 			this.createActivity(message);
 		} else {

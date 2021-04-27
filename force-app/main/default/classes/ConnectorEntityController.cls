@@ -55,21 +55,21 @@ global with sharing class ConnectorEntityController {
 	}
 
 	@RemoteAction
-	global static String closeActivity(String jsonMessage) {
+	global static String closeActivity(String jsonMessage, Boolean crmChange, Boolean operatorChange) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
 		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 
 		System.debug(JSON.serialize(attachdata));
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 			Id = (String) attachdata.get('sf_activity_id'),
-			CrmChange__c = (Boolean) attachdata.get('crmChange'),
-			OperatorChange__c = (Boolean) attachdata.get('operatorChange'),
 			wrts_prcgvr__Status__c = 'Completed',
 			ActivityEndTime__c = Datetime.now(),
 			CallEndTime__c = Datetime.now(),
 			ActivityDuration__c = (Decimal) message.get('Duration'),
 			CallDuration__c = (Decimal) message.get('Duration'),
 			WaitingTime__c = 0, // WIP
+			CrmChange__c = crmChange,
+			OperatorChange__c = operatorChange,
 			BPCode__c = ''
 		);
 
