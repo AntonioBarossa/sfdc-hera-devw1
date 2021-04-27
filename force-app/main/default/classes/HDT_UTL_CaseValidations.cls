@@ -347,7 +347,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             String billingProblem = getFieldValue(fields, 'BillingProblem__c');
             String bill = getFieldValue(fields, 'Bill__c');
             String dlNote = getFieldValue(fields, 'Note__c');
-            String customerAggreement = getFieldValue(fields, 'CustomerAggreement__c');
+            String customerAggreement = getFieldValue(fields, 'CustomerPaymentAgreements__c');
 
             if(billingProblem == 'Si' 
             && (
@@ -413,12 +413,39 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
+
+        }else if(caseType == 'Modifica Tariffa Residente/Non Residente'){
+
+            if(HDT_UTL_Variations.modifyRate(recordId)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+
+            }
  
+        } else if(caseType == 'Condizioni Contrattuali Errate'){ 
+
+            String billingProblem = getFieldValue(fields, 'BillingProblem__c');
+            String customerAggreement = getFieldValue(fields, 'CustomerPaymentAgreements__c');
+        
+            if(billingProblem == 'Si' && (customerAggreement == null || customerAggreement == '')){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizzare Accordi con il Cliente'));
+
+            } else{
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                
+            }
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
-        }
+        } 
 
         return result;
 

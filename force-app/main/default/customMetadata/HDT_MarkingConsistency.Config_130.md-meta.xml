@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Config 130</label>
+    <protected>false</protected>
+    <values>
+        <field>ImplantType__c</field>
+        <value xsi:type="xsd:string">1007-Attivita produttive</value>
+    </values>
+    <values>
+        <field>SupplyType__c</field>
+        <value xsi:type="xsd:string">C-Aziende di pubblica utilita</value>
+    </values>
+    <values>
+        <field>Taxes__c</field>
+        <value xsi:type="xsd:string">Non Ridotta IVA 20%-G_ICC</value>
+    </values>
+    <values>
+        <field>UseCategory__c</field>
+        <value xsi:type="xsd:string">004-Uso tecnologico</value>
+    </values>
+</CustomMetadata>
