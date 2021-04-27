@@ -1,59 +1,22 @@
 <template>
 	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default">
-		<div class="slds-grid slds-wrap slds-grid slds-page-header forceRelatedListCardHeader">
-			<lightning-icon icon-name="standard:customers"></lightning-icon>
-			<span class="slds-page-header__title">
-				Strumento di ricerca anagrafica
-			</span>
+		<div onkeyup={handleKeyUp} class="slds-col slds-size_1-of-1">
+			<lightning-input
+				name="contact_search"
+				label="Premere invio per ricercare"
+				type="search"
+			></lightning-input>
 		</div>
-		<template if:true={showContactSearchPanel}>
-			<div onkeyup={handleKeyUp} class="slds-col slds-size_1-of-1">
-				<lightning-input
-					name="contact_search"
-					label="Premere invio per ricercare"
-					type="search"
-				></lightning-input>
-			</div>
-			<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
-				<template if:false={contactsFound}>
-					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
-						Nessun contatto trovato. <br>
-						Ricercare per nome, email o numero di telefono.
-					</span>
-				</template>
-				<template if:true={contactsFound}>
-					<template for:each={contacts} for:item="contact">
-						<div key={contact.Id} data-id={contact.Id} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
-							<lightning-card title={contact.Name} icon-name="standard:contact">
-								<ul class="slds-m-around_medium">
-									Telefono fisso: {contact.Phone}, Cellulare:{contact.MobilePhone}, Email: {contact.Email}
-								</ul>
-							</lightning-card>
-						</div>
-					</template>
-				</template>
-			</div>
-		</template>
-		<template if:true={showAccountSearchPanel}>
-			<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
-				<template if:false={accountsFound}>
-					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
-						Nessun account trovato.
-					</span>
-				</template>
-				<template if:true={accountsFound}>
-					<template for:each={accounts} for:item="account">
-						<div key={account.Id} data-id={account.Id} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
-							<lightning-card title={account.Name} icon-name="standard:account">
-								<ul class="slds-m-around_medium">
-									Cod. Fiscale: {account.FiscalCode__c}, Partita IVA: {account.VATNumber__c} <br>
-									Indirizzo di Fatturazione: {account.BillingAddressFormula__c}
-								</ul>
-							</lightning-card>
-						</div>
-					</template>
-				</template>
-			</div>
-		</template>
+		<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
+			<template for:each={contacts} for:item="contact">
+				<div key={contact.Id} class="slds-col slds-size_1-of-1">
+					<lightning-card title={contact.Name} icon-name="standard:contact">
+						<ul class="slds-m-around_medium">
+							{contact.Phone}, {contact.MobilePhone}, {contact.Email}
+						</ul>
+					</lightning-card>
+				</div>
+			</template>
+		</div>
 	</div>
 </template>

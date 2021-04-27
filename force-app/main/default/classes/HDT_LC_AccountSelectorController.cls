@@ -1,5 +1,5 @@
 public with sharing class HDT_LC_AccountSelectorController {
-	private class HDT_UTL_Struct {
+	private class Struct {
 		String accountId;
 		String contactId;
 		List<Account> accounts;
@@ -10,13 +10,14 @@ public with sharing class HDT_LC_AccountSelectorController {
 	public static String init(String recordId) {
 		wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, ClientNumber__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId];
 		
-		HDT_UTL_Struct result = new HDT_UTL_Struct();
+		Struct result = new Struct();
 		result.accountId = activity.Account__c;
 		result.contactId = activity.Contact__c;
 
-		if(String.isBlank(activity.Contact__c) && String.isNotBlank(activity.ClientNumber__c)) {
+		if(String.isBlank(activity.Contact__c)) {
 			result.contacts = getContacts(activity.ClientNumber__c);
-		} else if(String.isBlank(activity.Account__c)) {
+		}
+		if(String.isBlank(activity.Account__c)) {
 			result.accounts = handleAccount(activity.Contact__c, activity.Id);
 		}
 
@@ -25,7 +26,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString) {
-		return [SELECT Id, AccountId, Name, Phone, MobilePhone, Email FROM Contact WHERE Name =: queryString OR Phone =: queryString OR MobilePhone =: queryString OR Email LIKE: queryString];
+		return [SELECT Id, AccountId, Name, Phone, MobilePhone, Email FROM Contact WHERE Name =: queryString OR Phone =: queryString OR MobilePhone =: queryString];
 	}
 	
 	@AuraEnabled
@@ -33,7 +34,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 		List<Account> accounts = getAccounts(contactId);
 
 		if(accounts.size() == 1) {
-			updateActivity(activityId, contactId, accounts[0].Id);
+			updateActivity(activityId, null, accounts[0].Id);
 		}
 
 		return accounts;
@@ -41,7 +42,11 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Account> getAccounts(String contactId) {
-		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c  FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId)];
+		Contact contact = [SELECT Id, Account.Id FROM Contact WHERE Id =: contactId];
+		List<Account> accounts = [SELECT Id FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId)];
+		accounts.add(0, contact.Account);
+
+		return accounts;
 	}
 
 	@AuraEnabled
