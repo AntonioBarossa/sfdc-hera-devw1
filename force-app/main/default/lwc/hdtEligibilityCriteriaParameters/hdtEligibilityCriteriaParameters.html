@@ -2,68 +2,125 @@
     
     <div class="slds-section slds-is-open">
         <h3 class="slds-section__title slds-theme_shade">
-            <span class="slds-truncate slds-p-horizontal_small" title="Altri parametri">Altri parametri</span>
+            <span class="slds-truncate slds-p-horizontal_small" title="Tutti i criteri di Eleggibilità">Tutti i criteri di Eleggibilità</span>
         </h3>
         <div aria-hidden="false" class="slds-section__content">
 
-            <!--<div class="slds-form" role="list">
-                <template iterator:it={fields}>
-                    <div class="slds-form__row" key={it.value.row}>
-                      <template iterator:it={it.value.innerList} >
-                        <div class="slds-form__item" role="listitem" key={it.value}>
-                          <div class="slds-form-element slds-form-element_stacked slds-is-editing">
-                            <label class="slds-form-element__label" for={it.value}>
-                              <abbr class="slds-required" title="required">* </abbr>{it.value}</label>
-                            <div class="slds-form-element__control">
-                              <input type="text" id={it.value} required="" class="slds-input" />
-                            </div>
-                          </div>
-                        </div>
-                      </template>
-                    </div>
-                </template>
-              </div>-->
-              <lightning-record-edit-form
-                  record-id={eligibilityId}
-                  object-api-name="EligibilityCriteria__c"
-                  density="comfy"
-                  onsuccess={handleSuccess}
-                  onload={handleLoad}
-                  onerror={handleError}
-                  onsubmit={handleSubmit}
-              >
-          
-                <lightning-messages></lightning-messages>
+          <lightning-record-edit-form
+              record-id={eligibilityId}
+              object-api-name="EligibilityCriteria__c"
+              density="comfy"
+              onsuccess={handleSuccess}
+              onload={handleLoad}
+              onerror={handleError}
+              onsubmit={handleSubmit}
+          >
+      
+            <lightning-messages></lightning-messages>
 
-                <lightning-input-field field-name="Product__c" value={productid} disabled ></lightning-input-field>
-                
-                <div class="slds-grid slds-wrap">
-                    <template iterator:it={fieldsList}>
-                    
-                      <!--<template iterator:it={it.value.list}>
-                        <div key={it.value.id} class="slds-col slds-size_1-of-2">-->
-                        <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_x-small">  
-                          <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
-                        </div>  
-                      <!--</template> -->
-                          
-                    </template>
-
-                    <template iterator:it={complexFieldsList}>
-                      <div key={it.value.fieldName} class="slds-col slds-size_1-of-2 slds-m-top_x-small"> 
-                        <div class="slds-grid slds-wrap">
-                          <template iterator:it={it.value.fields}>
-                            <div key={it.value} class="slds-col slds-size_1-of-2">
-                              <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
-                            </div>
-                          </template>
-                        </div>
-                      </div>
-                    </template>
-
-                </div>
+            <lightning-input-field field-name="Product__c" value={productid} disabled ></lightning-input-field>
+            
+            <div class="slds-grid slds-wrap slds-m-left_medium slds-m-right_medium slds-m-top_medium">
               
-              </lightning-record-edit-form>
+              <!--Tipo Cliente Categoria-->
+              <div class="slds-col slds-size_1-of-2">
+                <div class="slds-section slds-is-open">
+                  <h3 class="slds-section__title slds-theme_shade">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Tipo Cliente Categoria">Tipo Cliente Categoria</span>
+                  </h3>
+                  <div aria-hidden="false" class="slds-section__content">
+                    <lightning-input-field field-name="CategoryTypeClientOperator__c" variant="label-hidden"></lightning-input-field>
+                    <lightning-input-field field-name="CategoryTypeClient__c" variant="label-hidden" ></lightning-input-field>
+                  </div>
+                </div>
+              </div>
+
+              <!--Canale-->
+              <div class="slds-col slds-size_1-of-2">
+                <div class="slds-section slds-is-open">
+                  <h3 class="slds-section__title slds-theme_shade">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Canale">Canale</span>
+                  </h3>
+                  <div aria-hidden="false" class="slds-section__content">
+                    <lightning-input-field field-name="ChannelOperator__c" variant="label-hidden"></lightning-input-field>
+                    <lightning-input-field field-name="Channel__c" variant="label-hidden" ></lightning-input-field>
+                  </div>
+                </div>
+              </div>
+
+              <!--Mercato Provenienza-->
+              <div class="slds-col slds-size_1-of-2">
+                <div class="slds-section slds-is-open">
+                  <h3 class="slds-section__title slds-theme_shade">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Mercato Provenienza">Mercato Provenienza</span>
+                  </h3>
+                  <div aria-hidden="false" class="slds-section__content">
+                    <lightning-input-field field-name="OriginMarketOperator__c" variant="label-hidden"></lightning-input-field>
+                    <lightning-input-field field-name="OriginMarket__c" variant="label-hidden" ></lightning-input-field>
+                  </div>
+                </div>
+              </div>
+
+              <!--Marcatura Cliente-->
+              <div class="slds-col slds-size_1-of-2">
+                <div class="slds-section slds-is-open">
+                  <h3 class="slds-section__title slds-theme_shade">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Marcatura Cliente">Marcatura Cliente</span>
+                  </h3>
+                  <div aria-hidden="false" class="slds-section__content">
+                    <lightning-input-field field-name="ClientMarkerOperator__c" variant="label-hidden"></lightning-input-field>
+                    <lightning-input-field field-name="ClientMarker__c" variant="label-hidden" ></lightning-input-field>
+                  </div>
+                </div>
+              </div>
+
+              <!--Company Owner-->
+              <div class="slds-col slds-size_1-of-2">
+                <div class="slds-section slds-is-open">
+                  <h3 class="slds-section__title slds-theme_shade">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Company Owner">Company Owner</span>
+                  </h3>
+                  <div aria-hidden="false" class="slds-section__content">
+                    <lightning-input-field field-name="CompanyOwnerOperator__c" variant="label-hidden"></lightning-input-field>
+                    <lightning-input-field field-name="CompanyOwner__c" variant="label-hidden" ></lightning-input-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="slds-section slds-is-open slds-m-left_medium slds-m-right_medium slds-m-top_medium">
+              <h3 class="slds-section__title slds-theme_shade">
+                  <span class="slds-truncate slds-p-horizontal_small" title="Altri parametri">Altri parametri</span>
+              </h3>
+              <div aria-hidden="false" class="slds-section__content">
+
+            <div class="slds-grid slds-wrap">
+
+
+                  <template iterator:it={fieldsList}>
+                    <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_x-small">  
+                      <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
+                    </div>
+                  </template>
+    
+                  <template iterator:it={complexFieldsList}>
+                    <div key={it.value.fieldName} class="slds-col slds-size_1-of-2 slds-m-top_x-small"> 
+                      <div class="slds-grid slds-wrap">
+                        <template iterator:it={it.value.fields}>
+                          <div key={it.value} class="slds-col slds-size_1-of-2">
+                            <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
+                          </div>
+                        </template>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+              </div>
+
+            </div>
+          
+          </lightning-record-edit-form>
 
         </div>
     </div>

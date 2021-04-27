@@ -3,14 +3,23 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtEligibilityCriteriaParameters extends LightningElement {
 
+    multiPicklistFields = [
+      {fieldName: 'CategoryTypeClient__c', operator: 'CategoryTypeClientOperator__c'},
+      {fieldName: 'Channel__c', operator: 'ChannelOperator__c'},
+      {fieldName: 'OriginMarket__c', operator: 'OriginMarketOperator__c'},
+      {fieldName: 'ClientMarker_c', operator: 'ClientMarkerOperator__c'},
+      {fieldName: 'CompanyOwner__c', operator: 'CompanyOwnerOperator__c'}
+    ];
+
     @track fieldsList = [
-      'Channel__c',            'OriginMarket__c',
-      'ClientMarker__c',       'CategoryTypeClient__c',
-      'PromoCode__c',          'LoginGroup__c',
-      'NewClient__c',          'ResidentDeliveryAddress__c',
-      'Agency__c',             'CompanyOwner__c',
-      'UseCategory__c',        'Campaign__c',
-      'EquipmenType__c'
+      'EquipmenType__c',
+      'PromoCode__c',
+      'LoginGroup__c',
+      'NewClient__c',
+      'ResidentDeliveryAddress__c',
+      'Agency__c',
+      'UseCategory__c',
+      'Campaign__c'
     ];
 
     @track complexFieldsList = [
@@ -72,50 +81,7 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
       // Dispatches the event.
       this.dispatchEvent(saverecord);
       //this.template.querySelector('lightning-record-edit-form').submit();
+
     }
-
-    /*@track fields = [
-       {row: '1', innerList: ['Agenzia', 'Marcatura Cliente']},
-       {row: '2', innerList: ['ATC Gas', 'Nuovo Cliente']},
-       {row: '3', innerList: ['Campagna', 'Opzione Energia Verde']},
-       {row: '4', innerList: ['Canale', 'Opzione Gas Verde']},
-       {row: '6', innerList: ['Codice Criterio', 'Provenienza']},
-       {row: '7', innerList: ['Company Owner', 'Raggruppamento di Login']},
-       {row: '8', innerList: ['Eta Cliente', 'Ruolo Profilo']},
-       {row: '9', innerList: ['Fascia', 'Tipo Apparecchiatura']},
-       {row: '10', innerList: ['Login', 'Tipo Cliente Categoria']}
-    ];*/
-
-    /*@track fieldsList = [
-        {
-          id: '1',
-          list: [
-            'Channel__c',
-            'Agency__c',
-            'Login__c',
-            'LoginGroup__c',
-            'ClientMarker__c',
-            'CategoryTypeClient__c',
-            'NewClient__c',
-            'CompanyOwner__c',
-            'ClientAge__c',
-            'Campaign__c'
-          ]
-        },
-        {
-          id: '2',
-          list: [
-            'EquipmenType__c',
-            'UseCategory__c',
-            'ConsumptionRangeEE__c',
-            'ConsumptionRangeGAS__c',
-            'PowerRange__c',
-            'OriginMarket__c',
-            'ResidentDeliveryAddress__c'//,
-            ///'PaymentMode__c',
-            ///'BillSendingMethod__c'
-          ]
-        }
-      ];*/
 
 }
