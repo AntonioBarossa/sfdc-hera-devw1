@@ -7,10 +7,22 @@ export default class hdtEditQuote extends LightningElement {
 
     @api sale;
     @api quoteId;
+    @api isCommunity;
     iframeSrc;
     
     getIframeSrc(quoteId){
-        return '/apex/sbqq__sb?scontrolCaching=1&amp;id=' + quoteId +'#quote/le?qId='+ quoteId;
+
+        let link = '';
+
+        if (this.isCommunity) {
+            //'https://devwrvasku-partners.cs89.force.com/D2D/s/sfdcpage/%2Fapex%2FSBQQ__sb%3F%26id%3D' + quoteId + '#quote/le?qId='+ quoteId;
+            link = '/D2D/s/sfdcpage/%2Fapex%2FSBQQ__sb%3F%26id%3D' + quoteId + '#quote/le?qId='+ quoteId;
+        } else {
+            link = '/apex/sbqq__sb?scontrolCaching=1&amp;id=' + quoteId +'#quote/le?qId='+ quoteId;
+        }
+
+        return link;
+
     }
 
     connectedCallback(){
@@ -43,12 +55,15 @@ export default class hdtEditQuote extends LightningElement {
 
         execModalExitActions({saleId: this.sale.Id, quoteId: this.quoteId}).then(data =>{
             this.dispatchEvent(new CustomEvent('closeeditquote'));
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Successo',
-                message: 'QuoteLine configurato con successo',
-                variant: 'success'
-            });
-            this.dispatchEvent(toastSuccessMessage);
+
+            if(data){
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: 'Successo',
+                    message: 'QuoteLine configurato con successo',
+                    variant: 'success'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
         }).catch(error => {
             this.dispatchEvent(new CustomEvent('closeeditquote'));
             const toastErrorMessage = new ShowToastEvent({

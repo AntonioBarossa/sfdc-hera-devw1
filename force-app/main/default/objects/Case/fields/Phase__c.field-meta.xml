@@ -657,6 +657,11 @@
                 <default>false</default>
                 <label>Ripensamento - Inviato al SII</label>
             </value>
+            <value>
+                <fullName>Esito KO tentativo riattivazione</fullName>
+                <default>false</default>
+                <label>Esito KO tentativo riattivazione</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

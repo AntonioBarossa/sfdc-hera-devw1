@@ -29,7 +29,6 @@ public inherited sharing class HDT_UTL_HelperMethods {
         system.debug(us);
         if (!'Standard'.Equals(us)){
             check=True;
-           
         }
         return check;
     }
