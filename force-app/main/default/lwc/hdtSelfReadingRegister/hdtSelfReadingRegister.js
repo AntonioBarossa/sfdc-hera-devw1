@@ -209,6 +209,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 } 
     
             });
+
+            const oldValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value;
+            const newValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value;
+            if (newValue < oldValue) {
+                this.advanceError = 'Impossibile inserire una lettura inferiore alla precedente.';
+            }
     
             console.log('advanceError: ' + this.advanceError);
     
