@@ -42,7 +42,7 @@ export default class HdtSelfReading extends LightningElement {
 
     @api isSaved = false;
 
-    @api allowSmallerReading;
+    @api allowSmallerReading = false;
 
     @api oldTotalReadingValue;
 
