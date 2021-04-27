@@ -19,7 +19,6 @@ class Util {
 			} else {
 				var resultObj = JSON.parse(result);
 				message.attachdata.put('sf_activity_id', resultObj.activityId);
-				message.attachdata.put('CRM', 'sfdc'); // WIP
 				if(resultObj.accountId && resultObj.contactId) {
 					this.screenpop(resultObj.accountId);
 				} else {
@@ -72,12 +71,10 @@ class Util {
 						log.warn("The result from click to dial is not valid : " + JSON.stringify(payload));
 						return;
 					}
-					// DEFAULT
-					// iwscommand.MakeCall(payload.number, undefined);
-					// CUSTOM
+					// iwscommand.MakeCall(payload.number, undefined); // DEFAULT
 					var attachdata = createUserData();
-					attachdata.put('CRM', 'sfdc');
-					iwscommand.MakeCall('0' + payload.number, attachdata);
+					attachdata.put('target_crm', 'sf');
+					iwscommand.MakeCall(payload.number, attachdata); // DEFAULT
 				}
 			});
 			sforce.opencti.enableClickToDial({ callback: callback });
@@ -91,7 +88,7 @@ class Util {
 					return;
 				}
 				log.info("Dialing phone number : " + result.number);
-				iwscommand.MakeCall('0' + result.number, undefined);
+				iwscommand.MakeCall(result.number, undefined);
 			});
 			sforce.interaction.cti.enableClickToDial(undefined);
 		}
