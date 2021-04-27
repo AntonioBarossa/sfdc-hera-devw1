@@ -22,7 +22,6 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         Map<String,Object> mapResponse = new Map<String,Object>();
         
-        // Order ord = [SELECT AccountId,Account.Name, Id,recordtype.DeveloperName, Status FROM Order Where id = :orderId];
         orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status,SBQQ__Quote__r.IsVAS__c,SBQQ__Quote__r.AmendmentAllowed__c');
         Order ord = orderQr.getRecordById(orderId);
 
@@ -36,7 +35,11 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         //     ord = orderQr.getRecordById(orderId);
         // }
 
-        //List<OrderItem> orderItemList = [SELECT Id, Codice_POD__r.name,Codice_PDR__r.name, OrderId, Product2.name FROM OrderItem where Product2.name IN ('PDR','POD') AND OrderId = : ord.Id];
+        if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
+            HDT_UTL_OrderFieldsAlignment.alignFields(ord);
+            ord = orderQr.getRecordById(orderId);
+        }
+
         orderItemSrv.checkReadAccess('Service_Point__r.Name,Service_Point__r.ServicePointCode__c,OrderId,Product2.name');
         List<OrderItem> orderItemList = orderItemQr.getRecordsByOrderIdFilteredPdrPod(orderId);
 

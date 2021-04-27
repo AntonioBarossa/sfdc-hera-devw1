@@ -40,6 +40,8 @@ export default class HdtSelfReading extends LightningElement {
 
     @api disabledReadingDate;
 
+    @api isSaved = false;
+
     recordKey;
 
     selfReadingObj = [];
@@ -57,8 +59,6 @@ export default class HdtSelfReading extends LightningElement {
     advanceError = undefined;
 
     recordTypeId;
-
-    @track isSaved = false;
 
     errorAdvanceMessage = '';
 
@@ -306,14 +306,6 @@ export default class HdtSelfReading extends LightningElement {
             insertSelfReading({fields : JSON.stringify(this.outputObj)})
             .then(result => { 
                 
-                if (this.isVolture) {
-                    let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
-
-                    console.log('Event Name '+dispObj.name);
-
-                    this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
-                }
-
                 this.isSaved = true;
             
             })
@@ -321,11 +313,14 @@ export default class HdtSelfReading extends LightningElement {
 
         } else {
 
-            if (this.isVolture) {
-                let dispObj = {name: event.target.name, readingDate: this.readingCustomerDate};
+            if(this.isVolture){            
+                
+                let errorVolture = 'Autolettura già inserita';
 
-                this.dispatchEvent(new CustomEvent('savereading', {detail: dispObj}));
+                this.showToastMessage(errorVolture);
+            
             }
+
         }
     }
 

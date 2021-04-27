@@ -20,8 +20,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get value(){
         let result = '';
         console.log('**************************************** ', this.order.RecordType.DeveloperName);
-        //COMMENTATO POICHE GENERAVA ERRORE
-        /*if (this.order.RecordType.DeveloperName !== 'Default') {
+        if (this.order.RecordType.DeveloperName !== 'Default') {
 
             if(this.order.SBQQ__Quote__r.IsVAS__c){
                 result = 'HDT_RT_VAS';
@@ -34,8 +33,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.applySelectionLogic(result);
         } else {
             result = '';
-        }*/
-        //COMMENTATO POICHE GENERAVA ERRORE
+        }
         return result;
     }
 
@@ -43,8 +41,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         let records = [];
 
-        //COMMENTATO POICHE GENERAVA ERRORE
-        /*if(this.order.SBQQ__Quote__r.IsVAS__c){
+        if(this.order.SBQQ__Quote__r.IsVAS__c){
             records = [
                 {"label":"VAS","value":"HDT_RT_VAS"}
             ]
@@ -52,8 +49,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             records = [
                 {"label":"Aggiunta Sconti o Bonus VAS","value":"HDT_RT_ScontiBonus"}
             ]
-        } else {*/
-        //COMMENTATO POICHE GENERAVA ERRORE
+        } else {
             records = [
                 {"label":"Attivazione","value":"HDT_RT_Attivazione"},
                 {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
@@ -66,9 +62,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
                 
             ]
-        //COMMENTATO POICHE GENERAVA ERRORE    
-        //}
-       //COMMENTATO POICHE GENERAVA ERRORE    
+        }
 
         return records;
     }
@@ -168,16 +162,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
             this.showDeliberation = false;
         }
-        //INIZIO SVILUPPI EVERIS
-        else if(selectedProcess === 'HDT_RT_Voltura'){
-            this.precheck = true;
-            this.compatibilita = true;
-            this.causale = '';
-            this.showDeliberation = false;
-        }
-        //FINE SVILUPPI EVERIS 
-
-
     }
 
     handleSelectProcess(event){
@@ -191,10 +175,6 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         if(Object.keys(extraParams).length === 0) {
             extraParams = {};
         }
-
-        //EVERIS
-        console.log('OrderId--> '+this.order.Id);
-        //EVERIS
 
         next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
             this.loaded = true;
@@ -243,14 +223,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     connectedCallback(){
         console.log('this.order: ', JSON.parse(JSON.stringify(this.order)));
 
-        console.log('CallBack start');
-
-        /*if(this.order.SBQQ__Quote__r.IsVAS__c || this.order.SBQQ__Quote__r.AmendmentAllowed__c){
+        if(this.order.SBQQ__Quote__r.IsVAS__c || this.order.SBQQ__Quote__r.AmendmentAllowed__c){
             this.showEsitoCheck = false;
             this.vasAmendDisabledInput = true;
-        }*/
-        
-        console.log('CallBack end');
-
+        } 
     }
 }

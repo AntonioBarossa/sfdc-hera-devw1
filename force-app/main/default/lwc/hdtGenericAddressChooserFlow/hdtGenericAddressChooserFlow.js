@@ -99,6 +99,12 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
         else 
             return "Conferma Pratica"
     }
+
+    @api
+    getAddressValue(){
+        return this.address;
+    }
+    
     handleChangeAddress(event){
         this.isModalOpen = true;
     }

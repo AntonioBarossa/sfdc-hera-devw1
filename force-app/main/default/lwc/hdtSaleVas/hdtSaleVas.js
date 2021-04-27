@@ -70,13 +70,13 @@ export default class hdtSaleVas extends LightningElement {
         switch (this.selectedOption) {
             case 'Ordini in corso':
                 this.isOrderListVisible = true;
-                this.isInputVisible = true;
+                // this.isInputVisible = true;
                 this.handleOrdersList();
                 break;
 
             case 'Contratti Attivi':
                 this.isContractsListVisible = true;
-                this.isInputVisible = true;
+                // this.isInputVisible = true;
                 this.handleContractsList();
                 break;
 

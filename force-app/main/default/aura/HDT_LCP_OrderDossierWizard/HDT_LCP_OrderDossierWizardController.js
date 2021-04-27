@@ -1,5 +1,10 @@
 ({
     doInit: function (component, event, helper) {
+
+        //EVERIS
+        console.log('InitStarted')
+        //EVERIS
+
         component.set('v.loading', true);
         let accountId;
         let saleId;
