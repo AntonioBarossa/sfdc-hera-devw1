@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
-		<members>ConnectorEntityController</members>
-		<members>HDT_UTL_ActivityTracker</members>
-		<members>HDT_LC_AccountSelectorController</members>
-		<name>ApexClass</name>
-	</types>
-	<types>
-		<members>hdtAccountSelector</members>
-		<name>LightningComponentBundle</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>StaticResource</name>
-	</types>
-	<version>51.0</version>
+   
+
+  <version>47.0</version>
 </Package>
