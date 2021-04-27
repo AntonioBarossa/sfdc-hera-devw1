@@ -7,9 +7,6 @@
 		<lightning-button variant="destructive" label="Reset" onclick={handleReset} disabled={resetButtonDisabled} class="slds-col_bump-left"></lightning-button>
 	</div>
 	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default custom-body">
-		<span class="slds-size_1-of-1 slds-text-align_center">
-			In caso di chiamata muta o per errore, innescare il relativo processo dal tasto Catalogo Servizi.
-		</span>
 		<template if:true={showResetMessage}>
 			<span class="slds-p-horizontal_medium slds-text-align_center">
 				Premere il tasto "Reset" per ripetere il processo di selezione di Account e Contatto.
@@ -19,7 +16,7 @@
 			<div onkeyup={handleKeyUp} class="slds-col slds-size_1-of-1">
 				<lightning-input
 					name="contact_search"
-					placeholder="Cerca per nome, numero di telefono o email e digita invio"
+					label="Inserire nome, numero di telefono o email e premere invio."
 					type="search"
 				></lightning-input>
 			</div>
