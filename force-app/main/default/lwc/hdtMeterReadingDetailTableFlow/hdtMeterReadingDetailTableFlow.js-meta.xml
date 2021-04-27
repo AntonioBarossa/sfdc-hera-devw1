@@ -24,6 +24,8 @@
             
             <property name="readingValue" type="String" label="Valore Lettura" description="Valore Lettura selezionata" role="outputOnly"/>
             
+            <property name="totalReadingValue" type="Integer" label="Valore Letture Selezionate" description="Valore Totale delle Letture selezionate" role="outputOnly"/>
+
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             
         </targetConfig>

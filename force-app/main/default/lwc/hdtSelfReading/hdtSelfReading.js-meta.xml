@@ -69,6 +69,10 @@
             
             <property name="readingCustomerDate" type="Date" label="Reading Customer Date" description="Date of reading provided by customer" role="outputOnly"/>
             
+            <property name="oldTotalReadingValue" type="Integer" label="Old total reading value" description="Sum of all previous reading values" role="outputOnly"/>
+
+            <property name="newTotalReadingValue" type="Integer" label="New total reading value" description="Sum of all new reading values" role="outputOnly"/>
+
             <property name="disabledReadingDate" type="Boolean" label="Disabled Reading Date" description="If true reading date is disabled" role="inputOnly"/>
             
 

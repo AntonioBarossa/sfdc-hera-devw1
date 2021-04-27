@@ -8,7 +8,8 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     @api cancelCase;
     @api nextLabel;
     @api nextVariant;
-    @api readingValue;
+    @api readingValue; // UNUSED
+    @api totalReadingValue;
 
     @api contractNumber;
     @track meterReadingColumns;
@@ -34,6 +35,7 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
 
     connectedCallback() {
+        this.totalReadingValue = 0;
         console.log('contract number: ' + this.contractNumber);
         this.configurationData();
         //this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
@@ -68,8 +70,8 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
 
         if(this.availableActions.find(action => action === 'NEXT')){
 
-            this.readingValue = this.template.querySelector('c-hdt-meter-reading-detail-table').getSelectedReadingsValue();
-            console.log('selected readings value: ' + this.readingValue);
+            this.totalReadingValue = this.template.querySelector('c-hdt-meter-reading-detail-table').getSelectedReadingsValue();
+            console.log('selected readings value: ' + this.totalReadingValue);
 
             const navigateNextEvent = new FlowNavigationNextEvent();
             this.dispatchEvent(navigateNextEvent);

@@ -44,6 +44,10 @@ export default class HdtSelfReading extends LightningElement {
 
     @api allowSmallerReading;
 
+    @api oldTotalReadingValue;
+
+    @api newTotalReadingValue;
+
     recordKey;
 
     selfReadingObj = [];
@@ -68,6 +72,8 @@ export default class HdtSelfReading extends LightningElement {
 
     connectedCallback(){
 
+        this.oldTotalReadingValue = 0;
+        this.newTotalReadingValue = 0;
         this.readingCustomerDate = this.sysdate();
 
         this.recordKey = this.object === 'Order' ? 
@@ -235,6 +241,11 @@ export default class HdtSelfReading extends LightningElement {
                 }
 
                 console.log(result);
+
+                this.oldTotalReadingValue += element.oldReadingValue();
+                this.newTotalReadingValue += element.newReadingValue();
+                console.log('oldTotalReadingValue: ' + this.oldTotalReadingValue)
+                console.log('newTotalReadingValue: ' + this.newTotalReadingValue)
 
                 for(const [key,value] of Object.entries(result)){
 
