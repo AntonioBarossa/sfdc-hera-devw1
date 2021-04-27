@@ -73,13 +73,13 @@ export default class HdtAccountSelector extends LightningElement {
 			this.contactId = event.currentTarget.dataset.id;
 			handleAccount({contactId: this.contactId, activityId: this.recordId})
 			.then(result => {
+				this.accounts = result;
 				if(result.length == 1) {
-					this.accountId = result[0].Id;
+					this.accountId = this.accounts[0].Id;
 					this.changesCommitted = true;
 					getRecordNotifyChange([{recordId: this.recordId}]);
 					this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
 				}
-				this.accounts = result;
 			})
 			.catch(error => {
 				// WIP
@@ -105,8 +105,6 @@ export default class HdtAccountSelector extends LightningElement {
 	handleReset(event) {
 		this.contactId = undefined;
 		this.accountId = undefined;
-		this.contacts = undefined;
-		this.accounts = undefined;
 		if(this.changesCommitted) {
 			reset({activityId: this.recordId})
 			.then(result => {
