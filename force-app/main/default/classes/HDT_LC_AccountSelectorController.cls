@@ -8,8 +8,12 @@ public with sharing class HDT_LC_AccountSelectorController {
 	
 	@AuraEnabled
 	public static String init(String recordId) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isAccessible()) {
+			return null;
+		}
+
 		try {
-			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, ClientNumber__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId WITH SECURITY_ENFORCED];
+			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, ClientNumber__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId];
 			
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
 			result.accountId = activity.Account__c;
@@ -29,8 +33,12 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString) {
+		if(!Schema.sObjectType.Contact.isAccessible()) {
+			return null;
+		}
+
 		try {
-			return [SELECT Id, AccountId, Name, Phone, MobilePhone, Email FROM Contact WHERE Name =: queryString OR Phone =: queryString OR MobilePhone =: queryString OR Email LIKE: queryString WITH SECURITY_ENFORCED];
+			return [SELECT Id, AccountId, Name, Phone, MobilePhone, Email FROM Contact WHERE Name =: queryString OR Phone =: queryString OR MobilePhone =: queryString OR Email LIKE: queryString];
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
@@ -53,8 +61,12 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Account> getAccounts(String contactId) {
+		if(!Schema.sObjectType.Account.isAccessible()) {
+			return null;
+		}
+
 		try {
-			return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c  FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId) WITH SECURITY_ENFORCED];
+			return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c  FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId)];
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
@@ -62,6 +74,10 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static void updateActivity(String activityId, String contactId, String accountId) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isUpdateable()) {
+			return;
+		}
+
 		try {
 			wrts_prcgvr__Activity__c a = new wrts_prcgvr__Activity__c(
 				Id = activityId
@@ -74,7 +90,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 				a.Account__c = accountId;
 			}
 
-			HDT_UTL_DatabaseService.updateSObject(a);
+			update a;
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
@@ -82,12 +98,16 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static String reset(String activityId) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isUpdateable()) {
+			return null;
+		}
+
 		try {
-			HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
+			update new wrts_prcgvr__Activity__c(
 				Id = activityId,
 				Contact__c = null,
 				Account__c = null
-			));
+			);
 			return null;
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
