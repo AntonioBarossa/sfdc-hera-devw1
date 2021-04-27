@@ -3,15 +3,23 @@ class Util {
 		this.mapDelegated = {};
 		this.mapInteractions = {};
 	}
+	// popToSearch(number) {
+	// 	sforce.opencti.searchAndScreenPop({
+	// 		searchParams: number,
+	// 		callType:sforce.opencti.CALL_TYPE.INBOUND,
+	// 		callback:() => {} //Optional
+	// 	});
+	// }
 	createActivity(message) {
 		ConnectorEntityController.createActivity(JSON.stringify(message), (result, req) => {
-			if(result.startsWith("Error")) {
-				// WIP IMPROVE ERROR HANDLING
-				console.log("### iwsutil.createActivity() | RESULT STARTS WITH ERROR");
+			console.log('### req: ' + req);
+			console.log('### result: ' + result);
+			if(result.startsWith('Error')) {
+				// WIP
 			} else {
-				var resultObj = JSON.parse(result.replaceAll("&quot;","\""));
-				iwscommand.SetAttachdataById(message.ConnectionID, {"sf_activity_id": resultObj.activityId});
-				console.log("### iwsutil.createActivity() | ACTIVITY CREATED!");
+				var resultObj = JSON.parse(result);
+				message.attachdata.put('sf_activity_id', resultObj.activityId);
+				message.attachdata.put('CRM', 'sfdc'); // WIP
 				if(resultObj.accountId && resultObj.contactId) {
 					this.screenpop(resultObj.accountId);
 				} else {
@@ -22,11 +30,10 @@ class Util {
 	}
 	closeActivity(message, crmChange, operatorChange) {
 		ConnectorEntityController.closeActivity(JSON.stringify(message), crmChange, operatorChange, (result, req) => {
+			console.log('### req: ' + req);
+			console.log('### result: ' + result);
 			if(result.startsWith('Error')) {
-				// WIP IMPROVE ERRO HANDLING
-				console.log("### iwsutil.closeActivity() | RESULT STARTS WITH ERROR");
-			} else {
-				console.log("### iwsutil.closeActivity() | ACTIVITY CLOSED!");
+				// WIP
 			}
 		});
 	}
@@ -69,6 +76,7 @@ class Util {
 					// iwscommand.MakeCall(payload.number, undefined);
 					// CUSTOM
 					var attachdata = createUserData();
+					attachdata.put('CRM', 'sfdc');
 					iwscommand.MakeCall('0' + payload.number, attachdata);
 				}
 			});

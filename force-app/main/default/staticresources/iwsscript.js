@@ -1,4 +1,4 @@
-/********** USED EVENTS **********/
+/********** CUSTOM **********/
 
 function onEventEstablishedInbound(message) {
     sfutil.createActivity(message);
@@ -25,8 +25,7 @@ function onEventPartyChangedInbound(message) {
 function onEventPartyChangedOutbound(message) {
 }
 
-/*******************************/
-
+/********* STANDARD *********/
 var softphone_connector_initialized = false;
 function networkError(message) {
     log.error(message);
