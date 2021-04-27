@@ -2,10 +2,10 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>Assegna_Fase_completata</name>
+        <name>Assegna_Fase_completata_0</name>
         <label>Assegna Fase completata</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>396</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -13,10 +13,80 @@
                 <stringValue>Completata</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Assegna_Fase_completata_0_0</name>
+        <label>Assegna Fase completata</label>
+        <locationX>132</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Tipologia_Informative</name>
+        <label>Tipologia Informative?</label>
+        <locationX>176</locationX>
+        <locationY>278</locationY>
+        <defaultConnector>
+            <targetReference>hdtInformativeScreenComponent_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Ex Generiche</defaultConnectorLabel>
+        <rules>
+            <name>Comunicazione_di_Fallimento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Comunicazione di Fallimento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Case</targetReference>
+            </connector>
+            <label>Comunicazione di Fallimento</label>
+        </rules>
+        <rules>
+            <name>Altre_Informative</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_AltreInformative</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>ScreenAltreInformative_0</targetReference>
+            </connector>
+            <label>Altre Informative</label>
+        </rules>
+    </decisions>
     <description>Flow per la gestione del Cluster Informative</description>
     <interviewLabel>Gestione Informative {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Informative</label>
@@ -46,7 +116,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>hdtInformativeScreenComponent</targetReference>
+            <targetReference>Tipologia_Informative</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -64,27 +134,27 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>734</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <screens>
-        <name>hdtInformativeScreenComponent</name>
+        <name>hdtInformativeScreenComponent_0</name>
         <label>hdtInformativeScreenComponent</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>396</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Fase_completata</targetReference>
+            <targetReference>Assegna_Fase_completata_0</targetReference>
         </connector>
         <fields>
-            <name>DisplayText</name>
+            <name>DisplayText_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di Informative&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtInformativeScreen</name>
+            <name>hdtInformativeScreen_0</name>
             <extensionName>c:hdtRecordEditFormInformativeFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -159,6 +229,82 @@
                     <elementReference>Context</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>ScreenAltreInformative_0</name>
+        <label>ScreenAltreInformative</label>
+        <locationX>132</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Fase_completata_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayText</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostant&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ScreenAltreInformative</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Dati di processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>Get_Input_Case.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>FINISH</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
