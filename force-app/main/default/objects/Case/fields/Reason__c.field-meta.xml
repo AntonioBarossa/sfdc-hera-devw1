@@ -315,34 +315,34 @@
                 <label>DISATTIVATO/DISDETTO (SERVIZIO)</label>
             </value>
             <value>
+                <fullName>Chiamata Muta</fullName>
+                <default>false</default>
+                <label>Chiamata Muta</label>
+            </value>
+            <value>
+                <fullName>Malfunzionamento</fullName>
+                <default>false</default>
+                <label>Malfunzionamento</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Blocco per frode</label>
+            </value>
+            <value>
+                <fullName>Prima Bolletta</fullName>
+                <default>false</default>
+                <label>Prima Bolletta</label>
             </value>
             <value>
                 <fullName>Bolletta Periodica</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Bolletta Periodica</label>
             </value>
             <value>
                 <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
-            </value>
-            <value>
-                <fullName>Malfunzionamento</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Malfunzionamento</label>
-            </value>
-            <value>
-                <fullName>Prima Bolletta</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Prima Bolletta</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
