@@ -61,6 +61,8 @@
             
             <property name="showCancelButton" type="Boolean" label="Show Cancel Button?" description="Whether to show the Cancel Button" role="inputOnly"/>
             
+            <property name="allowSmallerReading" type="Boolean" label="Allow Smaller Reading?" description="If true the user can insert a reading smaller than the last one" role="inputOnly"/>
+
             <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
             
             <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>

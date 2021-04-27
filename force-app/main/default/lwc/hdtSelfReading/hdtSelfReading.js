@@ -42,6 +42,8 @@ export default class HdtSelfReading extends LightningElement {
 
     @api isSaved = false;
 
+    @api allowSmallerReading;
+
     recordKey;
 
     selfReadingObj = [];

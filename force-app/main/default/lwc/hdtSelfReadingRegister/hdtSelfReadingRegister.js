@@ -10,6 +10,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api isRetroactive;
     @api isVolture;
     @api isVisible;
+    @api allowSmallerReading;
     advanceError;
 
     get visibilityClass() {
@@ -44,6 +45,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
 
     connectedCallback(){
+        this.allowSmallerReading = false;
 
         this.registerObj = this.commodity === 'Energia Elettrica' ? this.registerObjEle : this.registerObjGas;
 
@@ -264,8 +266,9 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             const previousReading = this.registerObj[indexReading].value;
             const newReading = event.target.value;
+
             // Mostriamo l'errore solo dopo che l'operatore inserisce almeno lo stesso numero di cifre della vecchia lettura. 
-            if(newReading.length >= previousReading.length && parseInt(newReading) < parseInt(previousReading)){
+            if(this.allowSmallerReading === false && newReading.length >= previousReading.length && parseInt(newReading) < parseInt(previousReading)){
 
                 this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
 
