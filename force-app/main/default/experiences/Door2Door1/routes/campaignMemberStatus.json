@@ -1,0 +1,10 @@
+{
+  "activeViewId" : "32ad1005-2429-4024-a296-3a12afa38e3b",
+  "appPageId" : "34bd925c-b7ec-48a5-8032-5ef7baecad33",
+  "id" : "10531f43-9fdd-46ac-9bd2-92a05b51f846",
+  "label" : "Campaign Member Status",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-campaign-member-status",
+  "type" : "route",
+  "urlPrefix" : "campaign-member-status"
+}

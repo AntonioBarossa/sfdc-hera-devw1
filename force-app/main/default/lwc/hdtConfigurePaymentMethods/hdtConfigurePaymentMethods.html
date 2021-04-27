@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title="Configura Metodi di Pagamento">
+        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large"></lightning-spinner>
+        <div class="slds-clearfix">
+            <div class="slds-float_right slds-p-horizontal_small">
+                <ul class="slds-list_horizontal">
+                    <li><c-hdt-create-billing-profile disabled-input={disabledInput} account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile></li>
+                    <li><c-hdt-apply-payment-method disabled-input={disabledInput} selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method></li>
+                    <li><lightning-button onclick={handleCloneInit} disabled={isCloneButtonDisabled} variant="brand" label="Clona" title="Clona" class="slds-m-left_large"></lightning-button></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- <div class="slds-grid slds-gutters slds-float_right slds-p-vertical_small slds-p-horizontal_small"> -->
+            <!-- <div class="slds-col"> -->
+                <!-- <ul class="slds-has-block-links_space">
+                    <li class="slds-align_absolute-center"><c-hdt-create-billing-profile disabled-input={disabledInput} account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile></li>
+                    <li class="slds-align_absolute-center slds-m-top_small"><c-hdt-apply-payment-method disabled-input={disabledInput} selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method></li>
+                    <li class="slds-align_absolute-center slds-m-top_small"><lightning-button onclick={handleCloneInit} disabled={isCloneButtonDisabled} variant="brand" label="Clona" title="Clona" class="slds-m-left_large"></lightning-button></li>
+                </ul> -->
+                <!-- <c-hdt-create-billing-profile disabled-input={disabledInput} account-id={accountId} onnewbillingprofile={handleNewBillingProfileEvent}></c-hdt-create-billing-profile> -->
+            <!-- </div> -->
+            <!-- <div class="slds-col">
+                <c-hdt-apply-payment-method disabled-input={disabledInput} selected-billing-profile={selectedBillingProfile} sale={saleRecord}></c-hdt-apply-payment-method>
+            </div> -->
+        <!-- </div> -->
+        <!-- <div class="slds-grid slds-gutters">
+            <div class="slds-size_1-of-1">
+            <c-hdt-manage-billing-profile disabled-input={disabledInput} account-id={accountId} onselectedbillingprofile={handleSelectedBillingProfileEvent}></c-hdt-manage-billing-profile>
+            </div>
+        </div> -->
+        <div>
+            <c-hdt-manage-billing-profile disabled-input={disabledInput} account-id={accountId} onselectedbillingprofile={handleSelectedBillingProfileEvent}></c-hdt-manage-billing-profile>
+        </div>
+    </lightning-card>
+</template>

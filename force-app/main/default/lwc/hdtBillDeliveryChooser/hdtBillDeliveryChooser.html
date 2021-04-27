@@ -1,0 +1,24 @@
+<template>
+    <div class="slds-grid">
+        <div class="slds-col slds-size_1-of-3">
+            
+                <lightning-combobox name="modInvioBoll" label="Modalità di invio bolletta" value={modInvioBoll}
+                placeholder="Seleziona una Modalità" options={options} onchange={handleChange}
+                data-id="modalitaInvio" required></lightning-combobox>
+                <lightning-input type="email" data-id="email" required={emailRequired} label="Indirizzo Email" value={email} ></lightning-input>
+                <lightning-input type="pec" data-id="pec" required={pecRequired} label="Indirizzo PEC" value={pec}></lightning-input>
+                <lightning-input type="presso" data-id="presso"  label="Presso" value={presso}></lightning-input>
+        </div>
+    </div>
+    <c-hdt-generic-address-chooser-flow record-id={caseId} account-id={accountId} address-type="BillingProfile"></c-hdt-generic-address-chooser-flow>
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <lightning-button
+                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                variant="brand" type="button" name="save" label={nextLabel} onclick={handleGoNext}>
+            </lightning-button>
+        </div>
+    </div>
+</template>

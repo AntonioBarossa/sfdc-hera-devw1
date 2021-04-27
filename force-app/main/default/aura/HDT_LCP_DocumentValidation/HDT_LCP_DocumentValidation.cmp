@@ -1,0 +1,50 @@
+<aura:component 
+    controller="HDT_LC_DocumentValidation"
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+    <!-- <aura:attribute name="CILegalRepresentative" type="Boolean" default="true" /> -->
+    <!-- <aura:attribute name="CIAccoutn" type="Boolean" default="true" /> -->
+    <aura:attribute name="QuickQuote" type="Boolean" default="true" />
+    <aura:attribute name="ChamberCommerceRegistration" type="Boolean" default="true" />
+    <aura:attribute name="Instance326" type="Boolean" default="true" />
+    <aura:attribute name="DocumentLow80" type="Boolean" default="true" />
+    <aura:attribute name="AutorizationVolturaThirdTrader" type="Boolean" default="true" />
+    <aura:attribute name="formValid" type="Boolean" default="true"/>
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="ordOBJ" type="Order"/>
+    
+	<aura:renderif istrue="{!v.HideSpinner}">
+		<lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:renderif>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.formValid}">
+        <lightning:card>
+            <aura:set attribute="title">
+                Validazione Documenti
+            </aura:set>
+            <aura:set attribute="footer">
+                <lightning:button type="button" name="Submit" label="Conferma" variant="brand" onclick='{!c.handleSubmit}' />
+                <lightning:button type="button" name="Cancel" label="Annulla" onclick='{!c.handleCancel}' />
+            </aura:set>
+            <div class="">
+                <lightning:recordEditForm 
+                    objectApiName="{!v.sObjectName}" 
+                    recordId="{!v.recordId}" 
+                    onload="{!c.handleOnload}"
+                    aura:id="editForm" >
+                    <lightning:messages />
+                    <!-- <lightning:inputField fieldName="CILegalRepresentative__c" aura:id="CILegalRepresentative" class="{!v.CILegalRepresentative == false ? 'slds-hide' : ''}" /> -->
+                    <!-- <lightning:inputField fieldName="CIAccoutn__c" aura:id="CIAccoutn" class="{!v.CIAccoutn == false ? 'slds-hide' : ''}" /> -->
+                    <lightning:inputField fieldName="QuickQuote__c" aura:id="QuickQuote" class="{!v.QuickQuote == false ? 'slds-hide' : ''}" />
+                    <lightning:inputField fieldName="ChamberCommerceRegistration__c" aura:id="ChamberCommerceRegistration" class="{!v.ChamberCommerceRegistration == false ? 'slds-hide' : ''}" />
+                    <lightning:inputField fieldName="Instance326__c" aura:id="Instance326" class="{!v.Instance326 == false ? 'slds-hide' : ''}" />
+                    <lightning:inputField fieldName="DocumentLow80__c" aura:id="DocumentLow80" class="{!v.DocumentLow80 == false ? 'slds-hide' : ''}" />
+                    <lightning:inputField fieldName="AutorizationVolturaThirdTrader__c" aura:id="AutorizationVolturaThirdTrader" class="{!v.AutorizationVolturaThirdTrader == false ? 'slds-hide' : ''}" />
+                </lightning:recordEditForm>
+            </div>
+        </lightning:card>
+        <aura:set attribute="else" >
+            <lightning:card title="Validazione Non richiesta o Gia Effettuata"/> 
+        </aura:set>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,133 @@
+<template>
+
+    <lightning-layout >
+        <lightning-layout-item padding="around-small" size="9" style="margin-bottom:15px;" >
+            <c-hdt-advanced-search-selection-feild-radio-group disabledinput={disabledinput} onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="3" style="margin-left:-5px;font-size: 11px;">
+        
+    <div style="margin-top:20px;" if:true={showbuttonforniture}>
+            <lightning-button
+                    disabled={disabledinput}
+                    label="Forniture Cliente"
+                    onclick={submitFornitura}
+                    title="Forniture Cliente"
+                    variant="brand"
+                    class="slds-m-left_x-small searchGo"></lightning-button>
+    </div>
+    <div style="margin-top:20px;" if:true={showbuttoncontract}>
+            <lightning-button
+                    disabled={disabledinput}
+                    label="Contratti Cliente"
+                    onclick={submitContract}
+                    title="Contratti Cliente"
+                    variant="brand"
+                    class="slds-m-left_x-small searchGo"></lightning-button>
+    </div>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item padding="around-small" size="6">
+            <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+            <lightning-input
+                    disabled={disabledinput}
+                    onkeyup={handleSearchInputKeyChange}
+                    name="enter-search"
+                    type="search"
+                    value={searchInputValue}
+                    label="Nuova Ricerca"
+                    onchange={searchAction}
+                    class="searchInput">
+            </lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="3">
+            <lightning-button
+                    label="Cerca"
+                    disabled={submitButtonStatus}
+                    onclick={submitSearch}
+                    title="Search action"
+                    icon-name="utility:search"
+                    variant="brand"
+                    class="slds-m-left_x-small searchGo"></lightning-button>
+        </lightning-layout-item>
+        <lightning-layout-item padding="around-small" size="2">
+            <button class="slds-button slds-button_brand searchApi" onclick={callApi} disabled={apiSearchButtonStatus}>Ricerca in Sap</button>
+        </lightning-layout-item>
+    </lightning-layout>
+
+    <div if:true={openmodel} style="height: auto;">
+        <div>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                     aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse modal-close-button"
+                                title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" size="medium"></lightning-icon>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"></h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" if:true={isLoaded}>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="5">
+                                <c-hdt-advanced-search-selection-feild-radio-group onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-small" size="6">
+                                    <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+                                    <lightning-input
+                                            onkeyup={handleSearchInputKeyChange}
+                                            name="enter-search"
+                                            type="search"
+                                            label="Nuova Ricerca"
+                                            onchange={searchAction}
+                                            class="searchInput">
+                                    </lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="around-medium" size="3">
+                                <lightning-button variant="brand" label="search" disabled={submitButtonStatus} onclick={submitSearch} title="Search action" icon-name="utility:search" class="slds-m-left_x-small modal-searchGo"></lightning-button>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout horizontal-align="end">
+                            <lightning-layout-item padding="around-small" size="4" >
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
+                                    <lightning-input type="text" value={filterInputWord} label="Filtra Ricerca" onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Affina Ricerca"></lightning-input>
+                                    <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
+                                        <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
+                                    </svg>
+                                </div>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-layout>
+                            <lightning-layout-item padding="around-small" size="12">
+                                <lightning-datatable max-row-selection={maxRowSelected} class="table-section" key-field="id" data={tableData} columns={tableColumns} onrowselection={getSelectedServicePoint}></lightning-datatable>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                    <footer class="slds-modal__footer">
+                            <div class="slds-grid slds-grid_align-center">
+                                <div class="slds-col">
+                                    <button onclick={previousPage} class="slds-button slds-button_neutral pagination-button">
+                                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft"></use>
+                                        </svg>Previous</button>
+                                </div>
+                                <div class="slds-col">
+                                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPage}</p>
+                                </div>
+                                <div class="slds-col">
+                                    <button onclick={nextPage} class="slds-button slds-button_neutral pagination-button next">Next
+                                        <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright"></use>
+                                        </svg></button>
+                                </div>
+                            </div>
+                        <lightning-button label="Cancel" variant="brand" onclick={closeModal}></lightning-button>
+                        <lightning-button disabled={confirmButtonDisabled} onclick={handleConfirm} label="Conferma" variant="brand" class="slds-m-left_x-small"></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </div>
+</template>

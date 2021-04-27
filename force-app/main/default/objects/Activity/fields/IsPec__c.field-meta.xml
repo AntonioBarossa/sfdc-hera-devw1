@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IsPec__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Flag valorizzato a Y dalla action &quot;Invio PEC&quot;</description>
+    <externalId>false</externalId>
+    <label>PEC</label>
+    <type>Checkbox</type>
+</CustomField>

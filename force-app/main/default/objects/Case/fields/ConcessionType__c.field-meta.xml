@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ConcessionType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo di Agevolazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>Subprocess__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Iva 10% (Cod. 01) </fullName>
+                <default>false</default>
+                <label>Iva 10% (Cod. 01) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% (Cod. 02) </fullName>
+                <default>false</default>
+                <label>Iva 22% (Cod. 02) </label>
+            </value>
+            <value>
+                <fullName>Iva 10% Soc. Controllate (Cod. 03) </fullName>
+                <default>false</default>
+                <label>Iva 10% Soc. Controllate (Cod. 03) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% Soc. Controllate (Cod. 04) </fullName>
+                <default>false</default>
+                <label>Iva 22% Soc. Controllate (Cod. 04) </label>
+            </value>
+            <value>
+                <fullName>Iva 10% Soc. Collegate (Cod. 05) </fullName>
+                <default>false</default>
+                <label>Iva 10% Soc. Collegate (Cod. 05) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% Soc. Collegate (Cod. 06) </fullName>
+                <default>false</default>
+                <label>Iva 22% Soc. Collegate (Cod. 06) </label>
+            </value>
+            <value>
+                <fullName>Iva 10% Soc. Controllanti (Cod. 07) </fullName>
+                <default>false</default>
+                <label>Iva 10% Soc. Controllanti (Cod. 07) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% Soc. Controllanti (Cod. 08) </fullName>
+                <default>false</default>
+                <label>Iva 22% Soc. Controllanti (Cod. 08) </label>
+            </value>
+            <value>
+                <fullName>Iva 10% Soc. del Gruppo (Cod. 09) </fullName>
+                <default>false</default>
+                <label>Iva 10% Soc. del Gruppo (Cod. 09) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% Soc. del Gruppo (Cod. 10) </fullName>
+                <default>false</default>
+                <label>Iva 22% Soc. del Gruppo (Cod. 10) </label>
+            </value>
+            <value>
+                <fullName>Iva esente-non imp Art 72 (Cod. 12) </fullName>
+                <default>false</default>
+                <label>Iva esente-non imp Art 72 (Cod. 12) </label>
+            </value>
+            <value>
+                <fullName>Iva Fuori Campo Autofatt. Art 2 (Cod. 13) </fullName>
+                <default>false</default>
+                <label>Iva Fuori Campo Autofatt. Art 2 (Cod. 13) </label>
+            </value>
+            <value>
+                <fullName>Iva 10% Soc. Partecipate (Cod. 14) </fullName>
+                <default>false</default>
+                <label>Iva 10% Soc. Partecipate (Cod. 14) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% Soc. Partecipate (Cod. 15) </fullName>
+                <default>false</default>
+                <label>Iva 22% Soc. Partecipate (Cod. 15) </label>
+            </value>
+            <value>
+                <fullName>Iva Fuori Campo Livigno (Cod. 19) </fullName>
+                <default>false</default>
+                <label>Iva Fuori Campo Livigno (Cod. 19) </label>
+            </value>
+            <value>
+                <fullName>Iva esente-non imp art 8 S. Marino (Cod. 17) </fullName>
+                <default>false</default>
+                <label>Iva esente-non imp art 8 S. Marino (Cod. 17) </label>
+            </value>
+            <value>
+                <fullName>Iva Reverse Charge (Cod. 25) </fullName>
+                <default>false</default>
+                <label>Iva Reverse Charge (Cod. 25) </label>
+            </value>
+            <value>
+                <fullName>Iva Split payment 10% (Cod. S1) </fullName>
+                <default>false</default>
+                <label>Iva Split payment 10% (Cod. S1) </label>
+            </value>
+            <value>
+                <fullName>Iva Split payment 22% (Cod. S2) </fullName>
+                <default>false</default>
+                <label>Iva Split payment 22% (Cod. S2) </label>
+            </value>
+            <value>
+                <fullName>Iva Reseller esente (Cod. 26) </fullName>
+                <default>false</default>
+                <label>Iva Reseller esente (Cod. 26) </label>
+            </value>
+            <value>
+                <fullName>Iva Split payment 10% Soc. del Gruppo (Cod. S3) </fullName>
+                <default>false</default>
+                <label>Iva Split payment 10% Soc. del Gruppo (Cod. S3) </label>
+            </value>
+            <value>
+                <fullName>Iva Split payment 22% Soc. del Gruppo (Cod. S4) </fullName>
+                <default>false</default>
+                <label>Iva Split payment 22% Soc. del Gruppo (Cod. S4) </label>
+            </value>
+            <value>
+                <fullName>Iva 10% Consociate (Cod. 27) </fullName>
+                <default>false</default>
+                <label>Iva 10% Consociate (Cod. 27) </label>
+            </value>
+            <value>
+                <fullName>Iva 22% Consociate (Cod. 28) </fullName>
+                <default>false</default>
+                <label>Iva 22% Consociate (Cod. 28) </label>
+            </value>
+            <value>
+                <fullName>Imposta Autotrazione (Cod. G_I09) </fullName>
+                <default>false</default>
+                <label>Imposta Autotrazione (Cod. G_I09) </label>
+            </value>
+            <value>
+                <fullName>Imosta Autopr-Prod EE Industr (Cod. G_I15) </fullName>
+                <default>false</default>
+                <label>Imosta Autopr-Prod EE Industr (Cod. G_I15) </label>
+            </value>
+            <value>
+                <fullName>Imposta Processi Metallurgici (Cod. G_I22) </fullName>
+                <default>false</default>
+                <label>Imposta Processi Metallurgici (Cod. G_I22) </label>
+            </value>
+            <value>
+                <fullName>Imposta Processi Mineralogici (Cod. G_I23) </fullName>
+                <default>false</default>
+                <label>Imposta Processi Mineralogici (Cod. G_I23) </label>
+            </value>
+            <value>
+                <fullName>Imposta Forze Armate Nazionali (Cod. G_I24)  </fullName>
+                <default>false</default>
+                <label>Imposta Forze Armate Nazionali (Cod. G_I24)  </label>
+            </value>
+            <value>
+                <fullName>Imposta Usi Domestici (Cod. G_ICD) </fullName>
+                <default>false</default>
+                <label>Imposta Usi Domestici (Cod. G_ICD) </label>
+            </value>
+            <value>
+                <fullName>Imposta usi non domestici iva 10% (Cod. G_ICC10) </fullName>
+                <default>false</default>
+                <label>Imposta usi non domestici iva 10% (Cod. G_ICC10) </label>
+            </value>
+            <value>
+                <fullName>Imposta usi non domestici iva 22% (Cod. G_ICC) </fullName>
+                <default>false</default>
+                <label>Imposta usi non domestici iva 22% (Cod. G_ICC) </label>
+            </value>
+            <value>
+                <fullName>Imposta usi industriali (Cod. G_I04) </fullName>
+                <default>false</default>
+                <label>Imposta usi industriali (Cod. G_I04) </label>
+            </value>
+            <value>
+                <fullName>Altro </fullName>
+                <default>false</default>
+                <label>Altro </label>
+            </value>
+            <value>
+                <fullName>Imposta Processi Elettrolitici (Cod. G_I21) </fullName>
+                <default>false</default>
+                <label>Imposta Processi Elettrolitici (Cod. G_I21) </label>
+            </value>
+            <value>
+                <fullName>Imposta Forze Armate NATO (Cod. G_I25) </fullName>
+                <default>false</default>
+                <label>Imposta Forze Armate NATO (Cod. G_I25) </label>
+            </value>
+            <value>
+                <fullName>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26) </fullName>
+                <default>false</default>
+                <label>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26) </label>
+            </value>
+            <value>
+                <fullName>Imposta usi domestici </fullName>
+                <default>false</default>
+                <label>Imposta usi domestici </label>
+            </value>
+            <value>
+                <fullName>Imposta ordinaria Altri Usi (Cod. E_IE_M04) </fullName>
+                <default>false</default>
+                <label>Imposta ordinaria Altri Usi (Cod. E_IE_M04) </label>
+            </value>
+            <value>
+                <fullName>Imposta C En&gt;50% unità prod (Cod. E_IE_14A) </fullName>
+                <default>false</default>
+                <label>Imposta C En&gt;50% unità prod (Cod. E_IE_14A) </label>
+            </value>
+            <value>
+                <fullName>Imposta Usi Chim Elettrol Metal No Sog. Obbl.  (Cod. E_IE_L11) </fullName>
+                <default>false</default>
+                <label>Imposta Usi Chim Elettrol Metal No Sog. Obbl.  (Cod. E_IE_L11) </label>
+            </value>
+            <value>
+                <fullName>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)  </fullName>
+                <default>false</default>
+                <label>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)  </label>
+            </value>
+            <value>
+                <fullName>Imposta FFSS (Cod. E_IE_L03) </fullName>
+                <default>false</default>
+                <label>Imposta FFSS (Cod. E_IE_L03) </label>
+            </value>
+            <value>
+                <fullName>Imposta Grossiti EE Non Domest (Cod. E_IE_L98) </fullName>
+                <default>false</default>
+                <label>Imposta Grossiti EE Non Domest (Cod. E_IE_L98) </label>
+            </value>
+            <value>
+                <fullName>Imposta Illum Pubbl (Cod. E_IE_L01) </fullName>
+                <default>false</default>
+                <label>Imposta Illum Pubbl (Cod. E_IE_L01) </label>
+            </value>
+            <value>
+                <fullName>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C) </fullName>
+                <default>false</default>
+                <label>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C) </label>
+            </value>
+            <value>
+                <fullName>Imposta Opifici (Cod. E_IE_L13) </fullName>
+                <default>false</default>
+                <label>Imposta Opifici (Cod. E_IE_L13) </label>
+            </value>
+            <value>
+                <fullName>Imposta esente Prod.EE (Cod. E_IE_L06)  </fullName>
+                <default>false</default>
+                <label>Imposta esente Prod.EE (Cod. E_IE_L06)  </label>
+            </value>
+            <value>
+                <fullName>Imposta Sedi Diplomatiche (Cod.E_IE_L02) </fullName>
+                <default>false</default>
+                <label>Imposta Sedi Diplomatiche (Cod.E_IE_L02) </label>
+            </value>
+            <value>
+                <fullName>Imposta Trasp Urb. (Cod. E_IE_L04) </fullName>
+                <default>false</default>
+                <label>Imposta Trasp Urb. (Cod. E_IE_L04) </label>
+            </value>
+            <value>
+                <fullName>Imposta % Usi Chim Metall No Sog. Obbl.   (Cod. E_IE_11D) </fullName>
+                <default>false</default>
+                <label>Imposta % Usi Chim Metall No Sog. Obbl.   (Cod. E_IE_11D) </label>
+            </value>
+            <value>
+                <fullName>Imposta % Usi Mineral No Sog. Obbl.  (Cod. E_IE_11C) </fullName>
+                <default>false</default>
+                <label>Imposta % Usi Mineral No Sog. Obbl.  (Cod. E_IE_11C) </label>
+            </value>
+            <value>
+                <fullName>Imposta Usi Mineral No Sog. Obbl.  (Cod. E_IE_11A) </fullName>
+                <default>false</default>
+                <label>Imposta Usi Mineral No Sog. Obbl.  (Cod. E_IE_11A) </label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Autotrazione (Cod. G_I09) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imosta Autopr-Prod EE Industr (Cod. G_I15) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Processi Metallurgici (Cod. G_I22) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Processi Mineralogici (Cod. G_I23) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Forze Armate Nazionali (Cod. G_I24)  </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Usi Domestici (Cod. G_ICD) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta usi non domestici iva 10% (Cod. G_ICC10) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta usi non domestici iva 22% (Cod. G_ICC) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta usi industriali (Cod. G_I04) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Altro </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Processi Elettrolitici (Cod. G_I21) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Forze Armate NATO (Cod. G_I25) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>Accise - Errata applicazione</controllingFieldValue>
+            <valueName>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% (Cod. 01) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% (Cod. 02) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% Soc. Controllate (Cod. 03) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% Soc. Controllate (Cod. 04) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% Soc. Collegate (Cod. 05) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% Soc. Collegate (Cod. 06) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% Soc. Controllanti (Cod. 07) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% Soc. Controllanti (Cod. 08) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% Soc. del Gruppo (Cod. 09) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% Soc. del Gruppo (Cod. 10) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva esente-non imp Art 72 (Cod. 12) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Fuori Campo Autofatt. Art 2 (Cod. 13) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% Soc. Partecipate (Cod. 14) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% Soc. Partecipate (Cod. 15) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Fuori Campo Livigno (Cod. 19) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva esente-non imp art 8 S. Marino (Cod. 17) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Reverse Charge (Cod. 25) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Split payment 10% (Cod. S1) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Split payment 22% (Cod. S2) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Reseller esente (Cod. 26) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Split payment 10% Soc. del Gruppo (Cod. S3) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva Split payment 22% Soc. del Gruppo (Cod. S4) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 10% Consociate (Cod. 27) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>IVA - Agevolazione cliente</controllingFieldValue>
+            <controllingFieldValue>IVA - Errata applicazione</controllingFieldValue>
+            <valueName>Iva 22% Consociate (Cod. 28) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta ordinaria Altri Usi (Cod. E_IE_M04) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta C En&gt;50% unità prod (Cod. E_IE_14A) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Usi Chim Elettrol Metal No Sog. Obbl.  (Cod. E_IE_L11) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)  </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta FFSS (Cod. E_IE_L03) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Grossiti EE Non Domest (Cod. E_IE_L98) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Illum Pubbl (Cod. E_IE_L01) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Opifici (Cod. E_IE_L13) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta esente Prod.EE (Cod. E_IE_L06)  </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Sedi Diplomatiche (Cod.E_IE_L02) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Trasp Urb. (Cod. E_IE_L04) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta % Usi Chim Metall No Sog. Obbl.   (Cod. E_IE_11D) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta % Usi Mineral No Sog. Obbl.  (Cod. E_IE_11C) </valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Accise - Energia Elettrica</controllingFieldValue>
+            <valueName>Imposta Usi Mineral No Sog. Obbl.  (Cod. E_IE_11A) </valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

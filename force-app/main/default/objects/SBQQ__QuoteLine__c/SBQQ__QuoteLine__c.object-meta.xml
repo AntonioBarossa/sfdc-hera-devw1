@@ -156,6 +156,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Quote Line</label>
     <nameField>
         <displayFormat>QL-{0000000}</displayFormat>

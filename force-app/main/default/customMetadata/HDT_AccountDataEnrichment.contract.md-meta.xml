@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Contract</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">{
+  &quot;data&quot;: [
+    {
+      &quot;label&quot;: &quot;Numero Contratto&quot;,
+      &quot;fieldName&quot;: &quot;contractNumber&quot;,
+      &quot;initialWidth&quot;: 160
+    },
+    {
+      &quot;label&quot;: &quot;Stato Contratto&quot;,
+      &quot;fieldName&quot;: &quot;status&quot;,
+      &quot;initialWidth&quot;: 140
+    },
+    {
+      &quot;label&quot;: &quot;Servizio&quot;,
+      &quot;fieldName&quot;: &quot;service&quot;,
+      &quot;initialWidth&quot;: 140
+    },
+    {
+      &quot;label&quot;: &quot;Numero Impianto&quot;,
+      &quot;fieldName&quot;: &quot;asset&quot;,
+      &quot;initialWidth&quot;: 160
+    },
+    {
+      &quot;label&quot;: &quot;Data Inizio Contratto&quot;,
+      &quot;fieldName&quot;: &quot;startDate&quot;,
+      &quot;initialWidth&quot;: 180
+    },
+    {
+      &quot;label&quot;: &quot;Data Fine Contratto&quot;,
+      &quot;fieldName&quot;: &quot;endDate&quot;,
+      &quot;initialWidth&quot;: 180
+    }
+  ]
+}</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

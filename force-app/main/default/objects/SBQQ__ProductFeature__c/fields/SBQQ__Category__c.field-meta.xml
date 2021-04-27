@@ -13,14 +13,79 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Hardware</fullName>
+                <fullName>Attributi Offerta</fullName>
                 <default>false</default>
-                <label>Hardware</label>
+                <label>Attributi Offerta</label>
             </value>
             <value>
-                <fullName>Software</fullName>
+                <fullName>Punto Fornitura</fullName>
                 <default>false</default>
-                <label>Software</label>
+                <label>Punto Fornitura</label>
+            </value>
+            <value>
+                <fullName>Bonus</fullName>
+                <default>false</default>
+                <label>Bonus</label>
+            </value>
+            <value>
+                <fullName>Contributi</fullName>
+                <default>false</default>
+                <label>Contributi</label>
+            </value>
+            <value>
+                <fullName>Promozioni</fullName>
+                <default>false</default>
+                <label>Promozioni</label>
+            </value>
+            <value>
+                <fullName>VAS Fatturabili</fullName>
+                <default>false</default>
+                <label>VAS Fatturabili</label>
+            </value>
+            <value>
+                <fullName>VAS Prodotti</fullName>
+                <default>false</default>
+                <label>VAS Prodotti</label>
+            </value>
+            <value>
+                <fullName>VAS Servizi</fullName>
+                <default>false</default>
+                <label>VAS Servizi</label>
+            </value>
+            <value>
+                <fullName>Attributi</fullName>
+                <default>false</default>
+                <label>Attributi</label>
+            </value>
+            <value>
+                <fullName>Composizione VAS</fullName>
+                <default>false</default>
+                <label>Composizione VAS</label>
+            </value>
+            <value>
+                <fullName>Bonus e Sconti</fullName>
+                <default>false</default>
+                <label>Bonus e Sconti</label>
+            </value>
+            <value>
+                <fullName>Opzioni</fullName>
+                <default>false</default>
+                <label>Opzioni</label>
+            </value>
+            <value>
+                <fullName>VAS Opzione prodotto</fullName>
+                <default>false</default>
+                <label>VAS Opzione prodotto</label>
+            </value>
+            <value>
+                <fullName>VAS Opzione servizio</fullName>
+                <default>false</default>
+                <label>VAS Opzione servizio</label>
+            </value>
+            <value>
+                <fullName>VAS Opzione Fatturabili</fullName>
+                <default>false</default>
+                <label>VAS Opzione Fatturabili</label>
             </value>
         </valueSetDefinition>
     </valueSet>

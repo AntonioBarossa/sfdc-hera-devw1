@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PrivacyProfilingChoiceSource__c</fullName>
+    <description>Fonte diniego profilazione</description>
+    <externalId>false</externalId>
+    <label>Fonte Consenso Profilazione</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_ChoiseSource</valueSetName>
+    </valueSet>
+</CustomField>
