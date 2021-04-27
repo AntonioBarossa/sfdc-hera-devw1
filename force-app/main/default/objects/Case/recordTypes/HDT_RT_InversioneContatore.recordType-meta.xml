@@ -1,15 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>HDT_RT_FatturazioneConsumi</fullName>
+    <fullName>HDT_RT_InversioneContatore</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
-    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
-    <description>RT che accorpa i processi Rettifica Consumi, Ricostruzione Consumi, Prescrizione Fatture, Errore Fatturazione</description>
-    <label>Fatturazione Consumi</label>
+    <description>Inversione Contatore</description>
+    <label>Inversione Contatore</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
             <fullName>Accedi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agenzia di confisca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicazione della legge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assicuratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza a lungo termine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione grossisti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività bancaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Auto%2FCasalinghi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda wireline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda%2FDi passaggio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -29,7 +72,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BSU ESP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Banca centrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casa progettazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casalinghi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro convegni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro di assistenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro di formazione aziendale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro formaz altri produttori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chain Drug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chain Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clinica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante all%27ingrosso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante non in negozio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercio di massa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company</fullName>
             <default>false</default>
         </values>
         <values>
@@ -37,11 +156,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Default gas</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Dettagliante diretto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettagliante indiretto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Drogheria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettrodomestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enti Consip</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esperto finanziario</fullName>
             <default>false</default>
         </values>
         <values>
@@ -57,7 +216,63 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Farmacia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Federale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Funzionario produttore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Governo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grossista di prod%2E farmac%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gruppo di programmazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gruppo reparto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sede</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industriale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -65,7 +280,79 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Investitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Località</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luogo di vacanza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Magazzino a prezzi scontati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting%2FCongressi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>NRI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negozio prod%2E farmac%2E%2Fpropr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Definito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non a scopo di lucro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Normale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ODM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM del concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta di investimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Officina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paramedici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership</fullName>
             <default>false</default>
         </values>
         <values>
@@ -77,11 +364,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Polizia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Produttore su contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reparto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reseller - Extra Gruppo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Reseller - Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residenziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivenditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivenditore del concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S-Corp</fullName>
             <default>false</default>
         </values>
         <values>
@@ -93,11 +408,87 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Servizio affari Internet</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Societa Vendita Terze</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Società</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società a resp%2E limitata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società d%27assicurazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società fiduciaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società immobiliare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società in accomandita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soggiorno esteso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spedizioniere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subcontraente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermercato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ulteriori informazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Università</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>VIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore di varie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vigili del Fuoco</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -234,7 +625,59 @@
     <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
+            <fullName>100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>230 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Biorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Orario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -242,7 +685,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -250,7 +705,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -258,7 +725,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -270,7 +753,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -278,7 +769,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -286,7 +793,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -294,7 +817,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -302,14 +833,90 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
         <values>
+            <fullName>100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>230 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Biorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Orario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -317,7 +924,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -325,7 +944,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -333,7 +964,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -345,7 +992,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -353,7 +1008,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -361,7 +1032,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -369,7 +1056,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -377,14 +1072,90 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
+            <fullName>100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>230 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Biorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Orario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -392,7 +1163,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -400,7 +1183,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -408,7 +1203,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -420,7 +1231,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -428,7 +1247,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -436,7 +1271,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -444,7 +1295,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -452,7 +1311,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -554,6 +1437,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione Scarto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mancanza titolarità</fullName>
             <default>false</default>
         </values>
@@ -617,6 +1504,50 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Agenzia di confisca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Applicazione della legge</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assicuratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza a lungo termine</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione grossisti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività bancaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Auto%2FCasalinghi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda wireline</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Azienda%2FDi passaggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Aziende</fullName>
             <default>false</default>
         </values>
@@ -633,7 +1564,83 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>BSU ESP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Banca centrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Broker</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casa progettazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casalinghi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro convegni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro di assistenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro di formazione aziendale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centro formaz altri produttori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chain Drug</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chain Food</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Clinica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante all%27ingrosso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante non in negozio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercio di massa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Company</fullName>
             <default>false</default>
         </values>
         <values>
@@ -641,11 +1648,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consulente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Default gas</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Dettagliante diretto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettagliante indiretto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Drogheria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettrodomestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enti Consip</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esperto finanziario</fullName>
             <default>false</default>
         </values>
         <values>
@@ -661,7 +1708,63 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Farmacia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Federale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Filiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Funzionario produttore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Governo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grossista di prod%2E farmac%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gruppo di programmazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gruppo reparto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hotel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sede</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Industriale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -669,7 +1772,79 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Investitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Località</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luogo di vacanza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Magazzino a prezzi scontati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Meeting%2FCongressi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>NRI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Negozio prod%2E farmac%2E%2Fpropr%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Definito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non a scopo di lucro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Normale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ODM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OEM del concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerta di investimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Officina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paramedici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partner</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Partnership</fullName>
             <default>false</default>
         </values>
         <values>
@@ -681,11 +1856,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Polizia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Produttore su contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reparto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reseller - Extra Gruppo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Reseller - Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Residenziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivenditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rivenditore del concorrente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S-Corp</fullName>
             <default>false</default>
         </values>
         <values>
@@ -697,11 +1900,87 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Servizio affari Internet</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Societa Vendita Terze</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Società</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società a resp%2E limitata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società d%27assicurazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società fiduciaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società immobiliare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Società in accomandita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soggiorno esteso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spedizioniere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subcontraente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Suite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermarket</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supermercato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ulteriori informazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Università</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>VIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore di varie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vigili del Fuoco</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -771,6 +2050,10 @@
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento</fullName>
             <default>false</default>
         </values>
@@ -796,6 +2079,10 @@
         </values>
         <values>
             <fullName>Generiche VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1988,6 +3275,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MIWA ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MMS Associazione</fullName>
             <default>false</default>
         </values>
@@ -2020,6 +3315,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>NEWENRGGEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>NOIENERGIA-Altro</fullName>
             <default>false</default>
         </values>
@@ -2044,6 +3347,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>ONE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>ONOVA-Altro</fullName>
             <default>false</default>
         </values>
@@ -2065,6 +3376,22 @@
         </values>
         <values>
             <fullName>Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S4 ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3563,7 +4890,59 @@
     <picklistValues>
         <picklist>NewMeterCode__c</picklist>
         <values>
+            <fullName>100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>230 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Biorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Orario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1%2C6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3571,7 +4950,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3579,7 +4970,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3587,7 +4990,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G1600</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3599,7 +5018,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3607,7 +5034,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3615,7 +5058,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3623,7 +5082,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3631,7 +5098,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G650</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3690,11 +5181,23 @@
     <picklistValues>
         <picklist>OperationType__c</picklist>
         <values>
+            <fullName>Accollo parziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Separazione CA</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Separazione bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione BP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3709,11 +5212,123 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
+            <fullName>APP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistente web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back office Teleselling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back office Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Callback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Camper</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chat</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consip</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_WEB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IVR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ServiziSociali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto GDA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto agenzie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telefono Inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Telefono Outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teleselling</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita MM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita TopBusiness</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3761,11 +5376,19 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Accettazione Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acconto Paperless Non Pagato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Acconto Paperless Pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento RCU Concluso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3777,7 +5400,31 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3785,11 +5432,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3805,7 +5468,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Lavorazione BO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa check preliminari</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avvenuta Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BL010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocco Effettuato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocco Non Effettuato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3813,7 +5508,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3825,7 +5536,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazioni con il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da inviare a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da lavorare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Esecuzione Prevista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3845,6 +5576,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -3853,7 +5588,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da SAP simulato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3865,7 +5616,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura messa a perdita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Procedurale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR020</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento RCU</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa possibile contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Classificazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3873,7 +5656,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione - Inviare Comunicazione Disconoscimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione - Inviare Lettera di Legittimità</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Data Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3893,11 +5704,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Creata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria non necessaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Sap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavori Sospesi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3917,6 +5752,26 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica Riclassificata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione non concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presenza Atti Autorizzativi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivo accettato</fullName>
             <default>false</default>
         </values>
@@ -3933,7 +5788,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Preventivo Extra Sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3941,7 +5828,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta ricevuta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3950,6 +5857,38 @@
         </values>
         <values>
             <fullName>SMS Non Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso manualmente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso per richiesta parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso per verifica DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK DL simulata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4095,6 +6034,14 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
+            <fullName>Accesso dei dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Agevolazioni non Energy indirette</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Assistenza Sociale</fullName>
             <default>false</default>
         </values>
@@ -4103,11 +6050,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bonus integrativo solo per non Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CLIENTE NON TROVATO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caduta Linea</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4131,11 +6086,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cancellazione dei dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cessazione Contratto</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiamata Muta</fullName>
+            <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Mura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4144,6 +6107,10 @@
         </values>
         <values>
             <fullName>Cliente paga un acconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4187,6 +6154,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errata Emissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Evasione%2FElusione</fullName>
             <default>false</default>
         </values>
@@ -4227,7 +6198,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Limitazione dei dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Malfunzione Gruppo di misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata erogazione Bonus con domanda di attivazione%2Frinnovo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Opposizione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Permanenza condizioni di disagio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4243,6 +6230,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Portabilità dei dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RESO %28PRODOTTO%29</fullName>
             <default>false</default>
         </values>
@@ -4251,11 +6242,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rettifica dati personali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rinuncia piano rate</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Emissione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4673,6 +6676,106 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>1101-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1102-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1103-Attivita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1105-Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1106-Cantiere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1107-Colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1108-Irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1109-Comunale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1110-Ente pubblico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1111-Promiscuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1112-Subfornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1113-Uso interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1114-Rete</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1115-Scar poz priv%2Eciv no cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1116-Scar%2E acq reflue uso ind</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1117-Autobotte %28solo usi Hera%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1119-Scar%2E ind%2Ele  cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1120-Scar%2E ind%2Ele no cont%2E div</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1121-Scar%2Epozzo priv%2E ind cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1122-Scar%2Epoz priv%2Eind%2Eno cont</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1123-Prel%2E pozzo priv%2E no fatt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>13A0-Usi di Abitazione BT</fullName>
             <default>false</default>
         </values>
@@ -4710,6 +6813,74 @@
         </values>
         <values>
             <fullName>13Z0-Grossisti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1401-Risc amb singoli</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1403-Risc Amb centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1404-Attivita produttive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1406-Acqua calda Sing unità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1407-Acqua calda Centr</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1408-Ospedalieri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1409-Usi interni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1410-Solo Raffrescamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1411-Piscine e Palestre</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EIMP_L01-Illuminaz%2E Pubb%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EIMP_M04-Non domestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E_I_USIDOM-Domestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G_ICC-Imp%2E Usi Civili Commerci</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G_ICC-Imposta Usi Non Dom%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G_ICD-Imposta Usi Domestici</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -5715,6 +7886,30 @@
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>
+            <fullName>Accise - Agevolazione cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accise - Energia Elettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accise - Errata applicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Account e Billing Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Billing Profile</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio Amministratore</fullName>
             <default>false</default>
         </values>
@@ -5723,11 +7918,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Errore Stima Consumi</fullName>
+            <fullName>Elementi di dettaglio</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Errore di Lettura</fullName>
+            <fullName>IVA - Agevolazione cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IVA - Errata applicazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IVA - Esenzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IVA - Revoca Esenzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incorporazione societaria</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5744,6 +7955,26 @@
         </values>
         <values>
             <fullName>Modifica Dati di Recapito Votiva Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mortis Causa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ordinaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Report disaggregato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Report storno di adeguamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5923,7 +8154,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G_104 - Riduzione Usi Industiali</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G_I09-Imp%2E Autotrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G_I125 - Forze Armate Nato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5940,6 +8179,14 @@
         </values>
         <values>
             <fullName>G_I24-Imp%2E Forze Armate Nazion</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G_ICC - Imposta Usi Non Dom%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G_ICC10 - Imposta NonDom%2EagevIVA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6212,11 +8459,23 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Account%2FBilling Profile - errata categoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento Canone Rai</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Altre Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento Contratti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6228,7 +8487,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Autolettura da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura da processo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP%2FCA - errata categoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Blocco Sollecito%2FInteressi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caduta Linea%2FChiamata Muta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6236,7 +8511,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambio cont%2E non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio contatore non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chiusura Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento Altri Venditori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento Venditori HC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6244,11 +8535,39 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione di Fallimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contenzioso In Corso</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratto Non Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Copia Bolletta%2FBollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettaglio Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dichiarazione di intento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disassociazione Utente Web</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6260,11 +8579,35 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore di Fatturazione</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Esercizio Diritti Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Feature Request</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiscale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiscale  - IVA Esenzione%2FRevoca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Calamità</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6276,6 +8619,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Informative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni servizi Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Interruzione Fornitura</fullName>
             <default>false</default>
         </values>
@@ -6284,11 +8639,59 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancata Telelettura%2Flettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marcatura%2FUso PdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Alert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Layout di dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Portale SOL Gestione Energia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Tariffa Residente%2FNon Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifica Attivazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifica Variazione Stato PDR SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento ClickPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Online</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6328,6 +8731,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
             <default>false</default>
         </values>
@@ -6344,7 +8751,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Riattivazione a seguito di cessato pericolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta lettura cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6380,7 +8795,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazioni VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Emissione Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6388,7 +8811,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sospensione Canone Rai Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sospensione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione a seguito di potenziale pericolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sost%2E contatore cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Split Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6404,7 +8847,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Testo Contratto in Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trasmissione Dati Cliente Finale SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Unificazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Anagrafica Cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6428,11 +8887,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Variazione indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione su Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Dati al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica GDM</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Tensione - Pressione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Titolarità POD%2FPDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Contestazione Fattura</fullName>
             <default>false</default>
         </values>
         <values>
