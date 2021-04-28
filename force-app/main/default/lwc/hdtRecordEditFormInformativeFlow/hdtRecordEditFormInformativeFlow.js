@@ -357,6 +357,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 }),
             );
         }
+        this.cancelCase = false;
         this.handleGoNext();
     }
 

@@ -37,8 +37,8 @@ public with sharing class HDT_QR_InformativeManager {
 
     public static Case getFieldToPrePopulate(String recordId){
 
-        return [SELECT //InformativeCluster__c, 
-        //InformativeType__c,
+        return [SELECT InformativeCluster__c, 
+        InformativeType__c,
         CommodityFormula__c
         FROM Case
         WHERE Id = :recordId
