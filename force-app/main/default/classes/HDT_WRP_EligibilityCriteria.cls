@@ -36,6 +36,7 @@ public inherited sharing class HDT_WRP_EligibilityCriteria {
     public class HDT_WRP_MunicipalityTreeObj {
         @AuraEnabled public Boolean eligibleForAllCities;
         @AuraEnabled public List<HDT_WRP_TreeObjItem> treeItemList;
+        @AuraEnabled public List<HDT_WRP_TreeObjItem> treeNotAvailableItemList;
     }
 
     public class HDT_WRP_TreeObjItem {

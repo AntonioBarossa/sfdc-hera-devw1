@@ -6,6 +6,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
     data = [];
+    //data2 = [];
     detailFields = ['Version__c', 'ProductCode__c'];
     filter;
     showTable = false;
@@ -91,6 +92,7 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                         this.showTree = false;
                     } else {
                         this.data = result.treeItemList;
+                        //this.data2 = result.treeNotAvailableItemList;
                         this.showTree = true;
 
                         if(this.data.length===0){

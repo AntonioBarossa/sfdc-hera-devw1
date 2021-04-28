@@ -27,53 +27,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
         System.debug('# search this criteria > ' + recordId);
 
-        HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj();
+        HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj;
 
-        try{
-
-            List<EligibleMunicipality__c> muniList;
-            List<EligibilityCriteria__c> criteria;
-            muniList = HDT_QR_EligibilityCriteria.getEligibleMunicipalityByCriteriaId(muniList, recordId);
-            criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, recordId);
-
-
-            if(!criteria[0].EligibleForAllCities__c){
-                municipalityTreeObj.eligibleForAllCities = false;
-                municipalityTreeObj.treeItemList = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem treeItem;
-                for(EligibleMunicipality__c muni : muniList){
-
-                    HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv  = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
-
-                    treeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                    treeItem.label = singleProv.label + ' (' + singleProv.value + ')';
-                    treeItem.name = singleProv.value;
-                    treeItem.expanded = false;
-                    treeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-
-                    HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem nestedTreeItem;
-                    for(HDT_WRP_EligibilityCriteria.HDT_WRP_City cityItem : singleProv.cityAvailable){
-                        nestedTreeItem = new HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem();
-                        nestedTreeItem.label = cityItem.label + ' (' + cityItem.value + ')';
-                        nestedTreeItem.name = cityItem.value;
-                        nestedTreeItem.expanded = false;
-                        nestedTreeItem.items = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_TreeObjItem>();
-                        treeItem.items.add(nestedTreeItem);
-                    }
-                    municipalityTreeObj.treeItemList.add(treeItem);
-                }
-            } else {
-                municipalityTreeObj.eligibleForAllCities = true;
-                municipalityTreeObj.treeItemList = null;
-            }
-
-        } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
-            throw new AuraHandledException(e.getMessage());
-        }
-
-        System.debug(JSON.serialize(municipalityTreeObj));
+        municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj(municipalityTreeObj, recordId);
+        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj_EmprovedMethod(municipalityTreeObj, recordId);
 
         return municipalityTreeObj;
     }
