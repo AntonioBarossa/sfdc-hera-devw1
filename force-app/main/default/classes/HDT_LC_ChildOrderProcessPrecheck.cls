@@ -107,6 +107,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 newOrder.ServicePoint__c = order.ServicePoint__c;
                 newOrder.ContractId = order.ContractId;
                 newOrder.Subprocess__c = 'Standard';
+                newOrder.CausalCode__c = 'VTG';
                 newOrder = orderUtl.enrichOrder(newOrder);
                 orderSrv.updateRecord(newOrder);
 
