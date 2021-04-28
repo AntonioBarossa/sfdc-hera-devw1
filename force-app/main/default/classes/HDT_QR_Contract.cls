@@ -25,7 +25,7 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
-            // BillingProfile__c,
+            BillingProfile__c,
             Status,
             SBQQ__Order__r.BillingProfile__c
             FROM
@@ -133,6 +133,21 @@ public inherited sharing class HDT_QR_Contract {
 		String query = 'SELECT ' + fields + ' FROM Contract WHERE AccountId =: accountid WITH SECURITY_ENFORCED';
 		List<Contract> listCon = Database.query(query);
         return listCon;
+    }
+
+
+
+    public List<Contract> getRecordsWithOrders(List<String> contractIds){
+        return [
+            SELECT
+            SBQQ__Order__c,
+            SBQQ__Order__r.BillingProfile__c,
+            SBQQ__Order__r.ServicePoint__c
+            FROM
+            Contract
+            WHERE Id IN :contractIds
+            WITH SECURITY_ENFORCED
+        ];
     }
 
 }

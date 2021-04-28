@@ -37,4 +37,22 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             WITH SECURITY_ENFORCED
         ];
     }
+
+
+    public List<AccountContactRelation> getRecordByAccountId(String accountId){
+
+        return [
+            SELECT ContactId,
+            Contact.MobilePhone,
+            Contact.Email
+            FROM AccountContactRelation
+            WHERE AccountId = :accountId
+            AND IsActive = true
+            AND IsDirect = true
+            WITH SECURITY_ENFORCED
+        ];
+
+
+    }
+
 }

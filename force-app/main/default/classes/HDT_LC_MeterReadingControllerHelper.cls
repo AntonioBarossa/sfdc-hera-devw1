@@ -95,11 +95,11 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             }
 
             HDT_WRP_MeterReading.HDT_WRP_HttpBody bodyWrp = new HDT_WRP_MeterReading.HDT_WRP_HttpBody();
-            bodyWrp.codiceContratto = '';//contractCode;
-            bodyWrp.codiceImpianto = '4002460003';
+            bodyWrp.codiceContratto = contractCode;
+            //bodyWrp.codiceImpianto = '4005362981';
             bodyWrp.codicePod = '';
-            bodyWrp.dataInizioLettura = '01/12/2005';
-            bodyWrp.dataFineLettura = '31/12/2005';
+            //bodyWrp.dataInizioLettura = '01/12/2019';
+            bodyWrp.dataFineLettura = Datetime.now().format('dd/MM/yyyy'); 
             bodyWrp.letturaReale = '';
 
             String body = JSON.serialize(bodyWrp, true);
@@ -122,12 +122,12 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return meterReadingObj;
             }
     
-            //here we have to deserialize body to wrapper obj
-            //HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingData = (HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj)JSON.deserialize(responseCtrl.body, HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj.class);
-
             meterReadingObj.success = true;
-            //meterReadingObj.data = meterReadingData.data;
-            meterReadingObj.data = responseCtrl.body;
+            HDT_WRP_EstrattoLettureResponse responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
+
+            transcodeSapData(responseWrapper.data);
+
+            meterReadingObj.data = JSON.serialize(responseWrapper);
 
         } catch (Exception e){
             meterReadingObj.success = false;
@@ -150,10 +150,10 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             httpObj.endPoint = enrichmentbMetadataList[0].Credential__c;
             httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
 
-            if(enrichmentbMetadataList[0].UseMock__c){
+/*             if(enrichmentbMetadataList[0].UseMock__c){
                 httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
                 httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
-            }
+            } */
 
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');
@@ -163,6 +163,84 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         }
 
         return httpObj;
+    }
+
+    private static void transcodeSapData(List<HDT_WRP_EstrattoLettureData> responseData) {
+
+        List<HDT_MeterReadingTranscodeMap__mdt> maps = HDT_QR_AccountDataEnrichment.getReadingsTranscodeMap();
+        Map<String, String> commodityMap = new Map<String, String>();
+        Map<String, String> readingCategoryMap = new Map<String, String>();
+        Map<String, String> numCategoryMap = new Map<String, String>();
+        Map<String, String> readingStatusMap = new Map<String, String>();
+        Map<String, String> readingTypeMap = new Map<String, String>();
+        Map<String, String> numTypeMap = new Map<String, String>();
+        Map<String, String> numIdMap = new Map<String, String>();
+
+        for (HDT_MeterReadingTranscodeMap__mdt m : maps) {
+            switch on m.TranscodeType__c {
+                when 'Settore Merceologico' {
+                    commodityMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+                when 'Categoria Lettura' {
+                    readingCategoryMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+                when 'Categoria Numeratore' {
+                    numCategoryMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+                when 'Stato Lettura' {
+                    readingStatusMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+                when 'Tipo Lettura' {
+                    readingTypeMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+                when 'Tipo Numeratore' {
+                    numTypeMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+                when 'Identificazione Numeratore' {
+                    numIdMap.put(m.SapValue__c, m.SalesforceValue__c);
+                }
+            }
+        }
+
+        for (HDT_WRP_EstrattoLettureData data : responseData) {
+            data.identificazioneNumeratore = numIdMap.get(data.settoreMerceologico + '-' + data.identificazioneNumeratore);
+            data.settoreMerceologico = commodityMap.get(data.settoreMerceologico);
+            data.categoriaLettura = readingCategoryMap.get(data.categoriaLettura);
+            data.categoriaNumeratore = numCategoryMap.get(data.categoriaNumeratore);
+            data.statoLettura = readingStatusMap.get(data.statoLettura);
+            data.tipoLettura = readingTypeMap.get(data.tipoLettura);
+            data.tipoNumeratore = numTypeMap.get(data.tipoNumeratore);
+        }
+
+    }
+
+
+    public class HDT_WRP_EstrattoLettureData{
+        public String campo;
+        public String codiceContratto;
+        public String apparecchiatura;
+        public String dataLetturaPianificata;
+        public String posizioniPrecedentiLaVirgola;
+        public String decimali;
+        public String quantitaCalcolo;
+        public String tipoLettura;
+        public String categoriaLettura;
+        public String statoLettura;
+        public String consumoMedioGiornaliero;
+        public String giorniConsumo;
+        public String settoreMerceologico;
+        public String identificazioneNumeratore;
+        public String unitaDiMisura;
+        public String categoriaNumeratore;
+        public String tipoNumeratore;
+        public String motivazione;
+    }
+    
+    public class HDT_WRP_EstrattoLettureResponse{
+        public String status;
+        public String correlationId;
+        public String timestamp;
+        public List<HDT_WRP_EstrattoLettureData> data;
     }
 
 }

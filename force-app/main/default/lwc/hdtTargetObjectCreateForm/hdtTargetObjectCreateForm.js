@@ -10,11 +10,13 @@ import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.c
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint';
 
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
-
+import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
+import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 
 
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
+    @api spNew
     @api recordtype;
     @api accountid;
     @api selectedservicepoint;
@@ -48,7 +50,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     hasAddressBeenVerified = false;
     loading = false;
     recordTypeId;
-    @api servicePointRetrievedData;
+    @api servicePointRetrievedData= {};
     fieldsDataRaw = '';
     fieldsDataReqRaw = '';
     customSettings;
@@ -58,8 +60,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api theRecord= [];
     @api rowsplitele = [];
     @api rowsplitgas = [];
-
-    
+    @api responseArriccData;
+    isSap= false;
     
     /**
      * Handle save button availability
@@ -139,30 +141,22 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      */
     toObject(fieldsData, fieldsDataReq){
         console.log('fieldsReq************^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^' + this.fieldsDataReq);
-
+        console.log('fieldsData ' + JSON.stringify(fieldsData));
  
         let fieldsDataObject = [];
         let mapFieldReq = new Map() ;
         mapFieldReq = this.fieldRequiredMapping();
         console.log('mappa campi required ' + JSON.stringify(mapFieldReq));
-      /*  var fieldReqParse = fieldsDataReq.toString();
-        let fieldReq = fieldReqParse.split(",");
-        
-        fieldsDataReq.forEach(element=>{
-            mapFieldReq.set(element,true);
-
-        });*/
         
         console.log('mapFieldReq*****************'+JSON.stringify(mapFieldReq.get('ServicePointCode__c')));
-
         fieldsData.forEach(element => {
-            
-           if(this.selectedservicepoint != undefined){
 
+           if(this.selectedservicepoint != undefined){
+            console.log('this.servicePointRetrievedData[element]'+JSON.stringify(this.servicePointRetrievedData[element]));
             if(element == 'CommoditySector__c')
             {
-             console.log('entra in Punto Elettrico CommoditySector__c');
-             fieldsDataObject.push(
+
+                fieldsDataObject.push(
                  {
                      fieldname: element,
                      required : mapFieldReq.get(element),
@@ -200,10 +194,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             }
             else {
-                console.log('recordType :' + JSON.stringify(this.recordtype.label));
+                console.log('recordType Label :' + JSON.stringify(this.recordtype.label));
                 if((this.recordtype.label == 'Punto Elettrico'&& element == 'CommoditySector__c'))
                 {
-                 console.log('entra in Punto Elettrico CommoditySector__c');
+                 console.log('entra in Punto Elettrico CommoditySector__c2');
+                 this.allSubmitedFields.CommoditySector__c = 'Energia Elettrica';
                  fieldsDataObject.push(
                      {
                          fieldname: element,
@@ -213,6 +208,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                      }
                  ) 
                 }else if(this.recordtype.label === 'Punto Gas' && element === 'CommoditySector__c'){
+                this.allSubmitedFields.CommoditySector__c = 'Gas';
                  fieldsDataObject.push(
                      {
                          fieldname: element,
@@ -263,6 +259,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         return fieldsDataObject;
     }
 
+
     /**
      * Organize fields data
      */
@@ -276,6 +273,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         console.log('fieldsDataObject *********************'+ JSON.stringify(this.fieldsDataObject));
 
+        
         //get address fields
         this.fieldsAddress = this.toArray(this.customSettings.FieldAddress__c);
         this.fieldsAddressReq = this.toArray(this.customSettings.FieldRequiredAddress__c);
@@ -286,26 +284,115 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.allFieldsObject = this.toObject(this.allFieldsData, this.allFieldsDataReq);
     }
 
+
+    handleCallServiceSap(selectedservicepoint){
+        console.log('event detail callservicesap *************' + JSON.stringify(selectedservicepoint['Codice Punto']));
+        let input=selectedservicepoint['Codice Punto'];
+        let sp =selectedservicepoint;
+        console.log('sp *****************' + JSON.stringify(sp));
+        callService({contratto:'',pod:input}).then(data =>{
+            
+            console.log('data*******************' + JSON.stringify(data));
+            if(data.statusCode=='200'){
+                
+                this.responseArriccData = data;
+                if(this.servicePointRetrievedData == undefined){
+                    console.log('entra in if servRetrievedData undefiend **********************');
+
+                    extractDataFromArriccDataServiceWithExistingSp({sp:sp,response:data}).then(datas =>{
+                        console.log('datas*************************' +  JSON.stringify(datas));
+                        this.isSap= true;
+                            this.servicePointRetrievedData=datas[0];
+                            console.log('servicePointRetriviedData commodity: ******'+JSON.stringify(this.servicePointRetrievedData['CommoditySector__c']));
+                            
+                            switch(this.servicePointRetrievedData['CommoditySector__c']){
+                                case 'Energia Elettrica':
+                                    console.log('entra in energia elettrica');
+                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c  : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c ) );
+        
+                                    this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredEle__c  : (this.customSettings.FieldRequiredEle__c == null || this.customSettings.FieldRequiredEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredEle__c ) );
+                                    break;
+                                case 'Gas':
+
+                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c  : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c ) );
+        
+                                    this.fieldsDataReqRaw =(this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c  : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c ) );
+                                    break;
+                                }
+        
+                            
+                            this.fieldsData = this.toArray(this.fieldsDataRaw);
+                            this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
+                            console.log('fieldsDataObject before handleCallServiceSap'+ JSON.stringify(this.fieldsDataObject));
+                            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+                            console.log('fieldsDataObject after handleCallServiceSap'+ JSON.stringify(this.fieldsDataObject));
+
+                            this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
+                                                          
+                            
+                    });
+                }else{
+                    console.log('entra in else **********************');
+                    extractDataFromArriccDataServiceWithExistingSp({sp:this.servicePointRetrievedData,response:data}).then(datas =>{
+                        console.log('datas*************************' +  JSON.stringify(datas));
+                            this.servicePointRetrievedData=datas[0];
+                            console.log('servicePointRetriviedData commodity: ******'+JSON.stringify(this.servicePointRetrievedData['CommoditySector__c']));
+                            switch(this.servicePointRetrievedData['CommoditySector__c']){
+                                case 'Energia Elettrica':
+                                    console.log('entra in energia elettrica');
+                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c  : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c ) );
+                                    this.fieldsDataReqRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredEle__c  : (this.customSettings.FieldRequiredEle__c == null || this.customSettings.FieldRequiredEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredEle__c ) );
+                                    break;
+                                case 'Gas':
+                                    this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldGas__c  : (this.customSettings.FieldGas__c == null || this.customSettings.FieldGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldGas__c ) );
+                                    this.fieldsDataReqRaw =(this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c  : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c ) );
+                                    break;
+                                }
+        
+                            this.fieldsData = this.toArray(this.fieldsDataRaw);
+                            this.fieldsDataReq = this.toArray(this.fieldsDataReqRaw);
+                            console.log('fieldsDataObject before handleCallServiceSap'+ JSON.stringify(this.fieldsDataObject));
+                            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+                            console.log('fieldsDataObject after handleCallServiceSap'+ JSON.stringify(this.fieldsDataObject));
+                            this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValuesIfSap(this.servicePointRetrievedData);
+                        });
+                }
+
+
+            }else{
+                this.isSap= false;
+            }
+                
+        });
+        
+        
+    }
+
     connectedCallback(){
         this.loading = true;
-
-        console.log('hdtTargetObjectForm - connectedCallback - recordtype: ', JSON.stringify(this.recordtype));
+        
+        console.log('hdtTargetObjectForm - connectedCallback ');
         getCustomSettings().then(data => {
             //get data fields based on recordtype label
-            switch(this.recordtype.label){
-                case 'Punto Elettrico':
-                    this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldEle__c  : (data.FieldEle__c == null || data.FieldEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldEle__c ) );
-                    //this.fieldsDataRaw +=','+ data.FieldEle__c;
-                    this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredEle__c  : (data.FieldRequiredEle__c == null || data.FieldRequiredEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredEle__c ) );
-                    break;
-                case 'Punto Gas':
-                    this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c  : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldGas__c ) );
-                    //this.fieldsDataRaw = undefined || null  ? this.fieldsDataRaw += data.FieldGas__c :  this.fieldsDataRaw +=','+ data.FieldGas__c;
-
-                     //this.fieldsDataReqRaw += data.FieldGas__c;
-
-                    this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredGas__c  : (data.FieldRequiredGas__c == null || data.FieldRequiredGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredGas__c ) );
+            if(this.recordtype.label != undefined){
+                switch(this.recordtype.label){
+                    case 'Punto Elettrico':
+                        this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldEle__c  : (data.FieldEle__c == null || data.FieldEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldEle__c ) );
+                        //this.fieldsDataRaw +=','+ data.FieldEle__c;
+                        this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredEle__c  : (data.FieldRequiredEle__c == null || data.FieldRequiredEle__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredEle__c ) );
+                        break;
+                    case 'Punto Gas':
+                        this.fieldsDataRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldGas__c  : (data.FieldGas__c == null || data.FieldGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldGas__c ) );
+                        //this.fieldsDataRaw = undefined || null  ? this.fieldsDataRaw += data.FieldGas__c :  this.fieldsDataRaw +=','+ data.FieldGas__c;
+    
+                         //this.fieldsDataReqRaw += data.FieldGas__c;
+    
+                        this.fieldsDataReqRaw = (data.FieldGeneric__c == null || data.FieldGeneric__c == undefined ? data.FieldRequiredGas__c  : (data.FieldRequiredGas__c == null || data.FieldRequiredGas__c == null ? data.FieldGeneric__c  :  data.FieldGeneric__c + ',' + data.FieldRequiredGas__c ) );
+                }
+                
             }
+           
+        
 
             this.customSettings = data;
             console.log(JSON.stringify(this.selectedservicepoint)+'********selectedServicePoint');
@@ -315,13 +402,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c+','+ data.FieldRequiredGeneric__c;
                 //this.fieldsDataReqRaw = data.FieldRequiredEle__c + ', ' + data.FieldRequiredGas__c;
 
-
+                
                 let queryFields = [...new Set(this.toArray(this.fieldsDataRaw + ', ' + this.customSettings.FieldAddress__c))];
                 console.log('queryFields*************'+JSON.stringify(queryFields) );
                 getServicePoint({code:this.selectedservicepoint['Codice Punto'],fields: queryFields.join()}).then(data =>{
-                    
+
+                    //this.handleCallServiceSap(this.selectedservicepoint);
                     this.servicePointRetrievedData = data[0];
-                    console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData.RecordType.DeveloperName));
+                    console.log('servicePointRetriviedData: ******'+JSON.stringify(this.servicePointRetrievedData));
+                  if(this.servicePointRetrievedData.RecordType.DeveloperName!= undefined){
                     switch(this.servicePointRetrievedData.RecordType.DeveloperName){
                         case 'HDT_RT_Ele':
                             this.fieldsDataRaw = (this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldEle__c  : (this.customSettings.FieldEle__c == null || this.customSettings.FieldEle__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldEle__c ) );
@@ -335,9 +424,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                            // this.fieldsDataRaw = this.customSettings.FieldGas__c;
                             this.fieldsDataReqRaw =(this.customSettings.FieldGeneric__c == null || this.customSettings.FieldGeneric__c == undefined ? this.customSettings.FieldRequiredGas__c  : (this.customSettings.FieldRequiredGas__c == null || this.customSettings.FieldRequiredGas__c == null ? this.customSettings.FieldGeneric__c  :  this.customSettings.FieldGeneric__c + ',' + this.customSettings.FieldRequiredGas__c ) );
                     }
+                  }
+
+
                     this.manageFields();
 
-                    //this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObject(this.servicePointRetrievedData);
                     this.getInstanceWrapObject(this.servicePointRetrievedData);
 
                 }).catch(error => {
@@ -442,25 +533,34 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         
         this.validForm = true;
 
+
         if(event.target.fieldName =='Disconnectable__c' && event.target.value == 'SI'){
-            console.log('Object refresh' + JSON.stringify(this.servicePointRetrievedData));
-            console.log('Object refresh' + JSON.stringify(this.fieldsData));
-            console.log('Object refresh' + JSON.stringify(this.fieldsDataObject));
+            console.log(' if event target = disconnectable SI');
+
+            console.log('Object refresh servicePointRetrievedData' + JSON.stringify(this.servicePointRetrievedData));
+            console.log('Object refresh fieldsData' + JSON.stringify(this.fieldsData));
+            console.log('Object refresh fieldsDataObject' + JSON.stringify(this.fieldsDataObject));
             
-            this.servicePointRetrievedData['Disconnectable__c'] = 'SI';
-            
+            this.servicePointRetrievedData.Disconnectable__c = 'SI';
+
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
 
 
         }
         if(event.target.fieldName =='Disconnectable__c' && event.target.value == 'NO'){
-            this.servicePointRetrievedData['Disconnectable__c'] = 'NO';
-        
+            console.log(' if event target = disconnectable NO');
+            console.log('Object refresh servicePointRetrievedData' + JSON.stringify(this.servicePointRetrievedData));
+            console.log('Object refresh fieldsData' + JSON.stringify(this.fieldsData));
+            console.log('Object refresh fieldsDataObject' + JSON.stringify(this.fieldsDataObject));
+
+            this.servicePointRetrievedData.Disconnectable__c = 'NO';
+
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-           
+
     
         }
-       
+        console.log('handleFieldsDataChange END');
+
 
     }
 
@@ -494,6 +594,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * @param {*} event 
      */
     getSubmitedAddressFields(event){
+        console.log('event detail getSubmitedAddressFields *********************' + JSON.stringify(event.detail));
         this.submitedAddressFields = event.detail;
         this.validForm = true;
     }
@@ -502,13 +603,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Check validity before saving
      */
     validationChecks(){
+        console.log('validationChecks START');
+        console.log('allSubmitedFields : '+ JSON.stringify(this.allSubmitedFields));
         if(this.selectedservicepoint != undefined){
+            console.log('this.selectedservicepoint != undefined : '+ JSON.stringify(this.selectedservicepoint));
             if(Object.keys(this.allSubmitedFields).length != 0){
                 for (var key in this.allSubmitedFields) {
                     this.servicePointRetrievedData[key] = this.allSubmitedFields[key];
                 }
             }
+            
             this.allSubmitedFields = this.servicePointRetrievedData;
+            console.log('this.selectedservicepoint != undefined  END');
         } else {
             this.allSubmitedFields.RecordTypeId = this.recordtype.value;
             this.allSubmitedFields.Account__c = this.accountid;
@@ -516,34 +622,39 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         }
 
         if(this.submitedAddressFields != undefined){
+            console.log('this.submitedAddressFields != undefined START');
             for (let [key, value] of Object.entries(this.submitedAddressFields)) {
                 this.allSubmitedFields[key] = value;
             }
+            console.log('this.submitedAddressFields != undefined END');
         }
 
-        for(var i=0; i<this.fieldsDataReq.length; i++){
-            
+      /*  for(var i=0; i<this.fieldsDataReq.length; i++){
+            console.log('for1 START');
             let reqdata = this.allSubmitedFields[this.fieldsDataReq[i]];
 
-            /* if( reqdata == undefined || reqdata == '' ){
+            if( reqdata == undefined || reqdata == '' ){
                 this.validForm = false;
                 this.fieldsDataWithError.push(this.fieldsDataReq[i]);
-            }*/
-        }
+            }
+            console.log('for1 END');
+        }*/
 
-        for(var i=0; i<this.fieldsAddressReq.length; i++){
-            
+        /*for(var i=0; i<this.fieldsAddressReq.length; i++){
+            console.log('for2 START');
             let reqaddr = this.allSubmitedFields[this.fieldsAddressReq[i]];
 
             /* if( reqaddr == undefined || reqaddr == '' ){
                 this.validForm = false;
                 this.fieldsAddressWithError.push(this.fieldsAddressReq[i]);
-            }*/
-        }
+            }
+            console.log('for2   END');
+        }*/
+        console.log('validationChecks END');
     }
     
         updateServicePoint(){
-        console.log('update START');
+        console.log('updateServicePoint START');
         console.log('servicePointRetrievedData : ' + JSON.stringify(this.servicePointRetrievedData));
         if(this.servicePointRetrievedData!= undefined){
 
@@ -580,12 +691,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             
         }
 
-        console.log('update END');
+        console.log('updateServicePoint END');
     }
 
     updateSubmitedField(){
-        console.log(' create START');
-        console.log(' create START' + JSON.stringify(this.allSubmitedFields));
+        console.log(' updateSubmitedField START');
+        console.log(' allSubmitedFields ' + JSON.stringify(this.allSubmitedFields));
         if(this.allSubmitedFields!= undefined){
 
             if(this.allSubmitedFields['SupplyStreet__c'] != this.theRecord['Via']){
@@ -619,14 +730,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.allSubmitedFields['SupplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
             }
         }
-
+        console.log(' updateSubmitedField END');
     }
 
     /**
      * Handle new record creation
      */
     save(){
-        console.log('save');
+        console.log('save START');
+        console.log('this.servicePointRetrievedData*************'+JSON.stringify(this.servicePointRetrievedData));
+        console.log('this.allSubmittedFields*************'+JSON.stringify(this.allSubmitedFields));
+
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         
         this.validationChecks();
@@ -638,6 +752,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if(this.selectedservicepoint != undefined){
                 this.updateServicePoint();
                 this.confirm();
+                
             } else {
                 this.updateSubmitedField();
                 this.create();
@@ -655,6 +770,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             
         }
+        console.log('save END');
     }
 
     /**
@@ -691,11 +807,16 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Create record
      */
     create(){
+        console.log('save START');
+        console.log('allSubmitedFields' + JSON.stringify(this.allSubmitedFields));
+
         createServicePoint({servicePoint: this.allSubmitedFields}).then(data =>{
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;
             this.newServicePoint = data;
+
+            console.log('hdtTargetObjectCreateForm - create - this.newServicePoint: ', JSON.stringify(this.newServicePoint));
 
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
@@ -723,13 +844,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Confirm record
      */
     confirm(){
-
-        confirmServicePoint({servicePoint: this.allSubmitedFields, sale: this.sale}).then(data =>{
+        console.log('confirm START');
+        console.log('allSubmitedFields : ' + JSON.stringify(this.allSubmitedFields ));
+        confirmServicePoint({servicePoint: this.allSubmitedFields, sap: this.isSap}).then(data =>{
+            console.log('confirmServicePoint return : ' + JSON.stringify(data));
             this.loading = false;
             this.closeCreateTargetObjectModal();
             this.servicePointId = data.id;
             this.newServicePoint = data;
-
+            this.isSap= false;
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
             
@@ -744,5 +867,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+        console.log('confirm START');
     }
 }

@@ -133,6 +133,16 @@
                 <default>false</default>
                 <label>Incorporazione societaria</label>
             </value>
+            <value>
+                <fullName>Errore di Lettura</fullName>
+                <default>false</default>
+                <label>Errore di Lettura</label>
+            </value>
+            <value>
+                <fullName>Errore Stima Consumi</fullName>
+                <default>false</default>
+                <label>Errore Stima Consumi</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
@@ -145,38 +155,6 @@
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>Incorporazione societaria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Agevolazione cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Energia Elettrica</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>Accise - Errata applicazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>IVA - Agevolazione cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fiscale</controllingFieldValue>
-            <valueName>IVA - Errata applicazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
-            <valueName>IVA - Esenzione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
-            <valueName>IVA - Revoca Esenzione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
-            <valueName>Rettifica per segnalazione cassetto fiscale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
@@ -201,6 +179,38 @@
         <valueSettings>
             <controllingFieldValue>Account/Billing Profile - errata categoria</controllingFieldValue>
             <valueName>Billing Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>IVA - Revoca Esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
+            <valueName>Rettifica per segnalazione cassetto fiscale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Agevolazione cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Energia Elettrica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>Accise - Errata applicazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>IVA - Agevolazione cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fiscale</controllingFieldValue>
+            <valueName>IVA - Errata applicazione</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
