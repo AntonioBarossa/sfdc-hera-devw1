@@ -15,6 +15,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
     @api processType;
     @api objectName;
     @api recordId;
+    @api cancelCase;
     @api context;
     @api saveButton;
     @api cancelButton;
@@ -394,6 +395,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 variant: variant
             }),
         );
+    }
+    handleCancell(event){
+        this.cancelCase = true;
+        this.handleGoNext();
     }
 
     handleSubmit(event){

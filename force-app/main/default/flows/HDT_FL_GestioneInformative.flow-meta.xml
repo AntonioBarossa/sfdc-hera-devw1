@@ -4,8 +4,8 @@
     <assignments>
         <name>Assegna_Fase_completata_0</name>
         <label>Assegna Fase completata</label>
-        <locationX>396</locationX>
-        <locationY>518</locationY>
+        <locationX>330</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -27,7 +27,7 @@
     <assignments>
         <name>Assegna_Fase_completata_0_0</name>
         <label>Assegna Fase completata</label>
-        <locationX>132</locationX>
+        <locationX>66</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
@@ -47,6 +47,31 @@
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
+    <decisions>
+        <name>Annulla_o_Conferma</name>
+        <label>Annulla o Conferma?</label>
+        <locationX>462</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Subflow_Annullamento</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <rules>
+            <name>Conferma</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtInformativeScreen_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Fase_completata_0</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Tipologia_Informative</name>
         <label>Tipologia Informative?</label>
@@ -134,19 +159,19 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>176</locationX>
-        <locationY>734</locationY>
+        <locationY>1070</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <screens>
         <name>hdtInformativeScreenComponent_0</name>
         <label>hdtInformativeScreenComponent</label>
-        <locationX>396</locationX>
+        <locationX>462</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Fase_completata_0</targetReference>
+            <targetReference>Annulla_o_Conferma</targetReference>
         </connector>
         <fields>
             <name>DisplayText_0</name>
@@ -239,7 +264,7 @@
     <screens>
         <name>ScreenAltreInformative_0</name>
         <label>ScreenAltreInformative</label>
-        <locationX>132</locationX>
+        <locationX>66</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -319,6 +344,31 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Subflow_Annullamento</name>
+        <label>Subflow Annullamento</label>
+        <locationX>594</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>Context</name>
         <dataType>String</dataType>
