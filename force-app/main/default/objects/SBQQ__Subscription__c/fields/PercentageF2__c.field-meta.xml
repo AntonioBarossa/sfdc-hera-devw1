@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DiscountEurMWh__c</fullName>
-    <description>Sconto applicato per Euro per ogni MWh</description>
+    <fullName>PercentageF2__c</fullName>
+    <description>Percentuale consumo fascia F2.</description>
     <externalId>false</externalId>
-    <label>Sconto (Eur/MWh)</label>
-    <precision>18</precision>
+    <label>Percentuale F2</label>
+    <precision>4</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Percent</type>
 </CustomField>

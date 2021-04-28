@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DurationVas__c</fullName>
-    <description>Durata di applicazione del contratto dei VAS</description>
+    <fullName>ProductImage__c</fullName>
+    <description>Link all&apos;immagine del prodotto.</description>
     <externalId>false</externalId>
-    <label>VAS - Durata</label>
-    <precision>3</precision>
+    <formula>SBQQ__Product__r.ProductImage__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Immagine prodotto</label>
     <required>false</required>
-    <scale>0</scale>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>DiscountEurMWh__c</fullName>
-    <description>Sconto applicato per Euro per ogni MWh</description>
+    <fullName>PowerRangeMax__c</fullName>
+    <description>Campo di configurazione usato per indicare il valore massimo della potenza.</description>
     <externalId>false</externalId>
-    <label>Sconto (Eur/MWh)</label>
+    <label>Potenza/Portata max</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Number</type>
+    <unique>false</unique>
 </CustomField>
