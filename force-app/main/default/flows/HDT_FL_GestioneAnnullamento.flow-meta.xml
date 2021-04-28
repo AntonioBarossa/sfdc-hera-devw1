@@ -343,19 +343,12 @@
         <name>Assegna_Motivo_0_0</name>
         <label>Assegna Motivo</label>
         <locationX>2294</locationX>
-        <locationY>1635</locationY>
+        <locationY>1634</locationY>
         <assignmentItems>
             <assignToReference>GetRecord.CancellationReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DefaultReason</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.EffectiveDateInput__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>EffectiveDateFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
