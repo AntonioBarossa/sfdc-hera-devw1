@@ -60,6 +60,21 @@
             </div>
         </div>
 
+        <div if:true={isCompleteListVisible} class="slds-grid slds-m-top_large">
+            <div if:true={showEmptyMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno contratti attivi/ordini in corso</div>
+            </div>
+            <div if:false={showEmptyMessage} class="slds-size_1-of-1">
+                <lightning-datatable
+                    key-field="Id"
+                    data={tableData}
+                    columns={completeListcolumns}
+                    max-row-selection=1
+                    onrowselection={getSelectedFromCompleteList}>
+                </lightning-datatable>
+            </div>
+        </div>
+
         <template if:true={showPaginationButtons}>
             <div class="slds-grid slds-grid_align-center slds-m-top_small">
                 <div class="slds-col">

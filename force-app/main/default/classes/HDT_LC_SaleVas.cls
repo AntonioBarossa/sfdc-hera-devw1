@@ -67,6 +67,28 @@ public inherited sharing class HDT_LC_SaleVas {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get map with lists of active contracts and orders
+     * @param String accountId
+     * @return Map<String,List<SObject>>
+     */
+    @AuraEnabled
+    public static Map<String,List<SObject>> getContractsAndOrdersMap(String accountId){
+
+        Map<String,List<SObject>> mapOfLists = new Map<String,List<SObject>>();
+        
+        List<Contract> contractsList = new List<Contract>();
+        contractsList = getContractsList(accountId);
+        mapOfLists.put('contractsList', contractsList);
+
+        List<Order> ordersList = new List<Order>();
+        ordersList = getOrdersList(accountId);
+        mapOfLists.put('ordersList', ordersList);
+
+        return mapOfLists;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
      * @param Order order
      * @param String supplyCity

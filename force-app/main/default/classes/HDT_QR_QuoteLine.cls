@@ -75,7 +75,7 @@ public inherited sharing class HDT_QR_QuoteLine {
     * @param String paymentMethod
     * @return List<SBQQ__QuoteLine__c>
     */
-    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodNoContractNoOrder(String saleId, String paymentMethod){
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodPodPdr(String saleId, String paymentMethod){
 
         return [
             SELECT
@@ -91,11 +91,58 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__RequiredBy__r.BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            AND SBQQ__Quote__r.ContractReference__c = null
-            AND SBQQ__Quote__r.OrderReference__c = null
-            AND (SBQQ__Product__r.Name IN ('POD', 'PDR') OR (SBQQ__ProductFamily__c	= 'VAS Opzione prodotto' AND SBQQ__Number__c = 2))
+            // AND SBQQ__Quote__r.ContractReference__c = null
+            // AND SBQQ__Quote__r.OrderReference__c = null
+            // AND (SBQQ__Product__r.Name IN ('POD', 'PDR') OR ((SBQQ__ProductFamily__c = 'VAS Opzione prodotto' OR SBQQ__ProductFamily__c	= 'VAS prodotto') AND SBQQ__Number__c = 2))
+            AND SBQQ__Product__r.Name IN ('POD', 'PDR')
             AND SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c that have no ContractReference__c or OrderReference__c
+    * @param String saleId – Sale__c.Id
+    * @param String paymentMethod
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getRecordsBySaleFilteredPaymentMethodforVas(String saleId, String paymentMethod){
+
+        return [
+            SELECT
+            Id,
+            SBQQ__RequiredBy__c,
+            Name,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            SBQQ__Product__r.Name,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            BillingProfile__c,
+            BillingProfile__r.Name
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__r.Sale__c = :saleId
+            AND SBQQ__Quote__r.ContractReference__c = null
+            AND SBQQ__Quote__r.OrderReference__c = null
+            AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto')
+            AND PaymentMode__c = :paymentMethod
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<SBQQ__QuoteLine__c> getChildAnalisi(List<String> mainQuoteLineId){
+
+        return [
+            SELECT
+            Id,
+            BillingProfile__c,
+            SBQQ__RequiredBy__r.BillingProfile__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__RequiredBy__c = :mainQuoteLineId
+            AND SBQQ__ProductFamily__c = 'VAS Fatturabili'
             WITH SECURITY_ENFORCED
         ];
     }

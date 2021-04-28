@@ -953,195 +953,197 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleFields(){
 
     //INIZIO SVILUPPI EVERIS        
-        this.voltureField =[
-            {
 
-                section: 1,
-                label: 'Credit Check',
-                name: 'creditCheck',
-                reading: false,
-                readingButton: false,
-                inputField: false,
-                active: true,
-                data:
-                [
-                    {
-                        label: 'Esito Credit Check Uscente',
-                        apiname: 'OutgoingCreditCheck',
-                        value: 'OK',
-                        type: 'text',
-                        disabled: true,
-                        required:false
-                    },
-                    {
-                        label: 'Esito Credit Check Entrante',
-                        apiname: 'OutgoingCreditCheck',
-                        value: 'OK',
-                        type: 'text',
-                        disabled: true,
-                        required:false
-                    },
-                    {
-                        label: 'Descrizione Esito',
-                        apiname: 'CreditCheckDescription',
-                        value: 'OK',
-                        type: 'text',
-                        disabled: true,
-                        required:false
-                    }
-                ]
-
-
-            },
-            {
-
-                section: 2,
-                label: 'Data Retroattiva',
-                name: 'retroactiveDate',
-                reading: false,
-                readingButton: true,
-                inputField: true,
-                recordId:this.order.Id,
-                objectApiName:'Order',
-                active: true,
-                data:
-                [
-                    {
-                        label: 'Data Retroattiva',
-                        apiname: 'RetroactiveDate__c',
-                        type: 'Date',
-                        value: null,
-                        disabled: false
-                    }
-                ]
-
-            },
-            {
-
-                section: 3,
-                label: 'Autolettura',
-                name: 'reading',
-                reading: true,
-                readingButton: false,
-                inputField: false,
-                active: true
-
-            },
-            {
-                section: 4,
-                label: 'Variabili di Processo',
-                name: 'processVariable',
-                reading:false,
-                readingButton: false,
-                inputField:true,
-                recordId:this.order.Id,
-                objectApiName:'Order',
-                active:true,
-                data:
-                [
-                    {
-                        apiname: 'VoltureType__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'SignedDate__c',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: '',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: '',
-                        required: true,
-                        disabled: false
-                    },
-                    {
-                        apiname: 'Volture__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'AccountId',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'PhoneNumber__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'Email__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'WithdrawalClass__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'AnnualConsumption__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'Market__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'SupplyType__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'Implant__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'ClientCategory__c',
-                        required: false,
-                        disabled: true
-                    }
-                ]
-            },
-            {
-                section: 5,
-                label: 'Cliente Uscente',
-                name: 'exitingCustomer',
-                reading:false,
-                readingButton: false,
-                inputField:true,
-                recordId:this.order.ServicePoint__r.Account__c,
-                objectApiName:'Account',
-                active:true,
-                data:
-                [
-                    {
-                        apiname: 'Name',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'FiscalCode__c',
-                        required: false,
-                        disabled: true
-                    },
-                    {
-                        apiname: 'VATNumber__c',
-                        required: false,
-                        disabled: true
-                    }
-                ]
-            }
-    ];
-
+        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){ //Aggiunto perche causa errore per gli altri processi
+            this.voltureField =[
+                {
+    
+                    section: 1,
+                    label: 'Credit Check',
+                    name: 'creditCheck',
+                    reading: false,
+                    readingButton: false,
+                    inputField: false,
+                    active: true,
+                    data:
+                    [
+                        {
+                            label: 'Esito Credit Check Uscente',
+                            apiname: 'OutgoingCreditCheck',
+                            value: 'OK',
+                            type: 'text',
+                            disabled: true,
+                            required:false
+                        },
+                        {
+                            label: 'Esito Credit Check Entrante',
+                            apiname: 'OutgoingCreditCheck',
+                            value: 'OK',
+                            type: 'text',
+                            disabled: true,
+                            required:false
+                        },
+                        {
+                            label: 'Descrizione Esito',
+                            apiname: 'CreditCheckDescription',
+                            value: 'OK',
+                            type: 'text',
+                            disabled: true,
+                            required:false
+                        }
+                    ]
+    
+    
+                },
+                {
+    
+                    section: 2,
+                    label: 'Data Retroattiva',
+                    name: 'retroactiveDate',
+                    reading: false,
+                    readingButton: true,
+                    inputField: true,
+                    recordId:this.order.Id,
+                    objectApiName:'Order',
+                    active: true,
+                    data:
+                    [
+                        {
+                            label: 'Data Retroattiva',
+                            apiname: 'RetroactiveDate__c',
+                            type: 'Date',
+                            value: null,
+                            disabled: false
+                        }
+                    ]
+    
+                },
+                {
+    
+                    section: 3,
+                    label: 'Autolettura',
+                    name: 'reading',
+                    reading: true,
+                    readingButton: false,
+                    inputField: false,
+                    active: true
+    
+                },
+                {
+                    section: 4,
+                    label: 'Variabili di Processo',
+                    name: 'processVariable',
+                    reading:false,
+                    readingButton: false,
+                    inputField:true,
+                    recordId:this.order.Id,
+                    objectApiName:'Order',
+                    active:true,
+                    data:
+                    [
+                        {
+                            apiname: 'VoltureType__c',
+                            required: true,
+                            disabled: false
+                        },
+                        {
+                            apiname: 'SignedDate__c',
+                            required: true,
+                            disabled: false
+                        },
+                        {
+                            apiname: '',
+                            required: true,
+                            disabled: false
+                        },
+                        {
+                            apiname: '',
+                            required: true,
+                            disabled: false
+                        },
+                        {
+                            apiname: 'Volture__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'AccountId',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'PhoneNumber__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'Email__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'WithdrawalClass__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'AnnualConsumption__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'Market__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'SupplyType__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'Implant__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'ClientCategory__c',
+                            required: false,
+                            disabled: true
+                        }
+                    ]
+                },
+                {
+                    section: 5,
+                    label: 'Cliente Uscente',
+                    name: 'exitingCustomer',
+                    reading:false,
+                    readingButton: false,
+                    inputField:true,
+                    recordId:this.order.ServicePoint__r.Account__c,
+                    objectApiName:'Account',
+                    active:true,
+                    data:
+                    [
+                        {
+                            apiname: 'Name',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'FiscalCode__c',
+                            required: false,
+                            disabled: true
+                        },
+                        {
+                            apiname: 'VATNumber__c',
+                            required: false,
+                            disabled: true
+                        }
+                    ]
+                }
+            ];
+        }
 
     //FINE SVILUPPI EVERIS
     
@@ -2591,18 +2593,46 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('mainOrderItem: ', JSON.parse(JSON.stringify(this.mainOrderItem)));
         console.log('analisiConsumi: ', JSON.parse(JSON.stringify(this.analisiConsumi)));
         
+        console.log('LOG 1');
         
         this.title = 'Processo di ' + this.order.RecordType.Name;
+
+        console.log('LOG 2');
+
         this.isAccountResidential = this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale';
+
+        console.log('LOG 3');
         this.handleShowModuloInformativo();
+
+        console.log('LOG 4');
+
         this.handleShowDelibera40();
+
+        console.log('LOG 5');
+
         this.handleShowInviaModulistica();
+
+        console.log('LOG 6');
+
         this.handleFields();
+
+        console.log('LOG 7');
+
         this.applyCreditCheckLogic();
 
+        console.log('LOG 8');
+
         this.availableStepsFirst = this.fields.filter(section => section.processVisibility === true);
+
+        console.log('LOG 9');
+
         this.getFirstStepName();
+
+        console.log('LOG 10');
+
         this.loadAccordion();
+
+        console.log('LOG 11');
 
         // if(this.pendingSteps.length > 0){
         //     this.choosenSection = this.getFirstStepName();

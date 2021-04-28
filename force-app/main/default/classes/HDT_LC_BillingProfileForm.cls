@@ -78,7 +78,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         billingProfileSRV.checkReadAccess(String.join(fieldsToCheck,','));
 
         switch on paymentMethod {
-            when  'Bollettino postale'{
+            when  'Bollettino'{
                 resultMap.put('choosenFields', bollettionoPostale);
             }
             when 'RID' {
