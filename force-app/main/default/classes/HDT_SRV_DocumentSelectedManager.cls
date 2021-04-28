@@ -18,11 +18,11 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
         try {
-            String queryString = 'SELECT Id, DocumentSelected__c FROM ServiceCatalog__c WHERE Id=\''+inputs[0].recordId+'\'';
-            String fromQ = 'ServiceCatalog__c';
-            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
-            String documentJSON = (String) recordList[0].get('DocumentSelected__c');
-            List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJSON);
+            String queryString = 'SELECT Id, DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+            String queryObject = 'AccountStatementFilter__c';
+            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, queryObject);
+            String documentJson = (String) recordList[0].get('DocumentSelected__c');
+            List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
             Map<String, Object> secondoLivello = (Map<String, Object>)secondoLivelloList[0];
