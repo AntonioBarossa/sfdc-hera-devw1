@@ -1271,6 +1271,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazione Motore VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazione verso Heroku KO</fullName>
             <default>false</default>
         </values>
