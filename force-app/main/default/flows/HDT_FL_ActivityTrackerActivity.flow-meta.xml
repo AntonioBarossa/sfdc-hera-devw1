@@ -7,7 +7,7 @@
         <locationX>176</locationX>
         <locationY>431</locationY>
         <assignmentItems>
-            <assignToReference>$Record.ParentActivity__c</assignToReference>
+            <assignToReference>$Record.Activity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Activity.Id</elementReference>
