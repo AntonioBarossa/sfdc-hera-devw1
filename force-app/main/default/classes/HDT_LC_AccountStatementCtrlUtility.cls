@@ -184,15 +184,15 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
-        List<HDT_TabConfiguration__mdt> endPointMDT;
-        endPointMDT = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMDT, tabCode);
+        List<HDT_TabConfiguration__mdt> endPointMdt;
+        endPointMdt = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMdt, tabCode);
 
-        if(endPointMDT.size()>0 && !String.isEmpty(endPointMDT[0].EndpointService__c) && !String.isEmpty(endPointMDT[0].Authorization__c)){
+        if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
 
-            httpObj.endPoint = endPointMDT[0].EndpointService__c;
-            httpObj.headersMap.put('Authorization', endPointMDT[0].Authorization__c);
+            httpObj.endPoint = endPointMdt[0].EndpointService__c;
+            httpObj.headersMap.put('Authorization', endPointMdt[0].Authorization__c);
 
-            if(endPointMDT[0].UseMockService__c){
+            if(endPointMdt[0].UseMockService__c){
                 httpObj.endPoint = Label.MockEndPointAccountStatement;
                 httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
             }

@@ -6,7 +6,7 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String tabCode;
         @AuraEnabled public Boolean hasSecondLevel;
         @AuraEnabled public Boolean hasAmountField;
-        @AuraEnabled public String secondLevelAPIname;
+        @AuraEnabled public String secondLevelApiName;
         @AuraEnabled public List<HDT_WRP_ButtonObjDetail> buttonList;
     }
 

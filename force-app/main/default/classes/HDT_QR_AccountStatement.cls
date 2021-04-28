@@ -34,15 +34,15 @@ public inherited sharing class HDT_QR_AccountStatement {
         return mdtList;
     }*/
 
-    public static List<HDT_TabConfiguration__mdt> getTabConfigurationMetaData(List<HDT_TabConfiguration__mdt> endPointMDT, String tabCode){
-        endPointMDT = new List<HDT_TabConfiguration__mdt>();
-        endPointMDT = [
+    public static List<HDT_TabConfiguration__mdt> getTabConfigurationMetaData(List<HDT_TabConfiguration__mdt> endPointMdt, String tabCode){
+        endPointMdt = new List<HDT_TabConfiguration__mdt>();
+        endPointMdt = [
             SELECT EndpointService__c, UseMockService__c, Authorization__c
             FROM HDT_TabConfiguration__mdt
             WHERE DeveloperName = :tabCode
             WITH SECURITY_ENFORCED
         ];
-        return endPointMDT;       
+        return endPointMdt;       
     }
 
     public static List<HDT_HeraCompany__mdt> getCompanyList(List<HDT_HeraCompany__mdt> companyList){
@@ -96,6 +96,7 @@ public inherited sharing class HDT_QR_AccountStatement {
             SELECT MasterLabel, DeveloperName, ButtonCode__c,ButtonLevel__c,ButtonOrder__c,IsVisible__c, Tab__r.DeveloperName, ButtonType__c
             FROM HDT_ButtonDetails__mdt	
             WHERE Tab__r.DeveloperName = :tabValue AND ButtonLevel__c = :level
+            WITH SECURITY_ENFORCED
             ORDER BY ButtonOrder__c ASC
         ];
         return mdtButtonList;
@@ -107,6 +108,7 @@ public inherited sharing class HDT_QR_AccountStatement {
             SELECT Parameters__c
             FROM HDT_ButtonDetails__mdt	
             WHERE Tab__r.DeveloperName = :tabValue AND ButtonCode__c = :buttonCode
+            WITH SECURITY_ENFORCED
             ORDER BY ButtonOrder__c ASC
         ];
         return mdtButtonList;        

@@ -99,7 +99,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
         
         objDetail.tabCode = tabValue;
-        objDetail.secondLevelAPIname = mdtTabConfList[0].SecondLevelAPI_Name__c;
+        objDetail.secondLevelApiName = mdtTabConfList[0].SecondLevelAPI_Name__c;
         objDetail.hasSecondLevel = mdtTabConfList[0].HasSecondLevel__c;
         objDetail.hasAmountField = mdtTabConfList[0].HasAmountField__c;
         
@@ -368,7 +368,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             SObjectType objtype = Schema.getGlobalDescribe().get('AccountStatementFilter__c');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         
-            if(objRes.isCreateable()){
+            if(objRes.isUpdateable()){
                 upsert serviceCatalog UpsertKey__c;
             } else {
                 serviceCatalogResponse.success = false;

@@ -31,7 +31,7 @@ public inherited sharing class HDT_LC_AccountStatementController {
         HDT_WRP_AccountStatement.HDT_WRP_ResponseObj responseObj = new HDT_WRP_AccountStatement.HDT_WRP_ResponseObj();
 
         try{
-            HDT_WS_SOAP_EngageOnePrint.ReturnObj returnObj = HDT_WS_SOAP_EngageOnePrint.sendFile(dataList);
+            HDT_WS_EngageOnePrint.HDT_WRP_ReturnObj returnObj = HDT_WS_EngageOnePrint.sendFile(dataList);
             responseObj.success = returnObj.success;
             responseObj.bodyBase64 = returnObj.bodyBase64;
             responseObj.message = returnObj.message;

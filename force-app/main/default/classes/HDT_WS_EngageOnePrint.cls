@@ -1,8 +1,8 @@
-public class HDT_WS_SOAP_EngageOnePrint {
+public inherited sharing class HDT_WS_EngageOnePrint {
 
-    public static ReturnObj sendFile(String bodyString) {
+    public static HDT_WRP_ReturnObj sendFile(String bodyString) {
 
-        ReturnObj returnObj = new ReturnObj();
+        HDT_WRP_ReturnObj returnObj = new HDT_WRP_ReturnObj();
 
         Integer initialLimit = Limits.getHeapSize();
         Datetime startTime = Datetime.now();
@@ -10,8 +10,8 @@ public class HDT_WS_SOAP_EngageOnePrint {
         HttpRequest req = new HttpRequest();
 
         try{
-            req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
-            req.setMethod('POST');
+            //req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/getFileToPrint/0');
+            //req.setMethod('POST');
 
             req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
             req.setHeader('Content-Type', 'application/json');
@@ -27,7 +27,7 @@ public class HDT_WS_SOAP_EngageOnePrint {
             String responseStatus = res.getStatus();
             System.debug('## Response status -> ' + responseStatus);
 
-            ReponseObj responseObj = (ReponseObj)JSON.deserialize(res.getBody(), ReponseObj.class);
+            HDT_WRP_ReponseObj responseObj = (HDT_WRP_ReponseObj)JSON.deserialize(res.getBody(), HDT_WRP_ReponseObj.class);
 
             System.debug('### Response -> ' + responseObj.status);
             System.debug('### Response -> ' + responseObj.correlationId);
@@ -51,13 +51,13 @@ public class HDT_WS_SOAP_EngageOnePrint {
         return returnObj;
     }
 
-    public class  ReturnObj {
+    public class  HDT_WRP_ReturnObj {
         public Boolean success;
         public String bodyBase64;
         public String message;
     }
 
-    public class ReponseObj {
+    public class HDT_WRP_ReponseObj {
         String status;
         String correlationId;
         String timestamp;

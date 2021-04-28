@@ -161,7 +161,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 }
 
                 this.uniqueId = 'id';
-                this.detailTable = result.confObj.secondLevelAPIname;//'secondoLivello';
+                this.detailTable = result.confObj.secondLevelApiName;//'secondoLivello';
                 console.log('>>> Has second level? -> ' + result.confObj.hasSecondLevel);
                 this.showSecondLevel = result.confObj.hasSecondLevel;
             } else {
