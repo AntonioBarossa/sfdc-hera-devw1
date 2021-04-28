@@ -35,10 +35,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         try{
 
-            List<HDT_ColumnsFirstLevel__mdt> column_mdtList;
-            column_mdtList = HDT_QR_AccountStatement.getColumnMetaDataList(column_mdtList, tabValue);
+            List<HDT_ColumnsFirstLevel__mdt> columnMdtList;
+            columnMdtList = HDT_QR_AccountStatement.getColumnMetaDataList(columnMdtList, tabValue);
 
-            if(column_mdtList.size()==0){
+            if(columnMdtList.size()==0){
                 columnsObj.success = false;
                 columnsObj.message = 'No custom metadata found for coloumns';
                 return columnsObj;
@@ -62,7 +62,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
             HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail cd;
             HDT_WRP_AccountStatement.HDT_WRP_SingleColumn sc;
-            for(HDT_ColumnsFirstLevel__mdt c : column_mdtList){
+            for(HDT_ColumnsFirstLevel__mdt c : columnMdtList){
                 cd = new HDT_WRP_AccountStatement.HDT_WRP_ColumnDetail();
                 cd.type = c.FieldType__c;
                 cd.isAmount = c.IsAmountField__c;
@@ -293,8 +293,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
         serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
         
-        //List<HDT_ColumnsFirstLevel__mdt> column_mdtList;
-        //column_mdtList = HDT_QR_AccountStatement.getColumnMetaDataList(column_mdtList, tabValue);
+        //List<HDT_ColumnsFirstLevel__mdt> columnMdtList;
+        //columnMdtList = HDT_QR_AccountStatement.getColumnMetaDataList(columnMdtList, tabValue);
 
         try{
 
@@ -303,7 +303,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             System.debug('> Records > ' + records);
             System.debug('> level > ' + level);
 
-            //if(column_mdtList.size()==0){
+            //if(columnMdtList.size()==0){
             //    serviceCatalogResponse.success = false;
             //    serviceCatalogResponse.message = 'NO ColumnsFirstLevel metadata found';
             //    return serviceCatalogResponse;
@@ -365,16 +365,24 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
             serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
 
-            SObjectType objtype = Schema.getGlobalDescribe().get('AccountStatementFilter__c');
-            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-        
-            if(objRes.isUpdateable()){
-                upsert serviceCatalog UpsertKey__c;
-            } else {
+            Boolean upsertResult = HDT_UTL_DatabaseService.upsertSObjectExternalId(new List<SObject>{serviceCatalog}, 'AccountStatementFilter__c', 'UpsertKey__c');
+
+            if(!upsertResult){
                 serviceCatalogResponse.success = false;
                 serviceCatalogResponse.message = '> ERROR on object permission';
                 return serviceCatalogResponse;
             }
+
+            //SObjectType objtype = Schema.getGlobalDescribe().get('AccountStatementFilter__c');
+            //Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        
+            //if(objRes.isUpdateable()){
+            //    upsert serviceCatalog UpsertKey__c;
+            //} else {
+            //    serviceCatalogResponse.success = false;
+            //    serviceCatalogResponse.message = '> ERROR on object permission';
+            //    return serviceCatalogResponse;
+            //}
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = serviceCatalog.Id;

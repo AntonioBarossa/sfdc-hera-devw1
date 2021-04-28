@@ -55,16 +55,16 @@ public inherited sharing class HDT_QR_AccountStatement {
         return companyList;
     }
 
-    public static List<HDT_ColumnsFirstLevel__mdt> getColumnMetaDataList(List<HDT_ColumnsFirstLevel__mdt> column_mdtList, String tabValue){ 
-        column_mdtList = new List<HDT_ColumnsFirstLevel__mdt>();
-        column_mdtList = [
+    public static List<HDT_ColumnsFirstLevel__mdt> getColumnMetaDataList(List<HDT_ColumnsFirstLevel__mdt> columnMdtList, String tabValue){ 
+        columnMdtList = new List<HDT_ColumnsFirstLevel__mdt>();
+        columnMdtList = [
             SELECT MasterLabel, FieldName__c, DeveloperName, IsAmountField__c, IsSortable__c, FieldType__c, ShowTotAmountHere__c, ColumnOrder__c, IsVisible__c, IsFilter__c
             FROM HDT_ColumnsFirstLevel__mdt
             WHERE Tab__r.DeveloperName = :tabValue AND IsVisible__c = true
             WITH SECURITY_ENFORCED
             ORDER BY ColumnOrder__c ASC
         ];
-        return column_mdtList;
+        return columnMdtList;
     }
 
     public static List<HDT_TabConfiguration__mdt> getTabConfMetadataList(List<HDT_TabConfiguration__mdt> mdtTabConfList, String tabValue){

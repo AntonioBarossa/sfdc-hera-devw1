@@ -239,7 +239,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
     public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog){
         Set<String> isInstallmentSet = new Set<String>();
-        Set<String> sameCASet = new Set<String>();
+        Set<String> sameCaSet = new Set<String>();
         Decimal tot = 0;
 
         for(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj : recordsList){
@@ -248,7 +248,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             }
 
             if(!String.isEmpty(obj.contoContrattuale)){
-                sameCASet.add(obj.contoContrattuale);
+                sameCaSet.add(obj.contoContrattuale);
             }
             tot += Decimal.valueOf(obj.residuo);
         }
@@ -274,7 +274,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         serviceCatalog.OnCredit__c = (tot<0) ? true : false;
 
         //Se le fatture selezionate hanno tutte lo stesso conto contrattuale, impostare a true il campo SameCA__c; 
-        serviceCatalog.SameCA__c = (sameCASet.size() > 1) ? false : true;
+        serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;
         serviceCatalog.Multiselect__c = true;
 
         return serviceCatalog;
