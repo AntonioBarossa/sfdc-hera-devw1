@@ -3,8 +3,12 @@
     <label>Pagamenti e compensazioni</label>
     <protected>false</protected>
     <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=</value>
+    </values>
+    <values>
         <field>EndpointService__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/service-console/paperless-views/search</value>
     </values>
     <values>
         <field>HasAmountField__c</field>
@@ -12,14 +16,22 @@
     </values>
     <values>
         <field>HasSecondLevel__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>SecondLevelAPI_Name__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">secondoLivelloInformativo</value>
+    </values>
+    <values>
+        <field>ShowTab__c</field>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>TabOrder__c</field>
         <value xsi:type="xsd:double">8.0</value>
+    </values>
+    <values>
+        <field>UseMockService__c</field>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
 </CustomMetadata>

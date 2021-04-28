@@ -15,8 +15,16 @@
         <value xsi:type="xsd:double">5.0</value>
     </values>
     <values>
+        <field>ButtonType__c</field>
+        <value xsi:type="xsd:string">webservice</value>
+    </values>
+    <values>
         <field>IsVisible__c</field>
         <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>Parameters__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Tab__c</field>
