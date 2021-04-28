@@ -4188,6 +4188,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chiusura Conto</fullName>
             <default>false</default>
         </values>
@@ -6513,7 +6517,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>

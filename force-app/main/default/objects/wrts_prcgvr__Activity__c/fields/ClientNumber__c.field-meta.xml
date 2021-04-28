@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CallingNumber__c</fullName>
-    <description>Numero cliente per chiamate inbound, numero centralino per chiamate outbound</description>
+    <fullName>ClientNumber__c</fullName>
+    <description>Numero cliente coinvolto nell&apos;interazione</description>
     <externalId>false</externalId>
-    <label>Numero Chiamante</label>
+    <label>Numero Cliente</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

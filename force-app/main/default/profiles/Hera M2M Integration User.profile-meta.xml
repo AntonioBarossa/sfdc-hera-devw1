@@ -772,6 +772,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>AccountContactRelation.GlobalMigrationKeyFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.IsManagerSOL__c</field>
         <readable>true</readable>
@@ -1273,6 +1278,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.GreenCertificateIncluded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1324,6 +1334,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.IsInternal</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4319,6 +4334,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.InformationDetail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.InformativeCluster__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.InformativeType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8583,6 +8608,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NotRegisteredMeterCase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.OpportunityId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8759,6 +8789,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Pressure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PreviousCustomer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15228,6 +15263,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Subscription__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.GreenCertificateIncluded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15239,6 +15279,31 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.GreenGasOption__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdLevelMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdRequiredByIdMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdRootIdMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15419,11 +15484,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.QuoteIDCustom__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__Subscription__c.QuoteLine__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17737,14 +17797,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivityEndTime__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ActivityStartTime__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17753,19 +17813,29 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.AppointmentDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AppointmentDateToConfirm__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AppointmentResultCode__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentTimeSlotToConfirm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppoitmentTimeSlotConfirmed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Approved__c</field>
@@ -17782,9 +17852,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.BPCode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CallCenterNumber__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17792,24 +17867,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CallEndTime__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CallStartTime__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.CalledNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.CallingNumber__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17837,9 +17902,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ClientNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ConnectionID__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ContactReason__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17847,16 +17922,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.ContactReason__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ContractNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CraftsmenRegisterNumber__c</field>
         <readable>true</readable>
@@ -17872,18 +17942,18 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.CrmChange__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Distributor__c</field>
+        <field>wrts_prcgvr__Activity__c.CrmChange__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.DistributorFirstDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Distributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17902,9 +17972,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.FiscalCode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17913,28 +17983,13 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.isAtoA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.isManualAppoitment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.isSelfAppointment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	  <fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.IwsDemand__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Lead__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17945,16 +18000,16 @@
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Mobile__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.OperatorChange__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -17977,58 +18032,53 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdCallID__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdCallStatus__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdLogin__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdMethod__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdOfficeID__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdTicketBookingTime__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdTicketCallTime__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdTicketNumber__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.QAdWorkstationID__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.QuoteLine__c</field>
+        <field>wrts_prcgvr__Activity__c.QAdCallID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.ServicePoint__c</field>
+        <field>wrts_prcgvr__Activity__c.QAdCallStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdLogin__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdMethod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdOfficeID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdTicketBookingTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdTicketCallTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdTicketNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QAdWorkstationID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QuoteLine__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18044,6 +18094,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ServicePointCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.ServicePoint__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18082,13 +18137,28 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.VATNumber__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.WaitingTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAtoA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isManualAppoitment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isSelfAppointment__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18132,7 +18202,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__StatusIcon__c</field>
         <readable>true</readable>
     </fieldPermissions>
