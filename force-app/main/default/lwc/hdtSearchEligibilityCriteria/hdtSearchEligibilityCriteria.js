@@ -4,22 +4,8 @@ import getRecords from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.g
 import cloneRecord from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
-//const columns = [
-//    { label: 'Definizione', fieldName: 'Definition__c' },
-//    { label: 'M', fieldName: 'M__c', type: 'boolean'},
-//    { label: 'V', fieldName: 'V__c', type: 'boolean' },
-//    { label: 'Tipo tariffa', fieldName: 'FareType__c'},
-//    { label: 'Gruppo info', fieldName: 'InfoGroup__c'},
-//    { label: 'Valore numerico', fieldName: 'NumericValue__c'},
-//    { label: 'Flag', fieldName: 'Flag__c', type: 'boolean'},
-//    { label: 'Codice prezzo', fieldName: 'PriceCode__c'},
-//    { label: 'Stringa testuale', fieldName: 'StringValue__c'},
-//    { label: 'Nome Tecn.', fieldName: 'Operand__c'}   
-//];
-
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
     data = [];
-    //columns = columns;
     detailFields = ['Version__c', 'ProductCode__c'];
     filter;
     showTable = false;
@@ -65,7 +51,8 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
         productCode: 'PRODUCT CODE'
     };
 
-    title = 'Comuni eleggibili';
+    titleTreeAvailable = 'Comuni eleggibili';
+    titleTreeNotAvailable = 'Comuni non eleggibili';
 
     connectedCallback(){
         this.filter = 'Product__r.Template__c=\''+ this.template +'\'';

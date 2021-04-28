@@ -53,10 +53,10 @@ public inherited sharing class HDT_QR_SearchPlug {
         if(objRes.isAccessible()){
 
             myQuote = [
-                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, Campaign__c,
+                SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c,
                        Market__c, Channel__c, ClientMarker__c, CategoryTypeClient__c,
                        CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerRange__c,
-                       ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, SBQQ__Account__c, UseCategory__c, EquipmenType__c
+                       ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, EquipmenType__c
                 FROM SBQQ__Quote__c
                 WHERE Id = :currentId
                 WITH SECURITY_ENFORCED
@@ -85,19 +85,39 @@ public inherited sharing class HDT_QR_SearchPlug {
                 FROM EligibilityCriteria__c
                 WHERE Product__r.Status__c = 'Vendibile' AND Product__r.IsActive = true AND Product__r.Family IN :familyList AND
 
-                    (OriginMarket__c includes (:quote.Market__c) OR OriginMarket__c = null) AND
-                    (Channel__c includes (:quote.Channel__c) OR Channel__c = null) AND
-                    (ClientMarker__c includes (:quote.ClientMarker__c) OR ClientMarker__c = null) AND
+                    //(OriginMarket__c includes (:quote.Market__c) OR OriginMarket__c = null) AND
+                    (
+                        (OriginMarketOperator__c = 'excludesValues' AND OriginMarket__c excludes (:quote.Market__c)) OR
+                        (OriginMarketOperator__c = 'includesValues' AND OriginMarket__c includes (:quote.Market__c)) OR
+                        (OriginMarketOperator__c = 'includesAll')
+                    ) AND 
+                    //(Channel__c includes (:quote.Channel__c) OR Channel__c = null) AND
+                    (
+                        (ChannelOperator__c = 'excludesValues' AND Channel__c excludes (:quote.Channel__c)) OR
+                        (ChannelOperator__c = 'includesValues' AND Channel__c includes (:quote.Channel__c)) OR
+                        (ChannelOperator__c = 'includesAll')
+                    ) AND 
+                    //(ClientMarker__c includes (:quote.ClientMarker__c) OR ClientMarker__c = null) AND
+                    (
+                        (ClientMarkerOperator__c = 'excludesValues' AND ClientMarker__c excludes (:quote.ClientMarker__c)) OR
+                        (ClientMarkerOperator__c = 'includesValues' AND ClientMarker__c includes (:quote.ClientMarker__c)) OR
+                        (ClientMarkerOperator__c = 'includesAll')
+                    ) AND 
                     //(CategoryTypeClient__c includes (:quote.CategoryTypeClient__c) OR CategoryTypeClient__c = null) AND
                     (
                         (CategoryTypeClientOperator__c = 'excludesValues' AND CategoryTypeClient__c excludes (:quote.CategoryTypeClient__c)) OR
-                        (CategoryTypeClientOperator__c  = 'includesValues' AND CategoryTypeClient__c includes (:quote.CategoryTypeClient__c)) OR
-                        (CategoryTypeClientOperator__c  = 'includesAll')
+                        (CategoryTypeClientOperator__c = 'includesValues' AND CategoryTypeClient__c includes (:quote.CategoryTypeClient__c)) OR
+                        (CategoryTypeClientOperator__c = 'includesAll')
                     ) AND 
-                    (CompanyOwner__c includes (:quote.CategoryTypeClient__c) OR CategoryTypeClient__c = null) AND
-                    (Campaign__c = :quote.Campaign__c OR Campaign__c = null) AND
+                    //(CompanyOwner__c includes (:quote.CompanyOwner__c) OR CompanyOwner__c = null) AND
+                    (
+                        (CompanyOwnerOperator__c = 'excludesValues' AND CompanyOwner__c excludes (:quote.CompanyOwner__c)) OR
+                        (CompanyOwnerOperator__c = 'includesValues' AND CompanyOwner__c includes (:quote.CompanyOwner__c)) OR
+                        (CompanyOwnerOperator__c = 'includesAll')
+                    ) AND                     
+                    (CampaignName__c = :quote.CampaignName__c OR CampaignName__c = null) AND
                     (PromoCode__c = :quote.FriendCode__c OR PromoCode__c = null) AND
-                    (Agency__c = :quote.SBQQ__Account__c OR Agency__c = null) AND
+                    (Agency__c = :quote.Agency__c OR Agency__c = null) AND
                     (UseCategory__c = :quote.UseCategory__c OR UseCategory__c = null) AND
                     (EquipmenType__c = :quote.EquipmenType__c OR EquipmenType__c = null)
 

@@ -2,7 +2,7 @@
 
     <lightning-card icon-name="utility:note" title="Criteri di eleggibilità" >
 
-        <lightning-record-view-form
+        <!--<lightning-record-view-form
                 record-id={recordId}
                 object-api-name="EligibilityCriteria__c"
                 density="comfy"
@@ -31,6 +31,63 @@
 
             </div>
 
-        </lightning-record-view-form>
+        </lightning-record-view-form>-->
+
+        <lightning-record-edit-form
+            record-id={recordId}
+            object-api-name="EligibilityCriteria__c"
+            density="comfy"
+        >
+
+        <lightning-messages></lightning-messages>
+        
+        <div class="slds-grid slds-wrap slds-m-left_medium slds-m-right_medium">
+            <template iterator:it={multiPicklistFields}>
+            <div key={it.value.fieldName} class="slds-col slds-size_1-of-2 slds-m-top_medium slds-m-bottom_large slds-border_bottom">
+                <div class="slds-section slds-is-open">
+                <h3 class="slds-section__title slds-theme_shade">
+                    <span class="slds-truncate slds-p-horizontal_small" title={it.value.label} >{it.value.label}</span>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content">
+                    <lightning-input-field field-name={it.value.operator} variant="label-hidden" disabled ></lightning-input-field>
+                    <lightning-input-field field-name={it.value.fieldName} variant="label-hidden" disabled ></lightning-input-field>
+                </div>
+                </div>
+            </div>
+            </template>
+
+        </div>
+
+        <div class="slds-section slds-is-open slds-m-left_medium slds-m-right_medium slds-m-top_medium">
+            <h3 class="slds-section__title slds-theme_shade">
+                <span class="slds-truncate slds-p-horizontal_small" title="Altri parametri">Altri parametri</span>
+            </h3>
+            <div aria-hidden="false" class="slds-section__content">
+
+            <div class="slds-grid slds-wrap">
+                <template iterator:it={fieldsList}>
+                <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_x-small slds-m-top_medium slds-m-bottom_medium slds-border_bottom">  
+                    <lightning-input-field key={it.value} field-name={it.value} disabled ></lightning-input-field>
+                </div>
+                </template>
+
+                <template iterator:it={complexFieldsList}>
+                <div key={it.value.fieldName} class="slds-col slds-size_1-of-2 slds-m-top_x-small"> 
+                    <div class="slds-grid slds-wrap">
+                    <template iterator:it={it.value.fields}>
+                        <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_medium slds-m-bottom_medium slds-border_bottom">
+                        <lightning-input-field key={it.value} field-name={it.value} disabled ></lightning-input-field>
+                        </div>
+                    </template>
+                    </div>
+                </div>
+                </template>
+            </div>
+            </div>
+        </div>
+        
+        </lightning-record-edit-form>
+
+
     </lightning-card>
 </template>

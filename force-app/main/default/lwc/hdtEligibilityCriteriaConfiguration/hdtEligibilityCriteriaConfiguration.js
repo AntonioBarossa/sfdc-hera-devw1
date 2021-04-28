@@ -481,10 +481,16 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
     }
 
     modalResponse(event){
-        if(event.detail.decision === 'conf'){
-            this[event.detail.operation](event);
+        try{
+            if(event.detail.decision === 'conf'){
+                this[event.detail.operation](event);
+            }
+            this.modalObj.isVisible = false;
+        } catch(e){
+            console.error('# Name => ' + e.name );
+            console.error('# Message => ' + e.message );
+            console.error('# Stack => ' + e.stack );
         }
-        this.modalObj.isVisible = false;
     }
 
     saveAction(){

@@ -20,72 +20,20 @@
 
             <lightning-input-field field-name="Product__c" value={productid} disabled ></lightning-input-field>
             
-            <div class="slds-grid slds-wrap slds-m-left_medium slds-m-right_medium slds-m-top_medium">
-              
-              <!--Tipo Cliente Categoria-->
-              <div class="slds-col slds-size_1-of-2">
-                <div class="slds-section slds-is-open">
-                  <h3 class="slds-section__title slds-theme_shade">
-                      <span class="slds-truncate slds-p-horizontal_small" title="Tipo Cliente Categoria">Tipo Cliente Categoria</span>
-                  </h3>
-                  <div aria-hidden="false" class="slds-section__content">
-                    <lightning-input-field field-name="CategoryTypeClientOperator__c" variant="label-hidden"></lightning-input-field>
-                    <lightning-input-field field-name="CategoryTypeClient__c" variant="label-hidden" ></lightning-input-field>
+            <div class="slds-grid slds-wrap slds-m-left_medium slds-m-right_medium">
+              <template iterator:it={multiPicklistFields}>
+                <div key={it.value.fieldName} class="slds-col slds-size_1-of-2 slds-m-top_medium slds-m-bottom_large slds-border_bottom">
+                  <div class="slds-section slds-is-open">
+                    <h3 class="slds-section__title slds-theme_shade">
+                        <span class="slds-truncate slds-p-horizontal_small" title={it.value.label} >{it.value.label}</span>
+                    </h3>
+                    <div aria-hidden="false" class="slds-section__content">
+                      <lightning-input-field field-name={it.value.operator} variant="label-hidden"></lightning-input-field>
+                      <lightning-input-field field-name={it.value.fieldName} variant="label-hidden" ></lightning-input-field>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <!--Canale-->
-              <div class="slds-col slds-size_1-of-2">
-                <div class="slds-section slds-is-open">
-                  <h3 class="slds-section__title slds-theme_shade">
-                      <span class="slds-truncate slds-p-horizontal_small" title="Canale">Canale</span>
-                  </h3>
-                  <div aria-hidden="false" class="slds-section__content">
-                    <lightning-input-field field-name="ChannelOperator__c" variant="label-hidden"></lightning-input-field>
-                    <lightning-input-field field-name="Channel__c" variant="label-hidden" ></lightning-input-field>
-                  </div>
-                </div>
-              </div>
-
-              <!--Mercato Provenienza-->
-              <div class="slds-col slds-size_1-of-2">
-                <div class="slds-section slds-is-open">
-                  <h3 class="slds-section__title slds-theme_shade">
-                      <span class="slds-truncate slds-p-horizontal_small" title="Mercato Provenienza">Mercato Provenienza</span>
-                  </h3>
-                  <div aria-hidden="false" class="slds-section__content">
-                    <lightning-input-field field-name="OriginMarketOperator__c" variant="label-hidden"></lightning-input-field>
-                    <lightning-input-field field-name="OriginMarket__c" variant="label-hidden" ></lightning-input-field>
-                  </div>
-                </div>
-              </div>
-
-              <!--Marcatura Cliente-->
-              <div class="slds-col slds-size_1-of-2">
-                <div class="slds-section slds-is-open">
-                  <h3 class="slds-section__title slds-theme_shade">
-                      <span class="slds-truncate slds-p-horizontal_small" title="Marcatura Cliente">Marcatura Cliente</span>
-                  </h3>
-                  <div aria-hidden="false" class="slds-section__content">
-                    <lightning-input-field field-name="ClientMarkerOperator__c" variant="label-hidden"></lightning-input-field>
-                    <lightning-input-field field-name="ClientMarker__c" variant="label-hidden" ></lightning-input-field>
-                  </div>
-                </div>
-              </div>
-
-              <!--Company Owner-->
-              <div class="slds-col slds-size_1-of-2">
-                <div class="slds-section slds-is-open">
-                  <h3 class="slds-section__title slds-theme_shade">
-                      <span class="slds-truncate slds-p-horizontal_small" title="Company Owner">Company Owner</span>
-                  </h3>
-                  <div aria-hidden="false" class="slds-section__content">
-                    <lightning-input-field field-name="CompanyOwnerOperator__c" variant="label-hidden"></lightning-input-field>
-                    <lightning-input-field field-name="CompanyOwner__c" variant="label-hidden" ></lightning-input-field>
-                  </div>
-                </div>
-              </div>
+              </template>
 
             </div>
 
@@ -95,11 +43,9 @@
               </h3>
               <div aria-hidden="false" class="slds-section__content">
 
-            <div class="slds-grid slds-wrap">
-
-
+                <div class="slds-grid slds-wrap">
                   <template iterator:it={fieldsList}>
-                    <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_x-small">  
+                    <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_x-small slds-m-top_medium slds-m-bottom_medium slds-border_bottom">  
                       <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
                     </div>
                   </template>
@@ -108,7 +54,7 @@
                     <div key={it.value.fieldName} class="slds-col slds-size_1-of-2 slds-m-top_x-small"> 
                       <div class="slds-grid slds-wrap">
                         <template iterator:it={it.value.fields}>
-                          <div key={it.value} class="slds-col slds-size_1-of-2">
+                          <div key={it.value} class="slds-col slds-size_1-of-2 slds-m-top_medium slds-m-bottom_medium slds-border_bottom">
                             <lightning-input-field key={it.value} field-name={it.value} ></lightning-input-field>
                           </div>
                         </template>
@@ -117,7 +63,6 @@
                   </template>
                 </div>
               </div>
-
             </div>
           
           </lightning-record-edit-form>

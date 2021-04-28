@@ -3,34 +3,30 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtEligibilityCriteriaParameters extends LightningElement {
 
-    multiPicklistFields = [
-      {fieldName: 'CategoryTypeClient__c', operator: 'CategoryTypeClientOperator__c'},
-      {fieldName: 'Channel__c', operator: 'ChannelOperator__c'},
-      {fieldName: 'OriginMarket__c', operator: 'OriginMarketOperator__c'},
-      {fieldName: 'ClientMarker_c', operator: 'ClientMarkerOperator__c'},
-      {fieldName: 'CompanyOwner__c', operator: 'CompanyOwnerOperator__c'}
-    ];
-
-    @track fieldsList = [
-      'EquipmenType__c',
-      'PromoCode__c',
-      'LoginGroup__c',
-      'NewClient__c',
-      'ResidentDeliveryAddress__c',
-      'Agency__c',
-      'UseCategory__c',
-      'Campaign__c'
-    ];
-
-    @track complexFieldsList = [
-      {fieldName: 'ClientAge', fields: ['ClientAgeMin__c', 'ClientAgeMax__c']},
-      {fieldName: 'ConsumptionRangeEE', fields: ['ConsumptionRangeEEmin__c', 'ConsumptionRangeEEmax__c']},
-      {fieldName: 'ConsumptionRangeGAS', fields: ['ConsumptionRangeGASmin__c', 'ConsumptionRangeGASmax__c']},
-      {fieldName: 'PowerRange', fields: ['PowerRangeMin__c', 'PowerRangeMax__c']}
-    ];
-
     @api productid;
     @api eligibilityId;
+
+    multiPicklistFields = [
+      {label: 'Tipo Cliente Categoria', fieldName: 'CategoryTypeClient__c', operator: 'CategoryTypeClientOperator__c'},
+      {label: 'Canale', fieldName: 'Channel__c', operator: 'ChannelOperator__c'},
+      {label: 'Mercato Provenienza', fieldName: 'OriginMarket__c', operator: 'OriginMarketOperator__c'},
+      {label: 'Marcatura Cliente', fieldName: 'ClientMarker__c', operator: 'ClientMarkerOperator__c'},
+      {label: 'Company Owner', fieldName: 'CompanyOwner__c', operator: 'CompanyOwnerOperator__c'}
+    ];
+
+    fieldsList = [
+      'EquipmenType__c',            'PromoCode__c',
+      'ResidentDeliveryAddress__c', 'NewClient__c',
+      'LoginGroup__c',              'Agency__c',
+      'UseCategory__c',             'CampaignName__c'
+    ];
+
+    complexFieldsList = [
+      {fieldName: 'ClientAge', fields: ['ClientAgeMin__c', 'ClientAgeMax__c']},
+      {fieldName: 'PowerRange', fields: ['PowerRangeMin__c', 'PowerRangeMax__c']},
+      {fieldName: 'ConsumptionRangeEE', fields: ['ConsumptionRangeEEmin__c', 'ConsumptionRangeEEmax__c']},
+      {fieldName: 'ConsumptionRangeGAS', fields: ['ConsumptionRangeGASmin__c', 'ConsumptionRangeGASmax__c']}
+    ];
 
     handleLoad(event){
         console.log('>>>> handleLoad ');
@@ -72,16 +68,53 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         criteriaObj.Id = this.eligibilityId;
       }
 
-      var jsonRecord = JSON.stringify(criteriaObj);
-      console.log(jsonRecord);
-      const saverecord = new CustomEvent("saverecord", {
-        detail: {record: jsonRecord}
-      });
+      var checkResult = this.checkObjParameters(criteriaObj);
 
-      // Dispatches the event.
-      this.dispatchEvent(saverecord);
-      //this.template.querySelector('lightning-record-edit-form').submit();
+      if(checkResult.error){
+        try{
 
+          const evt = new ShowToastEvent({
+              title: 'ATTENZIONE',
+              message: checkResult.message,
+              variant: 'warning'
+          });
+          this.dispatchEvent(evt);
+
+        } catch(e){
+          console.log('>>>>>>>>>>>>>>>> ERROR');
+          console.log(e);
+        }
+      } else {
+        var jsonRecord = JSON.stringify(criteriaObj);
+        console.log(jsonRecord);
+        const saverecord = new CustomEvent("saverecord", {
+          detail: {record: jsonRecord}
+        });
+  
+        // Dispatches the event.
+        this.dispatchEvent(saverecord);
+        //this.template.querySelector('lightning-record-edit-form').submit();
+      }
+    }
+
+    checkObjParameters(obj){
+      var checkResult = {};
+      
+      console.log('>>>>>>>>>> ' + obj.CategoryTypeClient__c);
+
+      if(obj.CategoryTypeClient__c != null){
+        var res = obj.CategoryTypeClient__c.split(";");
+        
+        if(res.length > 100){
+          checkResult.error = true;
+          checkResult.message = 'Non puoi selezionare più di 100 valori!';
+          return checkResult;
+        }
+      }
+
+      checkResult.error = false;
+      
+      return checkResult;
     }
 
 }
