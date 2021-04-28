@@ -1,0 +1,23 @@
+<aura:component 
+    controller="HDT_LC_CaseDocumentValidation"
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+
+    <aura:attribute name="formValid" type="Boolean" default="true"/>
+    
+	<aura:renderif istrue="{!v.HideSpinner}">
+		<lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:renderif>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:if isTrue="{!v.formValid}">
+
+        <c:hdtDocumentValidation recordId="{!v.recordId}" 
+            oncloseaction="{!c.handleCancel}" 
+            oncomplete="{!c.handleComplete}">
+        </c:hdtDocumentValidation>
+
+        <aura:set attribute="else" >
+            <lightning:card title="Validazione Non richiesta o Gia Effettuata"/> 
+        </aura:set>
+    </aura:if>
+</aura:component>

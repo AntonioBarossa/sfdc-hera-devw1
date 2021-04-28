@@ -19,6 +19,8 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     accountAddr = '';
     ordChildBpAddr = '';
     addressOptions = [];
+    choosenAddr = '';
+
     get mailClasses(){
         return this.isMailVisible ? 'slds-size_1-of-2 slds-show' : 'slds-size_1-of-2 slds-hide';
     }
@@ -79,7 +81,22 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
     handleDataCollection(event){
         let fieldName = event.target.fieldName;
+        let name = event.target.name;
         let fieldValue = event.target.value;
+
+        console.log(name);
+        console.log(fieldValue);
+
+        if(name !== undefined){
+            switch (name) {
+                case 'Indirizzi':
+                    this.choosenAddr = fieldValue;
+                    break;
+            
+                default:
+                    break;
+            }
+        }
 
         this.dataToSubmit[fieldName] = fieldValue;
 
@@ -187,6 +204,11 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     country: data.ordChildList[0].BillingProfile__r.InvoicingCountry__c
                 });
                 this.addressOptions.push({label: this.ordChildBpAddr, value: this.ordChildBpAddr});
+                console.log('hdtOrderDossierWizardSignature - this.accountAddr: ', this.accountAddr);
+                if (this.accountAddr !== '') {
+                    this.addressOptions.push({'label': this.accountAddr, 'value': this.accountAddr});
+                }
+                console.log('hdtOrderDossierWizardSignature - this.addressOptions: ', this.addressOptions);
             }
 
         }).catch(error => {
@@ -210,10 +232,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 postalCode: this.orderParentRecord.Account.BillingAddress.postalCode === undefined ? '' : this.orderParentRecord.Account.BillingAddress.postalCode,
                 country: this.orderParentRecord.Account.BillingAddress.country === undefined ? '' : this.orderParentRecord.Account.BillingAddress.country
             });
-        }
-
-        if (this.accountAddr !== '') {
-            this.addressOptions.push({'label': this.accountAddr, 'value': this.accountAddr});
         }
 
         this.handleFormInit();

@@ -28,14 +28,14 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
-        Sobject obj = (sObject) argsMap.get('sender');
+        SObject obj = (SObject) argsMap.get('sender');
         Object templateMap = argsMap.get('templateMap');
         Map<String,String> parameters = (Map<String,String>)argsMap.get('parameters');
        
 
      try{
         ticket = (String) obj.get('Id');
-        currentCase = hpsmQr.getCurrentCaseById(ticket);
+        currentCase = (Case) obj;
         code = hpsmUtl.getCodeFromPhaseTransition(currentCase);
         record = hpsmQr.getCalloutTemplateByCode(code);
 
@@ -62,6 +62,8 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         arg.put('payload',mrrList);
         arg.put('clientType','REST');
         arg.put('contentType','application/json');
+
+        System.debug('mrrList--> '+mrrList);
 
         wrts_prcgvr.Interfaces_1_0.ICalloutClient client = 
             (wrts_prcgvr.Interfaces_1_0.ICalloutClient) wrts_prcgvr.VersionManager.newClassInstance('CalloutClient');
@@ -95,19 +97,33 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
     
     System.debug('New Phase --> '+caseToUpdate[0].Phase__c);
+    System.debug('Case --> '+caseToUpdate[0]);
 
-    if(caseToUpdate.size() > 0){
+    String serializedCase = JSON.serialize(caseToUpdate[0]);
+
+    /*if(caseToUpdate.size() > 0){
 
         HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
-    }
+    }*/
 
-    
+    System.debug('CaseToUpdate--> '+caseToUpdate[0]);
+
+    updateFuture(serializedCase);
 
     response.success = true;
     response.message = 'OK';
     return response;
      
+}
+
+    @Future
+    private static void updateFuture(String inputString){
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
     }
 
 

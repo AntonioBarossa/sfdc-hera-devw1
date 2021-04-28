@@ -6,6 +6,19 @@
 */
 public inherited sharing class HDT_QR_AccountContactRelation {
     
+    public List<AccountContactRelation> getAccountContactRelation(Id accountId, Id contactId, String fields){
+        String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId = :accountId And ContactId = :contactId';
+        List<AccountContactRelation> listAccCon= Database.query(query);
+
+        return listAccCon;
+    }
+    public List<AccountContactRelation> getAccountContactRelation(List<String> accountId, List<String> contactId, String fields){
+        String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId IN :accountId And ContactId IN :contactId';
+        List<AccountContactRelation> listAccCon= Database.query(query);
+
+        return listAccCon;
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get records filtered by account and contact
@@ -24,4 +37,22 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             WITH SECURITY_ENFORCED
         ];
     }
+
+
+    public List<AccountContactRelation> getRecordByAccountId(String accountId){
+
+        return [
+            SELECT ContactId,
+            Contact.MobilePhone,
+            Contact.Email
+            FROM AccountContactRelation
+            WHERE AccountId = :accountId
+            AND IsActive = true
+            AND IsDirect = true
+            WITH SECURITY_ENFORCED
+        ];
+
+
+    }
+
 }

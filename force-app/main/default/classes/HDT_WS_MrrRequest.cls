@@ -7,6 +7,9 @@
 
 @RestResource(urlMapping='/MRRInboundService/*')
 global with sharing class HDT_WS_MrrRequest {
+
+    private Static HDT_SRV_SalesHandler salesHandlerSrv = new HDT_SRV_SalesHandler();
+
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 17/03/2021
@@ -33,6 +36,8 @@ global with sharing class HDT_WS_MrrRequest {
         //INIZIO SVILUPPI EVERIS
         
         HDT_SRV_HerokuPostSalesManager hpsmSrv = new HDT_SRV_HerokuPostSalesManager();
+        HDT_WRP_MrrRequest.HDT_WRP_Request postSalesRequest = new HDT_WRP_MrrRequest.HDT_WRP_Request();
+        String result;
 
         //FINE SVILUPPI EVERIS
 
@@ -52,107 +57,28 @@ global with sharing class HDT_WS_MrrRequest {
                 
                 mrrResponseItem.objects.clear();
 
-                switch on header.requestType {
-                    when 'NOTIF_ES'{
+                if(header.fields.get(0).value == 'postsales'){
 
-                        //INIZIO SVILUPPI EVERIS
+                    //INIZIO SVILUPPI EVERIS
 
-                        if(header.fields.get(0).value == 'postsales'){
+                    postSalesRequest = request;
+                    result = hpsmSrv.handleInboundRequest(postSalesRequest);
 
-                            hpsmSrv.handleInboundRequest(request);
+                    responseField.fieldType = 'TEXT';
+                    responseField.name = 'ESITO';
+                    responseField.value = 'OK';
 
-                            responseField.fieldType = 'TEXT';
-                            responseField.name = 'ESITO';
-                            responseField.value = 'OK';
+                    responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
+                    mrrResponseItem.objects.add(responseObject);
+                    
+                    RestContext.response.statusCode = 200;
 
-                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
-                            mrrResponseItem.objects.add(responseObject);
-                            
-                            RestContext.response.statusCode = 200;
+                    //FINE SVILUPPI EVERIS
 
-                        } 
+                } else if (header.fields.get(0).value == 'sales') {
 
-                        //FINE SVILUPPI EVERIS
-
-                        else if (request.objects.get(0).fields.get(0) != null) {
-
-                            responseField.fieldType = 'TEXT';
-                            responseField.name = 'ESITO';
-                            responseField.value = 'OK';
-
-                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
-                            mrrResponseItem.objects.add(responseObject);
-                            
-                            RestContext.response.statusCode = 200;
-                            
-                        } else {
-
-                            responseField.fieldType = 'TEXT';
-                            responseField.name = 'ESITO';
-                            responseField.value = 'KO';
-
-                            responseFieldError.fieldType = 'TEXT';
-                            responseFieldError.name = 'ERROR_MESSAGE';
-                            responseFieldError.value = 'There was an issue with your request message';
-
-                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                            mrrResponseItem.objects.add(responseObject);
-
-                            RestContext.response.statusCode = 400;
-
-                        }                        
-
-                    }
-                    when 'RICH_PASS' {
-
-
-                        if (request.objects.get(0).fields.get(0).name == 'CODICE_CONTRATTO'){
-
-                            responseField.fieldType = 'TEXT';
-                            responseField.name = 'ESITO';
-                            responseField.value = 'OK';
-                            responseField.rds = '';
-                            responseField.rdo = '';
-
-                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
-                            mrrResponseItem.objects.add(responseObject);
-                            
-                            RestContext.response.statusCode = 200;
-                            
-                        } else {
-
-                            responseField.fieldType = 'TEXT';
-                            responseField.name = 'ESITO';
-                            responseField.value = 'KO';
-
-                            responseFieldError.fieldType = 'TEXT';
-                            responseFieldError.name = 'ERROR_MESSAGE';
-                            responseFieldError.value = 'There was an issue with your request message';
-
-                            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                            mrrResponseItem.objects.add(responseObject);
-
-                            RestContext.response.statusCode = 400;
-
-                        }
-
-                    }
-                    when else {
-
-                        responseField.fieldType = 'TEXT';
-                        responseField.name = 'ESITO';
-                        responseField.value = 'KO';
-
-                        responseFieldError.fieldType = 'TEXT';
-                        responseFieldError.name = 'ERROR_MESSAGE';
-                        responseFieldError.value = 'Unsupported requestType';
-
-                        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
-                        mrrResponseItem.objects.add(responseObject);
-
-                        RestContext.response.statusCode = 400;
-
-                    }
+                    mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
+                    
                 }
 
             }
@@ -199,7 +125,7 @@ global with sharing class HDT_WS_MrrRequest {
 
             RestContext.response.statusCode = 500;
             
-        }
+        } 
 
         // responseGen.writeEndObject();
 

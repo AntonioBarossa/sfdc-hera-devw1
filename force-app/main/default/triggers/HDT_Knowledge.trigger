@@ -9,5 +9,5 @@ trigger HDT_Knowledge on Knowledge__kav (before update) {
 
         }
     }*/
-    myUpdateHandler.myUpdateMethodToPublish();
+    myUpdateHandler.handleUpdate();
 }

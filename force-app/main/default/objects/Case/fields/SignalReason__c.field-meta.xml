@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SignalReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivo segnalazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>documentazione manutenzione</fullName>
+                <default>false</default>
+                <label>documentazione manutenzione</label>
+            </value>
+            <value>
+                <fullName>bolla di spedizione</fullName>
+                <default>false</default>
+                <label>bolla di spedizione</label>
+            </value>
+            <value>
+                <fullName>registrazione catasto caldaia&quot;</fullName>
+                <default>false</default>
+                <label>registrazione catasto caldaia&quot;</label>
+            </value>
+            <value>
+                <fullName>manutenzione male eseguita</fullName>
+                <default>false</default>
+                <label>manutenzione male eseguita</label>
+            </value>
+            <value>
+                <fullName>non riesce a contattare fornitore</fullName>
+                <default>false</default>
+                <label>non riesce a contattare fornitore</label>
+            </value>
+            <value>
+                <fullName>non sono coperto dell&apos;assicurazione</fullName>
+                <default>false</default>
+                <label>non sono coperto dell&apos;assicurazione</label>
+            </value>
+            <value>
+                <fullName>il prodotto è diverso da aspettativa</fullName>
+                <default>false</default>
+                <label>il prodotto è diverso da aspettativa</label>
+            </value>
+            <value>
+                <fullName>altro</fullName>
+                <default>false</default>
+                <label>altro</label>
+            </value>
+            <value>
+                <fullName>Firma / registrazione falsa</fullName>
+                <default>false</default>
+                <label>Firma / registrazione falsa</label>
+            </value>
+            <value>
+                <fullName>Volontà estorta</fullName>
+                <default>false</default>
+                <label>Volontà estorta</label>
+            </value>
+            <value>
+                <fullName>Prezzo errato</fullName>
+                <default>false</default>
+                <label>Prezzo errato</label>
+            </value>
+            <value>
+                <fullName>Copertura servizio</fullName>
+                <default>false</default>
+                <label>Copertura servizio</label>
+            </value>
+            <value>
+                <fullName>Tempi spedizione/attivazione</fullName>
+                <default>false</default>
+                <label>Tempi spedizione/attivazione</label>
+            </value>
+            <value>
+                <fullName>mq/n.abitanti/priorietario/tipo abitazione</fullName>
+                <default>false</default>
+                <label>mq/n.abitanti/priorietario/tipo abitazione</label>
+            </value>
+            <value>
+                <fullName>Tessera non funziona</fullName>
+                <default>false</default>
+                <label>Tessera non funziona</label>
+            </value>
+            <value>
+                <fullName>Colonnina Guasta</fullName>
+                <default>false</default>
+                <label>Colonnina Guasta</label>
+            </value>
+            <value>
+                <fullName>Sblocco coloninna</fullName>
+                <default>false</default>
+                <label>Sblocco coloninna</label>
+            </value>
+            <value>
+                <fullName>Messa in funzione</fullName>
+                <default>false</default>
+                <label>Messa in funzione</label>
+            </value>
+            <value>
+                <fullName>condizioni contratto variate</fullName>
+                <default>false</default>
+                <label>condizioni contratto variate</label>
+            </value>
+            <value>
+                <fullName>non vedo quanto ho ricaricato</fullName>
+                <default>false</default>
+                <label>non vedo quanto ho ricaricato</label>
+            </value>
+            <value>
+                <fullName>Nissan Leaf</fullName>
+                <default>false</default>
+                <label>Nissan Leaf</label>
+            </value>
+            <value>
+                <fullName>Renault Zoe</fullName>
+                <default>false</default>
+                <label>Renault Zoe</label>
+            </value>
+            <value>
+                <fullName>Smart For two</fullName>
+                <default>false</default>
+                <label>Smart For two</label>
+            </value>
+            <value>
+                <fullName>Tesla model 3</fullName>
+                <default>false</default>
+                <label>Tesla model 3</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

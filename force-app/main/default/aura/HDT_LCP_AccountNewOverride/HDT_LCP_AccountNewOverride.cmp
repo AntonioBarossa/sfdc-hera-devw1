@@ -1,0 +1,17 @@
+<aura:component implements="lightning:actionOverride" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="showSelection" type="Boolean" default="true" />
+    <aura:attribute name="showAccountResidenziale" type="Boolean" default="false" />
+    <aura:attribute name="showAccountBusiness" type="Boolean" default="false" />
+    <aura:attribute name="recordTypeId" type="String" />
+
+    <aura:if isTrue="{!v.showSelection}">
+        <c:hdtAccountSelezioneRecordtype onvaluechange="{!c.getValueFromLwc}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showAccountResidenziale}">
+        <c:hdtFormAccountResidenziale RecordTypeId="{!v.recordTypeId}"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showAccountBusiness}">
+        <c:hdtFormAccountBusiness RecordTypeId="{!v.recordTypeId}"/>
+    </aura:if>
+</aura:component>	

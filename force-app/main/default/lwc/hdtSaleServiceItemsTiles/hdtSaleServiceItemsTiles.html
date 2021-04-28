@@ -10,7 +10,7 @@
                                 <template for:each={tilesData} for:item="tile">
                                     <li key={tile.Id} class="slds-item">
                                         <lightning-tile type="media">
-                                            <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
+                                            <lightning-icon slot="media" icon-name={tile.TileIcon}></lightning-icon>
                                             <ul class="slds-has-inline-block-links_space">
                                                 <li class="slds-item">
                                                     <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
@@ -54,7 +54,7 @@
                     <template for:each={tilesData} for:item="tile">
                         <div key={tile.Id} class="slds-p-around_small slds-size_1-of-4">
                             <lightning-tile label="" type="media" class="slds-box">
-                                <lightning-icon slot="media" icon-name="standard:opportunity"></lightning-icon>
+                                <lightning-icon slot="media" icon-name={tile.TileIcon}></lightning-icon>
                                 <ul class="slds-has-inline-block-links_space">
                                     <li class="slds-item">
                                         <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">

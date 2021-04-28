@@ -20,7 +20,7 @@
         <fullName>Altre Verifiche</fullName>
         <default>false</default>
         <label>Altre Verifiche</label>
-    </standardValue> 
+    </standardValue>
     <standardValue>
         <fullName>Annullamento Contratti</fullName>
         <default>false</default>
@@ -452,9 +452,9 @@
         <label>Trasmissione Dati Cliente Finale SII</label>
     </standardValue>
     <standardValue>
-        <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
         <default>false</default>
-        <label>Unificazione/Separazione CA-Bolletta</label>
+        <label>Unificazione/Separazione BP-CA-Bolletta</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione POD</fullName>
@@ -535,5 +535,60 @@
         <fullName>Voltura Tecnica</fullName>
         <default>false</default>
         <label>Voltura Tecnica</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Segnalazioni VAS</fullName>
+        <default>false</default>
+        <label>Segnalazioni VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Cambio Uso Tecnico</fullName>
+        <default>false</default>
+        <label>Cambio Uso Tecnico</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Proroga Temporanea</fullName>
+        <default>false</default>
+        <label>Proroga Temporanea</label>
+    </standardValue>
+    <standardValue>
+        <fullName>HVAC</fullName>
+        <default>false</default>
+        <label>HVAC</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Autoelettrica</fullName>
+        <default>false</default>
+        <label>Autoelettrica</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Recesso</fullName>
+        <default>false</default>
+        <label>Recesso</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Ripensamento</fullName>
+        <default>false</default>
+        <label>Ripensamento</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Disattivazione VAS</fullName>
+        <default>false</default>
+        <label>Disattivazione VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione Canone Rai Calamità</fullName>
+        <default>false</default>
+        <label>Sospensione Canone Rai Calamità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Tensione - Pressione</fullName>
+        <default>false</default>
+        <label>Verifica Tensione - Pressione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Votive Modena Cessazione</fullName>
+        <default>false</default>
+        <label>Votive Modena Cessazione</label>
     </standardValue>
 </StandardValueSet>

@@ -1,0 +1,8 @@
+<aura:component implements = "flexipage:availableForAllPageTypes">
+    <lightning:card title="Acquisizione anagrafica">
+        <div class="slds-align_absolute-center slds-p-top_x-small slds-p-bottom_x-small">
+            <lightning:button variant="brand" label="Crea Lead" onclick="{! c.createRecord }" ></lightning:button>
+            <lightning:button variant="brand" label="Crea Account" onclick="{! c.handleAccountCreation }" ></lightning:button>
+        </div>
+    </lightning:card>
+</aura:component>

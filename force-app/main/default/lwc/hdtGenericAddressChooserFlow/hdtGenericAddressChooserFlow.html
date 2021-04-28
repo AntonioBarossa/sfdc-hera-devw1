@@ -1,0 +1,48 @@
+<template>
+    <div class="slds-grid">
+        <div class="slds-col slds-size_4-of-5">
+            <lightning-layout vertical-align="end">
+                <lightning-layout-item flexibility="auto">
+                    <lightning-input type="text" label={inputAddressLabel}
+                        value={address} data-id="indirizzoRecapito" disabled></lightning-input>
+                </lightning-layout-item>
+
+                <lightning-layout-item>
+                    <lightning-button-icon icon-name="standard:address" variant="brand" class="slds-m-left_xx-small"
+                        data-id="indirizzoRecapito" onclick={handleChangeAddress}></lightning-button-icon>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+    </div>
+    <template if:true={isModalOpen}>
+        <!-- Modal/Popup Box LWC starts here -->
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={handleCloseModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                </header>
+                <!-- Modal/Popup Box LWC body starts here -->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <c-hdt-target-object-address-fields accountid={accountId} objectapiname="Case" wrapaddressobject={addressWrapper}></c-hdt-target-object-address-fields>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    <!--<div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <lightning-button
+                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                variant={variantButton} type="button" name="save" label={labelButton} onclick={handleGoNext}>
+            </lightning-button>
+        </div>
+    </div>-->
+</template>
