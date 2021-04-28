@@ -385,11 +385,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             }
 
-        } else if(getFieldValue(fields, 'BillingProblem__c') == 'Si' && 
-        (getFieldValue(fields, 'CustomerAggreement__c') == null || getFieldValue(fields, 'CustomerAggreement__c') == '')){
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
-
         } else if(caseType == 'Fiscale'){
 
             if(subprocess != 'IVA - Errata applicazione' && subprocess != 'Accise - Errata applicazione'){
@@ -472,6 +467,27 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }
 
+
+        return result;
+
+    }
+
+    public String validateAnnullamento(String fields){
+
+        Date effectiveDate = Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'));
+        Date todayDate = System.today();
+
+        String result;
+
+        if(todayDate.day() > 10 && effectiveDate > todayDate.addMonths(2).toStartOfMonth().addDays(-1)){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data decorrenza non è coerente con la data inserimento'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
 
         return result;
 
