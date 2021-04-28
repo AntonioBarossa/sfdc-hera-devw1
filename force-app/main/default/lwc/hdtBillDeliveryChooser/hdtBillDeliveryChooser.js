@@ -26,6 +26,7 @@ export default class HdtBillDeliveryChooser extends LightningElement {
     @track pecRequired= false;
     @track addressRequired= false;
     @api availableActions = [];
+    @api cancelCase = false;
 
     get options() {
         return [
@@ -149,6 +150,25 @@ export default class HdtBillDeliveryChooser extends LightningElement {
         }catch(error){
             console.log(error);
         }
+    }
+
+    handleCancel(){
+
+        this.cancelCase = true;
+
+        if(this.availableActions.find(action => action === 'NEXT')){
+
+            const navigateNextEvent = new FlowNavigationNextEvent();
+            this.dispatchEvent(navigateNextEvent);
+
+        } else{
+
+            const navigateFinish = new FlowNavigationFinishEvent();
+        
+            this.dispatchEvent(navigateFinish);
+
+        }
+
     }
 
 }

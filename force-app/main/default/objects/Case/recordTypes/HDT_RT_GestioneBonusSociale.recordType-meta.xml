@@ -4096,6 +4096,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Chiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
             <default>false</default>
         </values>

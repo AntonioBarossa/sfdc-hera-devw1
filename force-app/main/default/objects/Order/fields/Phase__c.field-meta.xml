@@ -311,6 +311,11 @@
                 <label>Accettazione Voltura</label>
             </value>
             <value>
+                <fullName>Inviato al SII</fullName>
+                <default>false</default>
+                <label>Inviato al SII</label>
+            </value>
+            <value>
                 <fullName>Comunicazione verso Heroku</fullName>
                 <default>false</default>
                 <label>Comunicazione verso Heroku</label>
