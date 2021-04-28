@@ -6478,6 +6478,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.DocumentResidue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSelected__c.ExpirationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
