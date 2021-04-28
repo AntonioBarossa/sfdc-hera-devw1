@@ -15,17 +15,23 @@
     &quot;columns&quot;: [
       {
         &quot;fieldName&quot;: &quot;statoPratica&quot;,
-        &quot;label&quot;: &quot;Descrizione Stato Pratica&quot;,
+        &quot;label&quot;: &quot;Stato Pratica&quot;,
         &quot;initialWidth&quot;: 220
+      },
+      {
+        &quot;fieldName&quot;: &quot;importo&quot;,
+        &quot;label&quot;: &quot;Importo Rata&quot;,
+        &quot;type&quot;: &quot;currency&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;dataScadenza&quot;,
+        &quot;label&quot;: &quot;Data Scadenza Rata&quot;,
+        &quot;initialWidth&quot;: 180
       },
       {
         &quot;fieldName&quot;: &quot;soc&quot;,
         &quot;label&quot;: &quot;Società&quot;,
-        &quot;initialWidth&quot;: 160
-      },
-      {
-        &quot;fieldName&quot;: &quot;partner&quot;,
-        &quot;label&quot;: &quot;Codice Cliente&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
@@ -64,19 +70,8 @@
         &quot;initialWidth&quot;: 160
       },
       {
-        &quot;fieldName&quot;: &quot;importo&quot;,
-        &quot;label&quot;: &quot;Importo Rata&quot;,
-        &quot;type&quot;: &quot;currency&quot;,
-        &quot;initialWidth&quot;: 160
-      },
-      {
-        &quot;fieldName&quot;: &quot;dataScadenza&quot;,
-        &quot;label&quot;: &quot;Data Scadenza Rata&quot;,
-        &quot;initialWidth&quot;: 180
-      },
-      {
         &quot;fieldName&quot;: &quot;docRif&quot;,
-        &quot;label&quot;: &quot;N. Doc. di Riferim.&quot;,
+        &quot;label&quot;: &quot;Numero Fattura&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
@@ -106,6 +101,11 @@
         &quot;fieldName&quot;: &quot;chiusoCont&quot;,
         &quot;label&quot;: &quot;Chiuso Contabilmente&quot;,
         &quot;type&quot;: &quot;currency&quot;,
+        &quot;initialWidth&quot;: 160
+      },
+      {
+        &quot;fieldName&quot;: &quot;partner&quot;,
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
         &quot;initialWidth&quot;: 160
       }
     ]
