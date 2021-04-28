@@ -73,7 +73,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             AND (Campaign.EndDate >= :d OR Campaign.EndDate = NULL)
             AND HasResponded = false
             WITH SECURITY_ENFORCED
-            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c DESC
+            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
         ];
     }
     public List<CampaignMember> filterCampaignsByCategory(List<String> contacts, String category){
@@ -101,7 +101,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             AND HasResponded = false
             AND Campaign.Category__c = :category
             WITH SECURITY_ENFORCED
-            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c DESC
+            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
         ];
     }
 
@@ -132,7 +132,42 @@ public inherited sharing class HDT_QR_CampaignMember {
             AND Campaign.Category__c = :category
             AND Campaign.Channel__c INCLUDES (:channel)
             WITH SECURITY_ENFORCED
-            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c DESC
+            ORDER BY Campaign.Required__c DESC, Campaign.Priority__c ASC
+        ];
+    }
+
+    public List<CampaignMember> getUnassignedCampaignMembers(String campaignId){
+        return [
+            SELECT 
+            Id
+            FROM CampaignMember 
+            WHERE CampaignId = :campaignId 
+            AND Agency__c = NULL
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Account> getAccountsforCampaignMembers(){
+        return [
+            SELECT 
+            Id,
+            Name
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 10
+        ];
+    }
+    public CampaignMember getAccountAndCampaign(String campaignMemberId) {
+        return [
+            SELECT
+            Id,
+            ContactId, 
+            LeadId, 
+            CampaignId, 
+            GenericField1__c 
+            FROM CampaignMember 
+            WHERE Id = :campaignMemberId
+            WITH SECURITY_ENFORCED
         ];
     }
 }

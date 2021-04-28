@@ -19,7 +19,7 @@
             <value>
                 <fullName>02</fullName>
                 <default>false</default>
-                <label>Contratto firmato</label>
+                <label>Contratto firmato</label> 
             </value>
         </valueSetDefinition>
         <valueSettings>

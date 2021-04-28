@@ -130,11 +130,11 @@
         </div>
 
         <template if:true={showEditQuote}>
-            <c-hdt-edit-quote sale={saleRecord} quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
+            <c-hdt-edit-quote is-community={isCommunity} sale={saleRecord} quote-id={selectedQuoteId} oncloseeditquote={handleCloseEditQuoteEvent} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-edit-quote>
         </template>
 
         <template if:true={showAmend}>
-            <c-hdt-quote-amend-contract sale-id={saleRecord.Id} contract-id={selectedContractId} onclose_amend_contract={handleCloseAmendContract} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-quote-amend-contract>
+            <c-hdt-quote-amend-contract is-community={isCommunity} sale-id={saleRecord.Id} contract-id={selectedContractId} onclose_amend_contract={handleCloseAmendContract} oncretedquotelines={handleCreatedQuoteLinesEvent}></c-hdt-quote-amend-contract>
         </template>
 
         <c-hdt-confirmation-dialog-dropdown
