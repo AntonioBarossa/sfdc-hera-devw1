@@ -1,0 +1,19 @@
+public with sharing class HDT_LC_LeadChangeRecordType {
+
+    private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
+
+    @AuraEnabled
+    public static String changeRecordTypeOfLead(Id leadId){
+
+        HDT_QR_RecordType recordtypeQr= new HDT_QR_RecordType();
+        Lead lead=new Lead(Id= leadId);
+        lead.RecordTypeId= recordtypeQr.getRecordType('HDT_RT_Main', 'Lead').Id;
+        HDT_SRV_Lead.checkUpdateAccess(lead);
+        Lead l=HDT_SRV_Lead.updateRecord(lead);
+
+        Case c=new Case(Subject='Acquisizione Privacy'/*, Category__c= l.Categoria__c, Sottocategoria__c= l.Sottocategoria__c*/);
+        Case ce= caseSrv.createRecord(c);
+
+        return ce.Id;
+    }
+}
