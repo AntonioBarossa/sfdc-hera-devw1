@@ -14,9 +14,13 @@ public inherited sharing class HDT_QR_Account {
      * @param String Fields
      * @return Account account
      */
-    
+    private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
+
+
     public Account getRecordById(String id, String fields){
 
+        accountSrv.checkReadAccess(fields);
+        
         String query = 'SELECT '+ fields +
                 ' FROM Account WHERE Id = :id WITH SECURITY_ENFORCED LIMIT 1';
         List<Account> accounts = Database.query(query);
@@ -25,7 +29,7 @@ public inherited sharing class HDT_QR_Account {
     }
 
     public List<Account> getRecordsById(List<String> accountIdList, String fields){
-
+        accountSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +
                 ' From Account where id IN :accountIdList';
         List<Account> accounts = Database.query(query);
