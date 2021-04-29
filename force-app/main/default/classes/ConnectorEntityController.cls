@@ -10,7 +10,7 @@ global with sharing class ConnectorEntityController {
 			return 'Error: ' + JSON.serialize(message);
 		}
 
-		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Chiamata'];
+		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Call'];
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 			RecordTypeId = recordType.Id,
 			wrts_prcgvr__Status__c = 'In Progress',
