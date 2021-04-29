@@ -1328,6 +1328,14 @@
             <fullName>Aggiunta Sconti o Bonus VAS</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>QuickQuote__c</picklist>
