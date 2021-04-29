@@ -662,6 +662,30 @@
                 <default>false</default>
                 <label>Esito KO tentativo riattivazione</label>
             </value>
+            <value>
+                <fullName>Presa in Carico KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico KO</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico OK</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0152</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0152</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0153</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0153</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
