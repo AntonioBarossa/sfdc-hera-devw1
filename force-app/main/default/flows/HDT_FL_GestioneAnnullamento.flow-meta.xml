@@ -60,50 +60,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Causale_Cancellazione</name>
-        <label>Causale Cancellazione</label>
-        <locationX>2294</locationX>
-        <locationY>1875</locationY>
-        <actionName>HDT_UTL_CaseCancellation</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>Assegna_Codice_Causale_e_Descrizione</targetReference>
-        </connector>
-        <dataTypeMappings>
-            <typeName>T__caseRecord</typeName>
-            <typeValue>Case</typeValue>
-        </dataTypeMappings>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
-        <inputParameters>
-            <name>caseRecord</name>
-        </inputParameters>
-        <inputParameters>
-            <name>causalCode</name>
-            <value>
-                <stringValue>SWG1</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>method</name>
-            <value>
-                <stringValue>getCancellationReason</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>processCancellationReason</name>
-            <value>
-                <elementReference>GetRecord.CancellationReason__c</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recordId</name>
-            <value>
-                <elementReference>GetRecord.Id</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <name>Codice_Ripensamento</name>
         <label>Codice Ripensamento (Da Modificare una volta tutte le info disponibili)</label>
         <locationX>3743</locationX>
@@ -124,13 +80,27 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>2317</locationX>
-        <locationY>2462</locationY>
+        <locationX>2313</locationX>
+        <locationY>2617</locationY>
         <assignmentItems>
             <assignToReference>GetRecord.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Comunicazione verso Heroku OK</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcoloCodiceCausale.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcoloCodiceCausale.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -229,7 +199,7 @@
             <assignToReference>GetRecord.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Codice_Ripensamento.causalCode</elementReference>
+                <elementReference>Calcola_Causale_Annullamento.causalCode</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -250,22 +220,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Causale_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Codice_Causale_e_Descrizione</name>
-        <label>Assegna Codice Causale e Descrizione</label>
-        <locationX>2294</locationX>
-        <locationY>1995</locationY>
-        <assignmentItems>
-            <assignToReference>GetRecord.CancellationReasonDescription__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Causale_Cancellazione.cancellationReason</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Causale_e_Descrizione_Annullamento</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -342,7 +296,7 @@
     <assignments>
         <name>Assegna_Motivo_0_0</name>
         <label>Assegna Motivo</label>
-        <locationX>2294</locationX>
+        <locationX>2296</locationX>
         <locationY>1634</locationY>
         <assignmentItems>
             <assignToReference>GetRecord.CancellationReason__c</assignToReference>
@@ -851,7 +805,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Fase_in_Da_Inviare</targetReference>
+                <targetReference>CalcoloCodiceCausale</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -934,6 +888,48 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>CalcoloCodiceCausale</name>
+        <label>CalcoloCodiceCausale</label>
+        <locationX>2290</locationX>
+        <locationY>2438</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Da_Inviare</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Activities</name>
         <label>Get Activities</label>
@@ -1166,8 +1162,11 @@
     <recordUpdates>
         <name>Aggiorna_Fase_0</name>
         <label>Aggiorna Fase</label>
-        <locationX>2315</locationX>
-        <locationY>2623</locationY>
+        <locationX>2310</locationX>
+        <locationY>2791</locationY>
+        <connector>
+            <targetReference>Loading_Spinner_Screen</targetReference>
+        </connector>
         <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1196,7 +1195,7 @@
         <locationX>2294</locationX>
         <locationY>1755</locationY>
         <connector>
-            <targetReference>Causale_Cancellazione</targetReference>
+            <targetReference>Aggiorna_Causale_e_Descrizione_Annullamento</targetReference>
         </connector>
         <inputReference>GetRecord</inputReference>
     </recordUpdates>
@@ -1237,6 +1236,37 @@
         </connector>
         <inputReference>Get_Activities_0</inputReference>
     </recordUpdates>
+    <screens>
+        <name>Loading_Spinner_Screen</name>
+        <label>Loading Spinner Screen</label>
+        <locationX>2307</locationX>
+        <locationY>2966</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtFlowNavigationButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetRecord.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Motivo_Annullamento_Screen</name>
         <label>Motivo Annullamento Screen</label>

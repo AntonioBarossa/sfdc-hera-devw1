@@ -40,6 +40,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateVariazioni(fields,recordId,caseType, subprocess);
 
+        } else if(caseType == 'Chiusura Contatore'){
+
+            result = validateDisattivazioni(fields);
+
+        } else if(caseType == 'Contratto Non Richiesto'){
+
+            result = validateAnnullamento(fields);
+
         }
 
         return result;
