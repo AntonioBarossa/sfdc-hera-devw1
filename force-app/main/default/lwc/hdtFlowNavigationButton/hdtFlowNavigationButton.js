@@ -66,7 +66,7 @@ export default class HdtFlowNavigationButton extends LightningElement {
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Errore',
-                message: 'Comunicazione con Heroku fallita',
+                message: 'Comunicazione fallita',
                 variant: 'error',
             }),
         );
