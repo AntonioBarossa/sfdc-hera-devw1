@@ -452,9 +452,9 @@
         <label>Trasmissione Dati Cliente Finale SII</label>
     </standardValue>
     <standardValue>
-        <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
         <default>false</default>
-        <label>Unificazione/Separazione CA-Bolletta</label>
+        <label>Unificazione/Separazione BP-CA-Bolletta</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione POD</fullName>

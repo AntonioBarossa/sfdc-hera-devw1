@@ -66,7 +66,7 @@ public virtual class HDT_TRH_TriggerHandler {
     this.setMaxLoopCount(-1);
   }
 
-  /***************************************
+  /*************************************** 
    * public static methods
    ***************************************/
 

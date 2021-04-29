@@ -1328,6 +1328,14 @@
             <fullName>Aggiunta Sconti o Bonus VAS</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>QuickQuote__c</picklist>
@@ -1457,11 +1465,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>01</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2</fullName>
+            <fullName>02</fullName>
             <default>false</default>
         </values>
     </picklistValues>

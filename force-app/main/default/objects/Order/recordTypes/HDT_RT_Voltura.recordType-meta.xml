@@ -1284,6 +1284,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
@@ -1522,11 +1526,11 @@
     <picklistValues>
         <picklist>SelfCertificationConnection__c</picklist>
         <values>
-            <fullName>1</fullName>
+            <fullName>01</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>2</fullName>
+            <fullName>02</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1581,6 +1585,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>Con Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Retroattiva</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Standard</fullName>
             <default>false</default>

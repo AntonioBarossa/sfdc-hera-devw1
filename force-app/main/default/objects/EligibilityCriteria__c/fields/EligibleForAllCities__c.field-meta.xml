@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>EligibleForAllCities__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo di configurazione usato per indicare che il prodotto è vendibile in tutte le province.</description>
+    <externalId>false</externalId>
+    <label>Eleggibile per tutte le province</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
