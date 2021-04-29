@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Residue__c</fullName>
+    <fullName>CompanyOwner__c</fullName>
     <externalId>false</externalId>
-    <formula>DocumentResidue__c - PaidCustomer__c</formula>
+    <formula>TEXT(SBQQ__Account__r.CompanyOwner__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Residuo</label>
-    <precision>18</precision>
+    <label>Company Owner</label>
     <required>false</required>
-    <scale>2</scale>
+    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Currency</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>
