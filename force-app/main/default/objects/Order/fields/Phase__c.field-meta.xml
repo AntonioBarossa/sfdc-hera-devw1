@@ -321,6 +321,11 @@
                 <label>Comunicazione verso Heroku</label>
             </value>
             <value>
+                <fullName>Comunicazione Motore VAS</fullName>
+                <default>false</default>
+                <label>Comunicazione Motore VAS</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
