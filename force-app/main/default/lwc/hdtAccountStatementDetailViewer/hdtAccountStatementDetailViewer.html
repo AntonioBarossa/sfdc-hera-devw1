@@ -1,0 +1,61 @@
+<template>
+
+    <template if:true={bShowModal} >    
+        <c-hdt-detail-filter-modal onclosemodal={closeModal}
+                                     fields-to-filter={fieldsToFilter}
+                                     onsetobjfilter={applyFilter}
+                                     consider={filterApplied}
+        ></c-hdt-detail-filter-modal>
+    </template>
+
+    <div class="slds-border_top lgc-bg" >
+        <div class="slds-m-bottom_x-small slds-m-top_xx-small">
+            <div class="slds-grid slds-gutters slds-align_absolute-center">
+                <div class="slds-col slds-text-heading_medium slds-size_1-of-12">
+                    Dettaglio
+                </div>
+                <div class="slds-col slds-size_3-of-12">
+
+                    <div class="slds-button-group" role="group">
+                        <template for:each={buttonList} for:item="c">
+                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" onclick={buttonHandler} name={c.name} >{c.label}</button>
+                        </template>
+                    </div>
+
+                </div>
+                <div class="slds-col slds-size_1-of-12">
+                    <span if:true={filterApplied} class="slds-pill slds-pill_link" style="background-color: #f2f2f2">
+                        <span class="slds-pill__icon_container">
+                          <span class="slds-icon_container" title="Account" style="background-color: #f2f2f2">
+                            <lightning-icon icon-name="standard:filter" alternative-text="filterApplied" title="filterApplied" variant="success" size="medium"></lightning-icon>
+                          </span>
+                        </span>
+                        <a href="javascript:void(0);" class="slds-pill__action" >
+                          <span class="slds-pill__label">Filtro applicato</span>
+                        </a>
+                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" >
+                          <lightning-helptext content={filterString}></lightning-helptext>
+                        </button>
+                      </span>
+                    <!--<lightning-icon if:true={filterApplied} icon-name="standard:filter" alternative-text="filterApplied" title="filterApplied" variant="success" size="small"></lightning-icon>-->
+                </div>
+                <div class="slds-col slds-size_7-of-12">
+                </div>
+            </div>
+        </div>
+        <div style="height: 18vh;"><!--height: 150px;-->
+            <lightning-datatable
+                    key-field="id"
+                    data={accountdetailsToView}
+                    columns={columns}
+                    resize-column-disabled=true
+                    default-sort-direction={defaultSortDirection}
+                    sorted-direction={sortDirection}
+                    sorted-by={sortedBy}
+                    onsort={onHandleSort}
+            ></lightning-datatable>
+            <!--accountdetails.data-->
+        </div>
+    </div>
+    
+</template>
