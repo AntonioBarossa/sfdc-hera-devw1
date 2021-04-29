@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>ModificaLayoutFattura</label>
+    <protected>false</protected>
+    <values>
+        <field>JSON__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;requestType&quot;: &quot;ModificaLayoutFattura&quot;,
+    &quot;objects&quot;: [
+        {
+            &quot;objectLabel&quot;: &quot;Case&quot;,
+            &quot;objectName&quot;: &quot;Case&quot;,
+            &quot;fields&quot;: [
+                {
+                    &quot;fieldType&quot;: &quot;&quot;,
+                    &quot;apiName&quot;: &quot;CaseNumber&quot;,
+                    &quot;label&quot;: &quot;rds&quot;
+                }
+            ],
+            &quot;childObjects&quot;: [{
+                &quot;objectLabel&quot;: &quot;&quot;,
+                &quot;objectName&quot;: &quot;Case&quot;,
+                &quot;relationName&quot;: &quot;posizioni&quot;,
+                &quot;staticCondition&quot;: &quot;&quot;,
+                &quot;controllingField&quot;: &quot;Id&quot;,
+                &quot;fields&quot;: [{
+                        &quot;fieldType&quot;: &quot;&quot;,
+                        &quot;apiName&quot;: &quot;ContractCode__c&quot;,
+                        &quot;label&quot;: &quot;contratti&quot;
+                    },
+                    {
+                        &quot;fieldType&quot;: &quot;&quot;,
+                        &quot;apiName&quot;: &quot;ElementDetail__c&quot;,
+                        &quot;label&quot;: &quot;dettaglioBolletta&quot;
+                    }
+                ]
+            }]
+        }
+    ]
+}</value>
+    </values>
+    <values>
+        <field>NamedCredential__c</field>
+        <value xsi:type="xsd:string">Callout:EditInvoiceLayout</value>
+    </values>
+</CustomMetadata>
