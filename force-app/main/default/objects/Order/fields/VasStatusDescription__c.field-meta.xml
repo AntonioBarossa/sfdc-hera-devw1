@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>MailingCityCode__c</fullName>
-    <description>Codice Comune SAP</description>
+    <fullName>VasStatusDescription__c</fullName>
     <externalId>false</externalId>
-    <label>Codice ISTAT [Residenziale/Sede Legale]</label>
-    <length>30</length>
+    <label>Descrizione Stato Motore VAS</label>
+    <length>150</length>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>

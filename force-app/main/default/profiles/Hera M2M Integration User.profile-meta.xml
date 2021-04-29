@@ -6478,6 +6478,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSelected__c.DocumentResidue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSelected__c.ExpirationDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6527,7 +6532,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DocumentSelected__c.Residue__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8313,6 +8318,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DiscardReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Disconnectable__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8659,6 +8669,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.PowerQuote__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PowerRequested__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9018,6 +9033,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SapContractCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SAPImplantCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9309,6 +9329,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.VasServiceActivationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.VasStatusDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.VasStatus__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14528,12 +14558,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.CategoryTypeClient__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.Channel__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.ClientAge__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.CommissioningCampaign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14554,6 +14599,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.CreatedBy__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.CustomerMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16993,12 +17043,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.SupplySAPCityCode__c</field>
+        <field>ServicePoint__c.SupplyCityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.SupplySAPStreetCode__c</field>
+        <field>ServicePoint__c.SupplyStreetCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
