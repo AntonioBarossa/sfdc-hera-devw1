@@ -1,0 +1,13 @@
+<template>
+    <template if:true={showCombobox} >
+        <lightning-combobox
+                name={fieldName}
+                label="Operatore"
+                value={value}
+                placeholder="Seleziona l'operatore"
+                options={operator}
+                variant="label-hidden"
+                onchange={handleChange}
+        ></lightning-combobox>
+    </template>
+</template>
