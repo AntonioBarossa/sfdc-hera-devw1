@@ -4601,6 +4601,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.OneshotCustomer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.OperationCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8987,6 +8992,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.NotRegisteredMeterCase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.OneshotCustomer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
