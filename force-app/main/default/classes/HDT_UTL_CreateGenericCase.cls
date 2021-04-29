@@ -26,6 +26,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.ServicePoint__c = currentCase.ServicePoint__c;
         newCase.SuppliedEmail = currentCase.SuppliedEmail;
         newCase.SuppliedPhone = currentCase.SuppliedPhone;
+        newCase.Phase__c = 'Bozza';
 
 
         newCases.add(newCase);
