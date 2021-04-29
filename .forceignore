@@ -14,13 +14,3 @@ package.xml
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
 **profiles/Minimum Access - Salesforce.profile
-
-# Community Profiles
-force-app/main/default/profiles/HDT_TelesellingCommunity.profile-meta.xml
-force-app/main/default/profiles/Door2Door Profile.profile-meta.xml
-force-app/main/default/profiles/Hera Partner Community.profile-meta.xml
-force-app/main/default/profiles/Partner Community User.profile-meta.xml
-force-app/main/default/experiences/Door2Door1.site-meta.xml
-force-app/main/default/networks/Door2Door.network-meta.xml
-force-app/main/default/experiences/Door2Door1/routes/campaignMemberRelatedList.json
-force-app/main/default/experiences/Door2Door1
