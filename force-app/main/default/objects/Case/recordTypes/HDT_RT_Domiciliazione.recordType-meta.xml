@@ -6101,6 +6101,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Revoca Domiciliazione</fullName>
             <default>false</default>
         </values>
