@@ -44,7 +44,7 @@ package.xml
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
 **objects/Account/recordTypes/HDT_RT_Other*
-**layouts/Contact-Contact*
+**layouts/Contact*
 **applications/Lead_Generation*
 **applications/Relationship_Management*
 **applications/Sales_Operations*
