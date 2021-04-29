@@ -825,6 +825,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>AccountContactRelation.GlobalMigrationKeyFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.IsActive</field>
         <readable>true</readable>
@@ -1346,6 +1351,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.GreenCertificateIncluded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1397,6 +1407,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.IsInternal</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1492,36 +1507,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.Price</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PriceF0__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PriceF1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PriceF2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PriceF3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PriceFP__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Asset.PriceFV__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4332,6 +4317,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.InformationDetail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.InformativeCluster__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.InformativeType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8891,6 +8886,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NotRegisteredMeterCase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.OpportunityId</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9067,6 +9067,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Pressure__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PreviousCustomer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9967,36 +9972,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.PreviousDateSwitch__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF0__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceF3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceFP__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>OrderItem.PriceFV__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14826,6 +14801,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Subscription__c.GlobalMigrationKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.GreenCertificateIncluded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14846,6 +14826,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdLevelMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdRequiredByIdMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IdRootIdMigr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.Index0PUN__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14862,6 +14862,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.Index3PUN__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15017,11 +15022,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.QuoteIDCustom__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__Subscription__c.QuoteLine__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16701,7 +16701,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Account__c</field>      
+        <field>wrts_prcgvr__Activity__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16726,19 +16726,29 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.AppointmentDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AppointmentDateToConfirm__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AppointmentResultCode__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppointmentTimeSlotToConfirm__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.AppoitmentTimeSlotConfirmed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Approved__c</field>
@@ -16761,6 +16771,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.CallCenterNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CallDuration__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16772,16 +16787,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CallStartTime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.CalledNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.CallingNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16811,12 +16816,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.ConnectionID__c</field>
+        <field>wrts_prcgvr__Activity__c.ClientNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Contact__c</field>
+        <field>wrts_prcgvr__Activity__c.ConnectionID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16826,10 +16831,15 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.ContractNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CraftsmenRegisterNumber__c</field>
         <readable>true</readable>
@@ -16851,12 +16861,12 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.Distributor__c</field>
+        <field>wrts_prcgvr__Activity__c.DistributorFirstDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.DistributorFirstDate__c</field>
+        <field>wrts_prcgvr__Activity__c.Distributor__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16886,21 +16896,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.isAtoA__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.isManualAppoitment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>wrts_prcgvr__Activity__c.isSelfAppointment__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.IwsDemand__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16918,8 +16913,8 @@
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Mobile__c</field>
         <readable>true</readable>
-    </fieldPermissions>	
-	<fieldPermissions>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Note__c</field>
         <readable>true</readable>
@@ -17066,6 +17061,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isAtoA__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isManualAppoitment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.isSelfAppointment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.wrts_prcgvr__ActivityTemplate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17127,6 +17137,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountBalance__c-Estratto Conto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountBrand-Account Brand Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AccountContactRelation-Account Contact Relationship Layout</layout>
@@ -19584,6 +19597,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>ManageRoles</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageSandboxes</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

@@ -18,7 +18,7 @@ public inherited sharing class HDT_SRV_AccountContactRelation {
     * @param String crud - crud operation passed as a string (create, read, update, delete)
     */
     public void checkAccessInit(String fields, String crud){
-        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('BillingProfile__c', fields, crud);
+        HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('AccountContactRelation', fields, crud);
         securityAccess.checkSecurityAccess();
     }
 
@@ -48,4 +48,31 @@ public inherited sharing class HDT_SRV_AccountContactRelation {
     public void checkUpdateAccess(String fields){
         checkAccessInit(fields, UPDATEPERMISSION);
     }
+
+ /**
+     * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+     * @description updateRecord
+     * @param AccountContactRelation ac
+     * @return AccountContactRelation ac
+     */
+    public AccountContactRelation updateRecord(AccountContactRelation ac){
+        HDT_UTL_DatabaseService.updateSObject(ac);
+        return ac;
+    }
+/**
+     * @author Sabina Levonja (sabina.levonja@dunegroup.it)
+     * @description createRecord
+     * @param AccountContactRelation ac
+     * @return AccountContactRelation ac
+     */
+    public AccountContactRelation createRecord(AccountContactRelation ac){
+        HDT_UTL_DatabaseService.insertSObject(ac);
+        return ac;
+    }
+    
+    public List<AccountContactRelation> upsertRecord(List<AccountContactRelation> ac){
+        HDT_UTL_DatabaseService.upsertSObject(ac);
+        return ac;
+    }
+    
 }

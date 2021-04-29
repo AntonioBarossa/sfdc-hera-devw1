@@ -8,6 +8,7 @@ public inherited sharing class HDT_SRV_Account {
 
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static final String READPERMISSION = 'read';
+    private static final String CREATEPERMISSION = 'create';
     private static final String UPDATEPERMISSION = 'update';
 
     /**
@@ -28,6 +29,15 @@ public inherited sharing class HDT_SRV_Account {
      */
     public void checkReadAccess(String fields){
         checkAccessInit(fields, READPERMISSION);
+    }
+    public void checkCreateAccess(Account account){
+        List<String> fields = helperMethods.getObjAttrList(account);
+        checkAccessInit(String.join(fields, ','), CREATEPERMISSION);
+    }
+
+    public Account createRecord(Account account){
+        HDT_UTL_DatabaseService.insertSObject(account);
+        return account;
     }
 
     /**

@@ -5454,6 +5454,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
@@ -5945,6 +5949,10 @@
         </values>
         <values>
             <fullName>Chiamata Mura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8701,7 +8709,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>

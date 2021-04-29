@@ -1,0 +1,385 @@
+<template>
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" aria-modal="true"
+            class="slds-modal slds-fade-in-open panel slds-modal_medium">
+            <template if:true={spinner}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+            <div class="modal-container slds-modal__container">
+                <header class="slds-modal__header">
+                    <button
+                        class="slds-button slds-button_icon slds-modal__close closeIcon slds-button_icon-bare slds-button_icon-inverse"
+                        title="close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" variant="inverse" size="medium">
+                        </lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-modal__title slds-hyphenate">Account Business </h2>
+                </header>
+                <div class="modal-body scrollable slds-modal__content slds-p-around--medium">
+                    <div>
+                        <h3
+                            class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
+                            Anagrafica</h3>
+
+                        <div class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2">
+                                <div
+                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <template if:true={customerMarkingOptions.data}>
+                                        <lightning-combobox data-id="customerMarking" name="customerMarking"
+                                            label="Marcatura Cliente" placeholder="Seleziona Marcatura"
+                                            value={markingValue} options={customerMarkingOptions.data.values}
+                                            onchange={handleChange} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div data-id="hideBusinessName"
+                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small slds-show">
+                                    <lightning-input type="text" data-id="businessName" label="Ragione Sociale"
+                                        required>
+                                    </lightning-input>
+                                </div>
+                                <div class="slds-hide" data-id="showDiv">
+                                    <div
+                                        class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-input type="text" data-id="firstIndividualName"
+                                            label="Nome ditta individuale">
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-input type="text" data-id="lastIndividualName"
+                                            label="Cognome ditta individuale" required>
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div
+                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required={makerequired}>
+                                    </lightning-input>
+                                </div>
+                                <div
+                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <template if:true={legalFormOptions.data}>
+                                        <lightning-combobox data-id="legalForm" name="tipoformagiuridica"
+                                            label="Tipo Forma Giuridica" placeholder="Seleziona il tipo Forma Giuridica"
+                                            options={legalFormOptions.data.values} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <div
+                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <template if:true={categoryOptions.data}>
+                                        <lightning-combobox data-id="category" name="category" label="Categoria"
+                                            placeholder="Seleziona Categoria" value={categoryValue}
+                                            options={categoryOptions.data.values} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <lightning-input type="text" data-id="vatNumber" label="Partita IVA" onchange={handleVatChange} required>
+                                    </lightning-input>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <template if:true={companyOwnerOptions.data}>
+                                        <lightning-combobox data-id="companyOwner" name="companyOwner"
+                                            label="Società Gruppo Hera" placeholder="Seleziona Società"
+                                            options={companyOwnerOptions.data.values} required>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-m-top_x-large">
+                            <h3
+                                class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
+                                Sede Legale e Contatti </h3>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical">
+                            <div class="slds-col slds-grid">
+                                <!-- <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="region" label="Regione">
+                                    </lightning-input>
+                                </div> -->
+
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Cliente" required
+                                    maxlength="11">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <!-- <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="district" label="Provincia" required>
+                                    </lightning-input>
+                                </div> -->
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="email" data-id="email" label="Email">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <!-- <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="address" label="Comune" required>
+                                    </lightning-input>
+                                </div> -->
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="email" data-id="electronicMail" label="PEC">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <!-- <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="location" label="Località" required>
+                                    </lightning-input>
+                                </div> -->
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="tel" data-id="numberFax" label="Fax">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <!-- <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="myAddress" label="Indirizzo" required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="houseNumber" label="Numero Civico"
+                                        required></lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-col slds-grid slds-size_2-of-4  slds-m-top_medium slds-p-left_x-large">
+                                    <div class="slds-size_1-of-3 slds-p-right_small">
+                                        <lightning-input type="text" data-id="scale" label="Scala">
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-size_1-of-3 slds-p-right_small">
+                                        <lightning-input type="text" data-id="floor" label="Piano">
+                                        </lightning-input>
+                                    </div>
+                                    <div class="slds-size_1-of-3 slds-p-right_small">
+                                        <lightning-input type="text" data-id="intern" label="Interno">
+                                        </lightning-input>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="postalCode" label="CAP" required>
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small padding=around-medium">
+                                    <lightning-button variant="brand" name="" type="submit" label="Verifica Indirizzo">
+                                    </lightning-button>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="slds-m-top_x-large">
+                        <h3
+                            class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
+                            Informazioni Anagrafiche Referente </h3>
+                    </div>
+                    <div class="slds-grid slds-grid_vertical">
+                        <div class="slds-col slds-grid">
+                            <div
+                                class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-input type="text" data-id="firstName" label="Nome" required>
+                                </lightning-input>
+                            </div>
+                            <div
+                                class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                <template if:true={genderOptions.data}>
+                                    <lightning-combobox data-id="gender" name="gender" label="Sesso"
+                                        placeholder="Seleziona sesso" options={genderOptions.data.values}
+                                        value={gender}>
+                                    </lightning-combobox>
+                                </template>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid_vertical">
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="lastName" label="Cognome" required>
+                                    </lightning-input>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <lightning-input type="date" data-id="birthDate" name="birthDate" value={birthDate}
+                                        label="Data di nascita">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-grid_vertical">
+                                <div class="slds-col slds-grid">
+                                    <div
+                                        class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-input type="text" data-id="personFiscalCode" label="Codice Fiscale"
+                                            required>
+                                        </lightning-input>
+                                    </div>
+                                    <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                        <lightning-input type="text" data-id="birthPlace" name="comunedinascita"
+                                            label="Comune di nascita" placeholder="">
+                                        </lightning-input>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-grid_vertical">
+                                    <div class="slds-col slds-grid">
+                                        <div
+                                            class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                            <lightning-combobox data-id="role" name="role" label="Ruolo"
+                                                placeholder="Seleziona Ruolo" options={ruoloOptions} required>
+                                            </lightning-combobox>
+                                        </div>
+                                        <!-- <div
+                                            class="slds-form-element__control slds-size_1-of-2 slds-m-top_x-large slds-p-left_small slds-p-right_x-large">
+                                            <c-hdt-calcola-codice-fiscale></c-hdt-calcola-codice-fiscale>
+                                            <lightning-button class="slds-form-element" name="calculateFiscalCode"
+                                                type="submit" label="Calcola Codice Fiscale"
+                                                onclick={handleCalculation}></lightning-button>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="slds-m-top_x-large">
+                            <h3 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
+                                Contatti Referente</h3>
+                            <h4>Almeno un dato di contatto è obbligatorio</h4>
+                        </div>
+                        
+                        <div class="slds-grid slds-grid_vertical">
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-combobox data-id="mobilePhonePrefix" name="mobilePhonePrefix" label="Prefisso cellulare"
+                                        placeholder="Seleziona prefisso" value={mobilePhonePrefixValue} options={mobilePhonePrefixOptions}
+                                        required>
+                                    </lightning-combobox>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <lightning-input type="tel" data-id="mobilePhone" label="Cellulare"  minlength="10" message-when-too-short="Il numero di cellulare non può essere meno di 10 cifre!">
+                                    </lightning-input>
+                                </div>
+
+                            </div>
+                            <div class="slds-grid slds-grid_vertical">
+                                <div class="slds-col slds-grid">
+                                    
+                                    <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-combobox data-id="phonePrefix" name="phonePrefix" label="Prefisso telefono fisso"
+                                            placeholder="Seleziona prefisso" value={phonePrefixValue} options={phonePrefixOptions}
+                                            required>
+                                        </lightning-combobox>
+                                    </div>
+                                    <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                        <lightning-input type="tel"  data-id="contactPhoneNumber" label="Telefono Fisso"
+                                        maxlength="11">
+                                        </lightning-input>
+                                    </div>
+
+                                </div>
+                                <div class="slds-grid slds-grid_vertical">
+                                    <div class="slds-col slds-grid">
+                                        <div
+                                            class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                            <lightning-input type="email" data-id="contactEmail" label="Email">
+                                            </lightning-input>
+                                        </div>
+                                        <div
+                                            class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                            <lightning-input type="text" data-id="contactElectronicMail" label="PEC">
+                                            </lightning-input>
+                                        </div>
+                                        
+                                        <!-- <div
+                                            class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                            <lightning-input type="tel" data-id="otherPhone" label="Altro Telefono" minlength="10" message-when-too-short= "Altro telefono non può essere meno di 10 cifre!">
+                                            </lightning-input>
+                                        </div> -->
+
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-grid_vertical">
+                                    <div class="slds-col slds-grid">
+
+                                        <div
+                                            class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                            <lightning-input type="tel" data-id="contactFax" label="Fax">
+                                            </lightning-input>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="slds-m-top_x-large">
+                                <h3
+                                    class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
+                                    Studi e Professione Referente </h3>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <template if:true={educationalOptions.data}>
+                                        <lightning-combobox data-id="education" name="education"
+                                            label="Titolo di Studio" value=""
+                                            placeholder="Seleziona il Titolo di Studio"
+                                            options={educationalOptions.data.values}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                                <div
+                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
+                                    <template if:true={professionOptions.data}>
+                                        <lightning-combobox data-id="profession" name="profession" label="Professione"
+                                            value="" placeholder="Seleziona Professione"
+                                            options={professionOptions.data.values}>
+                                        </lightning-combobox>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
+                    </lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
