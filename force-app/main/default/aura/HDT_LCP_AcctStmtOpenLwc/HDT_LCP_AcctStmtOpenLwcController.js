@@ -13,29 +13,19 @@
     openmodal: function(component,event,helper) {
         console.log('>>> we have to open -> wrts_prcgvr:ServiceCatalogLtgCmp_1_1');
 
-        var eventDetails = event.getParam('servicecatalogId');
-        console.log('> eventDetails: ' + eventDetails);
+        //console.log('>>> event on aura > ');
+        console.log(JSON.stringify(event));
+        //var eventDetails = event.getParam('servicecatalogId');
+        //console.log('> eventDetails: ' + eventDetails);
         
-        $A.createComponent(
-            'wrts_prcgvr:ServiceCatalogLtgCmp_1_1',
-            {recordId: eventDetails},
-            function(lwcCmp, status, errorMessage) {
-                if (status === "SUCCESS") {
-                    var body = component.get("v.body");
-                    body.push(lwcCmp);
-                    component.set("v.body", body);
+        var accId = event.getParam('accId');
+        var auraFlow = event.getParam('auraFlow');
 
-                    helper.openModal(component,event,helper);
-
-                }
-                else if (status === "INCOMPLETE") {
-                    console.log("No response from server or client is offline.");
-                }
-                else if (status === "ERROR") {
-                    console.error("Error: " + errorMessage);
-                }
-            }
-        );
+        if(auraFlow === 'serviceCatalogHandler'){
+            helper.createComponent(component, event, helper, accId);
+        } else if(auraFlow === 'runFlowFromAura'){
+            helper.openSubTab(component, event, helper);
+        }
 
     },
 
