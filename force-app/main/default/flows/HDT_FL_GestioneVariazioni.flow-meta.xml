@@ -1,5 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Crea_Case</name>
+        <label>Crea Case</label>
+        <locationX>2426</locationX>
+        <locationY>998</locationY>
+        <actionName>HDT_SRV_CreateGenericCase</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__inputSobj</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseCluster</name>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>caseType</name>
+            <value>
+                <stringValue>Allineamento Anagrafica</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputSobj</name>
+            <value>
+                <elementReference>GetInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordTypeDevName</name>
+            <value>
+                <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Crea_Case_Allineamento_Anagrafica</name>
+        <label>Crea Case Allineamento Anagrafica</label>
+        <locationX>3482</locationX>
+        <locationY>1574</locationY>
+        <actionName>HDT_SRV_CreateGenericCase</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__inputSobj</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseCluster</name>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>caseType</name>
+            <value>
+                <stringValue>Allineamento Anagrafica</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputSobj</name>
+            <value>
+                <elementReference>GetInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordTypeDevName</name>
+            <value>
+                <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Crea_Case_Allineamento_Anagrafica_0</name>
+        <label>Crea Case Allineamento Anagrafica</label>
+        <locationX>4010</locationX>
+        <locationY>998</locationY>
+        <actionName>HDT_SRV_CreateGenericCase</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__inputSobj</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caseCluster</name>
+            <value>
+                <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>caseType</name>
+            <value>
+                <stringValue>Allineamento Anagrafica</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputSobj</name>
+            <value>
+                <elementReference>GetInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>recordTypeDevName</name>
+            <value>
+                <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Accorpamento_Campi</name>
@@ -21,7 +144,7 @@
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
         <locationX>2426</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +167,7 @@
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
         <locationX>3482</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +190,7 @@
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
         <locationX>4010</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -606,7 +729,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</targetReference>
+                <targetReference>Crea_Case_Allineamento_Anagrafica_0</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -667,7 +790,7 @@
         <locationX>3350</locationX>
         <locationY>1454</locationY>
         <defaultConnector>
-            <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0</targetReference>
+            <targetReference>Crea_Case_Allineamento_Anagrafica</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Presente</defaultConnectorLabel>
         <rules>
@@ -975,7 +1098,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU</targetReference>
+                <targetReference>Crea_Case</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -1802,14 +1925,14 @@
         <name>Aggiorna_Case_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>2426</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>3350</locationX>
-        <locationY>1790</locationY>
+        <locationY>1910</locationY>
         <inputReference>GetInputCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1853,7 +1976,7 @@
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>4010</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <inputReference>GetInputCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
