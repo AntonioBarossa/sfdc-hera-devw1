@@ -5693,6 +5693,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.MailingAddressFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.MailingCityCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
