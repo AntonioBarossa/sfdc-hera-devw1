@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>TvFeeResidual__c</fullName>
-    <description>Residuo Canone Rai</description>
+    <fullName>DocumentResidue__c</fullName>
+    <description>Residuo da pagare per il Documento.</description>
     <externalId>false</externalId>
-    <label>Residuo Canone Rai</label>
+    <label>Residuo Documento</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
