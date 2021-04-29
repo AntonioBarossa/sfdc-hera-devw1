@@ -192,14 +192,14 @@
         <locationX>4010</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
+            <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Attesa Allineamento Anagrafica</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCaseAggiornato.Status</assignToReference>
+            <assignToReference>GetInputCase.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
@@ -678,6 +678,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetInputCase.BillingProfile__r.BillSendingMethod__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>previousButton</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -1448,7 +1455,7 @@
         </rules>
         <rules>
             <name>Modifica</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetInputCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1533,7 +1540,7 @@
                 <leftValueReference>GetInputCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>BP/CA - errata categoria</stringValue>
+                    <stringValue>Account/Billing Profile - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1977,7 +1984,7 @@
         <label>Aggiorna Case</label>
         <locationX>4010</locationX>
         <locationY>1238</locationY>
-        <inputReference>GetInputCaseAggiornato</inputReference>
+        <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0</name>
@@ -2559,7 +2566,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2697,7 +2704,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2840,7 +2847,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2963,7 +2970,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>previousButton</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3086,7 +3093,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3155,7 +3162,7 @@
             <inputParameters>
                 <name>addContentDocument</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3209,7 +3216,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3278,7 +3285,7 @@
             <inputParameters>
                 <name>addContentDocument</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3332,7 +3339,7 @@
             <inputParameters>
                 <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3740,6 +3747,16 @@
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>previousButton</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
     <variables>
         <name>serviceCatalogId</name>

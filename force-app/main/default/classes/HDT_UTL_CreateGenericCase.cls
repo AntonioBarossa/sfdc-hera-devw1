@@ -17,8 +17,9 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
         newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
-        newCase.RecordTypeId = '';
+        newCase.RecordTypeId = recordTypeId;
         newCase.ContactId = currentCase.ContactId;
+        newCase.AccountId = currentCase.AccountId;
         newCase.PhoneNumber__c = currentCase.PhoneNumber__c;
         newCase.Contract__c = currentCase.Contract__c;
         newCase.DistributorNote__c = currentCase.DistributorNote__c;
@@ -27,6 +28,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.SuppliedEmail = currentCase.SuppliedEmail;
         newCase.SuppliedPhone = currentCase.SuppliedPhone;
         newCase.Phase__c = 'Bozza';
+        newCase.ParentId = currentCase.Id;
 
 
         newCases.add(newCase);
