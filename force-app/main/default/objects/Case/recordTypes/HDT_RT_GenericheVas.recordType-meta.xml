@@ -8609,6 +8609,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
             <default>false</default>
         </values>

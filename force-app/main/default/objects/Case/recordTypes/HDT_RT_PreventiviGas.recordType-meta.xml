@@ -6057,6 +6057,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Riattivazione Fornitura</fullName>
             <default>false</default>
         </values>
