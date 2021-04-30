@@ -1,0 +1,28 @@
+<template>
+    <c-hdt-account-statement-picker
+    contract-account={contractAccount}
+    billing-profile-id={billingProfileId}
+    codice-cliente={codiceCliente}
+    case-id={caseId}
+    process-type={processType}
+    account-id={accountId}
+    ></c-hdt-account-statement-picker>
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <template if:true={saveButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="brand" type="button" onclick={handleNext} name="save" label={labelSaveButton}>
+                </lightning-button>
+            </template>
+            <template if:true={previousButton}> 
+                <lightning-button
+                    class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                    variant="neutral" type="button" name="previous" label={labelPreviousButton} onclick={handlePrevious}>
+                </lightning-button>
+            </template>
+        </div>
+    </div>
+</template>
