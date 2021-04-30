@@ -6,7 +6,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
     {
-        &quot;FieldName&quot; : &quot;Note__c&quot;,
+        &quot;FieldName&quot; : &quot;CustomerPaymentAgreements__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     }
@@ -14,17 +14,21 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Rettifica Consumi - Errore Stima Consumi</value>
+        <value xsi:type="xsd:string">Errore Stima Consumi</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
     {
+        &quot;FieldName&quot; : &quot;Subprocess__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
         &quot;FieldName&quot; : &quot;AccountId&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
@@ -34,6 +38,11 @@
         &quot;FieldName&quot; : &quot;ReadType__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
     },
     {
         &quot;FieldName&quot; : &quot;BillingProfile__c&quot;,
@@ -57,11 +66,6 @@
     },
     {
         &quot;FieldName&quot; : &quot;DocumentExpirationDate__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 2
-    },
-    {
-        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     }

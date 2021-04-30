@@ -25,6 +25,12 @@
                 <default>false</default>
                 <label>Incorporazione societaria</label>
             </value>
+            <value>
+                <fullName>Oridnaria</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Oridnaria</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

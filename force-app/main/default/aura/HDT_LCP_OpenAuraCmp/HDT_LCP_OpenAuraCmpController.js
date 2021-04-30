@@ -13,7 +13,8 @@
         //var cluster = myPageRef.state.c__cluster;
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
-
+        var createDocuments = myPageRef.state.c__createDocuments;
+        var serviceCatalogId = myPageRef.state.c__catalogId;
         var context = myPageRef.state.c__context;
 
         console.log('# context -> '+ context);
@@ -69,7 +70,9 @@
                         c__recordTypeName: recordTypeName,
                         c__recordToCancell: recordToCancell,
                         c__sObjectRecordToCancell: sObjectRecordToCancell,
-                        c__context: context
+                        c__context: context,
+                        c__createDocuments: createDocuments,
+                        c__catalogId: serviceCatalogId
                     }
                 },
                 focus: true

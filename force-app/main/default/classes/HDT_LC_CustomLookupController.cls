@@ -6,6 +6,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
         Boolean enableDetails = (detailFields != null && detailFields.size()>0 && !detailFields.isEmpty()) ? true : false;
         String myQuery = null;
         List<HDT_UTL_ObjDetail> objList = new List<HDT_UTL_ObjDetail>();
+        List<String> statementList = new List<String>();
 
         System.debug('# Filter -> ' + filter);
 
@@ -17,7 +18,7 @@ public inherited sharing class HDT_LC_CustomLookupController {
 
         myQuery += 'FROM ' + myObject + ' ';
 
-        //if(filter != null && filter != ''){
+        //if(!String.isEmpty(filter)){
         //    myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\' AND ' + filter + ' LIMIT 5'; 
         //} else {
         //    if(searchTerm == null || searchTerm == ''){
@@ -27,20 +28,32 @@ public inherited sharing class HDT_LC_CustomLookupController {
         //    }
         //}
         
-        if(String.isEmpty(filter)){
-        //if(searchTerm == null || searchTerm == ''){
-            myQuery += 'WHERE LastModifiedDate != NULL';
-            if(!String.isEmpty(filter)){
-                myQuery += ' AND ' + filter;
-            }
-            myQuery += ' ORDER BY LastModifiedDate DESC';
-        } else {
-            myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\'';
-            if(!String.isEmpty(filter)){
-                myQuery += ' AND ' + filter;
-            }
+        //if(String.isEmpty(filter)){
+        //    myQuery += 'WHERE LastModifiedDate != NULL';
+        //    if(!String.isEmpty(filter)){
+        //        myQuery += ' AND ' + filter;
+        //    }
+        //} else {
+        //    myQuery += 'WHERE ' + searchBy + ' LIKE  \'%' + searchTerm + '%\'';
+        //    if(!String.isEmpty(filter)){
+        //        myQuery += ' AND ' + filter;
+        //    }
+        //}
+        
+        if(!String.isEmpty(filter)){
+            statementList.add(filter);
+        }
+        
+        if(!String.isEmpty(searchBy) && !String.isEmpty(searchTerm)){
+            statementList.add(searchBy + ' LIKE  \'%' + searchTerm + '%\'');
+        }        
+        
+        if(statementList.size()>0){
+            myQuery += ' WHERE ';
+            myQuery += String.join(statementList, ' AND ');
         }
 
+        myQuery += ' ORDER BY LastModifiedDate DESC';
         myQuery += ' LIMIT 5';
 
         System.debug('# myQuery -> ' + myQuery);

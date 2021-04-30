@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>cmor</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Bearer 00D58000000KR1c!AQgAQIKY0NtXIEGsTVACqga56CNQAdIlDZApP1msyAtbSnqtTLYen.WzZfrXZaTqrI7KwSy6oUZ5o1muelFHQX.3SnM_qiAY</value>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+    {
+    &quot;tableTitle&quot;: &quot;CMOR - Venditore entrante&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;POD/PDR&quot;,
+        &quot;fieldName&quot;: &quot;POD&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;fieldName&quot;: &quot;ANLAGE&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Numero business partner&quot;,
+        &quot;fieldName&quot;: &quot;PARTNER&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;CONTRATTO&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Importo Cmor&quot;,
+        &quot;fieldName&quot;: &quot;CMOR&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Stato CMOR&quot;,
+        &quot;fieldName&quot;: &quot;STATO&quot;
+      },
+      {
+        &quot;label&quot;: &quot;codice pratica gestore&quot;,
+        &quot;fieldName&quot;: &quot;ID_RICH&quot;
+      },
+      {
+        &quot;label&quot;: &quot;data ricezione&quot;,
+        &quot;fieldName&quot;: &quot;DATA_COM&quot;
+      },
+      {
+        &quot;label&quot;: &quot;data di ultimo aggiornamento&quot;,
+        &quot;fieldName&quot;: &quot;DATA_AGG&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Settore merceologico&quot;,
+        &quot;fieldName&quot;: &quot;SPARTE&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;fieldName&quot;: &quot;SERVICEID&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Importo Cmor stornato&quot;,
+        &quot;fieldName&quot;: &quot;CMOR_STORNATO&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Importo Cmor rettificato&quot;,
+        &quot;fieldName&quot;: &quot;CMOR_RETT&quot;
+      }
+    ]
+  },
+  {
+    &quot;tableTitle&quot;: &quot;CMOR - Venditore uscente&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Stato Richiesta Indennizzo&quot;,
+        &quot;fieldName&quot;: &quot;status&quot;
+      },
+      {
+        &quot;label&quot;: &quot;N. conto contrattuale&quot;,
+        &quot;fieldName&quot;: &quot;VKONT&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Numero business partner&quot;,
+        &quot;fieldName&quot;: &quot;GPART&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;VERTRAG&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Codice POD/PDR&quot;,
+        &quot;fieldName&quot;: &quot;POD&quot;
+      },
+      {
+        &quot;label&quot;: &quot;IMPORTO CMOR&quot;,
+        &quot;fieldName&quot;: &quot;IMPORTO_CMOR&quot;
+      },
+      {
+        &quot;label&quot;: &quot;IMPORTO CMOR PREGRESSO&quot;,
+        &quot;fieldName&quot;: &quot;CMOR_1&quot;
+      },
+      {
+        &quot;label&quot;: &quot;codice gestore&quot;,
+        &quot;fieldName&quot;: &quot;ID_ESTERNO&quot;
+      },
+      {
+        &quot;label&quot;: &quot;invio richiesta&quot;,
+        &quot;fieldName&quot;: &quot;DATA_RICHIESTA&quot;
+      },
+      {
+        &quot;label&quot;: &quot;data ultima modifica&quot;,
+        &quot;fieldName&quot;: &quot;DATA_FLUSSO&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data switch out&quot;,
+        &quot;fieldName&quot;: &quot;DATA_SWITCH&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Settore merceologico&quot;,
+        &quot;fieldName&quot;: &quot;SPARTE&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Società&quot;,
+        &quot;fieldName&quot;: &quot;SERVICEID&quot;
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">https://monted-dev-ed.my.salesforce.com/services/apexrest/cmor</value>
+    </values>
+</CustomMetadata>
