@@ -19485,6 +19485,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>standard-LightningQuickText</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>standard-Location</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
