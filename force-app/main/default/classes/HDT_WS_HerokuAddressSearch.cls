@@ -25,24 +25,24 @@ public class HDT_WS_HerokuAddressSearch {
         return res;
     }    
     public class HDT_WS_HerokuAddressSearchRequestCom extends HDT_WS_Request{
-        @AuraEnabled public HDT_WS_PrestazioneREQObj prestazione{get;set;}
+        @AuraEnabled public HDT_WS_PrestazioneReqObj prestazione{get;set;}
         public HDT_WS_HerokuAddressSearchRequestCom(String city){
-            this.prestazione = new HDT_WS_PrestazioneREQObj();
+            this.prestazione = new HDT_WS_PrestazioneReqObj();
             this.prestazione.city1 = city;
         }
 	}
     public class HDT_WS_HerokuAddressSearchRequestInd extends HDT_WS_Request{
-        @AuraEnabled public HDT_WS_PrestazioneREQObjInd prestazione{get;set;}
+        @AuraEnabled public HDT_WS_PrestazioneReqObjInd prestazione{get;set;}
         public HDT_WS_HerokuAddressSearchRequestInd(String street,String cityCode){
-            this.prestazione = new HDT_WS_PrestazioneREQObjInd();
+            this.prestazione = new HDT_WS_PrestazioneReqObjInd();
             this.prestazione.street = street;
             this.prestazione.cityCode = cityCode;
         }
 	}
     public class HDT_WS_HerokuAddressSearchRequestVer extends HDT_WS_Request{
-        @AuraEnabled public HDT_WS_PrestazioneREQObjVer prestazione{get;set;}
+        @AuraEnabled public HDT_WS_PrestazioneReqObjVer prestazione{get;set;}
         public HDT_WS_HerokuAddressSearchRequestVer(String modality,String cityCode,String streetCode,String houseNumCode){
-            this.prestazione = new HDT_WS_PrestazioneREQObjVer();
+            this.prestazione = new HDT_WS_PrestazioneReqObjVer();
             this.prestazione.modality = modality;
             this.prestazione.cityCode = cityCode;
             this.prestazione.streetCode = streetCode;
@@ -64,7 +64,7 @@ public class HDT_WS_HerokuAddressSearch {
         @AuraEnabled public String cityCode {get;set;}
         @AuraEnabled public String houseNumCode {get;set;}       
     }
-    public class HDT_WS_PrestazioneREQObj{
+    public class HDT_WS_PrestazioneReqObj{
         @AuraEnabled public String city1 {get;set;}
       //  @AuraEnabled public String street {get;set;}
       //  @AuraEnabled public String houseNum1 {get;set;}
@@ -73,11 +73,11 @@ public class HDT_WS_HerokuAddressSearch {
       //  @AuraEnabled public String streetCode {get;set;}
       //  @AuraEnabled public String houseNumCode {get;set;}       
     }
-    public class HDT_WS_PrestazioneREQObjInd{
+    public class HDT_WS_PrestazioneReqObjInd{
         @AuraEnabled public String street {get;set;}
         @AuraEnabled public String cityCode {get;set;}      
     }
-    public class HDT_WS_PrestazioneREQObjVer{
+    public class HDT_WS_PrestazioneReqObjVer{
       //  @AuraEnabled public String city1 {get;set;}
       //  @AuraEnabled public String street {get;set;}
       //  @AuraEnabled public String houseNum1 {get;set;}
