@@ -14,7 +14,7 @@ manifest/package.xml
 manifest/*
 manifest/
 .gitignore
-
+force-app/main/default/namedCredentials/EditInvoiceLayout.namedCredential-meta.xml 
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
