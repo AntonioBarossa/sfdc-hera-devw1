@@ -4,8 +4,8 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;ResidentValidityDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;Resident__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;ResidenceChangeDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;Resident__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
