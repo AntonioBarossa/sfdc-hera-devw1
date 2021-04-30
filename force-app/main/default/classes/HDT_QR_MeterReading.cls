@@ -22,6 +22,7 @@ public inherited sharing class HDT_QR_MeterReading {
             AND ServicePoint__c != null
             AND ServicePoint__r.CommoditySector__c != null
             AND ServicePoint__r.SAPImplantCode__c != null
+            AND Status != 'Draft'
             WITH SECURITY_ENFORCED
             ORDER BY Status
         ];
