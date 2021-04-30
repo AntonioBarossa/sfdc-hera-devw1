@@ -73,9 +73,12 @@ export default class hdtSaleVas extends LightningElement {
         // {label: 'Nome Ordine', fieldName: 'Name', type: 'text'},
         // {label: 'Numero Ordine', fieldName: 'OrderNumber', type: 'text'},
         {label: 'Tipo', fieldName: 'Type', type: 'text'},
-        {label: 'Nome', fieldName: 'Name', type: 'text'},
+        // {label: 'Nome', fieldName: 'Name', type: 'text'},
         {label: 'Numero', fieldName: 'Number', type: 'text'},
-        {label: 'Status', fieldName: 'Status', type: 'text'}
+        {label: 'Processo', fieldName: 'Process', type: 'text'},
+        {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+        {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'},
+        // {label: 'Status', fieldName: 'Status', type: 'text'}
     ];
 
     handleRadioGroupChange(event) {
@@ -105,7 +108,7 @@ export default class hdtSaleVas extends LightningElement {
 
             case 'VAS stand alone':
                 this.confirmedSelectedOption = 'VAS stand alone';
-                this.isInputVisible = true;configu
+                this.isInputVisible = true;
                 this.isCompleteListVisible = false;
                 break;
         }
@@ -174,6 +177,9 @@ export default class hdtSaleVas extends LightningElement {
             this.completeList.forEach(item => {
                 item.Type = item.ContractNumber !== undefined ? 'Contratto' : 'Ordine';
                 item.Number = item.ContractNumber !== undefined ? item.ContractNumber : item.OrderNumber;
+                item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+                item.Process = item.ProcessType__c !== undefined ? item.ProcessType__c : '';
             });
 
             if(this.completeList.length > 0){
@@ -185,7 +191,7 @@ export default class hdtSaleVas extends LightningElement {
 
         }).catch(error => {
             this.isLoading = false;
-            console.log('Error: ', error.body.message);
+            console.log('Error: ', JSON.stringify(error));
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: error.body.message,
@@ -306,14 +312,14 @@ export default class hdtSaleVas extends LightningElement {
 
         if(this.selectedFromCompleteList.Type === 'Contratto') {
             this.confirmedSelectedOption = 'Contratti Attivi';
-            delete this.selectedFromCompleteList.Type;
-            delete this.selectedFromCompleteList.Number;
+            // delete this.selectedFromCompleteList.Type;
+            // delete this.selectedFromCompleteList.Number;
             this.selectedContract = this.selectedFromCompleteList;
             this.selectedOrder = {};
         } else if (this.selectedFromCompleteList.Type === 'Ordine') {
             this.confirmedSelectedOption = 'Ordini in corso';
-            delete this.selectedFromCompleteList.Type;
-            delete this.selectedFromCompleteList.Number;
+            // delete this.selectedFromCompleteList.Type;
+            // delete this.selectedFromCompleteList.Number;
             this.selectedOrder = this.selectedFromCompleteList;
             this.selectedContract = {};
         }

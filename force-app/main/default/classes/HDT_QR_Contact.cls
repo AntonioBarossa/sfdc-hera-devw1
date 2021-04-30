@@ -14,6 +14,14 @@ public inherited sharing class HDT_QR_Contact {
         ];
     }
 
+    public List<Contact> getRecordsById(List<String> ids) {
+
+        String query = 'SELECT  Firstname,LastName, IndividualId  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        List<Contact> contacts = Database.query(query);
+        return contacts;
+    }
+
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 14/01/2021
@@ -80,4 +88,15 @@ public inherited sharing class HDT_QR_Contact {
     }
 
     // FINE SVILUPPI EVERIS
+
+    public Contact getRecordByFiscalCode(String fiscalCode) {
+        String query = 'SELECT  Id, Email , MobilePhone , Phone FROM Contact WHERE FiscalCode__c = :fiscalCode WITH SECURITY_ENFORCED';
+        List<Contact> contacts = Database.query(query);
+        if(contacts.size()>0){
+            return contacts[0];
+        }else{
+            return null;
+
+        }
+    }
 }

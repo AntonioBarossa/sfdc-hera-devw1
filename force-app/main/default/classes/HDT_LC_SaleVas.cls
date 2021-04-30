@@ -12,6 +12,8 @@ public inherited sharing class HDT_LC_SaleVas {
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -48,7 +50,7 @@ public inherited sharing class HDT_LC_SaleVas {
     @AuraEnabled
     public static List<Order> getOrdersList(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
-        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status');
+        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
 
@@ -122,7 +124,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SupplyCity__c = null, //to do (other logic to get SupplyCity)
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
-            IsVAS__c = true
+            IsVAS__c = true,
+            SBQQ__PriceBook__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -165,7 +168,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
-            IsVAS__c = true
+            IsVAS__c = true,
+            SBQQ__PriceBook__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -206,11 +210,33 @@ public inherited sharing class HDT_LC_SaleVas {
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
             SalesCompany__c = sale.SalesCompany__c,
-            IsVAS__c = true
+            IsVAS__c = true,
+            SBQQ__PriceBook__c = getPricebookId('VAS Standalone')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
         opportunitySrv.updateRecord(newOpportunity);
+    }
+
+    private static String getPricebookId(String pricebookName) {
+        List<Pricebook2> pricebook = HDT_QR_PriceBook.getRecordByName(pricebookName);
+        return pricebook[0].Id;
+    }
+
+    private static String checkCommodityContract(String contractId) {
+
+        List<Contract> contracts = contractQr.getRecordById(contractId);
+
+        return contracts[0].ServicePoint__r.RecordType.DeveloperName;
+
+    }
+
+    private static String checkCommodityOrder(String orderId) {
+
+        Order order = orderQr.getRecordById(orderId);
+
+        return order.ServicePoint__r.RecordType.DeveloperName;
+
     }
 }
