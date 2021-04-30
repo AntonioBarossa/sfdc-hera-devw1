@@ -4,26 +4,28 @@ function onEventEstablishedInbound(message) {
     sfutil.createActivity(message);
 }
 function onEventMarkDoneInbound(message) {
-    sfutil.closeActivity(message, false, false);
+    sfutil.closeActivity(message);
 }
 function onEventEstablishedOutbound(message) {
     sfutil.createActivity(message);
 }
 function onEventMarkDoneOutbound(message) {
-    sfutil.closeActivity(message, false, false);
+    sfutil.closeActivity(message);
 }
 function onEventEstablishedInternal(message) {
     handleOperatorSwitch(message);
 }
 function onEventMarkDoneInternal(message) {
-    sfutil.closeActivity(message, false, true);
+    sfutil.closeActivity(message);
 }
 function onSwitchCrmInbound(message) {
     sfutil.handleCrmSwitch(message);
 }
 function onEventPartyChangedInbound(message) {
+    // WIP CAPIRE SE USATO
 }
 function onEventPartyChangedOutbound(message) {
+    // WIP CAPIRE SE USATO
 }
 
 /*******************************/
