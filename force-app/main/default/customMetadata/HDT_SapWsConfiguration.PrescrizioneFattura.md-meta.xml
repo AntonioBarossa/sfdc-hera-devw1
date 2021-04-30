@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>PrescrizioneFattura</label>
+    <protected>false</protected>
+    <values>
+        <field>JSON__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;requestType&quot;: &quot;PrescrizioneFattura&quot;,
+    &quot;objects&quot;: [
+        {
+            &quot;objectLabel&quot;: &quot;Case&quot;,
+            &quot;objectName&quot;: &quot;Case&quot;,
+            &quot;fields&quot;: [
+                {
+                    &quot;fieldType&quot;: &quot;&quot;,
+                    &quot;apiName&quot;: &quot;CaseNumber&quot;,
+                    &quot;label&quot;: &quot;rds&quot;
+                },
+                {
+                    &quot;fieldType&quot;: &quot;&quot;,
+                    &quot;apiName&quot;: &quot;BillNumber__c&quot;,
+                    &quot;label&quot;: &quot;numeroFattura&quot;
+                }
+            ],
+            &quot;childObjects&quot;:[]
+        }
+    ]
+}</value>
+    </values>
+    <values>
+        <field>NamedCredential__c</field>
+        <value xsi:type="xsd:string">Callout:BillingsBlockReminder</value>
+    </values>
+</CustomMetadata>
