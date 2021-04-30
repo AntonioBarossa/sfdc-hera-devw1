@@ -1,0 +1,27 @@
+<template>
+
+    <template if:false={showCurrency} >
+        <div class="slds-truncate slds-form-element" >
+            <lightning-input id={field}
+                             value=""
+                             type="text"
+                             label=" "
+                             variant="label-hidden"
+                             onchange={setIntParam}
+            ></lightning-input>
+        </div>
+    </template>
+
+    <template if:true={showCurrency} >
+        <lightning-input id={field}
+                         value=""
+                         type="number"
+                         label=" "
+                         variant="label-hidden"
+                         formatter="currency"
+                         step="0.01"
+                         onchange={setIntParam}
+        ></lightning-input>
+    </template>
+
+</template>

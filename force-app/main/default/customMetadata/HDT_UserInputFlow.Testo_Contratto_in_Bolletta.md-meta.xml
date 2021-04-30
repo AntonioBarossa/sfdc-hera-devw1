@@ -24,16 +24,7 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-<!--     {
-        &quot;FieldName&quot; : &quot;EV_MarketType__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    },
-    {
-        &quot;FieldName&quot; : &quot;EV_AccountPhoneNumber__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    }, -->
+
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
@@ -50,7 +41,7 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;BillingProfile__c&quot;,
+        &quot;FieldName&quot; : &quot;ContractAccountCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     }
