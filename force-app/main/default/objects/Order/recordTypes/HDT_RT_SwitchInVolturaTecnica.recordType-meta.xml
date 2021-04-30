@@ -1232,20 +1232,8 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
+            <fullName>Bozza</fullName>
+            <default>true</default>
         </values>
     </picklistValues>
     <picklistValues>

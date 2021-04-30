@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     // Carta d’identità;
-                    // orderToUpdate.CIAccoutn__c = 'Richiesto';
+                    orderToUpdate.CIAccoutn__c = 'Richiesto';
 
                     if (order.VolturaThirdTrader__c) {
                         orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
@@ -63,7 +63,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                     }
 
-                    // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
+                    orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                 }
             }
             when 'HDT_RT_Attivazione' {

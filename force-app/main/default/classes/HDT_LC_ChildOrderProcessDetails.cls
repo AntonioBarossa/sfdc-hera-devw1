@@ -37,16 +37,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
 
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
-        if(isVolture){
+        if(isVolture != null && isVolture == true){
             //Commentato finche non viene creato campo a DM
             /*if(order.NonRegMeter__c != null && order.NonRegMeter__c == true){
-
                 if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
-
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 
                 }
-
             } else*/ if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
 
                 if(orderQr.getRoleNameByRoleId() != 'CEO'){
