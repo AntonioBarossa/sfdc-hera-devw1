@@ -15,10 +15,6 @@ package.xml
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
 **profiles/Minimum Access - Salesforce.profile
-**profiles/Door2Door Profile*
-**profiles/HDT_TelesellingCommunity*
-**profiles/Partner Community User
-**profiles/Hera Partner Community*
 **sites/*
 **networks/*
 **flexipages/HDT_KnowledgeGeneralPage*
