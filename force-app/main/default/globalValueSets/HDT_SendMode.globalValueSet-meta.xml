@@ -15,11 +15,6 @@
         <default>false</default>
         <label>Stampa Cartacea</label>
     </customValue>
-    <customValue>
-        <fullName>Consegna a mano</fullName>
-        <default>false</default>
-        <label>Consegna a mano</label>
-    </customValue>
     <masterLabel>Send Mode</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
