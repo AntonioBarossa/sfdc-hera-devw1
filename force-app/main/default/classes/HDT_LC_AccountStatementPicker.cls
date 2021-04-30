@@ -12,7 +12,11 @@ public with sharing class HDT_LC_AccountStatementPicker {
     {  
         System.debug('### CASE ' + caseId);
         List<SObject> documentSelected = HDT_SRV_DocumentSelectedManager.getDocumentsSelected(caseId);
-        return JSON.serialize(documentSelected);
+        if(documentSelected.size()>0){
+            return JSON.serialize(documentSelected);
+        }else {
+            return null;
+        }
     }
 
     @AuraEnabled

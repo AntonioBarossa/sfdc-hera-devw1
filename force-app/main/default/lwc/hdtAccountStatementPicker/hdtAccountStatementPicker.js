@@ -84,10 +84,10 @@ export default class HdtAccountStatementPicker extends LightningElement {
             if(data && data.length>0){
                 this.documents = JSON.parse(data);
             }else{
-                this.documents = false;
+                this.documents = undefined;
             }
         }).catch(err => {
-            this.documents = false;
+            this.documents = undefined;
             console.log(err);
         });
     }
@@ -185,6 +185,13 @@ export default class HdtAccountStatementPicker extends LightningElement {
                     this.showTable = true;
                 }else{
                     this.showTable = false;
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Nessun Documento trovato. Cambiare i parametri di ricerca e premere il tasto Ricerca',
+                            variant: 'error'
+                        })
+                    );
                 }
                 
             }).catch(err => {

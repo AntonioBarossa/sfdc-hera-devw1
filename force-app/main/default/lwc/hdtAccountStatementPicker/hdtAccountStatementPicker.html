@@ -53,11 +53,16 @@
                 </template>
             </lightning-accordion-section>
             <lightning-accordion-section name="selezionati" label="Documenti selezionati">
-                <div style="max-height: 300px;" if:true={documents}>
-                    <lightning-datatable onrowaction={handleRowAction} key-field="id" data={documents}
-                        columns={columnsDocumentSelected} hide-checkbox-column column-widths-mode="auto">
-                    </lightning-datatable>
-                </div>
+                <template if:true={documents}>
+                    <div style="max-height: 300px;">
+                        <lightning-datatable onrowaction={handleRowAction} key-field="id" data={documents}
+                            columns={columnsDocumentSelected} hide-checkbox-column column-widths-mode="auto">
+                        </lightning-datatable>
+                    </div>
+                </template>
+                <template if:false={documents}>
+                    Questa pratica non presenta ancora documenti.
+                </template>
             </lightning-accordion-section>
         </lightning-accordion>
     </div>
