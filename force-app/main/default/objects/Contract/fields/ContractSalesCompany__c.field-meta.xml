@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContractSalesCompany__c</fullName>
+    <description>Società di lettura del contratto</description>
+    <externalId>false</externalId>
+    <label>Società Di Vendita Del Contratto</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_SalesCompany</valueSetName>
+    </valueSet>
+</CustomField>

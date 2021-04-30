@@ -3954,11 +3954,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>LoginGroup__c.UserName__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>MacroActivityEasyCIM__c.idMacroActivityEasyCIM__c</field>
         <readable>false</readable>
     </fieldPermissions>

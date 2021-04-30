@@ -1,18 +1,13 @@
 <template>
     <div if:false={meterReadingError} >
         <lightning-card title={detailTableHeader} >
-            <template if:false={hideCheckboxColumn} >
-                <div class="slds-m-bottom_x-small" >
-                    <lightning-button label="Operazione" title="Non-primary action" onclick={operation} class="slds-m-left_small"></lightning-button>
-                </div>
-            </template>
 
             <div if:true={loadData} class="slds-scrollable_y slds-m-left_small slds-m-right_small" style="height: 25vh;">
                 <template if:true={hideCheckboxColumn} >
                     <lightning-datatable
                         key-field="id"
                         data={meterReadingData}
-                        columns={columns}
+                        columns={columnsobj}
                         resize-column-disabled
                         hide-checkbox-column
                     ></lightning-datatable>
@@ -21,8 +16,7 @@
                     <lightning-datatable
                         key-field="id"
                         data={meterReadingData}
-                        columns={columns}
-                        max-row-selection='1'
+                        columns={columnsobj}
                         resize-column-disabled
                     ></lightning-datatable>
                 </template>                

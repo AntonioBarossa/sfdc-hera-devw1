@@ -1,0 +1,16 @@
+<template>
+    <c-hdt-generic-record-selection if:true={showSelector} search-variant={searchVariant} search-placeholder={searchPlaceholder} max-row={maxRow} columns={columns} query-params={queryParams} onrecordselected={handleRecordSelection}></c-hdt-generic-record-selection>
+    <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionsLeft">
+        </div>
+        <div class="actionsRight">
+            <lightning-button
+                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                variant="brand" type="button" name="save" label="Avanti" onclick={handleNext}>
+            </lightning-button>
+            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                variant="brand" type="button" name="cancel" label="Annulla" onclick={handleCancell}>
+            </lightning-button>
+        </div>
+    </div>
+</template>

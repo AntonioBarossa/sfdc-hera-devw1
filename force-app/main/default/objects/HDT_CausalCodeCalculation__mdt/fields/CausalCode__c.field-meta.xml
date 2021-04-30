@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Codice Causale</label>
-    <length>3</length>
+    <length>4</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
