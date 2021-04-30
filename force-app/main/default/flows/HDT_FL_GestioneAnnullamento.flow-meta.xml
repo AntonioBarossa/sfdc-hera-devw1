@@ -1525,7 +1525,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <elementReference>GetRecord.Type</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1671,7 +1671,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <elementReference>GetRecord.Type</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
