@@ -3,7 +3,7 @@
     <fullName>ElectronicInvoicingMethod__c</fullName>
     <description>Per modifica Dati fatturazione elettronica</description>
     <externalId>false</externalId>
-    <label>Modalità di invio fatturazione Elettroni</label>
+    <label>Modalità invio fatturazione Elettronica</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

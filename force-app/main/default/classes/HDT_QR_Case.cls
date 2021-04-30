@@ -32,4 +32,18 @@ public inherited sharing class HDT_QR_Case {
         
     }
 
+    public Case getParentCaseById(String caseId){
+
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        DistributorName__c
+        FROM Case
+        WHERE Id = :caseId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+
+    }
+
+
 }

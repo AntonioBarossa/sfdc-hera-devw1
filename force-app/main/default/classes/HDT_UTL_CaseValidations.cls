@@ -36,7 +36,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if(caseType == 'Marcatura/Uso PdR' 
         || caseType == 'Condizioni Contrattuali Errate' 
         || caseType == 'BP/CA - errata categoria'
-        || caseType == 'Modifica/Azzeramento Consumo Annuo'){
+        || caseType == 'Modifica/Azzeramento Consumo Annuo'
+        || caseType == 'Modifica Tariffa Residente/Non Residente'){
+
+            System.debug('Inside Variazioni Validations');
 
             result = validateVariazioni(fields,recordId,caseType, subprocess);
 
@@ -330,15 +333,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     public String validateVariazioni(String fields, String recordId, String caseType, String subprocess){
 
-        String supplyType = getFieldValue(fields, 'SupplyType__c');
-        String useCategory = getFieldValue(fields, 'UseCategory__c');
-        String servicePointType = getFieldValue(fields, 'ServicePointType__c');
-
-        
-
         String result;
 
         if(caseType == 'Marcatura/Uso PdR'){
+
+            String supplyType = getFieldValue(fields, 'SupplyType__c');
+            String useCategory = getFieldValue(fields, 'UseCategory__c');
+            String servicePointType = getFieldValue(fields, 'ServicePointType__c');
 
             if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
 

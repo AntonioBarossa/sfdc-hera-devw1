@@ -4355,6 +4355,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Allineamento RCU</fullName>
             <default>false</default>
         </values>
