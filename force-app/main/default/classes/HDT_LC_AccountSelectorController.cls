@@ -8,6 +8,10 @@ public with sharing class HDT_LC_AccountSelectorController {
 	
 	@AuraEnabled
 	public static String init(String recordId) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isQueryable()) {
+			return null;
+		}
+
 		try {
 			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, ClientNumber__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId];
 			
@@ -29,6 +33,10 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Contact> getContacts(String queryString) {
+		if(!Schema.sObjectType.Contact.isQueryable()) {
+			return null;
+		}
+
 		try {
 			return [SELECT Id, AccountId, Name, Phone, MobilePhone, Email FROM Contact WHERE Name =: queryString OR Phone =: queryString OR MobilePhone =: queryString OR Email LIKE: queryString];
 		} catch (Exception e) {
@@ -53,6 +61,10 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static List<Account> getAccounts(String contactId) {
+		if(!Schema.sObjectType.Account.isQueryable()) {
+			return null;
+		}
+
 		try {
 			return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c  FROM Account WHERE Id IN (SELECT AccountId FROM AccountContactRelation WHERE ContactId =: contactId)];
 		} catch (Exception e) {
@@ -62,6 +74,10 @@ public with sharing class HDT_LC_AccountSelectorController {
 
 	@AuraEnabled
 	public static void updateActivity(String activityId, String contactId, String accountId) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isUpdateable()) {
+			return;
+		}
+
 		try {
 			wrts_prcgvr__Activity__c a = new wrts_prcgvr__Activity__c(
 				Id = activityId
@@ -81,7 +97,11 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
-	public static String reset(String activityId){
+	public static String reset(String activityId) {
+		if(!Schema.sObjectType.wrts_prcgvr__Activity__c.isUpdateable()) {
+			return null;
+		}
+
 		try {
 			update new wrts_prcgvr__Activity__c(
 				Id = activityId,
