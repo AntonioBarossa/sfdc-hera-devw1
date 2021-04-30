@@ -3,6 +3,8 @@
 #
 
 package.xml
+force-app/main/default/namedCredentials/BillingsBlockReminder.namedCredential-meta.xml
+force-app/main/default/namedCredentials/EditInvoiceLayout.namedCredential-meta.xml
 
 # LWC configuration files
 **/jsconfig.json
