@@ -216,39 +216,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Case_Id_Fatturazione_0_0_0</name>
-        <label>Assegna Case Id</label>
-        <locationX>3636</locationX>
-        <locationY>758</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_Fatturazione_0</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>ManageDocumentsFatturazione_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Case_Id_Fatturazione_0_0_0_0</name>
-        <label>Assegna Case Id</label>
-        <locationX>2228</locationX>
-        <locationY>878</locationY>
-        <assignmentItems>
-            <assignToReference>CaseId</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Crea_Case_Fatturazione_0_0</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Arricchimento_Dati_0_0</targetReference>
+            <targetReference>Gestione_Autoletture_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -344,37 +312,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_variabili_fatturazione_0</name>
-        <label>Assegna variabili fatturazione</label>
-        <locationX>1964</locationX>
-        <locationY>1238</locationY>
-        <assignmentItems>
-            <assignToReference>CaseFatturazione_0.Contract__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseFatturazione_0.ServicePoint__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>CaseFatturazione_0.BillingProfile__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>billingProfile</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_Fatturazione_0</targetReference>
+            <targetReference>Gestione_Morosita_Subflow</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1554,83 +1492,6 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
     <recordCreates>
-        <name>Crea_Case_Annullamento</name>
-        <label>Crea Case</label>
-        <locationX>4428</locationX>
-        <locationY>638</locationY>
-        <connector>
-            <targetReference>Assegna_Case_Id_Annullamento</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cluster__c</field>
-            <value>
-                <stringValue>Annullamento</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Contract__c</field>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Mobile__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Bozza</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>PhoneNumber__c</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Phone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_RT_Annullamento.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ServicePoint__c</field>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <elementReference>ProcessType</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
         <name>Crea_Case_Autolettura</name>
         <label>Crea Case</label>
         <locationX>3724</locationX>
@@ -1787,61 +1648,8 @@
     <recordCreates>
         <name>Crea_Case_Fatturazione_0</name>
         <label>Crea Case</label>
-        <locationX>2052</locationX>
-        <locationY>854</locationY>
-        <connector>
-            <targetReference>Assegna_Case_Id_Fatturazione_0_0_0</targetReference>
-        </connector>
-        <inputAssignments>
-            <field>AccountId</field>
-            <value>
-                <elementReference>AccountId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Cluster__c</field>
-            <value>
-                <stringValue>Fatturazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>ContactId</field>
-            <value>
-                <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Bozza</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RecordTypeId</field>
-            <value>
-                <elementReference>Get_RT_Fatturazione_0.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Type</field>
-            <value>
-                <elementReference>ProcessType</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
-    <recordCreates>
-        <name>Crea_Case_Fatturazione_0</name>
-        <label>Crea Case</label>
-        <locationX>2228</locationX>
-        <locationY>758</locationY>
+        <locationX>1964</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Fatturazione_0_0_0</targetReference>
         </connector>
@@ -2106,7 +1914,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>DistributorNote__c</field>
+            <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
             </value>
@@ -2340,27 +2148,6 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
-    <recordLookups>
-        <name>CaseFatturazione_0</name>
-        <label>CaseFatturazione</label>
-        <locationX>1964</locationX>
-        <locationY>1118</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Assegna_variabili_fatturazione_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CaseId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordLookups>
         <name>CaseFatturazione_0</name>
         <label>CaseFatturazione</label>
@@ -3091,7 +2878,7 @@
         <name>Gestione_Morosita_Subflow</name>
         <label>Gestione Morosita Subflow</label>
         <locationX>1700</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <flowName>HDT_FL_GestioneMorosita</flowName>
         <inputAssignments>
             <name>InputCase</name>
