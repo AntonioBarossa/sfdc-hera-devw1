@@ -7,7 +7,7 @@
         <locationX>176</locationX>
         <locationY>431</locationY>
         <assignmentItems>
-            <assignToReference>$Record.ParentActivity__c</assignToReference>
+            <assignToReference>$Record.Activity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Activity.Id</elementReference>
@@ -93,7 +93,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>ParentActivity__c</field>
+            <field>Activity__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -103,5 +103,5 @@
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
 </Flow>

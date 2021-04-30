@@ -10,7 +10,7 @@ global with sharing class ConnectorEntityController {
 			return 'Error: ' + JSON.serialize(message);
 		}
 
-		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Chiamata'];
+		RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Call'];
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 			RecordTypeId = recordType.Id,
 			wrts_prcgvr__Status__c = 'In Progress',
@@ -34,7 +34,7 @@ global with sharing class ConnectorEntityController {
 		}
 
 		for(wrts_prcgvr__Activity__c a : [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ConnectionID__c =: activity.ConnectionID__c ORDER BY CreatedDate DESC LIMIT 1]) {
-			activity.ParentActivity__c = a.Id;
+			activity.Activity__c = a.Id;
 		}
 
 		Map<String,String> result = new Map<String,String>();
