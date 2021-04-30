@@ -19,15 +19,6 @@ public with sharing class HDT_LC_AccountStatementPicker {
         }
     }
 
-    @AuraEnabled
-    public static String addNewDocument(String params,String caseId)
-    {  
-        System.debug('### params ' + params);
-       
-        return null;
-        //List<SObject> documentSelected = HDT_SRV_DocumentSelectedManager.getDocumentsSelected(caseId);
-        //return JSON.serialize(documentSelected);
-    }
 
     private static String manageResponse(String response){
         if(response == null)return null;
@@ -127,13 +118,13 @@ public with sharing class HDT_LC_AccountStatementPicker {
     }
 
     private static Map<String,String> getCompanyLabel(){
-        String queryString = 'SELECT id,Label, QualifiedApiName  from HDT_HeraCompany__mdt';
+        String queryString = 'SELECT id,Label, CompanyCode__c  from HDT_HeraCompany__mdt';
         String objectName = 'HDT_HeraCompany__mdt';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         Map<String,String> mapCodeValue = new Map<String,String>();
         for(SObject single : recordList){
             HDT_HeraCompany__mdt record = (HDT_HeraCompany__mdt) single;
-            mapCodeValue.put(record.QualifiedApiName, record.Label);
+            mapCodeValue.put(record.CompanyCode__c, record.Label);
         }
         return mapCodeValue;
     }
