@@ -13,7 +13,6 @@ function onEventMarkDoneOutbound(message) {
     sfutil.closeActivity(message, false, false);
 }
 function onEventEstablishedInternal(message) {
-    sfutil.createActivity(message);
 }
 function onEventMarkDoneInternal(message) {
     sfutil.closeActivity(message, false, true);
