@@ -633,6 +633,11 @@
                 <label>Annullamento - Esito KO da DL/SII</label>
             </value>
             <value>
+                <fullName>In Attesa Allineamento Anagrafica</fullName>
+                <default>false</default>
+                <label>In Attesa Allineamento Anagrafica</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito OK da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito OK da DL/SII</label>
