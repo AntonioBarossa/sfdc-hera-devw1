@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
 import getContacts from '@salesforce/apex/HDT_LC_AccountSelectorController.getContacts';
 import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccount';
@@ -11,9 +12,18 @@ export default class HdtAccountSelector extends LightningElement {
 	accountId;
 	contacts;
 	accounts;
-	showContactList;
-	showAccountList;
-	noContactFound;
+	get showContactSearchPanel() {
+		return !this.contactId;
+	}
+	get contactsFound() {
+		return this.contacts;
+	}
+	get showAccountSearchPanel() {
+		return this.contactId && !this.accountId;
+	}
+	get accountsFound() {
+		return this.accounts;
+	}
 	
 
 	connectedCallback() {
@@ -24,10 +34,6 @@ export default class HdtAccountSelector extends LightningElement {
 			this.accountId = res.accountId;
 			this.contacts = res.contacts;
 			this.accounts = res.accounts;
-
-			this.showContactList = !this.contactId && this.contacts;
-			this.noContactFound = !this.contactId && !this.contacts;
-			this.showAccountList = !this.contactId && !this.accountId && this.accounts;
 		})
 		.catch(error => {
 			// WIP
@@ -37,22 +43,60 @@ export default class HdtAccountSelector extends LightningElement {
 	handleKeyUp(event) {
 		const isEnterKey = (event.keyCode === 13);
 		if (isEnterKey) {
-			console.log('### inside 1');
-			getContacts({queryString: evt.target.value})
-			.then((result) => {
-				console.log('### inside 2');
-				this.contacts = result;
-				if(this.contacts.length == 0) {
-					this.noContactFound = true;
+			if(this.showContactSearchPanel) {
+				var queryString = event.target.value;
+				if(queryString) {
+					getContacts({queryString: queryString})
+					.then(result => {
+						this.contacts = result;
+						// this.contactsFound = (this.contacts.length > 0);
+					})
+					.catch(error => {
+						// WIP
+						console.log('error ' + error);
+					});
+				}
+			}
+		}
+	}
+
+	handleClick(event) {
+		if(this.showContactSearchPanel) {
+			this.contactId = event.currentTarget.dataset.id;
+			handleAccount({contactId: this.contactId, activityId: this.recordId})
+			.then(result => {
+				this.accounts = result;
+				if(result.length == 1) {
+					this.accountId = this.accounts[0].Id;
+					this.dispatchEvent(new ShowToastEvent({
+						variant: 'success',
+						title: 'Account Trovato',
+						message: 'L\'account è stato automaticamente associato all\'activity corrente.',
+					}));
 				}
 			})
 			.catch(error => {
 				// WIP
 			});
+		} else if(this.showAccountSearchPanel) {
+			this.accountId = event.currentTarget.dataset.id;
+			updateActivity({activityId: this.recordId, contactId: this.contactId, accountId: this.accountId})
+			.then(result => {
+				// TOAST
+			})
+			.catch(ERROR => {
+				// WIP
+			});
 		}
 	}
 
-	onSelectdElement(event) {
-		event.target.key 
+	// WIP
+	handleMouseOver(event) {
+		var x = event.currentTarget.dataset.id;
+		this.template.querySelector(`[data-id="${x}"]`).classList.add("hovered");
+	}
+	
+	handleMouseOut(event) {
+		this.template.querySelector(`[data-id="${x}"]`).classList.remove('hovered');
 	}
 }
