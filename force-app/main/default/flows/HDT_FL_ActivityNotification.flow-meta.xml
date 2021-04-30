@@ -1,14 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>mark_new_activity_0</name>
+        <label>Marchia Nuova Attività</label>
+        <locationX>50</locationX>
+        <locationY>551</locationY>
+        <assignmentItems>
+            <assignToReference>Notification.isNew__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>populate_notification</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>populate_notification</name>
+        <label>Popola Notifica</label>
+        <locationX>182</locationX>
+        <locationY>767</locationY>
+        <assignmentItems>
+            <assignToReference>Notification.Id__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Notification.Name__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Notification.Account__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.Account__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Notification.Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.wrts_prcgvr__Status__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Notification.QAdLogin__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Record.QAdLogin__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Send_Notification</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>is_insert_0</name>
+        <label>E&apos; Inserimento?</label>
+        <locationX>182</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>populate_notification</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>is_insert_yes_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record__Prior.Id</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>mark_new_activity_0</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Is_Sportello</name>
         <label>E&apos; di tipo Sportello?</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>311</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>yes</name>
+            <name>is_sportello_yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
@@ -18,7 +103,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Send_Notification</targetReference>
+                <targetReference>is_insert_0</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -47,19 +132,12 @@
     <recordCreates>
         <name>Send_Notification</name>
         <label>Invia Notifica</label>
-        <locationX>50</locationX>
-        <locationY>431</locationY>
-        <inputAssignments>
-            <field>QAdLogin__c</field>
-            <value>
-                <elementReference>$Record.QAdLogin__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>HDT_PEV_activityReceived__e</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <locationX>182</locationX>
+        <locationY>887</locationY>
+        <inputReference>Notification</inputReference>
     </recordCreates>
     <start>
-        <locationX>56</locationX>
+        <locationX>210</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Is_Sportello</targetReference>
@@ -73,7 +151,7 @@
             </value>
         </filters>
         <object>wrts_prcgvr__Activity__c</object>
-        <recordTriggerType>Create</recordTriggerType>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
