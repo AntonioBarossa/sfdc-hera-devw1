@@ -3757,6 +3757,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
             <default>false</default>
         </values>

@@ -3,7 +3,7 @@
     <fullName>CalculationBlock__c</fullName>
     <defaultValue>false</defaultValue>
     <externalId>false</externalId>
-    <label>Blocco al Calcolo</label>
+    <label>Blocco al Calcolo T1</label>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
