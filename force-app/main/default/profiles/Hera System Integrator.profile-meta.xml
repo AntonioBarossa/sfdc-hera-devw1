@@ -1010,22 +1010,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.AlertRule__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.AlertState__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>AlertAccountConfiguration__c.AlertType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.AlertType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1035,7 +1030,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.EnableExpiringDays__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1055,7 +1050,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.IsEmailChannelAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1065,7 +1060,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.IsPushChannelAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1075,7 +1070,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.IsSmsChannelAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1085,7 +1080,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>AlertAccountConfiguration__c.IsSolChannelAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
