@@ -4,6 +4,7 @@ global with sharing class ConnectorEntityController {
 	@RemoteAction
 	global static String createActivity(String jsonMessage) {
 		Map<String,Object> message = (Map<String,Object>) JSON.deserializeUntyped(jsonMessage);
+		Map<String,Object> attachdata = (Map<String,Object>) message.get('attachdata');
 
 		if((Integer) message.get('ErrorCode') != 0) {
 			return 'Error: ' + JSON.serialize(message);
@@ -15,7 +16,8 @@ global with sharing class ConnectorEntityController {
 			wrts_prcgvr__Status__c = 'In Progress',
 			ActivityStartTime__c = DateTime.now(),
 			CallStartTime__c = DateTime.now(),
-			ConnectionID__c = (String) message.get('ConnectionID')
+			ConnectionID__c = (String) message.get('ConnectionID'),
+			BPCode__c = (String) message.get('ivr_CODICE_CLIENTE')
 		);
 
 		switch on (String) message.get('CallType') {
@@ -48,7 +50,11 @@ global with sharing class ConnectorEntityController {
 			}
 		}
 
-		insert activity;
+		try {
+			insert activity;
+		} catch (Exception e) {
+			return 'Error ' + e.getMessage();
+		}
 		result.put('activityId', activity.Id);
 		
 		return JSON.serialize(result);
@@ -62,16 +68,20 @@ global with sharing class ConnectorEntityController {
 		System.debug(JSON.serialize(attachdata));
 		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
 			Id = (String) attachdata.get('sf_activity_id'),
-			CrmChange__c = (Boolean) attachdata.get('crmChange'),
-			OperatorChange__c = (Boolean) attachdata.get('operatorChange'),
 			wrts_prcgvr__Status__c = 'Completed',
 			ActivityEndTime__c = Datetime.now(),
 			CallEndTime__c = Datetime.now(),
 			ActivityDuration__c = (Decimal) message.get('Duration'),
 			CallDuration__c = (Decimal) message.get('Duration'),
-			WaitingTime__c = 0, // WIP
-			BPCode__c = ''
+			WaitingTime__c = 0 // WIP
 		);
+
+		if(attachdata.get('crmChange') != null) {
+			activity.CrmChange__c = (Boolean) attachdata.get('crmChange');
+		}
+		if(attachdata.get('operatorChange') != null) {
+			activity.OperatorChange__c = (Boolean) attachdata.get('operatorChange');
+		}
 
 		try {
 			update activity;
