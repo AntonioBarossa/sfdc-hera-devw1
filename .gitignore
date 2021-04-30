@@ -15,6 +15,7 @@ manifest/*
 manifest/
 .gitignore
 force-app/main/default/namedCredentials/EditInvoiceLayout.namedCredential-meta.xml 
+force-app/main/default/namedCredentials/BillingsBlockReminder.namedCredential-meta.xml
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
