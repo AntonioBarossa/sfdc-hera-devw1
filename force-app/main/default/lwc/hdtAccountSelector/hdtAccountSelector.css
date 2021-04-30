@@ -3,3 +3,11 @@
     border-radius: 15px;
     border-width: 3px;
 }
+.custom-header {
+    border-radius: 0.25em 0.25em 0 0 !important;
+    border-bottom: 0 !important;
+    align-items: center;
+}
+.custom-body {
+    border-radius: 0 0 0.25em 0.25em !important;
+}
