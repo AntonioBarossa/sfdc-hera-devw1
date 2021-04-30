@@ -88,6 +88,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Note Informative</span>
+                        </h3>
+                        <lightning-input-field field-name='Note__c'></lightning-input-field>
+                        </div>
                     </div>
                     <template if:true={hiddenFields}>
                         <lightning-input-field field-name='Name'>
@@ -169,7 +175,7 @@
                         </template>
                         <template if:true={cancelButton}>
                             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                                variant="destructive" type="button" name="cancel" label="Annulla">
+                                variant="brand" type="button" name="cancel" label="Annulla" onclick={handleCancell}>
                             </lightning-button>
                         </template>
                     </div>
