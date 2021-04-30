@@ -3905,6 +3905,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Approvazione</fullName>
             <default>false</default>
         </values>
@@ -6432,6 +6436,10 @@
         </values>
         <values>
             <fullName>Recesso su Richesta Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>

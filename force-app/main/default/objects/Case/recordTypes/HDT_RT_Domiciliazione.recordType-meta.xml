@@ -3798,6 +3798,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviata a SAP</fullName>
             <default>false</default>
         </values>
@@ -6113,6 +6117,10 @@
         </values>
         <values>
             <fullName>Recesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>

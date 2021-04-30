@@ -9,6 +9,8 @@ public inherited sharing class HDT_UTL_Variations {
 
     public static Boolean modifyRate(String caseId){
 
+        System.debug('UTL_Variations start');
+
         List<Case> otherCases = new List<Case>();
 
         Boolean check;
@@ -79,6 +81,8 @@ public inherited sharing class HDT_UTL_Variations {
             check = true;
 
         }
+
+        System.debug('UTL_Variations end');
 
         return check;
 

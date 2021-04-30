@@ -4359,6 +4359,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Allineamento RCU</fullName>
             <default>false</default>
         </values>
@@ -7050,6 +7054,10 @@
         </values>
         <values>
             <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>
