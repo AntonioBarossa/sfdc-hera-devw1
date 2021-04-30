@@ -663,6 +663,11 @@
                 <label>Esito KO tentativo riattivazione</label>
             </value>
             <value>
+                <fullName>Annullamento - Revocato</fullName>
+                <default>false</default>
+                <label>Annullamento - Revocato</label>
+            </value>
+            <value>
                 <fullName>Presa in Carico KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
