@@ -14,11 +14,13 @@ switch (softphoneSettings.GEN_INTEGRATION_TYPE) {
         break;
 }
 var GC_ENVIRONMENT = softphoneSettings.PEF_GC_ENVIRONMENT;
+
 function loadWDE() {
     iwscore.getLayoutParams().integrationType = "wde";
     iwscore.createConnection(softphoneSettings.WDE_HOST, softphoneSettings.WDE_PORT, { 'protocol': softphoneSettings.WDE_PROTOCOL });
+    iwscore.addFilters();
 }
-iwscore.addFilters();
+
 function addFilters() {
 	addFilter("onEventRingingInbound", "action");
 	addFilter("onEventRingingConsult", "action");

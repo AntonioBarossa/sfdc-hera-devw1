@@ -6,15 +6,19 @@ public with sharing class HDT_UTL_ActivityTracker {
 		}
 
 		for(wrts_prcgvr__Activity__c activity : [
-				SELECT Id
-				FROM wrts_prcgvr__Activity__c
-				WHERE
-					OwnerId IN: objectsByOwner.keySet() AND
-					Type__c = 'Chiamata' AND
-					wrts_prcgvr__Status__c = 'In Progress' AND
-					CreatedDate = TODAY
-			]) {
-			objectsByOwner.get(activity.OwnerId).put('Activity__c', activity.Id);
+			SELECT Id
+			FROM wrts_prcgvr__Activity__c
+			WHERE
+				OwnerId IN: objectsByOwner.keySet() AND
+				Type__c = 'Chiamata' AND
+				wrts_prcgvr__Status__c = 'In Progress' AND
+				CreatedDate = TODAY
+			ORDER BY CreatedDate DESC
+		]) {
+			SObject sobj = objectsByOwner.get(activity.OwnerId);
+			if(String.isNotBlank((String) sobj.get('Activity__c'))) {
+				sobj.put('Activity__c', activity.Id);
+			}
 		}
 	}
 }
