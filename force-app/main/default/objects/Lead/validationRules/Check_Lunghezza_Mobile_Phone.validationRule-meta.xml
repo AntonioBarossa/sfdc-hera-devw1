@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Check_Lunghezza_Mobile_Phone</fullName>
+    <active>true</active>
+    <errorConditionFormula>IF(ISBLANK(MobilePhone),false, if(LEN(MobilePhone)=10,false,true))</errorConditionFormula>
+    <errorDisplayField>MobilePhone</errorDisplayField>
+    <errorMessage>Lunghezza Numero Cellulare Minima Deve essere di 10 caratteri</errorMessage>
+</ValidationRule>
