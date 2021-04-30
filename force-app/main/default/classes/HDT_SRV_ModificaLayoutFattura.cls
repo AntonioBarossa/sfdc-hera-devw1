@@ -46,7 +46,25 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
 
     private static void manageResponse(HDT_WRP_GenericSapIntegration sapIntegration){
 
+        Case caseToUpdate = new Case();
+
+        caseToUpdate.Id = sapIntegration.recordId;
+
         if (sapIntegration.responseCode == 200) {
+
+
+            HDT_WRP_ModificaLayoutFattura.HDT_WRP_Response responseBody = 
+                (HDT_WRP_ModificaLayoutFattura.HDT_WRP_Response) JSON.deserialize(sapIntegration.responseBody, HDT_WRP_ModificaLayoutFattura.HDT_WRP_Response.class);
+
+            if(responseBody.data.attivita == 'Esito OK da SAP'){
+
+                caseToUpdate.Phase__c = 'Inviata a SAP';
+
+            }else{
+
+                caseToUpdate.description = responsebody.data.attivita + ' ' +responseBody.data.note;
+
+            }
 
             // TODO: parse response in sapIntegration.responseBody e update Phase sul case
 
@@ -55,6 +73,8 @@ global with sharing class HDT_SRV_ModificaLayoutFattura implements wrts_prcgvr.I
             // caseToUpdate.Phase__c = 'Inviata a SAP';
             // HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
             
+            HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+
         }
     }
 }

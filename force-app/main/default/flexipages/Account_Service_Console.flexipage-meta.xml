@@ -9,9 +9,9 @@
                         <valueListItems>
                             <value>Account.Catalogo_Servizi</value>
                         </valueListItems>
-<!--                         <valueListItems>
+                        <valueListItems>
                             <value>Account.HDT_AccountStatement</value>
-                        </valueListItems> -->
+                        </valueListItems>
                         <valueListItems>
                             <value>CustomButton.Account.HDT_InfoTracking</value>
                         </valueListItems>
