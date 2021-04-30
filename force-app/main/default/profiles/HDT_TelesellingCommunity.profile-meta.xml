@@ -9196,10 +9196,6 @@
         <layout>CampaignMember-Campaign Member Community Layout</layout>
     </layoutAssignments> -->
     <pageAccesses>
-        <apexPage>AnswersHome</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>BandwidthExceeded</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
