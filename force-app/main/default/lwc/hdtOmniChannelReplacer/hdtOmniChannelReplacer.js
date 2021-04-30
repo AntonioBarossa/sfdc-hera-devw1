@@ -22,7 +22,8 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
                         wrts_prcgvr__Status__c: response.data.payload.Status__c,
                         completed: response.data.payload.Status__c == 'Completed'
                     });
-                    this.dispatchEvent(new CustomEvent('newactivity'));
+                    // this.dispatchEvent(new CustomEvent('newactivity'));  // UNCOMMENT TO RE ENABLE NOTIFICATION IN UTILITY BAR
+                    navigate(response.data.payload.Account__c, response.data.payload.Id__c);
                 } else {
                     this.activities.forEach(a => {
                         if(a.Id == response.data.payload.Id__c) {
@@ -43,16 +44,18 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
         });
     }
 
-    handleClick(event) {
-        var activityId = event.currentTarget.dataset.id;
-        var accountId = event.currentTarget.dataset.accountid;
+    navigate(accountId, activityId) {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
                 recordId: accountId != null ? accountId : activityId,
                 actionName: 'view'
             }
-        }); 
+        });
+    }
+
+    handleClick(event) {
+        this.navigate(event.currentTarget.dataset.accountid, event.currentTarget.dataset.id);
     }
 
     getDataId(event) {
