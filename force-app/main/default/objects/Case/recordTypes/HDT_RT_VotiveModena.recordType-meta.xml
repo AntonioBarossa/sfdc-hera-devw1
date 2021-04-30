@@ -3758,6 +3758,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RC010</fullName>
             <default>false</default>
         </values>
@@ -3949,6 +3953,10 @@
         </values>
         <values>
             <fullName>Cessazione Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6046,6 +6054,10 @@
         </values>
         <values>
             <fullName>Recesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>

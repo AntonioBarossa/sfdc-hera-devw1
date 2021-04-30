@@ -5502,6 +5502,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Allineamento RCU</fullName>
             <default>false</default>
         </values>
@@ -5965,6 +5969,10 @@
         </values>
         <values>
             <fullName>Chiamata Mura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8601,6 +8609,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
             <default>false</default>
         </values>
@@ -8721,7 +8733,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>

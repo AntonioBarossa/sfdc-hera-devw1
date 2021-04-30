@@ -4,7 +4,7 @@
     <description>Componente Indirizzo di fatturazione</description>
     <externalId>false</externalId>
     <label>Codice ISTAT [Spedizione/Fatturazione]</label>
-    <length>6</length>
+    <length>30</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

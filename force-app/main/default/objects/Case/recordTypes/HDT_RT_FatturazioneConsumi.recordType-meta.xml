@@ -4,7 +4,7 @@
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
     <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
-    <description>RT che accorpa i processi Rettifica Consumi, Ricostruzione Consumi, Prescrizione Fatture, Errore Fatturazione, Inversione Contatore</description>
+    <description>RT che accorpa i processi Rettifica Consumi, Ricostruzione Consumi, Prescrizione Fatture, Errore Fatturazione</description>
     <label>Fatturazione Consumi</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -735,6 +735,25 @@
         <picklist>Cemetery__c</picklist>
         <values>
             <fullName>null</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ChannelOfPayment__c</picklist>
+        <values>
+            <fullName>Bollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -3846,6 +3865,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Attesa Approvazione</fullName>
             <default>false</default>
         </values>
@@ -4113,6 +4136,10 @@
         </values>
         <values>
             <fullName>Cessazione Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -5700,6 +5727,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Stima Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Lettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica Dati Fiscali</fullName>
             <default>false</default>
         </values>
@@ -6294,6 +6329,10 @@
         </values>
         <values>
             <fullName>Recesso su Richesta Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>

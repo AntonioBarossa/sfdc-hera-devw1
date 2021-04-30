@@ -452,9 +452,9 @@
         <label>Trasmissione Dati Cliente Finale SII</label>
     </standardValue>
     <standardValue>
-        <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
         <default>false</default>
-        <label>Unificazione/Separazione CA-Bolletta</label>
+        <label>Unificazione/Separazione BP-CA-Bolletta</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione POD</fullName>
@@ -590,5 +590,10 @@
         <fullName>Votive Modena Cessazione</fullName>
         <default>false</default>
         <label>Votive Modena Cessazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rettifica Consumi</fullName>
+        <default>false</default>
+        <label>Rettifica Consumi</label>
     </standardValue>
 </StandardValueSet>

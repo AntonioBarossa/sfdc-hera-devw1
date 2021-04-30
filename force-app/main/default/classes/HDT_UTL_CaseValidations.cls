@@ -36,9 +36,20 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if(caseType == 'Marcatura/Uso PdR' 
         || caseType == 'Condizioni Contrattuali Errate' 
         || caseType == 'BP/CA - errata categoria'
-        || caseType == 'Modifica/Azzeramento Consumo Annuo'){
+        || caseType == 'Modifica/Azzeramento Consumo Annuo'
+        || caseType == 'Modifica Tariffa Residente/Non Residente'){
+
+            System.debug('Inside Variazioni Validations');
 
             result = validateVariazioni(fields,recordId,caseType, subprocess);
+
+        } else if(caseType == 'Chiusura Contatore'){
+
+            result = validateDisattivazioni(fields);
+
+        } else if(caseType == 'Contratto Non Richiesto'){
+
+            result = validateAnnullamento(fields);
 
         }
 
@@ -322,15 +333,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     public String validateVariazioni(String fields, String recordId, String caseType, String subprocess){
 
-        String supplyType = getFieldValue(fields, 'SupplyType__c');
-        String useCategory = getFieldValue(fields, 'UseCategory__c');
-        String servicePointType = getFieldValue(fields, 'ServicePointType__c');
-
-        
-
         String result;
 
         if(caseType == 'Marcatura/Uso PdR'){
+
+            String supplyType = getFieldValue(fields, 'SupplyType__c');
+            String useCategory = getFieldValue(fields, 'UseCategory__c');
+            String servicePointType = getFieldValue(fields, 'ServicePointType__c');
 
             if(HDT_UTL_Variations.consistencyCheck(recordId, useCategory, supplyType, servicePointType)){
 
@@ -347,7 +356,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             String billingProblem = getFieldValue(fields, 'BillingProblem__c');
             String bill = getFieldValue(fields, 'Bill__c');
             String dlNote = getFieldValue(fields, 'Note__c');
-            String customerAggreement = getFieldValue(fields, 'CustomerAggreement__c');
+            String customerAggreement = getFieldValue(fields, 'CustomerPaymentAgreements__c');
 
             if(billingProblem == 'Si' 
             && (
@@ -385,11 +394,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             }
 
-        } else if(getFieldValue(fields, 'BillingProblem__c') == 'Si' && 
-        (getFieldValue(fields, 'CustomerAggreement__c') == null || getFieldValue(fields, 'CustomerAggreement__c') == '')){
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Controllo di coerenza non superato, correggere i dati'));
-
         } else if(caseType == 'Fiscale'){
 
             if(subprocess != 'IVA - Errata applicazione' && subprocess != 'Accise - Errata applicazione'){
@@ -413,12 +417,39 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
+
+        }else if(caseType == 'Modifica Tariffa Residente/Non Residente'){
+
+            if(HDT_UTL_Variations.modifyRate(recordId)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+
+            }
  
+        } else if(caseType == 'Condizioni Contrattuali Errate'){ 
+
+            String billingProblem = getFieldValue(fields, 'BillingProblem__c');
+            String customerAggreement = getFieldValue(fields, 'CustomerPaymentAgreements__c');
+        
+            if(billingProblem == 'Si' && (customerAggreement == null || customerAggreement == '')){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizzare Accordi con il Cliente'));
+
+            } else{
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                
+            }
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
-        }
+        } 
 
         return result;
 
@@ -445,6 +476,27 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }
 
+
+        return result;
+
+    }
+
+    public String validateAnnullamento(String fields){
+
+        Date effectiveDate = Date.valueOf(getFieldValue(fields, 'EffectiveDate__c'));
+        Date todayDate = System.today();
+
+        String result;
+
+        if(todayDate.day() > 10 && effectiveDate > todayDate.addMonths(2).toStartOfMonth().addDays(-1)){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data decorrenza non è coerente con la data inserimento'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
 
         return result;
 

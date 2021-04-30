@@ -5,7 +5,7 @@
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;ChangeDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;CurrentCaliberReading__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;Reading__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;ReadingDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;NewMeterCode__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
     </values>
@@ -15,8 +15,8 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;ServicePoint__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;PODPDRFormula__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;Contract__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;ServicePoint__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;PODPDRFormula__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;Contract__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
