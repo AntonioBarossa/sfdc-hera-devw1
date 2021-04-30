@@ -507,6 +507,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>DocumentNumber__c</fields>
+        <fields>Amount__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
