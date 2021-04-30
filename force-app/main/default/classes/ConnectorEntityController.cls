@@ -34,7 +34,7 @@ global with sharing class ConnectorEntityController {
 		}
 
 		for(wrts_prcgvr__Activity__c a : [SELECT Id FROM wrts_prcgvr__Activity__c WHERE ConnectionID__c =: activity.ConnectionID__c ORDER BY CreatedDate DESC LIMIT 1]) {
-			activity.Activity__c = a.Id;
+			activity.ParentActivity__c = a.Id;
 		}
 
 		Map<String,String> result = new Map<String,String>();
