@@ -23,14 +23,5 @@ package.xml
 **flexipages/HDT_KnowledgeGeneralPage*
 **layout/AccountBrand-Account*
 **experiences/*
-**objects/Case/fields/Cluster__c*
-**objects/Account/fields/Category__c*
-**objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
-**objects/BillingProfile__c/fields/XMLType__c*
-**objects/Case/fields/DisconnectibilityType__c*
-**objects/Order/fields/DocSendingMethod__c*
-**objects/ServicePoint__c/fields/Disconnectable__c*
-**objects/ServicePoint__c/fields/DisconnectibilityType__c*
-**objects/Account/recordTypes/HDT_RT_Other*
 **layouts/Contact-Contact*
 **objects/SBQQ__Quote__c/fields/Login__c*
