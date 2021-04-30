@@ -46,3 +46,4 @@ package.xml
 **applications/standard__LightningSales*
 **applications/Sales_Leadership*
 **objects/SBQQ__Quote__c/fields/Login__c*
+**objects/ServicePoint__c/fields/ImplantType__c*
