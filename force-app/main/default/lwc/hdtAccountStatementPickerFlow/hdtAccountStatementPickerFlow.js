@@ -22,7 +22,7 @@ export default class HdtAccountStatementPickerFlow extends LightningElement {
         const navigateBackEvent = new FlowNavigationBackEvent();
         this.dispatchEvent(navigateBackEvent);
     }
-    handleGoNext() {
+    handleNext() {
         if(this.availableActions.find(action => action === 'NEXT')){
 
             const navigateNextEvent = new FlowNavigationNextEvent();

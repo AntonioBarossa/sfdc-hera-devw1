@@ -73,7 +73,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     numeroBollettino;
     showTable = false;
     detailFields = ['Name'];
-    filter = 'Account__c=\''+this.accountId+'\'';
+    @track filter;
     
     getDocuments(){
         getDocumentSelected({
@@ -93,6 +93,14 @@ export default class HdtAccountStatementPicker extends LightningElement {
     }
     
     connectedCallback(){
+        console.log('contractAccount ' + this.contractAccount);
+        console.log('billingProfileId ' + this.billingProfileId);
+        console.log('codiceCliente ' + this.codiceCliente);
+        console.log('caseId ' + this.caseId);
+        console.log('processType ' + this.processType);
+        console.log('accountId ' + this.accountId);
+        this.filter = 'Account__c=\''+this.accountId+'\'';
+
         var today = new Date();
         this.endDate = this.formatDate(today);
         var month = today.getMonth()-36;
@@ -100,6 +108,8 @@ export default class HdtAccountStatementPicker extends LightningElement {
         this.startDate = this.formatDate(today);
         if(this.contractAccount){
             this.data = this.getRecords();
+        }else{
+            this.showSpinner = false;
         }
         this.getDocuments();
     }
@@ -228,7 +238,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Record deleted',
+                        message: 'Documento cancellato',
                         variant: 'success'
                     })
                 );
@@ -237,7 +247,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             .catch(error => {
                 this.dispatchEvent(
                     new ShowToastEvent({
-                        title: 'Error deleting record',
+                        title: 'Errore',
                         message: error.body.message,
                         variant: 'error'
                     })
