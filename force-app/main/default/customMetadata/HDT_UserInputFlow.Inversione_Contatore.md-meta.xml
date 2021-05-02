@@ -14,6 +14,11 @@
 &quot;FieldName&quot; : &quot;RelatedCase__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1
+},
+{
+&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+&quot;Required&quot; : true,
+&quot;Column&quot; : 2
 }
 ]</value>
     </values>
@@ -35,7 +40,17 @@
         &quot;Column&quot;   : 1
     },
     {
+        &quot;FieldName&quot; : &quot;Market__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
         &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;MeterCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
@@ -55,9 +70,13 @@
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
-
     {
         &quot;FieldName&quot; : &quot;CommodityFormula__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;ImplantTypeFormula__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     }
