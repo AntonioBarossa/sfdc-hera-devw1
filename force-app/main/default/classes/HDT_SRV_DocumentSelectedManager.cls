@@ -74,6 +74,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     //singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
                     singleDocument.IssuingCompany__c = (String) primolivello.get('societa');
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
+                    singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
                     documentList.add(singleDocument);
                 }
@@ -117,6 +118,13 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
             return null;
         }
+    }
+
+    public static List<SObject> getDocumentsSelected(Id caseId){
+        String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
+        String objectName = 'DocumentSelected__c';
+        List<SObject> documentSelected = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        return documentSelected;
     }
 
     public class HDT_WRP_DocumentSelectedResponse{
