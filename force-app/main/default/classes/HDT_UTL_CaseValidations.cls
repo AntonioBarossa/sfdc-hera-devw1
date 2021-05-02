@@ -51,6 +51,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateAnnullamento(fields);
 
+        } else if(caseType == 'Unificazione/Separazione BP-CA-Bolletta') {
+
+            result = validateUnificazioneSeparazione(fields);
+
         }
 
         return result;
@@ -499,6 +503,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }
 
         return result;
+
+    }
+
+    // Validazione campi Billing Profile per processo Unificazione/Separazione CA
+    private String validateUnificazioneSeparazione(String fields) {
+
+        return validateModificaDatiRecapito(fields);
 
     }
 
