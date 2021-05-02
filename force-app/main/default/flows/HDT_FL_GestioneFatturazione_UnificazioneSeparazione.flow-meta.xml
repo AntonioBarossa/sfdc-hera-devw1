@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Set_Descrizione_Account</name>
+        <label>Set Descrizione Account</label>
+        <locationX>2468</locationX>
+        <locationY>511</locationY>
+        <assignmentItems>
+            <assignToReference>FinalDescription</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>TemplateUnificazioneBP</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Input_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Descrizione_Contratti</name>
+        <label>Set Descrizione Contratti</label>
+        <locationX>2712</locationX>
+        <locationY>34</locationY>
+        <assignmentItems>
+            <assignToReference>FinalDescription</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ConcatenazioneCodiciSAP</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Next_Step</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>NoChoice</name>
         <choiceText>No</choiceText>
@@ -64,6 +96,43 @@
             <label>Unificazione BP</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Next_Step</name>
+        <label>Next Step?</label>
+        <locationX>2707</locationX>
+        <locationY>208</locationY>
+        <defaultConnector>
+            <targetReference>Set_Fase_In_Lavorazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_in_bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva in bozza</label>
+        </rules>
+    </decisions>
     <dynamicChoiceSets>
         <name>TipoOperazioneChoiceSet</name>
         <dataType>Picklist</dataType>
@@ -98,6 +167,27 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <name>Get_Account_Master</name>
+        <label>Get Account Master</label>
+        <locationX>2267</locationX>
+        <locationY>512</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Descrizione_Account</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountIdMaster</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Query_Case</name>
         <label>Query Case</label>
@@ -143,8 +233,8 @@
     <recordUpdates>
         <name>Set_Fase_In_Lavorazione</name>
         <label>Set Fase In Lavorazione</label>
-        <locationX>2716</locationX>
-        <locationY>198</locationY>
+        <locationX>3009</locationX>
+        <locationY>207</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -156,7 +246,7 @@
         <inputAssignments>
             <field>Description</field>
             <value>
-                <elementReference>ConcatenazioneCodiciSAP</elementReference>
+                <elementReference>FinalDescription</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -212,11 +302,11 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Set_Fase_In_Lavorazione</targetReference>
+            <targetReference>Next_Step</targetReference>
         </connector>
         <fields>
             <name>DT2</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -286,7 +376,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -324,8 +414,8 @@
     <screens>
         <name>Input_Dati_CA</name>
         <label>Input Dati (CA)</label>
-        <locationX>2221</locationX>
-        <locationY>33</locationY>
+        <locationX>2222</locationX>
+        <locationY>34</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -334,8 +424,44 @@
         </connector>
         <fields>
             <name>DT5</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Inserire i dati di processo:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtGenericAddressChooserFlow</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>CreaNuovoCA</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>YesChoice</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Form5</name>
@@ -363,12 +489,6 @@
                 <name>labelDraftButton</name>
                 <value>
                     <stringValue>Salva in bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Dati di Processo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -421,7 +541,14 @@
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -429,17 +556,17 @@
     <screens>
         <name>Input_Letture</name>
         <label>Input Letture</label>
-        <locationX>2414</locationX>
-        <locationY>33</locationY>
+        <locationX>2419</locationX>
+        <locationY>34</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Set_Fase_In_Lavorazione</targetReference>
+            <targetReference>Set_Descrizione_Contratti</targetReference>
         </connector>
         <fields>
             <name>DT6</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px; color: rgb(62, 62, 60);&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Inserire le letture:&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire la letture del cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -527,17 +654,17 @@
     <screens>
         <name>Selezione_Account</name>
         <label>Selezione Account</label>
-        <locationX>2108</locationX>
-        <locationY>415</locationY>
+        <locationX>1805</locationX>
+        <locationY>512</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Input_Dati</targetReference>
+            <targetReference>Selezione_Account_Master</targetReference>
         </connector>
         <fields>
             <name>DT4</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;Selezionare uno o più Account:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Selezionare uno o più Account:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -556,6 +683,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>searchPlaceholder</name>
+                <value>
+                    <stringValue>Restringi la ricerca...</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -567,10 +700,58 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Selezione_Account_Master</name>
+        <label>Selezione Account Master</label>
+        <locationX>2037</locationX>
+        <locationY>512</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_Account_Master</targetReference>
+        </connector>
+        <fields>
+            <name>DT7</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;Selezionare l&apos;Account master:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtAccountSelectionFlowMaster</name>
+            <extensionName>c:hdtAccountSelectionFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>selectionType</name>
+                <value>
+                    <stringValue>AccountUnificazioneSeparazioneBPMaster</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchPlaceholder</name>
+                <value>
+                    <stringValue>Restringi la ricerca...</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>concatenate</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>AccountIdMaster</assignToReference>
+                <name>results</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Selezione_Contratti</name>
         <label>Selezione Contratti</label>
         <locationX>2049</locationX>
-        <locationY>33</locationY>
+        <locationY>34</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -579,7 +760,7 @@
         </connector>
         <fields>
             <name>DT3</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;Selezionare uno o più contratti:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Processo di {!Refresh_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;b style=&quot;font-size: 14px; background-color: rgb(255, 255, 255);&quot;&gt;Tipologia Operazione: {!Refresh_Case.OperationType__c}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Selezionare uno o più contratti:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -602,6 +783,12 @@
                 <name>concatenate</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>searchPlaceholder</name>
+                <value>
+                    <stringValue>Restringi la ricerca...</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -669,6 +856,55 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Gestione_Annullamento</name>
+        <label>Gestione Annullamento</label>
+        <locationX>2713</locationX>
+        <locationY>415</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <textTemplates>
+        <name>TemplateUnificazioneBP</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Account da unificare:
+
+{!ConcatenazioneCodiciSAP}
+
+Account Master:
+
+{!Get_Account_Master.CustomerCode__c}</text>
+    </textTemplates>
+    <variables>
+        <name>AccountIdMaster</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>CancelCase</name>
         <dataType>Boolean</dataType>
@@ -686,6 +922,13 @@
     <variables>
         <name>DataLetturaCliente</name>
         <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>FinalDescription</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
