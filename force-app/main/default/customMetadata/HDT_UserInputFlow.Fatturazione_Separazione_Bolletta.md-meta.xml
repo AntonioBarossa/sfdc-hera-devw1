@@ -4,13 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[
-{
-&quot;FieldName&quot; : &quot;Note__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 1
-}
-]</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ProcessType__c</field>
@@ -30,22 +24,27 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    },
-    {
-        &quot;FieldName&quot; : &quot;Market__c&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
-    },
-    {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;FieldName&quot; : &quot;Market__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactMobile&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     }
