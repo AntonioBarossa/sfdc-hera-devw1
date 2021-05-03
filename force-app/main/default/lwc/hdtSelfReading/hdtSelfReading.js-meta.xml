@@ -39,12 +39,14 @@
         
         
         <targetConfig targets="lightning__FlowScreen">
-            
+
             
             <property name="commodity" type="String" label="Commodity" description="Selected commodity for the current process" role="inputOnly"/>
             
             <property name="recordId" type="String" label="Record Id" description="Record Id of the parent Object" role="inputOnly"/>
             
+            <property name="servicePointId" type="String" label="Service Point Id" description="Service Point Id" role="inputOnly"/>
+
             <property name="object" type="String" label="Object" description="The parent Object of the Reading" role="inputOnly"/>
             
             <property name="nextLabel" type="String" label="Next Label" description="The Label of the Next Button" role="inputOnly"/>

@@ -11,6 +11,13 @@ export default class HdtContractSelectionFlow extends LightningElement {
     @api accountId;
     @api selectionType;
     @api concatenate;
+    @api showDraftButton;
+    @api showBackButton;
+    @api showCancelButton;
+    @api nextLabel;
+    @api saveDraft;
+    @api cancelCase;
+    @api availableActions = [];
     
     @track queryParams;
     @track maxRow;
@@ -63,20 +70,40 @@ export default class HdtContractSelectionFlow extends LightningElement {
         }
     }
    
-    handleNext(event){
-        if(this.results != null && this.results != "" && this.results != "undefined"){
-            console.log('results: ' + this.results);
-            const navigateNextEvent = new FlowNavigationNextEvent();
-            this.dispatchEvent(navigateNextEvent);
-        }else{
-            this.showMessage('Errore','Attenzione! Seleziona un Contratto prima di andare avanti','error');  
+    handleNavigation(event){
 
+        const action = event.detail;
+        console.log('handleNavigation ' + action);
+
+        if(action === 'next' || action === 'draft' || action === 'save'){
+            this.saveDraft = action === 'draft'; 
+            if(this.results != null && this.results != "" && this.results != "undefined"){
+                console.log('results: ' + this.results);
+                if(this.availableActions.find(action => action === 'NEXT')){
+                    const navigateNextEvent = new FlowNavigationNextEvent();
+                    this.dispatchEvent(navigateNextEvent);
+                } else {
+                    const navigateFinish = new FlowNavigationFinishEvent();
+                    this.dispatchEvent(navigateFinish);
+                }
+            }else{
+                this.showMessage('Errore','Attenzione! Seleziona un Contratto prima di andare avanti','error');
+            }
+        } else if(action === 'previous'){
+            const navigateBackEvent = new FlowNavigationBackEvent();
+            this.dispatchEvent(navigateBackEvent);
+        } else if(action === 'cancel'){
+            this.cancelCase = true;
+            if(this.availableActions.find(action => action === 'NEXT')){
+                const navigateNextEvent = new FlowNavigationNextEvent();
+                this.dispatchEvent(navigateNextEvent);
+            } else {
+                const navigateFinish = new FlowNavigationFinishEvent();
+                this.dispatchEvent(navigateFinish);
+            }
         }
+    }
 
-    }
-    handleCancell(event){
-        
-    }
     showMessage(title,message,variant){
         this.dispatchEvent(
             new ShowToastEvent({
