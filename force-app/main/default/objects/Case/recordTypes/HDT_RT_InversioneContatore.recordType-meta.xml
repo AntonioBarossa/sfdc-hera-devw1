@@ -5395,6 +5395,14 @@
             <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
