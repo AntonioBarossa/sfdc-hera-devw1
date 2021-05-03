@@ -165,7 +165,7 @@ export default class HdtSelfReading extends LightningElement {
 
         checkLastReadings({servicePointId:this.servicePointId})
         .then(result =>{
-
+            console.log('checkLastReadings results: ' + result);
             const lastReadings = this.fillLastReadingsArray(JSON.parse(result));
             console.log('filled obj: ' + JSON.stringify( lastReadings));
 
