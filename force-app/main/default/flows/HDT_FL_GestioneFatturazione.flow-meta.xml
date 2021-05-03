@@ -90,6 +90,13 @@
                 <elementReference>SottoprocessoRettificaConsumi</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CustomMetadataProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>SottoprocessoRettificaConsumi</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Case_Rettifica</targetReference>
         </connector>
@@ -669,7 +676,7 @@
     <formulas>
         <name>TipoUltimaLetturaFormula</name>
         <dataType>String</dataType>
-        <expression>IF({!IsLetturaStimata}, &apos;Stimata&apos;, &apos;Reale&apos;)</expression>
+        <expression>IF({!IsLetturaStimata}=True, &apos;Stimata&apos;, &apos;Reale&apos;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestioneFatturazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneFatturazione</label>
