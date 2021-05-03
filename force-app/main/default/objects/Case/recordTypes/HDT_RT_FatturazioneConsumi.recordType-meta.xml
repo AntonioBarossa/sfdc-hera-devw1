@@ -3762,10 +3762,6 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Attesa conferma preventivo cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Blocco Effettuato</fullName>
             <default>false</default>
         </values>
@@ -4289,6 +4285,17 @@
         </values>
         <values>
             <fullName>Vendita confermata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RevokedCancellation__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -5903,6 +5903,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RevokedCancellation__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SecondLevelComplaintClassification__c</picklist>
         <values>
             <fullName>Altro</fullName>
@@ -8371,7 +8382,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
