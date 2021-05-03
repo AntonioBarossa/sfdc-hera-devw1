@@ -128,13 +128,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
     }
 
     @api
-    handleLastReading(jsonReading){
+    handleLastReading(readingObj){
 
         console.log('Method Called Correctly');
 
-        var readingObj = JSON.parse(jsonReading);
+        //var readingObj = JSON.parse(jsonReading);
 
-        console.log(readingObj);
+        console.log(JSON.stringify(readingObj));
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
