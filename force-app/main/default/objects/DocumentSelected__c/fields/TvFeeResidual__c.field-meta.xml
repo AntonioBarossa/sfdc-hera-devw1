@@ -4,9 +4,9 @@
     <description>Residuo Canone Rai</description>
     <externalId>false</externalId>
     <label>Residuo Canone Rai</label>
-    <length>255</length>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Currency</type>
 </CustomField>

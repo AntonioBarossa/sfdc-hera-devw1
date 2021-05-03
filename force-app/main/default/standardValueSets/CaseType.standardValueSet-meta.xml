@@ -452,9 +452,9 @@
         <label>Trasmissione Dati Cliente Finale SII</label>
     </standardValue>
     <standardValue>
-        <fullName>Unificazione/Separazione CA-Bolletta</fullName>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
         <default>false</default>
-        <label>Unificazione/Separazione CA-Bolletta</label>
+        <label>Unificazione/Separazione BP-CA-Bolletta</label>
     </standardValue>
     <standardValue>
         <fullName>Unificazione POD</fullName>
@@ -575,5 +575,25 @@
         <fullName>Disattivazione VAS</fullName>
         <default>false</default>
         <label>Disattivazione VAS</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Sospensione Canone Rai Calamità</fullName>
+        <default>false</default>
+        <label>Sospensione Canone Rai Calamità</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Verifica Tensione - Pressione</fullName>
+        <default>false</default>
+        <label>Verifica Tensione - Pressione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Votive Modena Cessazione</fullName>
+        <default>false</default>
+        <label>Votive Modena Cessazione</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rettifica Consumi</fullName>
+        <default>false</default>
+        <label>Rettifica Consumi</label>
     </standardValue>
 </StandardValueSet>

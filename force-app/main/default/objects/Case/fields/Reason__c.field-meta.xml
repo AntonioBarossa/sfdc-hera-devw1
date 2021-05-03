@@ -315,34 +315,34 @@
                 <label>DISATTIVATO/DISDETTO (SERVIZIO)</label>
             </value>
             <value>
+                <fullName>Chiamata Muta</fullName>
+                <default>false</default>
+                <label>Chiamata Muta</label>
+            </value>
+            <value>
+                <fullName>Malfunzionamento</fullName>
+                <default>false</default>
+                <label>Malfunzionamento</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Blocco per frode</label>
+            </value>
+            <value>
+                <fullName>Prima Bolletta</fullName>
+                <default>false</default>
+                <label>Prima Bolletta</label>
             </value>
             <value>
                 <fullName>Bolletta Periodica</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Bolletta Periodica</label>
             </value>
             <value>
                 <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
-            </value>
-            <value>
-                <fullName>Malfunzionamento</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Malfunzionamento</label>
-            </value>
-            <value>
-                <fullName>Prima Bolletta</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Prima Bolletta</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -474,12 +474,24 @@
             <valueName>TCP Comune no Int</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
-            <valueName>Sollecito Emissione</valueName>
+            <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
+            <valueName>Prima Bolletta</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
-            <valueName>Errata Emissione</valueName>
+            <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
+            <valueName>Bolletta Periodica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Cessazione utilizzo apparecchiatura elettromedicale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
@@ -488,6 +500,14 @@
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
             <valueName>Caduta Linea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
+            <valueName>Sollecito Emissione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
+            <valueName>Errata Emissione</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

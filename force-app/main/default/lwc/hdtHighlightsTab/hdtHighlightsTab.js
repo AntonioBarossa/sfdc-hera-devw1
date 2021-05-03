@@ -45,6 +45,7 @@ export default class HdtHighlightsTab extends LightningElement {
     
     @api recordId;
     @track record;
+    @track wireError;
     @track fields = fields;
     @track openCasesNumber = 4;
     @track openOptyNumber = 1;
@@ -57,11 +58,11 @@ export default class HdtHighlightsTab extends LightningElement {
     wiredAccount({ error, data }) {
         if (data) {
             this.record = data;
-            this.error = undefined;
+            this.wireError = undefined;
             this.updateClc();
         } else if (error) {
             console.log('wire failed to fetch data: ' + error);
-            this.error = error;
+            this.wireError = error;
             this.record = undefined;
         }
     }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>socialBonus</label>
+    <protected>false</protected>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:type="xsd:string">Bearer 00D58000000KR1c!AQgAQIKY0NtXIEGsTVACqga56CNQAdIlDZApP1msyAtbSnqtTLYen.WzZfrXZaTqrI7KwSy6oUZ5o1muelFHQX.3SnM_qiAY</value>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">{
+ &quot;tableTitle&quot;: &quot;Bonus Sociale&quot;,
+ &quot;iconName&quot;: &quot;standard:customer_lifecycle_analytics&quot;,
+  &quot;columns&quot;: [
+    {
+      &quot;label&quot;: &quot;BP&quot;,
+      &quot;fieldName&quot;: &quot;BP&quot;
+    },
+    {
+      &quot;label&quot;: &quot;POD&quot;,
+      &quot;fieldName&quot;: &quot;POD&quot;
+    },
+    {
+      &quot;label&quot;: &quot;CONTRATTO&quot;,
+      &quot;fieldName&quot;: &quot;CONTRATTO&quot;
+    },
+    {
+      &quot;label&quot;: &quot;data attivazione contratto&quot;,
+      &quot;fieldName&quot;: &quot;dataAttivazione&quot;
+    },
+    {
+      &quot;label&quot;: &quot;data cessazione contratto&quot;,
+      &quot;fieldName&quot;: &quot;dataCessazione&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Decodifica Società&quot;,
+      &quot;fieldName&quot;: &quot;decodificaSocieta&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Data Attivazione Bonus&quot;,
+      &quot;fieldName&quot;: &quot;dataAttivazioneBonus&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Data Cessazione Bonus&quot;,
+      &quot;fieldName&quot;: &quot;dataCessazioneBonus&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Tipo Compensazione Sap&quot;,
+      &quot;fieldName&quot;: &quot;tipoCompensazioneSap&quot;
+    },
+    {
+      &quot;label&quot;: &quot;Descrizione Tipo Compensazione&quot;,
+      &quot;fieldName&quot;: &quot;descrizioneTipo&quot;
+    }
+  ]
+}</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">https://monted-dev-ed.my.salesforce.com/services/apexrest/socialBonus</value>
+    </values>
+</CustomMetadata>

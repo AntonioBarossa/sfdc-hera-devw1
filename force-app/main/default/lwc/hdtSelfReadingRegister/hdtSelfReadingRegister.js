@@ -10,6 +10,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api isRetroactive;
     @api isVolture;
     @api isVisible;
+    @api allowSmallerReading = false;
     advanceError;
 
     get visibilityClass() {
@@ -127,13 +128,13 @@ export default class HdtSelfReadingRegister extends LightningElement {
     }
 
     @api
-    handleLastReading(jsonReading){
+    handleLastReading(readingObj){
 
         console.log('Method Called Correctly');
 
-        var readingObj = JSON.parse(jsonReading);
+        //var readingObj = JSON.parse(jsonReading);
 
-        console.log(readingObj);
+        console.log(JSON.stringify(readingObj));
 
         if (this.commodity === 'Energia Elettrica') {
             this.isVisible = (this.rowObj.id <= readingObj.length);
@@ -194,6 +195,16 @@ export default class HdtSelfReadingRegister extends LightningElement {
         }
     }
 
+    @api oldReadingValue(){
+        const parsedValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value);
+        return isNaN(parsedValue) ? 0 : parsedValue;
+    }
+
+    @api newReadingValue(){
+        const parsedValue = parseInt(this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value);
+        return isNaN(parsedValue) ? 0 : parsedValue;
+    }
+
     @api
     handleSave(){
 
@@ -207,6 +218,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
                 } 
     
             });
+
+            const oldValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingOldValue')].value;
+            const newValue = this.registerObj[this.registerObj.findIndex(p => p.name === 'readingValue')].value;
+            if (this.allowSmallerReading === false && newValue < oldValue) {
+                this.advanceError = 'Impossibile inserire una lettura inferiore alla precedente.';
+            }
     
             console.log('advanceError: ' + this.advanceError);
     
@@ -264,8 +281,9 @@ export default class HdtSelfReadingRegister extends LightningElement {
 
             const previousReading = this.registerObj[indexReading].value;
             const newReading = event.target.value;
+
             // Mostriamo l'errore solo dopo che l'operatore inserisce almeno lo stesso numero di cifre della vecchia lettura. 
-            if(newReading.length >= previousReading.length && parseInt(newReading) < parseInt(previousReading)){
+            if(this.allowSmallerReading === false && newReading.length >= previousReading.length && parseInt(newReading) < parseInt(previousReading)){
 
                 this.advanceError = 'Impossibile inserire lettura inferiore all\'ultima lettura';
 

@@ -26,6 +26,7 @@ export default class HdtBillDeliveryChooser extends LightningElement {
     @track pecRequired= false;
     @track addressRequired= false;
     @api availableActions = [];
+    @api cancelCase = false;
 
     get options() {
         return [
@@ -107,48 +108,65 @@ export default class HdtBillDeliveryChooser extends LightningElement {
                 .then(() => {
                     // Display fresh data in the form
                     console.log('Record aggiornato');
+                    if(this.availableActions.find(action => action === 'NEXT')){
+                        const modInvioChangeEvent = new FlowAttributeChangeEvent('modInvioBoll', this.modInvioBoll);
+                        this.dispatchEvent(modInvioChangeEvent);
+                        const emailChangeEvent = new FlowAttributeChangeEvent('email', email);
+                        this.dispatchEvent(emailChangeEvent);
+                        const pecChangeEvent = new FlowAttributeChangeEvent('pec', pec);
+                        this.dispatchEvent(pecChangeEvent);
+                        const pressoChangeEvent = new FlowAttributeChangeEvent('presso', presso);
+                        this.dispatchEvent(pressoChangeEvent);
+                        const indirizzoChangeEvent = new FlowAttributeChangeEvent('indirizzo', address);
+                        this.dispatchEvent(indirizzoChangeEvent);
+                        
+                        const navigateNextEvent = new FlowNavigationNextEvent();
+                        this.dispatchEvent(navigateNextEvent);
+            
+                    } else {
+                        const modInvioChangeEvent = new FlowAttributeChangeEvent('modInvioBoll', this.modInvioBoll);
+                        this.dispatchEvent(modInvioChangeEvent);
+                        const emailChangeEvent = new FlowAttributeChangeEvent('email', email);
+                        this.dispatchEvent(emailChangeEvent);
+                        const pecChangeEvent = new FlowAttributeChangeEvent('pec', pec);
+                        this.dispatchEvent(pecChangeEvent);
+                        const pressoChangeEvent = new FlowAttributeChangeEvent('presso', presso);
+                        this.dispatchEvent(pressoChangeEvent);
+                        const indirizzoChangeEvent = new FlowAttributeChangeEvent('indirizzo', address);
+                        this.dispatchEvent(indirizzoChangeEvent);
+            
+                        const navigateFinish = new FlowNavigationFinishEvent();
+            
+                        this.dispatchEvent(navigateFinish);
+                    }
                 })
                 .catch(error => {
                     console.log('Errore in aggiornamento ' + error.body.message);
                 });
                 this.isError = false;
             }
-            if(!this.isError){
-                if(this.availableActions.find(action => action === 'NEXT')){
-                    const modInvioChangeEvent = new FlowAttributeChangeEvent('modInvioBoll', this.modInvioBoll);
-                    this.dispatchEvent(modInvioChangeEvent);
-                    const emailChangeEvent = new FlowAttributeChangeEvent('email', email);
-                    this.dispatchEvent(emailChangeEvent);
-                    const pecChangeEvent = new FlowAttributeChangeEvent('pec', pec);
-                    this.dispatchEvent(pecChangeEvent);
-                    const pressoChangeEvent = new FlowAttributeChangeEvent('presso', presso);
-                    this.dispatchEvent(pressoChangeEvent);
-                    const indirizzoChangeEvent = new FlowAttributeChangeEvent('indirizzo', address);
-                    this.dispatchEvent(indirizzoChangeEvent);
-                    
-                    const navigateNextEvent = new FlowNavigationNextEvent();
-                    this.dispatchEvent(navigateNextEvent);
-        
-                } else {
-                    const modInvioChangeEvent = new FlowAttributeChangeEvent('modInvioBoll', this.modInvioBoll);
-                    this.dispatchEvent(modInvioChangeEvent);
-                    const emailChangeEvent = new FlowAttributeChangeEvent('email', email);
-                    this.dispatchEvent(emailChangeEvent);
-                    const pecChangeEvent = new FlowAttributeChangeEvent('pec', pec);
-                    this.dispatchEvent(pecChangeEvent);
-                    const pressoChangeEvent = new FlowAttributeChangeEvent('presso', presso);
-                    this.dispatchEvent(pressoChangeEvent);
-                    const indirizzoChangeEvent = new FlowAttributeChangeEvent('indirizzo', address);
-                    this.dispatchEvent(indirizzoChangeEvent);
-
-                    const navigateFinish = new FlowNavigationFinishEvent();
-        
-                    this.dispatchEvent(navigateFinish);
-                }
-            }
         }catch(error){
             console.log(error);
         }
+    }
+
+    handleCancel(){
+
+        this.cancelCase = true;
+
+        if(this.availableActions.find(action => action === 'NEXT')){
+
+            const navigateNextEvent = new FlowNavigationNextEvent();
+            this.dispatchEvent(navigateNextEvent);
+
+        } else{
+
+            const navigateFinish = new FlowNavigationFinishEvent();
+        
+            this.dispatchEvent(navigateFinish);
+
+        }
+
     }
 
 }

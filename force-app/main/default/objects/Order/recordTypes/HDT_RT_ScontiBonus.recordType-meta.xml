@@ -1231,10 +1231,6 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Accettazione pagamento a DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -1243,31 +1239,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ammissibilità conformità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità conformità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Attesa conferma preventivo cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1276,22 +1260,6 @@
         </values>
         <values>
             <fullName>Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Conferma Appuntamento KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DL Documentazione completa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DL accertamento OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DL documentazione incompleta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1307,31 +1275,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esecuzione Appuntamento KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esecuzione Appuntamento OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Esito DL KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Esito DL OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione appuntamento su portale DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1343,15 +1291,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa appuntamento DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In attesa conferma cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa esecuzione appuntamento</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1363,10 +1303,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In registrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
@@ -1375,55 +1311,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Invio allegato a DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>OK SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico Firmato da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico inviato da firmare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico validato Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo Accettato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Registrazione  da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta preventivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1441,7 +1329,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>To define</fullName>
+            <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
             <default>false</default>
         </values>
     </picklistValues>
