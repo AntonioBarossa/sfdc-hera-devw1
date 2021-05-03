@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>HDT_LC_SelfReading</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>hdtAccountSelectionFlow</members>
-        <members>hdtContractSelectionFlow</members>
-        <members>hdtSelfReading</members>
-        <members>hdtSelfReadingRegister</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</members>
-        <name>Flow</name>
-    </types>
     <version>49</version>
 </Package>
