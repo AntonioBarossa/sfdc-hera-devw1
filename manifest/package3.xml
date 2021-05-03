@@ -1,104 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Traccia_Informativa</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
-        <members>HDT_Order_Volture_Page</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>HDT_InvoiceType__mdt</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>BillingProfile__c-Billing Profile Layout</members>
-        <members>Case-HDT_AltreInformative</members>
-        <members>Case-HDT_FatturazioneConsumi</members>
-        <members>Case-HDT_GestioneBolletta</members>
-        <members>Case-HDT_GestioneBonusSociale</members>
-        <members>Case-HDT_Informative</members>
-        <members>Case-HDT_InversioneContatore</members>
-        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case-HDT_VariazioniEle</members>
-        <members>Case-HDT_VariazioniGas</members>
-        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
-        <members>Contact-Contact Layout</members>
-        <members>Global-Global Layout</members>
-        <members>Lead-Lead Layout</members>
-        <members>ServicePoint__c-Service Point Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_LC_AccountStatementPicker</members>
-        <members>HDT_LC_RecordEditFormFlowController</members>
-        <members>HDT_QR_InformativeManager</members>
-        <members>HDT_SRV_DocumentSelectedManager</members>
-        <members>HDT_SRV_EmailMessage</members>
-        <members>HDT_SRV_InformativeManager</members>
-        <members>HDT_TRH_EmailMessage</members>
-        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_LC_SelfReading</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_HeraCompany__mdt.CompanyCode__c</members>
-        <members>HDT_InvoiceType__mdt.InvoiceCode__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_RunFlowFromAura</members>
-        <members>HDT_LCP_RunFlowInformative</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>hdtAccountStatementPicker</members>
-        <members>hdtAccountStatementPickerFlow</members>
-        <members>hdtCustomLookup</members>
-        <members>hdtRecordEditFormInformativeFlow</members>
+        <members>hdtAccountSelectionFlow</members>
+        <members>hdtContractSelectionFlow</members>
+        <members>hdtSelfReading</members>
+        <members>hdtSelfReadingRegister</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>BillingProfile__c.HDT_InfoTracking</members>
-        <members>Contact.HDT_InfoTracking</members>
-        <members>Lead.Traccia_Informativa</members>
-        <members>Order.HDT_InfoTracking</members>
-        <members>ServicePoint__c.HDT_InfoTracking</members>
-        <name>WebLink</name>
-    </types>
-    <types>
-        <members>HDT_Generic_Record_Selection.AccountUnificazioneSeparazioneBPMaster</members>
-        <members>HDT_InvoiceType.BOLLETTA</members>
-        <members>HDT_UserInputFlow.Fatturazione_Separazione_Bolletta</members>
-        <members>HDT_UserInputFlow.Fatturazione_Separazione_CA</members>
-        <members>HDT_UserInputFlow.Fatturazione_Separazione_CA_CreaCA</members>
-        <members>HDT_UserInputFlow.Fatturazione_Unificazione_BP</members>
-        <members>HDT_UserInputFlow.Fatturazione_Unificazione_Bolletta</members>
-        <members>HDT_UserInputFlow.Fatturazione_Unificazione_CA</members>
-        <members>HDT_UserInputFlow.Fatturazione_Unificazione_CA_CreaCA</members>
-        <members>HDT_UserInputFlow.Gestione_Bonus_Sociale</members>
-        <members>HDT_UserInputFlow.Gestione_Bonus_Sociale_Cessazione</members>
-        <members>HDT_UserInputFlow.Gestione_Bonus_Sociale_Documentazione</members>
-        <members>HDT_UserInputFlow.Informative_Caduta_Linea_Chiamata_Muta</members>
-        <members>HDT_UserInputFlow.Inversione_Contatore</members>
-        <members>HDT_UserInputFlow.Ritorno_Fatturazione_Bimestrale</members>
-        <members>HDT_UserInputFlow.Sollecito_Emissione_Bolletta</members>
-        <members>HDT_UserInputFlow.Testo_Contratto_in_Bolletta</members>
-        <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneFatturazione</members>
         <members>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</members>
-        <members>HDT_FL_GestioneInformative</members>
-        <members>HDT_FL_GestioneVariazioni</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
         <name>Flow</name>
-    </types>
-    <types>
-        <members>BillingsBlockReminder</members>
-        <members>EditInvoiceLayout</members>
-        <members>MulesoftEqualStatements</members>
-        <name>NamedCredential</name>
     </types>
     <version>50</version>
 </Package>
