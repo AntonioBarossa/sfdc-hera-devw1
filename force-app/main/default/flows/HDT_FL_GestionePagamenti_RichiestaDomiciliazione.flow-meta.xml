@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Validazione_Iban</name>
         <label>Validazione Iban</label>
-        <locationX>611</locationX>
-        <locationY>1430</locationY>
+        <locationX>1287</locationX>
+        <locationY>1310</locationY>
         <actionName>HDT_UTL_ValidateIban</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -20,64 +20,80 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>AI</name>
-        <label>Assegna Iban It</label>
-        <locationX>281</locationX>
-        <locationY>1118</locationY>
+        <name>AggiornaFasi</name>
+        <label>AggiornaFasi</label>
+        <locationX>50</locationX>
+        <locationY>3206</locationY>
         <assignmentItems>
-            <assignToReference>Iban</assignToReference>
+            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.Status</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>IT{!Numeri_Controllo}{!CIN}{!ABI}{!CAB}{!Numero_Conto_Corrente}</stringValue>
+                <elementReference>CalcolaCodiceCausale.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>IbanABI_CC</assignToReference>
+            <assignToReference>GetCaseAggiornato2.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ABI</elementReference>
+                <elementReference>CalcolaCodiceCausale.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Passa_a_Da_Inviare</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AggiornaFasi_0</name>
+        <label>AggiornaFasi</label>
+        <locationX>314</locationX>
+        <locationY>3086</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>IbanCAB_CC</assignToReference>
+            <assignToReference>GetCaseAggiornato2.Status</assignToReference>
             <operator>Assign</operator>
-            <value>
-                <elementReference>CAB</elementReference>
-            </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanCIN_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CIN</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanContoCorrente_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Numero_Conto_Corrente</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanNumeriControllo_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Numeri_Controllo</elementReference>
-            </value>
-        </assignmentItems>
+        <connector>
+            <targetReference>Passa_a_Elaborazione_Manuale</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Iban_Estero</name>
+        <label>Assegna Iban Estero</label>
+        <locationX>1221</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>IbanIsForeign</assignToReference>
             <operator>Assign</operator>
             <value>
-                <booleanValue>false</booleanValue>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Iban</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornato.Iban__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>ProcessTypeFormFlow</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
+                <stringValue>Richiesta Domiciliazione - Estero</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -87,8 +103,8 @@
     <assignments>
         <name>Assegna_Intestatario</name>
         <label>Assegna Intestatario</label>
-        <locationX>512</locationX>
-        <locationY>2486</locationY>
+        <locationX>644</locationX>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFiscalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -115,110 +131,53 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Intestatario_0</name>
-        <label>Assegna Intestatario</label>
-        <locationX>248</locationX>
-        <locationY>2486</locationY>
+        <name>AssegnaFase</name>
+        <label>AssegnaFase</label>
+        <locationX>2426</locationX>
+        <locationY>518</locationY>
         <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFiscalCode__c</assignToReference>
+            <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
+                <stringValue>Da Inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
+            <assignToReference>GetCaseNonBozza.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue/>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryLastName__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue/>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_0</targetReference>
+            <targetReference>AggiornaCaseNonBozza</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Valori_Predefaultati</name>
-        <label>Assegna Valori Predefaultati</label>
-        <locationX>413</locationX>
-        <locationY>758</locationY>
+        <description>IT{!Numeri_Controllo}{!CIN}{!ABI}{!CAB}{!Numero_Conto_Corrente}</description>
+        <name>AssegnaIban</name>
+        <label>AssegnaIban</label>
+        <locationX>957</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>CaseInput.Iban__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanABI_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseInput.IbanABI__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanCAB_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseInput.IbanCAB__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanCIN_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseInput.IbanCIN__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanContoCorrente_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseInput.IbanCodeNumber__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>IbanNumeriControllo_CC</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseInput.IbanCIN_IBAN__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Iban_Italiano</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assign_Iban_Ex</name>
-        <label>Assign Iban Ex.</label>
-        <locationX>545</locationX>
-        <locationY>1118</locationY>
-        <assignmentItems>
-            <assignToReference>Iban</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Inserire_Iban_Estero</elementReference>
+                <elementReference>ItalianIbanFormula</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>IbanIsForeign</assignToReference>
             <operator>Assign</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>ProcessTypeFormFlow</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Richiesta Domiciliazione - Estero</stringValue>
+                <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -226,10 +185,33 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValoriAggiornamento</name>
+        <label>AssegnaValoriAggiornamento</label>
+        <locationX>941</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.Iban__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Iban</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanIsForeign__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IbanIsForeign</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Bozza</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_Iban_Selezionato</name>
         <label>Assign Iban Selezionato</label>
-        <locationX>809</locationX>
-        <locationY>638</locationY>
+        <locationX>1485</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Iban</assignToReference>
             <operator>Assign</operator>
@@ -244,10 +226,53 @@
                 <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanABI__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IbanABI_CC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCAB__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IbanCAB_CC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCIN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IbanCIN_CC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCIN_IBAN__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IbanNumeriControllo_CC</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.IbanCodeNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IbanContoCorrente_CC</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Validazione_Iban</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>BlanckChoice</name>
+        <choiceText>Selezionare un Iban o &quot;Inserimento Manuale&quot;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>blankChoice</stringValue>
+        </value>
+    </choices>
     <choices>
         <name>BlankIban</name>
         <choiceText>Inserimento Manuale</choiceText>
@@ -270,26 +295,133 @@
         </value>
     </choices>
     <decisions>
+        <name>Avanzamento</name>
+        <label>Avanzamento</label>
+        <locationX>1724</locationX>
+        <locationY>518</locationY>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_00</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4) OR (5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditIbanIt.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditIbanIt.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormExt.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormExt.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCaseAggiornato</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+        <rules>
+            <name>Annulla_00</name>
+            <conditionLogic>(1 AND 2) OR (3 AND 4) OR (5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditIbanIt.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditIbanIt.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormExt.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditFormExt.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Iban_Italiano</name>
         <label>Iban Italiano?</label>
-        <locationX>413</locationX>
+        <locationX>1089</locationX>
         <locationY>878</locationY>
         <defaultConnector>
-            <targetReference>Insert_Iban_Ex</targetReference>
+            <targetReference>Assegna_Iban_Estero</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Estero</defaultConnectorLabel>
         <rules>
             <name>Italiano</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Inserire_Provenienza_IBAN</leftValueReference>
+                <leftValueReference>Provenienza_Iban</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>IbanItalian</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Insert_Iban_IT</targetReference>
+                <targetReference>AssegnaIban</targetReference>
             </connector>
             <label>Italiano</label>
         </rules>
@@ -298,9 +430,9 @@
         <name>Iban_Italiano_0</name>
         <label>Iban Italiano?</label>
         <locationX>182</locationX>
-        <locationY>3182</locationY>
+        <locationY>2966</locationY>
         <defaultConnector>
-            <targetReference>Passa_a_Elaborazione_Manuale</targetReference>
+            <targetReference>AggiornaFasi_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Estero</defaultConnectorLabel>
         <rules>
@@ -314,7 +446,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Passa_a_Da_Inviare</targetReference>
+                <targetReference>CalcolaCodiceCausale</targetReference>
             </connector>
             <label>Italiano</label>
         </rules>
@@ -322,7 +454,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>990</locationX>
+        <locationX>2207</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -366,8 +498,8 @@
     <decisions>
         <name>Inserimento_Dati_Manualmente</name>
         <label>Inserimento Dati Manualmente?</label>
-        <locationX>380</locationX>
-        <locationY>2366</locationY>
+        <locationX>512</locationX>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>Assegna_Intestatario</targetReference>
         </defaultConnector>
@@ -411,7 +543,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Intestatario_0</targetReference>
+                <targetReference>Inserimento_Dati_Manuale_0_0</targetReference>
             </connector>
             <label>Inserimento Manuale</label>
         </rules>
@@ -419,8 +551,8 @@
     <decisions>
         <name>Inserimento_Manuale</name>
         <label>Inserimento Manuale?</label>
-        <locationX>611</locationX>
-        <locationY>518</locationY>
+        <locationX>1287</locationX>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assign_Iban_Selezionato</targetReference>
         </defaultConnector>
@@ -436,7 +568,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Paese_IBAN</targetReference>
+                <targetReference>Iban_Italiano</targetReference>
             </connector>
             <label>Inserimento Iban Manuale</label>
         </rules>
@@ -444,14 +576,21 @@
     <decisions>
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>380</locationX>
-        <locationY>2942</locationY>
+        <locationX>512</locationX>
+        <locationY>2606</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditFormFlow_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditFormFlow_0_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -462,12 +601,34 @@
             </connector>
             <label>Conferma</label>
         </rules>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_0</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>611</locationX>
-        <locationY>2126</locationY>
+        <locationX>941</locationX>
+        <locationY>1910</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -479,17 +640,46 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Case_Aggiornato</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
+        <rules>
+            <name>Annulla_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione_0_0</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Validate_Iban_OK</name>
         <label>Validate Iban OK?</label>
-        <locationX>611</locationX>
-        <locationY>1550</locationY>
+        <locationX>1287</locationX>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Screen_IBAN_non_validato</targetReference>
         </defaultConnector>
@@ -505,7 +695,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Case_Bozza</targetReference>
+                <targetReference>AssegnaValoriAggiornamento</targetReference>
             </connector>
             <label>OK</label>
         </rules>
@@ -560,6 +750,12 @@
         <dataType>String</dataType>
         <expression>RIGHT({!Get_Case_Aggiornato.Account.Name}, LEN({!Get_Case_Aggiornato.Account.Name}) - FIND(&quot; &quot;, {!Get_Case_Aggiornato.Account.Name}))</expression>
     </formulas>
+    <formulas>
+        <description>IT{!Numeri_Controllo}{!CIN}{!ABI}{!CAB}{!Numero_Conto_Corrente}</description>
+        <name>ItalianIbanFormula</name>
+        <dataType>String</dataType>
+        <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;{!GetCaseAggiornato.IbanCIN__c}&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_RichiestaDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Richiesta Domiciliazione/Attivazione Click&amp;Pay</label>
     <processMetadataValues>
@@ -582,10 +778,52 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>CalcolaCodiceCausale</name>
+        <label>CalcolaCodiceCausale</label>
+        <locationX>50</locationX>
+        <locationY>3086</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AggiornaFasi</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornato2.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
-        <locationX>380</locationX>
-        <locationY>2246</locationY>
+        <locationX>512</locationX>
+        <locationY>2030</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Dati_Manualmente</targetReference>
@@ -605,7 +843,7 @@
     <recordLookups>
         <name>Get_Ibans</name>
         <label>Get Ibans</label>
-        <locationX>611</locationX>
+        <locationX>1724</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -623,150 +861,126 @@
         <object>BillingProfile__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato</name>
+        <label>GetCaseAggiornato</label>
+        <locationX>1287</locationX>
+        <locationY>638</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Inserimento_Manuale</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornato2</name>
+        <label>GetCaseAggiornato2</label>
+        <locationX>182</locationX>
+        <locationY>2846</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Iban_Italiano_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseNonBozza</name>
+        <label>GetCaseNonBozza</label>
+        <locationX>2426</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaFase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>512</locationX>
-        <locationY>2606</locationY>
+        <locationX>644</locationX>
+        <locationY>2390</locationY>
         <connector>
-            <targetReference>Inserimento_Dati_Manuale_0</targetReference>
-        </connector>
-        <inputReference>Get_Case_Aggiornato</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Aggiorna_Case_0</name>
-        <label>Aggiorna Case</label>
-        <locationX>248</locationX>
-        <locationY>2606</locationY>
-        <connector>
-            <targetReference>Inserimento_Dati_Manuale_0</targetReference>
+            <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
         </connector>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_Bozza</name>
         <label>Aggiorna Iban Case Bozza</label>
-        <locationX>611</locationX>
-        <locationY>1886</locationY>
+        <locationX>941</locationX>
+        <locationY>1670</locationY>
         <connector>
             <targetReference>Screen_Mostra_Dati</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CaseInput.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>IbanABI__c</field>
-            <value>
-                <elementReference>IbanABI_CC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IbanCAB__c</field>
-            <value>
-                <elementReference>IbanCAB_CC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IbanCIN_IBAN__c</field>
-            <value>
-                <elementReference>IbanNumeriControllo_CC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IbanCIN__c</field>
-            <value>
-                <elementReference>IbanCIN_CC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IbanCodeNumber__c</field>
-            <value>
-                <elementReference>IbanContoCorrente_CC</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IbanIsForeign__c</field>
-            <value>
-                <elementReference>IbanIsForeign</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Iban__c</field>
-            <value>
-                <elementReference>Iban</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <inputReference>GetCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCaseNonBozza</name>
+        <label>AggiornaCaseNonBozza</label>
+        <locationX>2426</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Loading_Screen_0</targetReference>
+        </connector>
+        <inputReference>GetCaseNonBozza</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>50</locationX>
-        <locationY>3302</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CaseInput.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <locationY>3326</locationY>
+        <connector>
+            <targetReference>Loading_Screen</targetReference>
+        </connector>
+        <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Elaborazione_Manuale</name>
         <label>Passa a &quot;Elaborazione Manuale&quot;</label>
         <locationX>314</locationX>
-        <locationY>3302</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>CaseInput.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>Elaborazione Manuale</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <locationY>3206</locationY>
+        <inputReference>GetCaseAggiornato2</inputReference>
     </recordUpdates>
     <screens>
         <name>Document_Signature_Screen</name>
         <label>Document Signature Screen</label>
         <locationX>182</locationX>
-        <locationY>3062</locationY>
+        <locationY>2726</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Iban_Italiano_0</targetReference>
+            <targetReference>GetCaseAggiornato2</targetReference>
         </connector>
         <fields>
             <name>DisplayProcessType</name>
@@ -784,10 +998,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Inserimento_Dati_Manuale_0</name>
+        <name>Inserimento_Dati_Manuale_0_0</name>
         <label>Inserimento Dati Manuale</label>
         <locationX>380</locationX>
-        <locationY>2822</locationY>
+        <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -795,12 +1009,12 @@
             <targetReference>Salva_in_Bozza_o_Conferma</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader_6_0</name>
+            <name>DisplayHeader_6_0_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtRecordEditFormFlow_0</name>
+            <name>hdtRecordEditFormFlow_0_0</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -882,179 +1096,120 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Insert_Iban_Ex</name>
-        <label>Insert Iban Ex.</label>
-        <locationX>545</locationX>
-        <locationY>998</locationY>
+        <name>Loading_Screen</name>
+        <label>Loading Screen</label>
+        <locationX>50</locationX>
+        <locationY>3446</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Assign_Iban_Ex</targetReference>
-        </connector>
+        <allowPause>true</allowPause>
         <fields>
-            <name>DisplayHeader_4</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Inserire_Iban_Estero</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>Iban</elementReference>
-            </defaultValue>
-            <fieldText>Inserire Iban Estero</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>hdtFlowNavigationButton_0</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Insert_Iban_IT</name>
-        <label>Insert Iban IT</label>
-        <locationX>281</locationX>
-        <locationY>998</locationY>
+        <name>Loading_Screen_0</name>
+        <label>Loading Screen</label>
+        <locationX>2426</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>AI</targetReference>
-        </connector>
+        <allowPause>true</allowPause>
         <fields>
-            <name>DisplayHeader_3</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Numeri_Controllo</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>IbanNumeriControllo_CC</elementReference>
-            </defaultValue>
-            <fieldText>Numeri Controllo</fieldText>
-            <fieldType>InputField</fieldType>
+            <name>hdtFlowNavigationButton_0_0</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;I numeri di controllo sono composti da due numeri&lt;/p&gt;</errorMessage>
-                <formulaExpression>LEN({!Numeri_Controllo}) = 2</formulaExpression>
-            </validationRule>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
-        <fields>
-            <name>CIN</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>IbanCIN_CC</elementReference>
-            </defaultValue>
-            <fieldText>CIN</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Il codice CIN è composto da un solo carattere&lt;/p&gt;</errorMessage>
-                <formulaExpression>LEN({!CIN}) = 1</formulaExpression>
-            </validationRule>
-        </fields>
-        <fields>
-            <name>ABI</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>IbanABI_CC</elementReference>
-            </defaultValue>
-            <fieldText>ABI</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Il codice ABI è composto da cinque numeri&lt;/p&gt;</errorMessage>
-                <formulaExpression>LEN({!ABI}) = 5</formulaExpression>
-            </validationRule>
-        </fields>
-        <fields>
-            <name>CAB</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>IbanCAB_CC</elementReference>
-            </defaultValue>
-            <fieldText>CAB</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Il codice CAB è composto da cinque numeri&lt;/p&gt;</errorMessage>
-                <formulaExpression>LEN({!CAB}) = 5</formulaExpression>
-            </validationRule>
-        </fields>
-        <fields>
-            <name>Numero_Conto_Corrente</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>IbanContoCorrente_CC</elementReference>
-            </defaultValue>
-            <fieldText>Numero Conto Corrente</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-            <validationRule>
-                <errorMessage>&lt;p&gt;Il conto corrente è composto di dodici numeri&lt;/p&gt;</errorMessage>
-                <formulaExpression>LEN({!Numero_Conto_Corrente}) = 12</formulaExpression>
-            </validationRule>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Paese_IBAN</name>
-        <label>Paese IBAN</label>
-        <locationX>413</locationX>
-        <locationY>638</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Assegna_Valori_Predefaultati</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayHeader_2</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Inserire_Provenienza_IBAN</name>
-            <choiceReferences>IbanItalian</choiceReferences>
-            <choiceReferences>IbanForeign</choiceReferences>
-            <dataType>String</dataType>
-            <defaultSelectedChoiceReference>IbanItalian</defaultSelectedChoiceReference>
-            <fieldText>Inserire Provenienza IBAN</fieldText>
-            <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <showFooter>true</showFooter>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_IBAN_non_validato</name>
         <label>Screen IBAN non validato</label>
-        <locationX>699</locationX>
-        <locationY>1670</locationY>
+        <locationX>1634</locationX>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Aggiorna_Case_Bozza</targetReference>
+            <targetReference>Annulla_Prestazione_0_0_0</targetReference>
         </connector>
         <fields>
             <name>DisplayIbanNonValidato</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;﻿&lt;/span&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Iban Non valida&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;to&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; premere Avanti se si desidera procedere ugualmente&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 16px;&quot;&gt;﻿&lt;/span&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;Iban Non valida﻿to&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; premere Annulla per procedere con l&apos;annullamento.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>hdtFlowNav</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>1106</locationX>
+        <locationX>2426</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetCaseNonBozza</targetReference>
+        </connector>
         <fields>
             <name>DisplayHeader_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
@@ -1127,8 +1282,8 @@
     <screens>
         <name>Screen_Mostra_Dati</name>
         <label>Screen Mostra Dati</label>
-        <locationX>611</locationX>
-        <locationY>2006</locationY>
+        <locationX>941</locationX>
+        <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1231,13 +1386,13 @@
     <screens>
         <name>Show_Ibans</name>
         <label>Show Ibans</label>
-        <locationX>611</locationX>
+        <locationX>1724</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Inserimento_Manuale</targetReference>
+            <targetReference>Avanzamento</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_1</name>
@@ -1245,26 +1400,375 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Seleziona_un_Iban_oppure_procedi_per_inserirne_uno_manualmente</name>
+            <name>IbanSelection</name>
             <choiceReferences>Ibans</choiceReferences>
             <choiceReferences>BlankIban</choiceReferences>
             <dataType>String</dataType>
-            <defaultSelectedChoiceReference>BlankIban</defaultSelectedChoiceReference>
-            <fieldText>Seleziona un Iban oppure procedi per inserirne uno manualmente</fieldText>
+            <fieldText>Seleziona un Iban oppure seleziona &quot;Inserimento Manuale&quot;</fieldText>
             <fieldType>DropdownBox</fieldType>
             <isRequired>true</isRequired>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>Provenienza_Iban</name>
+            <choiceReferences>IbanItalian</choiceReferences>
+            <choiceReferences>IbanForeign</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Provenienza Iban</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IbanSelection</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>BlankIban</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtRecordEditIbanIt</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Richiesta Domiciliazione IT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>CaseInput.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Provenienza_Iban</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>IbanItalian</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtRecordEditFormExt</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Richiesta Domiciliazione Estero</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>CaseInput.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Provenienza_Iban</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>IbanForeign</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtFlowNavigationButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IbanSelection</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <elementReference>BlankIban</elementReference>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>864</locationX>
+        <locationX>2081</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Annulla_Prestazione</name>
+        <label>Annulla Prestazione</label>
+        <locationX>1898</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>578</locationX>
+        <locationY>2726</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>1106</locationX>
+        <locationY>2030</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Annulla_Prestazione_0_0_0</name>
+        <label>Annulla Prestazione</label>
+        <locationX>1634</locationX>
+        <locationY>1670</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseInput.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>CaseInput</name>
         <dataType>SObject</dataType>
