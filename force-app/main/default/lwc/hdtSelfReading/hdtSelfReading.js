@@ -3,6 +3,7 @@ import insertSelfReading from '@salesforce/apex/HDT_LC_SelfReading.insertSelfRea
 import updateSelfReading from '@salesforce/apex/HDT_LC_SelfReading.updateSelfReading';
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId';
+import checkLastReadings from '@salesforce/apex/HDT_LC_SelfReading.checkLastReadings';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -13,6 +14,8 @@ export default class HdtSelfReading extends LightningElement {
     @api recordId;
 
     @api object;
+
+    @api servicePointId;
 
     @api isVolture;
 
@@ -160,26 +163,83 @@ export default class HdtSelfReading extends LightningElement {
         this.buttonDisabled = true;
         this.lastReadingsChecked = true;
 
-        if(this.commodity == 'Energia Elettrica'){
+        checkLastReadings({servicePointId:this.servicePointId})
+        .then(result =>{
 
-            this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+            const lastReadings = this.fillLastReadingsArray(JSON.parse(result));
+            console.log('filled obj: ' + JSON.stringify( lastReadings));
 
-                element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
+            if(this.commodity == 'Energia Elettrica'){
+                this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+                    element.handleLastReading(lastReadings);
+                    //element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
+                });
+            } else if(this.commodity == 'Gas'){
+                this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+                    element.handleLastReading(lastReadings);
+                    //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
+                });
+            }
 
-            });
+        }).catch(error =>{
+            console.log('checkLastReadings failed: ' + error);
+        });
+    }
 
-        } else if(this.commodity == 'Gas'){
+    fillLastReadingsArray(lastReadingsResponse){
+        /*
+        [{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]'
+        */
 
-            this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+        const lastReadings = lastReadingsResponse.data;
 
-                //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
-                element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
+        let registers = [];
 
-            });
+        try {
+            for (const key in lastReadings) {
+                console.log('processing key: ' + key);
+                const match = key.match(/\d+/);
+                const index = match ? match[0] : -1;
 
-        }
+                if (index < 0) {
+                    continue;
+                }
+
+                let register = {};
+
+                const i = index - 1; // Indice effettivo, la response inizia da 1 anzichè da 0.
+                if (registers[i] === undefined) {
+                    registers[i] = {};
+                }
+
+                registers[i].register = index;
+
+                console.log('index: ' + i);
+                if (key.startsWith('herTipologiaMisuratore')) {
+                    registers[i].readingType = lastReadings[key];
+                } else if (key.startsWith('herMatricolaMisuratore')) {
+                    registers[i].readingSerialNumber = lastReadings[key];
+                } else if (key.startsWith('herDataLettura')) {
+                    const readingDate = lastReadings[key];
+                    if (readingDate === null) {
+                        continue;
+                    }
+                    registers[i].readingDate = this.convertItalianDate(readingDate);
+                } else if (key.startsWith('herFascia')) {
+                    registers[i].readingBand = lastReadings[key];
+                } else if (key.startsWith('herLettura')) {
+                    registers[i].readingOldValue = lastReadings[key];
+                }
+                // TODO: add missing fields
+            }
+
+          } catch (error) {
+            console.error(error);
+          }
 
 
+
+        return registers;
     }
 
     // event è definito solo per la voltura (this.isVolture) 
@@ -447,6 +507,15 @@ export default class HdtSelfReading extends LightningElement {
         return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
+    convertItalianDate(italianDate){
+        var parts = italianDate.split("/");
+        var date = new Date(parseInt(parts[2], 10),
+                            parseInt(parts[1], 10) - 1,
+                            parseInt(parts[0], 10));
+
+        var dateIso = date.toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return dateIso.substr(0, dateIso.indexOf('T'));
+    }
 
     reverseDate(inputDate){
 
