@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Document Selector</masterLabel>
+    <description>This is a component that allow users to search and create documents from sap</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="contractAccount" type="String" label="Contract Account SAP" description="Contract Account SAP" role="inputOnly"/>
+            <property name="billingProfileId" type="String" label="Record Id Billing Profile" description="Record Id Billing Profile" role="inputOnly"/>
+            <property name="codiceCliente" type="String" label="Codice Cliente SAP" description="Codice Cliente SAP" role="inputOnly"/>
+            <property name="caseId" type="String" label="Record Id Case" description="Record Id Case" role="inputOnly"/>
+            <property name="processType" type="String" label="Process Type" description="Process Type" role="inputOnly"/>
+            <property name="accountId" type="String" label="Record Id Account" description="Record Id Account" role="inputOnly"/>
+            <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
+            <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
+            <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
+            <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

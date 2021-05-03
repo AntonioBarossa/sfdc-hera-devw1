@@ -51,12 +51,12 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;Mobile__c&quot;,
+        &quot;FieldName&quot; : &quot;ContactMobile&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },
