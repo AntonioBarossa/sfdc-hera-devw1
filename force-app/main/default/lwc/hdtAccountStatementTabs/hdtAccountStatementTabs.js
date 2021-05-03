@@ -108,14 +108,15 @@ export default class HdtAccountStatementTabs extends LightningElement {
         this.statementType = event.detail;
     }
 
-    openServiceCatalog(event){
-        var servicecatalogId = event.detail;
-        console.log('>>> on tabs lwc > ' + servicecatalogId);
-        const serviceCatalog = new CustomEvent("servicecatalog", {
-            detail: {servicecatalogId}
+    openAuraCmp(event){
+
+        const serviceCatalog = new CustomEvent("auramodalcmp", {
+            detail: event.detail
+            //detail: {servicecatalogId}
         });
         // Dispatches the event.
         this.dispatchEvent(serviceCatalog);
+
     }
 
 }

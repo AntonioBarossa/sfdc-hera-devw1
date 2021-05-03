@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c));
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c));
         }
 
         return objDetail;
@@ -155,7 +155,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c));
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, ''));
         }
 
         obj.success = true;
@@ -265,7 +265,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             for(HDT_HeraCompany__mdt hc : companyList){
                 company  = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
                 company.label = hc.Label;
-                company.value = hc.DeveloperName;
+                company.value = hc.CompanyCode__c;
                 pickObj.companyList.add(company);
             }
 
