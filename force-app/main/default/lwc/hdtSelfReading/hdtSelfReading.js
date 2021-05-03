@@ -194,6 +194,7 @@ export default class HdtSelfReading extends LightningElement {
         const lastReadings = lastReadingsResponse.data;
 
         let registers = [];
+        let finalRegisters = []
 
         try {
             for (const key in lastReadings) {
@@ -204,8 +205,6 @@ export default class HdtSelfReading extends LightningElement {
                 if (index < 0) {
                     continue;
                 }
-
-                let register = {};
 
                 const i = index - 1; // Indice effettivo, la response inizia da 1 anzichè da 0.
                 if (registers[i] === undefined) {
@@ -221,6 +220,8 @@ export default class HdtSelfReading extends LightningElement {
                     registers[i].readingSerialNumber = lastReadings[key];
                 } else if (key.startsWith('herDataLettura')) {
                     const readingDate = lastReadings[key];
+                    // La response di SAP valorizza solo la data lettura a null se il registro non ha una lettura
+                    // Skippiamo questa key in modo da marcare l'oggetto del registro come 'da rimuovere'
                     if (readingDate === null) {
                         continue;
                     }
@@ -233,13 +234,18 @@ export default class HdtSelfReading extends LightningElement {
                 // TODO: add missing fields
             }
 
+            // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
+            registers.forEach(register => {
+                if ('readingDate' in register) {
+                    finalRegisters.push(register);
+                }
+            });
+
           } catch (error) {
             console.error(error);
           }
 
-
-
-        return registers;
+        return finalRegisters;
     }
 
     // event è definito solo per la voltura (this.isVolture) 
