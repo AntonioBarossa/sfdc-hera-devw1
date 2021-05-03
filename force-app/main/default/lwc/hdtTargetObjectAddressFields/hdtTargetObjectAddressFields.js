@@ -3,6 +3,10 @@ import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.
 import getIndirizzo from '@salesforce/apex/HDT_LC_AdvancedSearch.getIndirizzo';
 import getIndirizzoFornitura from '@salesforce/apex/HDT_LC_AdvancedSearch.getIndirizzoFornitura';
 import getAddressFromAccount from '@salesforce/apex/HDT_LC_AdvancedSearch.getAddressFromAccount';
+import getAddressComune from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceCom';
+import getAddressInd from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceInd';
+import getAddressRev from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceVer';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 export default class hdtTargetObjectAddressFields extends LightningElement {
     @api objectapiname;
     @api fieldsAddressObject=[];
@@ -11,15 +15,19 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api fieldsDataReq;
     @api selectedservicepoint;
     @api servicePointRetrievedData ;
+    @api herokuAddressServiceData;
+    @api titlecomponent ;
     hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
     verifyDisabledOnUpdate = true;
     verifyFieldsAddressDisabled= true;
+    disableVerifIndiButton = true;
     @api recordtype;
-    @api checkBoxFieldValue;
+    @api headertoshow;
+    @api checkBoxFieldValue = false;
     @api textFieldValue;
     @api theRecord = {};
-    @api stato;
+    @api stato = 'Italia';
     @api provincia;
     @api comune;
     @api cap;
@@ -28,9 +36,9 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api estensCivico;
     @api codComuneSAP;
     @api codStradarioSAP;
-    @api IndEstero ;
-
-    @api flagVerifiacto ;
+    @api IndEstero = false ;
+    @api aprimodal = false;
+    @api flagVerificato =false;
     @track openmodel = false;
     tableData = [];
     tableColumnsFornitura = [];
@@ -54,6 +62,56 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     rowToSend=[];
     disableCheckBoxFornitura=false;
     disableCheckBoxFatturazione=false;
+    booleanForm=false;
+    disableStato=false;
+    disableProvincia=false;
+    disableCap=false;
+    disableCodComuneSap=false;
+    disableCodViaSap=false;
+    visibleCopiaResidenza=false;
+    visibleSelezioneIndirizzi=false;
+    
+    
+
+    handleSelectedValue(event) {
+    console.log('handleSelectedValue - event ' +JSON.stringify(event.detail));
+    console.log('handleSelectedValue - rowtosend****' + JSON.stringify(this.rowToSend));
+    this.template.querySelector('c-hdt-selection-address-response').closeForm();
+    if(event.detail['city1'] != null){
+        this.comune=event.detail['city1'];
+        this.theRecord['Comune']= event.detail['city1'];
+    }
+    if(event.detail['cityCode'] != null){
+        this.codComuneSAP=event.detail['cityCode'];
+        this.theRecord['Codice Comune SAP']= event.detail['cityCode'];
+    }
+    if(event.detail['region'] != null){
+        this.provincia=event.detail['region'];
+        this.theRecord['Provincia']= event.detail['region'];
+    }
+    if(event.detail['street'] != null){
+        this.via=event.detail['street'];
+        this.theRecord['Via']= event.detail['Via'];
+    }
+    if(event.detail['streetCode'] != null){
+        this.codStradarioSAP=event.detail['streetCode'];
+        this.theRecord['codStradarioSAP']= event.detail['streetCode'];
+    }
+    if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
+        this.disableVerifIndiButton = false;
+    }
+    else{
+        this.disableVerifIndiButton = true;
+    }
+
+    }
+
+    handleChange(event) {
+        this.comune = event.detail.value;
+        this.autocomplete= 'false';
+    }
+
+
 
 handleAddressFromAccount()
 {
@@ -75,7 +133,7 @@ handleAddressFromAccount()
 			this.estensCivico='';
             this.codComuneSAP='';
             this.codStradarioSAP='';
-            //this.flagVerifiacto=false;
+            //this.flagVerificato=false;
 
             this.theRecord['Via']= data['Via'];
             this.theRecord['Civico']= data['Civico'];
@@ -93,6 +151,77 @@ handleAddressFromAccount()
 	
 	this.preloading = false;
     console.log(' getAddressFromAccount END****');
+}
+
+@api
+handleAddressValuesIfSap(servicePointRetrievedData){
+    console.log('handleAddressValuesIfSap START');
+    console.log('handleAddressValuesIfSap servicePointRetrievedData :' + JSON.stringify(servicePointRetrievedData));
+    
+    Object.keys(servicePointRetrievedData).forEach(key=>{
+        switch(key){
+            case 'SupplyCountry__c':
+                this.stato = servicePointRetrievedData[key] ;
+                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyCity__c':
+                this.comune= servicePointRetrievedData[key] ;
+                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyProvince__c':
+                this.provincia= servicePointRetrievedData[key] ;
+                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyPostalCode__c':
+                this.cap = servicePointRetrievedData[key] ;
+                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyStreet__c':
+                this.via = servicePointRetrievedData[key] ;
+                this.theRecord['Via'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyStreetNumberExtension__c':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.estensCivico = servicePointRetrievedData[key] ;
+                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyStreetNumber__c':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.civico = servicePointRetrievedData[key] ;
+                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplySAPCityCode__c':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.codComuneSAP = servicePointRetrievedData[key] ;
+                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplySAPStreetCode__c':
+                console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+                this.codStradarioSAP = servicePointRetrievedData[key] ;
+                this.theRecord['Codice Stradario SAP'] = servicePointRetrievedData[key] ;
+            break;
+            case 'SupplyIsAddressVerified__c':
+
+            console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
+            this.flagVerificato = servicePointRetrievedData[key] ;
+            this.theRecord['Flag Verificato'] = servicePointRetrievedData[key] ;
+
+            break;
+
+        }
+
+    });
+    console.log('handleAddressValues END ');
+}
+
+
+    alert(title,msg,variant){
+    const event = ShowToastEvent({
+        title: title,
+        message:  msg,
+        variant: variant
+    });
+    dispatchEvent(event);
 }
 
     handleConfirm(){
@@ -123,6 +252,10 @@ handleAddressFromAccount()
                 this.provincia=data[5];
                 this.cap=data[6];
                 this.stato=data[7];
+
+                this.codComuneSAP = data[8] !== undefined ? data[8] : '';
+                this.codStradarioSAP = data[9] !== undefined ? data[9] : '';
+                this.IndEstero = data[10] !== undefined ? data[10] : false;
             }else{
                 this.via= data[0];
                 this.civico= data[1];
@@ -131,6 +264,10 @@ handleAddressFromAccount()
                 this.provincia=data[4];
                 this.cap=data[5];
                 this.stato=data[6];
+
+                this.codComuneSAP = data[7] !== undefined ? data[7] : '';
+                this.codStradarioSAP = data[8] !== undefined ? data[8] : '';
+                this.IndEstero = data[9] !== undefined ? data[9] : false;
             }
 
             this.theRecord['Via']= this.via;
@@ -140,6 +277,12 @@ handleAddressFromAccount()
             this.theRecord['Provincia']= this.provincia;
             this.theRecord['CAP']= this.cap;
             this.theRecord['Stato']= this.stato;
+
+            this.theRecord['CodiceComuneSAP'] = this.codComuneSAP;
+            this.theRecord['CodiceViaStradarioSAP'] = this.codStradarioSAP;
+            this.theRecord['IndirizzoEstero'] = this.IndEstero;
+            this.theRecord['Flag Verificato'] = this.FlagVerificato;
+
             }
         
         this.preloading = false;
@@ -149,8 +292,7 @@ handleAddressFromAccount()
 
     getSelectedServicePoint(event){
         console.log('getSelectedServicePoint START');
-        /*table = $("#main_index1").DataTable();
-        table.rows( '.selected' ).nodes().to$().removeClass( 'selected' );*/
+  
         
         this.disableCheckBoxFornitura=true;
         this.preloading = true;
@@ -164,8 +306,6 @@ handleAddressFromAccount()
     
     getSelectedAddress(event){
         console.log('getSelectedAddress START');
-       /* table = $("#main_index1").DataTable();
-        table.rows( '.selected' ).nodes().to$().removeClass( 'selected' );*/
 
         this.disableCheckBoxFatturazione=true;
         this.preloading = true;
@@ -227,6 +367,9 @@ handleAddressFromAccount()
         this.preloading = true;
             console.log('AccountId *******************'+ JSON.stringify(this.accountid));
             getIndirizzo({accountId:this.accountid}).then(data =>{
+
+                console.log('****getIndirizzo: ', JSON.stringify(data));
+
                 this.preloading = false;
                 if (data.length > 0) {
                     this.originalData = JSON.parse(JSON.stringify(data));
@@ -234,14 +377,19 @@ handleAddressFromAccount()
                     this.formatTableHeaderColumns(data);
                     this.openmodel = true;
                     this.isLoaded = true;
+                    console.log('getIndirizzo pages: '+ JSON.stringify(this.pages));
+                    console.log('getIndirizzo tableData: '+ JSON.stringify(this.tableData));
+
                 } else {
-                   
+                    this.alert('Dati tabella','Nessun record trovato','warn')
                     this.tableData=[];
                     this.tableData = data;
                 }
             });
             
             getIndirizzoFornitura({accountId:this.accountid}).then(data =>{
+
+                console.log('****getIndirizzoFornitura: ', JSON.stringify(data));
                 this.preloading = false;
                 if (data.length > 0) {
                     this.originalDataFornitura = JSON.parse(JSON.stringify(data));
@@ -249,14 +397,15 @@ handleAddressFromAccount()
                     this.formatTableHeaderColumnsFornitura(data);
                     this.openmodel = true;
                     this.isLoaded = true;
+                    console.log('getIndirizzoFornitura pages: '+ JSON.stringify(this.pagesFornitura));
+                    console.log('tableDataFornitura******'+ JSON.stringify(this.tableDataFornitura));
                 } else {
                     this.alert('Dati tabella','Nessun record trovato','warn')
                     this.tableDataFornitura=[];
                     this.tableDataFornitura = data;
                 }
             });
-            console.log('tableData******'+ JSON.stringify(this.tableData));
-            console.log('tableDataFornitura******'+ JSON.stringify(this.tableDataFornitura));
+            
 
        
         
@@ -316,6 +465,7 @@ handleAddressFromAccount()
         this.tableData=[];
         this.tableData = this.pages[this.currentPage];
 
+        console.log('currentPage********'+ this.currentPage);
         console.log('tableData********'+ JSON.stringify(this.tableData));
 
     }
@@ -329,12 +479,12 @@ handleAddressFromAccount()
     }
 
     nextPage() {
-        if (this.currentPage < this.totalPage - 1) this.currentPage++;
+        if (this.currentPage < this.totalPage) this.currentPage += 1;
         this.reLoadTable();
     }
 
     previousPage() {
-        if (this.currentPage > 0) this.currentPage--;
+        if (this.currentPage > 1) this.currentPage-= 1 ;
         this.reLoadTable();
     }
 
@@ -408,12 +558,14 @@ handleAddressValues(servicePointRetrievedData){
             break;
             case 'IndirizzoEstero':
                 this.IndEstero = servicePointRetrievedData[key] ;
+                this.theRecord['Indirizzo Estero'] = this.IndEstero;
+
             break;
             case 'FlagVerificato':
 
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
-
-                this.flagVerifiacto = servicePointRetrievedData[key] ;
+                this.flagVerificato = servicePointRetrievedData[key] ;
+                this.theRecord['Flag Verificato'] = this.flagVerificato;
 
             break;
         }
@@ -432,20 +584,197 @@ handleCheckBoxChange(event){
         console.log(event.target.name + ' now is set to ' + event.target.checked); 
         switch(event.target.name){
             case 'Indirizzo Estero':
+                console.log('entra in indirizzo estero case');
                 this.IndEstero = event.target.checked;
                 break;
             case 'Flag Verificato':
-                this.flagVerifiacto =  event.target.checked;
+                console.log('entra in Flag Verificato case');
+
+                this.flagVerificato =  event.target.checked;
                 break;
         }
+
+        this.disableFieldByIndEstero();
+
 
 
         
         console.log('theRecord *********'+ JSON.stringify(this.theRecord));
 }
+
+flagVerificatoFalse(){
+    console.log('flagVerificatoFalse START');
+    this.theRecord['Flag Verificato'] = false;
+
+    this.flagVerificato = false;
+    console.log('Flag Verificato : '+JSON.stringify(this.flagVerificato));
+    console.log('flagVerificatoFalse END');
+}
+
 @api
-handleTextChange(event){
-    console.log('event detail : ******++'+ JSON.stringify(event.target.value));
+disableFieldByIndEstero(){
+
+    console.log('disableFieldByIndEstero START');
+    if(this.IndEstero === false ){
+        console.log('entra in indEstero false');
+        this.disableStato=true;
+        this.disableProvincia=true;
+        this.disableCap=true;
+        this.disableCodComuneSap=true;
+        this.disableCodViaSap=true;
+    }
+    if(this.IndEstero === true)
+    {
+        console.log('entra in indEstero true');
+        this.disableStato=false;
+        this.disableProvincia=false;
+        this.disableCap=false;
+        this.disableCodComuneSap=false;
+        this.disableCodViaSap=false;
+    }
+    console.log('disableFieldByIndEstero END');
+
+}
+
+
+@api
+handleChangeComune(event){
+    console.log('event value : ******++'+ JSON.stringify(event.target.value));
+    console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
+    console.log('entra qui+++++++++++++++++++++++++++');
+    
+    if((event.target.value.length==3 && event.target.name =='Comune')){
+        getAddressComune({city:event.target.value}).then(data =>
+            {
+                
+                console.log("******HOLAHOLA:" + JSON.stringify(data));
+                if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                    console.log("Sucessoooooooooooo:" + JSON.stringify(data));
+                    this.herokuAddressServiceData = data['prestazione'];
+                    this.headertoshow = 'Comune';
+                    this.booleanForm=false;
+                    this.booleanForm=true;
+                    this.template.querySelector('c-hdt-selection-address-response').openedForm();
+                    this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
+                }
+                else{
+                    let event2;
+                    if(data['statusCode'] != 200){
+                        event2 = new ShowToastEvent({
+                            title: 'Errore',
+                            variant: 'error',
+                            message: "errore di connessione, riprovare o contattare l'amministratore"
+                        });
+                        
+                    }
+                    else{
+                        event2 = new ShowToastEvent({
+                            title: 'Errore',
+                            variant: 'error',
+                            message: 'Non sono presenti Comuni corrispondenti ai caratteri inseriti. Digitare nuovamente per effettuare una nuova ricerca.'
+                        });
+                    }
+                    this.dispatchEvent(event2);
+                }
+                
+    
+    
+        });
+    }
+    
+
+        this.textFieldValue = event.target.value;
+        this.theRecord[event.target.name] = event.target.value;
+        console.log(event.target.name + ' now is set to ' + event.target.value);
+        console.log('theRecord *********'+ JSON.stringify(this.theRecord));
+        switch(event.target.name){
+            case 'Civico':
+                this.civico = event.target.value;
+                break;
+            case 'Comune':
+                this.comune =  event.target.value;
+                break;
+            case 'Stato':
+                this.stato = event.target.value;
+                break;
+            case 'Provincia':
+                this.provincia = event.target.value;
+                break;
+            case 'Via':
+                this.via= event.target.value;
+                
+                break;
+            case 'CAP':
+                this.cap= event.target.value;
+                break;
+            case 'Estens.Civico':
+                this.estensCivico = event.target.value;
+                console.log('estensione civico'+ JSON.stringify(event.target.value));
+                break;
+            case 'Codice Comune SAP':
+                this.codComuneSAP = event.target.value;
+                console.log('codComSAP'+ JSON.stringify(this.estensCivico));
+                break;
+            case 'Codice Via Stradario SAP':
+                this.codStradarioSAP = event.target.value;
+                console.log('codStradario'+ JSON.stringify(this.estensCivico));
+                break;
+        }
+        this.flagVerificatoFalse();
+        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
+       
+        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+
+}
+
+
+@api
+handleChangeIndirizz(event){
+    console.log('event value : ******++'+ JSON.stringify(event.target.value));
+    console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
+    console.log('entra qui+++++++++++++++++++++++++++');
+    
+    if((event.target.value.length==5 && event.target.name =='Via')){
+        getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
+            {
+                
+                console.log("******HOLAHOLA:" + JSON.stringify(data));
+                if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                    console.log("Sucessoooooooooooo:" + JSON.stringify(data));
+                    this.herokuAddressServiceData = data['prestazione'];
+                    this.headertoshow = 'Via';
+                    this.booleanForm=false;
+                    this.booleanForm=true;
+
+                    this.template.querySelector('c-hdt-selection-address-response').openedForm2();
+                    this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Via');
+                }
+                else{
+                    let event2;
+                    if(data['statusCode'] != 200){
+                        event2 = new ShowToastEvent({
+                            title: 'Errore',
+                            variant: 'error',
+                            message: "errore di connessione, riprovare o contattare l'amministratore"
+                        });
+                        
+                    }
+                    else{
+                        event2 = new ShowToastEvent({
+                            title: 'Errore',
+                            variant: 'error',
+                            message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
+                        });
+                    }
+                    this.dispatchEvent(event2);
+                }
+                
+    
+    
+        });
+    }
+    
+
         this.textFieldValue = event.target.value;
         this.theRecord[event.target.name] = event.target.value;
         console.log(event.target.name + ' now is set to ' + event.target.value);
@@ -482,9 +811,73 @@ handleTextChange(event){
                 console.log('codStradario'+ JSON.stringify(this.estensCivico));
                 break;
         }
+        this.flagVerificatoFalse();
         this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
         console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
 
+}
+
+
+
+
+
+
+@api
+handleTextChange(event){
+    console.log('event value : ******++'+ JSON.stringify(event.target.value));
+    console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
+    console.log('entra qui+++++++++++++++++++++++++++');
+    
+    if((event.target.value.length>2 && event.target.name =='Comune')||(event.target.value.length>4 && event.target.name =='Via')){
+        this.booleanForm=true;
+        this.template.querySelector('c-hdt-selection-address-response').openedForm();
+        this.template.querySelector('c-hdt-selection-address-response').connectedCallback();
+    }
+
+        this.textFieldValue = event.target.value;
+        this.theRecord[event.target.name] = event.target.value;
+        console.log(event.target.name + ' now is set to ' + event.target.value);
+        console.log('theRecord *********'+ JSON.stringify(this.theRecord));
+        switch(event.target.name){
+            case 'Civico':
+                this.civico = event.target.value;
+                break;
+            case 'Comune':
+                this.comune =  event.target.value;
+                break;
+            case 'Stato':
+                this.stato = event.target.value;
+                break;
+            case 'Provincia':
+                this.provincia = event.target.value;
+                break;
+            case 'Via':
+                this.via= event.target.value;
+                break;
+            case 'CAP':
+                this.cap= event.target.value;
+                break;
+            case 'Estens.Civico':
+                this.estensCivico = event.target.value;
+                break;
+            case 'Codice Comune SAP':
+                this.codComuneSAP = event.target.value;
+                break;
+            case 'Codice Via Stradario SAP':
+                this.codStradarioSAP = event.target.value;
+                break;
+        }
+        this.flagVerificatoFalse();
+        
+        this.wrapAddressObject = this.toObjectAddressInit(this.theRecord);
+        console.log('wrapAddressObject -handleTextChange ********************'+ JSON.stringify(this.wrapAddressObject));
+        if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
+            this.disableVerifIndiButton = false;
+        }
+        else{
+            this.disableVerifIndiButton = true;
+        }
+    
 }
 
 @api
@@ -526,6 +919,20 @@ disabledverifyFieldsAddressDisabled(){
     connectedCallback()
     {
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
+        console.log('connectedCallback  START + theRecord : '+JSON.stringify(this.theRecord));
+        console.log('connectedCallback   objectApiName : '+JSON.stringify(this.objectapiname));
+        if(this.objectapiname=='Account'){
+            this.visibleCopiaResidenza=false;
+            this.visibleSelezioneIndirizzi=false;
+        }else{
+            this.visibleCopiaResidenza=true;
+            this.visibleSelezioneIndirizzi=true;
+        }
+
+        this.theRecord['Stato'] = this.stato;
+        console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
+        this.disableFieldByIndEstero();
+        
     }
 
 
@@ -537,7 +944,12 @@ disabledverifyFieldsAddressDisabled(){
             this.handleAddressValues(data);
             console.log('getInstanceWrapObject - getInstanceWrapAddressObject Start '+ JSON.stringify(data));
             //this.wrapAddressObject = this.toObjectAddressInit(data);
-            
+            if(this.codComuneSAP != null && this.codStradarioSAP != null && this.civico != null){
+                this.disableVerifIndiButton = false;
+            }
+            else{
+                this.disableVerifIndiButton = true;
+            }
             console.log('getInstanceWrapObject - wrapAddressObject' + JSON.stringify(this.wrapAddressObject));
             //this.toObjectAddress();
             
@@ -676,13 +1088,134 @@ disabledverifyFieldsAddressDisabled(){
      * Verify address
      */
     handleAddressVerification(){
+
+        getAddressRev({modality:'S',cityCode:this.codComuneSAP,streetCode:this.codStradarioSAP,houseNumCode:this.civico}).then(data =>
+            {
+                
+                console.log("******:" + JSON.stringify(data));
+                if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                    console.log("Successoooooooooooo:" + JSON.stringify(data));
+                    this.comune = data['prestazione'][0].city1;
+                    this.codComuneSAP = data['prestazione'][0].cityCode;
+                    this.codStradarioSAP = data['prestazione'][0].streetCode;
+                    this.cap = data['prestazione'][0].postCode1;
+                    this.via = data['prestazione'][0].street;
+                    this.civico = data['prestazione'][0].houseNum1;
+                    this.provincia = data['prestazione'][0].region;
+                    
+                    console.log('******PREVERIF:' + this.flagVerificato);
+                    this.flagVerificato = true;
+                    console.log('******POSTVERIF:' + this.flagVerificato);
+
+                    this.theRecord['Via']= data['prestazione'][0].street;
+                    this.theRecord['Civico']= data['prestazione'][0].houseNum1;
+                    this.theRecord['Comune']= data['prestazione'][0].city1;
+                    this.theRecord['Provincia']= data['prestazione'][0].region;
+                    this.theRecord['CAP']= data['prestazione'][0].houseNum1;
+                    this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
+                    this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
+                    this.theRecord['Flag Verificato'] = true;
+                }
+                else{
+                    console.log("ErrorrrrrreeeeeeeeeEeee:" + JSON.stringify(data));
+                }
+                
+    
+    
+        }); 
+
+
+
+      //  this.hasAddressBeenVerified = true;
         
-        this.hasAddressBeenVerified = true;
-        
-        this.dispatchEvent(new CustomEvent("addressverification", {
+       /* this.dispatchEvent(new CustomEvent("addressverification", {
             detail: this.hasAddressBeenVerified
-          }));
+          }));*/
     }
+
+    handleKeyPress(event){
+
+        if(event.code=='Enter'){
+
+        if(event.target.value.length == 2 && event.target.name == 'Comune' && event.keyCode === 13){
+
+            //this.booleanForm= true;
+            getAddressComune({city:event.target.value}).then(data =>
+                {
+                    
+                    if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                        this.herokuAddressServiceData = data['prestazione'];
+                        this.headertoshow = 'Comune';
+                        
+                        this.booleanForm=true;
+                        this.template.querySelector('c-hdt-selection-address-response').openedForm();
+                        this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
+                    }
+                    else{
+                        let event2;
+                        if(data['statusCode'] != 200){
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: "errore di connessione, riprovare o contattare l'amministratore"
+                            });
+                            
+                        }
+                        else{
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: 'Non sono presenti Comuni corrispondenti ai caratteri inseriti. Digitare nuovamente per effettuare una nuova ricerca.'
+                            });
+                        }
+                        this.dispatchEvent(event2);
+                    }
+                    
+        
+        
+            });
+
+        }
+        if((event.target.value.length >= 2 && event.target.value.length <=4)  && event.target.name == 'Via' && event.keyCode === 13){
+            getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
+                {
+                    
+                    if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                        console.log("Sucessoooooooooooo:" + JSON.stringify(data));
+                        this.herokuAddressServiceData = data['prestazione'];
+                        this.headertoshow = 'Via';
+                        this.booleanForm=false;
+                        this.booleanForm=true;
+    
+                        this.template.querySelector('c-hdt-selection-address-response').openedForm2();
+                        this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Via');
+                    }
+                    else{
+                        let event2;
+                        if(data['statusCode'] != 200){
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: "errore di connessione, riprovare o contattare l'amministratore"
+                            });
+                            
+                        }
+                        else{
+                            event2 = new ShowToastEvent({
+                                title: 'Errore',
+                                variant: 'error',
+                                message: 'Non sono presenti Indirizzi corrispondenti ai caratteri inseriti . Digitare nuovamente per effettuare una nuova ricerca.',
+                            });
+                        }
+                        this.dispatchEvent(event2);
+                    }
+                    
+        
+        
+            });
+        }
+    } 
+}  
 
 
 }
