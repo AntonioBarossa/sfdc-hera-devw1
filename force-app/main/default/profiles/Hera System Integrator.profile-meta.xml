@@ -12511,11 +12511,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.Da_Esportare__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Product2.DayNotice__c</field>
         <readable>true</readable>
     </fieldPermissions>
