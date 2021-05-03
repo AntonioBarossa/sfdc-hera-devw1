@@ -9373,11 +9373,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Name__c.BelfioreCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>NewsNotificationCenter__c.Active__c</field>
         <readable>true</readable>
     </fieldPermissions>
