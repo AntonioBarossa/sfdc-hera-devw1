@@ -662,6 +662,11 @@
                 <default>false</default>
                 <label>Esito KO tentativo riattivazione</label>
             </value>
+            <value>
+                <fullName>In Attesa Allineamento Anagrafica</fullName>
+                <default>false</default>
+                <label>In Attesa Allineamento Anagrafica</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

@@ -591,4 +591,9 @@
         <default>false</default>
         <label>Votive Modena Cessazione</label>
     </standardValue>
+    <standardValue>
+        <fullName>Rettifica Consumi</fullName>
+        <default>false</default>
+        <label>Rettifica Consumi</label>
+    </standardValue>
 </StandardValueSet>

@@ -32,4 +32,11 @@ public with sharing class HDT_LC_AccountAlerts {
 
         return HDT_UTL_DatabaseService.insertSObject(accountAlert);
     }
+
+    @AuraEnabled
+    public static Boolean updateAlert(String alert) {
+        System.debug('Going to update alert ' + alert);
+        AlertAccountConfiguration__c alertObj = (AlertAccountConfiguration__c) JSON.deserialize(alert, AlertAccountConfiguration__c.class);
+        return HDT_UTL_DatabaseService.updateSObject(alertObj);
+    }
 }

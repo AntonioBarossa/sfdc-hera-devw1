@@ -1,0 +1,16 @@
+<template>
+
+    <template if:false={showCurrency} >
+        {outputvalue}
+    </template>
+
+    <template if:true={showCurrency} >
+        <lightning-formatted-number
+            value={outputvalue}
+            format-style="currency"
+            currency-code="EUR"
+            currency-display-as="symbol"
+        ></lightning-formatted-number>
+    </template>
+
+</template>
