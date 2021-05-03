@@ -961,15 +961,15 @@
     <picklistValues>
         <picklist>DocSendingMethod__c</picklist>
         <values>
-            <fullName>Mail</fullName>
+            <fullName>E-mail</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Posta</fullName>
+            <fullName>Posta Cartacea</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Stampa</fullName>
+            <fullName>Stampa Cartacea</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1134,257 +1134,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>ImplantType__c</picklist>
-        <values>
-            <fullName>1001-Cottura cibi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1002-Cottura%2FProduz acq calda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1003-Riscaldamento esclusivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1004-Riscaldamento promiscuo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1005-Risc%2E centraliz esclusivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1006-Risc%2E centraliz promiscuo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1007-Attivita produttive</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1008-Promiscuo %28prod%2B risc%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1009-Reti %28cabine primo salto%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1010-Usi interni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1101-Domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1102-Non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1103-Attivita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1104-Scar%2E poz priv%2E civ%2E cont</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1105-Antincendio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1106-Cantiere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1107-Colonnetta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1108-Irriguo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1109-Comunale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1110-Ente pubblico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1111-Promiscuo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1112-Subfornitura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1113-Uso interno</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1114-Rete</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1115-Scar poz priv%2Eciv no cont</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1116-Scar%2E acq reflue uso ind</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1117-Autobotte %28solo usi Hera%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1118-Scar ind no cont%2E ACQ%2BPOZ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1119-Scar%2E ind%2Ele  cont%2E div</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1120-Scar%2E ind%2Ele no cont%2E div</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1121-Scar%2Epozzo priv%2E ind cont</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1122-Scar%2Epoz priv%2Eind%2Eno cont</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1123-Prel%2E pozzo priv%2E no fatt</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1201-Domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1202-Non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13A0-Usi di Abitazione BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13BB-Illuminazione pubblica BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13CB-Non domestici in BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13CT-Forn temporanee %3C 21 gg</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13DM-Illuminazione pubblica MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13EM-Non domestici MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1401-Risc amb singoli</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1402-Risc AcquaIS - Raffr Sing</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1403-Risc Amb centr</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1404-Attivita produttive</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1405-Risc AcquaIS-Raffr Centr</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1406-Acqua calda Sing unità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1407-Acqua calda Centr</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1408-Ospedalieri</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1409-Usi interni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1410-Solo Raffrescamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>1411-Piscine e Palestre</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EIMP_L01-Illuminaz%2E Pubb%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EIMP_M04-Non domestici</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E_I_USIDOM-Domestici</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G_ICC-Imp%2E Usi Civili Commerci</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G_ICC-Imposta Usi Non Dom%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G_ICD-Imposta Usi Domestici</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Instance326__c</picklist>
         <values>
             <fullName>Non Validato</fullName>
@@ -1461,89 +1210,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MeterClass__c</picklist>
-        <values>
-            <fullName>Ambiente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Canone Rai</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disattivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generiche Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generiche VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Informative</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifiche Anagrafiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Notifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PostSales VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reclami</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>PaymentMode__c</picklist>
         <values>
             <fullName>Bollettino</fullName>
@@ -1593,15 +1259,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1658,14 +1324,6 @@
         </values>
         <values>
             <fullName>Gestione appuntamento su portale DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1738,10 +1396,6 @@
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
             <default>false</default>
         </values>
         <values>

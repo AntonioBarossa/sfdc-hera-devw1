@@ -3,6 +3,144 @@ public with sharing class HDT_UTL_ServicePoint {
     public HDT_UTL_ServicePoint() {
 
     }
+
+
+    @AuraEnabled
+	public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+		
+			servicePoint__c spNew = new servicePoint__c();
+			if(sp!= null){
+				system.debug('entra in sp diverso da null' + sp);
+				spNew = sp;
+			}
+		Map<string,string> mapRes = new Map<string,string>();
+		system.debug('posizioni ***************************'+response.data.posizioni[0]);
+	
+			for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject r : response.data.posizioni){
+				if(!String.isBlank(r.campo) && mapRes.get(r.campo.toUpperCase()) == null){
+					system.debug('campo ****' + r.campo);
+					system.debug('valore ****' + r.valore);
+					mapRes.put(r.campo.toUpperCase(),r.valore);
+				}
+	
+			}
+
+		
+		/*	
+		if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
+			spNew.MeterClass__c = mapRes.get('CALIBRO1');
+		}
+		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
+			spNew.RemiCode__c = mapRes.get('CODICEREMI');
+		}
+
+		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
+			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
+		}
+
+		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
+			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
+		}
+
+		if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
+			spNew.RequestPhase__c  = mapRes.get('FASE');
+		}
+
+		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
+			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
+		}
+
+		*/
+
+				//campi fornitura
+				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
+					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
+				}
+				if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
+					spNew.ServicePointCode__c   = mapRes.get('POD');
+                    spNew.Name   = mapRes.get('POD');
+
+
+				}
+				if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
+				
+                    if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
+                        spNew.CommoditySector__c = 'Energia Elettrica';
+
+                    }else
+                    {
+					    spNew.CommoditySector__c = 'Gas';
+                    }
+		
+				}
+				if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){
+		
+					spNew.ImplantType__c = mapRes.get('IMPIANTO');
+				}
+				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
+		
+					spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
+				}
+				if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){
+		
+					spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
+				}
+				if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
+		
+					//spNew.MarketOrigin__c = mapRes.get('MERCATO');
+				}
+				if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){
+		
+					spNew.IsRemoteManaged__c =Boolean.valueOf(mapRes.get('FLAGTELEGESTIBILE'));
+				}
+				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
+					spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+				}
+				if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){
+					spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.')+1)) ;
+				}
+				if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){
+		
+					spNew.VoltageLevel__c = mapRes.get('TENSIONE');
+				}
+				if(mapRes.get('RESIDENTINDFORNITURA')!=null && !String.isBlank(mapRes.get('RESIDENTINDFORNITURA'))){
+		
+					spNew.Resident__c = Boolean.valueOf(mapRes.get('RESIDENTINDFORNITURA'));
+				}
+
+				//campi indirizzo
+				if(mapRes.get('CAP')!=null && !String.isBlank(mapRes.get('CAP'))){
+
+					spNew.SupplyPostalCode__c = mapRes.get('CAP');
+				}
+				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
+					spNew.SupplyStreet__c  = mapRes.get('VIA');
+				}
+				if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
+					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
+				}
+				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
+					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
+				}
+				if(mapRes.get('LOCALITÀ')!=null && !String.isBlank(mapRes.get('LOCALITÀ'))){
+					spNew.SupplyCity__c  = mapRes.get('LOCALITÀ');
+				}
+				if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
+					spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
+				}
+				if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
+					//spNew.SupplySAPCityCode__c = mapRes.get('CODICEPAESE');
+				}
+                if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
+					spNew.SupplyCountry__c = mapRes.get('CODICEPAESE');
+				}
+
+		system.debug('spNew*****************' + spNew);
+		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
+		servicePoints.add(spNew);
+		return servicePoints;
+	}
+
     @AuraEnabled
     public static List<String> objectToList(HDT_WRP_AddressObject Wrap){
         System.debug('HDT_UTL_ServicePoint objectToList START');

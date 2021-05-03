@@ -31,6 +31,7 @@ export default class hdtManageBillingProfile extends LightningElement {
                 this.emptyTable = true;
                 this.columnsLength = this.columns.length;
             } else {
+                this.emptyTable = false;
                 this.billingProfileData = data;
             }
 

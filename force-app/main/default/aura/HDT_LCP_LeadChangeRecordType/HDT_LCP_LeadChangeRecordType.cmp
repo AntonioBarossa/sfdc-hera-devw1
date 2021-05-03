@@ -1,0 +1,25 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId,lightning:hasPageReference" controller="HDT_LC_LeadChangeRecordType">
+    <aura:html tag="style">
+    .slds-spinner_container {
+        background-color: transparent !important;
+    }
+    .slds-modal{
+        background: rgba(255, 255, 255, 0.5) !important;
+    }
+    .backgroundSpinner{
+        background: rgba(0, 0, 0, 0) !important;
+    }
+    .modal-body {
+        background: rgba(0, 0, 0, 0) !important;
+        box-shadow: none !important;
+    }
+    .closeIcon {
+        display:none !important;
+    }
+    .desktop {
+        overflow: visible !important;
+    }
+    </aura:html> 
+    <aura:handler name="init" action="{!c.init}" value="{!this}" /> 
+    <lightning:spinner variant="brand" size="medium" />
+</aura:component>

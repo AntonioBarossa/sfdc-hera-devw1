@@ -627,6 +627,76 @@
                 <default>false</default>
                 <label>Lavorazione Sap</label>
             </value>
+            <value>
+                <fullName>Annullamento - Esito KO da DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>In Attesa Allineamento Anagrafica</fullName>
+                <default>false</default>
+                <label>In Attesa Allineamento Anagrafica</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Inviato al DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Inviato al DL/SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Esito KO da SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Esito KO da SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Esito OK da SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Esito OK da SII</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Inviato al SII</fullName>
+                <default>false</default>
+                <label>Ripensamento - Inviato al SII</label>
+            </value>
+            <value>
+                <fullName>Esito KO tentativo riattivazione</fullName>
+                <default>false</default>
+                <label>Esito KO tentativo riattivazione</label>
+            </value>
+            <value>
+
+                <fullName>Annullamento - Revocato</fullName>
+                <default>false</default>
+                <label>Annullamento - Revocato</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico KO</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico OK</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0152</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0152</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0153</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0153</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

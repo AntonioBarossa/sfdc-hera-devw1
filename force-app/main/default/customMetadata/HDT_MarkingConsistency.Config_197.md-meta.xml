@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Config 197</label>
+    <protected>false</protected>
+    <values>
+        <field>ImplantType__c</field>
+        <value xsi:type="xsd:string">1006-Risc. centraliz promiscuo</value>
+    </values>
+    <values>
+        <field>SupplyType__c</field>
+        <value xsi:type="xsd:string">D-Altri usi</value>
+    </values>
+    <values>
+        <field>Taxes__c</field>
+        <value xsi:type="xsd:string">G_I125 - Forze Armate Nato</value>
+    </values>
+    <values>
+        <field>UseCategory__c</field>
+        <value xsi:type="xsd:string">011-Ris.Cen.+AcquaCalda</value>
+    </values>
+</CustomMetadata>

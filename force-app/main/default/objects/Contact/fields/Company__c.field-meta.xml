@@ -5,6 +5,7 @@
     <label>Company</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>CompanyOwner__c</controllingField>
@@ -37,6 +38,10 @@
         <valueSettings>
             <controllingFieldValue>HERA COMM</controllingFieldValue>
             <valueName>EB</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>HERA COMM</controllingFieldValue>
+            <valueName>HC+HCM+HCNE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>

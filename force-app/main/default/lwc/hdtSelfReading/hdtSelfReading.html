@@ -38,7 +38,7 @@
 
                 <td key={row.id} data-label="Column 1" scope="row">
 
-                    <c-hdt-self-reading-register row-obj={row} commodity={commodity} is-visible="false" is-retroactive={isRetroactive} is-volture={isVolture}>
+                    <c-hdt-self-reading-register row-obj={row} commodity={commodity} is-visible="false" is-retroactive={isRetroactive} is-volture={isVolture} allow-smaller-reading={allowSmallerReading}>
                     </c-hdt-self-reading-register>
 
                 </td>
@@ -54,24 +54,6 @@
 
         </div>
         <div class="actionsRight"> 
-
-            <lightning-button if:true={isVolture}
-            class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-            variant="brand"
-            name="advance"
-            label="Avanti"
-            icon-name="utility:right"
-            onclick={handleSaveButton}
-            ></lightning-button>
-
-            <lightning-button if:true={isVolture}
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="neutral"
-                name="previous"
-                label="Indietro"
-                icon-name="utility:left"
-                onclick={handleSaveButton}
-            ></lightning-button>
 
             <c-hdt-flow-navigation-button if:false={isVolture} 
             next-label={nextLabel} 

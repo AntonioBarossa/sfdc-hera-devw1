@@ -18,7 +18,7 @@
 {
 &quot;FieldName&quot; : &quot;AlternativeEmail__c&quot;,
 &quot;Required&quot; : false,
-&quot;Column&quot; : 1
+&quot;Column&quot; : 2
 },
 {
 &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,

@@ -135,6 +135,10 @@ export default class hdtSupplySelection extends LightningElement {
     handleServicePointSelection(event){
         console.log('handleServicePointSelection' + JSON.stringify(event.detail));
         this.selectedServicePoint = event.detail;
+        //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
+        this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
+            detail: event.detail
+        }));
         let contractNumber = this.selectedServicePoint['Contract Number'];
         console.log('rowToSend for Contract'+ JSON.stringify(contractNumber));
         
@@ -186,8 +190,9 @@ export default class hdtSupplySelection extends LightningElement {
      */
     handleConfirmServicePoint(event){
         console.log('handleConfirmServicePoint');
-        let servicePoint = event.detail;
-        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
+        let data = event.detail;
+        console.log('hdtSupplySelection - handleConfirmServicePoint: ', JSON.stringify(data));
+        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: data}));
     }
 
 }

@@ -1,0 +1,50 @@
+<template>
+
+    <lightning-card title="Alert del Cliente" icon-name="utility:alert">
+
+        <div class="slds-p-around_medium lgc-bg" slot="actions">
+            <lightning-button-menu 
+                label="Abilita Alert"
+                alternative-text="Abilita Alert"
+                menu-alignment="right"
+                onselect={addAlert}
+                disabled={disableAlertMenu}
+                icon-size="x-small">
+
+                <template for:each={menuItems} for:item="menuItem">  
+                    <lightning-menu-item 
+                        label={menuItem.label}
+                        value={menuItem.value}
+                        key={menuItem.id}>
+                    </lightning-menu-item>
+                </template>
+
+            </lightning-button-menu>
+        </div>
+
+        <p class="slds-p-horizontal_small">
+
+            <template if:true={hasAlerts}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={accountAlerts}
+                    columns={alertColumns}
+                    onsave={handleSave}
+                    draft-values={draftValues}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+
+            <template if:false={hasAlerts}>
+                <p><lightning-formatted-text value="Nessun Alert configurato per il Cliente." ></lightning-formatted-text></p>
+            </template>
+
+        </p>
+
+        <!-- <p slot="footer">Card Footer</p> -->
+
+    </lightning-card>
+
+
+
+</template>

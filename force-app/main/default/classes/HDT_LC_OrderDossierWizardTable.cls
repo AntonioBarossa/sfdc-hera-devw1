@@ -24,6 +24,8 @@ public inherited sharing class HDT_LC_OrderDossierWizardTable {
         orderSrv.checkReadAccess('AccountId,Account.Name,Recordtypeid,Recordtype.Name,Recordtype.DeveloperName,Status,OrderNumber');
         List<Order> childOrders = orderQr.getChildOrdersByParentIdAllStatus(orderParentId); // List<Order> ordList = [SELECT AccountId,Account.Name,recordtypeid,recordtype.DeveloperName, id,status,OrderNumber  FROM Order Where ordine_di_vendita__c = :ordineVendita];
 
+        System.debug('ChildOrders '+childOrders);
+      
         // for(Order o : ordList){
         //     listaOrderId.add(o.id);
         // }

@@ -5,6 +5,7 @@
   <name>ApexClass</name>
 </types>
  <types>
+  <members>AccountType</members>
   <members>OrderStatus</members>
   <members>CaseOrigin</members>
   <members>CasePriority</members>
@@ -160,6 +161,10 @@
 <types>
   <members>*</members>
   <name>ReportType</name>
+</types>
+<types>
+  <members>*</members>
+  <name>Role</name>
 </types>
 <types>
   <members>*</members>

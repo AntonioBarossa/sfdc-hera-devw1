@@ -11,26 +11,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>IR010</fullName>
-                <default>false</default>
-                <label>IR010</label>
-            </value>
-            <value>
-                <fullName>IR020</fullName>
-                <default>false</default>
-                <label>IR020</label>
-            </value>
-            <value>
-                <fullName>BL010</fullName>
-                <default>false</default>
-                <label>BL010</label>
-            </value>
-            <value>
-                <fullName>RC010</fullName>
-                <default>false</default>
-                <label>RC010</label>
-            </value>
-            <value>
                 <fullName>Bozza</fullName>
                 <default>false</default>
                 <label>Bozza</label>
@@ -279,6 +259,95 @@
                 <fullName>Motore vas ko</fullName>
                 <default>false</default>
                 <label>Motore vas ko</label>
+            </value>
+            <value>
+                <fullName>Bozza Annullata</fullName>
+                <default>false</default>
+                <label>Bozza Annullata</label>
+            </value>
+            <value>
+                <fullName>Voltura Accettata</fullName>
+                <default>false</default>
+                <label>Voltura Accettata</label>
+            </value>
+            <value>
+                <fullName>Voltura Rifiutata</fullName>
+                <default>false</default>
+                <label>Voltura Rifiutata</label>
+            </value>
+            <value>
+                <fullName>Comunicazone verso Heroku OK</fullName>
+                <default>false</default>
+                <label>Comunicazone verso Heroku OK</label>
+            </value>
+            <value>
+                <fullName>Esito OK da SII</fullName>
+                <default>false</default>
+                <label>Esito OK da SII</label>
+            </value>
+            <value>
+                <fullName>Esito KO da SII</fullName>
+                <default>false</default>
+                <label>Esito KO da SII</label>
+            </value>
+            <value>
+                <fullName>KO Rilavorato</fullName>
+                <default>false</default>
+                <label>KO Rilavorato</label>
+            </value>
+            <value>
+                <fullName>KO Definitivo</fullName>
+                <default>false</default>
+                <label>KO Definitivo</label>
+            </value>
+            <value>
+                <fullName>Chiuso</fullName>
+                <default>false</default>
+                <label>Chiuso</label>
+            </value>
+            <value>
+                <fullName>Accettazione Voltura</fullName>
+                <default>false</default>
+                <label>Accettazione Voltura</label>
+            </value>
+            <value>
+                <fullName>Inviato al SII</fullName>
+                <default>false</default>
+                <label>Inviato al SII</label>
+            </value>
+            <value>
+                <fullName>Comunicazione verso Heroku</fullName>
+                <default>false</default>
+                <label>Comunicazione verso Heroku</label>
+            </value>
+            <value>
+                <fullName>Comunicazione Motore VAS</fullName>
+                <default>false</default>
+                <label>Comunicazione Motore VAS</label>
+            </value>
+            <value>
+                <fullName>BL010</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>BL010</label>
+            </value>
+            <value>
+                <fullName>IR010</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IR010</label>
+            </value>
+            <value>
+                <fullName>IR020</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>IR020</label>
+            </value>
+            <value>
+                <fullName>RC010</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>RC010</label>
             </value>
         </valueSetDefinition>
     </valueSet>
