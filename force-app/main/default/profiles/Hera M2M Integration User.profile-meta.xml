@@ -4993,6 +4993,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.RevokedCancellation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.RowIdSiebel__c</field>
         <readable>true</readable>
     </fieldPermissions>
