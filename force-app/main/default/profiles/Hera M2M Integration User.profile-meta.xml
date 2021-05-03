@@ -9193,11 +9193,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Lead.OLDInterestArea__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Lead.PartnerAccountId</field>
         <readable>true</readable>
     </fieldPermissions>
