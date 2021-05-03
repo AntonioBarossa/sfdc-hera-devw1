@@ -367,9 +367,9 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
     }
 
-    trackInformation(){
-        var context = 'CreditManagement';
-        this.serviceCatalogBackendHandler('runFlowFromAura', context);
+    trackInformation(event){
+        console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
+        this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
     }
 
     serviceCatalogBackendHandler(serviceOperation, context){

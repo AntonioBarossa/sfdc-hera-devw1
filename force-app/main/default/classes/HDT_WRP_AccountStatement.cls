@@ -15,12 +15,14 @@ public class HDT_WRP_AccountStatement {
         @AuraEnabled public String name;
         @AuraEnabled public Boolean enable;
         @AuraEnabled public String type;
+        @AuraEnabled public String parameters;
         
-        public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp){
+        public HDT_WRP_ButtonObjDetail(String labelTemp, String nameTemp, Boolean enableTemp, String typeTemp, String parametersTemp){
             label = labelTemp;
             name = nameTemp;
             enable = enableTemp;
             type = typeTemp;
+            parameters = parametersTemp;
         }
     }
 

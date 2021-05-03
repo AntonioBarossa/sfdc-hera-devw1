@@ -13,10 +13,15 @@
         $A.util.addClass(cmpBack, 'slds-backdrop--open');
     },
 
-    createComponent:function(component,event,helper,eventDetails){    
+    createComponent:function(component, event, helper){    
+
+        var catalogId = event.getParam('catalogId');
+        console.log('>>>>>>>> on AURA cmp');
+        console.log('>>> catalogId: ' + catalogId);
+
         $A.createComponent(
             'wrts_prcgvr:ServiceCatalogLtgCmp_1_1',
-            {recordId: eventDetails},
+            {recordId: catalogId},
             function(lwcCmp, status, errorMessage) {
                 if (status === "SUCCESS") {
                     var body = component.get("v.body");
@@ -47,7 +52,6 @@
         console.log('>>> accId: ' + accId);
         console.log('>>> catalogId: ' + catalogId);
         console.log('>>> auraFlow: ' + auraFlow);
-        catalogId = 'a3K1x000000pTrHEAU';
 
         //var accountId = component.get("v.recordId");
         var workspaceAPI = component.find("workspace");
