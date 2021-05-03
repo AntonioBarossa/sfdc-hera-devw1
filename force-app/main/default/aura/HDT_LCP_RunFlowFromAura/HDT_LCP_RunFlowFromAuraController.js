@@ -179,7 +179,33 @@
                 });
             }else{
 
-                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                workspaceAPI.openSubtab({
+                    parentTabId: accountTabId,
+                    pageReference: {
+                    type: "standard__recordPage",
+                    attributes: {
+                        recordId: newCaseId,
+                        objectApiName: "Case",
+                        actionName: "view"
+                    }
+                }
+                })
+                .then(function(response) {
+                    workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){
+                        console.log('# Refresh page -> ' + enableRefresh);
+                      
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                    }).catch(function(error){
+                        console.log(error);
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+    
+
+                /*workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
                         console.log('# Refresh page -> ' + enableRefresh);
                       
                         console.log('# OK Refresh page #');
@@ -197,7 +223,7 @@
         
                 }).catch(function(error) {
                     console.log(error);
-                });
+                });*/
 
 
             }
