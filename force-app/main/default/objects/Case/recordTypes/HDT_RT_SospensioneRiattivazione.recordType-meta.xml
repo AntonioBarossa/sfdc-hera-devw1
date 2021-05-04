@@ -4295,6 +4295,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>BL010</fullName>
             <default>false</default>
         </values>

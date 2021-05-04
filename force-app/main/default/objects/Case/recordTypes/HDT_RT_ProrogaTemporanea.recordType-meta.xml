@@ -3802,6 +3802,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Avvenuta Riduzione Potenza</fullName>
             <default>false</default>
         </values>
