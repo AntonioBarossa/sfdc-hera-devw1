@@ -1,0 +1,97 @@
+<template >
+    <template if:true={openForm}>
+     <template if:false={openForm2}> 
+    <lightning-record-edit-form style="border-style: solid;" object-api-name={objectapiname} if:true={openForm}>
+        <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        
+        <div class="slds-modal__container">
+            
+            <header class="slds-modal__header">
+                <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">SELEZIONA COMUNE</span>
+
+            </header>
+            <div style="background-color:rgb(243, 242, 242)">  
+            <div class="slds-col slds-size_1-of-1">
+            <lightning-layout horizontal-align="end">
+                <lightning-layout-item padding="around-small" size="4" >
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
+                        <lightning-input type="text" value={filterinputword} label="Filtra Ricerca" onchange={handleFilterDataTable} id="text-input-id-1" placeholder="Affina Ricerca" tabindex="0"></lightning-input>
+                        <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
+                        </svg>
+                    </div>
+                </lightning-layout-item>
+            </lightning-layout>
+            </div>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <lightning-layout>
+                <lightning-datatable selectable-row={disableCheckBoxComune} max-row-selection=1 class="table-section" key-field="id" data={tableDataComune} columns={columnsComune} onrowselection={handleChnage}></lightning-datatable>
+           </lightning-layout>
+           </div>
+           </div>
+           <footer class="slds-modal__footer">
+            <div class="slds-grid slds-grid_align-center">
+                <div class="slds-col">
+                    <lightning-button onclick={previousPage2} label="Previous" variant="neutral"></lightning-button>
+                </div>
+                <div class="slds-col">
+                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPage}</p>
+                </div>
+                <div class="slds-col">
+                    <lightning-button onclick={nextPage2} label="Next" variant="neutral"></lightning-button>
+                </div>
+            </div>
+            <lightning-button label="Close" variant="neutral" onclick={closeForm}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </footer>
+        </div>
+        </section>
+    </lightning-record-edit-form>
+    </template>
+</template>
+    <template if:true={openForm2}>
+        <lightning-record-edit-form style="border-style: solid;" object-api-name={objectapiname} if:true={openForm2}>
+            <section role="dialog" tabindex="0" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <span class="slds-text-heading_medium slds-hyphenate slds-m-left_xx-large">SELEZIONA VIA</span>
+    
+                </header>
+                <div style="background-color:rgb(243, 242, 242)">  
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning-layout horizontal-align="end">
+                        <lightning-layout-item padding="around-small" size="4" >
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
+                                <lightning-input type="text" value={filterinputword2} label="Filtra Ricerca" onchange={handleFilterDataTable} id="text-input-id-2" placeholder="Affina Ricerca" tabindex="0"></lightning-input>
+                                <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon" aria-hidden="true">
+                                    <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#search"></use>
+                                </svg>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                    <lightning-layout>
+                    <lightning-datatable selectable-row={disableCheckBoxComune} max-row-selection=1 class="table-section" key-field="id" data={tableDataComune} columns={columnsIndirizzo} onrowselection={handleChnage}></lightning-datatable>
+               </lightning-layout>
+               </div>
+            </div>
+               <footer class="slds-modal__footer">
+                    <div class="slds-grid slds-grid_align-center">
+                        <div class="slds-col">
+                            <lightning-button onclick={previousPage2} label="Previous" variant="neutral"></lightning-button>
+                        </div>
+                        <div class="slds-col">
+                            <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPage}</p>
+                        </div>
+                        <div class="slds-col">
+                            <lightning-button onclick={nextPage2} label="Next" variant="neutral"></lightning-button>
+                        </div>
+                    </div>
+
+                <lightning-button label="Close" variant="neutral" onclick={closeForm}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+            </footer>
+            </div>
+            </section>
+        </lightning-record-edit-form>
+    </template>
+</template>
