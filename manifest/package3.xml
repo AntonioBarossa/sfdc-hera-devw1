@@ -1,19 +1,114 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_LC_SelfReading</members>
+        <members>AgentMatrix__c</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
+        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
+        <members>Case.HDT_RT_AltreInformative</members>
+        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
+        <members>Case.HDT_RT_Annullamento</members>
+        <members>Case.HDT_RT_AttivazionePODVariazionePDR</members>
+        <members>Case.HDT_RT_Autolettura</members>
+        <members>Case.HDT_RT_CambioUsoTec</members>
+        <members>Case.HDT_RT_CanoneRai</members>
+        <members>Case.HDT_RT_ComportamentoVenditori</members>
+        <members>Case.HDT_RT_ComunicazionePagamento</members>
+        <members>Case.HDT_RT_Disattivazioni</members>
+        <members>Case.HDT_RT_DocCopiaContratto</members>
+        <members>Case.HDT_RT_Domiciliazione</members>
+        <members>Case.HDT_RT_FatturazioneConsumi</members>
+        <members>Case.HDT_RT_GenericheAttivazioni</members>
+        <members>Case.HDT_RT_GenericheVas</members>
+        <members>Case.HDT_RT_GestioneBolletta</members>
+        <members>Case.HDT_RT_GestioneBonusSociale</members>
+        <members>Case.HDT_RT_GestionePrivacy</members>
+        <members>Case.HDT_RT_Informative</members>
+        <members>Case.HDT_RT_InversioneContatore</members>
+        <members>Case.HDT_RT_ModContrattoPreAtt</members>
+        <members>Case.HDT_RT_Morosita</members>
+        <members>Case.HDT_RT_PianoRateizzazione</members>
+        <members>Case.HDT_RT_PostSalesVAS</members>
+        <members>Case.HDT_RT_PreventiviEle</members>
+        <members>Case.HDT_RT_PreventiviGas</members>
+        <members>Case.HDT_RT_ProrogaTemporanea</members>
+        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
+        <members>Case.HDT_RT_RichiestaParere</members>
+        <members>Case.HDT_RT_Rimborso</members>
+        <members>Case.HDT_RT_SospensioneRiattivazione</members>
+        <members>Case.HDT_RT_Subentro_EE</members>
+        <members>Case.HDT_RT_Subentro_GAS</members>
+        <members>Case.HDT_RT_UnificazioneSeparazioneCABolletta</members>
+        <members>Case.HDT_RT_VariazioneAmministratore</members>
+        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
+        <members>Case.HDT_RT_VariazioniEle</members>
+        <members>Case.HDT_RT_VariazioniGas</members>
+        <members>Case.HDT_RT_VerificaDatiAlDl</members>
+        <members>Case.HDT_RT_VerificaTitolaritaPodPdr</members>
+        <members>Case.HDT_RT_VerificheEle</members>
+        <members>Case.HDT_RT_VerificheGas</members>
+        <members>Case.HDT_RT_VolturaTecnica</members>
+        <members>Case.HDT_RT_VotiveModena</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>HDT_LC_OmniChannelReplacerController</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>hdtAccountSelectionFlow</members>
-        <members>hdtContractSelectionFlow</members>
-        <members>hdtSelfReading</members>
-        <members>hdtSelfReadingRegister</members>
+        <members>HDT_VasEngineStatus</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>AgentMatrix__c.AgencyCode__c</members>
+        <members>AgentMatrix__c.AgencyName__c</members>
+        <members>AgentMatrix__c.AgentCode__c</members>
+        <members>AgentMatrix__c.AgentFirstName__c</members>
+        <members>AgentMatrix__c.AgentLastName__c</members>
+        <members>AgentMatrix__c.Channel__c</members>
+        <members>AgentMatrix__c.CollaborationEndDate__c</members>
+        <members>AgentMatrix__c.IsMonitoring__c</members>
+        <members>AgentMatrix__c.LowerChannelAgency__c</members>
+        <members>AgentMatrix__c.UpperChannelAgency__c</members>
+        <members>AgentMatrix__c.UserIdentification__c</members>
+        <members>Case.CommercialProductVersion__c</members>
+        <members>Case.CommercialProduct__c</members>
+        <members>Case.Phase__c</members>
+        <members>Case.RevokedCancellation__c</members>
+        <members>Case.VasStatusDescription__c</members>
+        <members>Case.VasStatus__c</members>
+        <members>HDT_Informative_Configuration__mdt.GlobalAction__c</members>
+        <members>Order.AreaManager__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>iwsscript</members>
+        <name>StaticResource</name>
+    </types>
+    <types>
+        <members>HDT_LCP_OmniChannelReplacerWrapper</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtBillDeliveryChooser</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</members>
+        <members>Admin</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_ActivityAccountLinker</members>
         <name>Flow</name>
+    </types>
+    <types>
+        <members>CheckLastReading</members>
+        <name>NamedCredential</name>
     </types>
     <version>50</version>
 </Package>
