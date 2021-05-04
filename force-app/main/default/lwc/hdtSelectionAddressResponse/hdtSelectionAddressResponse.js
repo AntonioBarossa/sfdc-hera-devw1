@@ -229,6 +229,8 @@ getSelectedComune(event){
 
 @api
     connectedCallback(event){
+        
+ 
         console.log('connectedCallback START');
         console.log('connectedCallback listobjtoshow ' + JSON.stringify(this.listobjtoshow));
         if(this.headertoshow = 'Comune'){
