@@ -270,11 +270,6 @@
                 <label>Errata Emissione</label>
             </value>
             <value>
-                <fullName>Chiamata Mura</fullName>
-                <default>false</default>
-                <label>Chiamata Mura</label>
-            </value>
-            <value>
                 <fullName>Caduta Linea</fullName>
                 <default>false</default>
                 <label>Caduta Linea</label>
@@ -492,10 +487,6 @@
         <valueSettings>
             <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
             <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
-            <valueName>Chiamata Mura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
