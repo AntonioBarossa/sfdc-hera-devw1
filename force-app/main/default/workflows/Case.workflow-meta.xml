@@ -13,7 +13,7 @@
     <fieldUpdates>
         <fullName>Passa_a_Attesa_Modulo_Firmato</fullName>
         <field>Phase__c</field>
-        <literalValue>Attesa Modulo Firmato</literalValue>
+        <literalValue>Da Inviare</literalValue>
         <name>Passa a &quot;Attesa Modulo Firmato&quot;</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
