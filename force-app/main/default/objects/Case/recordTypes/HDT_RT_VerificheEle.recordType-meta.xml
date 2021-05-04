@@ -3754,6 +3754,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Ammissibilità OK</fullName>
             <default>false</default>
         </values>
@@ -3774,13 +3778,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Attesa Modulo Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bozza</fullName>
-           <default>false</default>
-        </values>
             <fullName>Annullamento - Esito OK da DL</fullName>
             <default>false</default>
         </values>
@@ -3815,7 +3812,11 @@
         <values>
             <fullName>Completata</fullName>
             <default>false</default>
-        </values>        
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
