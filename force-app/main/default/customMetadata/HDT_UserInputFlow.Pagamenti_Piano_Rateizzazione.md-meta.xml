@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:false,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;SendMode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;ApplicationInterests__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;TypeInstallmentPlan__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Reason__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;InstallmentNumberRequired__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},

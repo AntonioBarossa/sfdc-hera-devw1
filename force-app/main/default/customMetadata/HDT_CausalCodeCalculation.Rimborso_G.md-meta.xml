@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Commodity__c</field>
-        <value xsi:type="xsd:string">Gas</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>OperationCode__c</field>
