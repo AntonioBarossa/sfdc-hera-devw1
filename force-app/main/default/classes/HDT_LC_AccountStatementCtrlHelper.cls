@@ -250,7 +250,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
     }
 
-    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValuesHelper(HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValuesHelper(HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj, String tabCode){
         
         pickObj = new HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist();
         
@@ -269,15 +269,36 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 pickObj.companyList.add(company);
             }
 
-            Schema.DescribeFieldResult fieldResult = HDT_StatementRequest__mdt.Aggregation__c.getDescribe();
-            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-            HDT_WRP_AccountStatement.HDT_WRP_PicklistObj joinLevel;
-            for( Schema.PicklistEntry f : ple){
-                joinLevel = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
-                joinLevel.label = f.getLabel();
-                joinLevel.value = f.getValue();
-                pickObj.joinLevelList.add(joinLevel);
-            }     
+            String tabEc = '[{"label":"Nr. Fattura","value":"01"},{"label":"Nr. Fattura - Conto Contrattuale","value":"02"},{"label":"Scadenza Documento","value":"03"},{"label":"Società","value":"04"}]';
+            String tabEc1 = '[{"label":"Conto Contrattuale – Contratto","value":"01"},{"label":"Servizio","value":"02"},{"label":"Recupero Crediti","value":"03"}]';
+            String tabEc4 = '[{"label":"Conto Contrattuale","value":"04"},{"label":"N. Piano Rata","value":"05"}]';
+            String deserializeThis = '';
+
+            switch on tabCode {
+                when 'EC' {
+                    deserializeThis = tabEc;
+                }
+    
+                when 'EC1' {
+                    deserializeThis = tabEc1;
+                }
+                
+                when 'EC4' {
+                    deserializeThis = tabEc4;
+                }                       
+            }
+
+            pickObj.joinLevelList = (List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>)JSON.deserialize(deserializeThis, List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>.class);
+
+            //Schema.DescribeFieldResult fieldResult = HDT_StatementRequest__mdt.Aggregation__c.getDescribe();
+            //List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
+            //HDT_WRP_AccountStatement.HDT_WRP_PicklistObj joinLevel;
+            //for( Schema.PicklistEntry f : ple){
+            //    joinLevel = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
+            //    joinLevel.label = f.getLabel();
+            //    joinLevel.value = f.getValue();
+            //    pickObj.joinLevelList.add(joinLevel);
+            //}     
 
             pickObj.success = true;
 

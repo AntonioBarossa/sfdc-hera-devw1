@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import getFieldValues from '@salesforce/apex/HDT_LC_AccountStatementController.getFieldValues';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
@@ -7,6 +7,7 @@ const timeLimit = 157680000000;//5years
 
 export default class HdtJoinFilterModal extends LightningElement {
 
+    @api tabCode;
     @track filterObject = filterObject;
     @track item = {
         selectedId: '',
@@ -23,24 +24,44 @@ export default class HdtJoinFilterModal extends LightningElement {
     };
 
     joinFilterObj = {
-        obj0: {label: 'Livello di aggregazione', name: 'aggregazione', empty: true},
-        obj1: {label: 'Numero fattura', name: 'numeroFattura', minLength: 12, empty: true},
-        obj2: {label: 'Conto contrattuale', name: 'contoContrattuale', empty: true},
-        obj3: {label: 'Numero bollettino', name: 'numeroBollettino', minLength: 16, empty: true},
-        obj4: {label: 'Data emissione da', name: 'dataInizio', empty: true},
-        obj5: {label: 'Data emissione a', name: 'dataFine', empty: true},
-        obj6: {label: 'Società', name: 'societa', empty: true}
+        aggregazione: {showField: true, label: 'Livello di aggregazione', name: 'aggregazione', empty: true},
+        numeroFattura: {showField: true, label: 'Numero fattura', name: 'numeroFattura', minLength: 12, empty: true},
+        contoContrattuale: {showField: true, label: 'Conto contrattuale', name: 'contoContrattuale', empty: true},
+        numeroBollettino: {showField: true, label: 'Numero bollettino', name: 'numeroBollettino', minLength: 16, empty: true},
+        dataInizio: {showField: true, label: 'Data emissione da', name: 'dataInizio', empty: true},
+        dataFine: {showField: true, label: 'Data emissione a', name: 'dataFine', empty: true},
+        societa: {showField: true, label: 'Società', name: 'societa', empty: true},
+        numeroDocumento: {showField: true, label: 'N. piano rata', name: 'numeroDocumento', minLength: 12, empty: true}
     };
 
 
     connectedCallback(){
+        
+        console.log('>>>>>> join filter modal > ' + this.tabCode);
+
+        switch (this.tabCode) {
+            case 'EC':
+                this.joinFilterObj.numeroDocumento.showField = false;
+                break;
+            case 'EC1':
+                this.joinFilterObj.numeroFattura.showField = false;
+                this.joinFilterObj.numeroBollettino.showField = false;
+                this.joinFilterObj.societa.showField = false;
+                this.joinFilterObj.numeroDocumento.showField = false;
+                break;
+            case 'EC4':
+                this.joinFilterObj.numeroFattura.showField = false;
+                this.joinFilterObj.numeroBollettino.showField = false;
+                this.joinFilterObj.societa.showField = false;
+        }
+
         this.spinnerObj.spinner = true;
         this.getFieldValues();
     }
 
     getFieldValues(){
         console.log('# getFieldValues #');
-        getFieldValues()
+        getFieldValues({tabCode: this.tabCode})
         .then(result => {
             
             if(result.success){
@@ -137,38 +158,38 @@ export default class HdtJoinFilterModal extends LightningElement {
 
         //dataInizio valorizzato e dataFine null
         //Se l’operatore inserisce solo la DataInizio, allora DataFine = DataInizio + 5 anni 
-        if(!this.joinFilterObj.obj4.empty && this.joinFilterObj.obj5.empty){
+        if(!this.joinFilterObj.dataInizio.empty && this.joinFilterObj.dataFine.empty){
             console.log('>>> dataInizio valorizzato e dataFine null');
-            var today = new Date(this.filterObject[this.joinFilterObj.obj4.name]);
+            var today = new Date(this.filterObject[this.joinFilterObj.dataInizio.name]);
             var dateArray = this.setDate(today);
-            this.filterObject[this.joinFilterObj.obj5.name] = (dateArray[0]+5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataFine.name] = (dateArray[0]+5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
         }
 
         //dataFine valorizzato e dataInizio null
         //Se l’operatore inserisce solo la DataFine, allora DataInizio = DataFine - 5 anni 
-        if(this.joinFilterObj.obj4.empty && !this.joinFilterObj.obj5.empty){
+        if(this.joinFilterObj.dataInizio.empty && !this.joinFilterObj.dataFine.empty){
             console.log('dataFine valorizzato e dataInizio null');
 
-            var today = new Date(this.filterObject[this.joinFilterObj.obj5.name]);
+            var today = new Date(this.filterObject[this.joinFilterObj.dataFine.name]);
             var dateArray = this.setDate(today);
-            this.filterObject[this.joinFilterObj.obj4.name] = (dateArray[0]-5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataInizio.name] = (dateArray[0]-5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
 
         }
 
         //dataFine e dataInizio valorizzati 
-        if(!this.joinFilterObj.obj4.empty && !this.joinFilterObj.obj5.empty){
+        if(!this.joinFilterObj.dataInizio.empty && !this.joinFilterObj.dataFine.empty){
             console.log('dataFine e dataInizio valorizzati');
         }
 
         //dataFine e dataInizio NON valorizzati
         //use default
-        if(this.joinFilterObj.obj4.empty && this.joinFilterObj.obj5.empty){
+        if(this.joinFilterObj.dataInizio.empty && this.joinFilterObj.dataFine.empty){
             console.log('dataFine e dataInizio NON valorizzati');
 
             var today = new Date();
             var dateArray = this.setDate(today);
-            this.filterObject[this.joinFilterObj.obj4.name] = (dateArray[0]+5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
-            this.filterObject[this.joinFilterObj.obj5.name] = dateArray[0].toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataInizio.name] = (dateArray[0]-5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataFine.name] = dateArray[0].toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
 
         }
 
@@ -212,83 +233,83 @@ export default class HdtJoinFilterModal extends LightningElement {
         //}
 
         //aggregazione
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj0.name])){
-            this.joinFilterObj.obj0.empty = false;
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.aggregazione.name])){
+            this.joinFilterObj.aggregazione.empty = false;
         } else {
-            this.joinFilterObj.obj0.empty = true;
+            this.joinFilterObj.aggregazione.empty = true;
         }
 
         var regExp = /[a-zA-Z]/g;
         
         //numeroFattura
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj1.name])){
-            if(regExp.test(this.filterObject[this.joinFilterObj.obj1.name])){
-                returnObj.message = this.joinFilterObj.obj1.label + ' non può contenere delle lettere';
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.numeroFattura.name])){
+            if(regExp.test(this.filterObject[this.joinFilterObj.numeroFattura.name])){
+                returnObj.message = this.joinFilterObj.numeroFattura.label + ' non può contenere delle lettere';
                 return returnObj;
-            } else if(this.filterObject[this.joinFilterObj.obj1.name].length < this.filterObject[this.joinFilterObj.obj1.minLength]){
-                returnObj.message = this.joinFilterObj.obj1.label + ' almeno 12 caratteri';
+            } else if(this.filterObject[this.joinFilterObj.numeroFattura.name].length < this.filterObject[this.joinFilterObj.numeroFattura.minLength]){
+                returnObj.message = this.joinFilterObj.numeroFattura.label + ' almeno 12 caratteri';
                 return returnObj;
             }
-            this.joinFilterObj.obj1.empty = false;
+            this.joinFilterObj.numeroFattura.empty = false;
         } else {
-            this.joinFilterObj.obj1.empty = true;
+            this.joinFilterObj.numeroFattura.empty = true;
         }
 
         //contoContrattuale
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj2.name])){
-            this.joinFilterObj.obj2.empty = false;
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.contoContrattuale.name])){
+            this.joinFilterObj.contoContrattuale.empty = false;
         } else {
-            this.joinFilterObj.obj2.empty = true;
+            this.joinFilterObj.contoContrattuale.empty = true;
         }
 
         //numeroBollettino
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj3.name])){
-            if(regExp.test(this.filterObject[this.joinFilterObj.obj3.name])){
-                returnObj.message = this.joinFilterObj.obj3.label + ' non può contenere delle lettere';
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.numeroBollettino.name])){
+            if(regExp.test(this.filterObject[this.joinFilterObj.numeroBollettino.name])){
+                returnObj.message = this.joinFilterObj.numeroBollettino.label + ' non può contenere delle lettere';
                 return returnObj;
-            } else if(this.filterObject[this.joinFilterObj.obj3.name].length < this.filterObject[this.joinFilterObj.obj3.minLength]){
-                returnObj.message = this.joinFilterObj.obj3.label + ' almeno 12 caratteri';
+            } else if(this.filterObject[this.joinFilterObj.numeroBollettino.name].length < this.filterObject[this.joinFilterObj.numeroBollettino.minLength]){
+                returnObj.message = this.joinFilterObj.numeroBollettino.label + ' almeno 12 caratteri';
                 return returnObj;
             }
-            this.joinFilterObj.obj3.empty = false;
+            this.joinFilterObj.numeroBollettino.empty = false;
         } else {
-            this.joinFilterObj.obj3.empty = true;
+            this.joinFilterObj.numeroBollettino.empty = true;
         }
 
         //societa
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj6.name])){
-            this.joinFilterObj.obj6.empty = false;
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.societa.name])){
+            this.joinFilterObj.societa.empty = false;
         } else {
-            this.joinFilterObj.obj6.empty = true;
+            this.joinFilterObj.societa.empty = true;
         }
 
         //dataInizio
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj4.name])){
-            if(regExp.test(this.filterObject[this.joinFilterObj.obj4.name])){
-                returnObj.message = '"' + this.joinFilterObj.obj4.label + '" ha un formato non corretto';
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.dataInizio.name])){
+            if(regExp.test(this.filterObject[this.joinFilterObj.dataInizio.name])){
+                returnObj.message = '"' + this.joinFilterObj.dataInizio.label + '" ha un formato non corretto';
                 return returnObj;
             }
-            this.joinFilterObj.obj4.empty = false;
+            this.joinFilterObj.dataInizio.empty = false;
         } else {
-            this.joinFilterObj.obj4.empty = true;
+            this.joinFilterObj.dataInizio.empty = true;
         }
         
         //dataFine
-        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.obj5.name])){
-            if(regExp.test(this.filterObject[this.joinFilterObj.obj5.name])){
-                returnObj.message = '"' + this.joinFilterObj.obj5.label + '" ha un formato non corretto';
+        if(this.checkIsNotNull(this.filterObject[this.joinFilterObj.dataFine.name])){
+            if(regExp.test(this.filterObject[this.joinFilterObj.dataFine.name])){
+                returnObj.message = '"' + this.joinFilterObj.dataFine.label + '" ha un formato non corretto';
                 return returnObj;
             }
-            this.joinFilterObj.obj5.empty = false;
+            this.joinFilterObj.dataFine.empty = false;
         } else {
-            this.joinFilterObj.obj5.empty = true;
+            this.joinFilterObj.dataFine.empty = true;
         }
         
         //dataFine e dataInizio valorizzati 
-        if(!this.joinFilterObj.obj4.empty && !this.joinFilterObj.obj5.empty){
+        if(!this.joinFilterObj.dataInizio.empty && !this.joinFilterObj.dataFine.empty){
             //check start/end date
-            var start = new Date(this.filterObject[this.joinFilterObj.obj4.name]);
-            var end = new Date(this.filterObject[this.joinFilterObj.obj5.name]);
+            var start = new Date(this.filterObject[this.joinFilterObj.dataInizio.name]);
+            var end = new Date(this.filterObject[this.joinFilterObj.dataFine.name]);
 
             if(start >= end){
                 returnObj.message = 'Data fine inferiore dello start';

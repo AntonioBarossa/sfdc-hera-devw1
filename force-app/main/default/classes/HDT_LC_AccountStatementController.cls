@@ -47,9 +47,9 @@ public inherited sharing class HDT_LC_AccountStatementController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValues(){
+    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValues(String tabCode){
         HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj;
-        pickObj = HDT_LC_AccountStatementCtrlHelper.getFieldValuesHelper(pickObj);
+        pickObj = HDT_LC_AccountStatementCtrlHelper.getFieldValuesHelper(pickObj, tabCode);
         return pickObj;
     }
 

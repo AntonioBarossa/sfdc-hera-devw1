@@ -19,6 +19,7 @@
 
     <template if:true={joinFilterModal} >
         <c-hdt-join-filter-modal
+                tab-code={tabCode}
                 onclosemodal={closeModalHandler}
                 fields-to-filter={fieldsToFilter}
                 onsetobjfilter={applyFilter}
