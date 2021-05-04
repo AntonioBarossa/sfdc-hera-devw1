@@ -245,7 +245,6 @@ getSelectedComune(event){
         this.currentPage = 1;
         this.createTable(this.listobjtoshow);
         // this.tableDataComune = this.listobjtoshow;
-        console.log("*********:"+JSON.stringify(this.listobjtoshow));
 
         console.log('connectedCallback END');
 
