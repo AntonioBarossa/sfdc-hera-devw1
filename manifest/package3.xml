@@ -1,98 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>AgentMatrix__c</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
-        <members>Case.HDT_RT_AltreInformative</members>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Case.HDT_RT_Annullamento</members>
-        <members>Case.HDT_RT_AttivazionePODVariazionePDR</members>
-        <members>Case.HDT_RT_Autolettura</members>
-        <members>Case.HDT_RT_CambioUsoTec</members>
-        <members>Case.HDT_RT_CanoneRai</members>
-        <members>Case.HDT_RT_ComportamentoVenditori</members>
         <members>Case.HDT_RT_ComunicazionePagamento</members>
-        <members>Case.HDT_RT_Disattivazioni</members>
-        <members>Case.HDT_RT_DocCopiaContratto</members>
-        <members>Case.HDT_RT_Domiciliazione</members>
-        <members>Case.HDT_RT_FatturazioneConsumi</members>
-        <members>Case.HDT_RT_GenericheAttivazioni</members>
-        <members>Case.HDT_RT_GenericheVas</members>
-        <members>Case.HDT_RT_GestioneBolletta</members>
-        <members>Case.HDT_RT_GestioneBonusSociale</members>
-        <members>Case.HDT_RT_GestionePrivacy</members>
-        <members>Case.HDT_RT_Informative</members>
-        <members>Case.HDT_RT_InversioneContatore</members>
-        <members>Case.HDT_RT_ModContrattoPreAtt</members>
-        <members>Case.HDT_RT_Morosita</members>
         <members>Case.HDT_RT_PianoRateizzazione</members>
-        <members>Case.HDT_RT_PostSalesVAS</members>
-        <members>Case.HDT_RT_PreventiviEle</members>
-        <members>Case.HDT_RT_PreventiviGas</members>
-        <members>Case.HDT_RT_ProrogaTemporanea</members>
-        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
-        <members>Case.HDT_RT_RichiestaParere</members>
-        <members>Case.HDT_RT_Rimborso</members>
-        <members>Case.HDT_RT_SospensioneRiattivazione</members>
-        <members>Case.HDT_RT_Subentro_EE</members>
-        <members>Case.HDT_RT_Subentro_GAS</members>
-        <members>Case.HDT_RT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case.HDT_RT_VariazioneAmministratore</members>
-        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
-        <members>Case.HDT_RT_VariazioniEle</members>
-        <members>Case.HDT_RT_VariazioniGas</members>
-        <members>Case.HDT_RT_VerificaDatiAlDl</members>
-        <members>Case.HDT_RT_VerificaTitolaritaPodPdr</members>
-        <members>Case.HDT_RT_VerificheEle</members>
-        <members>Case.HDT_RT_VerificheGas</members>
-        <members>Case.HDT_RT_VolturaTecnica</members>
-        <members>Case.HDT_RT_VotiveModena</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_LC_OmniChannelReplacerController</members>
+        <members>Case-HDT_ComunicazionePagamento</members>
+        <members>Case-HDT_PianoRateizzazione</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_AccountStatementCtrlHelper</members>
+        <members>HDT_LC_AccountStatementCtrlUtility</members>
+        <members>HDT_LC_SelfReading</members>
+        <members>HDT_QR_AccountStatement</members>
+        <members>HDT_QR_CaseValidations</members>
+        <members>HDT_UTL_CaseValidations</members>
+        <members>HDT_WRP_AccountStatement</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_VasEngineStatus</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>AgentMatrix__c.AgencyCode__c</members>
-        <members>AgentMatrix__c.AgencyName__c</members>
-        <members>AgentMatrix__c.AgentCode__c</members>
-        <members>AgentMatrix__c.AgentFirstName__c</members>
-        <members>AgentMatrix__c.AgentLastName__c</members>
-        <members>AgentMatrix__c.Channel__c</members>
-        <members>AgentMatrix__c.CollaborationEndDate__c</members>
-        <members>AgentMatrix__c.IsMonitoring__c</members>
-        <members>AgentMatrix__c.LowerChannelAgency__c</members>
-        <members>AgentMatrix__c.UpperChannelAgency__c</members>
-        <members>AgentMatrix__c.UserIdentification__c</members>
-        <members>Case.CommercialProductVersion__c</members>
-        <members>Case.CommercialProduct__c</members>
-        <members>Case.Phase__c</members>
-        <members>Case.RevokedCancellation__c</members>
-        <members>Case.VasStatusDescription__c</members>
-        <members>Case.VasStatus__c</members>
-        <members>HDT_Informative_Configuration__mdt.GlobalAction__c</members>
-        <members>Order.AreaManager__c</members>
+        <members>BillingProfile__c.ContractAccountCode__c</members>
+        <members>Order.VasStatus__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>iwsscript</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>HDT_LCP_OmniChannelReplacerWrapper</members>
+        <members>HDT_LCP_AcctStmtOpenLwc</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
-        <members>hdtBillDeliveryChooser</members>
+        <members>hdtAccountStatementTabs</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtFlowNavigationButton</members>
+        <members>hdtJoinFilterModal</members>
+        <members>hdtRecordEditFormFlow</members>
+        <members>hdtSelfReading</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -103,12 +46,112 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FL_ActivityAccountLinker</members>
-        <name>Flow</name>
+        <members>HDT_ButtonDetails.EC1_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC4_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC5_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC6_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC8_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC9_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.NVI_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.paperless_1_RunFlowFromAura</members>
+        <members>HDT_CausalCodeCalculation.Attivazione_Click_Pay</members>
+        <members>HDT_CausalCodeCalculation.Attivazione_Click_Pay_G</members>
+        <members>HDT_CausalCodeCalculation.Comunicazione_Pagamento</members>
+        <members>HDT_CausalCodeCalculation.Comunicazione_Pagamento_G</members>
+        <members>HDT_CausalCodeCalculation.Paperless</members>
+        <members>HDT_CausalCodeCalculation.Paperless_G</members>
+        <members>HDT_CausalCodeCalculation.Piano_Rateizzazione</members>
+        <members>HDT_CausalCodeCalculation.Piano_Rateizzazione_G</members>
+        <members>HDT_CausalCodeCalculation.Revoca_Domiciliazione</members>
+        <members>HDT_CausalCodeCalculation.Revoca_Domiciliazione_G</members>
+        <members>HDT_CausalCodeCalculation.Richiesta_Domiciliazione</members>
+        <members>HDT_CausalCodeCalculation.Richiesta_Domiciliazione_G</members>
+        <members>HDT_CausalCodeCalculation.Rimborso</members>
+        <members>HDT_CausalCodeCalculation.Rimborso_G</members>
+        <members>HDT_CausalCodeCalculation.Variazione_Domiciliazione</members>
+        <members>HDT_CausalCodeCalculation.Variazione_Domiciliazione_G</members>
+        <members>HDT_Generic_Record_Selection.BillingProfile</members>
+        <members>HDT_HeraCompany.HeraCompany_0001</members>
+        <members>HDT_HeraCompany.HeraCompany_1010</members>
+        <members>HDT_HeraCompany.HeraCompany_1020</members>
+        <members>HDT_HeraCompany.HeraCompany_1030</members>
+        <members>HDT_HeraCompany.HeraCompany_1040</members>
+        <members>HDT_HeraCompany.HeraCompany_1050</members>
+        <members>HDT_HeraCompany.HeraCompany_1060</members>
+        <members>HDT_HeraCompany.HeraCompany_1070</members>
+        <members>HDT_HeraCompany.HeraCompany_1080</members>
+        <members>HDT_HeraCompany.HeraCompany_1085</members>
+        <members>HDT_HeraCompany.HeraCompany_1090</members>
+        <members>HDT_HeraCompany.HeraCompany_1140</members>
+        <members>HDT_HeraCompany.HeraCompany_1150</members>
+        <members>HDT_HeraCompany.HeraCompany_1160</members>
+        <members>HDT_HeraCompany.HeraCompany_1170</members>
+        <members>HDT_HeraCompany.HeraCompany_1180</members>
+        <members>HDT_HeraCompany.HeraCompany_1190</members>
+        <members>HDT_HeraCompany.HeraCompany_1191</members>
+        <members>HDT_HeraCompany.HeraCompany_1192</members>
+        <members>HDT_HeraCompany.HeraCompany_1210</members>
+        <members>HDT_HeraCompany.HeraCompany_1220</members>
+        <members>HDT_HeraCompany.HeraCompany_1230</members>
+        <members>HDT_HeraCompany.HeraCompany_1240</members>
+        <members>HDT_HeraCompany.HeraCompany_1270</members>
+        <members>HDT_HeraCompany.HeraCompany_1290</members>
+        <members>HDT_HeraCompany.HeraCompany_1310</members>
+        <members>HDT_HeraCompany.HeraCompany_1330</members>
+        <members>HDT_HeraCompany.HeraCompany_1350</members>
+        <members>HDT_HeraCompany.HeraCompany_1360</members>
+        <members>HDT_HeraCompany.HeraCompany_1400</members>
+        <members>HDT_HeraCompany.HeraCompany_1410</members>
+        <members>HDT_HeraCompany.HeraCompany_1440</members>
+        <members>HDT_HeraCompany.HeraCompany_1630</members>
+        <members>HDT_HeraCompany.HeraCompany_1900</members>
+        <members>HDT_HeraCompany.HeraCompany_2010</members>
+        <members>HDT_HeraCompany.HeraCompany_2020</members>
+        <members>HDT_HeraCompany.HeraCompany_2030</members>
+        <members>HDT_HeraCompany.HeraCompany_2040</members>
+        <members>HDT_HeraCompany.HeraCompany_2060</members>
+        <members>HDT_HeraCompany.HeraCompany_3010</members>
+        <members>HDT_HeraCompany.HeraCompany_4080</members>
+        <members>HDT_HeraCompany.HeraCompany_5010</members>
+        <members>HDT_HeraCompany.HeraCompany_5020</members>
+        <members>HDT_HeraCompany.HeraCompany_6000</members>
+        <members>HDT_HeraCompany.HeraCompany_6001</members>
+        <members>HDT_HeraCompany.HeraCompany_7010</members>
+        <members>HDT_HeraCompany.HeraCompany_7015</members>
+        <members>HDT_HeraCompany.HeraCompany_7030</members>
+        <members>HDT_HeraCompany.HeraCompany_7050</members>
+        <members>HDT_HeraCompany.HeraCompany_7070</members>
+        <members>HDT_HeraCompany.HeraCompany_7085</members>
+        <members>HDT_HeraCompany.HeraCompany_7095</members>
+        <members>HDT_HeraCompany.HeraCompany_7100</members>
+        <members>HDT_HeraCompany.HeraCompany_7105</members>
+        <members>HDT_HeraCompany.HeraCompany_8010</members>
+        <members>HDT_HeraCompany.HeraCompany_8020</members>
+        <members>HDT_HeraCompany.HeraCompany_8060</members>
+        <members>HDT_HeraCompany.HeraCompany_8230</members>
+        <members>HDT_HeraCompany.HeraCompany_8470</members>
+        <members>HDT_HeraCompany.HeraCompany_8640</members>
+        <members>HDT_HeraCompany.HeraCompany_8650</members>
+        <members>HDT_HeraCompany.HeraCompany_IT01</members>
+        <members>HDT_HeraCompany.HeraCompany_RAI1</members>
+        <members>HDT_HeraCompany.HeraCompany_RAI2</members>
+        <members>HDT_HeraCompany.HeraCompany_V001</members>
+        <members>HDT_HeraCompany.HeraCompany_V002</members>
+        <members>HDT_HeraCompany.HeraCompany_V003</members>
+        <members>HDT_UserInputFlow.Disattivazioni_Chiusura_Contatore</members>
+        <members>HDT_UserInputFlow.Pagamenti_Comunicazione_Pagamento_Rec</members>
+        <members>HDT_UserInputFlow.Pagamenti_Piano_Rateizzazione</members>
+        <members>HDT_UserInputFlow.Pagamenti_Piano_Rateizzazione_Riepilog</members>
+        <members>HDT_UserInputFlow.Pagamenti_Richiesta_Domiciliazione_Es</members>
+        <members>HDT_UserInputFlow.Pagamenti_Richiesta_Domiciliazione_IT</members>
+        <name>CustomMetadata</name>
     </types>
     <types>
-        <members>CheckLastReading</members>
-        <name>NamedCredential</name>
+        <members>HDT_FL_GestioneFatturazione</members>
+        <members>HDT_FL_GestionePagamenti_ComunicazionePagamento</members>
+        <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
+        <members>HDT_FL_GestionePagamenti_RichiestaDomiciliazione</members>
+        <name>Flow</name>
     </types>
     <version>50</version>
 </Package>
