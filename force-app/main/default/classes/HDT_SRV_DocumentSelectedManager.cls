@@ -70,10 +70,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.IssueDate__c = dataEmissione;
                     singleDocument.ExpirationDate__c = dataScadenza;
                     singleDocument.Amount__c = totaleCopertina != null? totaleCopertina:importo;
-                    //singleDocument.Residue__c = (String) primolivello.get('residuo');
+                    singleDocument.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Extension__c = (String) primolivello.get('dilazione');
                     singleDocument.PaymentMode__c = (String) primolivello.get('modalitaPagamento');
-                    //singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
+                    singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
                     singleDocument.IssuingCompany__c = (String) primolivello.get('societa');
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
@@ -102,7 +102,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         return Date.valueOf(yyyy+'-'+mm+'-'+gg);
     }
 
-    private static String calculateRaiFee(List<Object> secondoLivelloList){
+    private static Double calculateRaiFee(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
         try {
             Double raiFee = 0;
@@ -115,7 +115,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     raiFee += importo;
                 }
             }
-            return String.valueOf(raiFee);
+            return raiFee;
         } catch (Exception ex) {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
             return null;
