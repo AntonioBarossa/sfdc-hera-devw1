@@ -232,6 +232,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:type="xsd:string">Allineamento Anagrafica</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>
