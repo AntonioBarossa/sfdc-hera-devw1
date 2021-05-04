@@ -619,8 +619,8 @@
     <assignments>
         <name>Assegna_Valori_00_0</name>
         <label>Assegna Valori</label>
-        <locationX>5288</locationX>
-        <locationY>1495</locationY>
+        <locationX>5285</locationX>
+        <locationY>1280</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.CategoryCode__c</assignToReference>
             <operator>Assign</operator>
@@ -740,8 +740,8 @@
     <assignments>
         <name>Assegna_Valori_0_0_0_0_0_0_0_0</name>
         <label>Assegna Valori</label>
-        <locationX>5288</locationX>
-        <locationY>1615</locationY>
+        <locationX>5285</locationX>
+        <locationY>1400</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -1677,6 +1677,45 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Seleziona_Documenti</name>
+        <label>Seleziona Documenti?</label>
+        <locationX>5280</locationX>
+        <locationY>1631</locationY>
+        <defaultConnector>
+            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Selezionare documenti</defaultConnectorLabel>
+        <rules>
+            <name>Seleziona_Documenti_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Condizioni Contrattuali Errate</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Account/Billing Profile - errata categoria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Dettaglio Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Seleziona_Documenti_Screen</targetReference>
+            </connector>
+            <label>Seleziona Documenti</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Stesso_Indirizzo</name>
         <label>Stesso Indirizzo?</label>
         <locationX>2251</locationX>
@@ -1702,7 +1741,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei processi del Cluster Variazioni
---&gt; Fix Type Dichiarazione Intento</description>
+--&gt; Inserito seleziona documenti</description>
     <formulas>
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
@@ -2368,10 +2407,10 @@
     <recordUpdates>
         <name>Aggiorna_Case_00_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>5288</locationX>
-        <locationY>1735</locationY>
+        <locationX>5285</locationX>
+        <locationY>1520</locationY>
         <connector>
-            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+            <targetReference>Seleziona_Documenti</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
@@ -3917,6 +3956,93 @@
                 <name>recordType</name>
                 <value>
                     <elementReference>GetInputCase.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Seleziona_Documenti_Screen</name>
+        <label>Seleziona Documenti Screen</label>
+        <locationX>5477</locationX>
+        <locationY>1756</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeaderDocument</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSelector</name>
+            <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>codiceCliente</name>
+                <value>
+                    <elementReference>GetInputCase.Account.CustomerCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractAccount</name>
+                <value>
+                    <elementReference>GetInputCase.BillingProfile__r.ContractAccountCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <elementReference>previousButton</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>GetInputCase.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>GetInputCase.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>billingProfileId</name>
+                <value>
+                    <elementReference>GetInputCase.BillingProfile__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

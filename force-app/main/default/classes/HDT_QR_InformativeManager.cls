@@ -37,8 +37,8 @@ public with sharing class HDT_QR_InformativeManager {
 
     public static Case getFieldToPrePopulate(String recordId){
 
-        return [SELECT //InformativeCluster__c, 
-        //InformativeType__c,
+        return [SELECT InformativeCluster__c, 
+        InformativeType__c,
         CommodityFormula__c
         FROM Case
         WHERE Id = :recordId
@@ -72,12 +72,14 @@ public with sharing class HDT_QR_InformativeManager {
                 }
                 when 'Order'{
 
-                    contextSobj = [SELECT AccountId,
+                    contextSobj = [SELECT Id,AccountId,
                     ServicePoint__c,
                     Market__c,
                     BillingProfile__c,
                     SalesCompany__c,
-                    ContractId
+                    ContractId,
+                    Subprocess__c,
+                    Cluster__c
                     FROM Order
                     WHERE Id = :recordId
                     WITH SECURITY_ENFORCED
@@ -116,26 +118,26 @@ public with sharing class HDT_QR_InformativeManager {
                 
 
                 }
+                when 'Contract'{
+
+                    contextSobj = [SELECT Id,
+                    BillingProfile__c/*,
+                    //BillingProfile__c,
+                    //Company__c, Non convinto che sia questo il campo corretto
+                    Contract__c*/
+                    FROM Contract
+                    WHERE ServicePoint__c =: recordId
+                    AND Status = 'Active'
+                    WITH SECURITY_ENFORCED
+                    LIMIT 1];
+                }
                 when 'BillingProfile__c'{
-
-                /*
-
-                    String addFields;
-
-                    
-
-                    if([SELECT Contratc__c FROM BillingProfile__c WHERE Id = :recordId WITH SECURITY_ENFORCED].size() == 1){
-
-                        addFields = 'ServicePoint__c, SalesCompany__c, Contract__c ';
-
-                    }
-
-                    String query = 'SELECT Account__c, Market__c, ' + addFields + 'FROM BillingProfile__c WHERE Id =: recordId WITH SECURITY_ENFORCED LIMIT 1';
-
-                    contextSobj = Database.query(query);
-
-                */
-
+                    contextSobj = [SELECT Id,
+                    Account__c
+                    FROM BillingProfile__c
+                    WHERE Id =: recordId
+                    WITH SECURITY_ENFORCED
+                    LIMIT 1]; 
                 }
                 when 'Lead'{
 

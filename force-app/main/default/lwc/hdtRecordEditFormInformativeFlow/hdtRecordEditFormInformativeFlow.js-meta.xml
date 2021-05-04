@@ -30,6 +30,7 @@
             <property name="showReadOnly" type="Boolean" label="Show ReadOnly Section" description="Show ReadOnly Section" role="inputOnly"/>
             <property name="labelInputSection" type="String" label="Label Input Section" description="Label Sezione Input" role="inputOnly"/>
             <property name="labelReadOnlySection" type="String" label="Label ReadOnly Section" description="Label Sezione ReadOnly" role="inputOnly"/>
+            <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
