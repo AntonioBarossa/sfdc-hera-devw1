@@ -22,6 +22,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     Date minusDate = todayDate.addYears(-5);
                     dbr.dataFine = convertDateFormat(String.valueOf(todayDate));
                     dbr.dataInizio = convertDateFormat(String.valueOf(minusDate));
+                    dbr.aggregazione = '03';
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
