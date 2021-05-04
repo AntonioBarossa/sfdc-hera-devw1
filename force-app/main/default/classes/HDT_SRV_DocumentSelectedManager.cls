@@ -25,8 +25,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
-            Map<String, Object> secondoLivello = (Map<String, Object>)secondoLivelloList[0];
-            
+            Map<String, Object> secondoLivello = new Map<String, Object>();
+            if(secondoLivelloList != null){
+                secondoLivello = (Map<String, Object>) secondoLivelloList[0];
+            }            
             Case caseRecord = new Case();
             
             Date dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
@@ -34,7 +36,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             String numeroDocumento = (String) primolivello.get('numeroDocumento');
             String numeroFattura = (String) primolivello.get('numeroFattura');
-            String contractCode = (String) secondoLivello.get('contratto');
+            String contractCode = (String) secondoLivello.get('contratto') != null? (String) secondoLivello.get('contratto'):(String) primolivello.get('contratto');
             String tipoDocumento = (String) secondoLivello.get('tipoDocumento');
             caseRecord.ContractAccountCode__c = (String) primolivello.get('contoContrattuale');
             caseRecord.DocumentExpirationDate__c = dataScadenza;
@@ -56,7 +58,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                 for(Object singleRecord : primoLivelloList){
                     primolivello = (Map<String, Object>) singleRecord;
                     secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
-                    numeroDocumento = (String) primolivello.get('numeroDocumento');
+                    numeroDocumento = (String) primolivello.get('numeroDocumento') != null? (String) primolivello.get('numeroDocumento'):(String) primolivello.get('documento');
                     numeroFattura = (String) primolivello.get('numeroFattura');
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
