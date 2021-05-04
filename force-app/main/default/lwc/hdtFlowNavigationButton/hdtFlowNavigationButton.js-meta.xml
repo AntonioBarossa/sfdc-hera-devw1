@@ -1,22 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
     <apiVersion>50.0</apiVersion>
+    
     <isExposed>true</isExposed>
+    
     <targets>
+        
         <target>lightning__FlowScreen</target>
+        
     </targets>
+    
     <targetConfigs>
+        
         <targetConfig targets="lightning__FlowScreen">
+            
             <property name="standAlone" type="Boolean" label="Stand Alone?" description="If the component stands alone" role="inputOnly"/>
+            
             <property name="nextVariant" type="String" label="Next Variant" description="Variant of Next Button" role="inputOnly"/>
+            
             <property name="nextLabel" type="String" label="Next Label" description="Label of Next Button" role="inputOnly"/>
+            
             <property name="isDraft" type="Boolean" label="Is Draft?" description="if the Case is Draft" role="inputOnly"/>
+            
             <property name="isCancel" type="Boolean" label="Is Cancel?" description="if the Case is Cancel" role="inputOnly"/>
+            
             <property name="isPrevious" type="Boolean" label="Is Previous?" description="if the Case is Previous" role="inputOnly"/>
+            
             <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>
+            
             <property name="loadingSpinner" type="Boolean" label="Loading Spinner" description="If true a loading spinner is shown" role="inputOnly"/>
+            
             <property name="saveDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
+            
             <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
+            
         </targetConfig>
+        
     </targetConfigs>
+    
 </LightningComponentBundle>

@@ -1,7 +1,6 @@
 ({
     doInit : function(component, event, helper) {
         var recordid = component.get("v.pageReference").state.c__recordid;
-        //console.log('### isUrlAddressable -> ' + recordid);
         component.set('v.recordid', recordid);
     },
 
@@ -11,31 +10,16 @@
     },
 
     openmodal: function(component,event,helper) {
-        console.log('>>> we have to open -> wrts_prcgvr:ServiceCatalogLtgCmp_1_1');
+        console.log('>>> we have to open a modal');
+        console.log('>>> EVENT FROM LWC > ' + JSON.stringify(event));
 
-        var eventDetails = event.getParam('servicecatalogId');
-        console.log('> eventDetails: ' + eventDetails);
-        
-        $A.createComponent(
-            'wrts_prcgvr:ServiceCatalogLtgCmp_1_1',
-            {recordId: eventDetails},
-            function(lwcCmp, status, errorMessage) {
-                if (status === "SUCCESS") {
-                    var body = component.get("v.body");
-                    body.push(lwcCmp);
-                    component.set("v.body", body);
+        var auraFlow = event.getParam('auraFlow');
 
-                    helper.openModal(component,event,helper);
-
-                }
-                else if (status === "INCOMPLETE") {
-                    console.log("No response from server or client is offline.");
-                }
-                else if (status === "ERROR") {
-                    console.error("Error: " + errorMessage);
-                }
-            }
-        );
+        if(auraFlow === 'serviceCatalogHandler'){
+            helper.createComponent(component, event, helper);
+        } else if(auraFlow === 'runFlowFromAura'){
+            helper.openSubTab(component, event, helper);
+        }
 
     },
 

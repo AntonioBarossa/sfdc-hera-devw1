@@ -364,7 +364,16 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     serviceCatalogHandler(){
-        console.log('# serviceCatalogHandler #');
+        this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
+    }
+
+    trackInformation(event){
+        console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
+        this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
+    }
+
+    serviceCatalogBackendHandler(serviceOperation, context){
+        console.log('# serviceCatalogBackendHandler #');
 
         if(idlist.length > 0){
             this.showOperationModal = true;
@@ -381,7 +390,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             //});
 
             var recordsString = JSON.stringify(selectedRecord);
-            this.serviceCatalogBackendOperation(recordsString);
+            this.serviceCatalogBackendOperation(recordsString, serviceOperation, context);
 
         } else {
             this.dispatchEvent(
@@ -395,7 +404,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
  
     }
 
-    serviceCatalogBackendOperation(recordsString){
+    serviceCatalogBackendOperation(recordsString, serviceOperation, context){
         console.log('# serviceCatalogBackendOperation #');
 
         this.openMainSpinner();
@@ -406,7 +415,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             if(result.success){
                 console.log('>>> result > ' + result.serviceCatalogId);
-                this.serviceCatalogEvent('serviceCatalogId');
+                if(serviceOperation==='serviceCatalogHandler'){
+                    this.serviceCatalogEvent(result.serviceCatalogId);
+                } else if(serviceOperation==='runFlowFromAura'){
+                    this.runFlowFromAuraEvent(result.serviceCatalogId, context);
+                }
             } else {
                 console.log('>>> result > ' + result.message);
                 this.dispatchEvent(
@@ -430,10 +443,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     }
 
-    serviceCatalogEvent(serviceCatalogId){
-        const serviceCatalog = new CustomEvent("servicecatalog", {
+    runFlowFromAuraEvent(serviceCatalogId, context){
+        console.log('>>> runFlowFromAura');
+        const serviceCatalog = new CustomEvent("openauracmp", {
             //serviceCatalogId
-            detail: this.recordid
+            detail: {context: context, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'runFlowFromAura'}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(serviceCatalog);
+    }
+
+    serviceCatalogEvent(serviceCatalogId){
+        const serviceCatalog = new CustomEvent("openauracmp", {
+            //serviceCatalogId
+            detail: {context: this.tabCode, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'serviceCatalogHandler'}
         });
         // Dispatches the event.
         this.dispatchEvent(serviceCatalog);

@@ -30,10 +30,10 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
 
             Id contextId= (Id) Context;
 
-            sObjName = contextId.getSObjectType().getDescribe().getName();
+            context = contextId.getSObjectType().getDescribe().getName();
 
         }
-        List<HDT_ClusterProcess__mdt> clusterList =  HDT_QR_InformativeManager.getClusterProcess(sObjName);
+        List<HDT_ClusterProcess__mdt> clusterList =  HDT_QR_InformativeManager.getClusterProcess(context);
         return JSON.serialize(convertToListMap(distinctRecords(clusterList,'Cluster__c'),'Cluster__c'));
     }
     private String getProcess(Map<String, Object> paramsMap){
@@ -49,10 +49,10 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
 
             Id contextId= (Id) Context;
 
-            sObjName = contextId.getSObjectType().getDescribe().getName();
+            context = contextId.getSObjectType().getDescribe().getName();
 
         }
-        List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getTopicByCluster((String) paramsMap.get('cluster'),sObjName);
+        List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getTopicByCluster((String) paramsMap.get('cluster'),context);
         return JSON.serialize(convertToListMap(distinctRecords(topic,'MacroTopic__c'),'MacroTopic__c'));
     }
     private String getInfo(Map<String, Object> paramsMap){
@@ -63,10 +63,10 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
 
             Id contextId= (Id) Context;
 
-            sObjName = contextId.getSObjectType().getDescribe().getName();
+            context = contextId.getSObjectType().getDescribe().getName();
 
         }
-        List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster((String) paramsMap.get('topic'),(String) paramsMap.get('cluster'),sObjName);
+        List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster((String) paramsMap.get('topic'),(String) paramsMap.get('cluster'),context);
         return JSON.serialize(convertToListMap(topic,'InformationDetail__c'));
     }
    

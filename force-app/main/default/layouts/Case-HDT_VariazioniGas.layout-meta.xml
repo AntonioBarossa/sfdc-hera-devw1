@@ -152,10 +152,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ErrorType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Error__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Order__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -498,6 +507,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>DocumentNumber__c</fields>
+        <fields>Amount__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
