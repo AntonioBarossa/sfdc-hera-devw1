@@ -98,7 +98,15 @@
                 <div class="slds-col">
                     <div class="slds-button-group" role="group">
                         <template for:each={confObj} for:item="c">
-                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" data-type={c.type} name={c.name} onclick={buttonHandler} >{c.label}</button>
+                            <button
+                                key={c.name}
+                                if:true={c.enable}
+                                class="slds-button slds-button_neutral mainbutton"
+                                data-type={c.type}
+                                data-parameters={c.parameters}
+                                name={c.name}
+                                onclick={buttonHandler}
+                            >{c.label}</button>
                         </template>
                     </div>
                 </div>
