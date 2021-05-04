@@ -316,7 +316,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
             'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
             'Amount__c' : row.totFattura,
-            //'Residue__c' : row.residuo,
+            'DocumentResidue__c' : row.residuo,
             'Extension__c' : row.sollecitato,
             'PaymentMode__c' : row.payment,
             'TvFeeResidual__c' : row.restituzioneCanoneRai,
