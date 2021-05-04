@@ -3752,11 +3752,7 @@
         <values>
             <fullName>Annullamento - Revocato</fullName>
             <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Modulo Firmato</fullName>
-            <default>false</default>
-        </values>
+        </values>        
         <values>
             <fullName>Bozza</fullName>
             <default>true</default>
