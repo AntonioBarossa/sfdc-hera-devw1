@@ -1376,18 +1376,6 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>CaseInput.Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
@@ -1426,18 +1414,6 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>CaseInput.Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
@@ -1475,18 +1451,6 @@
             <name>hdtDocumentSignature_0_0</name>
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>CaseInput.Account.Id</elementReference>
-                </value>
-            </inputParameters>
             <inputParameters>
                 <name>nextVariant</name>
                 <value>
