@@ -697,6 +697,12 @@
                 <default>false</default>
                 <label>Presa in Carico OK</label>
             </value>
+            <value>
+                <fullName>Risposta non Ricevuta</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Risposta non Ricevuta</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
