@@ -853,10 +853,6 @@
             <fullName>Teleriscaldamento</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>VAS</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CompetentOffice__c</picklist>
