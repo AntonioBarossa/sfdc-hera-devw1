@@ -853,6 +853,10 @@
             <fullName>Teleriscaldamento</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>VAS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CompetentOffice__c</picklist>
@@ -4702,10 +4706,6 @@
         </values>
         <values>
             <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata Mura</fullName>
             <default>false</default>
         </values>
         <values>
