@@ -5,7 +5,7 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>50</locationX>
-        <locationY>2366</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -42,7 +42,7 @@
         <name>AssegnaVariabili_0</name>
         <label>AssegnaVariabili</label>
         <locationX>314</locationX>
-        <locationY>2246</locationY>
+        <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -113,7 +113,7 @@
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
         <locationX>182</locationX>
-        <locationY>2126</locationY>
+        <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0</targetReference>
         </defaultConnector>
@@ -234,7 +234,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</targetReference>
+                <targetReference>Screen_Documentale</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -262,7 +262,7 @@
         </rules>
     </decisions>
     <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;
---&gt; Inserito screen documenti selezionati</description>
+--&gt; Inserito screen documentale</description>
     <interviewLabel>HDT_FL_GestionePagamenti_ComunicazionePagamento {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Comunicazione Pagamento</label>
     <loops>
@@ -302,7 +302,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>2246</locationY>
+        <locationY>2366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -386,7 +386,7 @@
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
         <locationX>314</locationX>
-        <locationY>2366</locationY>
+        <locationY>2486</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -413,7 +413,7 @@
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2486</locationY>
+        <locationY>2606</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -629,7 +629,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2606</locationY>
+        <locationY>2726</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -677,6 +677,56 @@
                 <name>recordId</name>
                 <value>
                     <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Documentale</name>
+        <label>Screen Documentale</label>
+        <locationX>182</locationX>
+        <locationY>2126</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextDocumentSignature</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignature</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>BillingProfile</label>
+    <protected>false</protected>
+    <values>
+        <field>Columns__c</field>
+        <value xsi:type="xsd:string">[
+    { &quot;label&quot;: &quot;Codice&quot;, &quot;fieldName&quot;: &quot;ContractAccountCode__c&quot; },
+    { &quot;label&quot;: &quot;Stato&quot;, &quot;fieldName&quot;: &quot;Status__c&quot; },
+	{ &quot;label&quot;: &quot;Data Attivazione&quot;, &quot;fieldName&quot;: &quot;ActivationDate__c&quot; },
+	{ &quot;label&quot;: &quot;Modalità Pagamento&quot;, &quot;fieldName&quot;: &quot;PaymentMethod__c&quot; }
+{&quot;label&quot;:&quot;Indirizzo Spedizione&quot;, &quot;fieldName&quot;:&quot;InvoicingAddressFormula__c&quot;},
+{&quot;label&quot;:&quot;Modalita Invio Bolletta&quot;, &quot;fieldName&quot;:&quot;BillSendingMethod__c&quot;}
+]</value>
+    </values>
+    <values>
+        <field>Default_Search_Key__c</field>
+        <value xsi:type="xsd:string">Attivo</value>
+    </values>
+    <values>
+        <field>Distinct__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
+        <field>Fields__c</field>
+        <value xsi:type="xsd:string">Status__c,ContractAccountCode__c,ActivationDate__c,PaymentMethod__c,InvoicingAddressFormula__c,BillSendingMethod__c</value>
+    </values>
+    <values>
+        <field>Max_Rows__c</field>
+        <value xsi:type="xsd:double">1.0</value>
+    </values>
+    <values>
+        <field>Query_Type__c</field>
+        <value xsi:type="xsd:string">SOSL</value>
+    </values>
+    <values>
+        <field>Row_Limit__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Where_Conditions__c</field>
+        <value xsi:type="xsd:string">Status__c = &apos;Attivo&apos;</value>
+    </values>
+    <values>
+        <field>sObject__c</field>
+        <value xsi:type="xsd:string">BillingProfile__c</value>
+    </values>
+</CustomMetadata>
