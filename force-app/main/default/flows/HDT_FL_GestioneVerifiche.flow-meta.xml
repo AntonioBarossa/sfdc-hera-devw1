@@ -10,7 +10,6 @@
         <connector>
             <targetReference>Aggiorna_Amount</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caliber</name>
             <value>
@@ -53,7 +52,6 @@
         <connector>
             <targetReference>Quote_trovata</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>commodity</name>
             <value>
@@ -302,6 +300,16 @@
         </rules>
     </decisions>
     <description>Flow per la gestione delle verifiche</description>
+    <formulas>
+        <name>processTypeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Case.CommodityFormula__c} = &quot;Gas&quot;,&quot;Verifiche Gas&quot;,&quot;Verifiche EE&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>processTypeRecapFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!Get_Case.CommodityFormula__c} = &quot;Gas&quot;,&quot;Verifiche Gas Modifica&quot;,&quot;Verifiche EE Modifica&quot;)</expression>
+    </formulas>
     <interviewLabel>HDT_FL_ {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Verifiche</label>
     <processMetadataValues>
@@ -460,7 +468,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <elementReference>processTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -505,7 +513,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -557,7 +564,6 @@
                     <elementReference>Quote_Management.QuoteType__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -602,7 +608,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <elementReference>processTypeRecapFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -635,7 +641,6 @@
                     <stringValue>Dati di Processo</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
