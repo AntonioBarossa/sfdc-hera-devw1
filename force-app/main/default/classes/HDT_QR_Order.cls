@@ -126,7 +126,7 @@ public inherited sharing class HDT_QR_Order {
             RequestOption__c,
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
-            PreviousTrader__c,
+            //PreviousTrader__c,
             VolturaThirdTrader__c,
             SBQQ__Quote__r.IsVAS__c,
             SBQQ__Quote__r.AmendmentAllowed__c,
