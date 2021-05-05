@@ -323,6 +323,7 @@
         <!-- Section 3: data of sevond level -->
         <div if:true={showSecondLevel} class="slds-col slds-size_1-of-1" style="height: 22vh;" >
             <c-hdt-account-statement-detail-viewer
+                account-id={recordid}
                 tab-code={tabCode}
                 first-level={firstLevel}
                 accountdetails={secondLevelList}

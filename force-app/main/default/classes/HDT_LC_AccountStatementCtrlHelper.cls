@@ -306,9 +306,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
     public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHelper(String tabValue, String recordId, String records, HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse, String level){
 
         serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
-        
-        //List<HDT_ColumnsFirstLevel__mdt> columnMdtList;
-        //columnMdtList = HDT_QR_AccountStatement.getColumnMetaDataList(columnMdtList, tabValue);
 
         try{
 
@@ -316,12 +313,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             System.debug('> RecordId > ' + recordId);
             System.debug('> Records > ' + records);
             System.debug('> level > ' + level);
-
-            //if(columnMdtList.size()==0){
-            //    serviceCatalogResponse.success = false;
-            //    serviceCatalogResponse.message = 'NO ColumnsFirstLevel metadata found';
-            //    return serviceCatalogResponse;
-            //}
 
             Id currentUserId = UserInfo.getUserId();
             AccountStatementFilter__c serviceCatalog = new AccountStatementFilter__c();
@@ -341,7 +332,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'InstallmentsView';
             }
             
-
             /*
                 1° livello
                     - Single Record:
@@ -365,7 +355,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                             = IsRaiFee__c
             */
 
-
             System.debug('>>> recordsList: ' + String.valueOf(recordsList.size()));
 
             if(recordsList.size() > 1){
@@ -374,7 +363,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog);
             }
 
-            //- Settare nel campo DocumentSelected__c il JSON delle fatture selezionate (sia 1 che 2 livello)
             serviceCatalog.DocumentSelected__c = records;
             serviceCatalog.Account__c = recordId;
             serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
@@ -386,17 +374,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalogResponse.message = '> ERROR on object permission';
                 return serviceCatalogResponse;
             }
-
-            //SObjectType objtype = Schema.getGlobalDescribe().get('AccountStatementFilter__c');
-            //Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-        
-            //if(objRes.isUpdateable()){
-            //    upsert serviceCatalog UpsertKey__c;
-            //} else {
-            //    serviceCatalogResponse.success = false;
-            //    serviceCatalogResponse.message = '> ERROR on object permission';
-            //    return serviceCatalogResponse;
-            //}
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = serviceCatalog.Id;
