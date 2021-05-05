@@ -165,7 +165,7 @@ export default class HdtSelfReading extends LightningElement {
 
         checkLastReadings({servicePointId:this.servicePointId})
         .then(result =>{
-
+            console.log('checkLastReadings results: ' + result);
             const lastReadings = this.fillLastReadingsArray(JSON.parse(result));
             console.log('filled obj: ' + JSON.stringify( lastReadings));
 
@@ -229,7 +229,9 @@ export default class HdtSelfReading extends LightningElement {
                 } else if (key.startsWith('herFascia')) {
                     registers[i].readingBand = lastReadings[key];
                 } else if (key.startsWith('herLettura')) {
-                    registers[i].readingOldValue = lastReadings[key];
+                    let reading = lastReadings[key];
+                    reading = reading.split('.').join('');  // rimuoviamo il separatore delle migliaia per poter parsare come int.
+                    registers[i].readingOldValue = reading;
                 }
                 // TODO: add missing fields
             }
@@ -315,6 +317,7 @@ export default class HdtSelfReading extends LightningElement {
 
                 this.oldTotalReadingValue += element.oldReadingValue();
                 this.newTotalReadingValue += element.newReadingValue();
+
                 console.log('oldTotalReadingValue: ' + this.oldTotalReadingValue)
                 console.log('newTotalReadingValue: ' + this.newTotalReadingValue)
 

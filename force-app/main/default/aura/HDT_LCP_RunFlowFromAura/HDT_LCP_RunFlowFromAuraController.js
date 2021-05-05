@@ -179,8 +179,7 @@
                 });
             }else{
 
-                workspaceAPI.openSubtab({
-                    parentTabId: accountTabId,
+                workspaceAPI.focusTab({
                     pageReference: {
                     type: "standard__recordPage",
                     attributes: {
@@ -188,7 +187,8 @@
                         objectApiName: "Case",
                         actionName: "view"
                     }
-                }
+                },
+                focus: true
                 })
                 .then(function(response) {
                     workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){

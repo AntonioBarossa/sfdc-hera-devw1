@@ -18,8 +18,16 @@ function onEventEstablishedInternal(message) {
 function onEventMarkDoneInternal(message) {
     sfutil.closeActivity(message);
 }
+function onPreSwitchCrmInbound(message) {
+    addJSONObjectInMemory(message);
+}
 function onSwitchCrmInbound(message) {
     sfutil.handleCrmSwitch(message);
+}
+function onPostSwitchCrmInbound(message) {
+    if(message.attachdata.CRM != "sfdc") {
+        removeJSONObjectInMemory(message.ConnectionID);
+    }
 }
 function onEventPartyChangedInbound(message) {
     // WIP CAPIRE SE USATO
