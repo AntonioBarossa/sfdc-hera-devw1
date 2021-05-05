@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>Hera_Service_Console</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
     <custom>true</custom>
     <classAccesses>
         <apexClass>HDT_WS_MrrRequest</apexClass>
@@ -835,6 +840,11 @@
         <editable>false</editable>
         <field>AccountDataEnrichment__mdt.Credential__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountStatementFilter__c.Account__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -6649,6 +6659,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.InterestLock__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.InvoicingPeriodDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.InvoicingPeriod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16358,11 +16378,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__ProductOption__c.Opportunity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__ProductOption__c.Origin__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26052,18 +26067,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_RichiestaParere</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_Subentro_EE</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -26072,15 +26075,7 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_UnificazioneSeparazioneCABolletta</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_VariazioneAmministratore</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VariazioneAnagraficaCliente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
@@ -26093,26 +26088,6 @@
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VerificaTitolaritaPodPdr</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VerificheEle</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VerificheGas</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VolturaTecnica</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VotiveModena</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_AlertDisassociazioneUtenteWeb</layout>
@@ -26191,9 +26166,49 @@
         <recordType>Case.HDT_RT_PreventiviGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_RichiestaParere</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_Rimborso</layout>
         <recordType>Case.HDT_RT_Rimborso</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_UnificazioneSeparazioneCABolletta</layout>
+        <recordType>Case.HDT_RT_UnificazioneSeparazioneCABolletta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VariazioneAnagraficaCliente</layout>
+        <recordType>Case.HDT_RT_VariazioneAnagraficaCliente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificaTitolaritaPodPdr</layout>
+        <recordType>Case.HDT_RT_VerificaTitolaritaPodPdr</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheEle</layout>
+        <recordType>Case.HDT_RT_VerificheEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheGas</layout>
+        <recordType>Case.HDT_RT_VerificheGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VolturaTecnica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VotiveModena</layout>
+        <recordType>Case.HDT_RT_VotiveModena</recordType>
+	</layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
