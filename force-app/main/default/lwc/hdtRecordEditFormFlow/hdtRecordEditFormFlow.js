@@ -32,6 +32,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api availableActions = [];
     @api variantSaveButton;
     @api outputId;
+    @api documentRecordId;
 
     @track errorMessage;
     @track error;
@@ -122,8 +123,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }
         */
     selectContentDocument(){
+
+        if(this.documentRecordId == null || this.documentRecordId == undefined || this.documentRecordId == ''){
+            this.documentRecordId = this.recordId;
+        }
+
         getContentDocs({
-            arecordId: this.recordId
+            arecordId: this.documentRecordId
             })
             .then(result => {
                 console.log(JSON.stringify(result));
@@ -199,10 +205,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleError(event){
+        console.log('Error Loading');
         let obj = event.detail.output.fieldErrors;
-
+ 
         let message = obj[Object.keys(obj)[0]][0].message;
-
+        console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Errore',
@@ -211,7 +218,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }),
         );
     }
-
     handleDraft(event){
         console.log('draft handle');
         if(event.target.name === 'draft'){

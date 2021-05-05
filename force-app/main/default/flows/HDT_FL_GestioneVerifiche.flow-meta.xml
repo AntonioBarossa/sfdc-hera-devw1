@@ -10,7 +10,6 @@
         <connector>
             <targetReference>Aggiorna_Amount</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caliber</name>
             <value>
@@ -53,7 +52,6 @@
         <connector>
             <targetReference>Quote_trovata</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>commodity</name>
             <value>
@@ -515,7 +513,6 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -567,7 +564,6 @@
                     <elementReference>Quote_Management.QuoteType__c</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -645,7 +641,6 @@
                     <stringValue>Dati di Processo</stringValue>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

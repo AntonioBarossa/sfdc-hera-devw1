@@ -1,8 +1,10 @@
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
+    HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
+
     public String validate(String fields, String recordId){
 
-        Case currentCase = [SELECT Type, Subprocess__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED];
+        Case currentCase = caseValidationQr.getCaseById(recordId);
         System.debug('HDT_UTL_CaseValidations: validating Case ' + currentCase);
 
         String caseType = currentCase.Type;
@@ -18,7 +20,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' ||
         caseType == 'Storno Rateizzazione'){
 
-            result = validatePagamenti(fields, caseType);
+            result = validatePagamenti(fields, caseType, currentCase);
 
 
         } else if (caseType == 'Variazione Anagrafica Cliente') {
@@ -55,13 +57,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
         }
 
         return result;
 
     }
 
-    public String validatePagamenti(String fields, string caseType){
+    public String validatePagamenti(String fields, string caseType, Case currentCase){
 
         String result;
 
@@ -69,11 +75,23 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug(getFieldValue(fields, 'Type'));
 
-        if(caseType != getFieldValue(fields, 'Type')){
+        if(caseType == 'Piano Rateizzazione'){
 
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile modificare tipo processo'));
+            if((fields == null || fields == '') && currentCase.AttachmentManagement__c == true){
 
-        } else if(caseType == 'Piano Rateizzazione'){
+                List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
+                if(attachedDocument.size() == 0){
+                
+                       result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+                    
+                }else{
+                
+                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                     
+                }
+
+            }
             
             Boolean applicationInterests = Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'));
             Integer requestedInstall = Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'));
@@ -83,14 +101,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
             ? System.today() + 365
             : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
+            String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
 
             if(clientCategory.contains('SME')){
 
-                if(!applicationInterests && requestedInstall > 6){
+                if(applicationInterests == false && requestedInstall > 6){
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 6'));
 
-                } else if(applicationInterests && requestedInstall > 2){
+                } else if(applicationInterests == true && requestedInstall > 2){
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 2'));
 
@@ -100,24 +119,48 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                 }
             
-            }else{
-
-                if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
+            }else if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
                     'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
-                    
-                } else {
+
+            }else if(typeInstallmentPlans == 'Straordinario'){
+
+                if(caseValidationQr.getUserSessionRole() != 'CEO'){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Permessi insufficienti per selezionare il Tipo Piano Rata'));
+
+                }else{
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
                 }
 
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
-    
         
-        } else {
+        
+        } else if(caseType == 'Variazione Domiciliazione'){
+            
+            BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
+            String reason = getFieldValue(fields, 'Reason__c');
+
+
+            if(billingProfile.PaymentMethod__c != 'RID' && reason != 'Domiciliazione Non Attiva'){
+                
+                result =  result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Billing Profile non domiciliati è possibile inseire soltanto \'Domiciliazione Non Attiva\''));
+
+            }else{
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+        
+        
+        }else{
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
