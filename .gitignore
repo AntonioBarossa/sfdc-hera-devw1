@@ -6,15 +6,13 @@
 .sfdx/
 .localdevserver/
 
-.github/
-assets/
-.github/*
-assets/*
-manifest/package.xml
-manifest/*
-manifest/
+.github
 .gitignore
+assets/*
+manifest/*
 
+#VSCode local files
+.vscode
 
 # LWC VSCode autocomplete
 **/lwc/jsconfig.json
