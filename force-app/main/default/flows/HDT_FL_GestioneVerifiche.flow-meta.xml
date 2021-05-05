@@ -673,6 +673,12 @@
                 <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Annullamento_Subflow_0</name>
