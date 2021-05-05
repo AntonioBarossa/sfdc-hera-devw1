@@ -143,6 +143,7 @@ public class HDT_WRP_AccountStatement {
         public String fatturaPrescrivibile;
         public String fatturaPrescritta;
         public String DEL_569;
+        public String documentoPareggio;
     }
 
 }
