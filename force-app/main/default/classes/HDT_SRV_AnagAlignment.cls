@@ -10,7 +10,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         VARIAZIONI_MARCATURA_USO_PDR,       // Innesco automatico alla chiusura del wizard del processo di Variazioni - Marcatura/Uso PDR
         VARIAZIONI_INDIRIZZO_FORNITURA,     // Innesco automatico alla chiusura del wizard del processo di Variazioni - Indirizzo Fornitura
         VARIAZIONI_TARIFFA_RES_NONRES,      // Innesco automatico alla chiusura del wizard del processo di Variazioni - Modifica Tariffa Residente/Non res.
-        MODIFICA_ANAGRAFICA_CLIENTE,        // Innesco automatico alla chiusura del wizard del processo di Modifica Anagrafica - Variazione Anagrafica Cliente
+        VARIAZIONE_ANAGRAFICA_CLIENTE,      // Innesco automatico alla chiusura del wizard del processo di Modifica Anagrafica - Variazione Anagrafica Cliente
         VARIAZIONE_STATO_POD,               // Innesco automatico all'arrivo del flusso VS2.0200 dal SII
         VARIAZIONE_STATO_PDR                // Innesco automatico all'arrivo del flusso VSG2.0200 dal SII
     }
@@ -47,8 +47,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             when 'VARIAZIONI_TARIFFA_RES_NONRES' {
                 result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_TARIFFA_RES_NONRES);
             }
-            when else {
-                // TODO
+            when 'VARIAZIONE_ANAGRAFICA_CLIENTE' {
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             }
         }
 
@@ -66,18 +66,19 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             when VARIAZIONI_FISCALE {
                 // TODO
             }
-            when VARIAZIONI_MARCATURA_USO_PDR {
-                // TODO
+            when VARIAZIONI_MARCATURA_USO_PDR,
+                 VARIAZIONI_INDIRIZZO_FORNITURA,
+                 VARIAZIONI_TARIFFA_RES_NONRES {
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
                 updateAnagAlignmentCaseVariazioni(anagAlignCase, (Case) triggerObj, context);
             }
-            when VARIAZIONI_INDIRIZZO_FORNITURA {
+            when VARIAZIONE_ANAGRAFICA_CLIENTE {
                 // TODO
             }
-            when VARIAZIONI_TARIFFA_RES_NONRES {
+            when VARIAZIONE_STATO_POD {
                 // TODO
             }
-            when else {
+            when VARIAZIONE_STATO_PDR {
                 // TODO
             }
         }
