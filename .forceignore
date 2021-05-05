@@ -25,7 +25,6 @@ package.xml
 **objects/Account/fields/ChannelProgramName*
 **objects/Account/fields/IsPartner*
 **objects/Campaign/fields/CampaignImageId*
-**objects/Case/fields/ChannelOfPayment__c*
 **objects/EligibilityCriteria__c/fields/CompanyOwner__c*
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/SBQQ__ProductOption__c/fields/NewClient__c*
@@ -35,7 +34,6 @@ package.xml
 **objects/Case/recordTypes/HDT_RT_InversioneContatore*
 **objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
 **objects/BillingProfile__c/fields/XMLType__c*
-**objects/Case/fields/DisconnectibilityType__c*
 **objects/Order/fields/DocSendingMethod__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
