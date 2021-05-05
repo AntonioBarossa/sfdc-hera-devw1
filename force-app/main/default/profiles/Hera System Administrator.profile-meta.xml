@@ -28178,10 +28178,6 @@
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VerificheEle</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-HDT_AlertDisassociazioneUtenteWeb</layout>
         <recordType>Case.HDT_RT_AlertDisassociazioneUtenteWeb</recordType>
     </layoutAssignments>
