@@ -250,6 +250,12 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
     }
 
+    public static String getPicklistValueHelper(String tabCode, String fieldName){
+        List<HDT_StatementRequest__mdt> mdtList;
+        mdtList = HDT_QR_AccountStatement.getStatementRequestMetaData(mdtList, fieldName);
+        return mdtList[0].PicklistValues__c;
+    }
+
     public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValuesHelper(HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj, String tabCode){
         
         pickObj = new HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist();
@@ -273,6 +279,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             String tabEc1 = '[{"label":"Conto Contrattuale – Contratto","value":"01"},{"label":"Servizio","value":"02"},{"label":"Recupero Crediti","value":"03"}]';
             String tabEc4 = '[{"label":"Conto Contrattuale","value":"04"},{"label":"N. Piano Rata","value":"05"}]';
             String deserializeThis = '';
+
+            //List<HDT_StatementRequest__mdt> mdtList;
+            //mdtList = HDT_QR_AccountStatement.getStatementRequestMetaData(mdtList, fieldName);
+            //return mdtList[0].PicklistValues__c;
 
             switch on tabCode {
                 when 'EC' {
@@ -383,7 +393,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
             //- Settare nel campo DocumentSelected__c il JSON delle fatture selezionate (sia 1 che 2 livello)
             serviceCatalog.DocumentSelected__c = records;
-
+            serviceCatalog.Account__c = recordId;
             serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
 
             Boolean upsertResult = HDT_UTL_DatabaseService.upsertSObjectExternalId(new List<SObject>{serviceCatalog}, 'AccountStatementFilter__c', 'UpsertKey__c');

@@ -3,7 +3,8 @@ import getFieldValues from '@salesforce/apex/HDT_LC_AccountStatementController.g
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const filterObject = {};
-const timeLimit = 157680000000;//5years
+const timeLimit5y = 157680000000;//5years
+const timeLimit2y = 157680000000;//2years
 
 export default class HdtJoinFilterModal extends LightningElement {
 
@@ -34,6 +35,8 @@ export default class HdtJoinFilterModal extends LightningElement {
         numeroDocumento: {showField: true, label: 'N. piano rata', name: 'numeroDocumento', minLength: 12, empty: true}
     };
 
+    timeLimit = 0;
+    timeDiff = 0;
 
     connectedCallback(){
         
@@ -42,17 +45,23 @@ export default class HdtJoinFilterModal extends LightningElement {
         switch (this.tabCode) {
             case 'EC':
                 this.joinFilterObj.numeroDocumento.showField = false;
+                this.timeLimit = timeLimit5y;
+                this.timeDiff = 5;
                 break;
             case 'EC1':
                 this.joinFilterObj.numeroFattura.showField = false;
                 this.joinFilterObj.numeroBollettino.showField = false;
                 this.joinFilterObj.societa.showField = false;
                 this.joinFilterObj.numeroDocumento.showField = false;
+                this.timeLimit = timeLimit2y;
+                this.timeDiff = 2;
                 break;
             case 'EC4':
                 this.joinFilterObj.numeroFattura.showField = false;
                 this.joinFilterObj.numeroBollettino.showField = false;
                 this.joinFilterObj.societa.showField = false;
+                this.timeLimit = timeLimit2y;
+                this.timeDiff = 2;
         }
 
         this.spinnerObj.spinner = true;
@@ -162,7 +171,7 @@ export default class HdtJoinFilterModal extends LightningElement {
             console.log('>>> dataInizio valorizzato e dataFine null');
             var today = new Date(this.filterObject[this.joinFilterObj.dataInizio.name]);
             var dateArray = this.setDate(today);
-            this.filterObject[this.joinFilterObj.dataFine.name] = (dateArray[0]+5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataFine.name] = (dateArray[0]+this.timeDiff).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
         }
 
         //dataFine valorizzato e dataInizio null
@@ -172,7 +181,7 @@ export default class HdtJoinFilterModal extends LightningElement {
 
             var today = new Date(this.filterObject[this.joinFilterObj.dataFine.name]);
             var dateArray = this.setDate(today);
-            this.filterObject[this.joinFilterObj.dataInizio.name] = (dateArray[0]-5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataInizio.name] = (dateArray[0]-this.timeDiff).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
 
         }
 
@@ -188,7 +197,7 @@ export default class HdtJoinFilterModal extends LightningElement {
 
             var today = new Date();
             var dateArray = this.setDate(today);
-            this.filterObject[this.joinFilterObj.dataInizio.name] = (dateArray[0]-5).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
+            this.filterObject[this.joinFilterObj.dataInizio.name] = (dateArray[0]-this.timeDiff).toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
             this.filterObject[this.joinFilterObj.dataFine.name] = dateArray[0].toString() + '-' + dateArray[1].toString() + '-' + dateArray[2].toString();
 
         }
@@ -321,8 +330,8 @@ export default class HdtJoinFilterModal extends LightningElement {
             console.log('>>>> ' + end);
             console.log('>>>> ' + diff);
 
-            if(diff > timeLimit){
-                returnObj.message = 'Hai selezionato un range maggiore di 5 anni';
+            if(diff > this.timeLimit){
+                returnObj.message = 'Hai selezionato un range maggiore di ' + this.timeDiff.toString() + ' anni';
                 return returnObj;    
             }
 
