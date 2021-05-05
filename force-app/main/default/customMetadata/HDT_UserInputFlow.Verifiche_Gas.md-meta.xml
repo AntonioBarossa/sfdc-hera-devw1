@@ -6,7 +6,7 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;Note__c&quot;,
+&quot;FieldName&quot; : &quot;DistributorNote__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1
 },
@@ -57,7 +57,7 @@
 &quot;Column&quot; : 2
 },
 {
-&quot;FieldName&quot; : &quot;CaliberAvailable__c&quot;,
+&quot;FieldName&quot; : &quot;Caliber__c&quot;,
 &quot;Column&quot; : 2
 },
 {
