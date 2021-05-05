@@ -7,7 +7,7 @@ class Util {
 		console.log("### iwsutil.createActivity() | MESSAGE: " + JSON.stringify(message));
 		ConnectorEntityController.createActivity(JSON.stringify(message), (result, req) => {
 			var cleanResult = result.replaceAll("&quot;","\"");
-			if(result.startsWith("Error")) {
+			if(cleanResult.startsWith("ERROR: ")) {
 				// WIP IMPROVE ERROR HANDLING
 				console.log("### iwsutil.createActivity() | " + cleanResult);
 			} else {
@@ -26,7 +26,7 @@ class Util {
 		ConnectorEntityController.closeActivity(JSON.stringify(message), (result, req) => {
 			if(result) {
 				// WIP
-				console.log("### iwsutil.closeActivity() | Error: " + error);
+				console.log("### iwsutil.closeActivity() | " + result);
 			} else {
 				console.log("### iwsutil.closeActivity() | ACTIVITY CLOSED!");
 			}
