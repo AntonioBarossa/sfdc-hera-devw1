@@ -54,8 +54,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
             if(inputs[0].createDocuments){
                 List<DocumentSelected__c> documentList = new List<DocumentSelected__c>();
-                DocumentSelected__c singleDocument = new DocumentSelected__c();
                 for(Object singleRecord : primoLivelloList){
+                    DocumentSelected__c singleDocument = new DocumentSelected__c();
                     primolivello = (Map<String, Object>) singleRecord;
                     secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
                     numeroDocumento = (String) primolivello.get('numeroDocumento') != null? (String) primolivello.get('numeroDocumento'):(String) primolivello.get('documento');
@@ -78,6 +78,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
+                    singleDocument.Name = numeroFattura != null? numeroFattura:numeroDocumento;
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
