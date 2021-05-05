@@ -272,9 +272,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return dateStr;
 	}
 
-	public static String getValueFromMethod(String classString, String method, Map<String,List<sObject>> inputs){
+	public static String getValueFromMethod(String classString, String method, Map<String,List<sObject>> inputs,Map<String,Object> formParams){
 		HDT_UTL_DocumentalManagementInterface support = HDT_UTL_DocumentalManagementFactory.getInstance(classString);
-		return support.execute(method,inputs);
+		return support.execute(method,inputs,formParams);
 	}
 	public static Integer getChildCount(String objectString, Map<String,List<sObject>> inputs){
 		return inputs.get(objectString)?.size();

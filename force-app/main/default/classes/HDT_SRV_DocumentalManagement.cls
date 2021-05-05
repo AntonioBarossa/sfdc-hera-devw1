@@ -6,7 +6,7 @@ public class HDT_SRV_DocumentalManagement{
 		List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver> driver = new List<HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver>();
 		Map<String,Object> driverPayloadMap = new Map<String,Object>();
 		List<Map<String,Object>> driverPayloadListMap = new List<Map<String,Object>>();
-		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : null;
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
 		String documentalContext = HDT_UTL_DocumentalManagement.getDocumentalContext(context);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure payloadStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration(documentalContext);
 		HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure driverStructure = HDT_UTL_DocumentalManagement.getDocumentalConfiguration('Driver');
@@ -14,7 +14,7 @@ public class HDT_SRV_DocumentalManagement{
 		Map<String,String> recordQueryMap = HDT_UTL_IntegrationObject.generateQueryString(integrationObjConfig,recordId); 
 		List<sObject> recordList = HDT_QR_GenericQuery.getGenericRecords(recordQueryMap.get('queryString'), recordQueryMap.get('parentObject'));
 		List<Map<String,List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList,documentalContext);
-		
+		formParamsMap.put('Contesto',context);
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
 			driver = generateDriver(recordObjectsListMap[i], payloadStructure,formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
@@ -128,7 +128,7 @@ public class HDT_SRV_DocumentalManagement{
 				//Nel caso in cui l'espressione ritorna $ deve essere ereditato il valore da uno dei controlli sotto
 				if((expression != null && expression != '' && value == '$') || expression == ''){
 					if(classString != null && classString != '' && methodString != null && methodString != ''){
-						value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString,methodString,inputs);
+						value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString,methodString,inputs,formParams);
 					}else if(separetor != null && separetor != ''){
 							//TODO Implentare getConcatValue
 							value = HDT_UTL_DocumentalManagement.getConcatValueFromObject(inputs,singleRecord);
@@ -192,7 +192,7 @@ public class HDT_SRV_DocumentalManagement{
 					//Nel caso in cui l'espressione ritorna $ deve essere ereditato il valore da uno dei controlli sotto
 					if((expression != null && expression != '' && value == '$') || expression == ''){
 						if(classString != null && classString != '' && methodString != null && methodString != ''){
-							value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString,methodString,inputs);
+							value = HDT_UTL_DocumentalManagement.getValueFromMethod(classString,methodString,inputs,formParams);
 						}else if(separetor != null && separetor != ''){
 								//TODO Implentare getConcatValue
 								value = HDT_UTL_DocumentalManagement.getConcatValueFromObject(inputs,singleRecord);
