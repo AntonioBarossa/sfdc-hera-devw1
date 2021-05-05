@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_UserInputFlow.Prescrizione_Fatture</members>
-        <members>HDT_UserInputFlow.Ricostruzione_Consumi</members>
-        <name>CustomMetadata</name>
+        <members>Case.HDT_RT_Informative</members>
+        <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</members>
-        <name>Flow</name>
+        <members>HDT_SRV_DocumentSelectedManager</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>hdtAccountStatementPicker</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <name>Profile</name>
     </types>
     <version>50</version>
 </Package>
