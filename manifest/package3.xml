@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-    <types>
-        <members>HDT_CreateBeneficiaryAccount</members>
-        <members>HDT_HCPointActivity</members>
-        <name>QuickAction</name>
-    </types>
-    <types>
-        <members>Global-Global Layout</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Call</members>
-        <members>wrts_prcgvr__Activity__c-HDT_HCPoint</members>
-        <members>wrts_prcgvr__Activity__c-HDT_Sportello</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>AccountStatementFilter__c.Account__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <name>Profile</name>
-    </types>
     <version>50</version>
 </Package>
