@@ -9,6 +9,11 @@
 &quot;FieldName&quot; : &quot;Reason__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
+},
+{
+&quot;FieldName&quot; : &quot;Note__c&quot;,
+&quot;Required&quot; : true,
+&quot;Column&quot; : 1
 }
 ]</value>
     </values>

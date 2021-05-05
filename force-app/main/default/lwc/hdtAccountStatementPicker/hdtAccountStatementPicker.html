@@ -45,7 +45,7 @@
                         onclick={handleSubmit} class="slds-m-left_x-small"></lightning-button>
                 </div>
                 <template if:true={showTable}>
-                    <div style="height: 200px;">
+                    <div style="height: 300px;">
                         <lightning-datatable onrowaction={handleRowAction} key-field="id" data={data} columns={columns}
                             hide-checkbox-column column-widths-mode="auto">
                         </lightning-datatable>
