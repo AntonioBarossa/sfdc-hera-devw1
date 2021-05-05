@@ -30,6 +30,11 @@
                 <default>false</default>
                 <label>date</label>
             </value>
+            <value>
+                <fullName>icon</fullName>
+                <default>false</default>
+                <label>icon</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
