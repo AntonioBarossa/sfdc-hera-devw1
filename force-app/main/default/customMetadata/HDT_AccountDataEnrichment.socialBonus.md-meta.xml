@@ -14,9 +14,16 @@
     &quot;iconName&quot;: &quot;standard:customer_lifecycle_analytics&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Codice Cliente&quot;,
-        &quot;fieldName&quot;: &quot;bp&quot;,
-        &quot;initialWidth&quot;: 140
+        &quot;label&quot;: &quot;Descrizione Tipo Compensazione&quot;,
+        &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data Attivazione Bonus&quot;,
+        &quot;fieldName&quot;: &quot;dataAttBonus&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data Cessazione Bonus&quot;,
+        &quot;fieldName&quot;: &quot;dataCessBonus&quot;
       },
       {
         &quot;label&quot;: &quot;POD/PDR&quot;,
@@ -47,16 +54,9 @@
         &quot;fieldName&quot;: &quot;soc&quot;
       },
       {
-        &quot;label&quot;: &quot;Data Attivazione Bonus&quot;,
-        &quot;fieldName&quot;: &quot;dataAttBonus&quot;
-      },
-      {
-        &quot;label&quot;: &quot;Data Cessazione Bonus&quot;,
-        &quot;fieldName&quot;: &quot;dataCessBonus&quot;
-      },
-      {
-        &quot;label&quot;: &quot;Descrizione Tipo Compensazione&quot;,
-        &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
+        &quot;label&quot;: &quot;Codice Cliente&quot;,
+        &quot;fieldName&quot;: &quot;bp&quot;,
+        &quot;initialWidth&quot;: 140
       }
     ]
   }

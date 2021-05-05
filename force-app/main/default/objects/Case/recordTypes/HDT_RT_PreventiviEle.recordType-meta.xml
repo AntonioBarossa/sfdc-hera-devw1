@@ -3790,6 +3790,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
@@ -3839,6 +3843,10 @@
         </values>
         <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4329,6 +4337,17 @@
         </values>
         <values>
             <fullName>Vendita confermata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RevokedCancellation__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -6174,6 +6193,10 @@
         </values>
         <values>
             <fullName>Recesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
             <default>false</default>
         </values>
         <values>

@@ -102,13 +102,13 @@ export default class LookupLwc extends LightningElement {
     }
 
     //To get preselected or selected record
-    /*@wire(getRecord, { recordId: '$valueId', fields: FIELDS })
+    @wire(getRecord, { recordId: '$valueId', fields: FIELDS })
     wiredOptions({ error, data }) {
         if (data) {
             console.log("# record: ", JSON.stringify(data));
             this.record = data;
             this.error = undefined;
-            this.valueObj = this.record.fields.Name.value;
+            this.valueObj = this.record.fields[this.searchBy].value;
             this.isValue = true;
             //console.log("# record: ", JSON.stringify(this.record));
         } else if (error) {
@@ -116,7 +116,7 @@ export default class LookupLwc extends LightningElement {
             this.record = undefined;
             console.log("# error: ", this.error);
         }
-    }*/
+    }
 
     //when valueId changes
     valueChange() {

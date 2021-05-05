@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>Activity</members>
-		<members>SolTracking__c</members>
+		<members>Contract</members>
 		<name>CustomObject</name>
 	</types>
 	<types>
-		<members>HDT_CategoryTypeClient</members>
+		<members>HDT_Company</members>
 		<name>GlobalValueSet</name>
 	</types>
 	<types>
-		<members>Admin</members>
+		<members>Admin</members> 
 		<members>Hera M2M Integration User</members>
 		<members>Hera System Administrator</members>
 		<members>Hera System Integrator</members>

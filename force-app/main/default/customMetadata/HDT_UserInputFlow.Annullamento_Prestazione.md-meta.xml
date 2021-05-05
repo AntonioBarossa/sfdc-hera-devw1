@@ -21,9 +21,7 @@
 &quot;FieldName&quot; : &quot;CancellationRequestDate__c&quot;,
 &quot;Required&quot; : false,
 &quot;Column&quot; : 1
-},
-{&quot;FieldName&quot;:&quot;CancellationReason__c&quot;,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;CancellationReasonCode__c&quot;,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;CancellationReasonDescription__c&quot;,&quot;Column&quot;:1}]</value>
+}]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>

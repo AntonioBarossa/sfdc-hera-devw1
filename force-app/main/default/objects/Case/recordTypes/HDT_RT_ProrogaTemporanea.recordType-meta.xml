@@ -3774,6 +3774,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
@@ -3907,6 +3911,10 @@
         </values>
         <values>
             <fullName>IR020</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4513,6 +4521,17 @@
         </values>
         <values>
             <fullName>Vendita confermata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RevokedCancellation__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -6485,6 +6504,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
             <default>false</default>
         </values>
@@ -6577,7 +6600,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
