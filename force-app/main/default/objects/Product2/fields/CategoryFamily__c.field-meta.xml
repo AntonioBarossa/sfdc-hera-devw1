@@ -19,54 +19,19 @@
                 <label>M Giusto Casa</label>
             </value>
             <value>
-                <fullName>Hello Hera Casa</fullName>
+                <fullName>A.R.E.R.A</fullName>
                 <default>false</default>
-                <label>Hello Hera Casa</label>
+                <label>A.R.E.R.A</label>
             </value>
             <value>
-                <fullName>Hera Comm Placet</fullName>
+                <fullName>Arera Ranton</fullName>
                 <default>false</default>
-                <label>Hera Comm Placet</label>
+                <label>Arera Ranton</label>
             </value>
             <value>
-                <fullName>Hera Impronta Zero</fullName>
+                <fullName>Delibera 153/12</fullName>
                 <default>false</default>
-                <label>Hera Impronta Zero</label>
-            </value>
-            <value>
-                <fullName>Nuova Idea</fullName>
-                <default>false</default>
-                <label>Nuova Idea</label>
-            </value>
-            <value>
-                <fullName>Prezzo Certo</fullName>
-                <default>false</default>
-                <label>Prezzo Certo</label>
-            </value>
-            <value>
-                <fullName>Prezzo Netto Hera</fullName>
-                <default>false</default>
-                <label>Prezzo Netto Hera</label>
-            </value>
-            <value>
-                <fullName>Prezzo Garantito</fullName>
-                <default>false</default>
-                <label>Prezzo Garantito</label>
-            </value>
-            <value>
-                <fullName>Prezzo Sicurezza</fullName>
-                <default>false</default>
-                <label>Prezzo Sicurezza</label>
-            </value>
-            <value>
-                <fullName>Welcome Hera</fullName>
-                <default>false</default>
-                <label>Welcome Hera</label>
-            </value>
-            <value>
-                <fullName>Casa Dolce Casa</fullName>
-                <default>false</default>
-                <label>Casa Dolce Casa</label>
+                <label>Delibera 153/12</label>
             </value>
             <value>
                 <fullName>Energia Serena</fullName>
@@ -74,14 +39,139 @@
                 <label>Energia Serena</label>
             </value>
             <value>
-                <fullName>Tutela Simile</fullName>
+                <fullName>Giorno Hera</fullName>
                 <default>false</default>
-                <label>Tutela Simile</label>
+                <label>Giorno Hera</label>
             </value>
             <value>
-                <fullName>Tre per te</fullName>
+                <fullName>Giorno Hera Hcp Lucca</fullName>
                 <default>false</default>
-                <label>Tre per te</label>
+                <label>Giorno Hera Hcp Lucca</label>
+            </value>
+            <value>
+                <fullName>Hello Hera</fullName>
+                <default>false</default>
+                <label>Hello Hera</label>
+            </value>
+            <value>
+                <fullName>Hello Ranton</fullName>
+                <default>false</default>
+                <label>Hello Ranton</label>
+            </value>
+            <value>
+                <fullName>Hera Bebe&apos;</fullName>
+                <default>false</default>
+                <label>Hera Bebe&apos;</label>
+            </value>
+            <value>
+                <fullName>Hera Etapiu</fullName>
+                <default>false</default>
+                <label>Hera Etapiu</label>
+            </value>
+            <value>
+                <fullName>Hera Impronta Zero</fullName>
+                <default>false</default>
+                <label>Hera Impronta Zero</label>
+            </value>
+            <value>
+                <fullName>Hera Welfare</fullName>
+                <default>false</default>
+                <label>Hera Welfare</label>
+            </value>
+            <value>
+                <fullName>Indicizzato Ranton</fullName>
+                <default>false</default>
+                <label>Indicizzato Ranton</label>
+            </value>
+            <value>
+                <fullName>Mercato Libero Cmv</fullName>
+                <default>false</default>
+                <label>Mercato Libero Cmv</label>
+            </value>
+            <value>
+                <fullName>Nuova Idea</fullName>
+                <default>false</default>
+                <label>Nuova Idea</label>
+            </value>
+            <value>
+                <fullName>Nuova Idea Ranton</fullName>
+                <default>false</default>
+                <label>Nuova Idea Ranton</label>
+            </value>
+            <value>
+                <fullName>Nuova Idea Tlr</fullName>
+                <default>false</default>
+                <label>Nuova Idea Tlr</label>
+            </value>
+            <value>
+                <fullName>Offerta Gas Ranton</fullName>
+                <default>false</default>
+                <label>Offerta Gas Ranton</label>
+            </value>
+            <value>
+                <fullName>Placet</fullName>
+                <default>false</default>
+                <label>Placet</label>
+            </value>
+            <value>
+                <fullName>Prezzo Fisso</fullName>
+                <default>false</default>
+                <label>Prezzo Fisso</label>
+            </value>
+            <value>
+                <fullName>Prezzo Fisso Leggero</fullName>
+                <default>false</default>
+                <label>Prezzo Fisso Leggero</label>
+            </value>
+            <value>
+                <fullName>Prezzo Fisso Ranton</fullName>
+                <default>false</default>
+                <label>Prezzo Fisso Ranton</label>
+            </value>
+            <value>
+                <fullName>Prezzo Fisso Tlr</fullName>
+                <default>false</default>
+                <label>Prezzo Fisso Tlr</label>
+            </value>
+            <value>
+                <fullName>Prezzo Indicizzato Ranton</fullName>
+                <default>false</default>
+                <label>Prezzo Indicizzato Ranton</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto</fullName>
+                <default>false</default>
+                <label>Prezzo Netto</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Amga</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Amga</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Comunita Solare</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Comunita Solare</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Ranton</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Ranton</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Tlr</fullName>
+                <default>false</default>
+                <label>Prezzo Netto Tlr</label>
+            </value>
+            <value>
+                <fullName>Prezzo Sicurezza</fullName>
+                <default>false</default>
+                <label>Prezzo Sicurezza</label>
+            </value>
+            <value>
+                <fullName>Regolamentato Hcm</fullName>
+                <default>false</default>
+                <label>Regolamentato Hcm</label>
             </value>
             <value>
                 <fullName>Simply Hera</fullName>
@@ -89,44 +179,29 @@
                 <label>Simply Hera</label>
             </value>
             <value>
-                <fullName>Gente Hera</fullName>
+                <fullName>Start Up</fullName>
                 <default>false</default>
-                <label>Gente Hera</label>
+                <label>Start Up</label>
             </value>
             <value>
-                <fullName>Prezzo Netto Verde</fullName>
+                <fullName>Teleriscaldamento</fullName>
                 <default>false</default>
-                <label>Prezzo Netto Verde</label>
+                <label>Teleriscaldamento</label>
             </value>
             <value>
-                <fullName>Prezzo Netto Special</fullName>
+                <fullName>Tutela Simile</fullName>
                 <default>false</default>
-                <label>Prezzo Netto Special</label>
+                <label>Tutela Simile</label>
             </value>
             <value>
-                <fullName>Prezzo Netto Natura</fullName>
+                <fullName>Welcome Hera</fullName>
                 <default>false</default>
-                <label>Prezzo Netto Natura</label>
+                <label>Welcome Hera</label>
             </value>
             <value>
-                <fullName>Prezzo Netto Impresa</fullName>
+                <fullName>Altro</fullName>
                 <default>false</default>
-                <label>Prezzo Netto Impresa</label>
-            </value>
-            <value>
-                <fullName>Prezzo Netto Lavoro</fullName>
-                <default>false</default>
-                <label>Prezzo Netto Lavoro</label>
-            </value>
-            <value>
-                <fullName>Prezzo Netto Special Web</fullName>
-                <default>false</default>
-                <label>Prezzo Netto Special Web</label>
-            </value>
-            <value>
-                <fullName>Hera Eta Piu</fullName>
-                <default>false</default>
-                <label>Hera Eta Piu</label>
+                <label>Altro</label>
             </value>
             <value>
                 <fullName>TBD</fullName>
