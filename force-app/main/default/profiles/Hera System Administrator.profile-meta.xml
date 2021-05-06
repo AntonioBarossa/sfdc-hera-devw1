@@ -28447,19 +28447,23 @@
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Dossier</layout>
+        <recordType>Order.HDT_RT_OrderDossier</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-HDT_Voltura</layout>
         <recordType>Order.HDT_RT_Voltura</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Prima attivazione</layout>
         <recordType>Order.HDT_RT_Attivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
@@ -28479,27 +28483,11 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Proroga</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
@@ -28510,7 +28498,19 @@
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Sconti o Bonus VAS</layout>
+        <recordType>Order.HDT_RT_ScontiBonus</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Subentro</layout>
+        <recordType>Order.HDT_RT_Subentro</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_SwitchIn</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-VAS</layout>
         <recordType>Order.HDT_RT_VAS</recordType>
     </layoutAssignments>
     <layoutAssignments>

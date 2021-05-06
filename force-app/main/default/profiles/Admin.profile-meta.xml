@@ -28446,7 +28446,7 @@
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
-     <layoutAssignments>
+    <layoutAssignments>
         <layout>Order-Dossier</layout>
         <recordType>Order.HDT_RT_OrderDossier</recordType>
     </layoutAssignments>
@@ -28461,6 +28461,41 @@
     <layoutAssignments>
         <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_CambioOfferta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_CambioUso</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_Default</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_Proroga</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_SwitchInVolturaTecnica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Sconti o Bonus VAS</layout>
