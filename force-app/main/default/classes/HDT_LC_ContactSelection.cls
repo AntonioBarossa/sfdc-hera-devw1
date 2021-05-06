@@ -9,7 +9,7 @@ public with sharing class HDT_LC_ContactSelection {
             List<List<sObject>> recordList = new List<List<sObject>>();
             Map<Id, String> rolesMap = new Map<Id, String>();
 
-            // TODO: capire se esclude contatti particolari, es. contatti SOL o Amministratore Condominio
+            // TODO: capire se escludere contatti particolari, es. contatti SOL o Amministratore Condominio
             HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
             List<AccountContactRelation> relationList = acrQueryHandler.getContactsByAccountWithRoles(accountId);
             Set<Id> contactIds = new Set<Id>();
