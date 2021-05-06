@@ -55,8 +55,8 @@ public inherited sharing class HDT_QR_SearchPlug {
             myQuote = [
                 SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c,
                        Market__c, Channel__c, CustomerMarking__c, CategoryTypeClient__c,
-                       CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerRange__c,
-                       ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, EquipmenType__c
+                       CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c,
+                       ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, MeterType__c
                 FROM SBQQ__Quote__c
                 WHERE Id = :currentId
                 WITH SECURITY_ENFORCED
@@ -119,7 +119,7 @@ public inherited sharing class HDT_QR_SearchPlug {
                     (PromoCode__c = :quote.FriendCode__c OR PromoCode__c = null) AND
                     (Agency__c = :quote.Agency__c OR Agency__c = null) AND
                     (UseCategory__c = :quote.UseCategory__c OR UseCategory__c = null) AND
-                    (EquipmenType__c = :quote.EquipmenType__c OR EquipmenType__c = null)
+                    (EquipmenType__c = :quote.MeterType__c OR EquipmenType__c = null)
 
             ];
             //Multipicklist
