@@ -233,7 +233,8 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getChildOrdersByParentIds(List<String> parentOrderIds){
         return [
             SELECT
-            Phase__c
+            Phase__c,
+            recordtype.developername
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -374,7 +375,11 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__r.IsVAS__c,
             SBQQ__Quote__r.AmendmentAllowed__c,
             RecordTypeId,
-            RecordType.DeveloperName
+            RecordType.DeveloperName,
+            ProcessType__c,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.SupplyAddress__c
             FROM
             Order
             WHERE AccountId = :accountId
@@ -382,7 +387,7 @@ public inherited sharing class HDT_QR_Order {
             AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
             AND SBQQ__Quote__r.IsVAS__c != true
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
-            AND Status IN ('In Lavorazione','Draft')
+            AND Status IN ('In Lavorazione')
             WITH SECURITY_ENFORCED
         ];
     }

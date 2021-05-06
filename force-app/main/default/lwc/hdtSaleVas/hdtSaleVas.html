@@ -4,7 +4,7 @@
 
     <div class="slds-media__body slds-m-top_small slds-p-left_small">
         <h2 class="slds-card__header-title">
-            <span class="slds-text-heading_small slds-truncate">Selezione VAS</span>
+            <span class="slds-text-heading_small slds-truncate">VAS</span>
         </h2>
     </div>
 
@@ -56,6 +56,21 @@
                     columns={contractsListcolumns}
                     max-row-selection=1
                     onrowselection={getSelectedContract}>
+                </lightning-datatable>
+            </div>
+        </div>
+
+        <div if:true={isCompleteListVisible} class="slds-grid slds-m-top_large">
+            <div if:true={showEmptyMessage} class="slds-size_1-of-1">
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno contratti attivi/ordini in corso</div>
+            </div>
+            <div if:false={showEmptyMessage} class="slds-size_1-of-1">
+                <lightning-datatable
+                    key-field="Id"
+                    data={tableData}
+                    columns={completeListcolumns}
+                    max-row-selection=1
+                    onrowselection={getSelectedFromCompleteList}>
                 </lightning-datatable>
             </div>
         </div>
