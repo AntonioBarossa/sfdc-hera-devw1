@@ -10,6 +10,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api accountdetails;
     @api filterString = '';
     @api tabCode;
+    @api accountId;
     @track columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
@@ -237,7 +238,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
         this.openMainSpinner();
 
-        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: '', records: recordsString, level: '2'})
+        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.accountId, records: recordsString, level: '2'})
         .then(result => {
             console.log('# service Catalog BackenHandler #');
 
