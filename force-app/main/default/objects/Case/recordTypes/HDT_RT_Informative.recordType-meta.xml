@@ -738,6 +738,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ChannelOfPayment__c</picklist>
+        <values>
+            <fullName>Bollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Charge__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -3048,10 +3067,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Info non censita</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Approfondimenti consumi fatturati</fullName>
             <default>false</default>
         </values>
@@ -3161,6 +3176,10 @@
         </values>
         <values>
             <fullName>Info mancato Ricontatto Da Canali Di Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info non censita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -4087,6 +4106,113 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OLDUseTypeEnergy__c</picklist>
+        <values>
+            <fullName>03 Illuminazione Pubblica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cantiere %28Temp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cottimo %28Perm%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>For temp abit%28Temp Straord 6h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Illuminaz Monum %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imp Risalita %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ins Lum Pubb %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inst Non presid %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavim%28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavim%28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavimenti%28Temp Straord%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie %28Temp Straord 16h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie %28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp Straord 16h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp Straord 6h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non raggiungibile%28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ordinaria %28Perm%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripr cine tv%28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripr cine tv%28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roulottes simili %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg %28Temp Straord 6h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg %28Temp Straord%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg %28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>OperationSubType__c</picklist>
         <values>
             <fullName>Prezzo energia negoziato</fullName>
@@ -4183,327 +4309,15 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Acconto Paperless Non Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acconto Paperless Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Allineamento RCU Concluso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Info da Banca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa check preliminari</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa conferma preventivo cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Avvenuta Riduzione Potenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Check preliminari KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Check preliminari OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiuso</fullName>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Completata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Heroku OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da Inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da inviare a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Data Esecuzione Prevista</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Non Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elaborazione Manuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SAP simulato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO pre-MDM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO tentativo riattivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Procedurale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento Anagrafica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento RCU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Approvazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa Data Decorrenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa Documentazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa risposta Mail</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa validazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo ricalcolato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Definitivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Rilavorato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paperless Generato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paperless Non Generato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Piano Rata Annullato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Presenza Atti Autorizzativi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo accettato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo scaduto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS Inviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMS Non Inviato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospeso parere interno</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validazione KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validazione OK DL simulata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Validazione OK da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7517,6 +7331,129 @@
         </values>
         <values>
             <fullName>Split payment soc gruppo10%25-S4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VasStatus__c</picklist>
+        <values>
+            <fullName>ANNUL PER CESSAZIONE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNUL PER RECESSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNUL PER RIPENS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNULLATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CESS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHIUSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COFF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FAT SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FATT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FATTURA SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO DIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO ODV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO PAREG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO RTZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO STORN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK ODV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK PAREG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECESSO DA FORNITORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIPENS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RTZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOLL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL_TAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STORN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
