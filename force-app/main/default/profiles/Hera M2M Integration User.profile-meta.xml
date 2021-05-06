@@ -26412,6 +26412,18 @@
     <layoutAssignments>
         <layout>WorkThanks-Thanks Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Call</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_HCPoint</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Sportello</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
