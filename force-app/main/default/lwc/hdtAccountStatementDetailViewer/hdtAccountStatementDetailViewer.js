@@ -15,6 +15,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
+    showButton = false;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
     sortedBy;
@@ -53,12 +54,13 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         getSecondLevelColumns({tabValue: this.tabCode})
         .then(result => {
             console.log('# getSecondLevelColumns #');
+            console.log('# getSecondLevelColumns: ' + result.success + ' - ' + result.message);
 
             if(result.success){
 
-                console.log('# getSecondLevelColumns: ' + result.message);
-
                 this.columns = result.columnObj;//columns;
+                console.log('# buttonList: ' + result.buttonList.length);
+
                 this.buttonList = result.buttonList;
 
                 this.columns.forEach((i) => {
@@ -67,6 +69,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                         this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label});
                     }
                 });
+
+                this.showButton = true;
 
             } else {
                 this.showError = true;
@@ -288,6 +292,10 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         });
         // Dispatches the event.
         this.dispatchEvent(removeSpinner);
+    }
+
+    showSingleBill(event){
+
     }
 
 }
