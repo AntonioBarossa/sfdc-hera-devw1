@@ -518,13 +518,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>ChannelClient__c</picklist>
-        <values>
-            <fullName>To define</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Channel__c</picklist>
         <values>
             <fullName>Agente</fullName>
@@ -696,13 +689,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>ComponentPCV__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>ContributionsType__c</picklist>
         <values>
             <fullName>TBD</fullName>
             <default>false</default>
@@ -1126,17 +1112,6 @@
         </values>
         <values>
             <fullName>Casa Indipendente</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>EquipmentType__c</picklist>
-        <values>
-            <fullName>Monorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Multiorario</fullName>
             <default>false</default>
         </values>
     </picklistValues>

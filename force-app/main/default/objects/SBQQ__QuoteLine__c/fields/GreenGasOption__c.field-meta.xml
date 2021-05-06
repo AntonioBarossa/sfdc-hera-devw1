@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>Usato per indicare se è presente(o meno) la presenza dell&apos;opzone Energia Verde per il dato record di di Quote Line</description>
     <externalId>false</externalId>
-    <label>Green Gas Option</label>
+    <label>Opzione Gas Verde</label>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
