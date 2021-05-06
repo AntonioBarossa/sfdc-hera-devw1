@@ -41,8 +41,8 @@ export default class HdtContactSelection extends LightningElement {
                 .then(result => {
                     console.log('RESULT: ' + result)
                     var wiredResponse = JSON.parse(result);
-                    if(Object.keys(wiredResponse[0]).length > 0){
-                        this.data = wiredResponse[0];
+                    if(Object.keys(wiredResponse).length > 0){
+                        this.data = wiredResponse;
                         this.showNoRecordMessage = false;
                     }else{
                         this.data = null;
@@ -66,6 +66,7 @@ export default class HdtContactSelection extends LightningElement {
         //this.columns = JSON.parse(this.columns);
         this.columns = [
             { label: 'Nome Contatto', fieldName: 'Name', type: 'text' },
+            { label: 'Ruolo', fieldName: 'Roles', type: 'text' },
             { label: 'Telefono', fieldName: 'Phone', type: 'phone' },
             { label: 'Cellulare', fieldName: 'MobilePhone', type: 'phone' },
             { label: 'Email', fieldName: 'Email', type: 'email' },
