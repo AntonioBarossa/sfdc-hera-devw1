@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Aggiorna_Amount</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caliber</name>
             <value>
@@ -52,6 +53,7 @@
         <connector>
             <targetReference>Quote_trovata</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>commodity</name>
             <value>
@@ -73,6 +75,38 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>Aggiorna_Da_Inviare</name>
+        <label>Aggiorna Preventivo Accettato</label>
+        <locationX>1326</locationX>
+        <locationY>903</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Preventivo accettato</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Operation_Code</name>
+        <label>Assegna Operation Code</label>
+        <locationX>577</locationX>
+        <locationY>1560</locationY>
+        <assignmentItems>
+            <assignToReference>OperationCode</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Quote_Management.OperationCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Conferma_Case</targetReference>
+        </connector>
+    </assignments>
     <assignments>
         <name>Assenga_Process_Type</name>
         <label>Assenga Process Type</label>
@@ -140,10 +174,10 @@
     <decisions>
         <name>Annullamento</name>
         <label>Annullamento?</label>
-        <locationX>165</locationX>
-        <locationY>1514</locationY>
+        <locationX>203</locationX>
+        <locationY>1556</locationY>
         <defaultConnector>
-            <targetReference>Aggiorna_Conferma_Case</targetReference>
+            <targetReference>OperationCode_Valorizzato</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Annullare</defaultConnectorLabel>
         <rules>
@@ -200,7 +234,7 @@
             <name>Energia_Elettrica_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.Commodity__c</leftValueReference>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Energia Elettrica</stringValue>
@@ -235,6 +269,31 @@
                 <targetReference>Get_Amount_Quote</targetReference>
             </connector>
             <label>Bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>OperationCode_Valorizzato</name>
+        <label>OperationCode Valorizzato?</label>
+        <locationX>409</locationX>
+        <locationY>1562</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Operation_Code</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>No</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Quote_Management.OperationCode__c</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Conferma_Case</targetReference>
+            </connector>
+            <label>No</label>
         </rules>
     </decisions>
     <decisions>
@@ -377,10 +436,20 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Case</name>
+        <label>Aggiorna Case</label>
+        <locationX>1326</locationX>
+        <locationY>1076</locationY>
+        <connector>
+            <targetReference>LoadSpinner</targetReference>
+        </connector>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Conferma_Case</name>
         <label>Aggiorna Fase in Inviare Preventivo</label>
-        <locationX>293</locationX>
-        <locationY>1667</locationY>
+        <locationX>524</locationX>
+        <locationY>1762</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -398,7 +467,7 @@
         <inputAssignments>
             <field>OperationCode__c</field>
             <value>
-                <elementReference>Quote_Management.OperationCode__c</elementReference>
+                <elementReference>OperationCode</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -421,6 +490,37 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <screens>
+        <name>LoadSpinner</name>
+        <label>LoadSpinner</label>
+        <locationX>1327</locationX>
+        <locationY>1236</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Spinner</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>LWC_hdtRecordEditForm</name>
         <label>LWC hdtRecordEditForm</label>
@@ -513,6 +613,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -564,6 +665,13 @@
                     <elementReference>Quote_Management.QuoteType__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -578,6 +686,9 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Aggiorna_Da_Inviare</targetReference>
+        </connector>
         <fields>
             <name>Intestazione_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
@@ -608,7 +719,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>processTypeRecapFormula</elementReference>
+                    <elementReference>ProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -632,7 +743,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Fine</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -641,6 +752,7 @@
                     <stringValue>Dati di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -683,8 +795,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow_0</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>21</locationX>
-        <locationY>1674</locationY>
+        <locationX>58</locationX>
+        <locationY>1697</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -704,6 +816,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>OperationCode</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
