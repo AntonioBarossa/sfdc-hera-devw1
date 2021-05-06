@@ -135,6 +135,10 @@
                 <behavior>Readonly</behavior>
                 <field>DistributorNote__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Description</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -217,10 +221,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Subject</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Description</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -314,7 +314,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001Wu7z</masterLabel>
+        <masterLabel>00h1X000001ktd6</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

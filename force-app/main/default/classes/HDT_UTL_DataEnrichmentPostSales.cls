@@ -1,17 +1,11 @@
 public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
-   
-
-    @InvocableMethod(label='Handle Response Data Enrichment')
-    public static List<Case> handleResponse(List<HDT_UTL_FlowInput> inputs){
+    public static Case handleResponse(String serializedResponse, Case currentCase){
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
-        List<Case> caseList = new List<Case>();
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
         List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigList = new List<HDT_DataEnrichmentTransocode__mdt>();
         Map<String, Object> transcodeMap = new Map<String, Object>();
-        String serializedResponse = inputs[0].serializedResponse;
-        Case currentCase = inputs[0].currentCase;
         String billingProfileCode;
         String billingProfilesfdcField;
         String billingProfileId;
@@ -118,11 +112,19 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
         transcodeMap.put('SalesCompany__c', salesCompany);
-        caseList.add(depsSrv.populateCase(transcodeMap, currentCase));
 
+        return depsSrv.populateCase(transcodeMap, currentCase);
+    }
+
+    // Wrapper per i flow
+    @InvocableMethod(label='Handle Response Data Enrichment')
+    public static List<Case> handleResponseFlow(List<HDT_UTL_FlowInput> inputs){
+        String serializedResponse = inputs[0].serializedResponse;
+        Case currentCase = inputs[0].currentCase;
+        
+        List<Case> caseList = new List<Case>();
+        caseList.add(handleResponse(serializedResponse, currentCase));
         return caseList;
-
-
     }
 
 
