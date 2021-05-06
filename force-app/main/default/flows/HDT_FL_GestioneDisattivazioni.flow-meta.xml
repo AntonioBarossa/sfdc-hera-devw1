@@ -360,6 +360,13 @@
                 <elementReference>Get_Input_Case.BillingProfile__r.BillSendingMethod__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.WrittenReceiptRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DataRicezioneRichiesta</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
         </connector>
@@ -718,6 +725,11 @@
         <picklistField>BillSendingMethod__c</picklistField>
         <picklistObject>BillingProfile__c</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>DataRicezioneRichiesta</name>
+        <dataType>Date</dataType>
+        <expression>IF(ISBLANK({!Get_Input_Case.WrittenReceiptRequestDate__c} ),TODAY(),{!Get_Input_Case.WrittenReceiptRequestDate__c} )</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestioneDisattivazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Disattivazioni</label>
     <processMetadataValues>

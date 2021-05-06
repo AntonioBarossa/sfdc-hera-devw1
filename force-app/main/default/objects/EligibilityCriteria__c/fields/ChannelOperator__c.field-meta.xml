@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ChannelOperator__c</fullName>
+    <description>Campo di configurazione usato per indicare il canale del record di criterio nella funzionalità di Configurazione Offerta Tecnica.</description>
+    <externalId>false</externalId>
+    <label>Operatore canale</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_EligibilityParameteOperator</valueSetName>
+    </valueSet>
+</CustomField>

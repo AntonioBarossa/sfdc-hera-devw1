@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Campaign__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
-    <description>La campagna legata al dato record di Asset</description>
+    <description>la campagna legata al dato record di product option</description>
     <externalId>false</externalId>
-    <label>Campaign</label>
-    <referenceTo>Campaign</referenceTo>
-    <relationshipLabel>Assets</relationshipLabel>
-    <relationshipName>Assets</relationshipName>
+    <label>Campagna</label>
+    <length>150</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Lookup</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

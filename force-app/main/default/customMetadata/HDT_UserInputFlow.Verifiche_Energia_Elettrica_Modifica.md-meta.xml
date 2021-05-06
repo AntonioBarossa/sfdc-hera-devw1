@@ -19,7 +19,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Verifiche EE</value>
+        <value xsi:type="xsd:string">Verifiche EE Modifica</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
