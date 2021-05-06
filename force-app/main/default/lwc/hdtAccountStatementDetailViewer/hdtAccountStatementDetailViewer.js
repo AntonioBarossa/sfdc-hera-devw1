@@ -295,7 +295,23 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     }
 
     showSingleBill(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'success'
+            })
+        );
+    }
 
+    showRate(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'success'
+            })
+        );
     }
 
 }
