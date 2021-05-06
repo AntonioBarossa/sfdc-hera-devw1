@@ -118,6 +118,8 @@
        //event.getParam("status") === "ERROR" 
 
        if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
+            var flowfinal = component.find("flowData");
+            flowfinal.destroy();
             var accountTabId = component.get("v.accountTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
