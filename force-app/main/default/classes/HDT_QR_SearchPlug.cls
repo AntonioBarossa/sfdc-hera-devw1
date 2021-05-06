@@ -54,7 +54,7 @@ public inherited sharing class HDT_QR_SearchPlug {
 
             myQuote = [
                 SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c, CampaignName__c,
-                       Market__c, Channel__c, ClientMarker__c, CategoryTypeClient__c,
+                       Market__c, Channel__c, CustomerMarking__c, CategoryTypeClient__c,
                        CompanyOwner__c, ClientAge__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerRange__c,
                        ResidentDeliveryAddress__c, FriendCode__c, NewClient__c, Agency__c, UseCategory__c, EquipmenType__c
                 FROM SBQQ__Quote__c
@@ -99,10 +99,10 @@ public inherited sharing class HDT_QR_SearchPlug {
                     ) AND 
                     //(ClientMarker__c includes (:quote.ClientMarker__c) OR ClientMarker__c = null) AND
                     (
-                        (ClientMarkerOperator__c = 'excludesValues' AND ClientMarker__c excludes (:quote.ClientMarker__c)) OR
-                        (ClientMarkerOperator__c = 'includesValues' AND ClientMarker__c includes (:quote.ClientMarker__c)) OR
+                        (ClientMarkerOperator__c = 'excludesValues' AND ClientMarker__c excludes (:quote.CustomerMarking__c)) OR
+                        (ClientMarkerOperator__c = 'includesValues' AND ClientMarker__c includes (:quote.CustomerMarking__c)) OR
                         (ClientMarkerOperator__c = 'includesAll')
-                    ) AND 
+                    ) AND
                     //(CategoryTypeClient__c includes (:quote.CategoryTypeClient__c) OR CategoryTypeClient__c = null) AND
                     (
                         (CategoryTypeClientOperator__c = 'excludesValues' AND CategoryTypeClient__c excludes (:quote.CategoryTypeClient__c)) OR

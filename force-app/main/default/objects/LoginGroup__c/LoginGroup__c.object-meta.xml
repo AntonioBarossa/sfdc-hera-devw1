@@ -162,14 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Login Groups</pluralLabel>
-    <profileSearchLayouts>
-        <fields>NameGroup__c</fields>
-        <fields>NAME</fields>
-        <profileName>System Administrator</profileName>
-    </profileSearchLayouts>
-    <searchLayouts>
-        <searchResultsAdditionalFields>NameGroup__c</searchResultsAdditionalFields>
-    </searchLayouts>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
