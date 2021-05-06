@@ -360,6 +360,13 @@
                 <elementReference>Get_Input_Case.BillingProfile__r.BillSendingMethod__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.WrittenReceiptRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DataRicezioneRichiesta</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
         </connector>
@@ -642,7 +649,7 @@
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
@@ -657,6 +664,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Votive</targetReference>
             </connector>
@@ -664,7 +678,7 @@
         </rules>
         <rules>
             <name>Annulla</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
@@ -677,6 +691,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -718,6 +739,11 @@
         <picklistField>BillSendingMethod__c</picklistField>
         <picklistObject>BillingProfile__c</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>DataRicezioneRichiesta</name>
+        <dataType>Date</dataType>
+        <expression>IF(ISBLANK({!Get_Input_Case.WrittenReceiptRequestDate__c} ),TODAY(),{!Get_Input_Case.WrittenReceiptRequestDate__c} )</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestioneDisattivazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Disattivazioni</label>
     <processMetadataValues>

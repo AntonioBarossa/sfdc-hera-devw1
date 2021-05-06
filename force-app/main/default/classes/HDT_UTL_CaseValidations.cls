@@ -75,7 +75,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug(getFieldValue(fields, 'Type'));
 
-        if(caseType == 'Piano Rateizzazione'){
+        if(caseType == 'Piano Rateizzazione'){            
 
             if((fields == null || fields == '') && currentCase.AttachmentManagement__c == true){
 
@@ -92,6 +92,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 }
 
             }
+
+            Boolean deposit = Boolean.valueOf(getFieldValue(fields, 'Deposit__c'));
+            String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
+            Decimal depositAmount = Decimal.valueOf(getFieldValue(fields, 'DepositAmount__c'));
             
             Boolean applicationInterests = Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'));
             Integer requestedInstall = Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'));
@@ -103,7 +107,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
             String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
 
-            if(clientCategory.contains('SME')){
+            if(deposit && (depositPaymentMode == null || depositPaymentMode == '' || depositAmount == null)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita Pagamento Acconto e Importo Acconto'));
+
+            }else if(clientCategory.contains('SME')){
 
                 if(applicationInterests == false && requestedInstall > 6){
 
