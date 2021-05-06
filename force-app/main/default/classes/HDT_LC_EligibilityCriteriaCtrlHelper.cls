@@ -14,17 +14,18 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         isUpsert = !String.isEmpty(criteria.Id);
 
         try{
-            SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
-            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-     
-            if(objRes.isCreateable()){
-                upsert criteria;
-            } else {
-                saveResponse.success = false;
-                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
-                saveResponse.dataError = false;
-                return saveResponse;                
-            }
+
+           SObjectType objtype = Schema.getGlobalDescribe().get('EligibilityCriteria__c');
+           Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+
+           if(objRes.isCreateable() && objRes.isUpdateable()){
+               upsert criteria;
+           } else {
+               saveResponse.success = false;
+               saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+               saveResponse.dataError = false;
+               return saveResponse;                
+           }
 
         } catch (Exception e){
             saveResponse.success = false;
@@ -432,7 +433,7 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return municipalityTreeObj;
     }
 
-    public static HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj createMunicipalityTreeObj_EmprovedMethod(HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj, String recordId){
+    public static HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj createMunicipalityTreeObjEmprovedMethod(HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj, String recordId){
         
         municipalityTreeObj = new HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj();
 
