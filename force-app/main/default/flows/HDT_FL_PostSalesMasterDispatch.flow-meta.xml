@@ -10,7 +10,6 @@
         <connector>
             <targetReference>Gestione_Informative_SubFlow</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -47,7 +46,6 @@
         <connector>
             <targetReference>GetContractFatturazione_0</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -3555,9 +3553,27 @@
         <locationY>758</locationY>
         <flowName>HDT_FL_GestionePagamenti</flowName>
         <inputAssignments>
+            <name>createDocuments</name>
+            <value>
+                <elementReference>createDocuments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>InputCase</name>
             <value>
                 <elementReference>Crea_Case_2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeFromDraft</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
