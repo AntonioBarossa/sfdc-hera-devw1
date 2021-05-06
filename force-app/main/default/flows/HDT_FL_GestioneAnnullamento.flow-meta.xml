@@ -397,10 +397,16 @@
         <assignmentItems>
             <assignToReference>GetCase.Phase__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCase.Status</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCase.NotCancellable__c</assignToReference>
