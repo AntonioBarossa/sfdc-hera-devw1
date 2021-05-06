@@ -731,10 +731,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     viewResultMulesoftResponse(obj){
         console.log('>>> viewResult Mulesoft Response');
-        this.viewResultData.id = obj.data[0].codiceEsito;
-        this.viewResultData.resultDate = obj.data[0].dataEsisto;
-        this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
-        this.showViewResult = true;
+        console.log('>>>> viewResult obj > ' + JSON.stringify(obj.data));
+
+        if(obj.data.length > 0){
+            this.viewResultData.id = obj.data[0].codiceEsito;
+            this.viewResultData.resultDate = obj.data[0].dataEsisto;
+            this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
+            this.showViewResult = true;
+        } else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Nessun risultato per questa fattura',
+                    variant: 'warning'
+                }),
+            );
+        }
+
         this.closeMainSpinner();
     }
 

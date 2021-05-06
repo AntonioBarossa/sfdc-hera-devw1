@@ -118,6 +118,8 @@
        //event.getParam("status") === "ERROR" 
 
        if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
+            var flowfinal = component.find("flowData");
+            flowfinal.destroy();
             var accountTabId = component.get("v.accountTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
@@ -179,8 +181,7 @@
                 });
             }else{
 
-                workspaceAPI.openSubtab({
-                    parentTabId: accountTabId,
+                workspaceAPI.focusTab({
                     pageReference: {
                     type: "standard__recordPage",
                     attributes: {
@@ -188,7 +189,8 @@
                         objectApiName: "Case",
                         actionName: "view"
                     }
-                }
+                },
+                focus: true
                 })
                 .then(function(response) {
                     workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){

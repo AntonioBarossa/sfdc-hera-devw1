@@ -264,84 +264,108 @@ export default class HdtAccountStatementPicker extends LightningElement {
         this.showSpinner=false;
     }
     addDocument(row){
-        this.showSpinner=true;
-        if(row['rateizzato'] != null && row['rateizzato'] === 'X' ){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Non è possibile selezionare documenti rateizzati',
-                    variant: 'error',
-                    mode: 'sticky'
-                })
-            );
-            this.showSpinner=false;
-            return null;
-        }
-        if(row['tipoDoc'] != null && row['tipoDoc'] === 'RATEIZZAZIONI' && this.processType === 'Piano Rateizzazione'){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Per questo processo non è possibile selezionare documenti di tipo RATEIZZAZIONE',
-                    variant: 'error',
-                    mode: 'sticky'
-                })
-            );
-            this.showSpinner=false;
-            return null;
-        }
-        if(row['xblnr'] != null && row['xblnr'] != ''){
-            var document = this.documents.find(function(post, index) {
-                if(post.DocumentNumber__c == row['xblnr'])
-                    return true;
-            });
-            if(document){
-                if(document['ExpirationDate__c'] === this.formatDateForInsert(row['bmEndDt'])){
-                    this.dispatchEvent(
-                        new ShowToastEvent({
-                            title: 'Attenzione',
-                            message: 'Questo documento è stato già selezionato',
-                            variant: 'error',
-                        })
-                    );
-                    this.showSpinner=false;
-                    return null;
-                }
+        try{
+            var alreadyExist = false;
+            this.showSpinner=true;
+            if(row['rateizzato'] != null && row['rateizzato'] === 'X' ){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Non è possibile selezionare documenti rateizzati',
+                        variant: 'error'
+                    })
+                );
+                this.showSpinner=false;
+                return null;
             }
-        }
-        console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
-        var fields = {
-            'DocumentNumber__c' : row.xblnr, 
-            'Bill__c' : row.boll, 
-            'Type__c' : row.tipoDocDesc,
-            'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
-            'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
-            'Amount__c' : row.totFattura,
-            'DocumentResidue__c' : row.residuo,
-            'Extension__c' : row.sollecitato,
-            'PaymentMode__c' : row.payment,
-            'TvFeeResidual__c' : row.restituzioneCanoneRai,
-            'IssuingCompany__c' : row.socEmittenteDesc,
-            'ContractualAccount__c' : row.contoContrattuale,
-            'TotalCommunicationPayment__c' : row.totPagare,
-            'Case__c' : this.caseId,        
-        };
-        var objRecordInput = {'apiName' : 'DocumentSelected__c', fields};
-        createRecord(objRecordInput).then(response => {
-            this.dispatchEvent(
+            if(row['tipoDoc'] != null && row['tipoDoc'] === 'RATEIZZAZIONI' && this.processType === 'Piano Rateizzazione'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Per questo processo non è possibile selezionare documenti di tipo RATEIZZAZIONE',
+                        variant: 'error'
+                    })
+                );
+                this.showSpinner=false;
+                return null;
+            }
+            if(row['xblnr'] != null && row['xblnr'] != '' && this.documents){
+                /*var document = this.documents.find(function(post, index) {
+                    if(post.DocumentNumber__c == row['xblnr'])
+                        return true;
+                });*/
+                var documentList = this.documents.filter(function(item){
+                    return item.DocumentNumber__c == row['xblnr']});
+                console.log(documentList);
+                documentList.forEach(document => {
+                    if(document['ExpirationDate__c'] === this.formatDateForInsert(row['bmEndDt'])){
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Attenzione',
+                                message: 'Questo documento è stato già selezionato',
+                                variant: 'error',
+                            })
+                        );
+                        this.showSpinner=false;
+                        alreadyExist = true;
+                        return null;
+                    }
+                });
+                if(alreadyExist)
+                    return null;
+                /*if(document){
+                    if(document['ExpirationDate__c'] === this.formatDateForInsert(row['bmEndDt'])){
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Attenzione',
+                                message: 'Questo documento è stato già selezionato',
+                                variant: 'error',
+                            })
+                        );
+                        this.showSpinner=false;
+                        return null;
+                    }
+                }*/
+            }
+            console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
+            var fields = {
+                'DocumentNumber__c' : row.xblnr, 
+                'Bill__c' : row.boll, 
+                'Type__c' : row.tipoDocDesc,
+                'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
+                'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
+                'Amount__c' : row.totFattura,
+                'DocumentResidue__c' : row.residuo,
+                'Extension__c' : row.sollecitato,
+                'PaymentMode__c' : row.payment,
+                'TvFeeResidual__c' : row.restituzioneCanoneRai,
+                'IssuingCompany__c' : row.socEmittenteDesc,
+                'ContractualAccount__c' : row.contoContrattuale,
+                'TotalCommunicationPayment__c' : row.totPagare,
+                'Case__c' : this.caseId,        
+            };
+            var objRecordInput = {'apiName' : 'DocumentSelected__c', fields};
+            createRecord(objRecordInput).then(response => {
+                this.showSpinner=false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Documento selezionato con successo',
+                        variant: 'success'
+                    })
+                );
+                this.getDocuments();
+            }).catch(error => {
+                this.showSpinner=false;
                 new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Documento selezionato con successo',
-                    variant: 'success'
+                    title: 'Errore',
+                    message: 'Non è possibile creare questo documento',
+                    variant: 'error'
                 })
-            );
-            this.getDocuments();
-        }).catch(error => {
-            new ShowToastEvent({
-                title: 'Errore',
-                message: 'Non è possibile creare questo documento',
-                variant: 'error'
-            })
-        });
-        this.showSpinner=false;
+            });
+            
+        }catch(error){
+            console.error(error);
+        }
     }
 }
