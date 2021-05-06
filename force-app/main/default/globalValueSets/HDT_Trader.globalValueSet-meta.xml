@@ -1,0 +1,4366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>+ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>+ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>2G ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>2G ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>3C DIV LUCE E GAS</fullName>
+        <default>false</default>
+        <label>3C DIV LUCE E GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>3VG POWER &amp; GAS</fullName>
+        <default>false</default>
+        <label>3VG POWER &amp; GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>4ENERGIA</fullName>
+        <default>false</default>
+        <label>4ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>4G ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>4G ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>A.M.C. SRL</fullName>
+        <default>false</default>
+        <label>A.M.C. SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>A.M.V.AZ MULT VALEN</fullName>
+        <default>false</default>
+        <label>A.M.V.AZ MULT VALEN</label>
+    </customValue>
+    <customValue>
+        <fullName>A.S.M. VOGHERA</fullName>
+        <default>false</default>
+        <label>A.S.M. VOGHERA</label>
+    </customValue>
+    <customValue>
+        <fullName>A2A VENDITA</fullName>
+        <default>false</default>
+        <label>A2A VENDITA</label>
+    </customValue>
+    <customValue>
+        <fullName>AB ENERGIE S.R.L.</fullName>
+        <default>false</default>
+        <label>AB ENERGIE S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>ACAM Gas</fullName>
+        <default>false</default>
+        <label>ACAM Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>ACAM SPA</fullName>
+        <default>false</default>
+        <label>ACAM SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ACCENDI</fullName>
+        <default>false</default>
+        <label>ACCENDI</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEA ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>ACEA ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEA PINEROLESE EN</fullName>
+        <default>false</default>
+        <label>ACEA PINEROLESE EN</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEL SERVICE SRL</fullName>
+        <default>false</default>
+        <label>ACEL SERVICE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ACOS ENERGIA</fullName>
+        <default>false</default>
+        <label>ACOS ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ACSM SPA</fullName>
+        <default>false</default>
+        <label>ACSM SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AEG ENERGIA GAS</fullName>
+        <default>false</default>
+        <label>AEG ENERGIA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>AEMME LINEA EN</fullName>
+        <default>false</default>
+        <label>AEMME LINEA EN</label>
+    </customValue>
+    <customValue>
+        <fullName>AEMME LINEA ENERGIE</fullName>
+        <default>false</default>
+        <label>AEMME LINEA ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>AET ITALIA</fullName>
+        <default>false</default>
+        <label>AET ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>AEVV ENERGIE SRL</fullName>
+        <default>false</default>
+        <label>AEVV ENERGIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AG.EN.GRANDA SRL</fullName>
+        <default>false</default>
+        <label>AG.EN.GRANDA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AGES TRADE SPA</fullName>
+        <default>false</default>
+        <label>AGES TRADE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AGESP ENERGIA</fullName>
+        <default>false</default>
+        <label>AGESP ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>AGN ENERGIA</fullName>
+        <default>false</default>
+        <label>AGN ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>AGORA GAS E LUCE</fullName>
+        <default>false</default>
+        <label>AGORA GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>AIMET</fullName>
+        <default>false</default>
+        <label>AIMET</label>
+    </customValue>
+    <customValue>
+        <fullName>AJ0 ENERGIA</fullName>
+        <default>false</default>
+        <label>AJ0 ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ALEGAS SRL</fullName>
+        <default>false</default>
+        <label>ALEGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ALFANO ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>ALFANO ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ALLEANZA LUCE&amp;GAS</fullName>
+        <default>false</default>
+        <label>ALLEANZA LUCE&amp;GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ALMA ENERGY TRADING</fullName>
+        <default>false</default>
+        <label>ALMA ENERGY TRADING</label>
+    </customValue>
+    <customValue>
+        <fullName>ALPERIA EN SRL</fullName>
+        <default>false</default>
+        <label>ALPERIA EN SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ALPERIA SPA</fullName>
+        <default>false</default>
+        <label>ALPERIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ALPERIA</fullName>
+        <default>false</default>
+        <label>ALPERIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ALPHASTAR SRL</fullName>
+        <default>false</default>
+        <label>ALPHASTAR SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ALPIQ ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>ALPIQ ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AMALFITANA GAS SRL</fullName>
+        <default>false</default>
+        <label>AMALFITANA GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AMBROGIO SRL</fullName>
+        <default>false</default>
+        <label>AMBROGIO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AMG GAS SRL</fullName>
+        <default>false</default>
+        <label>AMG GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AMGA UDINE</fullName>
+        <default>false</default>
+        <label>AMGA UDINE</label>
+    </customValue>
+    <customValue>
+        <fullName>AMGAS</fullName>
+        <default>false</default>
+        <label>AMGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>AMSC COMM. GAS</fullName>
+        <default>false</default>
+        <label>AMSC COMM. GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ANTARES ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>ANTARES ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ANTENORE ENERGIA</fullName>
+        <default>false</default>
+        <label>ANTENORE ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>AP ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>AP ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AP ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>AP ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AP ENERGIA</fullName>
+        <default>false</default>
+        <label>AP ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>APE ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>APE ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>APENERGIA</fullName>
+        <default>false</default>
+        <label>APENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>API GREEN ENERGY</fullName>
+        <default>false</default>
+        <label>API GREEN ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>API NOVA ENERGIA</fullName>
+        <default>false</default>
+        <label>API NOVA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>APLOS SPA</fullName>
+        <default>false</default>
+        <label>APLOS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ARCA GAS SRL</fullName>
+        <default>false</default>
+        <label>ARCA GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ARCADIA ITALIA SRL</fullName>
+        <default>false</default>
+        <label>ARCADIA ITALIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ARCALGAS ENERGIE</fullName>
+        <default>false</default>
+        <label>ARCALGAS ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>ARCHIPELAGUS SRL</fullName>
+        <default>false</default>
+        <label>ARCHIPELAGUS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AS RETIGAS S.R.L.</fullName>
+        <default>false</default>
+        <label>AS RETIGAS S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>ASCO PIAVE</fullName>
+        <default>false</default>
+        <label>ASCO PIAVE</label>
+    </customValue>
+    <customValue>
+        <fullName>ASCOPIAVE ENERGIE</fullName>
+        <default>false</default>
+        <label>ASCOPIAVE ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>ASEC TRADE</fullName>
+        <default>false</default>
+        <label>ASEC TRADE</label>
+    </customValue>
+    <customValue>
+        <fullName>ASM ENERGIA</fullName>
+        <default>false</default>
+        <label>ASM ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ASM SET</fullName>
+        <default>false</default>
+        <label>ASM SET</label>
+    </customValue>
+    <customValue>
+        <fullName>ASM VENDITA</fullName>
+        <default>false</default>
+        <label>ASM VENDITA</label>
+    </customValue>
+    <customValue>
+        <fullName>ASPEM ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>ASPEM ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ASPM COMMERC SRL</fullName>
+        <default>false</default>
+        <label>ASPM COMMERC SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ASPM COMMERCIALE</fullName>
+        <default>false</default>
+        <label>ASPM COMMERCIALE</label>
+    </customValue>
+    <customValue>
+        <fullName>ASSOUTILILY SRL</fullName>
+        <default>false</default>
+        <label>ASSOUTILILY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ASTI ENERGY SRL</fullName>
+        <default>false</default>
+        <label>ASTI ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ATENA TRADING SRL</fullName>
+        <default>false</default>
+        <label>ATENA TRADING SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ATERNO GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>ATERNO GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>ATS POWER</fullName>
+        <default>false</default>
+        <label>ATS POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>ATTIVA SPA</fullName>
+        <default>false</default>
+        <label>ATTIVA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AUDAX ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>AUDAX ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AURA SRL</fullName>
+        <default>false</default>
+        <label>AURA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AURORAENERGIA</fullName>
+        <default>false</default>
+        <label>AURORAENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOGAS CENTRO SRL</fullName>
+        <default>false</default>
+        <label>AUTOGAS CENTRO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOGAS CENTRO</fullName>
+        <default>false</default>
+        <label>AUTOGAS CENTRO</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOGAS JONICA SRL</fullName>
+        <default>false</default>
+        <label>AUTOGAS JONICA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOGAS NORD</fullName>
+        <default>false</default>
+        <label>AUTOGAS NORD</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOGAS VEN EMILIAN</fullName>
+        <default>false</default>
+        <label>AUTOGAS VEN EMILIAN</label>
+    </customValue>
+    <customValue>
+        <fullName>AXOGAS SPA</fullName>
+        <default>false</default>
+        <label>AXOGAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AXOPOWER SRL</fullName>
+        <default>false</default>
+        <label>AXOPOWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AXPO</fullName>
+        <default>false</default>
+        <label>AXPO</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ EE TICINESE ITAL</fullName>
+        <default>false</default>
+        <label>AZ EE TICINESE ITAL</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ EN GAS SOC.COOP</fullName>
+        <default>false</default>
+        <label>AZ EN GAS SOC.COOP</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ SERV INT MULTIS</fullName>
+        <default>false</default>
+        <label>AZ SERV INT MULTIS</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ. PUBBL. BRUNICO</fullName>
+        <default>false</default>
+        <label>AZ. PUBBL. BRUNICO</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ.GAS MARCA S.R.L.</fullName>
+        <default>false</default>
+        <label>AZ.GAS MARCA S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>AZIENDA ENERGETICA</fullName>
+        <default>false</default>
+        <label>AZIENDA ENERGETICA</label>
+    </customValue>
+    <customValue>
+        <fullName>AZIENDA LOC GAS</fullName>
+        <default>false</default>
+        <label>AZIENDA LOC GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>AZZALINI ENERGIE</fullName>
+        <default>false</default>
+        <label>AZZALINI ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>AZZURRA ENERGIE SRL</fullName>
+        <default>false</default>
+        <label>AZZURRA ENERGIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>Az En Valt Valchiav</fullName>
+        <default>false</default>
+        <label>Az En Valt Valchiav</label>
+    </customValue>
+    <customValue>
+        <fullName>B-ON</fullName>
+        <default>false</default>
+        <label>B-ON</label>
+    </customValue>
+    <customValue>
+        <fullName>B.ENERGY SRL</fullName>
+        <default>false</default>
+        <label>B.ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BARI ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>BARI ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BAROCCO ENERGIA Srl</fullName>
+        <default>false</default>
+        <label>BAROCCO ENERGIA Srl</label>
+    </customValue>
+    <customValue>
+        <fullName>BAROCCO SPA</fullName>
+        <default>false</default>
+        <label>BAROCCO SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BCC ENERGIA</fullName>
+        <default>false</default>
+        <label>BCC ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>BE POWER SRL</fullName>
+        <default>false</default>
+        <label>BE POWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BEE TWIN SPA</fullName>
+        <default>false</default>
+        <label>BEE TWIN SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BENACO ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>BENACO ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BENRG SRL</fullName>
+        <default>false</default>
+        <label>BENRG SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BERGAMASCA ENERGIA</fullName>
+        <default>false</default>
+        <label>BERGAMASCA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>BIG ONE ENERGY</fullName>
+        <default>false</default>
+        <label>BIG ONE ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>BLU RANTON SRL</fullName>
+        <default>false</default>
+        <label>BLU RANTON SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BLU SHELF SRL</fullName>
+        <default>false</default>
+        <label>BLU SHELF SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUE META S.p.A.</fullName>
+        <default>false</default>
+        <label>BLUE META S.p.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUENERGAS BEG SRL</fullName>
+        <default>false</default>
+        <label>BLUENERGAS BEG SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUEPOWER SRL</fullName>
+        <default>false</default>
+        <label>BLUEPOWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUGAS SPA</fullName>
+        <default>false</default>
+        <label>BLUGAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BRONI STRADEL S.R.L</fullName>
+        <default>false</default>
+        <label>BRONI STRADEL S.R.L</label>
+    </customValue>
+    <customValue>
+        <fullName>BRULLI ENERGIA</fullName>
+        <default>false</default>
+        <label>BRULLI ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>BURGO ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>BURGO ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BUTAN GAS S.P.A.</fullName>
+        <default>false</default>
+        <label>BUTAN GAS S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>C DI CASTEL D MONTE</fullName>
+        <default>false</default>
+        <label>C DI CASTEL D MONTE</label>
+    </customValue>
+    <customValue>
+        <fullName>C.E. POZZA DI FASSA</fullName>
+        <default>false</default>
+        <label>C.E. POZZA DI FASSA</label>
+    </customValue>
+    <customValue>
+        <fullName>C.M.V.</fullName>
+        <default>false</default>
+        <label>C.M.V.</label>
+    </customValue>
+    <customValue>
+        <fullName>CALDERALI GAS</fullName>
+        <default>false</default>
+        <label>CALDERALI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>CALORGAS ITALIA SRL</fullName>
+        <default>false</default>
+        <label>CALORGAS ITALIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CAMER GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>CAMER GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>CAMONICA SERVIZI</fullName>
+        <default>false</default>
+        <label>CAMONICA SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>CAST ENERGIE EE</fullName>
+        <default>false</default>
+        <label>CAST ENERGIE EE</label>
+    </customValue>
+    <customValue>
+        <fullName>CAST ENERGIE</fullName>
+        <default>false</default>
+        <label>CAST ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>CASTELLO DI FIEMME</fullName>
+        <default>false</default>
+        <label>CASTELLO DI FIEMME</label>
+    </customValue>
+    <customValue>
+        <fullName>CASTIGLIONE SICILIA</fullName>
+        <default>false</default>
+        <label>CASTIGLIONE SICILIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CCR ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>CCR ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CEG</fullName>
+        <default>false</default>
+        <label>CEG</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTRAL ENERGY SRL</fullName>
+        <default>false</default>
+        <label>CENTRAL ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTREX ITALIA SPA</fullName>
+        <default>false</default>
+        <label>CENTREX ITALIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTRIA S.R.L.</fullName>
+        <default>false</default>
+        <label>CENTRIA S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTRO VENETO EN.</fullName>
+        <default>false</default>
+        <label>CENTRO VENETO EN.</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTROGAS</fullName>
+        <default>false</default>
+        <label>CENTROGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>CER SCARL</fullName>
+        <default>false</default>
+        <label>CER SCARL</label>
+    </customValue>
+    <customValue>
+        <fullName>CH4 LIZZANO SPA</fullName>
+        <default>false</default>
+        <label>CH4 LIZZANO SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>CH4 SRL</fullName>
+        <default>false</default>
+        <label>CH4 SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CHE ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>CHE ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CHEBOLLETTA SPA</fullName>
+        <default>false</default>
+        <label>CHEBOLLETTA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>CHIARA GAS SERVIZI</fullName>
+        <default>false</default>
+        <label>CHIARA GAS SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>CHINAPOWER SRL</fullName>
+        <default>false</default>
+        <label>CHINAPOWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CHIURLO</fullName>
+        <default>false</default>
+        <label>CHIURLO</label>
+    </customValue>
+    <customValue>
+        <fullName>CIOPPOWER</fullName>
+        <default>false</default>
+        <label>CIOPPOWER</label>
+    </customValue>
+    <customValue>
+        <fullName>CIP LOMBARDIA SRL</fullName>
+        <default>false</default>
+        <label>CIP LOMBARDIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CMV ENER &amp; IMP SRL</fullName>
+        <default>false</default>
+        <label>CMV ENER &amp; IMP SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>COGAS SRL</fullName>
+        <default>false</default>
+        <label>COGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>COGASPIU</fullName>
+        <default>false</default>
+        <label>COGASPIU</label>
+    </customValue>
+    <customValue>
+        <fullName>COGENPOWER SRL</fullName>
+        <default>false</default>
+        <label>COGENPOWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>COGES ELETTRICO</fullName>
+        <default>false</default>
+        <label>COGES ELETTRICO</label>
+    </customValue>
+    <customValue>
+        <fullName>COGESER VENDITE</fullName>
+        <default>false</default>
+        <label>COGESER VENDITE</label>
+    </customValue>
+    <customValue>
+        <fullName>COIMEPA SERVIZI SRL</fullName>
+        <default>false</default>
+        <label>COIMEPA SERVIZI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>COINGAS SPA</fullName>
+        <default>false</default>
+        <label>COINGAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>COLLINO COMMERC SPA</fullName>
+        <default>false</default>
+        <label>COLLINO COMMERC SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>COLSAM SRL</fullName>
+        <default>false</default>
+        <label>COLSAM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>COM S STEF DI SESS</fullName>
+        <default>false</default>
+        <label>COM S STEF DI SESS</label>
+    </customValue>
+    <customValue>
+        <fullName>COMMERCIALE G &amp; L</fullName>
+        <default>false</default>
+        <label>COMMERCIALE G &amp; L</label>
+    </customValue>
+    <customValue>
+        <fullName>COMPAGNIA ENERG IT</fullName>
+        <default>false</default>
+        <label>COMPAGNIA ENERG IT</label>
+    </customValue>
+    <customValue>
+        <fullName>COMUNE DI ANDALO</fullName>
+        <default>false</default>
+        <label>COMUNE DI ANDALO</label>
+    </customValue>
+    <customValue>
+        <fullName>COMUNE DI CAVALLES</fullName>
+        <default>false</default>
+        <label>COMUNE DI CAVALLES</label>
+    </customValue>
+    <customValue>
+        <fullName>COMUNE DI PACENTRO</fullName>
+        <default>false</default>
+        <label>COMUNE DI PACENTRO</label>
+    </customValue>
+    <customValue>
+        <fullName>COMUNE DI PERDIFUMO</fullName>
+        <default>false</default>
+        <label>COMUNE DI PERDIFUMO</label>
+    </customValue>
+    <customValue>
+        <fullName>COMUNE DI ROCCA PIA</fullName>
+        <default>false</default>
+        <label>COMUNE DI ROCCA PIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CONF. ENER ADRIAT</fullName>
+        <default>false</default>
+        <label>CONF. ENER ADRIAT</label>
+    </customValue>
+    <customValue>
+        <fullName>CONS ENERGIA VERONA</fullName>
+        <default>false</default>
+        <label>CONS ENERGIA VERONA</label>
+    </customValue>
+    <customValue>
+        <fullName>CONS. EL. DI STORO</fullName>
+        <default>false</default>
+        <label>CONS. EL. DI STORO</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSOR MULTIENERGIA</fullName>
+        <default>false</default>
+        <label>CONSOR MULTIENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSORTIUM EN VERDE</fullName>
+        <default>false</default>
+        <label>CONSORTIUM EN VERDE</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSORZ GROSSETO EN</fullName>
+        <default>false</default>
+        <label>CONSORZ GROSSETO EN</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSORZIO ACEM</fullName>
+        <default>false</default>
+        <label>CONSORZIO ACEM</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSORZIO CEV</fullName>
+        <default>false</default>
+        <label>CONSORZIO CEV</label>
+    </customValue>
+    <customValue>
+        <fullName>CONTROCORRENTE SRL</fullName>
+        <default>false</default>
+        <label>CONTROCORRENTE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CONVERGENZA SPA</fullName>
+        <default>false</default>
+        <label>CONVERGENZA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>COOP ALLEANZA 3.1</fullName>
+        <default>false</default>
+        <label>COOP ALLEANZA 3.1</label>
+    </customValue>
+    <customValue>
+        <fullName>COOP</fullName>
+        <default>false</default>
+        <label>COOP</label>
+    </customValue>
+    <customValue>
+        <fullName>COOPERATIVA MC3</fullName>
+        <default>false</default>
+        <label>COOPERATIVA MC3</label>
+    </customValue>
+    <customValue>
+        <fullName>COOPGAS</fullName>
+        <default>false</default>
+        <label>COOPGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>COPPARO ENERGIA</fullName>
+        <default>false</default>
+        <label>COPPARO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>COSCOM</fullName>
+        <default>false</default>
+        <label>COSCOM</label>
+    </customValue>
+    <customValue>
+        <fullName>COSVIM ENERGIA</fullName>
+        <default>false</default>
+        <label>COSVIM ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CPM CARONNO PERTUS.</fullName>
+        <default>false</default>
+        <label>CPM CARONNO PERTUS.</label>
+    </customValue>
+    <customValue>
+        <fullName>CURA GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>CURA GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>CURA RAVENNA</fullName>
+        <default>false</default>
+        <label>CURA RAVENNA</label>
+    </customValue>
+    <customValue>
+        <fullName>DEA ENERGIA</fullName>
+        <default>false</default>
+        <label>DEA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>DENCO SRL</fullName>
+        <default>false</default>
+        <label>DENCO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>DGAS &amp; POWER SPA</fullName>
+        <default>false</default>
+        <label>DGAS &amp; POWER SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>DIMENSIONE SOLARE</fullName>
+        <default>false</default>
+        <label>DIMENSIONE SOLARE</label>
+    </customValue>
+    <customValue>
+        <fullName>DINAMICA ENERGIA</fullName>
+        <default>false</default>
+        <label>DINAMICA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>DK SERVIZI</fullName>
+        <default>false</default>
+        <label>DK SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>DL EDYNA SRL-13D0000141</fullName>
+        <default>false</default>
+        <label>DL EDYNA SRL-13D0000141</label>
+    </customValue>
+    <customValue>
+        <fullName>DM ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>DM ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>DOLOMITI ENERGIA</fullName>
+        <default>false</default>
+        <label>DOLOMITI ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>DOMESTIKA ENERGIA</fullName>
+        <default>false</default>
+        <label>DOMESTIKA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>DUE ENERGIE</fullName>
+        <default>false</default>
+        <label>DUE ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>DUFERCO ENERGIA</fullName>
+        <default>false</default>
+        <label>DUFERCO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>E</fullName>
+        <default>false</default>
+        <label>E</label>
+    </customValue>
+    <customValue>
+        <fullName>E-ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>E-ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>E-SMART</fullName>
+        <default>false</default>
+        <label>E-SMART</label>
+    </customValue>
+    <customValue>
+        <fullName>E.JA ENERGIA</fullName>
+        <default>false</default>
+        <label>E.JA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>E.JA SRL</fullName>
+        <default>false</default>
+        <label>E.JA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>E2A EN.AD.ABRUZZESE</fullName>
+        <default>false</default>
+        <label>E2A EN.AD.ABRUZZESE</label>
+    </customValue>
+    <customValue>
+        <fullName>E3ENERGY SRL</fullName>
+        <default>false</default>
+        <label>E3ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EAS SRL</fullName>
+        <default>false</default>
+        <label>EAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ECO POWER &amp; GAS SPA</fullName>
+        <default>false</default>
+        <label>ECO POWER &amp; GAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ECO TRADE SRL</fullName>
+        <default>false</default>
+        <label>ECO TRADE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ECOENERGIA SRL</fullName>
+        <default>false</default>
+        <label>ECOENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ECOGAS SRL</fullName>
+        <default>false</default>
+        <label>ECOGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ECOM SRL</fullName>
+        <default>false</default>
+        <label>ECOM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ECONOMY SERVICE</fullName>
+        <default>false</default>
+        <label>ECONOMY SERVICE</label>
+    </customValue>
+    <customValue>
+        <fullName>ECOOP</fullName>
+        <default>false</default>
+        <label>ECOOP</label>
+    </customValue>
+    <customValue>
+        <fullName>ECOTRADE</fullName>
+        <default>false</default>
+        <label>ECOTRADE</label>
+    </customValue>
+    <customValue>
+        <fullName>EDEN GAS E LUCE</fullName>
+        <default>false</default>
+        <label>EDEN GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>EDF ENERGIA ITALIA</fullName>
+        <default>false</default>
+        <label>EDF ENERGIA ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>EDIGASDUE SPA</fullName>
+        <default>false</default>
+        <label>EDIGASDUE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>EDILBETA</fullName>
+        <default>false</default>
+        <label>EDILBETA</label>
+    </customValue>
+    <customValue>
+        <fullName>EDLO ENERGY SRL</fullName>
+        <default>false</default>
+        <label>EDLO ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EDLO ENERGY</fullName>
+        <default>false</default>
+        <label>EDLO ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>EGEA COMM SRL</fullName>
+        <default>false</default>
+        <label>EGEA COMM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EGERIA ENERGIE</fullName>
+        <default>false</default>
+        <label>EGERIA ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>EGERIA SRL</fullName>
+        <default>false</default>
+        <label>EGERIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EGI POWER</fullName>
+        <default>false</default>
+        <label>EGI POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>EICOM SRL</fullName>
+        <default>false</default>
+        <label>EICOM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EKA SRL</fullName>
+        <default>false</default>
+        <label>EKA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ELECTORCONSULTING</fullName>
+        <default>false</default>
+        <label>ELECTORCONSULTING</label>
+    </customValue>
+    <customValue>
+        <fullName>ELECTRA ITALIA SPA</fullName>
+        <default>false</default>
+        <label>ELECTRA ITALIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ELEKTRO.PENS</fullName>
+        <default>false</default>
+        <label>ELEKTRO.PENS</label>
+    </customValue>
+    <customValue>
+        <fullName>ELETTRA ROMA</fullName>
+        <default>false</default>
+        <label>ELETTRA ROMA</label>
+    </customValue>
+    <customValue>
+        <fullName>ELETTRAGAS</fullName>
+        <default>false</default>
+        <label>ELETTRAGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ELETTROCARBONIUM</fullName>
+        <default>false</default>
+        <label>ELETTROCARBONIUM</label>
+    </customValue>
+    <customValue>
+        <fullName>ELETTROGAS SpA</fullName>
+        <default>false</default>
+        <label>ELETTROGAS SpA</label>
+    </customValue>
+    <customValue>
+        <fullName>ELGA SUD SPA</fullName>
+        <default>false</default>
+        <label>ELGA SUD SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ELIOGAS SRL</fullName>
+        <default>false</default>
+        <label>ELIOGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EMMECIDUE SRL</fullName>
+        <default>false</default>
+        <label>EMMECIDUE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EN&amp;GAS SRL</fullName>
+        <default>false</default>
+        <label>EN&amp;GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EN.E.R. TRADING</fullName>
+        <default>false</default>
+        <label>EN.E.R. TRADING</label>
+    </customValue>
+    <customValue>
+        <fullName>ENECOENERGIA</fullName>
+        <default>false</default>
+        <label>ENECOENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEGA S.R.L.</fullName>
+        <default>false</default>
+        <label>ENEGA S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEGA</fullName>
+        <default>false</default>
+        <label>ENEGA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEGAN SRL</fullName>
+        <default>false</default>
+        <label>ENEGAN SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEIDE SRL</fullName>
+        <default>false</default>
+        <label>ENEIDE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEIDE</fullName>
+        <default>false</default>
+        <label>ENEIDE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENELIGHT SRL</fullName>
+        <default>false</default>
+        <label>ENELIGHT SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENER.MED</fullName>
+        <default>false</default>
+        <label>ENER.MED</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERBALTEA</fullName>
+        <default>false</default>
+        <label>ENERBALTEA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERCITY SRL</fullName>
+        <default>false</default>
+        <label>ENERCITY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERFLUX SRL</fullName>
+        <default>false</default>
+        <label>ENERFLUX SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERG-JA SRL</fullName>
+        <default>false</default>
+        <label>ENERG-JA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGAS</fullName>
+        <default>false</default>
+        <label>ENERGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGENS</fullName>
+        <default>false</default>
+        <label>ENERGENS</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGETIC GAS&amp;POWER</fullName>
+        <default>false</default>
+        <label>ENERGETIC GAS&amp;POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGETIC SOURCE</fullName>
+        <default>false</default>
+        <label>ENERGETIC SOURCE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGETIC SPA</fullName>
+        <default>false</default>
+        <label>ENERGETIC SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGETIC VENDITE</fullName>
+        <default>false</default>
+        <label>ENERGETIC VENDITE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA AMB SERV</fullName>
+        <default>false</default>
+        <label>ENERGIA AMB SERV</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA BASE TRIEST</fullName>
+        <default>false</default>
+        <label>ENERGIA BASE TRIEST</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA COMUNE</fullName>
+        <default>false</default>
+        <label>ENERGIA COMUNE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA ITALIA SRL</fullName>
+        <default>false</default>
+        <label>ENERGIA ITALIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA PULITA</fullName>
+        <default>false</default>
+        <label>ENERGIA PULITA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA VIVA</fullName>
+        <default>false</default>
+        <label>ENERGIA VIVA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGICA SRL</fullName>
+        <default>false</default>
+        <label>ENERGICA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIE MAREO</fullName>
+        <default>false</default>
+        <label>ENERGIE MAREO</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIE OFFIDA SRL</fullName>
+        <default>false</default>
+        <label>ENERGIE OFFIDA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIECHIARE SRL</fullName>
+        <default>false</default>
+        <label>ENERGIECHIARE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIENOVE SOC COP</fullName>
+        <default>false</default>
+        <label>ENERGIENOVE SOC COP</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIT</fullName>
+        <default>false</default>
+        <label>ENERGIT</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGRID SPA</fullName>
+        <default>false</default>
+        <label>ENERGRID SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGY DIS SRL</fullName>
+        <default>false</default>
+        <label>ENERGY DIS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGY LIGHT SRL</fullName>
+        <default>false</default>
+        <label>ENERGY LIGHT SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGY ONLY SRL</fullName>
+        <default>false</default>
+        <label>ENERGY ONLY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGY TIME RETAIL</fullName>
+        <default>false</default>
+        <label>ENERGY TIME RETAIL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGY TRADING INT</fullName>
+        <default>false</default>
+        <label>ENERGY TRADING INT</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGYGAS ITALIA</fullName>
+        <default>false</default>
+        <label>ENERGYGAS ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGYPOLIS</fullName>
+        <default>false</default>
+        <label>ENERGYPOLIS</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERTOSCANA</fullName>
+        <default>false</default>
+        <label>ENERTOSCANA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERTRONICA</fullName>
+        <default>false</default>
+        <label>ENERTRONICA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERVIVA SRL</fullName>
+        <default>false</default>
+        <label>ENERVIVA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERXENIA SPA</fullName>
+        <default>false</default>
+        <label>ENERXENIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENGAS SRL</fullName>
+        <default>false</default>
+        <label>ENGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENGAS</fullName>
+        <default>false</default>
+        <label>ENGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ENGIE</fullName>
+        <default>false</default>
+        <label>ENGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENIT GAS E LUCE</fullName>
+        <default>false</default>
+        <label>ENIT GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENNE</fullName>
+        <default>false</default>
+        <label>ENNE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENOSTRA</fullName>
+        <default>false</default>
+        <label>ENOSTRA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENOVA</fullName>
+        <default>false</default>
+        <label>ENOVA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENTRA GAS E LUCE</fullName>
+        <default>false</default>
+        <label>ENTRA GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENTRACO</fullName>
+        <default>false</default>
+        <label>ENTRACO</label>
+    </customValue>
+    <customValue>
+        <fullName>ENVISI ENERGIA</fullName>
+        <default>false</default>
+        <label>ENVISI ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>EON VENDITA</fullName>
+        <default>false</default>
+        <label>EON VENDITA</label>
+    </customValue>
+    <customValue>
+        <fullName>EPIU S.P.A</fullName>
+        <default>false</default>
+        <label>EPIU S.P.A</label>
+    </customValue>
+    <customValue>
+        <fullName>EPIU S.P.A.</fullName>
+        <default>false</default>
+        <label>EPIU S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>ERMES GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>ERMES GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>EROGA ENERGIA</fullName>
+        <default>false</default>
+        <label>EROGA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ERRECI SRL</fullName>
+        <default>false</default>
+        <label>ERRECI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ESA ENERGIE</fullName>
+        <default>false</default>
+        <label>ESA ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>ESA SRL</fullName>
+        <default>false</default>
+        <label>ESA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ESPERIA SRL</fullName>
+        <default>false</default>
+        <label>ESPERIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EST PIU SPA GORIZIA</fullName>
+        <default>false</default>
+        <label>EST PIU SPA GORIZIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ESTENERGY SPA</fullName>
+        <default>false</default>
+        <label>ESTENERGY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ESTENSE ENERGIA</fullName>
+        <default>false</default>
+        <label>ESTENSE ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ESTRA ELETTR SPA</fullName>
+        <default>false</default>
+        <label>ESTRA ELETTR SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ETRURIA LUCE GAS</fullName>
+        <default>false</default>
+        <label>ETRURIA LUCE GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ETRURIALUCEGAS SRL</fullName>
+        <default>false</default>
+        <label>ETRURIALUCEGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EUR ENER GAS &amp; POW</fullName>
+        <default>false</default>
+        <label>EUR ENER GAS &amp; POW</label>
+    </customValue>
+    <customValue>
+        <fullName>EUR GEST IMM SPA</fullName>
+        <default>false</default>
+        <label>EUR GEST IMM SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>EUROGAS</fullName>
+        <default>false</default>
+        <label>EUROGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>EUROPA GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>EUROPA GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>EUROPAGAS SRL</fullName>
+        <default>false</default>
+        <label>EUROPAGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EUROPE ENERGY</fullName>
+        <default>false</default>
+        <label>EUROPE ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>EVISO</fullName>
+        <default>false</default>
+        <label>EVISO</label>
+    </customValue>
+    <customValue>
+        <fullName>EVIVA SPA</fullName>
+        <default>false</default>
+        <label>EVIVA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>EVOLVERE SPA</fullName>
+        <default>false</default>
+        <label>EVOLVERE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>EXERGIA ENER &amp; GAS</fullName>
+        <default>false</default>
+        <label>EXERGIA ENER &amp; GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>FACILE LUCE GAS</fullName>
+        <default>false</default>
+        <label>FACILE LUCE GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>FACILE.ENERGY SRL</fullName>
+        <default>false</default>
+        <label>FACILE.ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FAMIGLIA ENER SRL</fullName>
+        <default>false</default>
+        <label>FAMIGLIA ENER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FAMILY SRL</fullName>
+        <default>false</default>
+        <label>FAMILY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FENIX SRL</fullName>
+        <default>false</default>
+        <label>FENIX SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FERMO A.S.I.T.E.SRL</fullName>
+        <default>false</default>
+        <label>FERMO A.S.I.T.E.SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FIORENTINA OIL COMP</fullName>
+        <default>false</default>
+        <label>FIORENTINA OIL COMP</label>
+    </customValue>
+    <customValue>
+        <fullName>FIORESE ENERGIA</fullName>
+        <default>false</default>
+        <label>FIORESE ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>FLERES</fullName>
+        <default>false</default>
+        <label>FLERES</label>
+    </customValue>
+    <customValue>
+        <fullName>FONTEL SPA</fullName>
+        <default>false</default>
+        <label>FONTEL SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>FORGREEN SPA</fullName>
+        <default>false</default>
+        <label>FORGREEN SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>FORINI SPA</fullName>
+        <default>false</default>
+        <label>FORINI SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>FREE ENERGIA</fullName>
+        <default>false</default>
+        <label>FREE ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>FREE GAS&amp;POWER</fullName>
+        <default>false</default>
+        <label>FREE GAS&amp;POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>FREE LUCE &amp; GAS SRL</fullName>
+        <default>false</default>
+        <label>FREE LUCE &amp; GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FRIENDS SRL</fullName>
+        <default>false</default>
+        <label>FRIENDS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FUCINO GAS</fullName>
+        <default>false</default>
+        <label>FUCINO GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURA TRADE SRL</fullName>
+        <default>false</default>
+        <label>FUTURA TRADE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FUTURENERGY RINNOV</fullName>
+        <default>false</default>
+        <label>FUTURENERGY RINNOV</label>
+    </customValue>
+    <customValue>
+        <fullName>FVG ENERGIA</fullName>
+        <default>false</default>
+        <label>FVG ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>GALA SPA</fullName>
+        <default>false</default>
+        <label>GALA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS ENERGY</fullName>
+        <default>false</default>
+        <label>GAS ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS MARCA SRL</fullName>
+        <default>false</default>
+        <label>GAS MARCA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS NATURAL</fullName>
+        <default>false</default>
+        <label>GAS NATURAL</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS PLUS VENDITE</fullName>
+        <default>false</default>
+        <label>GAS PLUS VENDITE</label>
+    </customValue>
+    <customValue>
+        <fullName>GASWAY SPA</fullName>
+        <default>false</default>
+        <label>GASWAY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GEETIT SRL</fullName>
+        <default>false</default>
+        <label>GEETIT SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GEI SPA</fullName>
+        <default>false</default>
+        <label>GEI SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GEKO SPA</fullName>
+        <default>false</default>
+        <label>GEKO SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GELSIA SRL</fullName>
+        <default>false</default>
+        <label>GELSIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GEN-I ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>GEN-I ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GENERA</fullName>
+        <default>false</default>
+        <label>GENERA</label>
+    </customValue>
+    <customValue>
+        <fullName>GENESI ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>GENESI ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GEO NORD EST</fullName>
+        <default>false</default>
+        <label>GEO NORD EST</label>
+    </customValue>
+    <customValue>
+        <fullName>GEO SPA</fullName>
+        <default>false</default>
+        <label>GEO SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GESAM SPA</fullName>
+        <default>false</default>
+        <label>GESAM SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GEU ENERGIA</fullName>
+        <default>false</default>
+        <label>GEU ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>GLOBAL POWER</fullName>
+        <default>false</default>
+        <label>GLOBAL POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>GLOBO ENERGIA</fullName>
+        <default>false</default>
+        <label>GLOBO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>GO POWER SRL</fullName>
+        <default>false</default>
+        <label>GO POWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GOENERGY</fullName>
+        <default>false</default>
+        <label>GOENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>GOIL POWER SRL</fullName>
+        <default>false</default>
+        <label>GOIL POWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GOLDENERGY SRL</fullName>
+        <default>false</default>
+        <label>GOLDENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GOPOWER</fullName>
+        <default>false</default>
+        <label>GOPOWER</label>
+    </customValue>
+    <customValue>
+        <fullName>GR ENERGIA ITALIA</fullName>
+        <default>false</default>
+        <label>GR ENERGIA ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>GRAN SASSO ENERGIE</fullName>
+        <default>false</default>
+        <label>GRAN SASSO ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>GREEN EN. SAV.COM.</fullName>
+        <default>false</default>
+        <label>GREEN EN. SAV.COM.</label>
+    </customValue>
+    <customValue>
+        <fullName>GREEN NETWORK SPA</fullName>
+        <default>false</default>
+        <label>GREEN NETWORK SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GREEN POWER ENERGY</fullName>
+        <default>false</default>
+        <label>GREEN POWER ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>GREENESCO</fullName>
+        <default>false</default>
+        <label>GREENESCO</label>
+    </customValue>
+    <customValue>
+        <fullName>GREENIUS SRL</fullName>
+        <default>false</default>
+        <label>GREENIUS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GRITTI ENERGIA</fullName>
+        <default>false</default>
+        <label>GRITTI ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>GRUP. ACQUISTO ZERO</fullName>
+        <default>false</default>
+        <label>GRUP. ACQUISTO ZERO</label>
+    </customValue>
+    <customValue>
+        <fullName>GRUPPO GEA S.P.A.</fullName>
+        <default>false</default>
+        <label>GRUPPO GEA S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>GRUPPO SINERGY</fullName>
+        <default>false</default>
+        <label>GRUPPO SINERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>HB TRADING SPA</fullName>
+        <default>false</default>
+        <label>HB TRADING SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>HB TRADING</fullName>
+        <default>false</default>
+        <label>HB TRADING</label>
+    </customValue>
+    <customValue>
+        <fullName>HELIOS SRL</fullName>
+        <default>false</default>
+        <label>HELIOS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA COMM NORD EST</fullName>
+        <default>false</default>
+        <label>HERA COMM NORD EST</label>
+    </customValue>
+    <customValue>
+        <fullName>HER_SOC_USCENTE_MM</fullName>
+        <default>false</default>
+        <label>HER_SOC_USCENTE_MM</label>
+    </customValue>
+    <customValue>
+        <fullName>I-ENERGY</fullName>
+        <default>false</default>
+        <label>I-ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>IBERDROLA</fullName>
+        <default>false</default>
+        <label>IBERDROLA</label>
+    </customValue>
+    <customValue>
+        <fullName>IDEA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>IDEA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>IDROELE VALCAN SAS</fullName>
+        <default>false</default>
+        <label>IDROELE VALCAN SAS</label>
+    </customValue>
+    <customValue>
+        <fullName>IENERGY</fullName>
+        <default>false</default>
+        <label>IENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>IES POWER &amp; GAS</fullName>
+        <default>false</default>
+        <label>IES POWER &amp; GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ILLUMIA SPA</fullName>
+        <default>false</default>
+        <label>ILLUMIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>INENERGY SRL</fullName>
+        <default>false</default>
+        <label>INENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>INENERGY</fullName>
+        <default>false</default>
+        <label>INENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>INGI SRL</fullName>
+        <default>false</default>
+        <label>INGI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>INSIEMENERGIA SPA</fullName>
+        <default>false</default>
+        <label>INSIEMENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>INTERCONSULT SRL</fullName>
+        <default>false</default>
+        <label>INTERCONSULT SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>INVENT SRL</fullName>
+        <default>false</default>
+        <label>INVENT SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>INVOLTA SRL</fullName>
+        <default>false</default>
+        <label>INVOLTA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>INVOLTA</fullName>
+        <default>false</default>
+        <label>INVOLTA</label>
+    </customValue>
+    <customValue>
+        <fullName>IRIDE MERCATO</fullName>
+        <default>false</default>
+        <label>IRIDE MERCATO</label>
+    </customValue>
+    <customValue>
+        <fullName>IRIS SOC VEND LUCE</fullName>
+        <default>false</default>
+        <label>IRIS SOC VEND LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>ISOGAS S.P.A.</fullName>
+        <default>false</default>
+        <label>ISOGAS S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>ITAL ENER COMP SRL</fullName>
+        <default>false</default>
+        <label>ITAL ENER COMP SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALIA GAS E LUCE</fullName>
+        <default>false</default>
+        <label>ITALIA GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALIA POWER</fullName>
+        <default>false</default>
+        <label>ITALIA POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALIANGAS</fullName>
+        <default>false</default>
+        <label>ITALIANGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALICA ENERGIA</fullName>
+        <default>false</default>
+        <label>ITALICA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>JEN ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>JEN ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>JULIA SERVIZI PIU</fullName>
+        <default>false</default>
+        <label>JULIA SERVIZI PIU</label>
+    </customValue>
+    <customValue>
+        <fullName>KALORGAS SICILIANA</fullName>
+        <default>false</default>
+        <label>KALORGAS SICILIANA</label>
+    </customValue>
+    <customValue>
+        <fullName>KOSMO ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>KOSMO ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>LA LUCE SPA</fullName>
+        <default>false</default>
+        <label>LA LUCE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>LENERGIA SRL</fullName>
+        <default>false</default>
+        <label>LENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>LENERGIA</fullName>
+        <default>false</default>
+        <label>LENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>LEVIGAS S.P.A</fullName>
+        <default>false</default>
+        <label>LEVIGAS S.P.A</label>
+    </customValue>
+    <customValue>
+        <fullName>LEVIGAS SPA</fullName>
+        <default>false</default>
+        <label>LEVIGAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>LIBARNA GAS</fullName>
+        <default>false</default>
+        <label>LIBARNA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>LIBERA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>LIBERA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>LIFEGATE ENERGY</fullName>
+        <default>false</default>
+        <label>LIFEGATE ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>LIGURIA ENERGIA</fullName>
+        <default>false</default>
+        <label>LIGURIA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>LIGURIA GAS SERVICE</fullName>
+        <default>false</default>
+        <label>LIGURIA GAS SERVICE</label>
+    </customValue>
+    <customValue>
+        <fullName>LION ENERGY</fullName>
+        <default>false</default>
+        <label>LION ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>LIRENAS GAS &amp; LUCE</fullName>
+        <default>false</default>
+        <label>LIRENAS GAS &amp; LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>LIRENAS GAS</fullName>
+        <default>false</default>
+        <label>LIRENAS GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>LOMELLINA GAS SRL</fullName>
+        <default>false</default>
+        <label>LOMELLINA GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>LORO F.LLI S.P.A</fullName>
+        <default>false</default>
+        <label>LORO F.LLI S.P.A</label>
+    </customValue>
+    <customValue>
+        <fullName>LUCE E GAS ITALIA</fullName>
+        <default>false</default>
+        <label>LUCE E GAS ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>LUMENERGIA SPA</fullName>
+        <default>false</default>
+        <label>LUMENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>LUPATOTINA</fullName>
+        <default>false</default>
+        <label>LUPATOTINA</label>
+    </customValue>
+    <customValue>
+        <fullName>LUXERGON</fullName>
+        <default>false</default>
+        <label>LUXERGON</label>
+    </customValue>
+    <customValue>
+        <fullName>LW ENERGY S.R.L.</fullName>
+        <default>false</default>
+        <label>LW ENERGY S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>LWENERGY SRL</fullName>
+        <default>false</default>
+        <label>LWENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>LYRECO</fullName>
+        <default>false</default>
+        <label>LYRECO</label>
+    </customValue>
+    <customValue>
+        <fullName>M.P.MONDINO SRL</fullName>
+        <default>false</default>
+        <label>M.P.MONDINO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MADE IN ENERGY</fullName>
+        <default>false</default>
+        <label>MADE IN ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>MADOGAS NATURAL EN</fullName>
+        <default>false</default>
+        <label>MADOGAS NATURAL EN</label>
+    </customValue>
+    <customValue>
+        <fullName>MADOGAS NATURAL</fullName>
+        <default>false</default>
+        <label>MADOGAS NATURAL</label>
+    </customValue>
+    <customValue>
+        <fullName>MARCHE ENERGIE SRL</fullName>
+        <default>false</default>
+        <label>MARCHE ENERGIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MARSICA GAS</fullName>
+        <default>false</default>
+        <label>MARSICA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>MATCH ENERGY SRL</fullName>
+        <default>false</default>
+        <label>MATCH ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MATCH ENERGY</fullName>
+        <default>false</default>
+        <label>MATCH ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>MAXIMA ITALIA</fullName>
+        <default>false</default>
+        <label>MAXIMA ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>MAXIMA</fullName>
+        <default>false</default>
+        <label>MAXIMA</label>
+    </customValue>
+    <customValue>
+        <fullName>MAZZOLA&amp;BIGNARDI</fullName>
+        <default>false</default>
+        <label>MAZZOLA&amp;BIGNARDI</label>
+    </customValue>
+    <customValue>
+        <fullName>MBI GAS E LUCE</fullName>
+        <default>false</default>
+        <label>MBI GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>MEDEA SPA</fullName>
+        <default>false</default>
+        <label>MEDEA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>MET ENERGIA ITALIA</fullName>
+        <default>false</default>
+        <label>MET ENERGIA ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>META ENERGIA</fullName>
+        <default>false</default>
+        <label>META ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>METAEDILCOM</fullName>
+        <default>false</default>
+        <label>METAEDILCOM</label>
+    </customValue>
+    <customValue>
+        <fullName>METAN ALPI SESTRIERE</fullName>
+        <default>false</default>
+        <label>METAN ALPI SESTRIERE</label>
+    </customValue>
+    <customValue>
+        <fullName>METANALPI SESTRIERE</fullName>
+        <default>false</default>
+        <label>METANALPI SESTRIERE</label>
+    </customValue>
+    <customValue>
+        <fullName>METANIA SRL</fullName>
+        <default>false</default>
+        <label>METANIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>METANO NORD SPA</fullName>
+        <default>false</default>
+        <label>METANO NORD SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>METANO PROGETTI SRL</fullName>
+        <default>false</default>
+        <label>METANO PROGETTI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>METANOSUD SERVIZI</fullName>
+        <default>false</default>
+        <label>METANOSUD SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>METANOTRE S.R.L.</fullName>
+        <default>false</default>
+        <label>METANOTRE S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>METEMA ENERGY</fullName>
+        <default>false</default>
+        <label>METEMA ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>MIEENERGIE SRL</fullName>
+        <default>false</default>
+        <label>MIEENERGIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MILANO GAS E LUCE</fullName>
+        <default>false</default>
+        <label>MILANO GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>MILANO GAS LUCE SRL</fullName>
+        <default>false</default>
+        <label>MILANO GAS LUCE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MIRO ENERGIE</fullName>
+        <default>false</default>
+        <label>MIRO ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>MIWA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>MIWA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MOODS ENERGY SPA</fullName>
+        <default>false</default>
+        <label>MOODS ENERGY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>MORE LIFE ENERGY</fullName>
+        <default>false</default>
+        <label>MORE LIFE ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>MY LIFE GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>MY LIFE GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>MYA ENERGIA</fullName>
+        <default>false</default>
+        <label>MYA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>NAPOLETANA GAS</fullName>
+        <default>false</default>
+        <label>NAPOLETANA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>NATURAL ENERGY</fullName>
+        <default>false</default>
+        <label>NATURAL ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>NEG SRL</fullName>
+        <default>false</default>
+        <label>NEG SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NELSA GAS SRL</fullName>
+        <default>false</default>
+        <label>NELSA GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NEOGAS SRL</fullName>
+        <default>false</default>
+        <label>NEOGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NEW ENERGY SRL</fullName>
+        <default>false</default>
+        <label>NEW ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NEWCO ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>NEWCO ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NEXICOM SPA</fullName>
+        <default>false</default>
+        <label>NEXICOM SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>NOIENERGIA SRL</fullName>
+        <default>false</default>
+        <label>NOIENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NORDOVEST ENERGIE</fullName>
+        <default>false</default>
+        <label>NORDOVEST ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>NOTARESCO GAS</fullName>
+        <default>false</default>
+        <label>NOTARESCO GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>NOVA AEG SPA</fullName>
+        <default>false</default>
+        <label>NOVA AEG SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>NOVA SRL</fullName>
+        <default>false</default>
+        <label>NOVA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NOVENERGIAITALIA</fullName>
+        <default>false</default>
+        <label>NOVENERGIAITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>NUOVA ENERGIA ITALI</fullName>
+        <default>false</default>
+        <label>NUOVA ENERGIA ITALI</label>
+    </customValue>
+    <customValue>
+        <fullName>NUOVA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>NUOVA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>NUOVENERGIE SPA</fullName>
+        <default>false</default>
+        <label>NUOVENERGIE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>NUOVENERGIE</fullName>
+        <default>false</default>
+        <label>NUOVENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>NWG ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>NWG ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ODOARDO ZECCA SRL</fullName>
+        <default>false</default>
+        <label>ODOARDO ZECCA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>OLIMPIA ENERGIA</fullName>
+        <default>false</default>
+        <label>OLIMPIA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>OLIVI GAS</fullName>
+        <default>false</default>
+        <label>OLIVI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>OMEGA POWER SPA</fullName>
+        <default>false</default>
+        <label>OMEGA POWER SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>OMNIA</fullName>
+        <default>false</default>
+        <label>OMNIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ON POWER SRL</fullName>
+        <default>false</default>
+        <label>ON POWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ONDA PIU SRL</fullName>
+        <default>false</default>
+        <label>ONDA PIU SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ONDA PIÙ S.R.L.</fullName>
+        <default>false</default>
+        <label>ONDA PIÙ S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>ONE POWER&amp;GAS SPA</fullName>
+        <default>false</default>
+        <label>ONE POWER&amp;GAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ONE POWER&amp;GAS</fullName>
+        <default>false</default>
+        <label>ONE POWER&amp;GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ONOVA SRL</fullName>
+        <default>false</default>
+        <label>ONOVA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>OPERATION ENERGYPOL</fullName>
+        <default>false</default>
+        <label>OPERATION ENERGYPOL</label>
+    </customValue>
+    <customValue>
+        <fullName>OPTIMA ITALIA SPA</fullName>
+        <default>false</default>
+        <label>OPTIMA ITALIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ORANGY SRL</fullName>
+        <default>false</default>
+        <label>ORANGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>OV ENERGY</fullName>
+        <default>false</default>
+        <label>OV ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>PADANIA ACQUE</fullName>
+        <default>false</default>
+        <label>PADANIA ACQUE</label>
+    </customValue>
+    <customValue>
+        <fullName>PASSUELLO FRATELLI</fullName>
+        <default>false</default>
+        <label>PASSUELLO FRATELLI</label>
+    </customValue>
+    <customValue>
+        <fullName>PASUBIO SERVIZI</fullName>
+        <default>false</default>
+        <label>PASUBIO SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>PATAVIUM EN. SRL</fullName>
+        <default>false</default>
+        <label>PATAVIUM EN. SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>PATAVIUM ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>PATAVIUM ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>PEF ITALIA SPA</fullName>
+        <default>false</default>
+        <label>PEF ITALIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>PEGASO GASELUCE SRL</fullName>
+        <default>false</default>
+        <label>PEGASO GASELUCE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>PENTA ENERGIE SRL</fullName>
+        <default>false</default>
+        <label>PENTA ENERGIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>PEZZOLI GAS</fullName>
+        <default>false</default>
+        <label>PEZZOLI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>PHLOGAS</fullName>
+        <default>false</default>
+        <label>PHLOGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>PICCHIO GAS SRL</fullName>
+        <default>false</default>
+        <label>PICCHIO GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>PIEMONTE ENERGY</fullName>
+        <default>false</default>
+        <label>PIEMONTE ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>PIPER ENERGIA</fullName>
+        <default>false</default>
+        <label>PIPER ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>PLT PUREGREEN SPA</fullName>
+        <default>false</default>
+        <label>PLT PUREGREEN SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>PLT</fullName>
+        <default>false</default>
+        <label>PLT</label>
+    </customValue>
+    <customValue>
+        <fullName>PLURIENERGIA SPA</fullName>
+        <default>false</default>
+        <label>PLURIENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>POLIS ENERGIA</fullName>
+        <default>false</default>
+        <label>POLIS ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>POLLINO GAS SRL</fullName>
+        <default>false</default>
+        <label>POLLINO GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>POMILIA ENERGIA</fullName>
+        <default>false</default>
+        <label>POMILIA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>PORTO RECANATI</fullName>
+        <default>false</default>
+        <label>PORTO RECANATI</label>
+    </customValue>
+    <customValue>
+        <fullName>POWER ENERGIA</fullName>
+        <default>false</default>
+        <label>POWER ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>POWERGAS CLIENTI</fullName>
+        <default>false</default>
+        <label>POWERGAS CLIENTI</label>
+    </customValue>
+    <customValue>
+        <fullName>PROENERGY SPA</fullName>
+        <default>false</default>
+        <label>PROENERGY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>PROTOS SRL</fullName>
+        <default>false</default>
+        <label>PROTOS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>PULSEE</fullName>
+        <default>false</default>
+        <label>PULSEE</label>
+    </customValue>
+    <customValue>
+        <fullName>PURA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>PURA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>RANTON</fullName>
+        <default>false</default>
+        <label>RANTON</label>
+    </customValue>
+    <customValue>
+        <fullName>RETTAGLIATA</fullName>
+        <default>false</default>
+        <label>RETTAGLIATA</label>
+    </customValue>
+    <customValue>
+        <fullName>REVO LUCE</fullName>
+        <default>false</default>
+        <label>REVO LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>ROMA GAS</fullName>
+        <default>false</default>
+        <label>ROMA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ROMA OIL COMPANY</fullName>
+        <default>false</default>
+        <label>ROMA OIL COMPANY</label>
+    </customValue>
+    <customValue>
+        <fullName>ROMAGNA ENERGIA</fullName>
+        <default>false</default>
+        <label>ROMAGNA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ROTAGAS SRL</fullName>
+        <default>false</default>
+        <label>ROTAGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ROYAL GROUP SRL</fullName>
+        <default>false</default>
+        <label>ROYAL GROUP SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ROYAL GROUP</fullName>
+        <default>false</default>
+        <label>ROYAL GROUP</label>
+    </customValue>
+    <customValue>
+        <fullName>S.I.A.M. SRL</fullName>
+        <default>false</default>
+        <label>S.I.A.M. SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>S.I.P.P.I.C. S.p.A.</fullName>
+        <default>false</default>
+        <label>S.I.P.P.I.C. S.p.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>S.MED E PANTELLERIA</fullName>
+        <default>false</default>
+        <label>S.MED E PANTELLERIA</label>
+    </customValue>
+    <customValue>
+        <fullName>S4 ENERGIA</fullName>
+        <default>false</default>
+        <label>S4 ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SALERNO ENERGIA</fullName>
+        <default>false</default>
+        <label>SALERNO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SANGROSERVIZI SRL</fullName>
+        <default>false</default>
+        <label>SANGROSERVIZI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SAPERGAS SRL</fullName>
+        <default>false</default>
+        <label>SAPERGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SATO SERVICE</fullName>
+        <default>false</default>
+        <label>SATO SERVICE</label>
+    </customValue>
+    <customValue>
+        <fullName>SCI-FORNI DI SOPRA</fullName>
+        <default>false</default>
+        <label>SCI-FORNI DI SOPRA</label>
+    </customValue>
+    <customValue>
+        <fullName>SCOPPITO ENERGIA</fullName>
+        <default>false</default>
+        <label>SCOPPITO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SEA ENERGIA</fullName>
+        <default>false</default>
+        <label>SEA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SEBINA SRL</fullName>
+        <default>false</default>
+        <label>SEBINA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SECAB SOC COOP</fullName>
+        <default>false</default>
+        <label>SECAB SOC COOP</label>
+    </customValue>
+    <customValue>
+        <fullName>SELGAS SRL</fullName>
+        <default>false</default>
+        <label>SELGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SELIS LAMPEDUSA</fullName>
+        <default>false</default>
+        <label>SELIS LAMPEDUSA</label>
+    </customValue>
+    <customValue>
+        <fullName>SELLING COMPANY SRL</fullName>
+        <default>false</default>
+        <label>SELLING COMPANY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SELNET</fullName>
+        <default>false</default>
+        <label>SELNET</label>
+    </customValue>
+    <customValue>
+        <fullName>SELTRADE SPA</fullName>
+        <default>false</default>
+        <label>SELTRADE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SEM SOC EL MORBEGNO</fullName>
+        <default>false</default>
+        <label>SEM SOC EL MORBEGNO</label>
+    </customValue>
+    <customValue>
+        <fullName>SEMP.GAS &amp; LUCE SRL</fullName>
+        <default>false</default>
+        <label>SEMP.GAS &amp; LUCE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SEMPLICE GAS E LUCE</fullName>
+        <default>false</default>
+        <label>SEMPLICE GAS E LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>SENTRA ENERGIA</fullName>
+        <default>false</default>
+        <label>SENTRA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SENTRA ENERGIE</fullName>
+        <default>false</default>
+        <label>SENTRA ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>SEREN S.R.L.</fullName>
+        <default>false</default>
+        <label>SEREN S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>SERVIZI LAMA SRL</fullName>
+        <default>false</default>
+        <label>SERVIZI LAMA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SET DISTRIBUZIONE</fullName>
+        <default>false</default>
+        <label>SET DISTRIBUZIONE</label>
+    </customValue>
+    <customValue>
+        <fullName>SFERA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>SFERA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SG ENERGIA</fullName>
+        <default>false</default>
+        <label>SG ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SGM Commerciale Gas</fullName>
+        <default>false</default>
+        <label>SGM Commerciale Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>SHELL ITALIA SPA</fullName>
+        <default>false</default>
+        <label>SHELL ITALIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SICME ENERGY E GAS</fullName>
+        <default>false</default>
+        <label>SICME ENERGY E GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SIDI GAS</fullName>
+        <default>false</default>
+        <label>SIDI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SIE</fullName>
+        <default>false</default>
+        <label>SIE</label>
+    </customValue>
+    <customValue>
+        <fullName>SIENERGIA SRL</fullName>
+        <default>false</default>
+        <label>SIENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SIG SOC. INTERCOMUN</fullName>
+        <default>false</default>
+        <label>SIG SOC. INTERCOMUN</label>
+    </customValue>
+    <customValue>
+        <fullName>SIMA ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>SIMA ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SIMA ENERGIA</fullName>
+        <default>false</default>
+        <label>SIMA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SIME COMM SRL</fullName>
+        <default>false</default>
+        <label>SIME COMM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SIMP GAS SRL</fullName>
+        <default>false</default>
+        <label>SIMP GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SINERGI</fullName>
+        <default>false</default>
+        <label>SINERGI</label>
+    </customValue>
+    <customValue>
+        <fullName>SINERGIT</fullName>
+        <default>false</default>
+        <label>SINERGIT</label>
+    </customValue>
+    <customValue>
+        <fullName>SIST ENERG ITALIA</fullName>
+        <default>false</default>
+        <label>SIST ENERG ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SISTEMA ENERGIA IT</fullName>
+        <default>false</default>
+        <label>SISTEMA ENERGIA IT</label>
+    </customValue>
+    <customValue>
+        <fullName>SISTEMA GASEPOWER</fullName>
+        <default>false</default>
+        <label>SISTEMA GASEPOWER</label>
+    </customValue>
+    <customValue>
+        <fullName>SKY GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>SKY GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>SMALLENERGY SRL</fullName>
+        <default>false</default>
+        <label>SMALLENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SMART LUCE E GAS</fullName>
+        <default>false</default>
+        <label>SMART LUCE E GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SMARTUTILITY SPA</fullName>
+        <default>false</default>
+        <label>SMARTUTILITY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SMARTUTILITY</fullName>
+        <default>false</default>
+        <label>SMARTUTILITY</label>
+    </customValue>
+    <customValue>
+        <fullName>SMG SRL</fullName>
+        <default>false</default>
+        <label>SMG SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SMG</fullName>
+        <default>false</default>
+        <label>SMG</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC EL LA BRUZZOLES</fullName>
+        <default>false</default>
+        <label>SOC EL LA BRUZZOLES</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC ELE MONGUELFO</fullName>
+        <default>false</default>
+        <label>SOC ELE MONGUELFO</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC ENERGIA TOSCANA</fullName>
+        <default>false</default>
+        <label>SOC ENERGIA TOSCANA</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCIETA ELETTRICA</fullName>
+        <default>false</default>
+        <label>SOCIETA ELETTRICA</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCIETA LOC GAS</fullName>
+        <default>false</default>
+        <label>SOCIETA LOC GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCIETÁ ELETTRICAS</fullName>
+        <default>false</default>
+        <label>SOCIETÁ ELETTRICAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCO PLUS</fullName>
+        <default>false</default>
+        <label>SOCO PLUS</label>
+    </customValue>
+    <customValue>
+        <fullName>SOGEST</fullName>
+        <default>false</default>
+        <label>SOGEST</label>
+    </customValue>
+    <customValue>
+        <fullName>SONNEN ESERVICES</fullName>
+        <default>false</default>
+        <label>SONNEN ESERVICES</label>
+    </customValue>
+    <customValue>
+        <fullName>SPACE ENERGY SRL</fullName>
+        <default>false</default>
+        <label>SPACE ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SPEZIA ENERGY TRADING</fullName>
+        <default>false</default>
+        <label>SPEZIA ENERGY TRADING</label>
+    </customValue>
+    <customValue>
+        <fullName>SPIENERGY SPA</fullName>
+        <default>false</default>
+        <label>SPIENERGY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SPIENERGY SRL</fullName>
+        <default>false</default>
+        <label>SPIENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SPIGAS SRL</fullName>
+        <default>false</default>
+        <label>SPIGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SPIRIT ENERGIA</fullName>
+        <default>false</default>
+        <label>SPIRIT ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SPRING ENERGY</fullName>
+        <default>false</default>
+        <label>SPRING ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>SPRINT ENERGY SRL</fullName>
+        <default>false</default>
+        <label>SPRINT ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>STANTUP SRL</fullName>
+        <default>false</default>
+        <label>STANTUP SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>STET SPA</fullName>
+        <default>false</default>
+        <label>STET SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SUISSE GAS</fullName>
+        <default>false</default>
+        <label>SUISSE GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SUNTRADING</fullName>
+        <default>false</default>
+        <label>SUNTRADING</label>
+    </customValue>
+    <customValue>
+        <fullName>SVE VEND ENERGIE</fullName>
+        <default>false</default>
+        <label>SVE VEND ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>SWITCH POWER SRL</fullName>
+        <default>false</default>
+        <label>SWITCH POWER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TATE SRL</fullName>
+        <default>false</default>
+        <label>TATE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TECHMAGAS</fullName>
+        <default>false</default>
+        <label>TECHMAGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>TECNICONSUL ENERGIA</fullName>
+        <default>false</default>
+        <label>TECNICONSUL ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>TECNOENERGIA</fullName>
+        <default>false</default>
+        <label>TECNOENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>TESLA ENERGIA</fullName>
+        <default>false</default>
+        <label>TESLA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>TRADECOM EE</fullName>
+        <default>false</default>
+        <label>TRADECOM EE</label>
+    </customValue>
+    <customValue>
+        <fullName>TRADECOM GAS</fullName>
+        <default>false</default>
+        <label>TRADECOM GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>TRADEINV GAS &amp; E</fullName>
+        <default>false</default>
+        <label>TRADEINV GAS &amp; E</label>
+    </customValue>
+    <customValue>
+        <fullName>TRENOVE SERVIZI SRL</fullName>
+        <default>false</default>
+        <label>TRENOVE SERVIZI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TRES ENERGIA S.R.L.</fullName>
+        <default>false</default>
+        <label>TRES ENERGIA S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>TRI.BI.GAS</fullName>
+        <default>false</default>
+        <label>TRI.BI.GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>TRIBIGAS SRL</fullName>
+        <default>false</default>
+        <label>TRIBIGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TU.GG</fullName>
+        <default>false</default>
+        <label>TU.GG</label>
+    </customValue>
+    <customValue>
+        <fullName>TUA</fullName>
+        <default>false</default>
+        <label>TUA</label>
+    </customValue>
+    <customValue>
+        <fullName>UBROKER SRL</fullName>
+        <default>false</default>
+        <label>UBROKER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>UNENDO ENERG ITALIA</fullName>
+        <default>false</default>
+        <label>UNENDO ENERG ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNET ENERGIA ITALIA</fullName>
+        <default>false</default>
+        <label>UNET ENERGIA ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNICA ENERGIA</fullName>
+        <default>false</default>
+        <label>UNICA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNICA SPA</fullName>
+        <default>false</default>
+        <label>UNICA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNICOENERGIA</fullName>
+        <default>false</default>
+        <label>UNICOENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNIENERGIA SPA</fullName>
+        <default>false</default>
+        <label>UNIENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNIGAS</fullName>
+        <default>false</default>
+        <label>UNIGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>UNIKO SRL</fullName>
+        <default>false</default>
+        <label>UNIKO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>UNION ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>UNION ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>UNION GAS METANO</fullName>
+        <default>false</default>
+        <label>UNION GAS METANO</label>
+    </customValue>
+    <customValue>
+        <fullName>UNIPOWER ITALIA SRL</fullName>
+        <default>false</default>
+        <label>UNIPOWER ITALIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>UNIPOWER</fullName>
+        <default>false</default>
+        <label>UNIPOWER</label>
+    </customValue>
+    <customValue>
+        <fullName>UNITRADING ENERGIA</fullName>
+        <default>false</default>
+        <label>UNITRADING ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNOGAS UMBRIA SPA</fullName>
+        <default>false</default>
+        <label>UNOGAS UMBRIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>UNOGAS UMBRIA</fullName>
+        <default>false</default>
+        <label>UNOGAS UMBRIA</label>
+    </customValue>
+    <customValue>
+        <fullName>UTILITA SPA</fullName>
+        <default>false</default>
+        <label>UTILITA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>UTILITY 360 SPA</fullName>
+        <default>false</default>
+        <label>UTILITY 360 SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>VALLE CAMONICA SERV</fullName>
+        <default>false</default>
+        <label>VALLE CAMONICA SERV</label>
+    </customValue>
+    <customValue>
+        <fullName>VALLENERGIE SPA</fullName>
+        <default>false</default>
+        <label>VALLENERGIE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>VENETO ENERGIA</fullName>
+        <default>false</default>
+        <label>VENETO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>VENETO GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>VENETO GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>VERDUCCI SERVIZ SRL</fullName>
+        <default>false</default>
+        <label>VERDUCCI SERVIZ SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>VERONA SERVICE SRL</fullName>
+        <default>false</default>
+        <label>VERONA SERVICE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>VESTINA GAS &amp;LUCE</fullName>
+        <default>false</default>
+        <label>VESTINA GAS &amp;LUCE</label>
+    </customValue>
+    <customValue>
+        <fullName>VISI ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>VISI ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>VISIGAS</fullName>
+        <default>false</default>
+        <label>VISIGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>VISITEL SRL</fullName>
+        <default>false</default>
+        <label>VISITEL SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>WEEDOO</fullName>
+        <default>false</default>
+        <label>WEEDOO</label>
+    </customValue>
+    <customValue>
+        <fullName>WEKIWI SRL</fullName>
+        <default>false</default>
+        <label>WEKIWI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>WEKIWI</fullName>
+        <default>false</default>
+        <label>WEKIWI</label>
+    </customValue>
+    <customValue>
+        <fullName>WITHU</fullName>
+        <default>false</default>
+        <label>WITHU</label>
+    </customValue>
+    <customValue>
+        <fullName>X3ENERGY SPA</fullName>
+        <default>false</default>
+        <label>X3ENERGY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>XL ENERGIA E GAS SRL</fullName>
+        <default>false</default>
+        <label>XL ENERGIA E GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>XL ENERGIA E GAS</fullName>
+        <default>false</default>
+        <label>XL ENERGIA E GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>XXL ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>XXL ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>YES ENERGY SRL</fullName>
+        <default>false</default>
+        <label>YES ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>YOUTRADE SPA</fullName>
+        <default>false</default>
+        <label>YOUTRADE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ZERO ENERGIE</fullName>
+        <default>false</default>
+        <label>ZERO ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>ZERO PENSIERI</fullName>
+        <default>false</default>
+        <label>ZERO PENSIERI</label>
+    </customValue>
+    <customValue>
+        <fullName>A.F. ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>A.F. ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEA ELECTRALABEL</fullName>
+        <default>false</default>
+        <label>ACEA ELECTRALABEL</label>
+    </customValue>
+    <customValue>
+        <fullName>AGEA ONE SRL</fullName>
+        <default>false</default>
+        <label>AGEA ONE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ARGOS ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>ARGOS ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ASCOTRADE</fullName>
+        <default>false</default>
+        <label>ASCOTRADE</label>
+    </customValue>
+    <customValue>
+        <fullName>ASP-SER POLVERIGI</fullName>
+        <default>false</default>
+        <label>ASP-SER POLVERIGI</label>
+    </customValue>
+    <customValue>
+        <fullName>ASSM SSEVER. MARCHE</fullName>
+        <default>false</default>
+        <label>ASSM SSEVER. MARCHE</label>
+    </customValue>
+    <customValue>
+        <fullName>ASSM TOLENTINO</fullName>
+        <default>false</default>
+        <label>ASSM TOLENTINO</label>
+    </customValue>
+    <customValue>
+        <fullName>ASTEA SPA</fullName>
+        <default>false</default>
+        <label>ASTEA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ATAC CIVITANOVA</fullName>
+        <default>false</default>
+        <label>ATAC CIVITANOVA</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTROGAS ENERGIA</fullName>
+        <default>false</default>
+        <label>CENTROGAS ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSIAGAS SPA</fullName>
+        <default>false</default>
+        <label>CONSIAGAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>E.T. ENERGIA E TERRITORIO</fullName>
+        <default>false</default>
+        <label>E.T. ENERGIA E TERRITORIO</label>
+    </customValue>
+    <customValue>
+        <fullName>ELETTRIA SPA</fullName>
+        <default>false</default>
+        <label>ELETTRIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGEIA SRL</fullName>
+        <default>false</default>
+        <label>ENERGEIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FINTEL MULTISERVIZI</fullName>
+        <default>false</default>
+        <label>FINTEL MULTISERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>FIORENZUOLA GAS</fullName>
+        <default>false</default>
+        <label>FIORENZUOLA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS POLLINO SRL</fullName>
+        <default>false</default>
+        <label>GAS POLLINO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GASCOM</fullName>
+        <default>false</default>
+        <label>GASCOM</label>
+    </customValue>
+    <customValue>
+        <fullName>GORGOVIVO MULTISERVIZI</fullName>
+        <default>false</default>
+        <label>GORGOVIVO MULTISERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>LUCE SET SPA</fullName>
+        <default>false</default>
+        <label>LUCE SET SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>METAMER</fullName>
+        <default>false</default>
+        <label>METAMER</label>
+    </customValue>
+    <customValue>
+        <fullName>PROMETEO</fullName>
+        <default>false</default>
+        <label>PROMETEO</label>
+    </customValue>
+    <customValue>
+        <fullName>SADORI GAS</fullName>
+        <default>false</default>
+        <label>SADORI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>TRENTINO ENERGIA</fullName>
+        <default>false</default>
+        <label>TRENTINO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>VEGA ENERGIA</fullName>
+        <default>false</default>
+        <label>VEGA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>AEM ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>AEM ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BASILICATA ENER SRL</fullName>
+        <default>false</default>
+        <label>BASILICATA ENER SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BFD ENERGY SRL</fullName>
+        <default>false</default>
+        <label>BFD ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CONS EL DI STENICO</fullName>
+        <default>false</default>
+        <label>CONS EL DI STENICO</label>
+    </customValue>
+    <customValue>
+        <fullName>COOPGAS S.r.l.</fullName>
+        <default>false</default>
+        <label>COOPGAS S.r.l.</label>
+    </customValue>
+    <customValue>
+        <fullName>MIO GAS SRL</fullName>
+        <default>false</default>
+        <label>MIO GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AGSM ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>AGSM ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>DALMINE ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>DALMINE ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ALPENERGIE ITALIA</fullName>
+        <default>false</default>
+        <label>ALPENERGIE ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>E.ON Vendita S.r.l.</fullName>
+        <default>false</default>
+        <label>E.ON Vendita S.r.l.</label>
+    </customValue>
+    <customValue>
+        <fullName>ASITE SURL</fullName>
+        <default>false</default>
+        <label>ASITE SURL</label>
+    </customValue>
+    <customValue>
+        <fullName>ASM BRESSANONE SPA</fullName>
+        <default>false</default>
+        <label>ASM BRESSANONE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>EDISON PER VOI</fullName>
+        <default>false</default>
+        <label>EDISON PER VOI</label>
+    </customValue>
+    <customValue>
+        <fullName>ATEL ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>ATEL ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>C.V.A. TRADING SRL</fullName>
+        <default>false</default>
+        <label>C.V.A. TRADING SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEL ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>ENEL ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>CENTOMILACANDELE</fullName>
+        <default>false</default>
+        <label>CENTOMILACANDELE</label>
+    </customValue>
+    <customValue>
+        <fullName>CONS.ROMAGNA EN.</fullName>
+        <default>false</default>
+        <label>CONS.ROMAGNA EN.</label>
+    </customValue>
+    <customValue>
+        <fullName>AEEW AZ. ENERGETICA</fullName>
+        <default>false</default>
+        <label>AEEW AZ. ENERGETICA</label>
+    </customValue>
+    <customValue>
+        <fullName>AGESP ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>AGESP ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ALENTOGAS</fullName>
+        <default>false</default>
+        <label>ALENTOGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ALSENO SERVIZI SRL</fullName>
+        <default>false</default>
+        <label>ALSENO SERVIZI SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUE META SPA</fullName>
+        <default>false</default>
+        <label>BLUE META SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>CESAP</fullName>
+        <default>false</default>
+        <label>CESAP</label>
+    </customValue>
+    <customValue>
+        <fullName>COGERVAP</fullName>
+        <default>false</default>
+        <label>COGERVAP</label>
+    </customValue>
+    <customValue>
+        <fullName>CONVENERGY SRL</fullName>
+        <default>false</default>
+        <label>CONVENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EGL</fullName>
+        <default>false</default>
+        <label>EGL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERCOM SRL</fullName>
+        <default>false</default>
+        <label>ENERCOM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIA CORRENTE</fullName>
+        <default>false</default>
+        <label>ENERGIA CORRENTE</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERVENTI</fullName>
+        <default>false</default>
+        <label>ENERVENTI</label>
+    </customValue>
+    <customValue>
+        <fullName>ESEGAS</fullName>
+        <default>false</default>
+        <label>ESEGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>ESTRA ENERGIE SRL</fullName>
+        <default>false</default>
+        <label>ESTRA ENERGIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GEA COMMERCIALE</fullName>
+        <default>false</default>
+        <label>GEA COMMERCIALE</label>
+    </customValue>
+    <customValue>
+        <fullName>GESAM GAS SPA</fullName>
+        <default>false</default>
+        <label>GESAM GAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GRITTI GAS</fullName>
+        <default>false</default>
+        <label>GRITTI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA COMM MARCHE</fullName>
+        <default>false</default>
+        <label>HERA COMM MARCHE</label>
+    </customValue>
+    <customValue>
+        <fullName>INTESACOM SRL</fullName>
+        <default>false</default>
+        <label>INTESACOM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>IREA COMM</fullName>
+        <default>false</default>
+        <label>IREA COMM</label>
+    </customValue>
+    <customValue>
+        <fullName>IREN MERCATO</fullName>
+        <default>false</default>
+        <label>IREN MERCATO</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALPOWER ENERGIA</fullName>
+        <default>false</default>
+        <label>ITALPOWER ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>LUPATOTINA GAS</fullName>
+        <default>false</default>
+        <label>LUPATOTINA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>MORENICA SRL</fullName>
+        <default>false</default>
+        <label>MORENICA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>MULTIUTILITY SPA</fullName>
+        <default>false</default>
+        <label>MULTIUTILITY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ONDA ENERGIA S.R.L.</fullName>
+        <default>false</default>
+        <label>ONDA ENERGIA S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>PADANIA TRADING SRL</fullName>
+        <default>false</default>
+        <label>PADANIA TRADING SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>REPOWER VENDITA</fullName>
+        <default>false</default>
+        <label>REPOWER VENDITA</label>
+    </customValue>
+    <customValue>
+        <fullName>SEA COM</fullName>
+        <default>false</default>
+        <label>SEA COM</label>
+    </customValue>
+    <customValue>
+        <fullName>SEI SOC ENER ITALIA</fullName>
+        <default>false</default>
+        <label>SEI SOC ENER ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SIMAGAS</fullName>
+        <default>false</default>
+        <label>SIMAGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SOC SERVIZI ENERGIA</fullName>
+        <default>false</default>
+        <label>SOC SERVIZI ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SOMET ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>SOMET ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SORESINA SRL</fullName>
+        <default>false</default>
+        <label>SORESINA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>STATO SERVICE ENERG</fullName>
+        <default>false</default>
+        <label>STATO SERVICE ENERG</label>
+    </customValue>
+    <customValue>
+        <fullName>TOSCANA ENERGIA</fullName>
+        <default>false</default>
+        <label>TOSCANA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>TRENTA SPA</fullName>
+        <default>false</default>
+        <label>TRENTA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>UMBRIA ENERGY</fullName>
+        <default>false</default>
+        <label>UMBRIA ENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>UNI.CO.G.E.</fullName>
+        <default>false</default>
+        <label>UNI.CO.G.E.</label>
+    </customValue>
+    <customValue>
+        <fullName>UNO GAS SPA</fullName>
+        <default>false</default>
+        <label>UNO GAS SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>VENETA VENDITA</fullName>
+        <default>false</default>
+        <label>VENETA VENDITA</label>
+    </customValue>
+    <customValue>
+        <fullName>VERITAS ENERGIA</fullName>
+        <default>false</default>
+        <label>VERITAS ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>VESTINA GAS</fullName>
+        <default>false</default>
+        <label>VESTINA GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>VIVIGAS</fullName>
+        <default>false</default>
+        <label>VIVIGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>DALMINE ENERGIE SPA</fullName>
+        <default>false</default>
+        <label>DALMINE ENERGIE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>FIORENTINA OIL CO.</fullName>
+        <default>false</default>
+        <label>FIORENTINA OIL CO.</label>
+    </customValue>
+    <customValue>
+        <fullName>FLYENERGIA SPA</fullName>
+        <default>false</default>
+        <label>FLYENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>Flyenergia S.p.A.</fullName>
+        <default>false</default>
+        <label>Flyenergia S.p.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>GDF SUEZ ENERG SPA</fullName>
+        <default>false</default>
+        <label>GDF SUEZ ENERG SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>A.S.SE.M SPA</fullName>
+        <default>false</default>
+        <label>A.S.SE.M SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEA VENDITE</fullName>
+        <default>false</default>
+        <label>ACEA VENDITE</label>
+    </customValue>
+    <customValue>
+        <fullName>AIMET METANO</fullName>
+        <default>false</default>
+        <label>AIMET METANO</label>
+    </customValue>
+    <customValue>
+        <fullName>AMGAS SRL</fullName>
+        <default>false</default>
+        <label>AMGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BAIENGAS COM SRL</fullName>
+        <default>false</default>
+        <label>BAIENGAS COM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>C.B.E.G. scrl</fullName>
+        <default>false</default>
+        <label>C.B.E.G. scrl</label>
+    </customValue>
+    <customValue>
+        <fullName>CON ENERGIA</fullName>
+        <default>false</default>
+        <label>CON ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>CONS LIBERA ENERGIA</fullName>
+        <default>false</default>
+        <label>CONS LIBERA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>DSE SRL</fullName>
+        <default>false</default>
+        <label>DSE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>DUFERCO NATURAL GAS</fullName>
+        <default>false</default>
+        <label>DUFERCO NATURAL GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>E.S.TR.A. SRL</fullName>
+        <default>false</default>
+        <label>E.S.TR.A. SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EDISON ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>EDISON ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENI GAS &amp; POWER</fullName>
+        <default>false</default>
+        <label>ENI GAS &amp; POWER</label>
+    </customValue>
+    <customValue>
+        <fullName>ETRA ENERGIA</fullName>
+        <default>false</default>
+        <label>ETRA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS TRONTO SRL</fullName>
+        <default>false</default>
+        <label>GAS TRONTO SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GASWAY srl</fullName>
+        <default>false</default>
+        <label>GASWAY srl</label>
+    </customValue>
+    <customValue>
+        <fullName>HERA COMM S.P.A.</fullName>
+        <default>false</default>
+        <label>HERA COMM S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>METAENERGIA SPA</fullName>
+        <default>false</default>
+        <label>METAENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>METANODOTTI SPA</fullName>
+        <default>false</default>
+        <label>METANODOTTI SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>METANONORD</fullName>
+        <default>false</default>
+        <label>METANONORD</label>
+    </customValue>
+    <customValue>
+        <fullName>MODULA SRL</fullName>
+        <default>false</default>
+        <label>MODULA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>OPTIQUADRO ENERGIA</fullName>
+        <default>false</default>
+        <label>OPTIQUADRO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>OROBIE SRL</fullName>
+        <default>false</default>
+        <label>OROBIE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SAN GIORGIO ENERGIE</fullName>
+        <default>false</default>
+        <label>SAN GIORGIO ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>SATO SERVICE EE SRL</fullName>
+        <default>false</default>
+        <label>SATO SERVICE EE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SIME SPA</fullName>
+        <default>false</default>
+        <label>SIME SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SINERGAS SRL</fullName>
+        <default>false</default>
+        <label>SINERGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SOLGAS</fullName>
+        <default>false</default>
+        <label>SOLGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SORGEA SERVIZI</fullName>
+        <default>false</default>
+        <label>SORGEA SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>TECNICONSUL SRL</fullName>
+        <default>false</default>
+        <label>TECNICONSUL SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TIDONE GAS ENERGIE</fullName>
+        <default>false</default>
+        <label>TIDONE GAS ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>VUS COM SRL</fullName>
+        <default>false</default>
+        <label>VUS COM SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EGEA COMMERCIALE</fullName>
+        <default>false</default>
+        <label>EGEA COMMERCIALE</label>
+    </customValue>
+    <customValue>
+        <fullName>EGL ITALIA SPA</fullName>
+        <default>false</default>
+        <label>EGL ITALIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALGAS PIU S.P.A.</fullName>
+        <default>false</default>
+        <label>ITALGAS PIU S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>ENECO TRADE SRL</fullName>
+        <default>false</default>
+        <label>ENECO TRADE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ERG POWER &amp; GAS</fullName>
+        <default>false</default>
+        <label>ERG POWER &amp; GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>META ENERGY SRL</fullName>
+        <default>false</default>
+        <label>META ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ASMU CODOGNO</fullName>
+        <default>false</default>
+        <label>ASMU CODOGNO</label>
+    </customValue>
+    <customValue>
+        <fullName>ASTI SERV PUBB</fullName>
+        <default>false</default>
+        <label>ASTI SERV PUBB</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ ENERG TRADING</fullName>
+        <default>false</default>
+        <label>AZ ENERG TRADING</label>
+    </customValue>
+    <customValue>
+        <fullName>BERICA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>BERICA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>CLEANPOWER SPA</fullName>
+        <default>false</default>
+        <label>CLEANPOWER SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENEL SALVAGUARDIA</fullName>
+        <default>false</default>
+        <label>ENEL SALVAGUARDIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ESPANSIONE SRL</fullName>
+        <default>false</default>
+        <label>ESPANSIONE SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FONTEL ENERGIA</fullName>
+        <default>false</default>
+        <label>FONTEL ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>OPTIMA SRL</fullName>
+        <default>false</default>
+        <label>OPTIMA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>Publiluce S.C. ARL</fullName>
+        <default>false</default>
+        <label>Publiluce S.C. ARL</label>
+    </customValue>
+    <customValue>
+        <fullName>RETI PIU SRL</fullName>
+        <default>false</default>
+        <label>RETI PIU SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SERV.ELETTRICO NAZ.</fullName>
+        <default>false</default>
+        <label>SERV.ELETTRICO NAZ.</label>
+    </customValue>
+    <customValue>
+        <fullName>SGR SERVIZI</fullName>
+        <default>false</default>
+        <label>SGR SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>STECA ENERGIA</fullName>
+        <default>false</default>
+        <label>STECA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>SUM</fullName>
+        <default>false</default>
+        <label>SUM</label>
+    </customValue>
+    <customValue>
+        <fullName>Soc EE In Morbegno</fullName>
+        <default>false</default>
+        <label>Soc EE In Morbegno</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERG.IT SPA</fullName>
+        <default>false</default>
+        <label>ENERG.IT SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>RESS SRL</fullName>
+        <default>false</default>
+        <label>RESS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>FLY ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>FLY ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SORGENIA SPA</fullName>
+        <default>false</default>
+        <label>SORGENIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SPEIA SPA</fullName>
+        <default>false</default>
+        <label>SPEIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>IDROENERGIA SCRL</fullName>
+        <default>false</default>
+        <label>IDROENERGIA SCRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TS ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>TS ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>VEA ENERGIA AMB SRL</fullName>
+        <default>false</default>
+        <label>VEA ENERGIA AMB SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AIM Energy</fullName>
+        <default>false</default>
+        <label>AIM Energy</label>
+    </customValue>
+    <customValue>
+        <fullName>ITALGEN SPA</fullName>
+        <default>false</default>
+        <label>ITALGEN SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ASM SET SRL</fullName>
+        <default>false</default>
+        <label>ASM SET SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>AUTOGAS NORD SPA</fullName>
+        <default>false</default>
+        <label>AUTOGAS NORD SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>METAENERGY SPA</fullName>
+        <default>false</default>
+        <label>METAENERGY SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUENERGY GROUP</fullName>
+        <default>false</default>
+        <label>BLUENERGY GROUP</label>
+    </customValue>
+    <customValue>
+        <fullName>MPE ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>MPE ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUMET SPA</fullName>
+        <default>false</default>
+        <label>BLUMET SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>C.U.R.A. RAVENNA</fullName>
+        <default>false</default>
+        <label>C.U.R.A. RAVENNA</label>
+    </customValue>
+    <customValue>
+        <fullName>SERV.INTEGRATI SIE</fullName>
+        <default>false</default>
+        <label>SERV.INTEGRATI SIE</label>
+    </customValue>
+    <customValue>
+        <fullName>SIET SPA</fullName>
+        <default>false</default>
+        <label>SIET SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>=+ENERGIA</fullName>
+        <default>false</default>
+        <label>=+ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>=+ENERGIA SPA</fullName>
+        <default>false</default>
+        <label>=+ENERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ACEL SERVICE S.R.L.</fullName>
+        <default>false</default>
+        <label>ACEL SERVICE S.R.L.</label>
+    </customValue>
+    <customValue>
+        <fullName>AMAIE SPA</fullName>
+        <default>false</default>
+        <label>AMAIE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>AMET S.P.A.</fullName>
+        <default>false</default>
+        <label>AMET S.P.A.</label>
+    </customValue>
+    <customValue>
+        <fullName>AZ ELE DOBBIACO SPA</fullName>
+        <default>false</default>
+        <label>AZ ELE DOBBIACO SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>BLUENERGY</fullName>
+        <default>false</default>
+        <label>BLUENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>COIMEPA Servizi</fullName>
+        <default>false</default>
+        <label>COIMEPA Servizi</label>
+    </customValue>
+    <customValue>
+        <fullName>DSE</fullName>
+        <default>false</default>
+        <label>DSE</label>
+    </customValue>
+    <customValue>
+        <fullName>EGI SPA</fullName>
+        <default>false</default>
+        <label>EGI SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ENERGIE DIFFUSE SPA</fullName>
+        <default>false</default>
+        <label>ENERGIE DIFFUSE SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>GRUPPO GEA</fullName>
+        <default>false</default>
+        <label>GRUPPO GEA</label>
+    </customValue>
+    <customValue>
+        <fullName>INNOVA ENERGIA</fullName>
+        <default>false</default>
+        <label>INNOVA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>PANDORA SPA</fullName>
+        <default>false</default>
+        <label>PANDORA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SERV ELETTRICO ROMA</fullName>
+        <default>false</default>
+        <label>SERV ELETTRICO ROMA</label>
+    </customValue>
+    <customValue>
+        <fullName>SIGICOM</fullName>
+        <default>false</default>
+        <label>SIGICOM</label>
+    </customValue>
+    <customValue>
+        <fullName>STECA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>STECA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>TIWAG-ITALIA</fullName>
+        <default>false</default>
+        <label>TIWAG-ITALIA</label>
+    </customValue>
+    <customValue>
+        <fullName>TELENERGIA SRL</fullName>
+        <default>false</default>
+        <label>TELENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SO.L.G.A.S. Srl</fullName>
+        <default>false</default>
+        <label>SO.L.G.A.S. Srl</label>
+    </customValue>
+    <customValue>
+        <fullName>SOCIETA NON PRESENTE</fullName>
+        <default>false</default>
+        <label>SOCIETA NON PRESENTE</label>
+    </customValue>
+    <customValue>
+        <fullName>PHLOGAS SRL</fullName>
+        <default>false</default>
+        <label>PHLOGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EE Odoardo Zecca</fullName>
+        <default>false</default>
+        <label>EE Odoardo Zecca</label>
+    </customValue>
+    <customValue>
+        <fullName>PICENO GAS</fullName>
+        <default>false</default>
+        <label>PICENO GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>LINEA PIU</fullName>
+        <default>false</default>
+        <label>LINEA PIU</label>
+    </customValue>
+    <customValue>
+        <fullName>SINERGAS</fullName>
+        <default>false</default>
+        <label>SINERGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>GAS SALES SRL</fullName>
+        <default>false</default>
+        <label>GAS SALES SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>SOENERGY</fullName>
+        <default>false</default>
+        <label>SOENERGY</label>
+    </customValue>
+    <customValue>
+        <fullName>CONFINDUSTRIA EE PU</fullName>
+        <default>false</default>
+        <label>CONFINDUSTRIA EE PU</label>
+    </customValue>
+    <customValue>
+        <fullName>TEA ENERGIA SRL</fullName>
+        <default>false</default>
+        <label>TEA ENERGIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ASET SPA</fullName>
+        <default>false</default>
+        <label>ASET SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>EXERGIA SPA</fullName>
+        <default>false</default>
+        <label>EXERGIA SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>ADRIATICA ENERGIA</fullName>
+        <default>false</default>
+        <label>ADRIATICA ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>RUZZO SERVIZI</fullName>
+        <default>false</default>
+        <label>RUZZO SERVIZI</label>
+    </customValue>
+    <customValue>
+        <fullName>AIM ENERGY SRL</fullName>
+        <default>false</default>
+        <label>AIM ENERGY SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>DEVAL</fullName>
+        <default>false</default>
+        <label>DEVAL</label>
+    </customValue>
+    <customValue>
+        <fullName>MISCOGAS</fullName>
+        <default>false</default>
+        <label>MISCOGAS</label>
+    </customValue>
+    <customValue>
+        <fullName>APS TRADE</fullName>
+        <default>false</default>
+        <label>APS TRADE</label>
+    </customValue>
+    <customValue>
+        <fullName>ADRIATICA LUCE&amp;GAS</fullName>
+        <default>false</default>
+        <label>ADRIATICA LUCE&amp;GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>AZIENDA LOCALE GAS</fullName>
+        <default>false</default>
+        <label>AZIENDA LOCALE GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>CHIURLO GAS SRL</fullName>
+        <default>false</default>
+        <label>CHIURLO GAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>EUROPAM SPA</fullName>
+        <default>false</default>
+        <label>EUROPAM SPA</label>
+    </customValue>
+    <customValue>
+        <fullName>SAVI GAS</fullName>
+        <default>false</default>
+        <label>SAVI GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>UNENDO ENERGIA</fullName>
+        <default>false</default>
+        <label>UNENDO ENERGIA</label>
+    </customValue>
+    <customValue>
+        <fullName>ESSENIA SRL</fullName>
+        <default>false</default>
+        <label>ESSENIA SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>ZECCA</fullName>
+        <default>false</default>
+        <label>ZECCA</label>
+    </customValue>
+    <customValue>
+        <fullName>AEC USSITA</fullName>
+        <default>false</default>
+        <label>AEC USSITA</label>
+    </customValue>
+    <customValue>
+        <fullName>BERGAMASCA ENERGIE</fullName>
+        <default>false</default>
+        <label>BERGAMASCA ENERGIE</label>
+    </customValue>
+    <customValue>
+        <fullName>FINGAS SRL</fullName>
+        <default>false</default>
+        <label>FINGAS SRL</label>
+    </customValue>
+    <customValue>
+        <fullName>GIGAS RETI</fullName>
+        <default>false</default>
+        <label>GIGAS RETI</label>
+    </customValue>
+    <customValue>
+        <fullName>MONTE URANO GAS</fullName>
+        <default>false</default>
+        <label>MONTE URANO GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>SI ENERGIA</fullName>
+        <default>false</default>
+        <label>SI ENERGIA</label>
+    </customValue>
+    <description>Società o trader esterno venditrice del contratto</description>
+    <masterLabel>Trader</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
