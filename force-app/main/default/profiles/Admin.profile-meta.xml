@@ -17455,7 +17455,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.GreenEnergyOption__c</field>
         <readable>true</readable>
