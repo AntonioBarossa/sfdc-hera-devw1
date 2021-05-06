@@ -51,7 +51,7 @@ export default class hdtSaleVas extends LightningElement {
     radioGroupOptions = [
         // {'label': 'Ordini in corso', 'value': 'Ordini in corso'},
         // {'label': 'Contratti Attivi', 'value': 'Contratti Attivi'},
-        {'label': 'Contratto attivo/ordine in corso', 'value': 'Contratto attivo/ordine in corso'},
+        {'label': 'Contratto attivo/ordine in corso (solo per fatturazione)', 'value': 'Contratto attivo/ordine in corso'},
         {'label': 'Senza contratto', 'value': 'VAS stand alone'}
     ];
 
