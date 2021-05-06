@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>A.R.E.R.A</fullName>
+        <default>false</default>
+        <label>A.R.E.R.A</label>
+    </customValue>
+    <customValue>
+        <fullName>Arera Ranton</fullName>
+        <default>false</default>
+        <label>Arera Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Delibera 153/12</fullName>
+        <default>false</default>
+        <label>Delibera 153/12</label>
+    </customValue>
+    <customValue>
+        <fullName>Energia Serena</fullName>
+        <default>false</default>
+        <label>Energia Serena</label>
+    </customValue>
+    <customValue>
+        <fullName>Giorno Hera</fullName>
+        <default>false</default>
+        <label>Giorno Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Giorno Hera Hcp Lucca</fullName>
+        <default>false</default>
+        <label>Giorno Hera Hcp Lucca</label>
+    </customValue>
+    <customValue>
+        <fullName>Hello Hera</fullName>
+        <default>false</default>
+        <label>Hello Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Hello Ranton</fullName>
+        <default>false</default>
+        <label>Hello Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Bebe&apos;</fullName>
+        <default>false</default>
+        <label>Hera Bebe&apos;</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Etapiu</fullName>
+        <default>false</default>
+        <label>Hera Etapiu</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Impronta Zero</fullName>
+        <default>false</default>
+        <label>Hera Impronta Zero</label>
+    </customValue>
+    <customValue>
+        <fullName>Hera Welfare</fullName>
+        <default>false</default>
+        <label>Hera Welfare</label>
+    </customValue>
+    <customValue>
+        <fullName>Indicizzato Ranton</fullName>
+        <default>false</default>
+        <label>Indicizzato Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Mercato Libero Cmv</fullName>
+        <default>false</default>
+        <label>Mercato Libero Cmv</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuova Idea</fullName>
+        <default>false</default>
+        <label>Nuova Idea</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuova Idea Ranton</fullName>
+        <default>false</default>
+        <label>Nuova Idea Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuova Idea Tlr</fullName>
+        <default>false</default>
+        <label>Nuova Idea Tlr</label>
+    </customValue>
+    <customValue>
+        <fullName>Offerta Gas Ranton</fullName>
+        <default>false</default>
+        <label>Offerta Gas Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Placet</fullName>
+        <default>false</default>
+        <label>Placet</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Fisso</fullName>
+        <default>false</default>
+        <label>Prezzo Fisso</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Fisso Leggero</fullName>
+        <default>false</default>
+        <label>Prezzo Fisso Leggero</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Fisso Ranton</fullName>
+        <default>false</default>
+        <label>Prezzo Fisso Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Fisso Tlr</fullName>
+        <default>false</default>
+        <label>Prezzo Fisso Tlr</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Indicizzato Ranton</fullName>
+        <default>false</default>
+        <label>Prezzo Indicizzato Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Netto</fullName>
+        <default>false</default>
+        <label>Prezzo Netto</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Netto Amga</fullName>
+        <default>false</default>
+        <label>Prezzo Netto Amga</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Netto Comunita Solare</fullName>
+        <default>false</default>
+        <label>Prezzo Netto Comunita Solare</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Netto Ranton</fullName>
+        <default>false</default>
+        <label>Prezzo Netto Ranton</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Netto Tlr</fullName>
+        <default>false</default>
+        <label>Prezzo Netto Tlr</label>
+    </customValue>
+    <customValue>
+        <fullName>Prezzo Sicurezza</fullName>
+        <default>false</default>
+        <label>Prezzo Sicurezza</label>
+    </customValue>
+    <customValue>
+        <fullName>Regolamentato Hcm</fullName>
+        <default>false</default>
+        <label>Regolamentato Hcm</label>
+    </customValue>
+    <customValue>
+        <fullName>Simply Hera</fullName>
+        <default>false</default>
+        <label>Simply Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Start Up</fullName>
+        <default>false</default>
+        <label>Start Up</label>
+    </customValue>
+    <customValue>
+        <fullName>Teleriscaldamento</fullName>
+        <default>false</default>
+        <label>Teleriscaldamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Tutela Simile</fullName>
+        <default>false</default>
+        <label>Tutela Simile</label>
+    </customValue>
+    <customValue>
+        <fullName>Welcome Hera</fullName>
+        <default>false</default>
+        <label>Welcome Hera</label>
+    </customValue>
+    <customValue>
+        <fullName>Altro</fullName>
+        <default>false</default>
+        <label>Altro</label>
+    </customValue>
+    <description>Elenco famiglia categorie offerte.</description>
+    <masterLabel>Categoria Famiglia</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
