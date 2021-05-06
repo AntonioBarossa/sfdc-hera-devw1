@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Modifiche Anagraf. - Allineamento Anag.</label>
+    <protected>false</protected>
+    <values>
+        <field>FieldsJSON__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">Allineamento Anagrafica</value>
+    </values>
+    <values>
+        <field>ReadOnlyFields__c</field>
+        <value xsi:type="xsd:string">[
+    {
+        &quot;FieldName&quot; : &quot;AccountId&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingStreetToponym__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingStreetNumber__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingPlace__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingStreetName__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingPostalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingCountry__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;BillingCityCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyStreetToponym__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyProvince__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyStreetNumber__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyPlace__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyStreetName__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyPostalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyCountry__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;SupplyCityCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingStreetToponym__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingProvince__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingStreetNumber__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingPlace__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingStreetName__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingPostalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingCountry__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;InvoicingCityCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;VATPayment__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;VATPercentage__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Excises__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;RegionalAdditional__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;AtecoCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;MarketTypeCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;DistributorNote__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Disconnectable__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;OfficeSubjectCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;SalesCompanyCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;DistributorCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;FirstName__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;LastName__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;FiscalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;VatNumber__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Resident__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    }
+]</value>
+    </values>
+    <values>
+        <field>ValidateClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
