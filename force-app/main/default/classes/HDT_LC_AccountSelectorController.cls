@@ -114,7 +114,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static void handleLead(String leadId, String activityId){
 		try {
-			updateActivity(activityId, null, null, leadId)
+			updateActivity(activityId, null, null, leadId);
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
