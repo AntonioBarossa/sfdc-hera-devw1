@@ -45,12 +45,12 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
-	public static Map<String, List<SObject>> getLeadsAndContacts(String queryString) {
+	public static String getLeadsAndContacts(String queryString) {
 		try {
-			return new Map<String, List<SObject>>{
-				'leads' => getLeads(queryString),
-				'contacts' => getContacts(queryString)
-			};
+			HDT_UTL_Struct result = new HDT_UTL_Struct();
+			result.leads = getLeads(queryString);
+			result.contacts = getContacts(queryString);
+			return JSON.serialize(result);
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}

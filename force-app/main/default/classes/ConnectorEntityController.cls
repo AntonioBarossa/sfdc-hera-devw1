@@ -16,7 +16,6 @@ global with sharing class ConnectorEntityController {
 			RecordType recordType = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_Call'];
 			activity.RecordTypeId = recordType.Id;
 			activity.wrts_prcgvr__Status__c = 'In Progress';
-			activity.ActivityStartTime__c = DateTime.now();
 			activity.CallStartTime__c = DateTime.now();
 			activity.ConnectionID__c = (String) message.get('ConnectionID');
 			activity.BPCode__c = (String) attachdata.get('ivr_CODICE_CLIENTE');
@@ -79,7 +78,6 @@ global with sharing class ConnectorEntityController {
 				wrts_prcgvr__Status__c = 'Completed',
 				ActivityEndTime__c = Datetime.now(),
 				CallEndTime__c = Datetime.now(),
-				ActivityDuration__c = (Decimal) message.get('Duration'),
 				CallDuration__c = (Decimal) message.get('Duration'),
 				WaitingTime__c = 0 // WIP
 			);
