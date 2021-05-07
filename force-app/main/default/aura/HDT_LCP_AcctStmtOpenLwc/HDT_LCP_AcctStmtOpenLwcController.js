@@ -11,7 +11,7 @@
 
     openmodal: function(component,event,helper) {
         console.log('>>> we have to open a modal');
-        console.log('>>> EVENT FROM LWC > ' + JSON.stringify(event));
+        //console.log('>>> EVENT FROM LWC > ' + JSON.stringify(event));
 
         var auraFlow = event.getParam('auraFlow');
 

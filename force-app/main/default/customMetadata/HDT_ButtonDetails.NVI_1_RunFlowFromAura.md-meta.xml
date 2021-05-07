@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ButtonCode__c</field>
-        <value xsi:type="xsd:string">trackInformation</value>
+        <value xsi:type="xsd:string">runFlowFromAura</value>
     </values>
     <values>
         <field>ButtonLevel__c</field>
@@ -24,7 +24,12 @@
     </values>
     <values>
         <field>Parameters__c</field>
-        <value xsi:type="xsd:string">NoteVarIva</value>
+        <value xsi:type="xsd:string">{
+&quot;context&quot;: &quot;NoteVarIva&quot;,
+&quot;processType&quot;: &quot;Informative&quot;,
+&quot;recordTypeName&quot;: &quot;HDT_RT_Informative&quot;,
+&quot;flowName&quot;: &quot;HDT_FL_PostSalesMasterDispatch&quot;
+}</value>
     </values>
     <values>
         <field>Tab__c</field>

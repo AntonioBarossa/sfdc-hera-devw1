@@ -31,7 +31,7 @@
         
         <div if:true={isOrderListVisible} class="slds-grid slds-m-top_large">
             <div if:true={showEmptyOrdersMessage} class="slds-size_1-of-1">
-                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno ordini attivi</div>
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sono ordini attivi</div>
             </div>
             <div if:false={showEmptyOrdersMessage} class="slds-size_1-of-1">
                 <lightning-datatable
@@ -47,7 +47,7 @@
     
         <div if:true={isContractsListVisible} class="slds-grid slds-m-top_large">
             <div if:true={showEmptyContractsMessage} class="slds-size_1-of-1">
-                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno contratti attivi</div>
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sono contratti attivi</div>
             </div>
             <div if:false={showEmptyContractsMessage} class="slds-size_1-of-1">
                 <lightning-datatable
@@ -62,7 +62,7 @@
 
         <div if:true={isCompleteListVisible} class="slds-grid slds-m-top_large">
             <div if:true={showEmptyMessage} class="slds-size_1-of-1">
-                <div class="slds-align_absolute-center" style="height:5rem">Non ci sonno contratti attivi/ordini in corso</div>
+                <div class="slds-align_absolute-center" style="height:5rem">Non ci sono contratti attivi/ordini in corso</div>
             </div>
             <div if:false={showEmptyMessage} class="slds-size_1-of-1">
                 <lightning-datatable
