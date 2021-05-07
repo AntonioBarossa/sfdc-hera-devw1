@@ -2286,6 +2286,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>BillingProfile__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BillingProfile__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2587,6 +2592,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Campaign.CodeConventionQuantity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Campaign.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3902,6 +3912,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7281,6 +7296,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentalActivity__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentalActivity__c.EnvelopeId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -8651,6 +8671,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Individual.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Individual.ConsumerCreditScore</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9587,6 +9612,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Opportunity.CampaignId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13267,6 +13297,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>PushTracking__c.CaseID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PushTracking__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22926,6 +22961,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SMSTracking__c.CompanyOwner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SMSTracking__c.ContactID__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -23152,6 +23192,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Sale__c.Channel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24591,7 +24636,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>User.Job__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>User.LoginChannel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.UserCompany__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25312,6 +25367,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>et4ae5__IndividualEmailResult__c.CaseID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>et4ae5__IndividualEmailResult__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
