@@ -16,13 +16,13 @@ public with sharing class HDT_LC_MassiveLoader {
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 23/03/2021
-    * @description HDT_LC_MassiveLoader.getCSVBody(String selectedProcessName) – Get body of the Static Resource for the specified name
+    * @description HDT_LC_MassiveLoader.getCsvBody(String selectedProcessName) – Get body of the Static Resource for the specified name
     * @param selectedProcessName name of the process selected by the user for the export
     * @return Map containig the body and/or potential errors
     */
 
     @AuraEnabled
-    public static Map<String, Object> getCSVBody(String selectedProcessName) {
+    public static Map<String, Object> getCsvBody(String selectedProcessName) {
 
         Map<String, Object> response = new Map<String, Object>();
         
@@ -32,12 +32,12 @@ public with sharing class HDT_LC_MassiveLoader {
 
             if (!staticResources.isEmpty()) {
 
-                String urlCSVResource = '/resource/'
+                String urlCsvResource = '/resource/'
                                            + staticResources.get(0).SystemModStamp.getTime()
                                            + '/' 
                                            + staticResources.get(0).Name;
                 
-                response.put('urlCSVResource', urlCSVResource);
+                response.put('urlCSVResource', urlCsvResource);
                 response.put('error', false);
 
             } else {
@@ -147,7 +147,7 @@ public with sharing class HDT_LC_MassiveLoader {
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 30/03/2021
-    * @description HDT_LC_MassiveLoader.checkCSV() – Check file uploaded by the user
+    * @description HDT_LC_MassiveLoader.checkCsv() – Check file uploaded by the user
     * @param fileName the Name of the file as it was uploaded
     * @param contentVersionId the Id of the content version givven by the file uploader
     * @param selectedProcess the process which the user intendet to upload
@@ -155,7 +155,7 @@ public with sharing class HDT_LC_MassiveLoader {
     */
 
     @AuraEnabled
-    public static Map<String, Object> checkCSV(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
+    public static Map<String, Object> checkCsv(String fileName, String contentVersionId, String selectedProcessName, String massiveLoaderRequestId){
 
         Map<String, Object> response = new Map<String, Object>();
 
@@ -250,9 +250,10 @@ public with sharing class HDT_LC_MassiveLoader {
     /**​
     * @author Andrei Necsulescu (andrei.necsulescu@webresults.it)​
     * @date 30/03/2021
-    * @description HDT_LC_MassiveLoader.checkCSV() – Check file uploaded by the user
+    * @description HDT_LC_MassiveLoader.updateMassiveLoaderRequest() – updates request if the user changes process type
     * @param massiveLoaderRequestId Id of the Massive Loader Request to update
-    * @return Map containig confirmation of the file correctness or an error
+    * @param selectedProcessName New process name selected by user
+    * @return Map containig the result of the update
     */
 
     @AuraEnabled
