@@ -44,13 +44,13 @@ export default class HdtGestionePrivacyField extends NavigationMixin(LightningEl
         let ProfilingPrivacy = this.template.querySelector('[data-id="ProfilingPrivacy"]').value;
         let PrivacyProfilingChoiceSource =this.template.querySelector('[data-id="PrivacyProfilingChoiceSource"]').value;
         let ProfilingCompanyConsent= this.template.querySelector('[data-id="ProfilingCompanyConsent"]').value;
-        let ProfilingConsentInitiative= this.template.querySelector('[data-id="ProfilingConsentInitiative"]').value;
+        let PrivacyProfilingConsentInitiative= this.template.querySelector('[data-id="PrivacyProfilingConsentInitiative"]').value;
         let ThirdPartyPrivacy= this.template.querySelector('[data-id="ThirdPartyPrivacy"]').value;
-        let DataThirdPartiesConsentSource= this.template.querySelector('[data-id="DataThirdPartiesConsentSource"]').value;
+        let PrivacyThirdPartyChoiceSource= this.template.querySelector('[data-id="PrivacyThirdPartyChoiceSource"]').value;
         let ThirdPartyCompanyConsent= this.template.querySelector('[data-id="ThirdPartyCompanyConsent"]').value;
         let PrivacyThirdPartyConsentInitiative= this.template.querySelector('[data-id="PrivacyThirdPartyConsentInitiative"]').value;
         let MarketingCompanyConsent= this.template.querySelector('[data-id="MarketingCompanyConsent"]').value;
-        let MarketingConsentInitiative= this.template.querySelector('[data-id="MarketingConsentInitiative"]').value;
+        let PrivacyMarketingConsentInitiative= this.template.querySelector('[data-id="PrivacyMarketingConsentInitiative"]').value;
 
         if(!MarketingPrivacy.reportValidity()){
             isValidated=false;
@@ -72,7 +72,7 @@ export default class HdtGestionePrivacyField extends NavigationMixin(LightningEl
             isValidated=false;
         }
 
-        if(!ProfilingConsentInitiative.reportValidity()){
+        if(!PrivacyProfilingConsentInitiative.reportValidity()){
             isValidated=false;
         }
 
@@ -80,7 +80,7 @@ export default class HdtGestionePrivacyField extends NavigationMixin(LightningEl
             isValidated=false;
         }
 
-        if(!DataThirdPartiesConsentSource.reportValidity()){
+        if(!PrivacyThirdPartyChoiceSource.reportValidity()){
             isValidated=false;
         }
 
@@ -96,7 +96,7 @@ export default class HdtGestionePrivacyField extends NavigationMixin(LightningEl
             isValidated=false;
         }
 
-        if(!MarketingConsentInitiative.reportValidity()){
+        if(!PrivacyMarketingConsentInitiative.reportValidity()){
             isValidated=false;
         }
 
@@ -104,13 +104,13 @@ export default class HdtGestionePrivacyField extends NavigationMixin(LightningEl
             "MarketingPrivacy": MarketingPrivacy.value,
             "PrivacyMarketingChoiceSource": PrivacyMarketingChoiceSource.value,
             "MarketingCompanyConsent": MarketingCompanyConsent.value,
-            "MarketingConsentInitiative": MarketingConsentInitiative.value,
+            "PrivacyMarketingConsentInitiative": PrivacyMarketingConsentInitiative.value,
             "ProfilingPrivacy" : ProfilingPrivacy.value,
             "PrivacyProfilingChoiceSource": PrivacyProfilingChoiceSource.value,
             "ProfilingCompanyConsent": ProfilingCompanyConsent.value,
-            "ProfilingConsentInitiative" : ProfilingConsentInitiative.value,
+            "PrivacyProfilingConsentInitiative" : PrivacyProfilingConsentInitiative.value,
             "ThirdPartyPrivacy" : ThirdPartyPrivacy.value,
-            "DataThirdPartiesConsentSource" : DataThirdPartiesConsentSource.value,
+            "PrivacyThirdPartyChoiceSource" : PrivacyThirdPartyChoiceSource.value,
             "ThirdPartyCompanyConsent" : ThirdPartyCompanyConsent.value,
             "PrivacyThirdPartyConsentInitiative" : PrivacyThirdPartyConsentInitiative.value
             
