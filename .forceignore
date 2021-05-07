@@ -11,7 +11,7 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
-**applications/Hera_Service_Console*
+**applications/**
 **dashboards/trailheadapp__Trailhead_Dashboards
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
