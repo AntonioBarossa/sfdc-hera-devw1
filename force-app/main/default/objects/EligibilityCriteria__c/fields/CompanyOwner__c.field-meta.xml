@@ -8,8 +8,29 @@
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>CompanyOwnerOperator__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CompanyOwner</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAA-EBT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>HERA COMM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Reseller</valueName>
+        </valueSettings>
     </valueSet>
     <visibleLines>4</visibleLines>
 </CustomField>
