@@ -4,6 +4,8 @@ global inherited sharing class HDT_WS_ReminderBlock implements wrts_prcgvr.Inter
 
     global Object execute(Object args){
 
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
@@ -41,20 +43,20 @@ global inherited sharing class HDT_WS_ReminderBlock implements wrts_prcgvr.Inter
 
             switch on response.getStatusCode(){
 
-                when 500{
-
-                    HDT_WRP_ErrorResponse errorResponse = 
-                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
-
-                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
-
-                }
                 when 200{
 
                     HDT_WRP_SuccessResponse successResponse = 
                         (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
 
                     System.debug('WS_ReminderBlock successResponse--> ' + successResponse);
+
+                }
+                when else{
+
+                    HDT_WRP_ErrorResponse errorResponse = 
+                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
+
+                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
 
                 }
 
@@ -64,7 +66,7 @@ global inherited sharing class HDT_WS_ReminderBlock implements wrts_prcgvr.Inter
 
         }
 
-        return response;
+        return responseReturn;
     }
 
 

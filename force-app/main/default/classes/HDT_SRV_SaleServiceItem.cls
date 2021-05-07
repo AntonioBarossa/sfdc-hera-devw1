@@ -104,6 +104,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             groupLoginString = String.join(groupLoginList, ',');
         } else if (loginGroupItemList.size() == 1) {
             groupLoginString = loginGroupItemList[0].LoginGroup__r.NameGroup__c;
+        } else {
+            groupLoginString = '';
         }
         //End group login logic
 
