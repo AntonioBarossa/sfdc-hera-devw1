@@ -4,12 +4,13 @@
         <name>Check_Documenti</name>
         <label>Check Documenti</label>
         <locationX>182</locationX>
-        <locationY>1334</locationY>
+        <locationY>1214</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Fase_Da_Inviare</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>beneficiary</name>
             <value>
@@ -46,6 +47,7 @@
         <connector>
             <targetReference>Fase_Da_Inviare_0</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>beneficiary</name>
             <value>
@@ -82,6 +84,7 @@
         <connector>
             <targetReference>Fase_Da_Inviare_0_0</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>beneficiary</name>
             <value>
@@ -118,6 +121,7 @@
         <connector>
             <targetReference>EsitoChecks</targetReference>
         </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
             <name>customerCode</name>
             <value>
@@ -142,6 +146,7 @@
         <connector>
             <targetReference>Validate_Iban_OK</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>iban</name>
             <value>
@@ -335,7 +340,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -379,7 +384,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -423,7 +428,7 @@
         <name>AssegnaValori_00_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1694</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -453,7 +458,7 @@
         <name>AssegnaValori_00_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1574</locationY>
+        <locationY>1454</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -658,7 +663,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Documentale_0</targetReference>
+                <targetReference>Quale_Beneficiario</targetReference>
             </connector>
             <label>Assegno</label>
         </rules>
@@ -867,7 +872,7 @@
         <name>Fase_Da_Inviare</name>
         <label>Fase Da Inviare?</label>
         <locationX>182</locationX>
-        <locationY>1454</locationY>
+        <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_00_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1026,7 +1031,7 @@
         <name>Quale_Beneficiario</name>
         <label>Quale Beneficiario?</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0</targetReference>
         </defaultConnector>
@@ -1092,7 +1097,7 @@
                 <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1327,7 +1332,7 @@
         <name>GetCodiceCausale_0</name>
         <label>GetCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationY>1454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori_00_0_0_0</targetReference>
@@ -1453,7 +1458,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>1694</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1463,7 +1468,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>314</locationX>
-        <locationY>1694</locationY>
+        <locationY>1574</locationY>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1514,7 +1519,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>1934</locationY>
+        <locationY>1814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1534,6 +1539,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1564,6 +1570,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1594,6 +1601,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1632,44 +1640,7 @@
                     <elementReference>CaseInput.Type</elementReference>
                 </value>
             </inputParameters>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Screen_Documentale_0</name>
-        <label>Screen Documentale</label>
-        <locationX>182</locationX>
-        <locationY>878</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Quale_Beneficiario</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayTextDocumentSignature_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtDocumentSignature_0</name>
-            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>CaseInput.Type</elementReference>
-                </value>
-            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1708,6 +1679,7 @@
                     <elementReference>CaseInput.Type</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1788,6 +1760,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1891,6 +1864,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1959,6 +1933,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2051,6 +2026,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2128,6 +2104,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2248,6 +2225,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2331,6 +2309,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -2390,6 +2369,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>

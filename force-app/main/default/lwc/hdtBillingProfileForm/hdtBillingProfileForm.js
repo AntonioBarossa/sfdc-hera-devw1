@@ -189,51 +189,72 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (event.target.fieldName === 'LegalAgent__c') {
-            getLegalAccount({contactId: event.target.value}).then(data =>{
-                this.loading = false;
 
+            console.log('legale rapresentante: ', event.target.value);
+
+            if(event.target.value != '') {
+                getLegalAccount({contactId: event.target.value}).then(data =>{
+                    this.loading = false;
+    
+                    this.setTipologiaIntestatario({
+                        fiscalCode: data.FiscalCode__c,
+                        firstName: data.FirstName,
+                        lastName: data.LastName
+                    });
+    
+                }).catch(error => {
+                    this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: error.body.message,
+                        message: 'Error',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                    console.log('Errore - handleCollectFieldsData: ', error.body.message);
+                });
+            } else {
                 this.setTipologiaIntestatario({
-                    fiscalCode: data.FiscalCode__c,
-                    firstName: data.FirstName,
-                    lastName: data.LastName
+                    fiscalCode: '',
+                    firstName: '',
+                    lastName: ''
                 });
+            }
 
-            }).catch(error => {
-                this.loading = false;
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Errore',
-                    message: error.body.message,
-                    message: 'Error',
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-                this.dispatchEvent(toastErrorMessage);
-                console.log('Errore - handleCollectFieldsData: ', error.body.message);
-            });
         }
 
         if (event.target.fieldName === 'OtherPayer__c') {
-            getAccountOwnerInfo({accountId: event.target.value}).then(data =>{
-                this.loading = false;
 
+            if(event.target.value != '') {
+                getAccountOwnerInfo({accountId: event.target.value}).then(data =>{
+                    this.loading = false;
+    
+                    this.setTipologiaIntestatario({
+                        fiscalCode: data.FiscalCode__c,
+                        firstName: data.FirstName__c,
+                        lastName: data.LastName__c
+                    });
+    
+                }).catch(error => {
+                    this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        // message: error.body.message,
+                        message: 'Error',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                    // console.log('Errore: ',error.body.message);
+                });
+            } else {
                 this.setTipologiaIntestatario({
-                    fiscalCode: data.FiscalCode__c,
-                    firstName: data.FirstName__c,
-                    lastName: data.LastName__c
+                    fiscalCode: '',
+                    firstName: '',
+                    lastName: ''
                 });
-
-            }).catch(error => {
-                this.loading = false;
-                const toastErrorMessage = new ShowToastEvent({
-                    title: 'Errore',
-                    // message: error.body.message,
-                    message: 'Error',
-                    variant: 'error',
-                    mode: 'sticky'
-                });
-                this.dispatchEvent(toastErrorMessage);
-                // console.log('Errore: ',error.body.message);
-            });
+            }
         }
 
         if (event.target.fieldName === 'BillSendingMethod__c') {
