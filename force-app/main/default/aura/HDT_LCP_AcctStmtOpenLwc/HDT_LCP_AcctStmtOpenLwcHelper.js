@@ -43,15 +43,21 @@
 
     openSubTab: function(component, event, helper) {
 
-        var context = event.getParam('context');
+        //var context = event.getParam('context');
+        var parameters = event.getParam('parameters');
+        console.log('>>> PARAMETERS: ' + parameters);
+        var paramObj = JSON.parse(parameters);
+
         var accId = event.getParam('accId');
         var catalogId = event.getParam('catalogId');
-        var auraFlow = event.getParam('auraFlow');
+
         console.log('>>>>>>>> on AURA cmp');
-        console.log('>>> context: ' + context);
         console.log('>>> accId: ' + accId);
+        console.log('>>> context: ' + paramObj.context);
         console.log('>>> catalogId: ' + catalogId);
-        console.log('>>> auraFlow: ' + auraFlow);
+        console.log('>>> processType: ' + paramObj.processType);
+        console.log('>>> recordTypeName: ' + paramObj.recordTypeName);
+        console.log('>>> flowName: ' + paramObj.flowName);
 
         //var accountId = component.get("v.recordId");
         var workspaceAPI = component.find("workspace");
@@ -68,11 +74,11 @@
                     },
                     state: {
                         c__accid: accId,
-                        c__context: context,
+                        c__context: paramObj.context,
                         c__catalogId: catalogId,
-                        c__processType: 'Informative',
-                        c__recordTypeName: 'HDT_RT_Informative',
-                        c__flowName: 'HDT_FL_PostSalesMasterDispatch',
+                        c__processType: paramObj.processType,
+                        c__recordTypeName: paramObj.recordTypeName,
+                        c__flowName: paramObj.flowName,
                         c__createDocuments: true
                     }
                 }
