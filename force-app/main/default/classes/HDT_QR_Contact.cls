@@ -6,6 +6,9 @@ public inherited sharing class HDT_QR_Contact {
             SELECT
             FirstName,
             LastName,
+            MobilePhone,
+            Phone,
+            Email,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
