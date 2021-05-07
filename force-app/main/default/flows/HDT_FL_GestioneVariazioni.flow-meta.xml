@@ -834,56 +834,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Annullamento_o_Conferma</name>
-        <label>Annullamento o Conferma?</label>
-        <locationX>2733</locationX>
-        <locationY>1203</locationY>
-        <defaultConnector>
-            <targetReference>Annulla_Prestazione</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
-        <rules>
-            <name>Conferma_00</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtBillDeliveryChooser.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>GetCaseAggiornato_0_0_0_0</targetReference>
-            </connector>
-            <label>Conferma</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Annullare</name>
-        <label>Annullare?</label>
-        <locationX>5090</locationX>
-        <locationY>943</locationY>
-        <defaultConnector>
-            <targetReference>AssegnaModalit_Invio</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Conferma</defaultConnectorLabel>
-        <rules>
-            <name>Annullare_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtBillDeliveryChooser_0.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</targetReference>
-            </connector>
-            <label>Annullare</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
         <locationX>5110</locationX>
@@ -1291,8 +1241,8 @@
     <decisions>
         <name>OutcomeForm_0_0_0_0_0</name>
         <label>OutcomeForm</label>
-        <locationX>2251</locationX>
-        <locationY>1424</locationY>
+        <locationX>2246</locationX>
+        <locationY>1428</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annullata_0_0_0_0_0</name>
@@ -1741,7 +1691,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei processi del Cluster Variazioni
---&gt; Inserito seleziona documenti</description>
+--&gt; Inserito screen indirizzi corretto</description>
     <formulas>
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
@@ -2670,7 +2620,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullamento_o_Conferma</targetReference>
+            <targetReference>GetCaseAggiornato_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeadert_Address</name>
@@ -2678,19 +2628,25 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtBillDeliveryChooser</name>
-            <extensionName>c:hdtBillDeliveryChooser</extensionName>
+            <name>hdtGenericAddressChooser</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>accountId</name>
                 <value>
-                    <elementReference>GetInputCase.AccountId</elementReference>
+                    <elementReference>GetInputCase.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>caseId</name>
+                <name>recordId</name>
                 <value>
                     <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>ServicePoint</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -2703,13 +2659,13 @@
     <screens>
         <name>Screen_Selezione_Indirizzo_0</name>
         <label>Screen Selezione Indirizzo</label>
-        <locationX>5090</locationX>
-        <locationY>823</locationY>
+        <locationX>5093</locationX>
+        <locationY>863</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Annullare</targetReference>
+            <targetReference>AssegnaModalit_Invio</targetReference>
         </connector>
         <fields>
             <name>DisplayHeadert_Address_0</name>
@@ -2717,19 +2673,31 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtBillDeliveryChooser_0</name>
-            <extensionName>c:hdtBillDeliveryChooser</extensionName>
+            <name>hdtGenericAddressChooser_0</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>accountId</name>
                 <value>
-                    <elementReference>GetInputCase.AccountId</elementReference>
+                    <elementReference>GetInputCase.Account.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>caseId</name>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
                 <value>
                     <elementReference>GetInputCase.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -4059,26 +4027,7 @@
             <targetReference>GetInputCase</targetReference>
         </connector>
     </start>
-    <status>Active</status>
-    <subflows>
-        <name>Annulla_Prestazione</name>
-        <label>Annulla Prestazione</label>
-        <locationX>2865</locationX>
-        <locationY>1323</locationY>
-        <flowName>HDT_FL_GestioneAnnullamento</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>GetInputCase.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ProcessType</name>
-            <value>
-                <stringValue>Annulla prestazione</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
@@ -4236,25 +4185,6 @@
         <label>Annulla Prestazione</label>
         <locationX>5024</locationX>
         <locationY>2095</locationY>
-        <flowName>HDT_FL_GestioneAnnullamento</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>GetInputCase.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ProcessType</name>
-            <value>
-                <stringValue>Annulla prestazione</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0_0</name>
-        <label>Annulla Prestazione</label>
-        <locationX>4958</locationX>
-        <locationY>1063</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
