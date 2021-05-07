@@ -16,6 +16,8 @@ class Util {
 				console.log("### iwsutil.createActivity() | ACTIVITY CREATED!");
 				if(resultObj.accountId && resultObj.contactId) {
 					this.screenpop(resultObj.accountId);
+				} else if(resultObj.leadId) {
+					this.screenpop(resultObj.leadId);
 				} else {
 					this.screenpop(resultObj.activityId);
 				}

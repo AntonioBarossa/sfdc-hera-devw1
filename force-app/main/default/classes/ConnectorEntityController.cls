@@ -40,23 +40,30 @@ global with sharing class ConnectorEntityController {
 				activity.ParentActivity__c = a.Id;
 			}
 
-			List<Contact> contacts = [SELECT Id, AccountId FROM Contact WHERE Phone =: activity.ClientNumber__c OR MobilePhone =: activity.ClientNumber__c];
-			if(contacts.size() == 1) {
-				Contact contact = contacts[0];
-				activity.Contact__c = contact.Id;
-				result.put('contactId', contact.Id);
-				List<AccountContactRelation> relations = [SELECT Id FROM AccountContactRelation WHERE ContactId =: contact.Id];
-				if(relations.size() == 1) {
-					activity.Account__c = contact.AccountId;
-					result.put('accountId', contact.AccountId);
-				}
-			}
+			// ACCOUNT/CONTACT/LEAD SELECTION NOW FLOW-HANDLED
+			// List<Contact> contacts = [SELECT Id, AccountId FROM Contact WHERE Phone =: activity.ClientNumber__c OR MobilePhone =: activity.ClientNumber__c];
+			// if(contacts.size() == 1) {
+			// 	Contact contact = contacts[0];
+			// 	activity.Contact__c = contact.Id;
+			// 	result.put('contactId', contact.Id);
+			// 	List<AccountContactRelation> relations = [SELECT Id FROM AccountContactRelation WHERE ContactId =: contact.Id];
+			// 	if(relations.size() == 1) {
+			// 		activity.Account__c = contact.AccountId;
+			// 		result.put('accountId', contact.AccountId);
+			// 	}
+			// }
 
 			insert activity;
+
+			activity = [SELECT Id, Account__c, Contact__c, Lead__c FROM wrts_prcgvr__Activity__c WHERE Id =: activity.Id];
+
+			result.put('activityId', activity.Id);
+			result.put('accountId', activity.Account__c);
+			result.put('contactId', activity.Id);
+			result.put('leadId', activity.Lead__c);
 		} catch (Exception e) {
 			return 'ERROR: ' + e.getMessage();
 		}
-		result.put('activityId', activity.Id);
 		
 		return JSON.serialize(result);
 	}
