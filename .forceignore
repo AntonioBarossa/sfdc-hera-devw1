@@ -11,7 +11,6 @@ package.xml
 
 # LWC Jest
 **/__tests__/**
-**applications/**
 **dashboards/trailheadapp__Trailhead_Dashboards
 **dashboards/Sales_and_Marketing_Dashboards
 **settings
