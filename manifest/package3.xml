@@ -1,95 +1,133 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Case.HDT_RT_Disattivazioni</members>
-        <name>RecordType</name>
+        <members>LoginGroup__c</members>
+        <members>Product2</members>
+        <members>Sale__c</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Case-HDT_Domiciliazione</members>
-        <members>Case-HDT_PagamentiAltriProcessi</members>
-        <members>Case-HDT_PianoRateizzazione</members>
-        <members>Case-HDT_Rimborso</members>
-        <name>Layout</name>
+        <members>LoginGroup__c</members>
+        <name>CustomTab</name>
     </types>
     <types>
-        <members>HDT_LC_AccountStatementController</members>
-        <members>HDT_LC_ContactSelection</members>
-        <members>HDT_QR_AccountContactRelation</members>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_QR_InstallmentPlans</members>
-        <members>HDT_QR_Paperless</members>
-        <members>HDT_QR_PaymentCommunication</members>
-        <members>HDT_SRV_AccountInstallmentsCheck</members>
-        <members>HDT_SRV_InstallmentPlans</members>
-        <members>HDT_SRV_Paperless</members>
-        <members>HDT_SRV_PaymentCommunication</members>
-        <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_InstallmentPlans</members>
-        <members>HDT_WS_InstallmentPlans</members>
-        <members>HDT_WS_Paperless</members>
-        <members>HDT_WS_PaymentCommunication</members>
-        <name>ApexClass</name>
+        <members>Municipalities</members>
+        <name>StaticResource</name>
     </types>
     <types>
-        <members>HDT_TabConfiguration__mdt.SecondLevelAPI_Name__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>hdtAccountStatementDetailViewer</members>
-        <members>hdtBillDeliveryChooser</members>
-        <members>hdtContactSelection</members>
-        <members>hdtContactSelectionFlow</members>
-        <members>hdtSpinnerFlow</members>
+        <members>hdtApplyBillingProfileModal</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtCreateNewEligibilityCriteria</members>
+        <members>hdtEligibilityCriteriaConfiguration</members>
+        <members>hdtEligibilityCriteriaParameters</members>
+        <members>hdtEligibilityCriteriaViewForm</members>
+        <members>hdtGestionePrivacyField</members>
+        <members>hdtSaleVas</members>
+        <members>hdtSearchEligibilityCriteria</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_QUE_Creati_Srl</members>
-        <members>HDT_QUE_DataCompany</members>
-        <members>HDT_QUE_Global</members>
-        <members>HDT_QUE_MasSrl</members>
-        <members>HDT_QUE_SeeProgressum</members>
-        <name>Queue</name>
+        <members>Admin</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <name>Profile</name>
     </types>
     <types>
-        <members>HDT_ButtonDetails.EC1_1_visualbolletta</members>
-        <members>HDT_ButtonDetails.EC4_2_visualbolletta</members>
-        <members>HDT_ButtonDetails.EC5_2_visualRate</members>
-        <members>HDT_ButtonDetails.EC5_2_visualbolletta</members>
-        <members>HDT_ButtonDetails.EC6_2_visualRate</members>
-        <members>HDT_ButtonDetails.EC6_2_visualbolletta</members>
-        <members>HDT_ButtonDetails.EC9_2_visualbolletta</members>
-        <members>HDT_ButtonDetails.EC_2_visualRate</members>
-        <members>HDT_TabConfiguration.EC4</members>
-        <members>HDT_TabConfiguration.EC5</members>
-        <members>HDT_TabConfiguration.EC6</members>
-        <members>HDT_TabConfiguration.EC7</members>
-        <members>HDT_TabConfiguration.EC8</members>
-        <members>HDT_TabConfiguration.EC9</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Altri_Motivi_Richiesta</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Chiusura_Contatore</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Rifiuto_Voltura</members>
-        <members>HDT_UserInputFlow.Pagamenti_Contenzioso_in_Corso</members>
-        <members>HDT_UserInputFlow.Pagamenti_Piano_Rateizzazione</members>
-        <members>HDT_UserInputFlow.Pagamenti_Storno_Rateizzazione</members>
-        <name>CustomMetadata</name>
+        <members>SBQQ__ProductOption__c.Bonus_EE</members>
+        <members>SBQQ__ProductOption__c.Bonus_Gas</members>
+        <members>SBQQ__ProductOption__c.VAS_Fatturabili</members>
+        <members>SBQQ__QuoteLine__c.SBQQ__LineEditor</members>
+        <members>SBQQ__QuoteLine__c.SBQQ__StandardLineItemDrawer</members>
+        <name>FieldSet</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneDisattivazioni</members>
-        <members>HDT_FL_GestionePagamenti</members>
-        <members>HDT_FL_GestionePagamenti_PianoRateizzazione</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
-        <name>Flow</name>
+        <members>LoginGroup__c.All</members>
+        <name>ListView</name>
     </types>
     <types>
-        <members>HDT_InstallmentPlans</members>
-        <members>HDT_Paperless</members>
-        <members>HDT_PaymentCommunication</members>
-        <name>NamedCredential</name>
+        <members>Asset.HDT_RT_CompositionVASproductsnotbillable</members>
+        <members>Asset.HDT_RT_SectionBonusforEEservice</members>
+        <members>Asset.HDT_RT_SectionBonusforGasservice</members>
+        <members>Asset.HDT_RT_SectionContributesforEEservice</members>
+        <members>Asset.HDT_RT_SectionContributesforGasservice</members>
+        <members>Asset.HDT_RT_VASConsumptionanalysis</members>
+        <members>Asset.HDT_RT_VASPoductsnotbillable</members>
+        <members>Asset.HDT_RT_VASServicesnotbillable</members>
+        <members>Order.HDT_RT_Voltura</members>
+        <members>SBQQ__ConfigurationAttribute__c.SBQQ__Configuration_Attribute</members>
+        <members>SBQQ__ConfigurationAttribute__c.SBQQ__Global_Attribute</members>
+        <members>SBQQ__Subscription__c.HDT_RT_CompositionVASproductsnotbillable</members>
+        <members>SBQQ__Subscription__c.HDT_RT_SectionBonusforEEservice</members>
+        <members>SBQQ__Subscription__c.HDT_RT_SectionBonusforGasservice</members>
+        <members>SBQQ__Subscription__c.HDT_RT_SectionContributesforEEservice</members>
+        <members>SBQQ__Subscription__c.HDT_RT_SectionContributesforGasservice</members>
+        <members>SBQQ__Subscription__c.HDT_RT_VASConsumptionanalysis</members>
+        <members>SBQQ__Subscription__c.HDT_RT_VASPoductsnotbillable</members>
+        <members>SBQQ__Subscription__c.HDT_RT_VASServicesnotbillable</members>
+        <name>RecordType</name>
     </types>
     <types>
-        <members>Case.Data_Ricezione_Richiesta</members>
-        <name>ValidationRule</name>
+        <members>HEROKU</members>
+        <name>RemoteSiteSetting</name>
+    </types>
+    <types>
+        <members>LoginGroup__c-Login Group Layout</members>
+        <members>Order-HDT_Voltura</members>
+        <members>Product2-CPQ Product Layout New</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_ApexClasses</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_LC_ApplyBillingProfileModal</members>
+        <members>HDT_LC_BillingProfileForm</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_EligibilityCriteriaController</members>
+        <members>HDT_LC_EligibilityCriteriaCtrlHelper</members>
+        <members>HDT_LC_GestionePrivacyField</members>
+        <members>HDT_LC_OrderDossierWizard</members>
+        <members>HDT_LC_SaleActions</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_QR_Contract</members>
+        <members>HDT_QR_EligibilityCriteria</members>
+        <members>HDT_QR_LoginGroupItem</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_QR_PriceBook</members>
+        <members>HDT_QR_QuoteLine</members>
+        <members>HDT_QR_SaleServiceItem</members>
+        <members>HDT_QR_SearchPlug</members>
+        <members>HDT_QR_UserQueries</members>
+        <members>HDT_SRV_SaleServiceItem</members>
+        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_SearchPlug</members>
+        <members>HDT_WRP_EligibilityCriteria</members>
+        <members>HDT_WS_HerokuAddressSearch</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Asset.Typology__c</members>
+        <members>DocumentSelected__c.Position1__c</members>
+        <members>DocumentSelected__c.Position2__c</members>
+        <members>DocumentSelected__c.Position3__c</members>
+        <members>OrderItem.PowerFlow__c</members>
+        <members>OrderItem.Price__c</members>
+        <members>Product2.CategoryFamily__c</members>
+        <members>SBQQ__ConfigurationAttribute__c.SBQQ__TargetField__c</members>
+        <members>SBQQ__ErrorCondition__c.SBQQ__TestedField__c</members>
+        <members>SBQQ__ProductAction__c.SBQQ__FilterField__c</members>
+        <members>SBQQ__ProductOption__c.Opportunity__c</members>
+        <members>SBQQ__QuoteLine__c.CategoryFamily__c</members>
+        <members>SBQQ__Subscription__c.Typology__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_OrderDossierWizard</members>
+        <name>AuraDefinitionBundle</name>
     </types>
     <version>50</version>
 </Package>

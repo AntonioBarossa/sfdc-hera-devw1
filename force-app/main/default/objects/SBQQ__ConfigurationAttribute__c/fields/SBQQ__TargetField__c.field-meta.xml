@@ -13,24 +13,24 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>DurationVAS__c</fullName>
+                <default>false</default>
+                <label>DurationVAS__c</label>
+            </value>
+            <value>
                 <fullName>Agency__c</fullName>
                 <default>false</default>
                 <label>Agency__c</label>
             </value>
             <value>
-                <fullName>Campaign__c</fullName>
+                <fullName>CampaignName__c</fullName>
                 <default>false</default>
-                <label>Campaign__c</label>
+                <label>CampaignName__c</label>
             </value>
             <value>
                 <fullName>Channel__c</fullName>
                 <default>false</default>
                 <label>Channel__c</label>
-            </value>
-            <value>
-                <fullName>ChannelClient__c</fullName>
-                <default>false</default>
-                <label>ChannelClient__c</label>
             </value>
             <value>
                 <fullName>SupplyZipCode__c</fullName>
@@ -168,11 +168,6 @@
                 <label>KeepConsumptionsAnalysis__c</label>
             </value>
             <value>
-                <fullName>CustomerMarking__c</fullName>
-                <default>false</default>
-                <label>CustomerMarking__c</label>
-            </value>
-            <value>
                 <fullName>RegistrationNumber__c</fullName>
                 <default>false</default>
                 <label>RegistrationNumber__c</label>
@@ -253,34 +248,34 @@
                 <label>PriceFromThirds__c</label>
             </value>
             <value>
-                <fullName>PriceF0__c</fullName>
+                <fullName>Percentuale F0</fullName>
                 <default>false</default>
-                <label>PriceF0__c</label>
+                <label>Percentuale F0</label>
             </value>
             <value>
-                <fullName>PriceF1__c</fullName>
+                <fullName>Percentuale F1</fullName>
                 <default>false</default>
-                <label>PriceF1__c</label>
+                <label>Percentuale F1</label>
             </value>
             <value>
-                <fullName>PriceF2__c</fullName>
+                <fullName>Percentuale F2</fullName>
                 <default>false</default>
-                <label>PriceF2__c</label>
+                <label>Percentuale F2</label>
             </value>
             <value>
-                <fullName>PriceF3__c</fullName>
+                <fullName>Percentuale F3</fullName>
                 <default>false</default>
-                <label>PriceF3__c</label>
+                <label>Percentuale F3</label>
             </value>
             <value>
-                <fullName>PriceFP__c</fullName>
+                <fullName>Percentuale FP</fullName>
                 <default>false</default>
-                <label>PriceFP__c</label>
+                <label>Percentuale FP</label>
             </value>
             <value>
-                <fullName>PriceFV__c</fullName>
+                <fullName>Percentuale FV</fullName>
                 <default>false</default>
-                <label>PriceFV__c</label>
+                <label>Percentuale FV</label>
             </value>
             <value>
                 <fullName>PriceNet__c</fullName>
@@ -318,9 +313,9 @@
                 <label>ResidentDeliveryAddress__c</label>
             </value>
             <value>
-                <fullName>RoleProfile__c</fullName>
+                <fullName>Role__c</fullName>
                 <default>false</default>
-                <label>RoleProfile__c</label>
+                <label>Role__c</label>
             </value>
             <value>
                 <fullName>PODCode__c</fullName>
@@ -378,9 +373,39 @@
                 <label>VasActivationDate__c</label>
             </value>
             <value>
-                <fullName>DurationVAS__c</fullName>
+                <fullName>Opportunity__c</fullName>
                 <default>false</default>
-                <label>DurationVAS__c</label>
+                <label>Opportunity__c</label>
+            </value>
+            <value>
+                <fullName>Login2__c</fullName>
+                <default>false</default>
+                <label>Login2__c</label>
+            </value>
+            <value>
+                <fullName>WaitingPeriod__c</fullName>
+                <default>false</default>
+                <label>WaitingPeriod__c</label>
+            </value>
+            <value>
+                <fullName>Profile__c</fullName>
+                <default>false</default>
+                <label>Profile__c</label>
+            </value>
+            <value>
+                <fullName>CustomerMarking__c</fullName>
+                <default>false</default>
+                <label>CustomerMarking__c</label>
+            </value>
+            <value>
+                <fullName>MeterType__c</fullName>
+                <default>false</default>
+                <label>MeterType__c</label>
+            </value>
+            <value>
+                <fullName>ServicePoint__c</fullName>
+                <default>false</default>
+                <label>ServicePoint__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>
