@@ -26,7 +26,6 @@ package.xml
 **objects/Account/fields/IsPartner*
 **objects/Campaign/fields/CampaignImageId*
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
-**objects/SBQQ__ProductOption__c/fields/NewClient__c*
 **objects/SBQQ__ProductOption__c/fields/ResidentDeliveryAddress__c*
 **objects/Case/recordTypes/HDT_RT_FatturazioneConsumi*
 **objects/WorkBadge/WorkBadge*
