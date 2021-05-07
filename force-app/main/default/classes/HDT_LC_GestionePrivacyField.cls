@@ -1,10 +1,10 @@
 public with sharing class HDT_LC_GestionePrivacyField {
-    HDT_QR_Contact contactQR = new HDT_QR_Contact();
-    HDT_QR_Lead leadQR = new HDT_QR_Lead();
+
     @AuraEnabled
     public static void updateIndividual(String recordId,String type,Map<String,String> indvData){
 
-                                         
+        HDT_QR_Contact contactQR = new HDT_QR_Contact();
+        HDT_QR_Lead leadQR = new HDT_QR_Lead();                            
 
 
         String individualId ='';
