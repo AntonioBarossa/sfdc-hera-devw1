@@ -172,7 +172,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             String blockType = getFieldValue(fields, 'BlockType__c');
 
-                if(blockType.trim() != 'W' || blockType.trim() != '1'){
+                if(blockType.trim() != 'W' && blockType.trim() != '1'){
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Tipo blocco può essere 1 o W'));
 
