@@ -12,6 +12,9 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         currentCase = paymentQr.getCaseById(recordId);
         documents = paymentQr.getDocumentSelectedByCase(recordId);
 
+        System.debug('SRV_PaymenCommunication Case--> '+currentCase);
+        System.debug('SRV_PaymentCommunication Documetns--> '+documents);
+
         JSONGenerator gen = JSON.createGenerator(true);
 
         gen.writeStartObject();
@@ -25,15 +28,15 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         for(DocumentSelected__c document : documents){
 
             gen.writeStartObject();
-            gen.writeStringField('numeroBollettino',document.Bill__c);
-            gen.writeStringField('numeroFattura',document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : null);
+            gen.writeStringField('numeroBollettino','');
+            gen.writeStringField('numeroFattura',document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '');
             gen.writeStringField('numeroFattura1','');
             gen.writeStringField('rataFattura','');
             gen.writeDateField('scadenza',document.ExpirationDate__c);
             gen.writeNumberField('pagato',document.PaidCustomer__c);
             gen.writeStringField('infoBlocco','');
             gen.writeStringField('idProcesso','');
-            gen.writeStringField('numeroDocumento',document.DocumentNumber__c.startsWith('0') ? null : document.DocumentNumber__c);
+            gen.writeStringField('numeroDocumento',document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c);
             gen.writeStringField('rateizzazione',document.Extension__c);
             gen.writeDateField('dataFattura',document.IssueDate__c);
             gen.writeNumberField('totaleParziale',document.TotalCommunicationPayment__c);
@@ -43,6 +46,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
         gen.writeEndObject();
     
         pretty = gen.getAsString();
+
+        System.debug('SRV_PaymentCommunication -->' +pretty);
 
         return pretty;
     }

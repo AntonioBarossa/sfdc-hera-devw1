@@ -34,6 +34,8 @@ public with sharing class HDT_SRV_Paperless {
 
         pretty = gen.getAsString();
 
+        System.debug('SRV_Paperless -->' +pretty);
+
         return pretty;
 
     }
