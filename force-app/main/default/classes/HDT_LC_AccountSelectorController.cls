@@ -114,10 +114,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static void handleLead(String leadId, String activityId){
 		try {
-			update new wrts_prcgvr__Activity__c(
-				Id = activityId,
-				Lead__c = leadId
-			);
+			updateActivity(activityId, null, null, leadId)
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
@@ -129,7 +126,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			List<Account> accounts = getAccounts(contactId);
 
 			if(accounts.size() == 1) {
-				updateActivity(activityId, contactId, accounts[0].Id);
+				updateActivity(activityId, contactId, accounts[0].Id, null);
 			}
 
 			return accounts;
@@ -148,7 +145,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
-	public static void updateActivity(String activityId, String contactId, String accountId) {
+	public static void updateActivity(String activityId, String contactId, String accountId, String leadId) {
 		try {
 			wrts_prcgvr__Activity__c a = new wrts_prcgvr__Activity__c(
 				Id = activityId
@@ -159,6 +156,9 @@ public with sharing class HDT_LC_AccountSelectorController {
 			}
 			if(accountId != null) {
 				a.Account__c = accountId;
+			}
+			if(leadId != null) {
+				a.Lead__c = leadId;
 			}
 
 			HDT_UTL_DatabaseService.updateSObject(a);
