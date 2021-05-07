@@ -90,7 +90,7 @@
         <fields>HeaderName__c</fields>
         <fields>HeaderApiName__c</fields>
         <fields>Mandatory__c</fields>
-        <fields>Validation_Regex__c</fields>
+        <fields>ValidationRegex__c</fields>
         <relatedList>FileTemplateColumn__c.FileTemplate__c</relatedList>
     </relatedLists>
     <relatedLists>
