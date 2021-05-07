@@ -327,6 +327,21 @@ export default class HdtAccountStatementPicker extends LightningElement {
                     }
                 }*/
             }
+            if(this.documents){
+                var ca = this.documents[0].ContractualAccount__c;
+                var selectedCa = row.contoContrattuale;
+                if(this.processType === 'Piano Rateizzazione' && ca != selectedCa){
+                    this.dispatchEvent(
+                        new ShowToastEvent({
+                            title: 'Attenzione',
+                            message: 'Per questo processo non è possibile selezionare Documenti afferenti a CA differenti.',
+                            variant: 'error',
+                        })
+                    );
+                    this.showSpinner=false;
+                    return null;
+                }
+            }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
             var fields = {
                 'DocumentNumber__c' : row.xblnr, 

@@ -54,7 +54,7 @@
       &quot;Column&quot;:1
    },
    {
-      &quot;FieldName&quot;:&quot;ContactEmail&quot;,
+      &quot;FieldName&quot;:&quot;Email__c&quot;,
       &quot;Column&quot;:1
    },
    {

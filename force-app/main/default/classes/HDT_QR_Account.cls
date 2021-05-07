@@ -22,9 +22,16 @@ public inherited sharing class HDT_QR_Account {
         accountSrv.checkReadAccess(fields);
         String query = 'SELECT '+ fields +
                 ' FROM Account WHERE Id = :id WITH SECURITY_ENFORCED';
-        Account accounts = Database.query(query);
+
+        List<Account> accountsList = Database.query(query);
         
-        return accounts;
+        Account account = new Account();
+
+        if (!accountsList.isEmpty()) {
+            account = accountsList[0];
+        }
+        
+        return account;
     }
 
     public List<Account> getRecordsById(List<String> accountIdList, String fields){
@@ -40,7 +47,7 @@ public inherited sharing class HDT_QR_Account {
         contractSrv.checkReadAccess('Id,BillingAddress');
         Account ac = new Account();
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
-        ac= [SELECT Id,BillingAddress FROM Account WHERE Id =: AccountId];
+        ac= [SELECT Id,BillingAddress FROM Account WHERE Id =: AccountId WITH SECURITY_ENFORCED];
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;
