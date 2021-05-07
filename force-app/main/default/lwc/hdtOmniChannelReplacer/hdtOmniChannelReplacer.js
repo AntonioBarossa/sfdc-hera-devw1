@@ -1,6 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import { subscribe, unsubscribe, onError, setDebugFlag, isEmpEnabled }  from 'lightning/empApi';
+import { subscribe } from 'lightning/empApi';
 import getActivities from '@salesforce/apex/HDT_LC_OmniChannelReplacerController.getActivities';
 import getSigmaLogin from '@salesforce/apex/HDT_LC_OmniChannelReplacerController.getSigmaLogin';
 
@@ -18,12 +18,22 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
                     this.activities.unshift({
                         Id: response.data.payload.Id__c,
                         Name: response.data.payload.Name__c,
+                        Lead__c: response.data.payload.Lead__c,
                         Account__c: response.data.payload.Account__c,
                         wrts_prcgvr__Status__c: response.data.payload.Status__c,
                         completed: response.data.payload.Status__c == 'Completed'
                     });
                     // this.dispatchEvent(new CustomEvent('newactivity'));  // UNCOMMENT TO RE ENABLE NOTIFICATION IN UTILITY BAR
-                    navigate(response.data.payload.Account__c, response.data.payload.Id__c);
+                    var activity = this.activities[0];
+                    var target = activity.Account__c;
+                    if(!target) {
+                        if(activity.Lead__c) {
+                            target = activity.Lead__c;
+                        } else {
+                            target = activity.Id;
+                        }
+                    }
+                    this.navigate(target);
                 } else {
                     this.activities.forEach(a => {
                         if(a.Id == response.data.payload.Id__c) {
@@ -44,11 +54,11 @@ export default class hdtOmniChannelReplacer extends NavigationMixin(LightningEle
         });
     }
 
-    navigate(accountId, activityId) {
+    navigate(target) {
         this[NavigationMixin.Navigate]({
             type: 'standard__recordPage',
             attributes: {
-                recordId: accountId != null ? accountId : activityId,
+                recordId: target,
                 actionName: 'view'
             }
         });

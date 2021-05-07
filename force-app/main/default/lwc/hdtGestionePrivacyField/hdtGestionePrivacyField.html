@@ -1,0 +1,130 @@
+<template>
+    <lightning-card title="Gestione Privacy Field" icon-name="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning-input type="checkbox" label="show Marketing Fields" onchange={handleChange}></lightning-input>
+            <template if:true={areDetailsVisible}>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-2">
+                            <div
+                                class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-input type="text" data-id="MarketingPrivacy"
+                                    label="Consenso Marketing">
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <div
+                            class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                            <lightning-input type="text" data-id="PrivacyMarketingChoiceSource"
+                                label="Fonte Consenso Marketing">
+                            </lightning-input>
+                        </div>
+                    </div>  
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-2">
+                        <div
+                        class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                        <lightning-input type="number" data-id="MarketingCompanyConsent"
+                            label="Company consenso marketing">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <div
+                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-input type="text" data-id="PrivacyMarketingConsentInitiative"
+                        label="Iniziativa consenso marketing">
+                    </lightning-input>
+                </div>
+                </div>
+                </div>
+                </div>
+            </template>
+            <lightning-input type="checkbox" label="show Profiling Fields" onchange={handleProfilingChange}></lightning-input>
+            <template if:true={areProfilingVisible}>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-2">
+                            <div
+                                class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-input type="text" data-id="ProfilingPrivacy"
+                                    label="Consenso Alla Profilazione">
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <div
+                            class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                            <lightning-input type="text" data-id="PrivacyProfilingChoiceSource"
+                                label="Fonte Consenso Profilazione">
+                            </lightning-input>
+                        </div>
+                    </div>  
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-2">
+                        <div
+                        class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                        <lightning-input type="number" data-id="ProfilingCompanyConsent"
+                            label="Company consenso Profilazione">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <div
+                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-input type="text" data-id="PrivacyProfilingConsentInitiative"
+                        label="Iniziativa consenso Profilazione">
+                    </lightning-input>
+                </div>
+                </div>
+                </div>    
+                </div>
+            </template>
+            <lightning-input type="checkbox" label="show ThirdParts Fields" onchange={handleThirdPartsChange}></lightning-input>
+            <template if:true={areThirdPartsVisible}>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-2">
+                            <div
+                                class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                <lightning-input type="text" data-id="ThirdPartyPrivacy"
+                                    label="Consenso Trasferimento Dati a Terzi">
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-size_1-of-2">
+                            <div
+                            class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                            <lightning-input type="text" data-id="PrivacyThirdPartyChoiceSource"
+                                label="Fonte consenso dati a terzi">
+                            </lightning-input>
+                        </div>
+                    </div>  
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-2">
+                        <div
+                        class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                        <lightning-input type="number" data-id="ThirdPartyCompanyConsent"
+                            label="Company consenso dati a terzi">
+                        </lightning-input>
+                    </div>
+                </div>
+                <div class="slds-size_1-of-2">
+                    <div
+                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                    <lightning-input type="text" data-id="PrivacyThirdPartyConsentInitiative"
+                        label="Iniziativa consenso dati a terzi">
+                    </lightning-input>
+                </div>
+                </div>
+                </div>
+                </div>
+            </template>
+            <lightning-button variant="brand" name="savebutton" onclick= {handlesave} type="submit" label="Salva"></lightning-button>
+        </div>
+    </lightning-card>  
+</template>

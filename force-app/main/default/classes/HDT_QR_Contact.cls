@@ -2,7 +2,7 @@ public inherited sharing class HDT_QR_Contact {
     
     public Contact getRecordById(String id) {
 
-        return [
+        List<Contact> contactsList = [
             SELECT
             FirstName,
             LastName,
@@ -13,8 +13,15 @@ public inherited sharing class HDT_QR_Contact {
             FROM Contact
             WHERE Id = :id
             WITH SECURITY_ENFORCED
-            LIMIT 1
         ];
+
+        Contact contact = new Contact();
+
+        if (!contactsList.isEmpty()) {
+            contact = contactsList[0];
+        }
+
+        return contact;
     }
  public List<Contact> getRecordsById(List<String> ids) {
 
