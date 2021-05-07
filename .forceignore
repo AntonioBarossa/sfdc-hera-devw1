@@ -30,7 +30,6 @@ package.xml
 **objects/SBQQ__ProductOption__c/fields/ResidentDeliveryAddress__c*
 **objects/Case/recordTypes/HDT_RT_FatturazioneConsumi*
 **objects/WorkBadge/WorkBadge*
-**objects/Case/recordTypes/HDT_RT_InversioneContatore*
 **objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
 **objects/BillingProfile__c/fields/XMLType__c*
 **objects/Order/fields/DocSendingMethod__c*
