@@ -88,21 +88,13 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>HeaderName__c</fields>
-        <fields>Validation_Action__c</fields>
-        <fields>Validation_Regex__c</fields>
+        <fields>HeaderApiName__c</fields>
         <fields>Mandatory__c</fields>
+        <fields>Validation_Regex__c</fields>
         <relatedList>FileTemplateColumn__c.FileTemplate__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedFileList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Status__c</fields>
-        <fields>JobID__c</fields>
-        <fields>SkipJob__c</fields>
-        <fields>ContentDocumentId__c</fields>
-        <relatedList>FileImportJob__c.FileTemplate__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

@@ -7931,39 +7931,14 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>FileTemplateColumn__c.FileTemplate__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FileTemplateColumn__c.HeaderApiName__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FileTemplateColumn__c.HeaderName__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FileTemplateColumn__c.Index__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>FileTemplateColumn__c.Mandatory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>FileTemplateColumn__c.SobjectType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>FileTemplateColumn__c.ValidationRegex__c</field>
         <readable>false</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>FileTemplate__c.FileDelimiter__c</field>
@@ -8532,11 +8507,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_MassiveLoaderProcess__mdt.IsActive__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_MassiveLoaderProcess__mdt.Priority__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
