@@ -42,28 +42,17 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         
         // This would add an extra inventory filter if the family is Hardware
         String additionalFilter = '';
-
-        /*
-         * start ciro modification ***
-         * if(fieldValuesMap.get('Family') == 'Hardware'){
-            additionalFilter = 'Product2.Inventory_Level__c > 3';
-        }
-		*** end ciro modification ***
-		*/
         
         //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
 
-        SBQQ__Quote__c myQuote= [
-            SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c
-            FROM SBQQ__Quote__c
-            WHERE Id =: currentId
-            WITH SECURITY_ENFORCED
-        ];
+        SBQQ__Quote__c myQuote;
+        myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
         Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
-        additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
         additionalFilter += ' AND Product2Id IN :eligibleProductsId';
 		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
@@ -105,16 +94,13 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
 
-        SBQQ__Quote__c myQuote= [
-            SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c
-            FROM SBQQ__Quote__c
-            WHERE Id =: currentId
-            WITH SECURITY_ENFORCED
-        ];
+        SBQQ__Quote__c myQuote;
+        myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
         Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
-        whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        //whereClause += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        whereClause += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
         whereClause += ' AND Product2Id IN :eligibleProductsId';
         //*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 
@@ -138,19 +124,15 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         return (input == 'Comune__c')? true : false;
 
     }
+
     global String getInputDefaultValue(SObject quote, String input){
         System.debug('METHOD CALLED: getInputDefaultValue ' + input);
 
         Id currentId = String.valueOf(quote.get('Id'));
 
-        SBQQ__Quote__c myQuote= [
-            SELECT Id,SBQQ__PricebookId__c,SBQQ__PriceBook__c
-            FROM SBQQ__Quote__c where Id =: currentId
-            WITH SECURITY_ENFORCED
-        ];
-		/*if(input.equalsIgnoreCase('Comune__c'))
-        	return String.valueOf(myQuote.Comune_Fornitura__c);
-        else return null;*/
+        SBQQ__Quote__c myQuote;
+        myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
+
         return null;
     }
     
@@ -159,39 +141,29 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 		System.debug('isSuggestCustom false');
         return false;
     }
-     global List<PricebookEntry> suggest( sObject query, Map<String,Object> usg ){
-                 system.debug('suggest');
 
+    global List<PricebookEntry> suggest( sObject query, Map<String,Object> usg ){
+        System.debug('suggest');
         return [SELECT Id FROM PricebookEntry WITH SECURITY_ENFORCED LIMIT 1];
     }
+
     global String getAdditionalSuggestFilters( sObject quote, Map<String,Object> suggFilts )
     {
         system.debug('getAdditionalSuggestFilters');
         System.debug('METHOD CALLED: getAdditionalSearchFilters');
         
-        // This would add an extra inventory filter if the family is Hardware
         String additionalFilter = '';
-
-        /*
-         * start ciro modification ***
-         * if(fieldValuesMap.get('Family') == 'Hardware'){
-            additionalFilter = 'Product2.Inventory_Level__c > 3';
-        }
-		*** end ciro modification ***
-		*/
         
         //*** START ELIGIBLE CRITERIA IMPLEMENTATION ***
         Id currentId = String.valueOf(quote.get('Id'));
-        SBQQ__Quote__c myQuote= [
-            SELECT Id, SBQQ__PricebookId__c, SBQQ__PriceBook__c, SupplyCity__c
-            FROM SBQQ__Quote__c
-            WHERE Id =: currentId
-            WITH SECURITY_ENFORCED
-        ];
+
+        SBQQ__Quote__c myQuote;
+        myQuote = HDT_QR_SearchPlug.selectQuoteFromId(currentId, myQuote);
 
         Set<Id> eligibleProductsId = getEligibleProducts(myQuote);
 
-        additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        //additionalFilter += 'PriceBook2Id = \'' + myQuote.get('SBQQ__PriceBook__c') + '\'';
+        additionalFilter += 'PriceBook2Id = \'' + quote.get('SBQQ__PriceBookId__c') + '\'';
         additionalFilter += ' AND Product2Id IN :eligibleProductsId';
 		//*** END ELIGIBLE CRITERIA IMPLEMENTATION ***
 		
@@ -202,52 +174,71 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
     public static Set<Id> getEligibleProducts(SBQQ__Quote__c quote){
 
         Set<Id> idList = new Set<Id>();
+        Set<Id> idToFilterByMunicipalities = new Set<Id>();
         List<String> familyList = getFamilyList();
 
-        if(!String.isEmpty(quote.SupplyCity__c)){
+        //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
+        System.debug('>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
+        //  Here we filter these fields:
+        //  - OriginMarket__c           - Campaign__c
+        //  - Channel__c                - PromoCode__c
+        //  - ClientMarker__c           - Agency__c
+        //  - CategoryTypeClient__c     - UseCategory__c
+        //  - CompanyOwner__c           - EquipmenType__c
+        List<EligibilityCriteria__c> filteredEligibleCriteria;
+        filteredEligibleCriteria = HDT_QR_SearchPlug.selectEligibleCriteria(filteredEligibleCriteria, familyList, quote);
 
-            SObjectType objtype = Schema.getGlobalDescribe().get('EligibleMunicipality__c');
+        //  Here we filter the NUMBER & checkbox field type
+        //  - ClientAgeMin__c             - ClientAgeMax__c
+        //  - ConsumptionRangeEEmin__c    - ConsumptionRangeEEmax__c
+        //  - ConsumptionRangeGASmin__c   - ConsumptionRangeGASmax__c
+        //  - PowerRangeMin__c            - PowerRangeMax__c
+        //  - ResidentDeliveryAddress__c  - NewClient__c
+        //  - LoginGroup__c
+        Boolean age, consumptionRangeEe, consumptionRangeGas, powerRange, residentDeliveryAddress, newClient, login;
 
-            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-    
-            if(objRes.isAccessible()){
+        for(EligibilityCriteria__c criteria : filteredEligibleCriteria){
 
-                //List<List<SObject>> searchList = [
-                //    FIND :quote.SupplyCity__c IN ALL FIELDS
-                //    RETURNING EligibleMunicipality__c(
-                //        EligibilityCriteria__r.Product__c
-                //        WHERE EligibilityCriteria__r.Product__r.Status__c = 'Vendibile'
-                //        AND EligibilityCriteria__r.Product__r.IsActive = true
-                //        AND EligibilityCriteria__r.Product__r.Family IN :familyList
-                //    )];
+            age = checkDecimalCriteria(criteria.ClientAgeMin__c , criteria.ClientAgeMax__c, quote.ClientAge__c);
+            consumptionRangeEe = checkDecimalCriteria(criteria.ConsumptionRangeEEmin__c , criteria.ConsumptionRangeEEmax__c, quote.ConsumptionRangeEE__c);
+            consumptionRangeGas = checkDecimalCriteria(criteria.ConsumptionRangeGASmin__c , criteria.ConsumptionRangeGASmax__c, quote.ConsumptionRangeGAS__c);
+            powerRange = checkDecimalCriteria(criteria.PowerRangeMin__c , criteria.PowerRangeMax__c, quote.PowerFlow__c);
+            residentDeliveryAddress = checkBooleanCriteria(quote.ResidentDeliveryAddress__c, criteria.ResidentDeliveryAddress__c);
+            newClient = checkBooleanCriteria(quote.NewClient__c, criteria.NewClient__c);
+            login = checkLoginGroup(criteria.LoginGroup__c);
 
-                String searchquery = 'FIND \'' + String.valueOf(quote.SupplyCity__c) + '\' IN ALL FIELDS';
-                searchquery += ' RETURNING EligibleMunicipality__c(';
-                searchquery += 'EligibilityCriteria__r.Product__c';
-                searchquery += ' WHERE EligibilityCriteria__r.Product__r.Status__c = \'Vendibile\'';
-                searchquery += ' AND EligibilityCriteria__r.Product__r.IsActive = true';
-                searchquery += ' AND EligibilityCriteria__r.Product__r.Family IN :familyList';
-                searchquery += ')';
+            if(age && consumptionRangeEe && consumptionRangeGas && powerRange && residentDeliveryAddress && newClient && login){
 
-                List<List<SObject>> searchList = search.query(searchquery);
-
-                List<EligibleMunicipality__c> eligibleMunicipality = ((List<EligibleMunicipality__c>)searchlist[0]);
-
-                for(EligibleMunicipality__c e : eligibleMunicipality){
-                    System.debug('# > Prod id: ' + e.EligibilityCriteria__r.Product__c);
-                    idList.add(e.EligibilityCriteria__r.Product__c);
+                if(criteria.EligibleForAllCities__c){
+                    idList.add(criteria.Product__c);
+                } else {
+                    idToFilterByMunicipalities.add(criteria.Id);
                 }
+                
             }
+            
         }
 
-        List<Product2> prodWithoutCriteria = new List<Product2>();
-        prodWithoutCriteria = [
-            SELECT Id, (SELECT Id FROM EligibilitiesCriteria__r)
-            FROM Product2
-            WHERE Status__c = 'Vendibile' AND IsActive = true AND Family IN :familyList
-            WITH SECURITY_ENFORCED
-        ];
+        System.debug('>>>> criteri: ' + idToFilterByMunicipalities);
 
+        //>>> FILTER - STEP 2 > FILTER ONLY Municipalities...
+        if(!String.isEmpty(quote.SupplyCity__c) && idToFilterByMunicipalities.size()>0){
+            System.debug('>>> FILTER - STEP 2 > FILTER ONLY Municipalities...');
+
+            List<EligibleMunicipality__c> eligibleMunicipality;
+            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, familyList, String.valueOf(quote.SupplyCity__c));
+
+            for(EligibleMunicipality__c e : eligibleMunicipality){
+                idList.add(e.EligibilityCriteria__r.Product__c);
+            }
+
+        }
+
+        //>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...
+        System.debug('>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...');
+        List<Product2> prodWithoutCriteria;
+        prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, familyList, 'Vendibile');
+        
         if(!String.isEmpty(quote.SupplyCity__c)){
             for(Product2 p : prodWithoutCriteria){
                 if(p.EligibilitiesCriteria__r.size() == 0){
@@ -260,8 +251,50 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             }            
         }
 
+        System.debug('>>>> UFFICIAL LIST: ' + idList);
+
         return idList;
 
+    }
+
+    public static Boolean checkDecimalCriteria(Decimal min, Decimal max, Decimal value){
+ 
+        if(min != null && max != null && value <= max && value >= min){
+            return true;
+        } else if(min == null && max != null && value <= max){
+            return true;
+        } else if(min != null && max == null && value >= min){
+            return true;
+        } else if(min == null && max == null){
+            return true;
+        }
+
+        return false;
+    }
+
+    public static Boolean checkBooleanCriteria(String booleanString, Boolean checkbox){
+
+        if(!String.isEmpty(booleanString) && booleanString.equalsIgnoreCase('Y') == checkbox){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static Boolean checkLoginGroup(Id loginGroupId){
+
+        if(String.isEmpty(loginGroupId)){
+            return true;
+        }
+
+        Integer userPresence = HDT_QR_SearchPlug.getUserForLoginGroup(UserInfo.getUserId(), loginGroupId);
+
+        if(userPresence == 0){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public static List<String> getFamilyList(){
@@ -270,10 +303,6 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         sl.add('VAS Prodotto');
         sl.add('VAS Servizio');
         return sl;
-    }
-
-    public static void queryForEligibilitiesCriteria(){
-
     }
 
 }

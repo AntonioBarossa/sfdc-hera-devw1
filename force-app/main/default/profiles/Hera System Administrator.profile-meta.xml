@@ -134,6 +134,70 @@
         <enabled>true</enabled>
         <name>HDT_UserInputFlow__mdt</name>
     </customMetadataTypeAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>CS_SelezioneFornitura__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>HDT_WebServiceConfiguration__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>HDT_WebServiceCredential__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>SBQQ__FieldMetadata__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>et4ae5__ET4AEConfig__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>et4ae5__ET4AE_Config__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__ActivitySetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__ActivityStatusSetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__DependencySetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__EnvironmentSetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__IntegrationSetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__LogSetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__OverrideSetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__PhaseManagerSObjectSetting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__PhaseManagerSettings__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
+    </customSettingAccesses>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.AccountNumber</field>
@@ -2037,6 +2101,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Asset.Surface__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Asset.Typology__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7177,6 +7246,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSelected__c.PaymentMode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.Position1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.Position2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.Position3__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12766,26 +12850,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Product2.PriceF0__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.PriceF1__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.PriceF2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.PriceF3__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Product2.PriceFromThirds__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12797,11 +12861,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.PricePickOut__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Product2.PricePick__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16571,6 +16630,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.Opportunity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductOption__c.Origin__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17471,11 +17535,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__QuoteLine__c.ExternalId__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.GreenEnergyOption__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17692,11 +17751,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.QuoteLine__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__QuoteLine__c.Range__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20070,11 +20124,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__Subscription__c.Pricef2__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.Profile__c</field>
         <readable>true</readable>
@@ -20527,6 +20576,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.Surface__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.Typology__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28161,7 +28215,39 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_GenericheVas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ModContrattoPreAtt</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_PostSalesVAS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_RichiestaParere</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
@@ -28173,19 +28259,11 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VariazioneAmministratore</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VariazioniEle</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VariazioniGas</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VolturaTecnica</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_AlertDisassociazioneUtenteWeb</layout>
@@ -28244,6 +28322,10 @@
         <recordType>Case.HDT_RT_Informative</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_InversioneContatore</layout>
+        <recordType>Case.HDT_RT_InversioneContatore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_Morosita</layout>
         <recordType>Case.HDT_RT_Morosita</recordType>
     </layoutAssignments>
@@ -28264,28 +28346,24 @@
         <recordType>Case.HDT_RT_PreventiviGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_RichiestaParere</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-HDT_Rimborso</layout>
         <recordType>Case.HDT_RT_Rimborso</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_UnificazioneSeparazioneCABolletta</layout>
         <recordType>Case.HDT_RT_UnificazioneSeparazioneCABolletta</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_VariazioneAmministratore</layout>
+        <recordType>Case.HDT_RT_VariazioneAmministratore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_VariazioneAnagraficaCliente</layout>
         <recordType>Case.HDT_RT_VariazioneAnagraficaCliente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VariazioniEle</layout>
+        <recordType>Case.HDT_RT_VariazioniEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VerificaTitolaritaPodPdr</layout>
@@ -28297,16 +28375,16 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VerificheGas</layout>
-        <recordType>Case.HDT_RT_VerificheGas</recordType>
+        <recordType>Case.HDT_RT_VariazioniGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.HDT_RT_VolturaTecnica</recordType>
+        <layout>Case-HDT_VerificheGas</layout>
+        <recordType>Case.HDT_RT_VerificheGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VotiveModena</layout>
         <recordType>Case.HDT_RT_VotiveModena</recordType>
-	</layoutAssignments>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
@@ -28383,19 +28461,23 @@
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Dossier</layout>
+        <recordType>Order.HDT_RT_OrderDossier</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-HDT_Voltura</layout>
         <recordType>Order.HDT_RT_Voltura</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Prima attivazione</layout>
         <recordType>Order.HDT_RT_Attivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Prima attivazione con modifica</layout>
         <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-SBQQ__CPQ Order Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
@@ -28415,27 +28497,11 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_OrderDossier</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_Proroga</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
         <recordType>Order.HDT_RT_RiattivazioniNonMorose</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_ScontiBonus</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_Subentro</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
-        <recordType>Order.HDT_RT_SwitchIn</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-SBQQ__CPQ Order Layout</layout>
@@ -28446,7 +28512,19 @@
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-SBQQ__CPQ Order Layout</layout>
+        <layout>Order-Sconti o Bonus VAS</layout>
+        <recordType>Order.HDT_RT_ScontiBonus</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Subentro</layout>
+        <recordType>Order.HDT_RT_Subentro</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_SwitchIn</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-VAS</layout>
         <recordType>Order.HDT_RT_VAS</recordType>
     </layoutAssignments>
     <layoutAssignments>

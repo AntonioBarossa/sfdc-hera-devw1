@@ -8,6 +8,11 @@
 		<members>HDT_LC_EligibilityCriteriaController</members>
 		<members>HDT_LC_EligibilityCriteriaCtrlHelper</members>
 		<members>HDT_WRP_EligibilityCriteria</members>
+		<members>HDT_QR_SearchPlug</members>
+		<members>HDT_UTL_SearchPlug</members>
+		<members>HDT_QR_EligibilityCriteria</members>
+		<members>HDT_QR_Municipality</members>
+		<members>HDT_UTL_GenerateMunicipalityJson</members>
 		<name>ApexClass</name>
 	</types>
 	<types>
@@ -17,10 +22,19 @@
 		<name>AuraDefinitionBundle</name>
 	</types>
 	<types>
+		<members>LoginGroup__c</members>
+		<name>CustomTab</name>
+	</types>
+	<types>
+		<members>LoginGroup__c-Login Group Layout</members>
+		<name>Layout</name>
+	</types>	
+	<types>
 		<members>hdtEligibilityCriteriaConfiguration</members>
 		<members>hdtCreateNewEligibilityCriteria</members>
 		<members>hdtSearchEligibilityCriteria</name>
 		<members>hdtEligibilityCriteriaParameters</name>
+		<members>hdtEligibilityCriteriaViewForm</name>
 		<name>LightningComponentBundle</name>
 	</types>
 	<types>
