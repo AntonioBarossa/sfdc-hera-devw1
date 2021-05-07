@@ -25,7 +25,6 @@ package.xml
 **objects/Account/fields/ChannelProgramName*
 **objects/Account/fields/IsPartner*
 **objects/Campaign/fields/CampaignImageId*
-**objects/EligibilityCriteria__c/fields/CompanyOwner__c*
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/SBQQ__ProductOption__c/fields/NewClient__c*
 **objects/SBQQ__ProductOption__c/fields/ResidentDeliveryAddress__c*
