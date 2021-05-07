@@ -2,8 +2,6 @@ import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
-import getContacts from '@salesforce/apex/HDT_LC_AccountSelectorController.getContacts';
-import getLeads from '@salesforce/apex/HDT_LC_AccountSelectorController.getLeads';
 import getLeadsAndContacts from '@salesforce/apex/HDT_LC_AccountSelectorController.getLeadsAndContacts';
 import handleLead from '@salesforce/apex/HDT_LC_AccountSelectorController.handleLead';
 import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccount';
@@ -55,15 +53,13 @@ export default class HdtAccountSelector extends LightningElement {
 			this.accounts = res.accounts;
 			this.changesCommitted = this.leadId || this.contactId || this.accountId;
 			if(res.preFilter) {
-				console.log(this.template.querySelector('search_bar_anagrafica'));
-				console.log(this.template.querySelector(`[data-id="search_bar_anagrafica"]`));
-				console.log(this.template.querySelector(`[data-id="search_bar_anagrafica"]`).value = res.preFilter);
+				this.template.querySelector(`[data-id="search_bar_anagrafica"]`).value = res.preFilter;
 			}
-			console.log(this.leads);
-			console.log(this.contacts);
 		})
 		.catch(error => {
 			// WIP
+			console.error(error);
+			this.showGenericErrorToast();
 		});
 	}
 
@@ -73,11 +69,11 @@ export default class HdtAccountSelector extends LightningElement {
 			if(this.showContactSearchPanel) {
 				var queryString = event.target.value;
 				if(queryString) {
-					console.log('calling');
 					getLeadsAndContacts({queryString: queryString})
 					.then(result => {
-						this.leads = result.leads;
-						this.contacts = result.contacts;
+						var resObj = JSON.parse(result);
+						this.leads = resObj.leads;
+						this.contacts = resObj.contacts;
 					})
 					.catch(error => {
 						// WIP
@@ -90,8 +86,6 @@ export default class HdtAccountSelector extends LightningElement {
 	}
 
 	handleClick(event) {
-		console.log('### event ');
-		console.log('### event ' + event.currentTarget.dataset.id);
 		var selectedRecordId = event.currentTarget.dataset.id;
 		if(this.showContactSearchPanel) {
 			switch(event.currentTarget.dataset.sobjtype) {
@@ -127,8 +121,6 @@ export default class HdtAccountSelector extends LightningElement {
 						this.showGenericErrorToast();
 					});
 					break;
-					default:
-						console.log('### default');
 			}
 		} else if(this.showAccountSearchPanel) {
 			this.accountId = event.currentTarget.dataset.id;
