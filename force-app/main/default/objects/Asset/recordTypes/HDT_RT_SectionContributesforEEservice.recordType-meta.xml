@@ -1429,6 +1429,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Typology__c</picklist>
+        <values>
+            <fullName>Prodotto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>UseCategory__c</picklist>
         <values>
             <fullName>001-Uso cottura cibi</fullName>
