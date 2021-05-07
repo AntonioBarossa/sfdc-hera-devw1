@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>51.0</apiVersion>
     <assignments>
-        <name>account_counter</name>
+        <name>account_counter_increase</name>
         <label>Contatore</label>
         <locationX>534</locationX>
         <locationY>1367</locationY>
@@ -13,22 +12,88 @@
                 <numberValue>1.0</numberValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>accountID</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>account_counter_loop.AccountId</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>account_counter_loop</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>link_activity_to_account</name>
-        <label>Associa Account ad Activity</label>
+        <name>assign_to_account</name>
+        <label>Assegna a Account</label>
         <locationX>314</locationX>
         <locationY>1703</locationY>
         <assignmentItems>
             <assignToReference>$Record.Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>contact.AccountId</elementReference>
+                <elementReference>accountID</elementReference>
             </value>
         </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>assign_to_lead</name>
+        <label>Assegna a Lead</label>
+        <locationX>842</locationX>
+        <locationY>1583</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Lead__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>leadId</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>contact_counter_increase</name>
+        <label>Contatore</label>
+        <locationX>798</locationX>
+        <locationY>671</locationY>
+        <assignmentItems>
+            <assignToReference>contact_counter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>contact_id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>contact_counter_loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>contact_counter_loop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>lead_counter_increase</name>
+        <label>Contatore</label>
+        <locationX>1062</locationX>
+        <locationY>1247</locationY>
+        <assignmentItems>
+            <assignToReference>counter</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>leadId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>lead_counter_loop.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>lead_counter_loop</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>link_activity_to_contact_by_fiscal_code</name>
@@ -39,11 +104,11 @@
             <assignToReference>$Record.Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>contact.Id</elementReference>
+                <elementReference>contact_id</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Account_by_Fiscal_Code</targetReference>
+            <targetReference>get_account_by_contact</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -55,21 +120,21 @@
             <assignToReference>$Record.Account__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Account_by_BP_Code.Id</elementReference>
+                <elementReference>account_by_bp_code.Id</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>$Record.Contact__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>get_AccountContactRelationship.ContactId</elementReference>
+                <elementReference>get_contact_by_account.ContactId</elementReference>
             </value>
         </assignmentItems>
     </assignments>
     <decisions>
         <name>Find_Client_By</name>
         <label>Identifica cliente per:</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>311</locationY>
         <defaultConnectorLabel>Manualmente</defaultConnectorLabel>
         <rules>
@@ -83,13 +148,13 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Account_by_BP_Code</targetReference>
+                <targetReference>account_by_bp_code</targetReference>
             </connector>
             <label>Codice BP</label>
         </rules>
         <rules>
-            <name>Fiscal_Code</name>
-            <conditionLogic>and</conditionLogic>
+            <name>personal_data</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.FiscalCode__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -97,14 +162,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>get_contact_by_fiscal_code</targetReference>
-            </connector>
-            <label>Codice Fiscale</label>
-        </rules>
-        <rules>
-            <name>VAT_Number</name>
-            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>$Record.VATNumber__c</leftValueReference>
                 <operator>IsNull</operator>
@@ -112,10 +169,17 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Record.ClientNumber__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
-                <targetReference>get_contact_by_vatnumber</targetReference>
+                <targetReference>get_contact</targetReference>
             </connector>
-            <label>Partita IVA</label>
+            <label>Dati Anagrafici</label>
         </rules>
     </decisions>
     <decisions>
@@ -125,7 +189,7 @@
         <locationY>1583</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>yes</name>
+            <name>single_account_found_yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>counter</leftValueReference>
@@ -135,7 +199,54 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>link_activity_to_account</targetReference>
+                <targetReference>assign_to_account</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>single_contact_found</name>
+        <label>Contatto univoco trovato?</label>
+        <locationX>710</locationX>
+        <locationY>887</locationY>
+        <defaultConnector>
+            <targetReference>get_lead</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>single_contact_found_yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>contact_counter</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>link_activity_to_contact_by_fiscal_code</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>single_lead_found</name>
+        <label>Lead Univoco?</label>
+        <locationX>974</locationX>
+        <locationY>1463</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>single_lead_found_yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>counter</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>1.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assign_to_lead</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -147,13 +258,41 @@
         <label>Conta Account</label>
         <locationX>446</locationX>
         <locationY>1247</locationY>
-        <collectionReference>Account_by_Fiscal_Code</collectionReference>
+        <collectionReference>get_account_by_contact</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>account_counter</targetReference>
+            <targetReference>account_counter_increase</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>single_account_found</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>contact_counter_loop</name>
+        <label>Conta Contatti</label>
+        <locationX>710</locationX>
+        <locationY>551</locationY>
+        <collectionReference>get_contact</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>contact_counter_increase</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>single_contact_found</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
+        <name>lead_counter_loop</name>
+        <label>Conta Lead</label>
+        <locationX>974</locationX>
+        <locationY>1127</locationY>
+        <collectionReference>get_lead</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>lead_counter_increase</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>single_lead_found</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -176,15 +315,14 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>Account_by_BP_Code</name>
+        <name>account_by_bp_code</name>
         <label>Account</label>
         <locationX>50</locationX>
         <locationY>431</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>get_AccountContactRelationship</targetReference>
+            <targetReference>get_contact_by_account</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>CustomerCode__c</field>
             <operator>EqualTo</operator>
@@ -198,7 +336,7 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>Account_by_Fiscal_Code</name>
+        <name>get_account_by_contact</name>
         <label>Account</label>
         <locationX>446</locationX>
         <locationY>1127</locationY>
@@ -206,34 +344,111 @@
         <connector>
             <targetReference>account_counter_loop</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>ContactId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>contact.Id</elementReference>
+                <elementReference>contact_id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>IsActive</field>
+            <operator>EqualTo</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>AccountContactRelation</object>
         <queriedFields>Id</queriedFields>
+        <queriedFields>AccountId</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>get_AccountContactRelationship</name>
-        <label>AccountContactRelationship</label>
+        <name>get_contact</name>
+        <label>Contatto</label>
+        <locationX>710</locationX>
+        <locationY>431</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>contact_counter_loop</targetReference>
+        </connector>
+        <filters>
+            <field>FiscalCode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.FiscalCode__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>FiscalCode__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>VATNumber__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.VATNumber__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>VATNumber__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phone</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ClientNumber__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Phone</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>MobilePhone</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ClientNumber__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>MobilePhone</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Contact</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>AccountId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_contact_by_account</name>
+        <label>Contact</label>
         <locationX>50</locationX>
         <locationY>551</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Account_and_Contact</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>Account_by_BP_Code.Id</elementReference>
+                <elementReference>account_by_bp_code.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -257,15 +472,14 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>get_contact_by_fiscal_code</name>
-        <label>Contatto</label>
-        <locationX>314</locationX>
-        <locationY>431</locationY>
+        <name>get_lead</name>
+        <label>Lead</label>
+        <locationX>974</locationX>
+        <locationY>1007</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>link_activity_to_contact_by_fiscal_code</targetReference>
+            <targetReference>lead_counter_loop</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>FiscalCode__c</field>
             <operator>EqualTo</operator>
@@ -273,21 +487,13 @@
                 <elementReference>$Record.FiscalCode__c</elementReference>
             </value>
         </filters>
-        <object>Contact</object>
-        <outputReference>contact</outputReference>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>AccountId</queriedFields>
-    </recordLookups>
-    <recordLookups>
-        <name>get_contact_by_vatnumber</name>
-        <label>Contatto</label>
-        <locationX>578</locationX>
-        <locationY>431</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>link_activity_to_contact_by_fiscal_code</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
+        <filters>
+            <field>FiscalCode__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
         <filters>
             <field>VATNumber__c</field>
             <operator>EqualTo</operator>
@@ -295,18 +501,52 @@
                 <elementReference>$Record.VATNumber__c</elementReference>
             </value>
         </filters>
-        <object>Contact</object>
-        <outputReference>contact</outputReference>
+        <filters>
+            <field>VATNumber__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phone</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ClientNumber__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Phone</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>MobilePhone</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.ClientNumber__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>MobilePhone</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Lead</object>
         <queriedFields>Id</queriedFields>
-        <queriedFields>AccountId</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>320</locationX>
+        <locationX>584</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Find_Client_By</targetReference>
         </connector>
-        <filterLogic>or</filterLogic>
         <filters>
             <field>Type__c</field>
             <operator>EqualTo</operator>
@@ -321,11 +561,46 @@
                 <booleanValue>false</booleanValue>
             </value>
         </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>Contains</operator>
+            <value>
+                <stringValue>Chiamata</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Lead__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Contact__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Account__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <object>wrts_prcgvr__Activity__c</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <variables>
+        <name>accountID</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>contact</name>
         <dataType>SObject</dataType>
@@ -333,6 +608,24 @@
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <objectType>Contact</objectType>
+    </variables>
+    <variables>
+        <name>contact_counter</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>0</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>contact_id</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>counter</name>
@@ -344,6 +637,13 @@
         <value>
             <numberValue>0.0</numberValue>
         </value>
+    </variables>
+    <variables>
+        <name>leadId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>Notification</name>
