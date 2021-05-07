@@ -7264,6 +7264,10 @@
             <fullName>Non Inviata a SAP</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
