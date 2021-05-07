@@ -1,0 +1,13 @@
+.hdt_massive_loader_tab {
+    width: 100%;
+}
+
+.hdt_massive_loader_tab ul {
+    /* width: calc(100vw - 4rem); */
+    /* width: calc(100%); */
+}
+
+.hdt_massive_loader_tab li {
+    width: 50%;
+    text-align: center;
+}
