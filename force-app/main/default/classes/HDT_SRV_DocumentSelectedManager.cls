@@ -45,6 +45,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.DocumentAmount__c = Double.valueOf(secondoLivello.get('importo'));
             caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
+            caseRecord.SalesCompany__c = (String) primolivello.get('societa');
+            System.debug('società ' + (String) primolivello.get('societa'));
             caseRecord.Id = inputs[0].caseId;
             //caseRecord.ReadType__c = (String) secondoLivello.get('importo'); --> Richiamare WS ad hoc
             
