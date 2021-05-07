@@ -1,133 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>LoginGroup__c</members>
-        <members>Product2</members>
-        <members>Sale__c</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>LoginGroup__c</members>
-        <name>CustomTab</name>
-    </types>
-    <types>
-        <members>Municipalities</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>hdtApplyBillingProfileModal</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessPrecheck</members>
-        <members>hdtCreateNewEligibilityCriteria</members>
-        <members>hdtEligibilityCriteriaConfiguration</members>
-        <members>hdtEligibilityCriteriaParameters</members>
-        <members>hdtEligibilityCriteriaViewForm</members>
-        <members>hdtGestionePrivacyField</members>
-        <members>hdtSaleVas</members>
-        <members>hdtSearchEligibilityCriteria</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>SBQQ__ProductOption__c.Bonus_EE</members>
-        <members>SBQQ__ProductOption__c.Bonus_Gas</members>
-        <members>SBQQ__ProductOption__c.VAS_Fatturabili</members>
-        <members>SBQQ__QuoteLine__c.SBQQ__LineEditor</members>
-        <members>SBQQ__QuoteLine__c.SBQQ__StandardLineItemDrawer</members>
-        <name>FieldSet</name>
-    </types>
-    <types>
-        <members>LoginGroup__c.All</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>Asset.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>Asset.HDT_RT_SectionBonusforEEservice</members>
-        <members>Asset.HDT_RT_SectionBonusforGasservice</members>
-        <members>Asset.HDT_RT_SectionContributesforEEservice</members>
-        <members>Asset.HDT_RT_SectionContributesforGasservice</members>
-        <members>Asset.HDT_RT_VASConsumptionanalysis</members>
-        <members>Asset.HDT_RT_VASPoductsnotbillable</members>
-        <members>Asset.HDT_RT_VASServicesnotbillable</members>
-        <members>Order.HDT_RT_Voltura</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__Configuration_Attribute</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__Global_Attribute</members>
-        <members>SBQQ__Subscription__c.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionBonusforEEservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionBonusforGasservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionContributesforEEservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionContributesforGasservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_VASConsumptionanalysis</members>
-        <members>SBQQ__Subscription__c.HDT_RT_VASPoductsnotbillable</members>
-        <members>SBQQ__Subscription__c.HDT_RT_VASServicesnotbillable</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>HEROKU</members>
-        <name>RemoteSiteSetting</name>
-    </types>
-    <types>
-        <members>LoginGroup__c-Login Group Layout</members>
-        <members>Order-HDT_Voltura</members>
-        <members>Product2-CPQ Product Layout New</members>
+        <members>Case-HDT_Disattivazioni</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_ApexClasses</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_LC_ApplyBillingProfileModal</members>
-        <members>HDT_LC_BillingProfileForm</members>
-        <members>HDT_LC_ChildOrderProcessDetails</members>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_EligibilityCriteriaController</members>
-        <members>HDT_LC_EligibilityCriteriaCtrlHelper</members>
-        <members>HDT_LC_GestionePrivacyField</members>
-        <members>HDT_LC_OrderDossierWizard</members>
-        <members>HDT_LC_SaleActions</members>
-        <members>HDT_LC_SaleVas</members>
-        <members>HDT_QR_Contract</members>
-        <members>HDT_QR_EligibilityCriteria</members>
-        <members>HDT_QR_LoginGroupItem</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_PriceBook</members>
-        <members>HDT_QR_QuoteLine</members>
-        <members>HDT_QR_SaleServiceItem</members>
-        <members>HDT_QR_SearchPlug</members>
-        <members>HDT_QR_UserQueries</members>
-        <members>HDT_SRV_SaleServiceItem</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_UTL_SearchPlug</members>
-        <members>HDT_WRP_EligibilityCriteria</members>
-        <members>HDT_WS_HerokuAddressSearch</members>
+        <members>HDT_SRV_DocumentSelectedManager</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Asset.Typology__c</members>
-        <members>DocumentSelected__c.Position1__c</members>
-        <members>DocumentSelected__c.Position2__c</members>
-        <members>DocumentSelected__c.Position3__c</members>
-        <members>OrderItem.PowerFlow__c</members>
-        <members>OrderItem.Price__c</members>
-        <members>Product2.CategoryFamily__c</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__TargetField__c</members>
-        <members>SBQQ__ErrorCondition__c.SBQQ__TestedField__c</members>
-        <members>SBQQ__ProductAction__c.SBQQ__FilterField__c</members>
-        <members>SBQQ__ProductOption__c.Opportunity__c</members>
-        <members>SBQQ__QuoteLine__c.CategoryFamily__c</members>
-        <members>SBQQ__Subscription__c.Typology__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_OrderDossierWizard</members>
-        <name>AuraDefinitionBundle</name>
+        <members>HDT_UserInputFlow.Disattivazioni_Chiusura_Contatore</members>
+        <name>CustomMetadata</name>
     </types>
     <version>50</version>
 </Package>
