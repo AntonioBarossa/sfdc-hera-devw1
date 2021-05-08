@@ -6833,11 +6833,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.OLDUseTypeEnergy__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.OfficeSubjectCode__c</field>
         <readable>false</readable>
     </fieldPermissions>
