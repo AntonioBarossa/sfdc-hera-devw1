@@ -14,7 +14,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     deliberation = '';
     showDeliberation = false;
     disabledDeliberation = false;
-    showEsitoCheck = true;
+    showEsitoCheck = false;
     vasAmendDisabledInput = false;
     
     get value(){
