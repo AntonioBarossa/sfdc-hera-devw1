@@ -7264,6 +7264,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
         </values>
