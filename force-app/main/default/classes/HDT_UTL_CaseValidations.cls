@@ -18,7 +18,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
         || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' ||
-        caseType == 'Storno Rateizzazione'){
+        caseType == 'Storno Rateizzazione' || caseType == 'Blocco Sollecito/Interessi'){
 
             result = validatePagamenti(fields, caseType, currentCase);
 
@@ -57,6 +57,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
         }
 
         return result;
@@ -71,7 +75,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug(getFieldValue(fields, 'Type'));
 
-        if(caseType == 'Piano Rateizzazione'){
+        if(caseType == 'Piano Rateizzazione'){            
 
             if((fields == null || fields == '') && currentCase.AttachmentManagement__c == true){
 
@@ -88,6 +92,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 }
 
             }
+
+            Boolean deposit = Boolean.valueOf(getFieldValue(fields, 'Deposit__c'));
+            String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
+            Decimal depositAmount = Decimal.valueOf(getFieldValue(fields, 'DepositAmount__c'));
             
             Boolean applicationInterests = Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'));
             Integer requestedInstall = Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'));
@@ -99,7 +107,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
             String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
 
-            if(clientCategory.contains('SME')){
+            if(deposit && (depositPaymentMode == null || depositPaymentMode == '' || depositAmount == null)){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita Pagamento Acconto e Importo Acconto'));
+
+            }else if(clientCategory.contains('SME')){
 
                 if(applicationInterests == false && requestedInstall > 6){
 
@@ -139,7 +151,38 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
         
         
-        } else {
+        } else if(caseType == 'Variazione Domiciliazione'){
+            
+            BillingProfile__c billingProfile = caseValidationQr.getBillingProfileInfo(currentCase.BillingProfile__c);
+            String reason = getFieldValue(fields, 'Reason__c');
+
+
+            if(billingProfile.PaymentMethod__c != 'RID' && reason != 'Domiciliazione Non Attiva'){
+                
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Billing Profile non domiciliati è possibile inseire soltanto \'Domiciliazione Non Attiva\''));
+
+            }else{
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+        
+        
+        }else if (caseType == 'Blocco Sollecito/Interessi'){
+
+            String blockType = getFieldValue(fields, 'BlockType__c');
+
+                if(blockType.trim() != 'W' && blockType.trim() != '1'){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Tipo blocco può essere 1 o W'));
+
+                } else {
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                }
+
+        }else{
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 

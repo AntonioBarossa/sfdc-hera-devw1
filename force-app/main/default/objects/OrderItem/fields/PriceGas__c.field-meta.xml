@@ -2,8 +2,6 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>PriceGas__c</fullName>
     <externalId>false</externalId>
-    <formula>Product2.PriceBonusGas__c</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Prezzo</label>
     <precision>18</precision>
     <required>false</required>

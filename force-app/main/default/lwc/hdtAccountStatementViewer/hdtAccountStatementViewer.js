@@ -367,12 +367,12 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
         this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
     }
 
-    trackInformation(event){
+    runFlowFromAura(event){
         console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
         this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
     }
 
-    serviceCatalogBackendHandler(serviceOperation, context){
+    serviceCatalogBackendHandler(serviceOperation, parameters){
         console.log('# serviceCatalogBackendHandler #');
 
         if(idlist.length > 0){
@@ -390,7 +390,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             //});
 
             var recordsString = JSON.stringify(selectedRecord);
-            this.serviceCatalogBackendOperation(recordsString, serviceOperation, context);
+            this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
 
         } else {
             this.dispatchEvent(
@@ -404,7 +404,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
  
     }
 
-    serviceCatalogBackendOperation(recordsString, serviceOperation, context){
+    serviceCatalogBackendOperation(recordsString, serviceOperation, parameters){
         console.log('# serviceCatalogBackendOperation #');
 
         this.openMainSpinner();
@@ -418,7 +418,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 if(serviceOperation==='serviceCatalogHandler'){
                     this.serviceCatalogEvent(result.serviceCatalogId);
                 } else if(serviceOperation==='runFlowFromAura'){
-                    this.runFlowFromAuraEvent(result.serviceCatalogId, context);
+                    this.runFlowFromAuraEvent(result.serviceCatalogId, parameters);
                 }
             } else {
                 console.log('>>> result > ' + result.message);
@@ -443,11 +443,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     }
 
-    runFlowFromAuraEvent(serviceCatalogId, context){
+    runFlowFromAuraEvent(serviceCatalogId, parameters){
         console.log('>>> runFlowFromAura');
         const serviceCatalog = new CustomEvent("openauracmp", {
             //serviceCatalogId
-            detail: {context: context, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'runFlowFromAura'}
+            detail: {parameters: parameters, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'runFlowFromAura'}
         });
         // Dispatches the event.
         this.dispatchEvent(serviceCatalog);
@@ -456,7 +456,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     serviceCatalogEvent(serviceCatalogId){
         const serviceCatalog = new CustomEvent("openauracmp", {
             //serviceCatalogId
-            detail: {context: this.tabCode, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'serviceCatalogHandler'}
+            detail: {parameters: this.tabCode, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'serviceCatalogHandler'}
         });
         // Dispatches the event.
         this.dispatchEvent(serviceCatalog);
@@ -731,10 +731,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     viewResultMulesoftResponse(obj){
         console.log('>>> viewResult Mulesoft Response');
-        this.viewResultData.id = obj.data[0].codiceEsito;
-        this.viewResultData.resultDate = obj.data[0].dataEsisto;
-        this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
-        this.showViewResult = true;
+        console.log('>>>> viewResult obj > ' + JSON.stringify(obj.data));
+
+        if(obj.data.length > 0){
+            this.viewResultData.id = obj.data[0].codiceEsito;
+            this.viewResultData.resultDate = obj.data[0].dataEsisto;
+            this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
+            this.showViewResult = true;
+        } else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Nessun risultato per questa fattura',
+                    variant: 'warning'
+                }),
+            );
+        }
+
         this.closeMainSpinner();
     }
 

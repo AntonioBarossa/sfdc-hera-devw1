@@ -1,6 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
     <labels>
+        <fullName>Error</fullName>
+        <categories>Cross</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoader</shortDescription>
+        <value>Massive Loader</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderCompleteImport</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderCompleteImport</shortDescription>
+        <value>Complete Import</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderDesiredAction</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderDesiredAction</shortDescription>
+        <value>What action do you want to carry out?</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderExportTemplate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderExportTemplate</shortDescription>
+        <value>Export Template</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderExtentionError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderExtentionError</shortDescription>
+        <value>The format of the uploaded file is not supported. Only files in the CSV format can be uploaded.</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderFileCheckError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderFileCheckError</shortDescription>
+        <value>The uploaded file is not compliant with the selected process.</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderFileDownload</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderFileDownload</shortDescription>
+        <value>Download CSV</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderFileNameError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderFileNameError</shortDescription>
+        <value>The name of the uploaded file does not match the selected process.</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderFileNotFound</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderFileNotFound</shortDescription>
+        <value>The selected template was not found.</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderFileUpload</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderFileUpload</shortDescription>
+        <value>Upload File</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderGoToRecord</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderGoToRecord</shortDescription>
+        <value>Go to Record</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderImportProcesses</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderImportProcesses</shortDescription>
+        <value>Import Processes</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderImportSuccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderImportSuccess</shortDescription>
+        <value>The upload finished successfully. ID:{0}</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderParsingError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderParsingError</shortDescription>
+        <value>There was a parsing error in the file. Check the file and reupload it.</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderPicklistPlaceholder</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderPicklistPlaceholder</shortDescription>
+        <value>Select a Type</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderRequestType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderRequestType</shortDescription>
+        <value>Request type</value>
+    </labels>
+    <labels>
+        <fullName>MassiveLoaderReset</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MassiveLoaderReset</shortDescription>
+        <value>Reset</value>
+    </labels>
+    <labels>
         <fullName>MockEndPointAccountStatement</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -13,5 +140,13 @@
         <protected>false</protected>
         <shortDescription>MockSessionId</shortDescription>
         <value>00D58000000KR1c!AQgAQJyKK5vLgfE7PGN5RYGw3eh9HuBHBHFbIyFxHlcCa6l1Ju40yJgft9qRroF9NU.cn0RPU_E7XFTNiK5RAETcWY1.6G5y</value>
+    </labels>
+    <labels>
+        <fullName>Success</fullName>
+        <categories>Cross</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Success</shortDescription>
+        <value>Success</value>
     </labels>
 </CustomLabels>

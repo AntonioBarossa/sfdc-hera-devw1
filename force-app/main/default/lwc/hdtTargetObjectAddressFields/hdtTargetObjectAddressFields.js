@@ -8,6 +8,7 @@ import getAddressInd from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServi
 import getAddressRev from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceVer';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 export default class hdtTargetObjectAddressFields extends LightningElement {
+    
     @api objectapiname;
     @api fieldsAddressObject=[];
     @api wrapObjectInput= [];
@@ -647,6 +648,7 @@ handleChangeComune(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+
     if(this.IndEstero==true){
 
     }else{
@@ -661,6 +663,7 @@ handleChangeComune(event){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
+
                     if(this.IndEstero==true)
                     {
                         this.booleanForm=false;
@@ -673,7 +676,6 @@ handleChangeComune(event){
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
                     }
                     
-
                 }
                 else{
                     let event2;
@@ -699,7 +701,9 @@ handleChangeComune(event){
     
         });
     }
+
     }
+
     
 
         this.textFieldValue = event.target.value;
@@ -752,9 +756,11 @@ handleChangeIndirizz(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+
     if(this.IndEstero==true){
 
     }else{
+
 
     
     if((event.target.value.length==5 && event.target.name =='Via')){
@@ -796,7 +802,9 @@ handleChangeIndirizz(event){
     
         });
     }
+
     }
+
     
 
         this.textFieldValue = event.target.value;
@@ -953,11 +961,13 @@ disabledverifyFieldsAddressDisabled(){
             this.visibleSelezioneIndirizzi=true;
         }
 
+
         if(this.IndEstero==true){
             this.stato='Estero';
         }
 
         this.theRecord['Stato'] = this.stato;
+
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
@@ -1163,6 +1173,7 @@ disabledverifyFieldsAddressDisabled(){
     }
 
     handleKeyPress(event){
+
         console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
         console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
         console.log('EVENT lenght: '+ JSON.stringify(event.target.value.length)); 
@@ -1254,6 +1265,7 @@ disabledverifyFieldsAddressDisabled(){
         }
     } 
 }  
+
 
 
 }
