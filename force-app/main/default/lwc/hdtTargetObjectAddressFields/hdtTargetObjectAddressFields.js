@@ -8,7 +8,6 @@ import getAddressInd from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServi
 import getAddressRev from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceVer';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 export default class hdtTargetObjectAddressFields extends LightningElement {
-    
     @api objectapiname;
     @api fieldsAddressObject=[];
     @api wrapObjectInput= [];
@@ -676,6 +675,7 @@ handleChangeComune(event){
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
                     }
                     
+
                 }
                 else{
                     let event2;
@@ -702,7 +702,9 @@ handleChangeComune(event){
         });
     }
 
+
     }
+
 
     
 
@@ -803,7 +805,9 @@ handleChangeIndirizz(event){
         });
     }
 
+
     }
+
 
     
 
@@ -1173,6 +1177,11 @@ disabledverifyFieldsAddressDisabled(){
     }
 
     handleKeyPress(event){
+        console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
+        console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
+        console.log('EVENT lenght: '+ JSON.stringify(event.target.value.length)); 
+        console.log('EVENT code: '+ JSON.stringify(event.code)); 
+        console.log('EVENT key: '+ JSON.stringify(event.key));
 
         console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
         console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
@@ -1180,7 +1189,9 @@ disabledverifyFieldsAddressDisabled(){
         console.log('EVENT code: '+ JSON.stringify(event.code)); 
         console.log('EVENT key: '+ JSON.stringify(event.key));
 
+
         if(event.code=='Enter'){
+
 
         if(event.target.value.length ==2 && event.target.name == 'Comune' ){
             console.log('entra in if comune');
