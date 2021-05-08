@@ -9828,16 +9828,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Event.softphone_it__IWS_Interaction_ID__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Event.softphone_it__IWS_Media_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>FUBProcessingItem__c.Campaign__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -10044,16 +10034,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Individual.MilitaryService</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Individual.OLDPrivacyMarketingChoiceSource__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Individual.OLDPrivacyProfilingChoiceSource__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10554,11 +10534,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.NumberOfLocations__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.OLDInterestArea__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13844,11 +13819,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Product2.CostExemption__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Product2.Da_Esportare__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17538,11 +17508,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SBQQ__ProductOption__c.CheckAC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SBQQ__ProductOption__c.ClientAge__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17954,11 +17919,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.ProductImage__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__ProductOption__c.Product_image__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18577,11 +18537,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.CheckAC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.ClientAge__c</field>
         <readable>true</readable>
@@ -18957,11 +18912,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.Product_Image__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.QuoteIDCustom__c</field>
         <readable>true</readable>
@@ -18969,11 +18919,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.QuoteLine__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SBQQ__QuoteLine__c.Quote_Image__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25513,16 +25458,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Task.softphone_it__IWS_Interaction_ID__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Task.softphone_it__IWS_Media_Name__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>TechnicalOfferItem__c.Definition__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -26519,41 +26454,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>et4ae5__IndividualLink__c.et4ae5__NumberOfTotalClicks__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__ChangeType__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__EntityName__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__EventDefinitionKey__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__Fields__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__FilterFields__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__OwnerMid__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>et4ae5__Journey__c.et4ae5__RecordId__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -30225,10 +30125,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Account.HDT_RT_Distributore</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <recordType>Account.HDT_RT_Other</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
