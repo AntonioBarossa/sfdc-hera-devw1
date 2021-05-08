@@ -25,9 +25,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if (caseType == 'Variazione Anagrafica Cliente') {
             if (currentCase.Subprocess__c == 'Modifica Dati di Contatto') {
-                result = validateModificaDatiContatto(fields);
+                result = validateModificaDatiContatto(fields, currentCase.ContactId);
             } else if (currentCase.Subprocess__c == 'Modifica Dati di Recapito') {
                 result = validateModificaDatiRecapito(fields);
+            } else if (currentCase.Subprocess__c == 'Modifica Dati Fiscali') {
+                result = validateModificaDatiFiscali(fields, currentCase.AccountId);
+            } else if (currentCase.Subprocess__c == 'Variazione Gruppo IVA') {
+                result = validateVariazioneGruppoIva(fields, currentCase.AccountId);
             }
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
@@ -192,18 +196,35 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    private String validateModificaDatiContatto(String fields) {
+    private String validateModificaDatiContatto(String fields, String contactId) {
         String result;
 
-        String newEmail = getFieldValue(fields, 'Email__c');
-        String newMobile = getFieldValue(fields, 'Mobile__c');
-        String newPhone = getFieldValue(fields, 'PhoneNumber__c');
-        System.debug('validateModificaDatiContatto: ' + newEmail + ' - ' + newPhone + ' - ' + newMobile);
+        String newEmail = getFieldValue(fields, 'Email__c') != null ? getFieldValue(fields, 'Email__c') : '';
+        String newMobile = getFieldValue(fields, 'Mobile__c') != null ? getFieldValue(fields, 'Mobile__c') : '';
+        String newPhone = getFieldValue(fields, 'PhoneNumber__c') != null ? getFieldValue(fields, 'PhoneNumber__c') : '';
+        String newPec = getFieldValue(fields, 'CertifiedEmail__c') != null ? getFieldValue(fields, 'CertifiedEmail__c') : '';
+        String newFax = getFieldValue(fields, 'Fax__c') != null ? getFieldValue(fields, 'Fax__c') : '';
+
+        HDT_QR_Contact queryHandler = new HDT_QR_Contact();
+        Contact c = queryHandler.getRecordById(contactId);
+        String currentEmail = c.Email != null ? c.Email : '';
+        String currentMobile = c.MobilePhone != null ? c.MobilePhone : '';
+        String currentPhone = c.Phone != null ? c.Phone : '';
+        String currentPec = c.CertifiedEmail__c != null ? c.CertifiedEmail__c : '';
+        String currentFax = c.Fax != null ? c.Fax : '';
+
+        System.debug('validateModificaDatiContatto: current ' + c);
+        System.debug('validateModificaDatiContatto: new ' + newEmail + ';' + newPhone + ';' + newMobile + ';' + newFax + ';' + newPec);
+
+        if (newEmail.equals(currentEmail) && newMobile.equals(currentMobile) && newPhone.equals(currentPhone)
+            && newPec.equals(currentPec) && newFax.equals(currentFax)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato di contatto.'));
+            return result;
+        }
 
         Boolean noEmail = String.isBlank(newEmail) || newEmail.equalsIgnoreCase('null');
         Boolean noMobile = String.isBlank(newMobile) || newMobile.equalsIgnoreCase('null');
         Boolean noPhone = String.isBlank(newPhone) || newPhone.equalsIgnoreCase('null');
-        System.debug('validateModificaDatiContatto: ' + noEmail + ' - ' + noMobile + ' - ' + noPhone);
 
         if (noEmail && noMobile && noPhone) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire almeno un riferimento telefonico o un indirizzo Email.'));
@@ -246,6 +267,58 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             if (!String.isEmpty(electronicInvoicingError)) {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', electronicInvoicingError));
             }
+        }
+
+        return result;
+    }
+
+    private String validateModificaDatiFiscali(String fields, String accountId) {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        String newFirstName = getFieldValue(fields, 'FirstName__c') != null ? getFieldValue(fields, 'FirstName__c') : '';
+        String newLastName = getFieldValue(fields, 'LastName__c') != null ? getFieldValue(fields, 'LastName__c') : '';
+        String newFiscaleCode = getFieldValue(fields, 'FiscalCode__c') != null ? getFieldValue(fields, 'FiscalCode__c') : '';
+        String newVatNumber = getFieldValue(fields, 'VatNumber__c') != null ? getFieldValue(fields, 'VatNumber__c') : '';
+        String newMarking = getFieldValue(fields, 'CustomerMarking__c') != null ? getFieldValue(fields, 'CustomerMarking__c') : '';
+
+        HDT_QR_Account queryHandler = new HDT_QR_Account();
+        String queryFields = 'FirstName__c,LastName__c,FiscalCode__c,VATNumber__c,CustomerMarking__c';
+        Account a = queryHandler.getRecordById(accountId, queryFields);
+        String currentFirstName = a.FirstName__c != null ? a.FirstName__c : '';
+        String currentLastName = a.LastName__c != null ? a.LastName__c : '';
+        String currentFiscaleCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
+        String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
+        String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
+
+        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
+            && newVatNumber.equals(currentVatNumber) && newMarking.equals(currentMarking)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
+        }
+
+        return result;
+    }
+
+    private String validateVariazioneGruppoIva(String fields, String accountId) {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+
+        Boolean newIsJoined = Boolean.valueOf(getFieldValue(fields, 'IsVATGroupJoined__c'));
+        String newGroup = getFieldValue(fields, 'VATGroup__c') != null ? getFieldValue(fields, 'VATGroup__c') : '';
+        String newStartDate = getFieldValue(fields, 'VATGroupStartDate__c') != null ? getFieldValue(fields, 'VATGroupStartDate__c') : '';
+        String newEndDate = getFieldValue(fields, 'VATGroupEndDate__c') != null ? getFieldValue(fields, 'VATGroupEndDate__c') : '';
+
+        HDT_QR_Account queryHandler = new HDT_QR_Account();
+        String queryFields = 'IsVATGroupJoined__c,VATGroup__c,VATGroupStartDate__c,VATGroupEndDate__c';
+        Account a = queryHandler.getRecordById(accountId, queryFields);
+        Boolean currentIsJoined = a.IsVATGroupJoined__c;
+        String currentGroup = a.VATGroup__c != null ? a.VATGroup__c : '';
+        String currentStartDate = String.valueOf(a.VATGroupStartDate__c) != null ? String.valueOf(a.VATGroupStartDate__c) : '';
+        String currentEndDate = String.valueOf(a.VATGroupEndDate__c) != null ? String.valueOf(a.VATGroupEndDate__c) : '';
+
+        System.debug('validateVariazioneGruppoIva: current ' + currentIsJoined + ';' + currentGroup + ';' + currentStartDate + ';' + currentEndDate);
+        System.debug('validateVariazioneGruppoIva: new ' + newIsJoined + ';' + newGroup + ';' + newStartDate + ';' + newEndDate);
+
+        if (newIsJoined == currentIsJoined && newGroup.equals(currentGroup) && newStartDate.equals(currentStartDate) && newEndDate.equals(currentEndDate)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un campo per poter proseguire.'));
         }
 
         return result;

@@ -9,6 +9,8 @@ public inherited sharing class HDT_QR_Contact {
             MobilePhone,
             Phone,
             Email,
+            Fax,
+            CertifiedEmail__c,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
