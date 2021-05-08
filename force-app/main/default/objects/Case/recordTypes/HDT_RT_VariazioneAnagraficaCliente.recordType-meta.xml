@@ -7237,6 +7237,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Chiuso</fullName>
             <default>false</default>
         </values>

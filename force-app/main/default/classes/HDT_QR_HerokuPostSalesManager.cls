@@ -41,6 +41,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         FROM wrts_prcgvr__AsyncJob__c
         WHERE wrts_prcgvr__JobItem__c = :recordId
         AND (wrts_prcgvr__Status__c = 'Completed'
+        
             OR wrts_prcgvr__Status__c = 'Queued')
         WITH SECURITY_ENFORCED
         LIMIT 1];
