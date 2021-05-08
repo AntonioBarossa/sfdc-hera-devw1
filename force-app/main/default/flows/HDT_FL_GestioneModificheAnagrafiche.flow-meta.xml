@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Gestione_Allineamento_Anagrafica</name>
         <label>Gestione Allineamento Anagrafica</label>
-        <locationX>1011</locationX>
+        <locationX>1106</locationX>
         <locationY>363</locationY>
         <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
@@ -33,7 +33,7 @@
     <assignments>
         <name>Set_Sottoprocesso_as_Tipo_Processo</name>
         <label>Set Tipo Processo = Sottoprocesso</label>
-        <locationX>2032</locationX>
+        <locationX>2127</locationX>
         <locationY>1038</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
@@ -49,7 +49,7 @@
     <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
-        <locationX>842</locationX>
+        <locationX>937</locationX>
         <locationY>283</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
@@ -65,7 +65,7 @@
     <assignments>
         <name>Set_Tipo_Processo_Allineamento_Anagrafica</name>
         <label>Set Tipo Processo Allineamento Anagrafica</label>
-        <locationX>1342</locationX>
+        <locationX>1437</locationX>
         <locationY>363</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
@@ -81,7 +81,7 @@
     <decisions>
         <name>Check_Processo</name>
         <label>Check Processo</label>
-        <locationX>830</locationX>
+        <locationX>925</locationX>
         <locationY>1011</locationY>
         <defaultConnector>
             <targetReference>Set_Tipo_Processo</targetReference>
@@ -233,7 +233,7 @@
     <decisions>
         <name>Check_Processo_2</name>
         <label>Check Processo 2</label>
-        <locationX>2516</locationX>
+        <locationX>2611</locationX>
         <locationY>491</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_Da_Inviare</targetReference>
@@ -321,7 +321,7 @@
     <decisions>
         <name>Check_Pulsante_Premuto</name>
         <label>Pulsante Premuto?</label>
-        <locationX>2329</locationX>
+        <locationX>2424</locationX>
         <locationY>292</locationY>
         <defaultConnector>
             <targetReference>Refresh_Case</targetReference>
@@ -390,7 +390,7 @@
     <recordLookups>
         <name>Get_Billing_Profile</name>
         <label>Get Billing Profile</label>
-        <locationX>1209</locationX>
+        <locationX>1304</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -411,7 +411,7 @@
     <recordLookups>
         <name>Get_Target_Contact</name>
         <label>Get Target Contact</label>
-        <locationX>1351</locationX>
+        <locationX>1446</locationX>
         <locationY>895</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -432,8 +432,8 @@
     <recordLookups>
         <name>Query_Case</name>
         <label>Get Records</label>
-        <locationX>451</locationX>
-        <locationY>1016</locationY>
+        <locationX>499</locationX>
+        <locationY>1088</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo</targetReference>
@@ -453,7 +453,7 @@
     <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>2340</locationX>
+        <locationX>2435</locationX>
         <locationY>489</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -474,7 +474,7 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Contatto</name>
         <label>Predefault Dati di Contatto</label>
-        <locationX>1514</locationX>
+        <locationX>1609</locationX>
         <locationY>895</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -528,7 +528,7 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Recapito</name>
         <label>Predefault Dati di Recapito</label>
-        <locationX>1547</locationX>
+        <locationX>1642</locationX>
         <locationY>759</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -594,7 +594,7 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali</name>
         <label>Predefault Dati Fiscali</label>
-        <locationX>1115</locationX>
+        <locationX>1210</locationX>
         <locationY>1052</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -645,7 +645,7 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali_No_Validation</name>
         <label>Predefault Dati Fiscali No Validation</label>
-        <locationX>1569</locationX>
+        <locationX>1664</locationX>
         <locationY>1165</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -681,7 +681,7 @@
     <recordUpdates>
         <name>Predefault_Gruppo_IVA</name>
         <label>Predefault Gruppo IVA</label>
-        <locationX>840</locationX>
+        <locationX>935</locationX>
         <locationY>1421</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -726,7 +726,7 @@
     <recordUpdates>
         <name>Predefault_Gruppo_IVA_No_Validation</name>
         <label>Predefault Gruppo IVA No Validation</label>
-        <locationX>2031</locationX>
+        <locationX>2126</locationX>
         <locationY>1429</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -762,7 +762,7 @@
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>2773</locationX>
+        <locationX>2868</locationX>
         <locationY>492</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
@@ -786,7 +786,7 @@
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>2522</locationX>
+        <locationX>2617</locationX>
         <locationY>781</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -807,7 +807,7 @@
     <recordUpdates>
         <name>Update_Esercizio_Diritti_Privacy</name>
         <label>Update Esercizio Diritti Privacy</label>
-        <locationX>2523</locationX>
+        <locationX>2618</locationX>
         <locationY>198</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -840,7 +840,7 @@ Processo di {!Query_Case.Type}
 Inserisci manualmente i seguenti campi:</description>
         <name>InputFieldsModAnag</name>
         <label>Input Campi</label>
-        <locationX>2031</locationX>
+        <locationX>2126</locationX>
         <locationY>290</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -858,15 +858,15 @@ Inserisci manualmente i seguenti campi:</description>
             <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>addressType</name>
-                <value>
-                    <stringValue>BillingProfile</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>accountId</name>
                 <value>
                     <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1012,7 +1012,7 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>SelectBillingProfileScreen</name>
         <label>Selezione Billing Profile</label>
-        <locationX>1003</locationX>
+        <locationX>1098</locationX>
         <locationY>757</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1072,7 +1072,7 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>Selezione_Contatto</name>
         <label>Selezione Contatto</label>
-        <locationX>1198</locationX>
+        <locationX>1293</locationX>
         <locationY>895</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1142,7 +1142,7 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>3034</locationX>
+        <locationX>3129</locationX>
         <locationY>492</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1165,8 +1165,8 @@ Inserisci manualmente i seguenti campi:</description>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>39</locationX>
-        <locationY>998</locationY>
+        <locationX>50</locationX>
+        <locationY>1070</locationY>
         <connector>
             <targetReference>Query_Case</targetReference>
         </connector>
@@ -1175,7 +1175,7 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2335</locationX>
+        <locationX>2430</locationX>
         <locationY>50</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1206,7 +1206,7 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Disassociazione_Utente_Web</name>
         <label>Gestione Disassociazione Utente Web</label>
-        <locationX>521</locationX>
+        <locationX>616</locationX>
         <locationY>504</locationY>
         <flowName>HDT_FL_Gestione_Modifiche_Anagrafiche_Disassociazione_Utente_Web</flowName>
         <inputAssignments>
@@ -1219,9 +1219,9 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Privacy</name>
         <label>Gestione Privacy</label>
-        <locationX>260</locationX>
-        <locationY>801</locationY>
-        <flowName>Gestione_Modifiche_Anagrafiche_Modifica_Privacy</flowName>
+        <locationX>399</locationX>
+        <locationY>855</locationY>
+        <flowName>HDT_FL_Gestione_Modifiche_Anagrafiche_Modifica_Privacy</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
