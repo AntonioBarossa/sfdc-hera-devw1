@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CustomerMarking__c</fullName>
-    <description>la marcatura cliente associata al dato record di product option.</description>
+    <fullName>NomeBundle__c</fullName>
     <externalId>false</externalId>
-    <label>Marcatura Cliente</label>
-    <length>150</length>
+    <formula>SBQQ__ConfiguredSKU__r.Name + &quot;_&quot; + SBQQ__ConfiguredSKU__r.Version__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Nome Bundle</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>

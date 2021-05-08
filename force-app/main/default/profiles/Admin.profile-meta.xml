@@ -2159,6 +2159,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.VasDuration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.VasPracticeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16748,6 +16753,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NomeBundle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.NumberRateMonthly__c</field>
         <readable>true</readable>
@@ -17140,6 +17150,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.Service__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.ServicePointLinkItem__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18589,6 +18604,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.ServicePointLinkItem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Service__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18620,6 +18640,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Surface__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.TextInPrint__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19909,6 +19934,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Subscription__c.CampaignName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.CategoryFamily__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20709,6 +20739,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Subscription__c.TextInPrint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Subscription__c.Typology__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20880,6 +20915,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__SummaryVariable__c.SBQQ__ValueElement__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.SupplyCity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.SupplyProvince__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.SupplyZipCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

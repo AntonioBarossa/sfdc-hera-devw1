@@ -2159,6 +2159,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Asset.VasDuration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Asset.VasPracticeCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15884,6 +15889,66 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__Field__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__FilterFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__FilterType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__FilterVariable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__Index__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__Object__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__Operator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__ParentRuleIsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__RuleTargetsCalculator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__TestedFormula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__TestedVariable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__PriceCondition__c.SBQQ__Value__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__PriceSchedule__c.SBQQ__Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16608,6 +16673,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.NomeBundle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.NumberRateMonthly__c</field>
         <readable>true</readable>
@@ -17000,6 +17070,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SBQQ__ProductOption__c.Service__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__ProductOption__c.ServicePointLinkItem__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18379,6 +18454,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.ServicePointLinkItem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Service__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18410,6 +18490,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.Surface__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.TextInPrint__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18750,11 +18835,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__SubscriptionConsumptionSchedule__c.SBQQ__UnitOfMeasure__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>SBQQ__Subscription__c.Typology__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
