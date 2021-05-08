@@ -1,210 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Vendita_Record_Page</members>
-        <name>FlexiPage</name>
-    </types>
-    <types>
-        <members>FileTemplateColumn__c</members>
-        <members>FileTemplate__c</members>
-        <members>HDT_MassiveLoaderProcess__mdt</members>
-        <members>MassiveLoaderRequest__c</members>
+        <members>ServicePoint__c</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>FileTemplate__c</members>
-        <members>MassiveLoader</members>
-        <members>MassiveLoaderRequest__c</members>
-        <name>CustomTab</name>
+        <members>HDT_CampaignManager</members>
+        <members>HDT_EditPublicListView</members>
+        <members>HDT_MarketingCloud</members>
+        <members>HDT_SalesforceCPQAdmin</members>
+        <members>HDT_SalesforceCPQPartner</members>
+        <members>HDT_SalesforceCPQUser</members>
+        <name>PermissionSet</name>
     </types>
     <types>
-        <members>hdtMassiveLoader</members>
+        <members>HDT_LC_ConfigureProduct</members>
+        <members>HDT_LC_SaleActions</members>
+        <members>HDT_LC_SaleServiceContainer</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>BillingProfile__c.InvoicingAddressFormula__c</members>
+        <members>Sale__c.CancellationReason__c</members>
+        <members>ServicePoint__c.ImplantType__c</members>
+        <members>ServicePoint__c.SupplyAddress__c</members>
+        <members>ServicePoint__c.SupplyType__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>HDT_LCP_SellingWizard</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtChildOrderProcessActions</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtChildOrderProcessPrecheck</members>
+        <members>hdtConfigureProduct</members>
+        <members>hdtOrderDossierWizardActions</members>
+        <members>hdtSaleActions</members>
+        <members>hdtTargetObjectAddressFields</members>
+        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>CustomLabels</members>
-        <name>CustomLabels</name>
-    </types>
-    <types>
-        <members>MassiveLoaderRequest__c.All</members>
-        <members>MassiveLoaderRequest__c.Richieste_Recenti</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>Order.HDT_RT_Attivazione</members>
-        <members>Order.HDT_RT_AttivazioneConModifica</members>
-        <members>Order.HDT_RT_CambioOfferta</members>
-        <members>Order.HDT_RT_CambioUso</members>
-        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_Default</members>
-        <members>Order.HDT_RT_OrderDossier</members>
-        <members>Order.HDT_RT_Proroga</members>
-        <members>Order.HDT_RT_RiattivazioniNonMorose</members>
-        <members>Order.HDT_RT_ScontiBonus</members>
-        <members>Order.HDT_RT_Subentro</members>
-        <members>Order.HDT_RT_SwitchIn</members>
-        <members>Order.HDT_RT_SwitchInVolturaTecnica</members>
-        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
-        <members>Order.HDT_RT_VAS</members>
-        <members>Order.HDT_RT_Voltura</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_SectionBonusForGasService</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_SectionBonusforEEservice</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_SectionContributesforEEservice</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_SectionContributesforGasservice</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_VASConsumptionanalysis</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_VASPoductsnotbillable</members>
-        <members>SBQQ__ProductOption__c.HDT_RT_VASServicesnotbillable</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_SectionBonusforEEservice</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_SectionBonusforGasservice</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_SectionContributesforEEservice</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_SectionContributesforGasservice</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_VASConsumptionanalysis</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_VASPoductsnotbillable</members>
-        <members>SBQQ__QuoteLine__c.HDT_RT_VASServicesnotbillable</members>
-        <members>SBQQ__Subscription__c.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionBonusforEEservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionBonusforGasservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionContributesforEEservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_SectionContributesforGasservice</members>
-        <members>SBQQ__Subscription__c.HDT_RT_VASConsumptionanalysis</members>
-        <members>SBQQ__Subscription__c.HDT_RT_VASPoductsnotbillable</members>
-        <members>SBQQ__Subscription__c.HDT_RT_VASServicesnotbillable</members>
-        <name>RecordType</name>
-    </types>
-    <types>
-        <members>FileTemplateColumn__c-Layout FileTemplateColumn</members>
-        <members>FileTemplate__c-Layout FileTemplate</members>
-        <members>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</members>
-        <members>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_ApexClasses</members>
-        <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>HDT_BA_MassiveLoader</members>
-        <members>HDT_LC_MassiveLoader</members>
-        <members>HDT_QR_ContentDocumentLink</members>
-        <members>HDT_QR_ContentVersion</members>
-        <members>HDT_QR_FileTemplate</members>
-        <members>HDT_QR_MassiveLoaderProcess</members>
-        <members>HDT_QR_MassiveLoaderRequest</members>
-        <members>HDT_QR_StaticResource</members>
-        <members>HDT_SRV_MassiveLoaderRequest</members>
-        <members>HDT_UTL_Constants</members>
-        <members>HDT_UTL_Utils</members>
-        <name>ApexClass</name>
-    </types>
-    <types>
-        <members>Asset.CategoryFamily__c</members>
-        <members>BillingProfile__c.CompanyOwner__c</members>
-        <members>Campaign.CompanyOwner__c</members>
-        <members>Case.CompanyOwner__c</members>
-        <members>DocumentalActivity__c.CompanyOwner__c</members>
-        <members>EligibilityCriteria__c.Channel__c</members>
-        <members>EligibilityCriteria__c.CompanyOwner__c</members>
-        <members>EligibilityCriteria__c.OriginMarket__c</members>
-        <members>FileTemplateColumn__c.DataType__c</members>
-        <members>FileTemplateColumn__c.FileTemplate__c</members>
-        <members>FileTemplateColumn__c.HeaderApiName__c</members>
-        <members>FileTemplateColumn__c.HeaderName__c</members>
-        <members>FileTemplateColumn__c.Index__c</members>
-        <members>FileTemplateColumn__c.Mandatory__c</members>
-        <members>FileTemplateColumn__c.SobjectType__c</members>
-        <members>FileTemplateColumn__c.ValidationRegex__c</members>
-        <members>FileTemplate__c.FileDelimiter__c</members>
-        <members>FileTemplate__c.FileExtension__c</members>
-        <members>FileTemplate__c.FileTemplateApiName__c</members>
-        <members>FileTemplate__c.FileTemplateName__c</members>
-        <members>FileTemplate__c.FileType__c</members>
-        <members>FileTemplate__c.HeadLineIndex__c</members>
-        <members>HDT_MassiveLoaderProcess__mdt.IsActive__c</members>
-        <members>HDT_MassiveLoaderProcess__mdt.Priority__c</members>
-        <members>Individual.CompanyOwner__c</members>
-        <members>MassiveLoaderRequest__c.Phase__c</members>
-        <members>MassiveLoaderRequest__c.Priority__c</members>
-        <members>MassiveLoaderRequest__c.ProcessType__c</members>
-        <members>MassiveLoaderRequest__c.RequestKO__c</members>
-        <members>MassiveLoaderRequest__c.RequestOK__c</members>
-        <members>MassiveLoaderRequest__c.Status__c</members>
-        <members>MassiveLoaderRequest__c.TotalRequest__c</members>
-        <members>Opportunity.CompanyOwner__c</members>
-        <members>Order.PreviousTrader__c</members>
-        <members>OrderItem.KeepConsumptionsAnalysis__c</members>
-        <members>OrderItem.TextInPrint__c</members>
-        <members>OrderItem.Version__c</members>
-        <members>Product2.CategoryFamily__c</members>
-        <members>PushTracking__c.CompanyOwner__c</members>
-        <members>SBQQ__ProductOption__c.ContinuityChangeOffer__c</members>
-        <members>SBQQ__ProductOption__c.DelayDay__c</members>
-        <members>SBQQ__ProductOption__c.KeepConsumptionsAnalysis__c</members>
-        <members>SBQQ__ProductOption__c.NomeBundle__c</members>
-        <members>SBQQ__ProductOption__c.ServicePointLinkItem__c</members>
-        <members>SBQQ__ProductOption__c.Service__c</members>
-        <members>SBQQ__QuoteLine__c.KeepConsumptionsAnalysis__c</members>
-        <members>SBQQ__QuoteLine__c.ServicePointLinkItem__c</members>
-        <members>SBQQ__QuoteLine__c.TextInPrint__c</members>
-        <members>SBQQ__Subscription__c.CampaignName__c</members>
-        <members>SBQQ__Subscription__c.CategoryFamily__c</members>
-        <members>SBQQ__Subscription__c.Channel__c</members>
-        <members>SBQQ__Subscription__c.ClientAge__c</members>
-        <members>SBQQ__Subscription__c.ConsumptionRangeEE__c</members>
-        <members>SBQQ__Subscription__c.CustomerMarking__c</members>
-        <members>SBQQ__Subscription__c.DelayDayGas__c</members>
-        <members>SBQQ__Subscription__c.DelayDay__c</members>
-        <members>SBQQ__Subscription__c.DurationDayGas__c</members>
-        <members>SBQQ__Subscription__c.DurationDay__c</members>
-        <members>SBQQ__Subscription__c.GreenGasOption__c</members>
-        <members>SBQQ__Subscription__c.IVA__c</members>
-        <members>SBQQ__Subscription__c.KeepConsumptionsAnalysis__c</members>
-        <members>SBQQ__Subscription__c.LoginGroup__c</members>
-        <members>SBQQ__Subscription__c.Login__c</members>
-        <members>SBQQ__Subscription__c.PowerFlow__c</members>
-        <members>SBQQ__Subscription__c.Price__c</members>
-        <members>SBQQ__Subscription__c.SupplyCity__c</members>
-        <members>SBQQ__Subscription__c.SupplyProvince__c</members>
-        <members>SBQQ__Subscription__c.SupplyZipCode__c</members>
-        <members>SBQQ__Subscription__c.TextInPrint__c</members>
-        <members>SBQQ__Subscription__c.UseCategory__c</members>
-        <members>SBQQ__Subscription__c.Version__c</members>
-        <members>SMSTracking__c.CompanyOwner__c</members>
-        <members>Sale__c.CompanyOwner__c</members>
-        <members>User.Job__c</members>
-        <members>User.UserCompany__c</members>
-        <members>et4ae5__IndividualEmailResult__c.CompanyOwner__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_MassiveLoaderContainer</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>HDT_MassiveLoaderProcess.CambioOfferta</members>
-        <members>HDT_MassiveLoaderProcess.CambioUso</members>
-        <members>HDT_MassiveLoaderProcess.CaricamentoCGC</members>
-        <members>HDT_MassiveLoaderProcess.Disattivazioni</members>
-        <members>HDT_MassiveLoaderProcess.MUC</members>
-        <members>HDT_MassiveLoaderProcess.Morosita</members>
-        <members>HDT_MassiveLoaderProcess.PrimaAttivazione</members>
-        <members>HDT_MassiveLoaderProcess.Subentro</members>
-        <members>HDT_MassiveLoaderProcess.SubentroSuGdMChiuso</members>
-        <members>HDT_MassiveLoaderProcess.SwitchIn</members>
-        <members>HDT_MassiveLoaderProcess.SwitchInReseller</members>
-        <members>HDT_MassiveLoaderProcess.TariffeSconti</members>
-        <members>HDT_MassiveLoaderProcess.VAS</members>
-        <members>HDT_MassiveLoaderProcess.Variazioni</members>
-        <members>HDT_MassiveLoaderProcess.VolturaTecnica</members>
-        <name>CustomMetadata</name>
+        <members>Hera_Service_Console</members>
+        <name>CustomApplication</name>
     </types>
     <version>50</version>
 </Package>

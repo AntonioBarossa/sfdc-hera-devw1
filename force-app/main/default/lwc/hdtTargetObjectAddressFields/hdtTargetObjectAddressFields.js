@@ -8,7 +8,6 @@ import getAddressInd from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServi
 import getAddressRev from '@salesforce/apex/HDT_WS_HerokuAddressSearch.callServiceVer';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 export default class hdtTargetObjectAddressFields extends LightningElement {
-    
     @api objectapiname;
     @api fieldsAddressObject=[];
     @api wrapObjectInput= [];
@@ -28,7 +27,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api checkBoxFieldValue = false;
     @api textFieldValue;
     @api theRecord = {};
-    @api stato = 'Italia';
+    @api stato = 'ITALIA';
     @api provincia;
     @api comune;
     @api cap;
@@ -587,6 +586,11 @@ handleCheckBoxChange(event){
             case 'Indirizzo Estero':
                 console.log('entra in indirizzo estero case');
                 this.IndEstero = event.target.checked;
+                if(event.target.checked==true){
+                    this.stato='ESTERO';
+                }else{
+                    this.stato='ITALIA';
+                }
                 break;
             case 'Flag Verificato':
                 console.log('entra in Flag Verificato case');
@@ -643,6 +647,11 @@ handleChangeComune(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+
+    if(this.IndEstero==true){
+
+    }else{
+
     
     if((event.target.value.length==3 && event.target.name =='Comune')){
         getAddressComune({city:event.target.value}).then(data =>
@@ -653,10 +662,20 @@ handleChangeComune(event){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
-                    this.booleanForm=false;
-                    this.booleanForm=true;
-                    this.template.querySelector('c-hdt-selection-address-response').openedForm();
-                    this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
+
+                    if(this.IndEstero==true)
+                    {
+                        this.booleanForm=false;
+                    }
+                    else
+                    {
+                        this.booleanForm=true;
+
+                        this.template.querySelector('c-hdt-selection-address-response').openedForm();
+                        this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
+                    }
+                    
+
                 }
                 else{
                     let event2;
@@ -682,6 +701,11 @@ handleChangeComune(event){
     
         });
     }
+
+
+    }
+
+
     
 
         this.textFieldValue = event.target.value;
@@ -734,6 +758,12 @@ handleChangeIndirizz(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+
+    if(this.IndEstero==true){
+
+    }else{
+
+
     
     if((event.target.value.length==5 && event.target.name =='Via')){
         getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
@@ -774,6 +804,11 @@ handleChangeIndirizz(event){
     
         });
     }
+
+
+    }
+
+
     
 
         this.textFieldValue = event.target.value;
@@ -930,7 +965,14 @@ disabledverifyFieldsAddressDisabled(){
             this.visibleSelezioneIndirizzi=true;
         }
 
+
+        if(this.IndEstero==true){
+            this.stato='ESTERO';
+        }
+
         this.theRecord['Stato'] = this.stato;
+
+
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
         
@@ -1135,16 +1177,31 @@ disabledverifyFieldsAddressDisabled(){
     }
 
     handleKeyPress(event){
+        console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
+        console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
+        console.log('EVENT lenght: '+ JSON.stringify(event.target.value.length)); 
+        console.log('EVENT code: '+ JSON.stringify(event.code)); 
+        console.log('EVENT key: '+ JSON.stringify(event.key));
+
+        console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
+        console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
+        console.log('EVENT lenght: '+ JSON.stringify(event.target.value.length)); 
+        console.log('EVENT code: '+ JSON.stringify(event.code)); 
+        console.log('EVENT key: '+ JSON.stringify(event.key));
+
 
         if(event.code=='Enter'){
 
-        if(event.target.value.length == 2 && event.target.name == 'Comune' && event.keyCode === 13){
 
+        if(event.target.value.length ==2 && event.target.name == 'Comune' ){
+            console.log('entra in if comune');
             //this.booleanForm= true;
             getAddressComune({city:event.target.value}).then(data =>
                 {
                     
+                    console.log("******:" + JSON.stringify(data));
                     if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                        console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                         this.herokuAddressServiceData = data['prestazione'];
                         this.headertoshow = 'Comune';
                         
@@ -1177,10 +1234,12 @@ disabledverifyFieldsAddressDisabled(){
             });
 
         }
-        if((event.target.value.length >= 2 && event.target.value.length <=4)  && event.target.name == 'Via' && event.keyCode === 13){
+        if((event.target.value.length >2 && event.target.value.length <4)  && event.target.name == 'Via'){
+            console.log('entra in if Via');
             getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
                 {
                     
+                    console.log("******HOLAHOLA:" + JSON.stringify(data));
                     if(data['statusCode'] == 200 && data['prestazione'].length > 0){
                         console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                         this.herokuAddressServiceData = data['prestazione'];
@@ -1217,6 +1276,7 @@ disabledverifyFieldsAddressDisabled(){
         }
     } 
 }  
+
 
 
 }
