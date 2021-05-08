@@ -27,7 +27,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api checkBoxFieldValue = false;
     @api textFieldValue;
     @api theRecord = {};
-    @api stato = 'Italia';
+    @api stato = 'ITALIA';
     @api provincia;
     @api comune;
     @api cap;
@@ -587,9 +587,9 @@ handleCheckBoxChange(event){
                 console.log('entra in indirizzo estero case');
                 this.IndEstero = event.target.checked;
                 if(event.target.checked==true){
-                    this.stato='Estero';
+                    this.stato='ESTERO';
                 }else{
-                    this.stato='Italia';
+                    this.stato='ITALIA';
                 }
                 break;
             case 'Flag Verificato':
@@ -954,7 +954,7 @@ disabledverifyFieldsAddressDisabled(){
         }
 
         if(this.IndEstero==true){
-            this.stato='Estero';
+            this.stato='ESTERO';
         }
 
         this.theRecord['Stato'] = this.stato;
