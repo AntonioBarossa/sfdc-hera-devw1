@@ -263,12 +263,13 @@ public inherited sharing class HDT_LC_SaleActions {
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale
      * @param Sale__c sale
+     * @param String CancellationReason__c
      */
     @AuraEnabled
-    public static void cancel(Sale__c sale){
+    public static void cancel(Sale__c sale, String cancellationReason){
         
         //1 - Update sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Annullata');
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Annullata', CancellationReason__c = cancellationReason);
 
         //2- Update Opportunity
         opportunitySrv.checkReadAccess('StageName');

@@ -65,7 +65,11 @@
     <picklistValues>
         <picklist>KeepConsumptionsAnalysis__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Y</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -5,6 +5,11 @@
     }
 
     @AuraEnabled
+    public static String getUserChannel() {
+        return [SELECT LoginChannel__c FROM User WHERE Id =: UserInfo.getUserID() WITH SECURITY_ENFORCED].LoginChannel__c;
+    }
+
+    @AuraEnabled
     public static List<wrts_prcgvr__Activity__c> getActivities(String qadLogin) {
         return [
             SELECT
@@ -12,6 +17,9 @@
                 Name,
                 Lead__c,
                 Account__c,
+                QAdTicketCallTime__c,
+                ActivityEndTime__c,
+                ActivityDuration__c,
                 wrts_prcgvr__Status__c
             FROM
                 wrts_prcgvr__Activity__c

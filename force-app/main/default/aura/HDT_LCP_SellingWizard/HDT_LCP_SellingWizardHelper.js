@@ -61,30 +61,10 @@
             var focusedTabId = response.parentTabId;
             var focusedTab = response.tabId;
             
-            console.log("Begin Redirect_3_: " + focusedTabId);
-            console.log("Begin Redirect_4_: " + objectId);
-            console.log("Begin Redirect_5_: " + objectApiname);
+            console.log("focusedTab: " + focusedTab);
+            console.log("objectId: " + objectId);
+            console.log("objectApiname: " + objectApiname);
             
-            if (objectApiname == 'Sale__c') {
-                console.log('subTab Sale');
-                workspaceAPI.openSubtab({//Subtab({
-                    parentTabId: focusedTabId,
-                    pageReference: {
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: objectId,
-                            objectApiName: objectApiname,
-                            actionName : 'view'
-                        }
-                    },
-                    focus: true
-                }).then(function(response2){
-                    workspaceAPI.closeTab({tabId: focusedTab});
-                })
-                .catch(function(error) {
-                    console.log('******' + error);
-                });
-            } else {
                 workspaceAPI.openTab({//Subtab({
                     parentTabId: focusedTabId,
                     pageReference: {
@@ -102,7 +82,6 @@
                 .catch(function(error) {
                     console.log('******' + error);
                 });
-            }
         })
         .catch(function(error) {
             console.log('******' + error);

@@ -544,6 +544,31 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('+++++++++++test:', this.template.querySelector("[data-id='CommoditySector__c']"));
 
         if(currentSectionName === 'dettaglioImpianto'){
+            
+            if(this.template.querySelector("[data-id='PhoneNumber__c']").value === '') {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Recapito Telefonico',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='ImplantType__c']").value === '') {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Tipo Impianto',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
             if(this.template.querySelector("[data-id='CommoditySector__c']") !== null && this.template.querySelector("[data-id='CommoditySector__c']").value === 'Energia Elettrica' && (this.template.querySelector("[data-id='UseTypeEnergy__c']").value === null || this.template.querySelector("[data-id='UseTypeEnergy__c']").value === '')){
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
@@ -1345,7 +1370,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             },
             {
                 step: 5,
-                label: 'Dettaglio impianto',
+                label: 'Dettaglio commodity',
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
@@ -1373,7 +1398,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'ImplantType__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1446,7 +1471,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'Disconnectable__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1455,7 +1480,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'DisconnectibilityType__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1464,7 +1489,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'DisconnectibilityPhone__c', //3
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1644,6 +1669,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'RequestVoltage__c',
                     'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
                     'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Recapito telefonico',
+                    'apiname': 'PhoneNumber__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
@@ -2252,7 +2286,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'ivaAccise',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica',
                 data: [
                     {
                         'label': 'Flag Agevolazione IVA',
