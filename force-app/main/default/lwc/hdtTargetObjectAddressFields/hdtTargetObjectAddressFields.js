@@ -647,6 +647,7 @@ handleChangeComune(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+
     if(this.IndEstero==true){
 
     }else{
@@ -661,6 +662,7 @@ handleChangeComune(event){
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
+
                     if(this.IndEstero==true)
                     {
                         this.booleanForm=false;
@@ -699,7 +701,11 @@ handleChangeComune(event){
     
         });
     }
+
+
     }
+
+
     
 
         this.textFieldValue = event.target.value;
@@ -752,9 +758,11 @@ handleChangeIndirizz(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+
     if(this.IndEstero==true){
 
     }else{
+
 
     
     if((event.target.value.length==5 && event.target.name =='Via')){
@@ -796,7 +804,11 @@ handleChangeIndirizz(event){
     
         });
     }
+
+
     }
+
+
     
 
         this.textFieldValue = event.target.value;
@@ -953,11 +965,13 @@ disabledverifyFieldsAddressDisabled(){
             this.visibleSelezioneIndirizzi=true;
         }
 
+
         if(this.IndEstero==true){
             this.stato='ESTERO';
         }
 
         this.theRecord['Stato'] = this.stato;
+
 
         console.log('connectedCallback indirizzo estero : ' + JSON.stringify(this.IndEstero));
         this.disableFieldByIndEstero();
@@ -1169,7 +1183,15 @@ disabledverifyFieldsAddressDisabled(){
         console.log('EVENT code: '+ JSON.stringify(event.code)); 
         console.log('EVENT key: '+ JSON.stringify(event.key));
 
+        console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
+        console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
+        console.log('EVENT lenght: '+ JSON.stringify(event.target.value.length)); 
+        console.log('EVENT code: '+ JSON.stringify(event.code)); 
+        console.log('EVENT key: '+ JSON.stringify(event.key));
+
+
         if(event.code=='Enter'){
+
 
         if(event.target.value.length ==2 && event.target.name == 'Comune' ){
             console.log('entra in if comune');
@@ -1254,6 +1276,7 @@ disabledverifyFieldsAddressDisabled(){
         }
     } 
 }  
+
 
 
 }

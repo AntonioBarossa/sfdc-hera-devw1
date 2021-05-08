@@ -25,8 +25,10 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
-            Map<String, Object> secondoLivello = (Map<String, Object>)secondoLivelloList[0];
-            
+            Map<String, Object> secondoLivello = new Map<String, Object>();
+            if(secondoLivelloList != null){
+                secondoLivello = (Map<String, Object>) secondoLivelloList[0];
+            }            
             Case caseRecord = new Case();
             
             Date dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
@@ -34,7 +36,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             
             String numeroDocumento = (String) primolivello.get('numeroDocumento');
             String numeroFattura = (String) primolivello.get('numeroFattura');
-            String contractCode = (String) secondoLivello.get('contratto');
+            String contractCode = (String) secondoLivello.get('contratto') != null? (String) secondoLivello.get('contratto'):(String) primolivello.get('contratto');
             String tipoDocumento = (String) secondoLivello.get('tipoDocumento');
             caseRecord.ContractAccountCode__c = (String) primolivello.get('contoContrattuale');
             caseRecord.DocumentExpirationDate__c = dataScadenza;
@@ -43,6 +45,8 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.DocumentAmount__c = Double.valueOf(secondoLivello.get('importo'));
             caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
+            caseRecord.SalesCompany__c = (String) primolivello.get('societa');
+            System.debug('società ' + (String) primolivello.get('societa'));
             caseRecord.Id = inputs[0].caseId;
             //caseRecord.ReadType__c = (String) secondoLivello.get('importo'); --> Richiamare WS ad hoc
             
@@ -52,11 +56,11 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
             if(inputs[0].createDocuments){
                 List<DocumentSelected__c> documentList = new List<DocumentSelected__c>();
-                DocumentSelected__c singleDocument = new DocumentSelected__c();
                 for(Object singleRecord : primoLivelloList){
+                    DocumentSelected__c singleDocument = new DocumentSelected__c();
                     primolivello = (Map<String, Object>) singleRecord;
                     secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
-                    numeroDocumento = (String) primolivello.get('numeroDocumento');
+                    numeroDocumento = (String) primolivello.get('numeroDocumento') != null? (String) primolivello.get('numeroDocumento'):(String) primolivello.get('documento');
                     numeroFattura = (String) primolivello.get('numeroFattura');
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
@@ -68,14 +72,15 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.IssueDate__c = dataEmissione;
                     singleDocument.ExpirationDate__c = dataScadenza;
                     singleDocument.Amount__c = totaleCopertina != null? totaleCopertina:importo;
-                    //singleDocument.Residue__c = (String) primolivello.get('residuo');
+                    singleDocument.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
                     singleDocument.Extension__c = (String) primolivello.get('dilazione');
                     singleDocument.PaymentMode__c = (String) primolivello.get('modalitaPagamento');
-                    //singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
+                    singleDocument.TvFeeResidual__c = calculateRaiFee(secondoLivelloList);
                     singleDocument.IssuingCompany__c = (String) primolivello.get('societa');
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
+                    singleDocument.Name = numeroFattura != null? numeroFattura:numeroDocumento;
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
@@ -100,7 +105,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         return Date.valueOf(yyyy+'-'+mm+'-'+gg);
     }
 
-    private static String calculateRaiFee(List<Object> secondoLivelloList){
+    private static Double calculateRaiFee(List<Object> secondoLivelloList){
         if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
         try {
             Double raiFee = 0;
@@ -113,7 +118,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     raiFee += importo;
                 }
             }
-            return String.valueOf(raiFee);
+            return raiFee;
         } catch (Exception ex) {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
             return null;

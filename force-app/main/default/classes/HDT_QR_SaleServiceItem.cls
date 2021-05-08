@@ -10,13 +10,13 @@ public inherited sharing class HDT_QR_SaleServiceItem {
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Check for SaleServiceItem record that has a ServicePoint__c with this city and record type
-     * @param String saleId
-     * @param String ServicePoint__r.SupplyCity__c
-     * @param String ServicePoint__r.RecordType.DeveloperName
-     * @param String ServicePoint__r.MarketOrigin__c
+     * @param Sale__c sale
+     * @param ServicePoint__c servicePoint
+     * @param Map<String,String> calculatedStringValues
+     * @param Map<String,Decimal> calculatedDecimalValues
      * @return List<SaleServiceItem__c>
      */
-    public List<SaleServiceItem__c> queryExsistingCityAndType(String saleId, String city, String type, String marketOrigin){
+    public List<SaleServiceItem__c> queryExsistingCityAndType(Sale__c sale, ServicePoint__c servicePoint, Map<String,String> calculatedStringValues, Map<String,Decimal> calculatedDecimalValues){
 
         return [SELECT Id,
         Opportunity__c,
@@ -29,10 +29,25 @@ public inherited sharing class HDT_QR_SaleServiceItem {
         ServicePoint__r.MarketOrigin__c,
         Opportunity__r.Sale__c
         FROM SaleServiceItem__c
-        WHERE Opportunity__r.Sale__c = :saleId
-        AND ServicePoint__r.SupplyCity__c = :city
-        AND ServicePoint__r.RecordType.DeveloperName = :type
-        AND ServicePoint__r.MarketOrigin__c = :marketOrigin
+        WHERE Opportunity__r.Sale__c = :sale.Id
+        AND ServicePoint__r.SupplyCity__c = :servicePoint.SupplyCity__c
+        AND ServicePoint__r.RecordType.DeveloperName = :servicePoint.RecordType.DeveloperName
+        AND ServicePoint__r.MarketOrigin__c = :servicePoint.MarketOrigin__c
+        AND ServicePoint__r.SupplyProvince__c = :servicePoint.SupplyProvince__c
+        AND ServicePoint__r.MeterType__c = :servicePoint.MeterType__c
+        AND ServicePoint__r.UseCategory__c = :servicePoint.UseCategory__c
+        AND Opportunity__r.Sale__r.Agency__c = :sale.Agency__c
+        AND Opportunity__r.Sale__r.Channel__c = :sale.Channel__c
+        AND Opportunity__r.Sale__r.Campaign__c = :sale.Campaign__c
+        AND Quote__r.Login__c = :calculatedStringValues.get('login')
+        AND Quote__r.LoginGroup__c = :calculatedStringValues.get('loginGroup')
+        AND Quote__r.Role__c = :calculatedStringValues.get('role')
+        AND Quote__r.Profile__c = :calculatedStringValues.get('profile')
+        AND Quote__r.NewClient__c = :calculatedStringValues.get('newClient')
+        AND Quote__r.ResidentDeliveryAddress__c = :calculatedStringValues.get('residentDeliveryAddress')
+        AND Quote__r.ConsumptionRangeEE__c = :calculatedDecimalValues.get('consumptionRangeEle')
+        AND Quote__r.ConsumptionRangeGAS__c = :calculatedDecimalValues.get('consumptionRangeGas')
+        AND Quote__r.PowerFlow__c = :calculatedDecimalValues.get('powerFlow')
         AND Quote__r.AmendmentAllowed__c = false
         AND Opportunity__r.StageName NOT IN ('Closed Lost')
         WITH SECURITY_ENFORCED];

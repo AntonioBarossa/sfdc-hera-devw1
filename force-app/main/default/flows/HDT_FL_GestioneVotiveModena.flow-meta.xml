@@ -50,6 +50,9 @@
                     <stringValue>Votive Modena Contestazione Fattura</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Gestione_Reclami</targetReference>
+            </connector>
             <label>Contestazione Fattura</label>
         </rules>
         <rules>
@@ -62,6 +65,9 @@
                     <stringValue>Votive Modena Pagamenti Morosità</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Gestione_Morosita</targetReference>
+            </connector>
             <label>Morosità</label>
         </rules>
     </decisions>
@@ -131,7 +137,7 @@
             <targetReference>GetCase</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Cluster_Disattivazioni</name>
         <label>Cluster Disattivazioni</label>
@@ -158,6 +164,32 @@
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Gestione_Morosita</name>
+        <label>Gestione Morosità</label>
+        <locationX>842</locationX>
+        <locationY>398</locationY>
+        <flowName>HDT_FL_GestioneMorosita</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Reclami</name>
+        <label>Gestione Reclami</label>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
+        <flowName>HDT_FL_GestioneReclami</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>GetCase.Id</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <variables>
         <name>InputCase</name>

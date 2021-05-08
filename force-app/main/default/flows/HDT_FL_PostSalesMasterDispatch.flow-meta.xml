@@ -10,7 +10,6 @@
         <connector>
             <targetReference>Gestione_Informative_SubFlow</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -47,7 +46,6 @@
         <connector>
             <targetReference>GetContractFatturazione_0</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -104,7 +102,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Verifiche_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -280,7 +278,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Arricchimento_Dati_Mod_Anagrafica</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -493,6 +491,31 @@
                 </rightValue>
             </conditions>
             <label>Annullare</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Arricchimento_Dati_Mod_Anagrafica</name>
+        <label>Arricchimento Dati Mod. Anagrafica?</label>
+        <locationX>2756</locationX>
+        <locationY>1094</locationY>
+        <defaultConnector>
+            <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Senza Arricchimento</defaultConnectorLabel>
+        <rules>
+            <name>Con_Arricchimento</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Allineamento Anagrafica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Arricchimento_Dati_Mod_Anagrafica</targetReference>
+            </connector>
+            <label>Con Arricchimento</label>
         </rules>
     </decisions>
     <decisions>
@@ -826,19 +849,47 @@
             <label>Cluster Fatturazione</label>
         </rules>
         <rules>
-            <name>Cluster_Modifiche_Anagrafiche_Variazione_Cliente</name>
-            <conditionLogic>and</conditionLogic>
+            <name>Cluster_Modifiche_Anagrafiche</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Variazione Anagrafica Cliente</stringValue>
+                    <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_GestionePrivacy</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioneAnagraficaCliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_VariazioneAmministratore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_AlertDisassociazioneUtenteWeb</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Check_Processo_ModAnagrafica</targetReference>
             </connector>
-            <label>Cluster Modifiche Anagrafiche - Variazione Cliente</label>
+            <label>Cluster Modifiche Anagrafiche</label>
         </rules>
         <rules>
             <name>Cluster_Reclami</name>
@@ -2800,6 +2851,63 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>248</locationX>
+        <locationY>1334</locationY>
+        <connector>
+            <targetReference>Gestione_Verifiche_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Arricchimento_Dati_Mod_Anagrafica</name>
+        <label>Arricchimento Dati Mod. Anagrafica</label>
+        <locationX>2624</locationX>
+        <locationY>1214</locationY>
+        <connector>
+            <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Crea_Case_Modifiche_Anagrafiche</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>4516</locationX>
@@ -2886,7 +2994,7 @@
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2970,7 +3078,7 @@
         <name>Gestione_Verifiche_Subflow</name>
         <label>Gestione Verifiche Subflow</label>
         <locationX>248</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <flowName>HDT_FL_GestioneVerifiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3445,9 +3553,27 @@
         <locationY>758</locationY>
         <flowName>HDT_FL_GestionePagamenti</flowName>
         <inputAssignments>
+            <name>createDocuments</name>
+            <value>
+                <elementReference>createDocuments</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>InputCase</name>
             <value>
                 <elementReference>Crea_Case_2</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ResumeFromDraft</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>serviceCatalogId</name>
+            <value>
+                <elementReference>serviceCatalogId</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>

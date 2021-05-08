@@ -1284,10 +1284,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
@@ -1301,13 +1297,6 @@
         </values>
         <values>
             <fullName>Voltura Rifiutata</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PreviousTrader__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
             <default>false</default>
         </values>
     </picklistValues>

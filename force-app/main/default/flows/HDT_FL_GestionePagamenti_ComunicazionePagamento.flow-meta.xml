@@ -5,7 +5,7 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>50</locationX>
-        <locationY>2366</locationY>
+        <locationY>2246</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -42,7 +42,7 @@
         <name>AssegnaVariabili_0</name>
         <label>AssegnaVariabili</label>
         <locationX>314</locationX>
-        <locationY>2246</locationY>
+        <locationY>2126</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -64,7 +64,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>886</locationX>
+        <locationX>952</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
@@ -87,7 +87,7 @@
     <decisions>
         <name>Bozza</name>
         <label>Bozza?</label>
-        <locationX>798</locationX>
+        <locationX>820</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Screen_Review_Dati_0</targetReference>
@@ -104,7 +104,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Documenti_Selezionati</targetReference>
+                <targetReference>Inserire_altri_documenti_0</targetReference>
             </connector>
             <label>Bozza</label>
         </rules>
@@ -113,7 +113,7 @@
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
         <locationX>182</locationX>
-        <locationY>2126</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0</targetReference>
         </defaultConnector>
@@ -162,7 +162,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>226</locationX>
+        <locationX>204</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -214,7 +214,7 @@
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>512</locationX>
-        <locationY>2006</locationY>
+        <locationY>1886</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
@@ -262,7 +262,7 @@
         </rules>
     </decisions>
     <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;
---&gt; Inserito screen documenti selezionati</description>
+--&gt; Inserito screen documentale</description>
     <interviewLabel>HDT_FL_GestionePagamenti_ComunicazionePagamento {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Comunicazione Pagamento</label>
     <loops>
@@ -276,7 +276,7 @@
             <targetReference>Inserimento_dati_nel_documento</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Inserire_altri_documenti</targetReference>
+            <targetReference>Screen_Review_Dati</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -302,7 +302,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>2246</locationY>
+        <locationY>2126</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -364,7 +364,7 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>886</locationX>
+        <locationX>952</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -386,7 +386,7 @@
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
         <locationX>314</locationX>
-        <locationY>2366</locationY>
+        <locationY>2246</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -413,7 +413,7 @@
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2486</locationY>
+        <locationY>2366</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -422,7 +422,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza_0</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>886</locationX>
+        <locationX>952</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
@@ -533,6 +533,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -540,23 +541,23 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Inserire_altri_documenti</name>
+        <name>Inserire_altri_documenti_0</name>
         <label>Inserire altri documenti?</label>
-        <locationX>512</locationX>
-        <locationY>1766</locationY>
+        <locationX>688</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Screen_Review_Dati</targetReference>
+            <targetReference>Documenti_Selezionati</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader_2</name>
+            <name>DisplayHeader_2_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>DocumentSelector</name>
+            <name>DocumentSelector_0</name>
             <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -619,6 +620,7 @@
                     <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -629,7 +631,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2606</locationY>
+        <locationY>2486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -649,6 +651,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -658,7 +661,7 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>886</locationX>
+        <locationX>952</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -679,6 +682,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -688,7 +692,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>226</locationX>
+        <locationX>204</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -771,6 +775,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -781,7 +786,7 @@
         <name>Screen_Review_Dati</name>
         <label>Screen Review Dati</label>
         <locationX>512</locationX>
-        <locationY>1886</locationY>
+        <locationY>1766</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -875,6 +880,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -884,7 +890,7 @@
     <screens>
         <name>Screen_Review_Dati_0</name>
         <label>Screen Review Dati</label>
-        <locationX>886</locationX>
+        <locationX>952</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -979,6 +985,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -996,7 +1003,7 @@
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
-        <locationX>182</locationX>
+        <locationX>160</locationX>
         <locationY>518</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1022,7 +1029,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>578</locationX>
-        <locationY>2126</locationY>
+        <locationY>2006</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

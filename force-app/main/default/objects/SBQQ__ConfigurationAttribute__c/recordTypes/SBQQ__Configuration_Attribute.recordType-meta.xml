@@ -41,4 +41,11 @@
             <default>true</default>
         </values>
     </picklistValues>
+    <picklistValues>
+        <picklist>SBQQ__TargetField__c</picklist>
+        <values>
+            <fullName>DurationVAS%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
 </RecordType>

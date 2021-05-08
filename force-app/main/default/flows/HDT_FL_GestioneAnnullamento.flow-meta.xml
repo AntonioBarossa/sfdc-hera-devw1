@@ -36,7 +36,7 @@
         <inputParameters>
             <name>processCancellationReason</name>
             <value>
-                <elementReference>GetRecord.CancellationReason__c</elementReference>
+                <elementReference>GetCase.CancellationReason__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -113,14 +113,14 @@
         <locationX>965</locationX>
         <locationY>2320</locationY>
         <assignmentItems>
-            <assignToReference>GetRecord.Phase__c</assignToReference>
+            <assignToReference>GetCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Annullamento - Comunicazione verso Heroku OK</stringValue>
+                <stringValue>Annullamento - Da inviare</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRecord.NotCancellable__c</assignToReference>
+            <assignToReference>GetCase.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -189,14 +189,14 @@
         <locationX>1163</locationX>
         <locationY>1721</locationY>
         <assignmentItems>
-            <assignToReference>GetRecord.CancellationReasonDescription__c</assignToReference>
+            <assignToReference>GetCase.CancellationReasonDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcola_Causale_Annullamento.cancellationReason</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRecord.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetCase.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcola_Causale_Annullamento.causalCode</elementReference>
@@ -218,6 +218,13 @@
                 <elementReference>Codice_Ripensamento.cancellationReason</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.CancellationReasonCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Codice_Ripensamento.causalCode</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Causale_0</targetReference>
         </connector>
@@ -228,10 +235,10 @@
         <locationX>965</locationX>
         <locationY>2200</locationY>
         <assignmentItems>
-            <assignToReference>GetRecord.PreviousPhase__c</assignToReference>
+            <assignToReference>GetCase.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>GetRecord.Phase__c</elementReference>
+                <elementReference>GetCase.Phase__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -260,17 +267,10 @@
         <locationX>1163</locationX>
         <locationY>1360</locationY>
         <assignmentItems>
-            <assignToReference>GetRecord.CancellationReason__c</assignToReference>
+            <assignToReference>GetCase.CancellationReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DefaultReason</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.CancellationRequestDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -315,7 +315,7 @@
         <locationX>3741</locationX>
         <locationY>1338</locationY>
         <assignmentItems>
-            <assignToReference>GetRecord.CancellationReason__c</assignToReference>
+            <assignToReference>GetOrder.CancellationReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DefaultReason</elementReference>
@@ -374,26 +374,42 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
+        <locationX>1467</locationX>
+        <locationY>1029</locationY>
+        <assignmentItems>
+            <assignToReference>GetRecord.CancellationRequestDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Bozza_Annullata</name>
         <label>Bozza Annullata</label>
         <locationX>1229</locationX>
         <locationY>2896</locationY>
         <assignmentItems>
-            <assignToReference>GetRecord.Phase__c</assignToReference>
+            <assignToReference>GetCase.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Bozza Annullata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRecord.Status</assignToReference>
+            <assignToReference>GetCase.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetRecord.NotCancellable__c</assignToReference>
+            <assignToReference>GetCase.NotCancellable__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
@@ -564,7 +580,7 @@
             <name>Inviata</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetRecord.Subject</leftValueReference>
+                <leftValueReference>GetCase.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -589,7 +605,7 @@
             <name>Inviata_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetRecord.Subject</leftValueReference>
+                <leftValueReference>GetOrder.HerokuPracticeCode__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -618,7 +634,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Motivo_Annullamento_Screen</targetReference>
+                <targetReference>AssegnaValori</targetReference>
             </connector>
             <label>Annullamento Prestazione</label>
         </rules>
@@ -708,7 +724,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>3734</locationX>
+        <locationX>3733</locationX>
         <locationY>1033</locationY>
         <defaultConnector>
             <targetReference>Motivo_Annullamento_Screen_0_0_0</targetReference>
@@ -775,9 +791,6 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Motivo_Annullamento_Screen</targetReference>
-            </connector>
             <label>Annulla</label>
         </rules>
     </decisions>
@@ -826,14 +839,11 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Motivo_Annullamento_Screen</targetReference>
-            </connector>
             <label>Annulla</label>
         </rules>
     </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.
---&gt; Portato wizard ad un solo screen, aggiunto ramo per Order</description>
+--&gt; Modificato Ramo per Ripensamento</description>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
@@ -1001,6 +1011,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>GetCase</name>
+        <label>GetCase</label>
+        <locationX>1179</locationX>
+        <locationY>1094</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Motivo_Annullamento_Screen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
         <locationX>3809</locationX>
@@ -1111,9 +1142,9 @@
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>1163</locationX>
+        <locationX>1162</locationX>
         <locationY>3208</locationY>
-        <inputReference>GetRecord</inputReference>
+        <inputReference>GetCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0_0</name>
@@ -1125,12 +1156,12 @@
     <recordUpdates>
         <name>Aggiorna_Causale</name>
         <label>Aggiorna Causale</label>
-        <locationX>1163</locationX>
-        <locationY>1840</locationY>
+        <locationX>1162</locationX>
+        <locationY>1841</locationY>
         <connector>
             <targetReference>InviataHeroku</targetReference>
         </connector>
-        <inputReference>GetRecord</inputReference>
+        <inputReference>GetCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale_0</name>
@@ -1138,9 +1169,9 @@
         <locationX>3773</locationX>
         <locationY>2038</locationY>
         <connector>
-            <targetReference>Screen_Riepilogo_Dati_0_0</targetReference>
+            <targetReference>InviataHeroku_0</targetReference>
         </connector>
-        <inputReference>GetRecord</inputReference>
+        <inputReference>GetOrder</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale_e_Descrizione_Annullamento</name>
@@ -1173,11 +1204,11 @@
         <name>Aggiorna_Motivo</name>
         <label>Aggiorna Motivo</label>
         <locationX>1163</locationX>
-        <locationY>1480</locationY>
+        <locationY>1481</locationY>
         <connector>
             <targetReference>Calcola_Causale_Annullamento</targetReference>
         </connector>
-        <inputReference>GetRecord</inputReference>
+        <inputReference>GetCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Motivo_0</name>
@@ -1207,13 +1238,23 @@
         <connector>
             <targetReference>Codice_Ripensamento</targetReference>
         </connector>
-        <inputReference>GetRecord</inputReference>
+        <inputReference>GetOrder</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Ripristino_Fase</name>
         <label>Aggiorna Ripristino Fase</label>
         <locationX>2954</locationX>
         <locationY>1395</locationY>
+        <inputReference>GetRecord</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>AggiornaCase</name>
+        <label>AggiornaCase</label>
+        <locationX>1323</locationX>
+        <locationY>1038</locationY>
+        <connector>
+            <targetReference>GetCase</targetReference>
+        </connector>
         <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1718,7 +1759,7 @@
         </connector>
         <fields>
             <name>DisplayHeader_3</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Inserire motivo Ripensamento tra i valori disponibili&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1774,7 +1815,75 @@
                 <name>selectedReason</name>
             </outputParameters>
         </fields>
-        <showFooter>true</showFooter>
+        <fields>
+            <name>hdtRecordEditFormFlow_00</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Order</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>ProcessType</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>GetOrder.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
@@ -1905,105 +2014,6 @@
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Screen_Riepilogo_Dati_0_0</name>
-        <label>Screen Riepilogo Dati</label>
-        <locationX>3777</locationX>
-        <locationY>2230</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>InviataHeroku_0</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayHeader_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/b&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtRecordEditForm_0_0_0</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelPreviousButton</name>
-                <value>
-                    <stringValue>Indietro</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>GetRecord.Type</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>GetRecord.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

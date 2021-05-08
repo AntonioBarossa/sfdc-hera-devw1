@@ -8,8 +8,614 @@
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>CategoryTypeClientOperator__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CategoryTypeClient</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Accedi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Aziende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Aziende SME</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Aziende Soho</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Aziende TOP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Banca centrale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Comuni Territorio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Default gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Enti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Famiglie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>FUI domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>FUI non domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Grandi Condomini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Intercompany</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NRI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Personale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Piccoli Condomini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Reseller - Extra Gruppo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Reseller - Gruppo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Salvaguardia Aziende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Salvaguardia Enti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Societa Vendita Terze</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>VIP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Agenzia di confisca</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Applicazione della legge</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Assicuratore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Assistenza a lungo termine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Assistenza gestita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Associazione grossisti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Attività bancaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Auto/Casalinghi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Azienda wireline</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Azienda/Di passaggio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Broker</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BSU ESP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Casa progettazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Casalinghi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Centro convegni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Centro di assistenza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Centro di formazione aziendale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Centro formaz altri produttori</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Chain Drug</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Chain Food</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Cliente azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Clinica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Commerciante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Commerciante all&apos;ingrosso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Commerciante non in negozio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Commercio di massa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Company</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Concorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Consulente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Dettagliante diretto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Dettagliante indiretto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Drogheria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Elettrodomestici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Enti Consip</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Esperto finanziario</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Farmacia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Federale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Filiale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Fornitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Funzionario produttore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Governo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Grossista di prod. farmac.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Gruppo di programmazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Gruppo reparto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Hotel</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>HQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>In sede</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Industriale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Investitore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Località</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Luogo di vacanza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Magazzino a prezzi scontati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Meeting/Congressi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Negozio prod. farmac./propr.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Non a scopo di lucro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Non Definito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Normale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ODM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>OEM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>OEM del concorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Offerta di investimento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Officina</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Ospedale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Paramedici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Partner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Partnership</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Polizia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Produttore su contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Reparto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Residenziale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Rivenditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Rivenditore del concorrente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>S-Corp</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Servizio affari Internet</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Società</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Società a resp. limitata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Società d&apos;assicurazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Società fiduciaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Società immobiliare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Società in accomandita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Soggiorno esteso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Spedizioniere</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Subcontraente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Suite</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Supermarket</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Supermercato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Ufficio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Ulteriori informazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Università</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Venditore di varie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Vigili del Fuoco</valueName>
+        </valueSettings>
     </valueSet>
     <visibleLines>3</visibleLines>
 </CustomField>
