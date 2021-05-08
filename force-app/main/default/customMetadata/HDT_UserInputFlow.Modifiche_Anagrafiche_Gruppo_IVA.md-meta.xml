@@ -18,12 +18,12 @@
     {
         &quot;FieldName&quot; : &quot;VATGroupStartDate__c&quot;,
         &quot;Required&quot;   : false,
-        &quot;Column&quot;   : 1
+        &quot;Column&quot;   : 2
     },
     {
         &quot;FieldName&quot; : &quot;VATGroupEndDate__c&quot;,
         &quot;Required&quot;   : false,
-        &quot;Column&quot;   : 1
+        &quot;Column&quot;   : 2
     }
 ]</value>
     </values>
@@ -38,11 +38,16 @@
         &quot;FieldName&quot; : &quot;AccountId&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;Origin&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
     }
 ]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

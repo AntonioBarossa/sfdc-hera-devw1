@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Gestione_Allineamento_Anagrafica</name>
+        <label>Gestione Allineamento Anagrafica</label>
+        <locationX>1011</locationX>
+        <locationY>363</locationY>
+        <actionName>HDT_SRV_AnagAlignment</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Set_Tipo_Processo_Allineamento_Anagrafica</targetReference>
+        </connector>
+        <dataTypeMappings>
+            <typeName>T__inputCase</typeName>
+            <typeValue>Case</typeValue>
+        </dataTypeMappings>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>context</name>
+            <value>
+                <stringValue>SERVICE_CATALOG</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>inputCase</name>
+            <value>
+                <elementReference>Query_Case</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Set_Sottoprocesso_as_Tipo_Processo</name>
         <label>Set Tipo Processo = Sottoprocesso</label>
-        <locationX>1464</locationX>
-        <locationY>773</locationY>
+        <locationX>2032</locationX>
+        <locationY>1038</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -20,8 +49,24 @@
     <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
-        <locationX>721</locationX>
-        <locationY>414</locationY>
+        <locationX>842</locationX>
+        <locationY>283</locationY>
+        <assignmentItems>
+            <assignToReference>CustomMetadataProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Query_Case.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>InputFieldsModAnag</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Tipo_Processo_Allineamento_Anagrafica</name>
+        <label>Set Tipo Processo Allineamento Anagrafica</label>
+        <locationX>1342</locationX>
+        <locationY>363</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -36,27 +81,12 @@
     <decisions>
         <name>Check_Processo</name>
         <label>Check Processo</label>
-        <locationX>563</locationX>
-        <locationY>665</locationY>
+        <locationX>830</locationX>
+        <locationY>1011</locationY>
         <defaultConnector>
             <targetReference>Set_Tipo_Processo</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Riprendi_Var_Anag_Cliente_da_Bozza</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>ResumeFromDraft</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
-            </connector>
-            <label>Riprendi Var. Anag. Cliente da Bozza</label>
-        </rules>
         <rules>
             <name>Modifica_Dati_di_Recapito_Outcome</name>
             <conditionLogic>and</conditionLogic>
@@ -132,12 +162,79 @@
             </connector>
             <label>Modifica Dati di Recapito Votiva Modena</label>
         </rules>
+        <rules>
+            <name>Allineamento_Anagrafica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Allineamento Anagrafica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Allineamento_Anagrafica</targetReference>
+            </connector>
+            <label>Allineamento Anagrafica</label>
+        </rules>
+        <rules>
+            <name>Riprendi_Var_Anag_Cliente_da_Bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione Anagrafica Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
+            </connector>
+            <label>Riprendi Var. Anag. Cliente da Bozza</label>
+        </rules>
+        <rules>
+            <name>Disassociazione_Utente_Web</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Disassociazione Utente Web</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Disassociazione_Utente_Web</targetReference>
+            </connector>
+            <label>Disassociazione Utente Web</label>
+        </rules>
+        <rules>
+            <name>Modifica_Privacy</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Privacy</targetReference>
+            </connector>
+            <label>Modifica Privacy</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Processo_2</name>
         <label>Check Processo 2</label>
-        <locationX>2039</locationX>
-        <locationY>414</locationY>
+        <locationX>2516</locationX>
+        <locationY>491</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_Da_Inviare</targetReference>
         </defaultConnector>
@@ -205,12 +302,27 @@
             </connector>
             <label>Modifica Dati di Recapito Votiva Modena</label>
         </rules>
+        <rules>
+            <name>Esercizio_Diritti_Privacy_Outcome</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esercizio Diritti Privacy</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Esercizio_Diritti_Privacy</targetReference>
+            </connector>
+            <label>Esercizio Diritti Privacy</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Pulsante_Premuto</name>
         <label>Pulsante Premuto?</label>
-        <locationX>1650</locationX>
-        <locationY>416</locationY>
+        <locationX>2329</locationX>
+        <locationY>292</locationY>
         <defaultConnector>
             <targetReference>Refresh_Case</targetReference>
         </defaultConnector>
@@ -244,6 +356,11 @@
         </rules>
     </decisions>
     <formulas>
+        <name>ScadenzaEsercizioDirittiFormula</name>
+        <dataType>Date</dataType>
+        <expression>{!Refresh_Case.WrittenReceiptRequestDate__c} + 30</expression>
+    </formulas>
+    <formulas>
         <description>Se riprendiamo una bozza l&apos;edit form è il primo screen, quindi non possiamo mostrare il pulsante Indietro.</description>
         <name>ShowBackButton</name>
         <dataType>Boolean</dataType>
@@ -273,8 +390,8 @@
     <recordLookups>
         <name>Get_Billing_Profile</name>
         <label>Get Billing Profile</label>
-        <locationX>1024</locationX>
-        <locationY>504</locationY>
+        <locationX>1209</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Predefault_Dati_di_Recapito</targetReference>
@@ -294,8 +411,8 @@
     <recordLookups>
         <name>Get_Target_Contact</name>
         <label>Get Target Contact</label>
-        <locationX>1119</locationX>
-        <locationY>610</locationY>
+        <locationX>1351</locationX>
+        <locationY>895</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Predefault_Dati_di_Contatto</targetReference>
@@ -315,8 +432,8 @@
     <recordLookups>
         <name>Query_Case</name>
         <label>Get Records</label>
-        <locationX>573</locationX>
-        <locationY>421</locationY>
+        <locationX>451</locationX>
+        <locationY>1016</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo</targetReference>
@@ -336,8 +453,8 @@
     <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>1876</locationX>
-        <locationY>412</locationY>
+        <locationX>2340</locationX>
+        <locationY>489</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo_2</targetReference>
@@ -357,8 +474,8 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Contatto</name>
         <label>Predefault Dati di Contatto</label>
-        <locationX>1265</locationX>
-        <locationY>671</locationY>
+        <locationX>1514</locationX>
+        <locationY>895</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -370,6 +487,12 @@
                 <elementReference>InputCase</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>CertifiedEmail__c</field>
+            <value>
+                <elementReference>Get_Target_Contact.CertifiedEmail__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>ContactId</field>
             <value>
@@ -383,7 +506,7 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FAX__c</field>
+            <field>Fax__c</field>
             <value>
                 <elementReference>Get_Target_Contact.Fax</elementReference>
             </value>
@@ -405,8 +528,8 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Recapito</name>
         <label>Predefault Dati di Recapito</label>
-        <locationX>1252</locationX>
-        <locationY>504</locationY>
+        <locationX>1547</locationX>
+        <locationY>759</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -471,8 +594,8 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali</name>
         <label>Predefault Dati Fiscali</label>
-        <locationX>813</locationX>
-        <locationY>1032</locationY>
+        <locationX>1115</locationX>
+        <locationY>1052</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -522,8 +645,8 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali_No_Validation</name>
         <label>Predefault Dati Fiscali No Validation</label>
-        <locationX>1192</locationX>
-        <locationY>1029</locationY>
+        <locationX>1569</locationX>
+        <locationY>1165</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -558,8 +681,8 @@
     <recordUpdates>
         <name>Predefault_Gruppo_IVA</name>
         <label>Predefault Gruppo IVA</label>
-        <locationX>968</locationX>
-        <locationY>1613</locationY>
+        <locationX>840</locationX>
+        <locationY>1421</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -603,8 +726,8 @@
     <recordUpdates>
         <name>Predefault_Gruppo_IVA_No_Validation</name>
         <label>Predefault Gruppo IVA No Validation</label>
-        <locationX>1479</locationX>
-        <locationY>1346</locationY>
+        <locationX>2031</locationX>
+        <locationY>1429</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -639,8 +762,11 @@
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>2300</locationX>
-        <locationY>415</locationY>
+        <locationX>2773</locationX>
+        <locationY>492</locationY>
+        <connector>
+            <targetReference>Spinner</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -660,8 +786,8 @@
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>2049</locationX>
-        <locationY>704</locationY>
+        <locationX>2522</locationX>
+        <locationY>781</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -678,6 +804,33 @@
         </inputAssignments>
         <object>Case</object>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_Esercizio_Diritti_Privacy</name>
+        <label>Update Esercizio Diritti Privacy</label>
+        <locationX>2523</locationX>
+        <locationY>198</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ExpirationDate__c</field>
+            <value>
+                <elementReference>ScadenzaEsercizioDirittiFormula</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>In Classificazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <description>Insert a resource...
 Processo di {!Query_Case.Type}
@@ -687,8 +840,8 @@ Processo di {!Query_Case.Type}
 Inserisci manualmente i seguenti campi:</description>
         <name>InputFieldsModAnag</name>
         <label>Input Campi</label>
-        <locationX>1473</locationX>
-        <locationY>414</locationY>
+        <locationX>2031</locationX>
+        <locationY>290</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -697,8 +850,44 @@ Inserisci manualmente i seguenti campi:</description>
         </connector>
         <fields>
             <name>WizardHeaderText</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di &lt;/b&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!CustomMetadataProcessType}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Inserisci manualmente i seguenti campi:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di &lt;/b&gt;&lt;b style=&quot;font-size: 18px; color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;{!CustomMetadataProcessType}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtGenericAddressChooserFlow</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Modifica Dati di Recapito</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>recordEditFormModAnagrafiche</name>
@@ -800,6 +989,12 @@ Inserisci manualmente i seguenti campi:</description>
                     <stringValue>Indietro</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>labelReadOnlySection</name>
+                <value>
+                    <stringValue>Dati Ereditati</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -817,8 +1012,8 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>SelectBillingProfileScreen</name>
         <label>Selezione Billing Profile</label>
-        <locationX>908</locationX>
-        <locationY>504</locationY>
+        <locationX>1003</locationX>
+        <locationY>757</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -877,8 +1072,8 @@ Inserisci manualmente i seguenti campi:</description>
     <screens>
         <name>Selezione_Contatto</name>
         <label>Selezione Contatto</label>
-        <locationX>972</locationX>
-        <locationY>610</locationY>
+        <locationX>1198</locationX>
+        <locationY>895</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -906,19 +1101,72 @@ Inserisci manualmente i seguenti campi:</description>
                     <stringValue>Account_Contacts</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showBackButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showCancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showDraftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
                 <assignToReference>TargetContactId</assignToReference>
                 <name>results</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Spinner</name>
+        <label>Spinner</label>
+        <locationX>3034</locationX>
+        <locationY>492</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtSpinnerFlow</name>
+            <extensionName>c:hdtSpinnerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>573</locationX>
-        <locationY>50</locationY>
+        <locationX>39</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Query_Case</targetReference>
         </connector>
@@ -927,8 +1175,8 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>1656</locationX>
-        <locationY>168</locationY>
+        <locationX>2335</locationX>
+        <locationY>50</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -940,6 +1188,44 @@ Inserisci manualmente i seguenti campi:</description>
             <name>ProcessType</name>
             <value>
                 <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Disassociazione_Utente_Web</name>
+        <label>Gestione Disassociazione Utente Web</label>
+        <locationX>521</locationX>
+        <locationY>504</locationY>
+        <flowName>HDT_FL_Gestione_Modifiche_Anagrafiche_Disassociazione_Utente_Web</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Privacy</name>
+        <label>Gestione Privacy</label>
+        <locationX>260</locationX>
+        <locationY>801</locationY>
+        <flowName>Gestione_Modifiche_Anagrafiche_Modifica_Privacy</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
     </subflows>
