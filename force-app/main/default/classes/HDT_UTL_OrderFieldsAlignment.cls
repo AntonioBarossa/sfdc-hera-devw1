@@ -81,6 +81,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Disconnectable__c = servicePoint.Disconnectable__c != null ? servicePoint.Disconnectable__c : 'Si';
         orderToUpdate.DisconnectibilityType__c = servicePoint.DisconnectibilityType__c;
         orderToUpdate.ConnectionType__c = 'Permanente';
+        orderToUpdate.AtecoCode__c = '999999';
+        orderToUpdate.InstanceSelfCertification__c = 'SI';
+        orderToUpdate.ConnectionMandate__c = 'SI';
+        orderToUpdate.SelfCertificationConnection__c = 'Contratto Firmato';
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
