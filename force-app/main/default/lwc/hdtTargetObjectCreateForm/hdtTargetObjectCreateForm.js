@@ -739,7 +739,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('save');
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord ));
-        if(this.theRecord['Flag Verificato'] != true || this.theRecord['Indirizzo Estero'] != true ){
+        if((this.theRecord['Flag Verificato'] != true && this.theRecord['Indirizzo Estero'] != true)
+            ||
+            (this.theRecord['Flag Verificato'] != true && this.theRecord['Indirizzo Estero'] == true))
+            {
             this.alert('Dati tabella','Per poter Confermare è necessario verificare l'+' indirizzo','error')
         }
         else
