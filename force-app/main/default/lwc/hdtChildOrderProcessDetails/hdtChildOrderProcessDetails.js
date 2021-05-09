@@ -1381,7 +1381,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'ImplantType__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1477,6 +1477,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
+                    'label': 'Residente all\'indirizzo di Fornitura',
+                    'apiname': 'Resident__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': true,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Misuratore',
+                    'apiname': 'MeterSN__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
                     'label': 'Potenzialità massima richiesta',
                     'apiname': 'MaxRequiredPotential__c',
                     'typeVisibility': this.typeVisibility('gas'),
@@ -1517,15 +1535,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MeterClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Misuratore',
-                    'apiname': 'MeterSN__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1619,22 +1628,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Opzione richiesta',
                     'apiname': 'RequestOption__c',
-                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
+                    'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
                     'disabled': false,
-                    'value': this.order.RequestOption__c,
-                    'processVisibility': '',
-                    'isMockPicklist': true,
-                    'mockOptions': this.requestOptions,
-                    // 'diffObjApi': 'Order',
-                    // 'diffRecordId': this.order.Id
-                },
-                {
-                    'label': 'Residente all\'indirizzo di Fornitura',
-                    'apiname': 'Resident__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
-                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1688,7 +1684,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'AtecoCode__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': false,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1697,7 +1693,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'InstanceSelfCertification__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': false,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 }
