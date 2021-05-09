@@ -544,8 +544,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('+++++++++++test:', this.template.querySelector("[data-id='CommoditySector__c']"));
 
         if(currentSectionName === 'dettaglioImpianto'){
+
+            if(this.template.querySelector("[data-id='RequestPhase__c']") !== null && this.template.querySelector("[data-id='RequestPhase__c']").value === '') {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Fase Richiesta',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
             
-            if(this.template.querySelector("[data-id='PhoneNumber__c']").value === '') {
+            if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null && this.template.querySelector("[data-id='PhoneNumber__c']").value === '') {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -557,7 +569,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='ImplantType__c']").value === '') {
+            if(this.template.querySelector("[data-id='ImplantType__c']") !== null && this.template.querySelector("[data-id='ImplantType__c']").value === '') {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -1681,12 +1693,30 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
+                },
+                {
+                    'label': 'Fase richiesta',
+                    'apiname': 'RequestPhase__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Azione commerciale',
+                    'apiname': 'CommercialAction__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 }
                ]
             },
             {
                 step: 7,
-                label: 'Indirizzo fornitura',
+                label: 'Indirizzo di fornitura',
                 name: 'indirizzoFornitura',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
@@ -2276,6 +2306,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'required': false,
                         'disabled': false,
                         'value': 'Si',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'SendCertifiedEmailConsentDate__c',
+                        'apiname': 'SendCertifiedEmailConsentDate__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
                         'processVisibility': ''
                     }
                 ]
