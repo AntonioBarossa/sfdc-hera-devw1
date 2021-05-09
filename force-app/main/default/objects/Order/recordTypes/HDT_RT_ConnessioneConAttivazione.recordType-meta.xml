@@ -1412,13 +1412,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PreviousTrader__c</picklist>
-        <values>
-            <fullName>TBD</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
             <fullName>Connessione con Attivazione</fullName>

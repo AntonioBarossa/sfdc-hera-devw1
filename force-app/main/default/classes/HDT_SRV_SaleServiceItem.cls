@@ -12,6 +12,8 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
+    private static HDT_QR_Sale saleQr = new HDT_QR_Sale();
+    private static HDT_SRV_Sale saleSrv = new HDT_SRV_Sale();
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static List<Contract> contractsForAmendmentCheck = new List<Contract>();
@@ -58,15 +60,86 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
      */
     public SaleServiceItem__c createRecord(ServicePoint__c servicePoint, Sale__c sale, Map<String,String> extraParams){
 
-        servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c');
+        //Get servicePoint data start
+        servicePointSrv.checkReadAccess('ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName,SupplyCity__c,MarketOrigin__c,SupplySAPCityCode__c,UseCategory__c,AnnualConsumption__c,PowerContractual__c,MaxRequiredPotential__c,MeterType__c,SupplyProvince__c,Resident__c,Account__c');
+        servicePoint = existingServicePoint[0];
+        //Get servicePoint data end
 
-        String recordTypeName = existingServicePoint[0].RecordType.DeveloperName;
-        String supplyCity = existingServicePoint[0].SupplyCity__c;
-        String marketOrigin = existingServicePoint[0].MarketOrigin__c;
+        //Get sale data start
+        saleSrv.checkReadAccess('Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        Sale__c existingSale = saleQr.getRecordById(sale.id, 'Account__c,Agency__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name');
+        sale = existingSale;
+        //Get sale data end
+
+        //Needed logic start
+        Boolean allowChangeUse = false;
+        Boolean amendmentAllowed = isAmendmentAllowed(servicePoint, sale);
+        String contractReference = amendmentAllowed ? contractsForAmendmentCheck[0].Id : null;
+        
+        if (extraParams != null) {
+            if (extraParams.get('AllowChangeUse__c') != null && extraParams.get('AllowChangeUse__c') == 'true') {
+                contractReference = extraParams.get('contractReference');
+                amendmentAllowed = false;
+                allowChangeUse = true;
+            }
+        }
+        //Needed logic end
+
+        //Start userRoleProfile logic
+        List<User> userRoleProfile = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
+        //End userRoleProfile logic
+
+        //Start group login logic
+        List<LoginGroupItem__c> loginGroupItemList = HDT_QR_LoginGroupItem.getRecordByLogin(UserInfo.getUserId());
+        Set<String> groupLoginSet = new Set<String>();
+        List<String> groupLoginList = new List<String>();
+        String groupLoginString = '';
+
+        if (loginGroupItemList.size() > 1) {
+            for (LoginGroupItem__c loginGroupItem : loginGroupItemList) {
+                groupLoginSet.add(loginGroupItem.LoginGroup__r.NameGroup__c);
+            }
+            groupLoginList.addAll(groupLoginSet);
+            groupLoginString = String.join(groupLoginList, ',');
+        } else if (loginGroupItemList.size() == 1) {
+            groupLoginString = loginGroupItemList[0].LoginGroup__r.NameGroup__c;
+        } else {
+            groupLoginString = '';
+        }
+        //End group login logic
+
+        //Start newClient logic
+        String newClient = 'Y';
+        if (amendmentAllowed || allowChangeUse) {
+            newClient = 'N';
+        }
+        //End newClient logic
+
+        //calculate fields based on commodity start
+        Decimal consumptionRangeEle = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.AnnualConsumption__c : null;
+        Decimal consumptionRangeGas = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.AnnualConsumption__c : null;
+        Decimal powerFlow = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? servicePoint.PowerContractual__c : servicePoint.MaxRequiredPotential__c;
+        String residentDeliveryAddress = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' ? (servicePoint.Resident__c == true ? 'Y' : 'N') : 'N';
+        //calculate fields based on commodity end
+
+        //Compare logic to create new quote or not start
+        Map<String,String> calculatedStringValues = new Map<String,String>();
+        calculatedStringValues.put('login', UserInfo.getUserName());
+        calculatedStringValues.put('loginGroup', groupLoginString);
+        calculatedStringValues.put('role', userRoleProfile[0].UserRole.Name);
+        calculatedStringValues.put('profile', userRoleProfile[0].Profile.Name);
+        calculatedStringValues.put('newClient', newClient);
+        calculatedStringValues.put('residentDeliveryAddress', residentDeliveryAddress);
+
+        Map<String,Decimal> calculatedDecimalValues = new Map<String,Decimal>();
+        calculatedDecimalValues.put('consumptionRangeEle', consumptionRangeEle);
+        calculatedDecimalValues.put('consumptionRangeGas', consumptionRangeGas);
+        calculatedDecimalValues.put('powerFlow', powerFlow);
 
         checkReadAccess('Opportunity__c,Opportunity__r.Name,Quote__c,ServicePoint__c,ServicePoint__r.SupplyCity__c,ServicePoint__r.RecordType.Name,ServicePoint__r.RecordType.DeveloperName,ServicePoint__r.RecordType.MarketOrigin__c,Opportunity__r.Sale__c');
-        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale.Id, supplyCity, recordTypeName, marketOrigin);
+        List<SaleServiceItem__c> existingSaleServiceItems = saleServiceItemQuery.queryExsistingCityAndType(sale, servicePoint, calculatedStringValues, calculatedDecimalValues);
+        //Compare logic to create new quote or not end
 
         SaleServiceItem__c newSaleServiceItem = new SaleServiceItem__c();
 
@@ -94,18 +167,6 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
-            Boolean allowChangeUse = false;
-            String contractReference = isAmendmentAllowed(servicePoint, sale) ? contractsForAmendmentCheck[0].Id : null;
-            Boolean amendmentAllowed = isAmendmentAllowed(servicePoint, sale);
-
-            if (extraParams != null) {
-                if (extraParams.get('AllowChangeUse__c') != null && extraParams.get('AllowChangeUse__c') == 'true') {
-                    contractReference = extraParams.get('contractReference');
-                    amendmentAllowed = false;
-                    allowChangeUse = true;
-                }
-            }
-
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
@@ -120,10 +181,23 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 CreatedBy__c = sale.CreatedBy__c,
                 SalesCompany__c = sale.SalesCompany__c,
                 Campaign__c = sale.Campaign__c,
-                SupplyCity__c = servicePoint.SupplyCity__c,
+                SupplyCity__c = servicePoint.SupplySAPCityCode__c,
                 AmendmentAllowed__c = amendmentAllowed,
                 ContractReference__c = contractReference,
-                AllowChangeUse__c = allowChangeUse
+                AllowChangeUse__c = allowChangeUse,
+                UseCategory__c = servicePoint.UseCategory__c,
+                ConsumptionRangeEE__c = consumptionRangeEle,
+                ConsumptionRangeGAS__c = consumptionRangeGas,
+                PowerFlow__c = powerFlow,
+                MarketOrigin__c = servicePoint.MarketOrigin__c,
+                ResidentDeliveryAddress__c = residentDeliveryAddress,
+                MeterType__c = servicePoint.MeterType__c,
+                SupplyProvince__c = servicePoint.SupplyProvince__c,
+                Login__c = UserInfo.getUserName(),
+                LoginGroup__c = groupLoginString,
+                Role__c = userRoleProfile[0].UserRole.Name,
+                Profile__c = userRoleProfile[0].Profile.Name,
+                NewClient__c = newClient
             ));
 
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;

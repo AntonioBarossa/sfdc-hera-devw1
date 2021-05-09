@@ -7710,20 +7710,12 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <fullName>Annullato</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
+            <fullName>Bozza</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Attesa Modulo Firmato</fullName>
@@ -7731,10 +7723,14 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiuso</fullName>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7750,19 +7746,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito KO da SAP</fullName>
+            <fullName>Elaborazione Manuale</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito KO tentativo riattivazione</fullName>
+            <fullName>Esito KO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito OK da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7770,23 +7762,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Non Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RC010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
+            <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>

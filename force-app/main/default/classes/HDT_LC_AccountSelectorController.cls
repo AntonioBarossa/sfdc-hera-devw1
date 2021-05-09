@@ -1,22 +1,39 @@
 public with sharing class HDT_LC_AccountSelectorController {
 	private class HDT_UTL_Struct {
+		Boolean isCall;
+		String preFilter;
 		String accountId;
 		String contactId;
+		String leadId;
 		List<Account> accounts;
 		List<Contact> contacts;
+		List<Lead> leads;
 	}
 	
 	@AuraEnabled
 	public static String init(String recordId) {
 		try {
-			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, ClientNumber__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId WITH SECURITY_ENFORCED];
+			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, Lead__c, BPCode__c, ClientNumber__c, FiscalCode__c, VATNumber__c, Type__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId WITH SECURITY_ENFORCED];
 			
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
+			result.isCall = activity.Type__c.contains('Chiamata');
 			result.accountId = activity.Account__c;
 			result.contactId = activity.Contact__c;
+			result.leadId = activity.Lead__c;
 
-			if(String.isBlank(activity.Contact__c) && String.isNotBlank(activity.ClientNumber__c)) {
-				result.contacts = getContacts(activity.ClientNumber__c);
+			if(String.isNotBlank(activity.BPCode__c)) {
+				result.preFilter = activity.BPCode__c;
+			} else if(String.isNotBlank(activity.FiscalCode__c)) {
+				result.preFilter = activity.FiscalCode__c;
+			} else if(String.isNotBlank(activity.VATNumber__c)) {
+				result.preFilter = activity.VATNumber__c;
+			} else if(String.isNotBlank(activity.ClientNumber__c)) {
+				result.preFilter = activity.ClientNumber__c;
+			}
+
+			if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
+				result.contacts = getContacts(result.preFilter);
+				result.leads = getLeads(result.preFilter);
 			} else if(String.isBlank(activity.Account__c)) {
 				result.accounts = handleAccount(activity.Contact__c, activity.Id);
 			}
@@ -28,21 +45,88 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
+	public static String getLeadsAndContacts(String queryString) {
+		try {
+			HDT_UTL_Struct result = new HDT_UTL_Struct();
+			result.leads = getLeads(queryString);
+			result.contacts = getContacts(queryString);
+			return JSON.serialize(result);
+		} catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
+		}
+	}
+
+	@AuraEnabled
 	public static List<Contact> getContacts(String queryString) {
 		try {
-			return [SELECT Id, AccountId, Name, Phone, MobilePhone, Email FROM Contact WHERE Name =: queryString OR Phone =: queryString OR MobilePhone =: queryString OR Email LIKE: queryString WITH SECURITY_ENFORCED];
+			return [
+				SELECT
+					Id,
+					AccountId,
+					Name,
+					Phone,
+					MobilePhone,
+					Email,
+					FiscalCode__c,
+					VATNumber__c
+				FROM Contact
+				WHERE
+					Name LIKE: queryString OR
+					Phone LIKE: queryString OR
+					MobilePhone LIKE: queryString OR
+					Email LIKE: queryString OR
+					FiscalCode__c LIKE: queryString OR
+					VATNumber__c LIKE: queryString
+				WITH SECURITY_ENFORCED
+			];
 		} catch (Exception e) {
 			throw new AuraHandledException('ERROR: ' + e.getMessage());
 		}
 	}
-	
+
+	@AuraEnabled
+	public static List<Lead> getLeads(String queryString) {
+		try {
+			return [
+				SELECT
+					Id,
+					Name,
+					Phone,
+					MobilePhone,
+					Email,
+					FiscalCode__c,
+					VATNumber__c
+				FROM Lead
+				WHERE
+					Name LIKE: queryString OR
+					Phone LIKE: queryString OR
+					MobilePhone LIKE: queryString OR
+					Email LIKE: queryString OR
+					FiscalCode__c LIKE: queryString OR
+					VATNumber__c LIKE: queryString
+				WITH SECURITY_ENFORCED
+			];
+		} catch (Exception e) {
+			throw new AuraHandledException('ERROR: ' + e.getMessage());
+		}
+	}
+
+	@AuraEnabled
+	public static void handleLead(String leadId, String activityId){
+		try {
+			updateActivity(activityId, null, null, leadId);
+		} catch (Exception e) {
+			throw new AuraHandledException('ERROR: ' + e.getMessage());
+		}
+	}
+
 	@AuraEnabled
 	public static List<Account> handleAccount(Id contactId, String activityId) {
 		try {
 			List<Account> accounts = getAccounts(contactId);
 
 			if(accounts.size() == 1) {
-				updateActivity(activityId, contactId, accounts[0].Id);
+				updateActivity(activityId, contactId, accounts[0].Id, null);
 			}
 
 			return accounts;
@@ -61,7 +145,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
-	public static void updateActivity(String activityId, String contactId, String accountId) {
+	public static void updateActivity(String activityId, String contactId, String accountId, String leadId) {
 		try {
 			wrts_prcgvr__Activity__c a = new wrts_prcgvr__Activity__c(
 				Id = activityId
@@ -72,6 +156,9 @@ public with sharing class HDT_LC_AccountSelectorController {
 			}
 			if(accountId != null) {
 				a.Account__c = accountId;
+			}
+			if(leadId != null) {
+				a.Lead__c = leadId;
 			}
 
 			HDT_UTL_DatabaseService.updateSObject(a);
@@ -86,7 +173,8 @@ public with sharing class HDT_LC_AccountSelectorController {
 			HDT_UTL_DatabaseService.updateSObject(new wrts_prcgvr__Activity__c(
 				Id = activityId,
 				Contact__c = null,
-				Account__c = null
+				Account__c = null,
+				Lead__c = null
 			));
 			return null;
 		} catch (Exception e) {

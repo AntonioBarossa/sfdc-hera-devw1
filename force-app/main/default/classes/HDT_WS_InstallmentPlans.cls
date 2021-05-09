@@ -4,6 +4,8 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
 
     global Object execute(Object args){
 
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject transition = (SObject) argsMap.get('transition'); //phase transition
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
@@ -43,16 +45,6 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
 
             switch on response.getStatusCode(){
 
-                when 500{
-
-                    HDT_WRP_ErrorResponse errorResponse = 
-                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
-
-                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
-
-                    currentCase.Phase__c = 'Non Inviato a SAP';
-
-                }
                 when 200{
 
                     HDT_WRP_SuccessResponse successResponse = 
@@ -63,7 +55,18 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
                     currentCase.Phase__c = 'Inviato a SAP';
 
                 }
+                when else{
 
+                    HDT_WRP_ErrorResponse errorResponse = 
+                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
+
+                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
+
+                    currentCase.Phase__c = 'Non Inviato a SAP';
+                    currentCase.Description = errorResponse.errorDetails[0].message;
+
+
+                }
 
             }
 
@@ -72,7 +75,7 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
 
         updateFuture(JSON.serialize(currentCase));
 
-        return response;
+        return responseReturn;
     }
 
     @Future

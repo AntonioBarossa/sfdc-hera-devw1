@@ -48,8 +48,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        servicePointSrv.checkReadAccess('RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
@@ -59,7 +59,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
         orderToUpdate.MaxRequiredPotential__c = servicePoint.MaxRequiredPotential__c;
-        orderToUpdate.UseTypeEnergy__c = servicePoint.UseTypeEnergy__c;
+        orderToUpdate.UseTypeEnergy__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && servicePoint.UseTypeEnergy__c == null ? 'Ordinaria (Perm)' : servicePoint.UseTypeEnergy__c;
         orderToUpdate.UseCategory__c = servicePoint.UseCategory__c;
         // orderToUpdate.WithdrawalClass__c = servicePoint.WithdrawalClass__c;
         orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
@@ -77,6 +77,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.ImplantType__c = servicePoint.ImplantType__c;
         orderToUpdate.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
         orderToUpdate.SupplyState__c = servicePoint.SupplyProvince__c;
+        orderToUpdate.Disconnectable__c = servicePoint.Disconnectable__c != null ? servicePoint.Disconnectable__c : 'Si';
+        orderToUpdate.DisconnectibilityType__c = servicePoint.DisconnectibilityType__c;
+        orderToUpdate.ConnectionType__c = 'Permanente';
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
@@ -106,11 +109,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('SaleBy__c,Campaign__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c');
+        saleSrv.checkReadAccess('SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone');
+        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
+        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
