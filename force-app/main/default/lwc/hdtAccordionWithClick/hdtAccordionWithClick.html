@@ -12,7 +12,7 @@
                 <template if:true={section.manualDisplay}>
                     <div class="slds-grid slds-wrap slds-m-top_small">
                         <template for:each={section.data} for:item="field">
-                            <lightning-input if:true={field.typeVisibility} label={field.label} value={field.value} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input>
+                            <lightning-input if:true={field.typeVisibility} label={field.label} value={field.value} disabled required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input>
                         </template>
                     </div>
                 </template>
@@ -23,10 +23,10 @@
                             <template for:each={section.data} for:item="field">
                                 <template if:false={field.diffObjApi}>
                                     <template if:true={field.value}>
-                                        <lightning-input-field onchange={handleSectionDataToSubmitCollection} if:true={field.typeVisibility} value={field.value} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                        <lightning-input-field onchange={handleSectionDataToSubmitCollection} if:true={field.typeVisibility} value={field.value} disabled required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
                                     </template>
                                     <template if:false={field.value}>
-                                        <lightning-input-field onchange={handleSectionDataToSubmitCollection} if:true={field.typeVisibility} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                        <lightning-input-field onchange={handleSectionDataToSubmitCollection} if:true={field.typeVisibility} disabled required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} key={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
                                     </template>
                                 </template>
                             </template>
@@ -39,13 +39,13 @@
                                 <template for:each={section.data} for:item="field">
                                     <template if:true={field.diffObjApi}>
                                         <template if:false={field.isMockPicklist}>
-                                            <lightning-input-field onchange={handleSectionDiffDataToSubmitCollection} key={field.apiname} if:true={field.typeVisibility} disabled required={field.required} class="slds-size_1-of-3 fieldsData" data-id={field.apiname} data-name={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field onchange={handleSectionDiffDataToSubmitCollection} key={field.apiname} if:true={field.typeVisibility} disabled required={field.required} class="slds-size_1-of-4 fieldsData" data-id={field.apiname} data-name={field.apiname} field-name={field.apiname} variant="label-stacked"></lightning-input-field>
                                         </template>
                                         <template if:true={field.isMockPicklist}>
                                             <lightning-combobox
                                                 if:true={field.typeVisibility}
                                                 key={field.apiname}
-                                                class="slds-size_1-of-3 fieldsData"
+                                                class="slds-size_1-of-4 fieldsData"
                                                 name={field.apiname}
                                                 label={field.label}
                                                 value={field.value}
