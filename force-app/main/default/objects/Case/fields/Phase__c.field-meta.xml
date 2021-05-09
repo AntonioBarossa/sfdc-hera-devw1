@@ -678,6 +678,11 @@
                 <label>Attesa Modulo Firmato</label>
             </value>
             <value>
+                <fullName>Ripensamento - Revocato</fullName>
+                <default>false</default>
+                <label>Ripensamento - Revocato</label>
+            </value>
+            <value>
                 <fullName>Risposta non Ricevuta</fullName>
                 <default>false</default>
                 <isActive>false</isActive>

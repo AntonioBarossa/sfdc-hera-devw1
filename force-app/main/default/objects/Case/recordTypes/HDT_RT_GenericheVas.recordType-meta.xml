@@ -9205,6 +9205,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
         </values>

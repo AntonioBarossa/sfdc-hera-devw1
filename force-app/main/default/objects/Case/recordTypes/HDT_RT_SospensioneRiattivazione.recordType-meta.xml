@@ -8018,6 +8018,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SMS Inviato</fullName>
             <default>false</default>
         </values>

@@ -7752,6 +7752,10 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
