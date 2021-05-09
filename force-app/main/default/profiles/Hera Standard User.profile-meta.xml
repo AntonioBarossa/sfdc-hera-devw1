@@ -27471,10 +27471,6 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>SaleServiceItem__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
         <tab>ServicePoint__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
