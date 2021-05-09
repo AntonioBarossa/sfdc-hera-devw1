@@ -70,6 +70,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     disableCodViaSap=false;
     visibleCopiaResidenza=false;
     visibleSelezioneIndirizzi=false;
+    disableFlagVerificato=false;
     
     
 
@@ -943,6 +944,7 @@ disabledverifyFieldsAddressDisabled(){
 @api
     connectedCallback()
     {
+        this.disableFlagVerificato=true;
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
         console.log('connectedCallback  START + theRecord : '+JSON.stringify(this.theRecord));
         console.log('connectedCallback   objectApiName : '+JSON.stringify(this.objectapiname));
@@ -1164,11 +1166,7 @@ disabledverifyFieldsAddressDisabled(){
     }
 
     handleKeyPress(event){
-																		
-																		  
-																				  
-																 
-															  
+													  
 
         if(event.code=='Enter'){
 
