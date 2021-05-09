@@ -7221,6 +7221,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento RCU Concluso</fullName>
             <default>false</default>
         </values>
