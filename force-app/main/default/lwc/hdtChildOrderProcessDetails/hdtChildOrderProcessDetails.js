@@ -593,35 +593,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='Disconnectable__c']") !== null && this.template.querySelector("[data-id='Disconnectable__c']").value === 'NO'){
-                
-                let errorMessage = '';
-
-                console.log(this.template.querySelector("[data-id='DisconnectibilityType__c']").value);
-                if(this.template.querySelector("[data-id='DisconnectibilityType__c']").value === null){
-                    errorMessage = 'Popolare Telefono Non Disalimentabilita';
-                } 
-                
-                console.log(this.template.querySelector("[data-id='DisconnectibilityPhone__c']").value);
-                if(this.template.querySelector("[data-id='DisconnectibilityPhone__c']").value === null){
-                    errorMessage = 'Popolare Tipologia Disalimentabilita';
-                }
-                
-                console.log('errorMessage: ', errorMessage);
-
-                if(errorMessage !== ''){
-                    this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: errorMessage,
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                    this.dispatchEvent(toastErrorMessage);
-                    return;
-                }
-
-            }
         }
 
         if(currentSectionName === 'ivaAccise'){
@@ -1491,7 +1462,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Categoria disalimentabilità', //2
                     'apiname': 'DisconnectibilityType__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1500,7 +1471,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Recapito telefonico',
                     'apiname': 'DisconnectibilityPhone__c', //3
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1709,6 +1680,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'typeVisibility': this.typeVisibility('both'),
                     'required': false,
                     'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Codice Ateco',
+                    'apiname': 'AtecoCode__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Autocert Instanza',
+                    'apiname': 'InstanceSelfCertification__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 }
@@ -2226,6 +2215,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'processVisibility': ''
                     },
                     {
+                        'label': 'SendCertifiedEmailConsentDate__c',
+                        'apiname': 'SendCertifiedEmailConsentDate__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
                         'label': 'Destinatario Divergente',
                         'apiname': 'DivergentSubject__c',
                         'typeVisibility': this.typeVisibility('both'),
@@ -2306,15 +2304,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'required': false,
                         'disabled': false,
                         'value': 'Si',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'SendCertifiedEmailConsentDate__c',
-                        'apiname': 'SendCertifiedEmailConsentDate__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
                         'processVisibility': ''
                     }
                 ]
