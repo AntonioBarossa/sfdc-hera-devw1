@@ -7340,10 +7340,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Acconto Paperless Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifica Dati al DL</fullName>
             <default>false</default>
         </values>
@@ -7692,6 +7688,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
+        <values>
+            <fullName>Acconto Paperless Pagato</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Attesa Modulo Firmato</fullName>
             <default>false</default>
