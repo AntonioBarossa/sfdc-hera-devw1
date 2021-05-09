@@ -7967,16 +7967,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Individual.OLDPrivacyMarketingChoiceSource__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Individual.OLDPrivacyProfilingChoiceSource__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Individual.Occupation</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -8473,11 +8463,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Lead.NumberOfLocations__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Lead.OLDInterestArea__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
