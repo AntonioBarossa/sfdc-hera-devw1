@@ -7340,10 +7340,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Variazione su Amministratore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Verifica Dati al DL</fullName>
             <default>false</default>
         </values>
@@ -7692,6 +7688,14 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
+        <values>
+            <fullName>Acconto Paperless Pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Bozza</fullName>
             <default>false</default>

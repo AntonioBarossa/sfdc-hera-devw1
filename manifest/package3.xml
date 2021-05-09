@@ -1,23 +1,77 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
+        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
+        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
+        <members>Case.HDT_RT_AltreInformative</members>
+        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
+        <members>Case.HDT_RT_Annullamento</members>
+        <members>Case.HDT_RT_AttivazionePODVariazionePDR</members>
+        <members>Case.HDT_RT_Autolettura</members>
+        <members>Case.HDT_RT_CambioUsoTec</members>
+        <members>Case.HDT_RT_CanoneRai</members>
+        <members>Case.HDT_RT_ComportamentoVenditori</members>
+        <members>Case.HDT_RT_ComunicazionePagamento</members>
+        <members>Case.HDT_RT_Disattivazioni</members>
+        <members>Case.HDT_RT_DocCopiaContratto</members>
+        <members>Case.HDT_RT_Domiciliazione</members>
+        <members>Case.HDT_RT_FatturazioneConsumi</members>
+        <members>Case.HDT_RT_GenericheAttivazioni</members>
+        <members>Case.HDT_RT_GenericheVas</members>
+        <members>Case.HDT_RT_GestioneBolletta</members>
+        <members>Case.HDT_RT_GestioneBonusSociale</members>
+        <members>Case.HDT_RT_GestionePrivacy</members>
+        <members>Case.HDT_RT_Informative</members>
+        <members>Case.HDT_RT_InversioneContatore</members>
+        <members>Case.HDT_RT_ModContrattoPreAtt</members>
+        <members>Case.HDT_RT_Morosita</members>
+        <members>Case.HDT_RT_PianoRateizzazione</members>
+        <members>Case.HDT_RT_PostSalesVAS</members>
+        <members>Case.HDT_RT_PreventiviEle</members>
+        <members>Case.HDT_RT_PreventiviGas</members>
+        <members>Case.HDT_RT_ProrogaTemporanea</members>
+        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
+        <members>Case.HDT_RT_RichiestaParere</members>
+        <members>Case.HDT_RT_Rimborso</members>
+        <members>Case.HDT_RT_SospensioneRiattivazione</members>
+        <members>Case.HDT_RT_Subentro_EE</members>
+        <members>Case.HDT_RT_Subentro_GAS</members>
+        <members>Case.HDT_RT_UnificazioneSeparazioneCABolletta</members>
+        <members>Case.HDT_RT_VariazioneAmministratore</members>
+        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
+        <members>Case.HDT_RT_VariazioniEle</members>
+        <members>Case.HDT_RT_VariazioniGas</members>
+        <members>Case.HDT_RT_VerificaDatiAlDl</members>
+        <members>Case.HDT_RT_VerificaTitolaritaPodPdr</members>
+        <members>Case.HDT_RT_VerificheEle</members>
+        <members>Case.HDT_RT_VerificheGas</members>
+        <members>Case.HDT_RT_VolturaTecnica</members>
+        <members>Case.HDT_RT_VotiveModena</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>HDT_AgentMatrixManagement</members>
+        <members>HDT_CampaignManager</members>
+        <members>HDT_MassiveLoader</members>
+        <members>HDT_SalesforceCPQUser</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>HDT_QR_Order</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_LCP_ChildOrderProcess</members>
-        <name>AuraDefinitionBundle</name>
+        <members>Case.Phase__c</members>
+        <name>CustomField</name>
     </types>
     <types>
-        <members>hdtAccordionWithClick</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtOrderDossierWizardSignature</members>
-        <members>hdtTargetObjectAddressFields</members>
-        <members>hdtTargetObjectCreateForm</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
+        <members>Hera Standard User</members>
         <name>Profile</name>
     </types>
     <version>50</version>
