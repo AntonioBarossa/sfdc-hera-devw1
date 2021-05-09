@@ -7249,6 +7249,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO tentativo riattivazione</fullName>
             <default>false</default>
         </values>

@@ -73,9 +73,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         gen.writeStartArray();
         for(DocumentSelected__c document : documents){ 
             gen.writeStartObject();
-            gen.writeStringField('numeroBollettino', document.Bill__c);
-            gen.writeStringField('numeroDocumetno', document.DocumentNumber__c.startsWith('0') ? null : document.DocumentNumber__c);
-            gen.writeStringField('numeroFatturaRata',document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : null);
+            gen.writeStringField('numeroBollettino', '');
+            gen.writeStringField('numeroDocumetno', document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c);
+            gen.writeStringField('numeroFatturaRata',document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '');
             gen.writeDateField('scadenzaRata',document.ExpirationDate__c);
             gen.writeStringField('tipoDocumento',document.Type__c);
             gen.writeEndObject();
@@ -85,6 +85,8 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         gen.writeEndObject();
 
         pretty = gen.getAsString();
+
+        System.debug('SRV_InstallmentPlans -->' +pretty);
 
         return pretty;
     }

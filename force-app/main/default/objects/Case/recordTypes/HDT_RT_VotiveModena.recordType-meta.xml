@@ -7233,19 +7233,23 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <fullName>Annullato</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento - Revocato</fullName>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Modulo Firmato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7253,23 +7257,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RC010</fullName>
+            <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripensamento - Inviato al SII</fullName>
+            <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>

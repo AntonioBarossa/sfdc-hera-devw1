@@ -10,6 +10,7 @@
         <connector>
             <targetReference>GetContract</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -46,6 +47,7 @@
         <connector>
             <targetReference>GetContract_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -82,6 +84,7 @@
         <connector>
             <targetReference>GetContract_0_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -118,6 +121,7 @@
         <connector>
             <targetReference>GetContract_0_0_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -154,6 +158,7 @@
         <connector>
             <targetReference>GetContract_0_0_0_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -190,6 +195,7 @@
         <connector>
             <targetReference>GetContract_0_0_0_0_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -226,6 +232,7 @@
         <connector>
             <targetReference>GetContract_0_0_0_0_0_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -255,13 +262,14 @@
     <actionCalls>
         <name>ManageDocuments_6</name>
         <label>ManageDocuments</label>
-        <locationX>6166</locationX>
+        <locationX>6254</locationX>
         <locationY>518</locationY>
         <actionName>HDT_SRV_DocumentSelectedManager</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>GetContract_0_0_0_0_0_0_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -364,14 +372,20 @@
         <name>AssegnaFase_0</name>
         <label>AssegnaFase</label>
         <locationX>2602</locationX>
-        <locationY>1934</locationY>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0.Status</assignToReference>
             <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
         </assignmentItems>
         <connector>
             <targetReference>Passa_a_Elaborazione_Manuale_0</targetReference>
@@ -590,7 +604,7 @@
     <assignments>
         <name>AssegnaInfo_0_0_0_0_0_0_0_0</name>
         <label>AssegnaInfo</label>
-        <locationX>6166</locationX>
+        <locationX>6254</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.BillingProfile__c</assignToReference>
@@ -724,7 +738,7 @@
     <assignments>
         <name>AssegnaValori_0_0_0</name>
         <label>AssegnaValori</label>
-        <locationX>6034</locationX>
+        <locationX>6122</locationX>
         <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_2.Phase__c</assignToReference>
@@ -844,7 +858,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>3526</locationX>
+        <locationX>3614</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_0_0_0_0</targetReference>
@@ -1086,7 +1100,7 @@
         <locationX>2866</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Screen_Inserimento_Dati_1</targetReference>
+            <targetReference>Screen_Documenti_Selezionati_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Riprendi Da Bozza</defaultConnectorLabel>
         <rules>
@@ -1208,7 +1222,7 @@
     <decisions>
         <name>Riprendi_Da_Bozza_0_0_0_0_0_0_0</name>
         <label>Riprendi Da Bozza?</label>
-        <locationX>6298</locationX>
+        <locationX>6386</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati</targetReference>
@@ -1233,7 +1247,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>6298</locationX>
+        <locationX>6386</locationX>
         <locationY>1334</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -1386,7 +1400,7 @@
     <decisions>
         <name>Salva_in_bozza_o_Conferma_0_0_0</name>
         <label>Salva in bozza o Conferma?</label>
-        <locationX>6870</locationX>
+        <locationX>7046</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
@@ -1409,7 +1423,7 @@
         <name>Salva_in_bozza_o_Conferma_0_0_0_0</name>
         <label>Salva in bozza o Conferma?</label>
         <locationX>2866</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0_0_0</name>
@@ -1539,7 +1553,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>3526</locationX>
+        <locationX>3614</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1582,7 +1596,7 @@
         <name>GetCaseAggiornato_0</name>
         <label>GetCaseAggiornato</label>
         <locationX>2602</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaFase_0</targetReference>
@@ -1665,7 +1679,7 @@
     <recordLookups>
         <name>GetCaseAggiornato_2</name>
         <label>GetCaseAggiornato</label>
-        <locationX>6034</locationX>
+        <locationX>6122</locationX>
         <locationY>1454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2092,7 +2106,7 @@
     <recordLookups>
         <name>GetContract_0_0_0_0_0_0_0</name>
         <label>GetContract</label>
-        <locationX>6166</locationX>
+        <locationX>6254</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2230,7 +2244,7 @@
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0_0_0_0</name>
         <label>AggiornaCase</label>
-        <locationX>6166</locationX>
+        <locationX>6254</locationX>
         <locationY>878</locationY>
         <connector>
             <targetReference>ArricchimentoDati_0_0_0_0_0_0_0</targetReference>
@@ -2243,7 +2257,7 @@
         <locationX>2734</locationX>
         <locationY>1358</locationY>
         <connector>
-            <targetReference>Screen_Inserimento_Dati_1</targetReference>
+            <targetReference>Screen_Documenti_Selezionati_0_0</targetReference>
         </connector>
         <inputReference>GetCaseAggiornato_1</inputReference>
     </recordUpdates>
@@ -2278,13 +2292,13 @@
         <name>Passa_a_Elaborazione_Manuale_0</name>
         <label>Passa a Elaborazione Manuale</label>
         <locationX>2602</locationX>
-        <locationY>2054</locationY>
+        <locationY>2174</locationY>
         <inputReference>GetCaseAggiornato_0</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_In_Lavorazione</name>
         <label>Passa a In Lavorazione</label>
-        <locationX>6738</locationX>
+        <locationX>6914</locationX>
         <locationY>638</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2311,7 +2325,7 @@
     <recordUpdates>
         <name>Passa_a_In_Lavorazione_0</name>
         <label>Passa a In Lavorazione</label>
-        <locationX>6034</locationX>
+        <locationX>6122</locationX>
         <locationY>1694</locationY>
         <inputReference>GetCaseAggiornato_2</inputReference>
     </recordUpdates>
@@ -2339,6 +2353,7 @@
                     <elementReference>Get_Input_Case.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2369,6 +2384,7 @@
                     <elementReference>Get_Input_Case.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2449,6 +2465,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2529,6 +2546,88 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Documenti_Selezionati_0_0</name>
+        <label>Screen Documenti Selezionati</label>
+        <locationX>2866</locationX>
+        <locationY>1574</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Screen_Inserimento_Dati_1</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayDocumentSelected_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSelector_0_0</name>
+            <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>codiceCliente</name>
+                <value>
+                    <elementReference>Get_Input_Case.Account.CustomerCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractAccount</name>
+                <value>
+                    <elementReference>Get_Input_Case.BillingProfile__r.ContractAccountCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>Get_Input_Case.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>billingProfileId</name>
+                <value>
+                    <elementReference>Get_Input_Case.BillingProfile__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2538,7 +2637,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>6298</locationX>
+        <locationX>6386</locationX>
         <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2633,6 +2732,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2725,6 +2825,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2799,6 +2900,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2897,6 +2999,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -2906,7 +3009,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_0_0_0_0</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>6870</locationX>
+        <locationX>7046</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2989,6 +3092,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -3093,6 +3197,7 @@
                     <stringValue>Indietro</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -3103,7 +3208,7 @@
         <name>Screen_Inserimento_Dati_1</name>
         <label>Screen Inserimento Dati</label>
         <locationX>2866</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3191,6 +3296,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -3247,6 +3353,7 @@
                     <stringValue>Label-Hidden</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -3303,6 +3410,7 @@
                     <stringValue>Label-Hidden</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -3359,6 +3467,7 @@
                     <stringValue>Label-Hidden</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -3366,7 +3475,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>3400</locationX>
+        <locationX>3488</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -3402,7 +3511,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>2866</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3476,7 +3585,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>6298</locationX>
+        <locationX>6386</locationX>
         <locationY>1454</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -3697,7 +3806,7 @@
     <subflows>
         <name>ArricchimentoDati_0_0_0_0_0_0_0</name>
         <label>ArricchimentoDati</label>
-        <locationX>6166</locationX>
+        <locationX>6254</locationX>
         <locationY>998</locationY>
         <connector>
             <targetReference>Screen_Inserimento_Dati</targetReference>

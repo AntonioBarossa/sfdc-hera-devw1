@@ -2,25 +2,28 @@
 	<div class="slds-grid slds-wrap slds-grid slds-page-header forceRelatedListCardHeader custom-header">
 		<lightning-icon icon-name="standard:customers" class="slds-m-right_medium"></lightning-icon>
 		<span class="slds-page-header__title">
-			Strumento di ricerca anagrafica
+			Ricerca anagrafica
 		</span>
 		<lightning-button variant="destructive" label="Reset" onclick={handleReset} disabled={resetButtonDisabled} class="slds-col_bump-left"></lightning-button>
 	</div>
 	<div class="slds-grid slds-grid_vertical slds-box slds-theme_default custom-body">
 		<template if:false={changesCommitted}>
-			<span class="slds-size_1-of-1 slds-text-align_center">
-				In caso di chiamata muta o per errore, innescare il relativo processo dal tasto Catalogo Servizi.
-			</span>
+			<template if:true={isCall}>
+				<span class="slds-size_1-of-1 slds-text-align_center">
+					In caso di chiamata muta o per errore, innescare il relativo processo dal tasto Catalogo Servizi.
+				</span>
+			</template>
 		</template>
 		<template if:true={showResetMessage}>
 			<span class="slds-p-horizontal_medium slds-text-align_center">
-				Premere il tasto "Reset" per ripetere il processo di selezione di Account e Contatto.
+				Premere il tasto "Reset" per ripetere il processo di selezione anagrafica.
 			</span>
 		</template>
 		<template if:true={showContactSearchPanel}>
 			<div onkeyup={handleKeyUp} class="slds-col slds-size_1-of-1">
 				<lightning-input
-					name="contact_search"
+					data-id="search_bar_anagrafica"
+					name="search_bar_anagrafica"
 					placeholder="Cerca per nome, numero di telefono o email e digita invio"
 					type="search"
 				></lightning-input>
@@ -28,16 +31,27 @@
 			<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
 				<template if:false={contactsFound}>
 					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
-						Nessun contatto trovato. <br>
-						Ricercare per nome, email o numero di telefono.
+						Nessun contatto o lead trovato. <br>
+						E possibile ricercare per nome, email, numero di telefono, codice fiscale e partita IVA.
 					</span>
 				</template>
 				<template if:true={contactsFound}>
 					<template for:each={contacts} for:item="contact">
-						<div key={contact.Id} data-id={contact.Id} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
+						<div key={contact.Id} data-id={contact.Id} data-sobjtype={contact.attributes.type} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
 							<lightning-card title={contact.Name} icon-name="standard:contact">
 								<ul class="slds-m-around_medium">
 									Telefono fisso: {contact.Phone}, Cellulare:{contact.MobilePhone}, Email: {contact.Email}
+								</ul>
+							</lightning-card>
+						</div>
+					</template>
+				</template>
+				<template if:true={leadsFound}>
+					<template for:each={leads} for:item="lead">
+						<div key={lead.Id} data-id={lead.Id} data-sobjtype={lead.attributes.type} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
+							<lightning-card title={lead.Name} icon-name="standard:lead">
+								<ul class="slds-m-around_medium">
+									Telefono fisso: {lead.Phone}, Cellulare:{lead.MobilePhone}, Email: {lead.Email}
 								</ul>
 							</lightning-card>
 						</div>

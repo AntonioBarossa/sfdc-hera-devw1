@@ -7237,6 +7237,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Acconto Paperless Pagato</fullName>
             <default>false</default>
         </values>
