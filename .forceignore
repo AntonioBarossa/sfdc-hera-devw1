@@ -26,6 +26,7 @@ package.xml
 **objects/Account/fields/ChannelProgramName*
 **objects/Account/fields/IsPartner*
 **objects/Campaign/fields/CampaignImageId*
+**objects/Contract/fields/SBQQ__ActiveContract__c*
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/SBQQ__ProductOption__c/fields/ResidentDeliveryAddress__c*
 **objects/Case/recordTypes/HDT_RT_FatturazioneConsumi*
