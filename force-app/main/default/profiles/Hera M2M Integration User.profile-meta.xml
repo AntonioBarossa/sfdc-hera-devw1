@@ -26487,6 +26487,11 @@
         <layout>Case-HDT_Informative</layout>
         <recordType>Case.HDT_RT_Informative</recordType>
     </layoutAssignments>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Case.HDT_RT_InversioneContatore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
     <layoutAssignments>
         <layout>Case-HDT_InversioneContatore</layout>
         <recordType>Case.HDT_RT_InversioneContatore</recordType>
