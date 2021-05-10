@@ -5,6 +5,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_MassiveLoader</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_PostSalesMasterBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -154,6 +158,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_ManageBillingProfile</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_MassiveLoader</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -317,6 +325,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_ContentDocumentLink</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_ContentVersion</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Contract</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -326,6 +342,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_DataEnrichmentPostSales</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_FileTemplate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -362,6 +382,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_Lead</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_MassiveLoaderProcess</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_MassiveLoaderRequest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -430,6 +458,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_ServicePoint</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_StaticResource</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -546,6 +578,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_Lead</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_MassiveLoaderRequest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -729,6 +765,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_Constants</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_ContactPoint</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -838,6 +878,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SobjectUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_Utils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

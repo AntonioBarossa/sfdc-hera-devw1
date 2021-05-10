@@ -221,7 +221,14 @@ public inherited sharing class HDT_LC_SaleVas {
 
     private static String getPricebookId(String pricebookName) {
         List<Pricebook2> pricebook = HDT_QR_PriceBook.getRecordByName(pricebookName);
-        return pricebook[0].Id;
+
+        String result = '';
+
+        if(!pricebook.isEmpty()) {
+            result = pricebook[0].Id;
+        }
+
+        return null;
     }
 
     private static String checkCommodityContract(String contractId) {

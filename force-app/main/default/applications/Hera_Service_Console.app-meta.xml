@@ -441,13 +441,9 @@
     <tabs>standard-Case</tabs>
     <tabs>standard-Opportunity</tabs>
     <tabs>standard-Contract</tabs>
-    <tabs>SiebelCustomers__x</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
-        <mappings>
-            <tab>SiebelCustomers__x</tab>
-        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>

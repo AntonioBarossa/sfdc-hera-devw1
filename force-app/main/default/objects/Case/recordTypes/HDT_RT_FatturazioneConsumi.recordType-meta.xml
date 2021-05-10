@@ -7253,6 +7253,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Blocco Effettuato</fullName>
             <default>false</default>
         </values>

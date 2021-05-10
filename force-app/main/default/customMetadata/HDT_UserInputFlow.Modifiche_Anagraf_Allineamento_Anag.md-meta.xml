@@ -199,6 +199,11 @@
         &quot;Column&quot;   : 2
     },
     {
+        &quot;FieldName&quot; : &quot;CausalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
+    },
+    {
         &quot;FieldName&quot; : &quot;FirstName__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 2
@@ -219,7 +224,7 @@
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+        &quot;FieldName&quot; : &quot;Mobile__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 2
     },

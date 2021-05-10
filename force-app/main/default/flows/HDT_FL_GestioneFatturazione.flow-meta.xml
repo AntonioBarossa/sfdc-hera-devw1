@@ -193,8 +193,8 @@
     <decisions>
         <name>Case_da_annullare_2</name>
         <label>Case da annullare?</label>
-        <locationX>1385</locationX>
-        <locationY>1637</locationY>
+        <locationX>1396</locationX>
+        <locationY>1641</locationY>
         <defaultConnector>
             <targetReference>Sottoprocesso</targetReference>
         </defaultConnector>
@@ -203,7 +203,7 @@
             <name>Si2</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Annulla_Case</leftValueReference>
+                <leftValueReference>CancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>

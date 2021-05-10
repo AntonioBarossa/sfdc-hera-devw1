@@ -14,11 +14,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>M Giusto Casa</fullName>
-                <default>false</default>
-                <label>M Giusto Casa</label>
-            </value>
-            <value>
                 <fullName>A.R.E.R.A</fullName>
                 <default>false</default>
                 <label>A.R.E.R.A</label>

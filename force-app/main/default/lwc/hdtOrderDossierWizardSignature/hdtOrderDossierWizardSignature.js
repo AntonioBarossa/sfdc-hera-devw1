@@ -121,13 +121,21 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         this.loading = true;
         this.dataToSubmit['Id'] = this.orderParentRecord.Id;
 
-        let validErrorMessage = ''
+        let validErrorMessage = 'Popolare il campo ';
 
         if(this.template.querySelector("[data-id='ContractSigned__c']").value && this.template.querySelector("[data-id='SignedDate__c']").value === null){
-            validErrorMessage = 'Popolare il campo Data Firma';
+            validErrorMessage = validErrorMessage.concat('Data Firma, ');
         }
 
-        if(validErrorMessage === ''){
+        if(this.template.querySelector("[data-id='SignatureMethod__c']") !== null && this.template.querySelector("[data-id='SignatureMethod__c']").value === null){
+            validErrorMessage = validErrorMessage.concat('Metodo Firma, ');
+        }
+
+        if(this.template.querySelector("[data-id='DocSendingMethod__c']") !== null && this.template.querySelector("[data-id='DocSendingMethod__c']").value === null){
+            validErrorMessage = validErrorMessage.concat('Modalità Invio Doc, ');
+        }
+
+        if(validErrorMessage === 'Popolare il campo '){
             next({orderUpdates: this.dataToSubmit}).then(data =>{
                 this.loading = false;
                 this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
@@ -148,7 +156,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             console.log(validErrorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: validErrorMessage,
+                message: validErrorMessage.slice(0, -2), //remove space and comma at end of error string
                 variant: 'error',
                 mode: 'sticky'
             });

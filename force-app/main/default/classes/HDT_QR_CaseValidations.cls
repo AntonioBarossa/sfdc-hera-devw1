@@ -10,7 +10,9 @@ public inherited sharing class HDT_QR_CaseValidations {
         ServicePoint__r.ServicePointCode__c,
         OpinionRequest__c,
         AttachmentManagement__c,
-        BillingProfile__c
+        BillingProfile__c,
+        AccountId,
+        ContactId
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

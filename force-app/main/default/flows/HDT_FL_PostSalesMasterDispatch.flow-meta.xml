@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Gestione_Informative_SubFlow</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -46,6 +47,7 @@
         <connector>
             <targetReference>GetContractFatturazione_0</targetReference>
         </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -441,7 +443,7 @@
     </assignments>
     <choices>
         <name>ModificaDatiContattoChoice</name>
-        <choiceText>Modifica Dati di Contatto</choiceText>
+        <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati di Contatto</stringValue>
@@ -449,7 +451,7 @@
     </choices>
     <choices>
         <name>ModificaDatiFiscaliChoice</name>
-        <choiceText>Modifica Dati Fiscali</choiceText>
+        <choiceText>Modifica Dati Fiscali (Nome, Cognome/Ragione sociale, Codice Fiscale, Partita IVA, Marcatura)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati Fiscali</stringValue>
@@ -457,7 +459,7 @@
     </choices>
     <choices>
         <name>ModificaDatiRecapitoChoice</name>
-        <choiceText>Modifica Dati di Recapito</choiceText>
+        <choiceText>Modifica Dati di Recapito (Modalità Invio Bolletta, Recapito Invio Bolletta, Fatturazione Elettronica)</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati di Recapito</stringValue>
@@ -2701,7 +2703,7 @@
         <label>Selezione Sottoprocesso</label>
         <locationX>2492</locationX>
         <locationY>518</locationY>
-        <allowBack>true</allowBack>
+        <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
@@ -2714,10 +2716,10 @@
         </fields>
         <fields>
             <name>SubprocessChoice</name>
+            <choiceReferences>ModificaDatiContattoChoice</choiceReferences>
+            <choiceReferences>ModificaDatiRecapitoChoice</choiceReferences>
             <choiceReferences>ModificaDatiFiscaliChoice</choiceReferences>
             <choiceReferences>VariazioneGruppoIVAChoice</choiceReferences>
-            <choiceReferences>ModificaDatiRecapitoChoice</choiceReferences>
-            <choiceReferences>ModificaDatiContattoChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Sotto-processo</fieldText>
             <fieldType>RadioButtons</fieldType>
