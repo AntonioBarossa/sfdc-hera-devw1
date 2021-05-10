@@ -7288,6 +7288,7 @@
             <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>
+        <values>
             <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
