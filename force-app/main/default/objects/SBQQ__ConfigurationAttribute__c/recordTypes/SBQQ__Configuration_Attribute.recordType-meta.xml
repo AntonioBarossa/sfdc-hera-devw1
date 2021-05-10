@@ -232,30 +232,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>PercentageF0%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PercentageF1%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PercentageF2%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PercentageF3%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PercentageFP%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PercentageFV%5F%5Fc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>PhoneRecipient%5F%5Fc</fullName>
             <default>false</default>
         </values>
