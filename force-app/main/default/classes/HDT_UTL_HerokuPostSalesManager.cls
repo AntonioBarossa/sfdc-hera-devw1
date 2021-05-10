@@ -216,7 +216,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             caseNew.HerokuPracticeCode__c = herokuCode;
             caseNew.Description = errorMessage;
             if(dlCode != null && dlCode != ''){
-                caseNew.DistributorServiceCode__c = dlCode;
+                caseNew.DistributorPracticeCode__c = dlCode;
             }
             if(sendDlDate != null && sendDlDate != ''){
                 caseNew.SendToDistributorDate__c = Date.valueOf(sendDlDate);
@@ -242,7 +242,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Phase__c = reqWrp.requestMap.get('FASE');
                 }
                 if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
-                    currentCase.DistributorServiceCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
+                    currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
                 }
                 if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
                     currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
