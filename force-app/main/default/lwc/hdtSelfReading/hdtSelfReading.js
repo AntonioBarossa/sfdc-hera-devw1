@@ -430,6 +430,7 @@ export default class HdtSelfReading extends LightningElement {
         if(action === 'next' || action === 'draft' || action === 'save'){
 
             this.saveDraft = action === 'draft'; 
+            this.cancelCase = false;
 
             if(this.availableActions.find(action => action === 'NEXT')){
 

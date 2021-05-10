@@ -11,6 +11,19 @@ export default class HdtCustomPicklist extends LightningElement {
     @api required;
     @api disabled;
 
+    connectedCallback(){
+    
+        console.log('value--> '+this.value);
+
+        if(this.value != null && this.value != ''){
+            console.log('inside condition')
+            this.outcome = this.value;
+            const attributeChangeEvent = new FlowAttributeChangeEvent('outcome', this.value);
+            this.dispatchEvent(attributeChangeEvent);
+        }
+
+    }
+
     handleChange(event){
         console.log(event.detail.value);
         this.outcome = event.detail.value;
@@ -26,7 +39,5 @@ export default class HdtCustomPicklist extends LightningElement {
             console.log('List opt JSON '+this.options);
             return JSON.parse(this.options);
     }
-    connectedCallback(){
 
-    }
 }
