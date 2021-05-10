@@ -127,7 +127,7 @@ public with sharing class HDT_QR_InformativeManager {
                     Contract__c*/
                     FROM Contract
                     WHERE ServicePoint__c =: recordId
-                    AND Status = 'Active'
+                    AND Status IN ('Active','Activated')
                     WITH SECURITY_ENFORCED
                     LIMIT 1];
                 }
