@@ -16,13 +16,23 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             recordId = (String) obj.get('Id');
             HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
             sapIntegration = submitRequest(recordId,parameters.get('requestType'));
+
+            Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+            Map<String,Object> data = (Map<String,Object>) body.get('data');
+            if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
+                HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                response.success = false;
+                response.message = 'KO';
+            }else {
+                response.success = true;
+                response.message = 'OK';
+            }
+
         }catch(Exception ex){
             System.debug(ex.getMessage());
         }
-        response.success = true;
-        response.message = 'OK';
+
         return response;
-     
     }
 
     private static HDT_WRP_GenericSapIntegration submitRequest(String recordId,String requestType){
