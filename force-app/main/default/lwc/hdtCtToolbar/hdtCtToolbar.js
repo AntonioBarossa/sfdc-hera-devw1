@@ -1,4 +1,4 @@
-import { LightningElement} from 'lwc';
+import { LightningElement, api} from 'lwc';
 import { loadScript } from 'lightning/platformResourceLoader';
 import cttoolbar from '@salesforce/resourceUrl/toolbar_sdk';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
@@ -8,6 +8,7 @@ var DataObj;
 
 export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
+    @api showPanel;
     numberToCall = '';
     iconName = '';
     agentStatus = '';
@@ -34,9 +35,48 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
     }
 
+    enableCallback(){
+        try{
+            console.log('# bindContactCallback #');
+            window.TOOLBAR.CONTACT.bindContactCallback(this.customCallback);
+        } catch (err){
+            console.log('## err ' + err);
+        }
+    }
+
+    customCallback(jQuery_eventType, data){
+        DataObj = null;
+
+        if (typeof data === "string") {
+          DataObj = JSON.parse(data);
+        }
+
+        if (typeof data === "object") {
+          DataObj = data;
+        }
+
+        if (data !== null) {
+            if (typeof data.event !== "undefined") {
+                const selectedEvent = new CustomEvent('toolbarCallBack');
+                this.dispatchEvent(selectedEvent);
+          }
+        }
+
+    }
+
     contactCallback = () => {
         console.log('# RICEVUTO EVENTO ' + DataObj.event + ' #');
 
+        this.manageEvent();
+
+        const toolbarEvent = new CustomEvent("toolbarevent", {
+            detail: {eventType: DataObj.event, eventObj: DataObj}
+        });
+        this.dispatchEvent(toolbarEvent);
+
+    };
+
+    manageEvent(){
         if (DataObj !== null) {
             if (typeof DataObj.event !== "undefined") {
 
@@ -68,7 +108,6 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
       
             }
         }  
-
 
         switch (DataObj.event) {
 
@@ -118,23 +157,18 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
             case 'DELETE':
                 
         }
-
-    };
-
-    enableCallback(){
-        try{
-            console.log('# bindContactCallback #');
-            window.TOOLBAR.CONTACT.bindContactCallback(this.customCallback);
-        } catch (err){
-            console.log('## err ' + err);
-        }
     }
 
     setNumber(event){
         this.numberToCall = event.target.value;
     }
 
-    callThisNumber(event){
+    @api callNumberFromParent(numToCall){
+        this.numberToCall = numToCall;
+        this.callThisNumber();
+    }
+
+    callThisNumber(){
         console.log('## callThisNumber #');
         try{
             if(this.numberToCall != '' && this.numberToCall != undefined){
@@ -155,7 +189,12 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
         }
     }
 
-    hangup(event){
+    @api hangUpFromParent(){
+        this.hangup();
+        this.numberToCall = '';
+    }
+
+    hangup(){
         console.log('## Hangup #');
         window.TOOLBAR.CONTACT.Hangup();
         this.iconName = 'utility:end_call';
@@ -167,24 +206,4 @@ export default class HdtCtToolbar extends NavigationMixin(LightningElement) {
 
     }
     
-    customCallback(jQuery_eventType, data){
-        DataObj = null;
-
-        if (typeof data === "string") {
-          DataObj = JSON.parse(data);
-        }
-
-        if (typeof data === "object") {
-          DataObj = data;
-        }
-
-        if (data !== null) {
-            if (typeof data.event !== "undefined") {
-                const selectedEvent = new CustomEvent('toolbarCallBack');
-                this.dispatchEvent(selectedEvent);
-          }
-        }
-
-    }
-
 }
