@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ConsumptionRangeGas__c</fullName>
-    <description>la fascia di consumo GAS del dato record di Prodotto nella funzionalità di Configurazione Offerta Tecnica.</description>
+    <fullName>ConsumptionRangeEE__c</fullName>
+    <description>la fascia di consumo EE del dato record di Prodotto nella funzionalità di Configurazione Offerta Tecnica.</description>
     <externalId>false</externalId>
-    <label>Fasce Consumo Gas</label>
+    <label>Fasce Consumo EE</label>
     <precision>18</precision>
     <required>false</required>
     <scale>2</scale>
