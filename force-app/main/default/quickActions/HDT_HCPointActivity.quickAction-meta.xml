@@ -4,6 +4,10 @@
         <field>QAdLogin__c</field>
         <formula>$User.FederationIdentifier</formula>
     </fieldOverrides>
+    <fieldOverrides>
+        <field>Type__c</field>
+        <literalValue>Sportello</literalValue>
+    </fieldOverrides>
     <label>Attività HC Point / QAd Light</label>
     <optionsCreateFeedItem>true</optionsCreateFeedItem>
     <quickActionLayout>

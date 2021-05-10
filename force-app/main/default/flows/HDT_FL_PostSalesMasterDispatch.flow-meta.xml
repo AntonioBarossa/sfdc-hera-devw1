@@ -296,7 +296,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Gestione_Reclami_Subflow</targetReference>
+            <targetReference>Arricchimento_Dati_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -895,12 +895,26 @@
         </rules>
         <rules>
             <name>Cluster_Reclami</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>ProcessType</leftValueReference>
+                <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+                    <stringValue>HDT_RT_VerificaDatiAlDl</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamiScrittiRichiesteInfo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RecordTypeName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ComportamentoVenditori</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2735,7 +2749,7 @@
             <targetReference>Cerca_Contatto_Primario</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati</name>
@@ -2860,6 +2874,35 @@
         <locationY>1334</locationY>
         <connector>
             <targetReference>Gestione_Verifiche_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_0_0_0_0_0</name>
+        <label>Arricchimento Dati</label>
+        <locationX>3196</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>Gestione_Reclami_Subflow</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
         <inputAssignments>
@@ -3042,7 +3085,7 @@
         <name>Gestione_Reclami_Subflow</name>
         <label>Gestione Reclami Subflow</label>
         <locationX>3196</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneReclami</flowName>
         <inputAssignments>
             <name>InputCase</name>
