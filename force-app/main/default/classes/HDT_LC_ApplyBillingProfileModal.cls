@@ -15,18 +15,27 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     * @description Get SBQQ__QuoteLine__c based on payment method
     * @param String saleId
     * @param String paymentMethod
-    * @return List<SBQQ__QuoteLine__c>
+    * @return Map<String, List<SBQQ__QuoteLine__c>>
     */
     @AuraEnabled
-    public static List<SBQQ__QuoteLine__c> getQuoteLineBundle(String saleId, String paymentMethod){
+    public static Map<String, List<SBQQ__QuoteLine__c>> getQuoteLineBundle(String saleId, String paymentMethod){
 
         System.debug('saleId: ' + saleId);
         System.debug('paymentMethod: ' + paymentMethod);
 
         quoteLineSrv.checkReadAccess('SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SBQQ__RequiredBy__r.SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
         
-        System.debug('query result: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodNoContractNoOrder(saleId, paymentMethod));
-        return quoteLineQr.getRecordsBySaleFilteredPaymentMethodNoContractNoOrder(saleId, paymentMethod);
+        System.debug('query result pod/pdr: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, paymentMethod));
+        List<SBQQ__QuoteLine__c> listPodPdr = quoteLineQr.getRecordsBySaleFilteredPaymentMethodPodPdr(saleId, paymentMethod);
+        
+        System.debug('query result vas: ' + quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId, paymentMethod));
+        List<SBQQ__QuoteLine__c> listVas = quoteLineQr.getRecordsBySaleFilteredPaymentMethodforVas(saleId, paymentMethod);
+
+        Map<String, List<SBQQ__QuoteLine__c>> quoteLineMap = new Map<String, List<SBQQ__QuoteLine__c>>();
+        quoteLineMap.put('listPodPdr', listPodPdr);
+        quoteLineMap.put('listVas', listVas);
+
+        return quoteLineMap;
     }
 
     /**
@@ -41,12 +50,25 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         
         List<SBQQ__QuoteLine__c> quoteLineListUpdate = new List<SBQQ__QuoteLine__c>();
 
+        List<String> quoteLineIds = new List<String>();
+
         for (SObject quoteLine : quoteLinesToUpdate) {
             SBQQ__QuoteLine__c quoteLineUpdate = new SBQQ__QuoteLine__c(
                 Id = quoteLine.Id,
                 BillingProfile__c = billingProfileId
             );
             quoteLineListUpdate.add(quoteLineUpdate);
+            quoteLineIds.add(quoteLine.Id);
+        }
+
+        List<SBQQ__QuoteLine__c> quoteLineVas = quoteLineQr.getChildAnalisi(quoteLineIds);
+
+        for (SBQQ__QuoteLine__c qlv : quoteLineVas) {
+            SBQQ__QuoteLine__c qlvUpdate = new SBQQ__QuoteLine__c(
+                Id = qlv.Id,
+                BillingProfile__c = billingProfileId
+            );
+            quoteLineListUpdate.add(qlvUpdate);
         }
 
         quoteLineSrv.updateRecords(quoteLineListUpdate);

@@ -33,7 +33,7 @@
         <actionName>HDT_UTL_DataEnrichmentPostSales</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Assegna_Altri_Dati</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -54,6 +54,22 @@
         </outputParameters>
     </actionCalls>
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assegna_Altri_Dati</name>
+        <label>Assegna Altri Dati</label>
+        <locationX>176</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetServicePoint.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
     <description>Flow per la gestione dell&apos;arricchimento dati postSales</description>
     <interviewLabel>Arricchimento Dati PostSales {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Arricchimento Dati PostSales</label>
@@ -143,7 +159,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>176</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <start>

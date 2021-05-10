@@ -38,6 +38,132 @@ public inherited sharing class HDT_LC_SaleActions {
         //1 - Check if QuoteLines have BillingProfiles associated
         quoteLineSrv.checkReadAccess('Name,BillingProfile__c,SBQQ__Quote__c');
         List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
+        List<SBQQ__QuoteLine__c> quoteLinesListForBillingCheck = quoteLineQr.getRecordsBySaleForBillingCheck(sale.Id);
+        List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
+        List<SBQQ__QuoteLine__c> quoteLinePrimary = new List<SBQQ__QuoteLine__c>();
+        List<String> quoteLinesWithoutBilling = new List<String>();
+
+        for (SBQQ__QuoteLine__c quoteLine : quoteLinesListForBillingCheck) {
+            if (quoteLine.BillingProfile__c == null) {
+                quoteLinesWithoutBilling.add(quoteLine.Name);
+            }
+        }
+
+        if (!quoteLinesWithoutBilling.isEmpty()) {
+            throw new AuraHandledException('Attenzione! Ai bundle “' + String.join(quoteLinesWithoutBilling, ',') +'” non è stato associato un Metodo di Pagamento');
+        }
+
+        for (SBQQ__QuoteLine__c quoteLine : quoteLinesList) {
+            if (quoteLine.BillingProfile__c != null) {
+                quoteLinePrimary.add(quoteLine);
+            }
+        }
+
+        system.debug('***quoteLinePrimary: ' + quoteLinePrimary);
+        
+        //2 - Update Opportunity stage
+        opportunitySrv.checkReadAccess('StageName');
+        List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName', 'Proposal');
+        
+        for (Opportunity opp : opps) {
+            opp.StageName = 'Closed Won';
+        }
+        
+        //3 - Update SBQQ__Quote
+        quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
+        List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
+
+        for (SBQQ__Quote__c quote : quoteList) {
+            quote.SBQQ__Status__c = 'Accettata';
+            quote.SBQQ__Ordered__c = true;
+            quote.SBQQ__LineItemsGrouped__c = true;
+            quote.SBQQ__OrderByQuoteLineGroup__c = true;
+        }
+
+        system.debug('quoteList: ' + quoteList);
+
+        //4 - Update Sale
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva');
+
+        //5 - SBQQ__QuoteLineGroup__c
+        //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
+        //Associazione su ogni QuoteLineGroup del record configurato su SBQQ__QuoteProcess__c
+        Map<String,SBQQ__QuoteLineGroup__c> mapLineGroup = new Map<String,SBQQ__QuoteLineGroup__c>();
+
+        quoteProcessSrv.checkReadAccess('SBQQ__Default__c,SBQQ__GuidedOnly__c,SBQQ__ProductAutoSelected__c,SBQQ__ProductConfigurationInitializer__c,SBQQ__ProductSearchExecutor__c,SBQQ__SortOrder__c,Name');
+        List<SBQQ__QuoteProcess__c> quoteProcessList = quoteProcessQr.getProcessForGroupAssoc();
+
+        for (SBQQ__QuoteLine__c quoteLine : quoteLinePrimary) {
+            SBQQ__QuoteLineGroup__c quoteLineGroup = new SBQQ__QuoteLineGroup__c(
+                SBQQ__Account__c = sale.Account__c,
+                Name = quoteLine.Name + ' Group',
+                SBQQ__Quote__c = quoteLine.SBQQ__Quote__c,
+                SBQQ__QuoteProcess__c = quoteProcessList[0].Id
+            );
+
+            mapLineGroup.put(quoteLine.Id, quoteLineGroup);
+
+        }
+
+        //6 - SBQQ__QuoteLine__c
+        //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
+        quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
+
+        List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
+        
+        String groupToAssign = null;
+
+        system.debug('***mapLineGroup: ' + mapLineGroup);
+
+        for(SBQQ__QuoteLine__c quoteLine : allQuoteLines){
+            // quoteLine.SBQQ__Group__c = mapLineGroup.get(quoteLine.Id).Id;
+
+            if (quoteLine.BillingProfile__c != null) {
+                system.debug('quoteLine with problem: ' + quoteLine);
+                groupToAssign = mapLineGroup.get(quoteLine.Id).Id;
+
+                // if(quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.BillingProfile__c != null){
+                //     groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c).Id;
+                // }
+                // else if(quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c != null){
+                //     groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c).Id;
+                // } else {
+                //     groupToAssign = mapLineGroup.get(quoteLine.Id).Id;
+                // }
+            }
+            else {
+                if(quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.BillingProfile__c != null){
+                    groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__c).Id;
+                }
+                else{
+                    if(quoteLine.SBQQ__RequiredBy__c != null && quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c != null){
+                        groupToAssign = mapLineGroup.get(quoteLine.SBQQ__RequiredBy__r.SBQQ__RequiredBy__c).Id;
+                    }
+                }
+            }
+
+            SBQQ__QuoteLine__c quoteLineToUpdate = new SBQQ__QuoteLine__c(
+                Id = quoteLine.Id,
+                SBQQ__Group__c = groupToAssign
+            );
+
+            quoteLinesListToUpdate.add(quoteLineToUpdate);
+        }
+
+        //7 - Execute actions
+        opportunitySrv.updateRecords(opps);
+        saleSrv.updateRecord(saleToUpdate);
+        quoteLineSrv.updateRecords(quoteLinesListToUpdate);
+        quoteSrv.updateRecords(quoteList);
+    }
+
+
+    @AuraEnabled
+    public static void saveBackup(Sale__c sale){
+        
+        //1 - Check if QuoteLines have BillingProfiles associated
+        quoteLineSrv.checkReadAccess('Name,BillingProfile__c,SBQQ__Quote__c');
+        List<SBQQ__QuoteLine__c> quoteLinesList = quoteLineQr.getRecordsBySaleFilteredPaymentMethodNotNull(sale.Id);
         List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
 
         List<String> quoteLinesWithoutBilling = new List<String>();
@@ -59,7 +185,7 @@ public inherited sharing class HDT_LC_SaleActions {
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
         }
-
+        
         //3 - Update SBQQ__Quote
         quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
@@ -133,17 +259,17 @@ public inherited sharing class HDT_LC_SaleActions {
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
         quoteSrv.updateRecords(quoteList);
     }
-
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale
      * @param Sale__c sale
+     * @param String CancellationReason__c
      */
     @AuraEnabled
-    public static void cancel(Sale__c sale){
+    public static void cancel(Sale__c sale, String cancellationReason){
         
         //1 - Update sale
-        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Annullata');
+        Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Annullata', CancellationReason__c = cancellationReason);
 
         //2- Update Opportunity
         opportunitySrv.checkReadAccess('StageName');

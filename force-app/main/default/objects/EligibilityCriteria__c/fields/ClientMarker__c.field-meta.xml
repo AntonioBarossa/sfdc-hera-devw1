@@ -8,8 +8,509 @@
     <trackTrending>false</trackTrending>
     <type>MultiselectPicklist</type>
     <valueSet>
+        <controllingField>ClientMarkerOperator__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CustomerMarking</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAS Associazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAS Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAS Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAS Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAS Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAS Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ACEL-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ACEL-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Amga-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Amga-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ANTENORE ENERGY-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ANTENORE ENERGY-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Associazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BENACO-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BENACO-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BE POWER-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BE POWER-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BLU RANTON-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>BLU RANTON-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>CMV E e I - Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>CMV E e I - Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Enegan-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Enegan-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGETICA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGETICA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGIA SOCIALE-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGIA SOCIALE-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGIECHIARE-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGIECHIARE-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGYGAS ITA - Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGYGAS ITA - Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGYPOLIS-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ENERGYPOLIS-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ERMES-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ERMES-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>EstEnergy-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>EstEnergy-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ETRURIA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ETRURIA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>FUTURA TR-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>FUTURA TR-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>FUTURENERGY-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>FUTURENERGY-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>GENESI-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>GENESI-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>GRAN SASSO-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>GRAN SASSO-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>GREEN EN-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>GREEN EN-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ITALIANGAS-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ITALIANGAS-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>LIRENAS-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>LIRENAS-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>LUCEEG IT SERV-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>LUCEEG IT SERV-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS Associazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MOODS-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MOODS-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NOIENERGIA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NOIENERGIA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NWGENERGIA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NWGENERGIA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>OMNIA EN-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>OMNIA EN-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ONOVA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ONOVA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>PIUENERGIA SPA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>PIUENERGIA SPA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>TOP ENERGY-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>TOP ENERGY-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>UNION-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>UNION-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D1 - Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D2 - Ditta individuale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D3 - Azienda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D4 - Parti comuni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D5 - Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D6 - Associazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D7 - BP Doppio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>D8 - Marcatura nulla</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MIWA ENERGIA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MIWA ENERGIA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NEWENRGGEL-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>NEWENRGGEL-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ONE POWER-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>ONE POWER-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>S4 ENERGIA-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>S4 ENERGIA-Persona fisica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>SGR-Altro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>SGR-Persona fisica</valueName>
+        </valueSettings>
     </valueSet>
     <visibleLines>3</visibleLines>
 </CustomField>

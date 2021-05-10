@@ -323,6 +323,10 @@
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DocumentSelected__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <relatedList>RelatedFileList</relatedList>
     </relatedLists>
     <relatedLists>

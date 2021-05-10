@@ -11,7 +11,7 @@
 
     <lightning-card title="Eleggibilità" variant="narrow" icon-name="standard:sales_path">
         
-        <div if:true={spinnerObj.spinner} >
+        <div if:true={spinnerObj.spinner}>
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
         </div>
 
@@ -30,12 +30,38 @@
 
                 <div class="slds-col slds-size_1-of-2">
 
+                    <!--
+                    <div class="slds-grid slds-box slds-box_x-small">
+                        <div class="slds-col slds-size_2-of-6">
+                            <div class="slds-text-body_regular slds-m-bottom_small">
+                                Rendi eleggibile per tutte le province
+                            </div>
+                        </div>
+                        <div class="slds-col slds-grow-none">
+                            <lightning-input
+                                type="toggle"
+                                label={customLabel}
+                                name="allProvince"
+                                checked
+                                message-toggle-active="Attivo"
+                                message-toggle-inactive="Disattivo"
+                                variant="label-hidden"
+                                onchange={handleToggleChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+                    -->
+
                     <div class="slds-section slds-is-open">
+                    <!--<div class="slds-section slds-is-open slds-is-relative">
+
+                        <div if:true={disableCitySelection} class="slds-spinner_container"></div>-->
+
                         <h3 class="slds-section__title slds-theme_shade">
                             <span class="slds-truncate slds-p-horizontal_small" title="Comuni eleggibili">Province eleggibili</span>
                         </h3>
-                        <div aria-hidden="false" class="slds-section__content">
 
+                        <div aria-hidden="false" class="slds-section__content">
 
                             <div class="slds-grid slds-gutters">
                                 <div class="slds-col slds-size_3-of-7">
@@ -56,6 +82,27 @@
                                                             onchange={checkboxHeaderHandler}
                                                         ></lightning-input>
 
+                                                        <!--<template if:true={headerCheckbox} >
+                                                            <lightning-input
+                                                                name="headerCheckbox"
+                                                                type="checkbox"
+                                                                label="checkboxHeader"
+                                                                variant="label-hidden"
+                                                                checked
+                                                                onchange={checkboxHeaderHandler}
+                                                            ></lightning-input>
+                                                        </template>
+
+                                                        <template if:false={headerCheckbox} >
+                                                            <lightning-input
+                                                                name="headerCheckbox"
+                                                                type="checkbox"
+                                                                label="checkboxHeader"
+                                                                variant="label-hidden"
+                                                                onchange={checkboxHeaderHandler}
+                                                            ></lightning-input>
+                                                        </template>-->
+
                                                     </th>
                                                     <th class="headerackground" scope="col">
                                                         <div class="slds-truncate" title="ProvinceName">Provincia</div>
@@ -67,7 +114,7 @@
                                             </thead>
                                             <tbody>
     
-                                                <template iterator:it={provinceOptions}>
+                                                <template iterator:it={cityZipCode.provinceOptions}>
                                                     <tr key={it.value.value} data-id={it.value.value} class="slds-hint-parent" onclick={handleRowAction} >
                                                         <th data-label={it.value.value} scope="row">
 

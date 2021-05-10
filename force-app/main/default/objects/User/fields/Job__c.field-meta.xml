@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Job__c</fullName>
+    <description>Rappresentano le mansioni previste nella matrice RBAC del BSN HERA</description>
+    <externalId>false</externalId>
+    <label>Mansione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Specialista Aggiornamento Operativo</fullName>
+                <default>false</default>
+                <label>Specialista Aggiornamento Operativo</label>
+            </value>
+            <value>
+                <fullName>Specialista Back Office</fullName>
+                <default>false</default>
+                <label>Specialista Back Office</label>
+            </value>
+            <value>
+                <fullName>Specialista Campaign</fullName>
+                <default>false</default>
+                <label>Specialista Campaign</label>
+            </value>
+            <value>
+                <fullName>Specialista Demand Sistemi Clienti</fullName>
+                <default>false</default>
+                <label>Specialista Demand Sistemi Clienti</label>
+            </value>
+            <value>
+                <fullName>Specialista Esercizio Sistemi Clienti</fullName>
+                <default>false</default>
+                <label>Specialista Esercizio Sistemi Clienti</label>
+            </value>
+            <value>
+                <fullName>Specialista Gestione del Credito</fullName>
+                <default>false</default>
+                <label>Specialista Gestione del Credito</label>
+            </value>
+            <value>
+                <fullName>Specialista Marketing Strategico</fullName>
+                <default>false</default>
+                <label>Specialista Marketing Strategico</label>
+            </value>
+            <value>
+                <fullName>Specialista Offering</fullName>
+                <default>false</default>
+                <label>Specialista Offering</label>
+            </value>
+            <value>
+                <fullName>Responsabile Offering</fullName>
+                <default>false</default>
+                <label>Responsabile Offering</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Offering</fullName>
+                <default>false</default>
+                <label>Coordinatore Offering</label>
+            </value>
+            <value>
+                <fullName>Addetto Offering</fullName>
+                <default>false</default>
+                <label>Addetto Offering</label>
+            </value>
+            <value>
+                <fullName>Specialista Processi Transazionali</fullName>
+                <default>false</default>
+                <label>Specialista Processi Transazionali</label>
+            </value>
+            <value>
+                <fullName>Specialista Progetti Clienti</fullName>
+                <default>false</default>
+                <label>Specialista Progetti Clienti</label>
+            </value>
+            <value>
+                <fullName>Specialista Programmazione Operativa e Monitoraggio</fullName>
+                <default>false</default>
+                <label>Specialista Programmazione Operativa e Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Specialista Quality Assurance + Presidio</fullName>
+                <default>false</default>
+                <label>Specialista Quality Assurance + Presidio</label>
+            </value>
+            <value>
+                <fullName>Specialista Reporting</fullName>
+                <default>false</default>
+                <label>Specialista Reporting</label>
+            </value>
+            <value>
+                <fullName>Specialista Sportelli</fullName>
+                <default>false</default>
+                <label>Specialista Sportelli</label>
+            </value>
+            <value>
+                <fullName>Specialista Contact Center</fullName>
+                <default>false</default>
+                <label>Specialista Contact Center</label>
+            </value>
+            <value>
+                <fullName>SPECIALISTA SPORTELLI (TL)</fullName>
+                <default>false</default>
+                <label>SPECIALISTA SPORTELLI (TL)</label>
+            </value>
+            <value>
+                <fullName>Specialista Supporto Vendita</fullName>
+                <default>false</default>
+                <label>Specialista Supporto Vendita</label>
+            </value>
+            <value>
+                <fullName>Specialista Sviluppo Prodotto</fullName>
+                <default>false</default>
+                <label>Specialista Sviluppo Prodotto</label>
+            </value>
+            <value>
+                <fullName>SPECIALISTA VENDITA CRM</fullName>
+                <default>false</default>
+                <label>SPECIALISTA VENDITA CRM</label>
+            </value>
+            <value>
+                <fullName>Addetto Back Office</fullName>
+                <default>false</default>
+                <label>Addetto Back Office</label>
+            </value>
+            <value>
+                <fullName>SPECIALISTA SPORTELLI (Indiretti)</fullName>
+                <default>false</default>
+                <label>SPECIALISTA SPORTELLI (Indiretti)</label>
+            </value>
+            <value>
+                <fullName>Addetto Aggiornamento Operativo</fullName>
+                <default>false</default>
+                <label>Addetto Aggiornamento Operativo</label>
+            </value>
+            <value>
+                <fullName>Addetto Esercizio Sistemi Clienti</fullName>
+                <default>false</default>
+                <label>Addetto Esercizio Sistemi Clienti</label>
+            </value>
+            <value>
+                <fullName>Addetto Quality Assurance</fullName>
+                <default>false</default>
+                <label>Addetto Quality Assurance</label>
+            </value>
+            <value>
+                <fullName>Addetto Gestione del Credito</fullName>
+                <default>false</default>
+                <label>Addetto Gestione del Credito</label>
+            </value>
+            <value>
+                <fullName>Addetto Order Management</fullName>
+                <default>false</default>
+                <label>Addetto Order Management</label>
+            </value>
+            <value>
+                <fullName>Addetto Processi Transazionali</fullName>
+                <default>false</default>
+                <label>Addetto Processi Transazionali</label>
+            </value>
+            <value>
+                <fullName>Addetto Programmazione Operativa e Monitoraggio</fullName>
+                <default>false</default>
+                <label>Addetto Programmazione Operativa e Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Addetto Contact Center</fullName>
+                <default>false</default>
+                <label>Addetto Contact Center</label>
+            </value>
+            <value>
+                <fullName>ADDETTO SPORTELLI</fullName>
+                <default>false</default>
+                <label>ADDETTO SPORTELLI</label>
+            </value>
+            <value>
+                <fullName>Addetto Supporto Tecnico Amministrativo</fullName>
+                <default>false</default>
+                <label>Addetto Supporto Tecnico Amministrativo</label>
+            </value>
+            <value>
+                <fullName>Addetto Supporto Vendita</fullName>
+                <default>false</default>
+                <label>Addetto Supporto Vendita</label>
+            </value>
+            <value>
+                <fullName>Addetto Reporting</fullName>
+                <default>false</default>
+                <label>Addetto Reporting</label>
+            </value>
+            <value>
+                <fullName>ADDETTO VENDITA CRM</fullName>
+                <default>false</default>
+                <label>ADDETTO VENDITA CRM</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Customer Value Management e Back Office</fullName>
+                <default>false</default>
+                <label>Coordinatore Customer Value Management e Back Office</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Esercizio Sistemi Clienti</fullName>
+                <default>false</default>
+                <label>Coordinatore Esercizio Sistemi Clienti</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Progetti Clienti</fullName>
+                <default>false</default>
+                <label>Coordinatore Progetti Clienti</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Order Management</fullName>
+                <default>false</default>
+                <label>Coordinatore Order Management</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Processi Transazionali</fullName>
+                <default>false</default>
+                <label>Coordinatore Processi Transazionali</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Programmazione Operativa e Monitoraggio</fullName>
+                <default>false</default>
+                <label>Coordinatore Programmazione Operativa e Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Quality Assurance</fullName>
+                <default>false</default>
+                <label>Coordinatore Quality Assurance</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Reporting</fullName>
+                <default>false</default>
+                <label>Coordinatore Reporting</label>
+            </value>
+            <value>
+                <fullName>COORDINATORE SPORTELLI</fullName>
+                <default>false</default>
+                <label>COORDINATORE SPORTELLI</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Supporto Vendita</fullName>
+                <default>false</default>
+                <label>Coordinatore Supporto Vendita</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Vendita CRM</fullName>
+                <default>false</default>
+                <label>Coordinatore Vendita CRM</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Vendita</fullName>
+                <default>false</default>
+                <label>Coordinatore Vendita</label>
+            </value>
+            <value>
+                <fullName>Coordinatore Contact Center</fullName>
+                <default>false</default>
+                <label>Coordinatore Contact Center</label>
+            </value>
+            <value>
+                <fullName>Responsabile Contact Center</fullName>
+                <default>false</default>
+                <label>Responsabile Contact Center</label>
+            </value>
+            <value>
+                <fullName>Responsabile Customer Data Operations</fullName>
+                <default>false</default>
+                <label>Responsabile Customer Data Operations</label>
+            </value>
+            <value>
+                <fullName>Responsabile Customer Value Management e Back Office</fullName>
+                <default>false</default>
+                <label>Responsabile Customer Value Management e Back Office</label>
+            </value>
+            <value>
+                <fullName>Responsabile Loyalty e Campaign</fullName>
+                <default>false</default>
+                <label>Responsabile Loyalty e Campaign</label>
+            </value>
+            <value>
+                <fullName>Responsabile Marketing Strategico</fullName>
+                <default>false</default>
+                <label>Responsabile Marketing Strategico</label>
+            </value>
+            <value>
+                <fullName>Responsabile Order Management</fullName>
+                <default>false</default>
+                <label>Responsabile Order Management</label>
+            </value>
+            <value>
+                <fullName>Responsabile Processi Transazionali</fullName>
+                <default>false</default>
+                <label>Responsabile Processi Transazionali</label>
+            </value>
+            <value>
+                <fullName>Responsabile Sportelli</fullName>
+                <default>false</default>
+                <label>Responsabile Sportelli</label>
+            </value>
+            <value>
+                <fullName>Responsabile Vendita</fullName>
+                <default>false</default>
+                <label>Responsabile Vendita</label>
+            </value>
+            <value>
+                <fullName>Resposabile Esercizio Sistemi Clienti</fullName>
+                <default>false</default>
+                <label>Resposabile Esercizio Sistemi Clienti</label>
+            </value>
+            <value>
+                <fullName>Responsabile Progetti Clienti</fullName>
+                <default>false</default>
+                <label>Responsabile Progetti Clienti</label>
+            </value>
+            <value>
+                <fullName>Responsabile Reporting</fullName>
+                <default>false</default>
+                <label>Responsabile Reporting</label>
+            </value>
+            <value>
+                <fullName>Specialista Normativa</fullName>
+                <default>false</default>
+                <label>Specialista Normativa</label>
+            </value>
+            <value>
+                <fullName>Specialista Conciliazioni</fullName>
+                <default>false</default>
+                <label>Specialista Conciliazioni</label>
+            </value>
+            <value>
+                <fullName>Specialista Gestione Margini</fullName>
+                <default>false</default>
+                <label>Specialista Gestione Margini</label>
+            </value>
+            <value>
+                <fullName>Area manager vendita</fullName>
+                <default>false</default>
+                <label>Area manager vendita</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

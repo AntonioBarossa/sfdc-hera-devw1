@@ -14,14 +14,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     deliberation = '';
     showDeliberation = false;
     disabledDeliberation = false;
-    showEsitoCheck = true;
+    showEsitoCheck = false;
     vasAmendDisabledInput = false;
     
     get value(){
         let result = '';
         console.log('**************************************** ', this.order.RecordType.DeveloperName);
+        //COMMENTATO POICHE GENERAVA ERRORE
         if (this.order.RecordType.DeveloperName !== 'Default') {
-
             if(this.order.SBQQ__Quote__r.IsVAS__c){
                 result = 'HDT_RT_VAS';
             } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c) {
@@ -29,11 +29,11 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             } else {
                 result = this.order.RecordType.DeveloperName;
             }
-
             this.applySelectionLogic(result);
         } else {
             result = '';
         }
+        //COMMENTATO POICHE GENERAVA ERRORE
         return result;
     }
 
@@ -41,6 +41,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
         let records = [];
 
+        //COMMENTATO POICHE GENERAVA ERRORE
         if(this.order.SBQQ__Quote__r.IsVAS__c){
             records = [
                 {"label":"VAS","value":"HDT_RT_VAS"}
@@ -50,6 +51,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 {"label":"Aggiunta Sconti o Bonus VAS","value":"HDT_RT_ScontiBonus"}
             ]
         } else {
+        //COMMENTATO POICHE GENERAVA ERRORE
             records = [
                 {"label":"Attivazione","value":"HDT_RT_Attivazione"},
                 {"label":"Attivazione con Modifica","value":"HDT_RT_AttivazioneConModifica"},
@@ -62,7 +64,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 // {"label":"SwitchIn con Voltura Tecnica","value":"HDT_RT_SwitchInVolturaTecnica"}
                 
             ]
+        //COMMENTATO POICHE GENERAVA ERRORE    
         }
+       //COMMENTATO POICHE GENERAVA ERRORE    
 
         return records;
     }
@@ -162,6 +166,16 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.causale = '';
             this.showDeliberation = false;
         }
+        //INIZIO SVILUPPI EVERIS
+        else if(selectedProcess === 'HDT_RT_Voltura'){
+            this.precheck = true;
+            this.compatibilita = true;
+            this.causale = '';
+            this.showDeliberation = false;
+        }
+        //FINE SVILUPPI EVERIS 
+
+
     }
 
     handleSelectProcess(event){
@@ -176,7 +190,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             extraParams = {};
         }
 
-        next({orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
+        //EVERIS
+        console.log('OrderId--> '+this.order.Id);
+        //EVERIS
+
+        //EVERIS: Aggiunta variabile Order
+        next({order: this.order,orderId: this.order.Id, selectedProcess: this.selectedProcess, deliberate: this.deliberation, extraParams: extraParams}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('refreshorderchild'));
 
@@ -223,9 +242,14 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     connectedCallback(){
         console.log('this.order: ', JSON.parse(JSON.stringify(this.order)));
 
+        console.log('CallBack start');
+
         if(this.order.SBQQ__Quote__r.IsVAS__c || this.order.SBQQ__Quote__r.AmendmentAllowed__c){
             this.showEsitoCheck = false;
             this.vasAmendDisabledInput = true;
-        } 
+        }
+        
+        console.log('CallBack end');
+
     }
 }

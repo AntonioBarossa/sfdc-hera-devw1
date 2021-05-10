@@ -6,11 +6,6 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
 &quot;FieldName&quot; : &quot;NotPerformedBefore__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
@@ -111,7 +106,10 @@
    {
       &quot;FieldName&quot;:&quot;ServicePointType__c&quot;,
       &quot;Column&quot;:2
-   }
+   },{
+&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+&quot;Column&quot; : 2
+}
 ]</value>
     </values>
     <values>
