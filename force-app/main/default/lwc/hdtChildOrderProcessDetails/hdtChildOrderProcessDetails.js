@@ -544,8 +544,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('+++++++++++test:', this.template.querySelector("[data-id='CommoditySector__c']"));
 
         if(currentSectionName === 'dettaglioImpianto'){
+
+            if(this.template.querySelector("[data-id='RequestPhase__c']") !== null && this.template.querySelector("[data-id='RequestPhase__c']").value === '') {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Fase Richiesta',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
             
-            if(this.template.querySelector("[data-id='PhoneNumber__c']").value === '') {
+            if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null && this.template.querySelector("[data-id='PhoneNumber__c']").value === '') {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -557,7 +569,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='ImplantType__c']").value === '') {
+            if(this.template.querySelector("[data-id='ImplantType__c']") !== null && this.template.querySelector("[data-id='ImplantType__c']").value === '') {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -581,35 +593,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='Disconnectable__c']") !== null && this.template.querySelector("[data-id='Disconnectable__c']").value === 'NO'){
-                
-                let errorMessage = '';
-
-                console.log(this.template.querySelector("[data-id='DisconnectibilityType__c']").value);
-                if(this.template.querySelector("[data-id='DisconnectibilityType__c']").value === null){
-                    errorMessage = 'Popolare Telefono Non Disalimentabilita';
-                } 
-                
-                console.log(this.template.querySelector("[data-id='DisconnectibilityPhone__c']").value);
-                if(this.template.querySelector("[data-id='DisconnectibilityPhone__c']").value === null){
-                    errorMessage = 'Popolare Tipologia Disalimentabilita';
-                }
-                
-                console.log('errorMessage: ', errorMessage);
-
-                if(errorMessage !== ''){
-                    this.loading = false;
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: errorMessage,
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                    this.dispatchEvent(toastErrorMessage);
-                    return;
-                }
-
-            }
         }
 
         if(currentSectionName === 'ivaAccise'){
@@ -1398,7 +1381,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'ImplantType__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
-                    'disabled': false,
+                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1479,7 +1462,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Categoria disalimentabilità', //2
                     'apiname': 'DisconnectibilityType__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1488,7 +1471,25 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Recapito telefonico',
                     'apiname': 'DisconnectibilityPhone__c', //3
                     'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Residente all\'indirizzo di Fornitura',
+                    'apiname': 'Resident__c',
+                    'typeVisibility': this.typeVisibility('ele'),
                     'required': true,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Misuratore',
+                    'apiname': 'MeterSN__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1534,15 +1535,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'MeterClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Misuratore',
-                    'apiname': 'MeterSN__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
                     'disabled': true,
                     'value': '',
                     'processVisibility': ''
@@ -1636,22 +1628,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Opzione richiesta',
                     'apiname': 'RequestOption__c',
-                    'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn',
+                    'typeVisibility': this.typeVisibility('ele'),
                     'required': false,
                     'disabled': false,
-                    'value': this.order.RequestOption__c,
-                    'processVisibility': '',
-                    'isMockPicklist': true,
-                    'mockOptions': this.requestOptions,
-                    // 'diffObjApi': 'Order',
-                    // 'diffRecordId': this.order.Id
-                },
-                {
-                    'label': 'Residente all\'indirizzo di Fornitura',
-                    'apiname': 'Resident__c',
-                    'typeVisibility': this.typeVisibility('ele'),
-                    'required': true,
-                    'disabled': true,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1681,12 +1660,48 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
+                },
+                {
+                    'label': 'Fase richiesta',
+                    'apiname': 'RequestPhase__c',
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Azione commerciale',
+                    'apiname': 'CommercialAction__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Codice Ateco',
+                    'apiname': 'AtecoCode__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Autocert Instanza',
+                    'apiname': 'InstanceSelfCertification__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
                 }
                ]
             },
             {
                 step: 7,
-                label: 'Indirizzo fornitura',
+                label: 'Indirizzo di fornitura',
                 name: 'indirizzoFornitura',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
@@ -2189,6 +2204,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     {
                         'label': 'Email PEC invio Bolletta',
                         'apiname': 'InvoiceCertifiedEmailAddress__c',
+                        'typeVisibility': this.typeVisibility('both'),
+                        'required': false,
+                        'disabled': true,
+                        'value': '',
+                        'processVisibility': ''
+                    },
+                    {
+                        'label': 'SendCertifiedEmailConsentDate__c',
+                        'apiname': 'SendCertifiedEmailConsentDate__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,

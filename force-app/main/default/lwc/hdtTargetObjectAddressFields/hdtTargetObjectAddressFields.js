@@ -27,7 +27,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api checkBoxFieldValue = false;
     @api textFieldValue;
     @api theRecord = {};
-    @api stato = 'Italia';
+    @api stato = 'ITALIA';
     @api provincia;
     @api comune;
     @api cap;
@@ -70,6 +70,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     disableCodViaSap=false;
     visibleCopiaResidenza=false;
     visibleSelezioneIndirizzi=false;
+    disableFlagVerificato=false;
     
     
 
@@ -587,10 +588,11 @@ handleCheckBoxChange(event){
                 console.log('entra in indirizzo estero case');
                 this.IndEstero = event.target.checked;
                 if(event.target.checked==true){
-                    this.stato='Estero';
+                    this.stato='ESTERO';
                 }else{
-                    this.stato='Italia';
+                    this.stato='ITALIA';
                 }
+                this.flagVerificatoFalse();
                 break;
             case 'Flag Verificato':
                 console.log('entra in Flag Verificato case');
@@ -942,6 +944,7 @@ disabledverifyFieldsAddressDisabled(){
 @api
     connectedCallback()
     {
+        this.disableFlagVerificato=true;
         console.log('hdtTargetObjectAddressFields - fieldAddressObject : '+ JSON.stringify(this.fieldsaddressobject));
         console.log('connectedCallback  START + theRecord : '+JSON.stringify(this.theRecord));
         console.log('connectedCallback   objectApiName : '+JSON.stringify(this.objectapiname));
@@ -954,7 +957,7 @@ disabledverifyFieldsAddressDisabled(){
         }
 
         if(this.IndEstero==true){
-            this.stato='Estero';
+            this.stato='ESTERO';
         }
 
         this.theRecord['Stato'] = this.stato;
@@ -1163,23 +1166,19 @@ disabledverifyFieldsAddressDisabled(){
     }
 
     handleKeyPress(event){
-        console.log('EVENT name: '+ JSON.stringify(event.target.name)); 
-        console.log('EVENT value: '+ JSON.stringify(event.target.value)); 
-        console.log('EVENT lenght: '+ JSON.stringify(event.target.value.length)); 
-        console.log('EVENT code: '+ JSON.stringify(event.code)); 
-        console.log('EVENT key: '+ JSON.stringify(event.key));
+													  
 
         if(event.code=='Enter'){
 
-        if(event.target.value.length ==2 && event.target.name == 'Comune' ){
-            console.log('entra in if comune');
+        if(event.target.value.length == 2 && event.target.name == 'Comune' && event.keyCode === 13){
+
             //this.booleanForm= true;
             getAddressComune({city:event.target.value}).then(data =>
                 {
                     
-                    console.log("******:" + JSON.stringify(data));
+																  
                     if(data['statusCode'] == 200 && data['prestazione'].length > 0){
-                        console.log("Sucessoooooooooooo:" + JSON.stringify(data));
+																				  
                         this.herokuAddressServiceData = data['prestazione'];
                         this.headertoshow = 'Comune';
                         
@@ -1212,12 +1211,12 @@ disabledverifyFieldsAddressDisabled(){
             });
 
         }
-        if((event.target.value.length >2 && event.target.value.length <4)  && event.target.name == 'Via'){
-            console.log('entra in if Via');
+        if((event.target.value.length >= 2 && event.target.value.length <=4)  && event.target.name == 'Via' && event.keyCode === 13){
+										   
             getAddressInd({street:event.target.value,cityCode:this.codComuneSAP}).then(data =>
                 {
                     
-                    console.log("******HOLAHOLA:" + JSON.stringify(data));
+																		  
                     if(data['statusCode'] == 200 && data['prestazione'].length > 0){
                         console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                         this.herokuAddressServiceData = data['prestazione'];
