@@ -585,7 +585,7 @@
         </filters>
         <filters>
             <field>CreatedDate</field>
-            <operator>LessThanOrEqualTo</operator>
+            <operator>GreaterThanOrEqualTo</operator>
             <value>
                 <elementReference>CreatedDateLessThanFifthy</elementReference>
             </value>
@@ -822,6 +822,13 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>resumedFromDraft</name>
+                <value>
+                    <elementReference>ResumeFromDraft</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -872,6 +879,13 @@
                     <stringValue>Selezionare Processo...</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>value</name>
+                <value>
+                    <elementReference>FlowCase.Subprocess__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -969,6 +983,7 @@
                     <elementReference>FlowCase.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1070,6 +1085,7 @@
                     <elementReference>FlowCase.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1153,6 +1169,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1291,6 +1308,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

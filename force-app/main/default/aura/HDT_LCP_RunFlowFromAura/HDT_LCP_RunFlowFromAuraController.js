@@ -20,6 +20,9 @@
         //variabile per informative
         var context = myPageRef.state.c__context;
 
+        //variabile per innesco da altri case
+        var parentRecordId = myPageRef.state.c__parentRecordId;
+
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -33,6 +36,7 @@
         console.log('# recordToCancell -> ' + recordToCancell);
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
         console.log('# context -> '+context);
+        console.log('# parentRecordId -> ' +parentRecordId);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -102,6 +106,9 @@
         }
         if(serviceCatalogId != null){
             inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
+        }
+        if(parentRecordId != null){
+            inputVariables.push({ name : 'ParentRecordId', type: 'String', value : parentRecordId });
         }
 
         console.log('## inputVariables -> ');

@@ -3,7 +3,9 @@
 
 
 
+
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
     
     
     
@@ -13,7 +15,9 @@
     
     
     
+    
     <isExposed>true</isExposed>
+    
     
     
     
@@ -23,7 +27,9 @@
         
         
         
+        
         <target>lightning__FlowScreen</target>
+        
         
         
         
@@ -33,53 +39,76 @@
     
     
     
+    
     <targetConfigs>
         
         
         
         
+        
         <targetConfig targets="lightning__FlowScreen">
+            
 
             
             <property name="commodity" type="String" label="Commodity" description="Selected commodity for the current process" role="inputOnly"/>
             
+            
             <property name="recordId" type="String" label="Record Id" description="Record Id of the parent Object" role="inputOnly"/>
             
+            
             <property name="servicePointId" type="String" label="Service Point Id" description="Service Point Id" role="inputOnly"/>
+            
 
             <property name="object" type="String" label="Object" description="The parent Object of the Reading" role="inputOnly"/>
             
+            
             <property name="nextLabel" type="String" label="Next Label" description="The Label of the Next Button" role="inputOnly"/>
+            
             
             <property name="nextVariant" type="String" label="Next variant" description="The variant of the next button" default="brand" role="inputOnly"/>
             
+            
             <property name="isVolture" type="Boolean" label="Is Volture?" description="Discriminates if the process is a Volture" role="inputOnly"/>
             
+            
             <property name="isRettificaConsumi" type="Boolean" label="Rettifica Consumi?" description="Discriminates if the process is Rettifica Consumi" role="inputOnly"/>
+            
 
             <property name="selectedReadingValue" type="Integer" label="Lettura Selezionata da cruscotto letture" description="Lettura Selezionata da cruscotto letture, solo per processo Rettifica Consumi" role="inputOnly"/>
+            
 
             <property name="resumedFromDraft" type="Boolean" label="Resumed from Draft?" description="Discriminates if the case has been resumed from Draft" role="inputOnly"/>
+            
 
             <property name="showDraftButton" type="Boolean" label="Show Draft Button?" description="Whether to show the Draft Button" role="inputOnly"/>
+            
 
             <property name="showBackButton" type="Boolean" label="Show Back Button?" description="Whether to show the Back Button" role="inputOnly"/>
             
+            
             <property name="showCancelButton" type="Boolean" label="Show Cancel Button?" description="Whether to show the Cancel Button" role="inputOnly"/>
             
+            
             <property name="allowSmallerReading" type="Boolean" label="Allow Smaller Reading?" description="If true the user can insert a reading smaller than the last one" role="inputOnly"/>
+            
 
             <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
             
+            
             <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>
+            
             
             <property name="readingCustomerDate" type="Date" label="Reading Customer Date" description="Date of reading provided by customer" role="outputOnly"/>
             
+            
             <property name="oldTotalReadingValue" type="Integer" label="Old total reading value" description="Sum of all previous reading values" role="outputOnly"/>
+            
 
             <property name="newTotalReadingValue" type="Integer" label="New total reading value" description="Sum of all new reading values" role="outputOnly"/>
+            
 
             <property name="disabledReadingDate" type="Boolean" label="Disabled Reading Date" description="If true reading date is disabled" role="inputOnly"/>
+            
             
 
 
@@ -88,7 +117,9 @@
         
         
         
+        
     </targetConfigs>
+    
     
     
     
