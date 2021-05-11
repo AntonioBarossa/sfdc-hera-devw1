@@ -21,6 +21,18 @@
                                 <div class="slds-text-title slds-truncate" title="Account Name">Account Owner</div>
                                 <div class="slds-truncate" title="Account Name">{saleRecord.Account__r.Owner.Name}</div>
                             </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Canale Login</div>
+                                <div class="slds-truncate" title="Account Name">{saleRecord.CreatedBy.LoginChannel__c}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Postazione</div>
+                                <div class="slds-truncate" title="Account Name">{saleRecord.CreatedBy.Station__c}</div>
+                            </li>
+                            <li class="slds-page-header__detail-block">
+                                <div class="slds-text-title slds-truncate" title="Account Name">Gruppo Creatore</div>
+                                <div class="slds-truncate" title="Account Name">{saleRecord.CreatedBy.CreatorGroup__c}</div>
+                            </li>
                             <li if:false={isAccountBusiness} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Codice Fiscale">
                                     Codice Fiscale

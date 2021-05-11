@@ -16,7 +16,6 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     @api selectedservicepoint;
     @api servicePointRetrievedData ;
     @api herokuAddressServiceData;
-    @api titlecomponent ;
     hasAddressBeenVerified = false;
     @track submitedAddressFields = {};
     verifyDisabledOnUpdate = true;
@@ -104,6 +103,7 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     else{
         this.disableVerifIndiButton = true;
     }
+    
 
     }
 
@@ -131,7 +131,7 @@ handleAddressFromAccount()
             this.provincia=data['Provincia'];
             this.cap=data['CAP'];
             this.stato=data['Stato'];
-			this.estensCivico='';
+			this.estensCivico=data['Est.Civico'];
             this.codComuneSAP='';
             this.codStradarioSAP='';
             //this.flagVerificato=false;
@@ -142,7 +142,7 @@ handleAddressFromAccount()
             this.theRecord['Provincia']= data['Provincia'];
             this.theRecord['CAP']= data['CAP'];
             this.theRecord['Stato']= data['Stato'];
-            this.theRecord['Estens.Civico']= '';
+            this.theRecord['Estens.Civico']= data['Est.Civico'];
             this.theRecord['Codice Comune SAP']= '';
             this.theRecord['Codice Via Stradario SAP']= '';
             //this.theRecord['Flag Verificato']= false;
