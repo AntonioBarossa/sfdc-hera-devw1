@@ -18,12 +18,17 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             sapIntegration = submitRequest(recordId,parameters.get('requestType'));
 
             Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
+            System.debug('responseBody deserialized: ' + body);
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
-                HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                System.debug('Creazione activity Errore Lavorazione SAP');
+                if (data != null) {
+                    HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                }
                 response.success = false;
                 response.message = 'KO';
             }else {
+                System.debug('Response OK');
                 response.success = true;
                 response.message = 'OK';
             }
@@ -59,7 +64,9 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             Map<String,Object> body = (Map<String,Object>) JSON.deserializeUntyped(sapIntegration.responseBody);
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
-                HDT_SRV_BpCaVariation.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                if (data != null) {
+                    HDT_SRV_BpCaVariation.createActivity(inputs[0].recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                }
                 output.outcome = false;
             }else {
                 output.outcome = true;
