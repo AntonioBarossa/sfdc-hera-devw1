@@ -7300,6 +7300,7 @@
             <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
+        <values>
             <fullName>Inviato al SII</fullName>
             <default>false</default>
         </values>
