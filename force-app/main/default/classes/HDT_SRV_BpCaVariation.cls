@@ -86,26 +86,32 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,FirstName__c,LastName__c,FiscalCode__c,VatNumber__c';
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,FirstName__c,LastName__c,FiscalCode__c,VatNumber__c,CustomerMarking__c';
         fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
         Case caseRecord = (Case) sobjectRecordList[0];
-        Account acc = (Account) caseRecord.Account;	
+        Account acc = (Account) caseRecord.Account;
         HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MA2';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        requestBody.account.nome = (String) caseRecord.get('FirstName__c') != null ? (String) caseRecord.get('FirstName__c') : '';
+        requestBody.account.alias = (String) caseRecord.get('LastName__c'); // Non dovrebbe mai essere vuoto.
+        requestBody.account.codiceFiscale = (String) caseRecord.get('FiscalCode__c') != null ? (String) caseRecord.get('FiscalCode__c') : '';
+        requestBody.account.partitaIva = (String) caseRecord.get('VatNumber__c') != null ? (String) caseRecord.get('VatNumber__c') : '';
+        requestBody.account.marcaturaCliente = (String) caseRecord.get('CustomerMarking__c') != null ? (String) caseRecord.get('CustomerMarking__c') : '';
         requestBody.account.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
-        requestBody.account.indirizzo.nazione = (String) caseRecord.get('BillingCountry__c');
+        requestBody.account.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('BillingCountry__c'));
         requestBody.account.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.account.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
         requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
         requestBody.account.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.account.indirizzo.piano = '';
+        System.debug('requestBody indirizzo ' + requestBody.account.indirizzo);
 
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);
@@ -134,5 +140,14 @@ public with sharing class HDT_SRV_BpCaVariation {
         Datetime today = Datetime.now();
         String formattedToday = today.format('yMMdd');
         return formattedToday;
+    }
+
+    // Restituisce la nazione nel formato richiesto da SAP (IT)
+    private static String getFormattedCountry(String country) {
+        if (country == null) {
+            return '';
+        }
+
+        return country.toUpperCase().substring(0, 2);
     }
 }

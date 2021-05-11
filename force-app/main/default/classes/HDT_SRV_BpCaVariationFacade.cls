@@ -21,12 +21,19 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
             System.debug('responseBody deserialized: ' + body);
             Map<String,Object> data = (Map<String,Object>) body.get('data');
             if((sapIntegration.responseCode != 200 && sapIntegration.responseCode != 201) || (data != null && data.get('commenti') != null)){
-                System.debug('Creazione activity Errore Lavorazione SAP');
                 if (data != null) {
-                    HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                    String tipoAttivita = (String) data.get('tipoAttivita');
+                    if (!tipoAttivita.equals('Pratica gestita')){ // ==> tipoAttivita = Errore cons. eBSM ==> riportiamo l'errore nell'activity.
+                        System.debug('Creazione activity Errore Lavorazione SAP');
+                        HDT_SRV_BpCaVariation.createActivity(recordId,(String)data.get('commenti'),'Errore Lavorazione SAP');
+                        response.success = false;
+                        response.message = 'KO';
+                    } else {
+                        System.debug('Response OK: commento da SAP: ' + (String)data.get('commenti'));
+                        response.success = true;
+                        response.message = 'OK';
+                    }
                 }
-                response.success = false;
-                response.message = 'KO';
             }else {
                 System.debug('Response OK');
                 response.success = true;
