@@ -5,11 +5,11 @@ public with sharing class HDT_SRV_BpCaVariation {
             when 'MA3Disattivazioni' {
                 return manageMA3Disattivazioni(inputParams);
             }
-            when 'MA3Account' {
-                return manageMA3Account(inputParams);
+            when 'MA2DatiFiscali' {
+                return manageMA2DatiFiscali(inputParams);
             }
             when else {
-               return null; 
+               return null;
             }
         }
     }
@@ -50,37 +50,32 @@ public with sharing class HDT_SRV_BpCaVariation {
         return inputParams;
     }
 
-    private static HDT_WRP_GenericSapIntegration manageMA3Account(HDT_WRP_GenericSapIntegration inputParams){
+    private static HDT_WRP_GenericSapIntegration manageMA2DatiFiscali(HDT_WRP_GenericSapIntegration inputParams){
         String fieldq;
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber, CareOf__c,BillSendingMethod__c,InvoiceEmail__c,InvoiceCertifiedEmailAddress__c,BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,FirstName__c,LastName__c,FiscalCode__c,VatNumber__c';
+        fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
-        HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         Case caseRecord = (Case) sobjectRecordList[0];
         Account acc = (Account) caseRecord.Account;	
-        //BillingProfile__c bp = (BillingProfile__c) caseRecord.BillingProfile__r;
+        HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
         requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MA2';
-        requestBody.dataCreazione = '20150303';
+        requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
-        requestBody.account.indirizzo
-        //requestBody.ordine.contoContrattuale = (String) bp.get('ContractAccountCode__c');
-/*         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('InvoicingCity__c');
-        requestBody.ordine.indirizzo.nazione = (String) caseRecord.get('InvoicingCountry__c');
-        requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetNumber__c');
-        requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('InvoicingStreetNumberExtension__c') != null? (String) caseRecord.get('InvoicingStreetNumberExtension__c'):'';
-        requestBody.ordine.indirizzo.cap = (String) caseRecord.get('InvoicingPostalCode__c');
-        requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
-        requestBody.ordine.indirizzo.via = (String) caseRecord.get('InvoicingStreetName__c');
-        requestBody.ordine.indirizzo.piano = '';
-        //requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
-        requestBody.ordine.emailInvioBolletta = (String) caseRecord.get('InvoiceEmail__c');
-        requestBody.ordine.pecInvioBolletta = (String) caseRecord.get('InvoiceCertifiedEmailAddress__c'); */
-        //requestBody.ordine.modalitaInvioBolletta = (String) caseRecord.get('BillSendingMethod__c');
+        requestBody.account.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
+        requestBody.account.indirizzo.nazione = (String) caseRecord.get('BillingCountry__c');
+        requestBody.account.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
+        requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
+        requestBody.account.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
+        requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.account.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
+        requestBody.account.indirizzo.piano = '';
+
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
@@ -101,5 +96,12 @@ public with sharing class HDT_SRV_BpCaVariation {
             activity.wrts_prcgvr__Description__c = description;
             Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
         }
+    }
+
+    // Restituisce Today nel formato richiesto da mulesoft (es. 20210511)
+    private static String getFormattedToday() {
+        Datetime today = Datetime.now();
+        String formattedToday = today.format('yMMdd');
+        return formattedToday;
     }
 }
