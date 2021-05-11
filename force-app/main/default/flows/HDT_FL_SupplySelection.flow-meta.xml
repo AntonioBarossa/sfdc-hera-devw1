@@ -70,7 +70,7 @@
             <field>Status</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Activated</stringValue>
+                <stringValue>Attivo</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
