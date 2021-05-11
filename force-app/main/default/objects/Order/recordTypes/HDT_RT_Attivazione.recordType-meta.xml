@@ -1911,7 +1911,7 @@
         </values>
         <values>
             <fullName>Bozza</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Completata</fullName>

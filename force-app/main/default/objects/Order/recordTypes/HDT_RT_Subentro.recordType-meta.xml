@@ -1922,7 +1922,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito DL KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito DL OK</fullName>
             <default>false</default>
         </values>
         <values>
