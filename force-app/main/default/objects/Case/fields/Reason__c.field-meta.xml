@@ -469,6 +469,14 @@
             <valueName>TCP Comune no Int</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Malfunzionamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
             <valueName>Prima Bolletta</valueName>
         </valueSettings>
