@@ -243,7 +243,7 @@
     <decisions>
         <name>Check_Inserire_Letture</name>
         <label>Inserire Letture?</label>
-        <locationX>1242</locationX>
+        <locationX>1241</locationX>
         <locationY>843</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
@@ -765,8 +765,11 @@
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>2017</locationX>
-        <locationY>615</locationY>
+        <locationX>2191</locationX>
+        <locationY>569</locationY>
+        <connector>
+            <targetReference>Spinner</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -786,8 +789,8 @@
     <recordUpdates>
         <name>Set_Phase_Elaborazione_Manuale</name>
         <label>Set Phase Elaborazione Manuale</label>
-        <locationX>2174</locationX>
-        <locationY>466</locationY>
+        <locationX>2189</locationX>
+        <locationY>379</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1555,6 +1558,31 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Spinner</name>
+        <label>Spinner</label>
+        <locationX>2441</locationX>
+        <locationY>569</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>hdtSpinnerFlow</name>
+            <extensionName>c:hdtSpinnerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>

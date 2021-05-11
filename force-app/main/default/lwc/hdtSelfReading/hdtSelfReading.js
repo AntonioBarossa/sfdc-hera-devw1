@@ -166,7 +166,19 @@ export default class HdtSelfReading extends LightningElement {
         checkLastReadings({servicePointId:this.servicePointId})
         .then(result =>{
             console.log('checkLastReadings results: ' + result);
-            const lastReadings = this.fillLastReadingsArray(JSON.parse(result));
+            if (result == null) {
+                this.errorAdvanceMessage = 'Errore di sistema, impossibile recuperare le ultime letture. Contattare un amministratore di sistema.';
+                this.showToastMessage(this.errorAdvanceMessage);
+                return;
+            }
+            const parsedResult = JSON.parse(result);
+            // Verifichiamo se la response contiene un errore da SAP.
+            if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
+                this.errorAdvanceMessage = 'Errore da SAP: ' + parsedResult.errorDetails[0].message;
+                this.showToastMessage(this.errorAdvanceMessage);
+                return;
+            }
+            const lastReadings = this.fillLastReadingsArray(parsedResult);
             console.log('filled obj: ' + JSON.stringify( lastReadings));
 
             if(this.commodity == 'Energia Elettrica'){
