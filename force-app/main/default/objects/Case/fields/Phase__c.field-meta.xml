@@ -678,6 +678,11 @@
                 <label>Attesa Modulo Firmato</label>
             </value>
             <value>
+                <fullName>Ripensamento - Revocato</fullName>
+                <default>false</default>
+                <label>Ripensamento - Revocato</label>
+            </value>
+            <value>
                 <fullName>Errore invio a DL/SII</fullName>
                 <default>false</default>
                 <label>Errore invio a DL/SII</label>

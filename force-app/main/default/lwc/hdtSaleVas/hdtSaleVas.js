@@ -38,7 +38,7 @@ export default class hdtSaleVas extends LightningElement {
     // }
 
     get isConfirmDisabled(){
-        return this.selectedOption === '' || this.disabledInput ? true: false;
+        return this.selectedOption === '' || this.confirmedSelectedOption === '' || this.disabledInput ? true: false;
     }
 
     // handleCancelEvent(){
@@ -87,6 +87,7 @@ export default class hdtSaleVas extends LightningElement {
         this.isContractsListVisible = false;
         this.isInputVisible = false;
         this.selectedOption = event.detail.value;
+        this.confirmedSelectedOption = '';
         
         switch (this.selectedOption) {
             case 'Ordini in corso':
@@ -103,6 +104,7 @@ export default class hdtSaleVas extends LightningElement {
             
             case 'Contratto attivo/ordine in corso':
                 this.isCompleteListVisible = true;
+                this.isInputVisible = false;
                 this.handleContractsAndOrdersList();
                 break;
 

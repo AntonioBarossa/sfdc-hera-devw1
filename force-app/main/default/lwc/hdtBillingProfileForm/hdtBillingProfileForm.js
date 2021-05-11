@@ -19,6 +19,8 @@ export default class hdtBillingProfileForm extends LightningElement {
     dataToSubmit = {};
     saveErrorMessage = '';
     cloneObject = {};
+    isVerifiedAddress = false;
+    isForeignAddress = false;
 
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
@@ -314,6 +316,40 @@ export default class hdtBillingProfileForm extends LightningElement {
         } else {
             isValid = false;
         }
+    
+        //Validate address
+        if(!this.isForeignAddress){
+            if (!this.isVerifiedAddress) {
+                isValid = false;
+                this.saveErrorMessage = 'E\' necessario verificare l\'indirizzo per poter procedere al salvataggio';
+            }
+        } else {
+            let foreignAddressMsg = 'Per poter salvare popolare i seguenti campi: ';
+
+            if (this.dataToSubmit['InvoicingCountry__c'] === undefined || this.dataToSubmit['InvoicingCountry__c'] === '') {
+                foreignAddressMsg = foreignAddressMsg.concat('Stato, ');
+            }
+            if (this.dataToSubmit['InvoicingProvince__c'] === undefined || this.dataToSubmit['InvoicingProvince__c'] === '') {
+                foreignAddressMsg = foreignAddressMsg.concat('Provincia, ');
+            }
+            if (this.dataToSubmit['InvoicingCity__c'] === undefined || this.dataToSubmit['InvoicingCity__c'] === '') {
+                foreignAddressMsg = foreignAddressMsg.concat('Comune, ');
+            }
+            if (this.dataToSubmit['InvoicingStreetName__c'] === undefined || this.dataToSubmit['InvoicingStreetName__c'] === '') {
+                foreignAddressMsg = foreignAddressMsg.concat('Via, ');
+            }
+            if (this.dataToSubmit['InvoicingStreetNumber__c'] === undefined || this.dataToSubmit['InvoicingStreetNumber__c'] === '') {
+                foreignAddressMsg = foreignAddressMsg.concat('Civico, ');
+            }
+            if (this.dataToSubmit['InvoicingPostalCode__c'] === undefined || this.dataToSubmit['InvoicingPostalCode__c'] === '') {
+                foreignAddressMsg = foreignAddressMsg.concat('CAP, ');
+            }
+
+            if (foreignAddressMsg !== 'Per poter salvare popolare i seguenti campi: ') {
+                isValid = false;
+                this.saveErrorMessage = foreignAddressMsg.slice(0, -2);
+            }
+        }
 
         return isValid;
 
@@ -346,6 +382,9 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.dataToSubmit['InvoicingStreetNumber__c'] != this.wrapAddressObject['Civico']){
             this.dataToSubmit['InvoicingStreetNumber__c'] = this.wrapAddressObject['Civico'];
         }
+        
+        this.isVerifiedAddress = this.wrapAddressObject['Flag Verificato'];
+        this.isForeignAddress = this.wrapAddressObject['Indirizzo Estero'];
 
     }
 
@@ -414,19 +453,20 @@ export default class hdtBillingProfileForm extends LightningElement {
     }
 
     handleSaveEvent(){
+
+        this.handleWrapAddressObject();
+
         if(this.validFields()){
 
             this.dataToSubmit['Account__c'] = this.accountId;
-
-            // if(Object.keys(this.wrapAddressObject).length === 0){
-                console.log('save address:');
-                this.handleWrapAddressObject();
-            // }
 
             this.loading = true;
             createBillingProfile({billingProfile: this.dataToSubmit}).then(data =>{
                 this.loading = false;
                 this.recordId = '';
+                this.isVerifiedAddress = false;
+                this.isForeignAddress = false;
+
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Metodo di pagamento creato con successo',
