@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>GlobalMigrationKey__c</fullName>
-    <description>Generato in fase di migrazione</description>
-    <externalId>true</externalId>
-    <label>Chiave globale di migrazione</label>
+    <fullName>Vendor__c</fullName>
+    <description>Descrizione Venditore</description>
+    <externalId>false</externalId>
+    <label>Venditore</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
