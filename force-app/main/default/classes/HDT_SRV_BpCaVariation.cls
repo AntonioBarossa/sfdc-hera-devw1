@@ -5,8 +5,14 @@ public with sharing class HDT_SRV_BpCaVariation {
             when 'MA3Disattivazioni' {
                 return manageMA3Disattivazioni(inputParams);
             }
+/*             when 'MA3ModAnagrafiche' {
+                return manageMA3ModAnagrafiche(inputParams);
+            } */
             when 'MA2DatiFiscali' {
                 return manageMA2DatiFiscali(inputParams);
+            }
+            when 'DatiContatto' {
+                return manageDatiContatto(inputParams);
             }
             when 'GruppoIva' {
                 return manageGruppoIva(inputParams);
@@ -113,6 +119,33 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.account.indirizzo.piano = '';
         System.debug('requestBody indirizzo ' + requestBody.account.indirizzo);
+
+        inputParams.requestBody = JSON.serialize(requestBody);
+        System.debug('requestBody ' + requestBody);
+        inputParams.namedCredential = 'Callout:BpCaVariation';
+        return inputParams;
+    }
+
+    private static HDT_WRP_GenericSapIntegration manageDatiContatto(HDT_WRP_GenericSapIntegration inputParams){
+        String fieldq;
+        String whereq;
+        String fromq = 'Case';
+        String queryString;
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
+        whereq = 'Id = \''+inputParams.recordId+'\'';
+        queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
+        List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
+        Case caseRecord = (Case) sobjectRecordList[0];
+        Account acc = (Account) caseRecord.Account;
+        HDT_WRP_BpCaVariation requestBody = new HDT_WRP_BpCaVariation();
+        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.codiceCausale = 'MAI';
+        requestBody.dataCreazione = getFormattedToday();
+        requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
+        requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
+        requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';
+        requestBody.account.email = (String) caseRecord.get('Email__c') != null ? (String) caseRecord.get('Email__c') : '';
 
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);
