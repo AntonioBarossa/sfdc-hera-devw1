@@ -321,10 +321,10 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(!this.isForeignAddress){
             if (!this.isVerifiedAddress) {
                 isValid = false;
-                this.saveErrorMessage = 'Devi verificare l\'indirizzo';
+                this.saveErrorMessage = 'E\' necessario verificare l\'indirizzo per poter procedere al salvataggio';
             }
         } else {
-            let foreignAddressMsg = 'Popolare campo ';
+            let foreignAddressMsg = 'Per poter salvare popolare i seguenti campi: ';
 
             if (this.dataToSubmit['InvoicingCountry__c'] === undefined || this.dataToSubmit['InvoicingCountry__c'] === '') {
                 foreignAddressMsg = foreignAddressMsg.concat('Stato, ');
@@ -345,7 +345,7 @@ export default class hdtBillingProfileForm extends LightningElement {
                 foreignAddressMsg = foreignAddressMsg.concat('CAP, ');
             }
 
-            if (foreignAddressMsg !== 'Popolare campo ') {
+            if (foreignAddressMsg !== 'Per poter salvare popolare i seguenti campi: ') {
                 isValid = false;
                 this.saveErrorMessage = foreignAddressMsg.slice(0, -2);
             }
