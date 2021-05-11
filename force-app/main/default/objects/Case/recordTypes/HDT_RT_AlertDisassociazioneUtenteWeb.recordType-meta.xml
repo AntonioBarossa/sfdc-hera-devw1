@@ -7299,6 +7299,70 @@
             <fullName>Non Inviata a SAP</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Paperless Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Non Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rata Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presenza Atti Autorizzativi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Non Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica in laboratorio</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

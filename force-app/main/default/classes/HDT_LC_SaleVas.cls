@@ -125,7 +125,7 @@ public inherited sharing class HDT_LC_SaleVas {
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             IsVAS__c = true,
-            SBQQ__PriceBook__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
+            SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -169,7 +169,7 @@ public inherited sharing class HDT_LC_SaleVas {
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,
-            SBQQ__PriceBook__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
+            SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -211,7 +211,7 @@ public inherited sharing class HDT_LC_SaleVas {
             CreatedBy__c = sale.CreatedBy__c,
             SalesCompany__c = sale.SalesCompany__c,
             IsVAS__c = true,
-            SBQQ__PriceBook__c = getPricebookId('VAS Standalone')
+            SBQQ__PricebookId__c = getPricebookId('VAS Standalone')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
