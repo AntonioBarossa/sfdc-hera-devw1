@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_Id_Contenitore</name>
         <label>Assegna Id Contenitore</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
@@ -14,13 +14,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Linka_Case_Corrente</targetReference>
+            <targetReference>AssegnaValori</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Id_Contenitore_0</name>
         <label>Assegna Id Contenitore</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
@@ -30,13 +30,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Linka_Case_Corrente</targetReference>
+            <targetReference>AssegnaValori</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>1458</locationX>
+        <locationX>1722</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -52,7 +52,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1722</locationX>
+        <locationX>1986</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -68,7 +68,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1986</locationX>
+        <locationX>2250</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -81,10 +81,47 @@
             <targetReference>Screen_inserimento_dati</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
+        <locationX>710</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IdContenitore</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetAccountStessoReclamo.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>IdContenitore</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Get_Input_Case</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CaseCollection</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetAccountStessoReclamo</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCaseCollection</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Altri_Venditori_o_Venditori_HC</name>
         <label>Altri Venditori o Venditori HC?</label>
-        <locationX>1590</locationX>
+        <locationX>1854</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0</targetReference>
@@ -109,7 +146,7 @@
     <decisions>
         <name>Altro_Reclamo_Esiste</name>
         <label>Altro Reclamo Esiste?</label>
-        <locationX>875</locationX>
+        <locationX>1040</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
@@ -134,7 +171,7 @@
     <decisions>
         <name>Esiste_Contenitore</name>
         <label>Esiste Contenitore?</label>
-        <locationX>446</locationX>
+        <locationX>710</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Contenitore</targetReference>
@@ -159,12 +196,41 @@
     <decisions>
         <name>Navigazione</name>
         <label>Navigazione?</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>878</locationY>
-        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
         <rules>
             <name>Avanti</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtFlowNavigationButton.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>hdtFlowNavigationButton.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
@@ -181,7 +247,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>1150</locationX>
+        <locationX>1282</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Nessun_Processo</targetReference>
@@ -258,7 +324,7 @@
     <decisions>
         <name>Riprendi_Bozza</name>
         <label>Riprendi Bozza?</label>
-        <locationX>1078</locationX>
+        <locationX>1293</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
@@ -283,7 +349,7 @@
     <decisions>
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>1150</locationX>
+        <locationX>1282</locationX>
         <locationY>2438</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -327,7 +393,7 @@
     <recordCreates>
         <name>Crea_Case_Contenitore</name>
         <label>Crea Case Contenitore</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>1118</locationY>
         <connector>
             <targetReference>Assegna_Id_Contenitore_0</targetReference>
@@ -398,7 +464,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1150</locationX>
+        <locationX>1282</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -419,7 +485,7 @@
     <recordLookups>
         <name>GetAccountStessoReclamo</name>
         <label>GetAccountStessoReclamo</label>
-        <locationX>875</locationX>
+        <locationX>1040</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -461,7 +527,7 @@
     <recordUpdates>
         <name>Aggiorna_Fase_in_Lavorazione</name>
         <label>Aggiorna Fase in Lavorazione</label>
-        <locationX>1018</locationX>
+        <locationX>1150</locationX>
         <locationY>2558</locationY>
         <filterLogic>and</filterLogic>
         <filters>
@@ -480,57 +546,19 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
-        <name>Linka_Case_Corrente</name>
-        <label>Linka Case Corrente</label>
-        <locationX>446</locationX>
-        <locationY>1454</locationY>
-        <connector>
-            <targetReference>Linka_Case_Corrente_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Input_Case.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>IdContenitore</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Linka_Case_Corrente_0</name>
-        <label>Linka Case Corrente</label>
-        <locationX>446</locationX>
+        <name>AggiornaCaseCollection</name>
+        <label>AggiornaCaseCollection</label>
+        <locationX>710</locationX>
         <locationY>1574</locationY>
         <connector>
             <targetReference>Processo_Reclami_Scritti_Richieste_Info_0</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetAccountStessoReclamo.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ParentId</field>
-            <value>
-                <elementReference>IdContenitore</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <screens>
         <name>Nessun_Processo</name>
         <label>Nessun Processo</label>
-        <locationX>2250</locationX>
+        <locationX>2514</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -546,7 +574,7 @@
     <screens>
         <name>Screen_Alert</name>
         <label>Screen Alert</label>
-        <locationX>644</locationX>
+        <locationX>710</locationX>
         <locationY>758</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -572,7 +600,7 @@
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -608,7 +636,7 @@
     <screens>
         <name>Screen_inserimento_dati</name>
         <label>Screen inserimento dati</label>
-        <locationX>1150</locationX>
+        <locationX>1282</locationX>
         <locationY>2318</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -692,17 +720,42 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1024</locationX>
+        <locationX>1156</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
+    <subflows>
+        <name>Annulla_Prestazione</name>
+        <label>Annulla Prestazione</label>
+        <locationX>314</locationX>
+        <locationY>998</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <subflows>
         <name>Processo_Reclami_Scritti_Richieste_Info_0</name>
         <label>Processo Reclami Scritti/Richieste Info</label>
-        <locationX>1078</locationX>
+        <locationX>1293</locationX>
         <locationY>1982</locationY>
         <flowName>HDT_FL_GestioneReclami_ReclamiScritti</flowName>
         <inputAssignments>
@@ -725,6 +778,14 @@
             </value>
         </inputAssignments>
     </subflows>
+    <variables>
+        <name>CaseCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
+    </variables>
     <variables>
         <name>IdContenitore</name>
         <dataType>String</dataType>
