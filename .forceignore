@@ -30,7 +30,6 @@ package.xml
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/Case/recordTypes/HDT_RT_FatturazioneConsumi*
 **objects/WorkBadge/WorkBadge*
-**objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
 **objects/BillingProfile__c/fields/XMLType__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
