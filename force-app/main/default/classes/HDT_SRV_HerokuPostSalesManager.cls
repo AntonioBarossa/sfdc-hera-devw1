@@ -96,20 +96,11 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     System.debug('WRPResponse --> '+wrpResponses);
     caseToUpdate = hpsmUtl.handleResponse(wrpResponses, currentCase);
     
-    System.debug('New Phase --> '+caseToUpdate[0].Phase__c);
-    System.debug('Case --> '+caseToUpdate[0]);
-
-    String serializedCase = JSON.serialize(caseToUpdate[0]);
-
-    /*if(caseToUpdate.size() > 0){
-
-        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
-
-    }*/
-
-    System.debug('CaseToUpdate--> '+caseToUpdate[0]);
-
-    updateFuture(serializedCase);
+    if(caseToUpdate != null && caseToUpdate.size() > 0){
+        String serializedCase = JSON.serialize(caseToUpdate[0]);
+        updateFuture(serializedCase);
+    }
+    
 
     response.success = true;
     response.message = 'OK';

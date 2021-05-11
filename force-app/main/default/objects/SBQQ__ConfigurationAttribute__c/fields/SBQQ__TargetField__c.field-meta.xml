@@ -248,34 +248,34 @@
                 <label>PriceFromThirds__c</label>
             </value>
             <value>
-                <fullName>Percentuale F0</fullName>
+                <fullName>PercentageF0__c</fullName>
                 <default>false</default>
-                <label>Percentuale F0</label>
+                <label>PercentageF0__c</label>
             </value>
             <value>
-                <fullName>Percentuale F1</fullName>
+                <fullName>PercentageF1__c</fullName>
                 <default>false</default>
-                <label>Percentuale F1</label>
+                <label>PercentageF1__c</label>
             </value>
             <value>
-                <fullName>Percentuale F2</fullName>
+                <fullName>PercentageF2__c</fullName>
                 <default>false</default>
-                <label>Percentuale F2</label>
+                <label>PercentageF2__c</label>
             </value>
             <value>
-                <fullName>Percentuale F3</fullName>
+                <fullName>PercentageF3__c</fullName>
                 <default>false</default>
-                <label>Percentuale F3</label>
+                <label>PercentageF3__c</label>
             </value>
             <value>
-                <fullName>Percentuale FP</fullName>
+                <fullName>PercentagePickOut__c</fullName>
                 <default>false</default>
-                <label>Percentuale FP</label>
+                <label>PercentagePickOut__c</label>
             </value>
             <value>
-                <fullName>Percentuale FV</fullName>
+                <fullName>PercentagePick__c</fullName>
                 <default>false</default>
-                <label>Percentuale FV</label>
+                <label>PercentagePick__c</label>
             </value>
             <value>
                 <fullName>PriceNet__c</fullName>
@@ -406,6 +406,11 @@
                 <fullName>ServicePoint__c</fullName>
                 <default>false</default>
                 <label>ServicePoint__c</label>
+            </value>
+            <value>
+                <fullName>ServicePointLinkItem__c</fullName>
+                <default>false</default>
+                <label>ServicePointLinkItem__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -9189,6 +9189,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
         </values>
@@ -9246,6 +9250,18 @@
         </values>
         <values>
             <fullName>Verifica in laboratorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
