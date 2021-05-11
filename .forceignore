@@ -32,7 +32,6 @@ package.xml
 **objects/WorkBadge/WorkBadge*
 **objects/BillingProfile__c/fields/ElectronicInvoicingMethod__c*
 **objects/BillingProfile__c/fields/XMLType__c*
-**objects/Order/fields/DocSendingMethod__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
 **objects/Account/recordTypes/HDT_RT_Other*
