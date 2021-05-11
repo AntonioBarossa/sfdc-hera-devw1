@@ -85,6 +85,11 @@
                 <default>false</default>
                 <label>SG01</label>
             </value>
+            <value>
+                <fullName>AN1</fullName>
+                <default>false</default>
+                <label>AN1</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

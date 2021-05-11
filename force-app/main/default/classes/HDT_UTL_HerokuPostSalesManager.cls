@@ -263,6 +263,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
                     currentCase.Amount__c = Decimal.valueOf(reqWrp.requestMap.get('IMP_PREV_DIST'));
                 }
+                if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
+                    currentCase.Description = reqWrp.requestMap.get('TESTO_ERRR');
+                }
             }
             when 'esito_finale'{
                 currentCase.Phase__c = reqWrp.requestMap.get('FASE');
