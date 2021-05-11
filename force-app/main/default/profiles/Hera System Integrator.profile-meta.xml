@@ -29150,6 +29150,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Case.HDT_RT_InversioneContatore</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Case.HDT_RT_ModContrattoPreAtt</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
