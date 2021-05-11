@@ -7278,6 +7278,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore invio a DL%2FSII</fullName>
             <default>false</default>
         </values>

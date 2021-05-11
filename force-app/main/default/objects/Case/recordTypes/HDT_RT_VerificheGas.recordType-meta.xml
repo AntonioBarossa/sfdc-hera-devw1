@@ -7838,6 +7838,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
