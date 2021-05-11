@@ -102,7 +102,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.alias = (String) caseRecord.get('LastName__c'); // Non dovrebbe mai essere vuoto.
         requestBody.account.codiceFiscale = (String) caseRecord.get('FiscalCode__c') != null ? (String) caseRecord.get('FiscalCode__c') : '';
         requestBody.account.partitaIva = (String) caseRecord.get('VatNumber__c') != null ? (String) caseRecord.get('VatNumber__c') : '';
-        requestBody.account.marcaturaCliente = (String) caseRecord.get('CustomerMarking__c') != null ? (String) caseRecord.get('CustomerMarking__c') : '';
+        // SAP ignora la marcaturaCliente, se la prende dal codice BP che è obbligatorio.
+        //requestBody.account.marcaturaCliente = (String) caseRecord.get('CustomerMarking__c') != null ? (String) caseRecord.get('CustomerMarking__c') : '';
         requestBody.account.indirizzo.comune = (String) caseRecord.get('BillingCity__c');
         requestBody.account.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('BillingCountry__c'));
         requestBody.account.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
