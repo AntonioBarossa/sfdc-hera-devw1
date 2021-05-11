@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>GlobalAction__c</field>
-        <value xsi:type="xsd:boolean">Voltura</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>IndemnitiesList__c</field>
@@ -44,7 +44,7 @@
     </values>
     <values>
         <field>InformationDetail__c</field>
-        <value xsi:type="xsd:string">Assistenza compilazione moduli (daticatastali</value>
+        <value xsi:type="xsd:string">Assistenza compilazione moduli (daticatastali, legge 80)</value>
     </values>
     <values>
         <field>InstallmentList__c</field>
@@ -84,7 +84,7 @@
     </values>
     <values>
         <field>Process__c</field>
-        <value xsi:type="xsd:string">legge 80)</value>
+        <value xsi:type="xsd:string">Voltura</value>
     </values>
     <values>
         <field>ServicePoint__c</field>

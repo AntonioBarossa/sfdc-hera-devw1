@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>BillingProfile__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Case__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Contact__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>CreditManagement__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>EC1Level__c</field>
@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>GlobalAction__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>IndemnitiesList__c</field>
@@ -44,7 +44,7 @@
     </values>
     <values>
         <field>InformationDetail__c</field>
-        <value xsi:type="xsd:string">Info numeri di contatto Hera (sportelli</value>
+        <value xsi:type="xsd:string">Info numeri di contatto Hera (sportelli, stazioni ecologiche)</value>
     </values>
     <values>
         <field>InstallmentList__c</field>
@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Lead__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>MacroTopic__c</field>
@@ -60,7 +60,7 @@
     </values>
     <values>
         <field>NoteVarIva__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>Opportunity__c</field>
@@ -84,7 +84,7 @@
     </values>
     <values>
         <field>Process__c</field>
-        <value xsi:type="xsd:string">stazioni ecologiche)</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ServicePoint__c</field>

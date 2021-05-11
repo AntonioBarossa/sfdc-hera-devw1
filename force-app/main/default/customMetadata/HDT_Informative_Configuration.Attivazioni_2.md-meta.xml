@@ -44,7 +44,7 @@
     </values>
     <values>
         <field>InformationDetail__c</field>
-        <value xsi:type="xsd:string">Assistenza compilazione moduli (daticatastali</value>
+        <value xsi:type="xsd:string">Assistenza compilazione moduli (daticatastali, legge 80)</value>
     </values>
     <values>
         <field>InstallmentList__c</field>
