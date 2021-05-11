@@ -8,6 +8,9 @@ public with sharing class HDT_SRV_BpCaVariation {
             when 'MA2DatiFiscali' {
                 return manageMA2DatiFiscali(inputParams);
             }
+            when 'GruppoIva' {
+                return manageGruppoIva(inputParams);
+            }
             when else {
                return null;
             }
@@ -46,6 +49,34 @@ public with sharing class HDT_SRV_BpCaVariation {
         //requestBody.ordine.modalitaInvioBolletta = (String) caseRecord.get('BillSendingMethod__c');
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);
+        inputParams.namedCredential = 'Callout:BpCaVariation';
+        return inputParams;
+    }
+
+    private static HDT_WRP_GenericSapIntegration manageGruppoIva(HDT_WRP_GenericSapIntegration inputParams){
+        String fieldq;
+        String whereq;
+        String fromq = 'Case';
+        String queryString;
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,Account.VatNumber__c';
+        fieldq += ',IsVATGroupJoined__c,VATGroup__c';
+        whereq = 'Id = \''+inputParams.recordId+'\'';
+        queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
+        List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
+        Case caseRecord = (Case) sobjectRecordList[0];
+        Account acc = (Account) caseRecord.Account;	
+        HDT_WRP_BpCaVariationVatGroup requestBody = new HDT_WRP_BpCaVariationVatGroup();
+        requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
+        requestBody.codiceCausale = 'MAG';
+        requestBody.dataCreazione = getFormattedToday();
+        requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        requestBody.account.partitaIva = (String) acc.get('VatNumber__c');
+        requestBody.account.gruppoIva.adesione = String.valueOf(caseRecord.get('IsVATGroupJoined__c'));
+        requestBody.account.gruppoIva.partitaIva = (String) caseRecord.get('VATGroup__c');
+
+        System.debug('requestBody ' + requestBody);
+        inputParams.requestBody = JSON.serialize(requestBody);
+        System.debug('serialized requestBody ' + requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
         return inputParams;
     }
