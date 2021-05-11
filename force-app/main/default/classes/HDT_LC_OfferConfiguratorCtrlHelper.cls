@@ -1,54 +1,72 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String productId, String rate) {
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String technicalofferid, String productId, String rate) {
         System.debug('# saveTechnicalOffer controller helper #');
         System.debug('# offerList size -> ' + offerList.size());
         System.debug('# rate -> ' + rate);
 
-        HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
+        saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, Name, ProductCode,Version__c FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
-        Id rateId = [SELECT Id FROM RateTemplate__c WHERE Name = :rate LIMIt 1].Id;
+        TechnicalOffer__c tecOff;
+        Id tecOffId;
+        Boolean isUpsert = !String.isEmpty(technicalofferid);
 
-        TechnicalOffer__c tecOff = new TechnicalOffer__c();
-        //Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
-        tecOff.Name = pr.Name + ' [' + pr.Version__c + '] [' + rate + ']';
-        tecOff.Product__c = productId;
-        tecOff.RateCategory__c = rateId;
-        
-        try{
-            SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
-            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-        
-            if(objRes.isCreateable()){
-                insert tecOff;
-            } else {
+        if(!isUpsert){
+
+            List<Product2> prodList;
+            prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
+
+            List<RateTemplate__c> rateList;
+            rateList = HDT_QR_TechnicalOffer.getRateByName(rateList, rate);
+            Id rateId = rateList[0].Id;
+
+            tecOff = new TechnicalOffer__c();
+            //Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
+            tecOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
+            tecOff.Product__c = productId;
+            tecOff.RateCategory__c = rateId;
+            
+            try{
+                SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+                Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+            
+                if(objRes.isCreateable()){
+                    insert tecOff;
+                    tecOffId = tecOff.Id;
+                } else {
+                    saveResponse.success = false;
+                    saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                    saveResponse.dataError = false;
+                    return saveResponse;                
+                }
+
+            } catch (Exception e){
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
+                saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+                saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+                lineError.rowId = '0';
+                lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+                saveResponse.errorData.add(lineError);
                 saveResponse.dataError = false;
-                return saveResponse;                
+                return saveResponse;
             }
-
-        } catch (Exception e){
-            saveResponse.success = false;
-            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-            saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
-            HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
-            lineError.rowId = '0';
-            lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-            saveResponse.errorData.add(lineError);
-            saveResponse.dataError = false;
-            return saveResponse;
+        } else {
+            tecOffId = technicalofferid;
         }
 
         List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c tecOffItem;
 
         for(HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine : offerList){
-            tecOffItem = convertWrapperToObject(tecOffItem, offerLine);
-            tecOffItem.TechnicalOffer__c = tecOff.Id;
+            tecOffItem = convertWrapperToObject(tecOffItem, offerLine, isUpsert);
+
+            if(!isUpsert){
+                tecOffItem.TechnicalOffer__c = tecOffId;
+            }
+
             itemList.add(tecOffItem);
         }
 
@@ -61,7 +79,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             saveResponse.message = '# ERROR: insert failed';
         } else {
             saveResponse.success = true;
-            saveResponse.techOffId = tecOff.Id;
+            saveResponse.techOffId = tecOffId;
         }
         
         return saveResponse;
@@ -74,12 +92,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
  
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
-        if(objRes.isCreateable()){
+        if(objRes.isCreateable() && objRes.isUpdateable()){
 
-            List<Database.SaveResult> insertResults = Database.insert(itemList, false);
+            List<Database.UpsertResult> insertResults = Database.upsert(itemList, false);
 
             for(Integer n=0; n<insertResults.size(); n++){
-                Database.SaveResult sr = insertResults[n];
+                Database.UpsertResult sr = insertResults[n];
 
                 if (!sr.isSuccess()) {
                     // Operation failed
@@ -100,6 +118,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     public static HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow convertObjectToWrapper(TechnicalOfferItem__c tempItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow setSingleRow){
         //setSingleRow.Id = tempItem.RowId__c;
         //setSingleRow.Id = tempItem.Id;
+        setSingleRow.rowId = tempItem.Id;
         setSingleRow.definition = tempItem.Definition__c;
         setSingleRow.type = tempItem.Type__c;
         setSingleRow.m = tempItem.M__c;
@@ -116,21 +135,26 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return setSingleRow;
     }
 
-    public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine){
-        /*System.debug('# ' + 
-        '[id = ' + offerLine.id + '] - ' +
-        '[M = ' + offerLine.m + '] - ' +
-        '[V = ' + offerLine.v + '] - ' +
-        '[rateType = ' + offerLine.rateType.value + '] - ' +
-        '[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
-        '[numValue = ' + offerLine.numValue.value + '] - ' +
-        '[flag = ' + offerLine.flag.value + '] - ' +
-        '[priceCode = ' + offerLine.priceCode.value + '] - ' +
-        '[stringValue = ' + offerLine.stringValue.value + ']' + 
-        '[tecName = ' + offerLine.tecName + ']'
-        );*/
+    public static TechnicalOfferItem__c convertWrapperToObject(TechnicalOfferItem__c tecOffItem, HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow offerLine, Boolean isUpsert){
+        //System.debug('# ' + 
+        //'[id = ' + offerLine.id + '] - ' +
+        //'[M = ' + offerLine.m + '] - ' +
+        //'[V = ' + offerLine.v + '] - ' +
+        //'[rateType = ' + offerLine.rateType.value + '] - ' +
+        //'[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
+        //'[numValue = ' + offerLine.numValue.value + '] - ' +
+        //'[flag = ' + offerLine.flag.value + '] - ' +
+        //'[priceCode = ' + offerLine.priceCode.value + '] - ' +
+        //'[stringValue = ' + offerLine.stringValue.value + ']' + 
+        //'[tecName = ' + offerLine.tecName + ']'
+        //);
         
         tecOffItem = new TechnicalOfferItem__c();
+
+        if(isUpsert){
+            tecOffItem.Id = offerLine.rowId;
+        }
+
         tecOffItem.RowId__c = offerLine.id;
         tecOffItem.Type__c = offerLine.type;
         tecOffItem.Definition__c = offerLine.definition;
@@ -148,21 +172,6 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.StringValue__c = offerLine.stringValue.value;
         return tecOffItem;
     }
-
-    public static TechnicalOffer__c queryTechnicalOfferRecord(Id recId){
-        TechnicalOffer__c techOff = [
-            SELECT Id, Name, RateCategory__r.Name, (
-                    SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
-                           FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
-                    FROM RigheOffertaTecnica__r ORDER BY RowId__c
-                )
-            FROM TechnicalOffer__c
-            WHERE Id =: recId
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
-        return techOff;
-    }
     
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse cloneRecordHandler(String recIdToClone, String productId){
 
@@ -171,12 +180,14 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         TechnicalOffer__c newTechOff = new TechnicalOffer__c();
         Savepoint sp = Database.setSavepoint();
 
-        Product2 pr = [SELECT Id, Name, ProductCode, Version__c FROM Product2 WHERE Id =: productId  WITH SECURITY_ENFORCED LIMIT 1];
+        List<Product2> prodList;
+        prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
 
-        TechnicalOffer__c recToClone = queryTechnicalOfferRecord(recIdToClone);
+        TechnicalOffer__c recToClone;
+        recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(recToClone, recIdToClone);
 
         newTechOff = recToClone.clone(false, true, false, false);
-        newTechOff.Name = pr.Name + ' [' + pr.Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
+        newTechOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
         newTechOff.Product__c = productId;
 
         System.debug('# clone this -> ' + newTechOff);
@@ -226,13 +237,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
-    //public static void sendTechOfferToSAP(){
-    //    
-    //}
-
     public static Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> crateComplexMatrix(){
 
-        StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'MatrixConfiguration'  WITH SECURITY_ENFORCED LIMIT 1];
+        StaticResource sr = HDT_QR_TechnicalOffer.getStaticResourceByName('MatrixConfiguration');
         HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData matrixObj = (HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData)JSON.deserialize(sr.Body.toString(), HDT_WRP_TechnicalOffer.HDT_WRP_MatrixData.class);
         
         Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>> operandMap = new Map<String, Map<String, HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail>>();
@@ -297,17 +304,62 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
-    /*public static void updateTechnicalOffer(Id product2Id, Boolean asChild){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSAP(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse mulesoftResponse, String technicalOfferId){
 
-        try{
-            Product2 prod = new Product2();
-            prod.Id = product2Id;
-            prod.TechnicalOffer__c = asChild;
-            update prod;
-        } catch (Exception e){
-            System.debug('# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']');
+        mulesoftResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
+
+        TechnicalOffer__c techOff;
+        techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
+
+        if(techOff == null){
+            mulesoftResponse.success = false;
+            mulesoftResponse.message = 'Nessuna configurazione trovata';
+            return mulesoftResponse;
         }
 
-    }*/
+        HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj;
+        httpObj = setHttpObject(httpObj);
+
+        String body = JSON.serialize('{"key": "value"}', true);
+        System.debug('>>> body obj > ' + body);
+
+        //HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+
+        //if(!responseCtrl.success){
+        //    mulesoftResponse.success = false;
+        //    mulesoftResponse.message = responseCtrl.message;
+        //    return mulesoftResponse;
+        //}
+
+        //mulesoftResponse.success = true;
+        //mulesoftResponse.message = responseCtrl.message;
+        //mulesoftResponse.bodyResponse = responseCtrl.body;
+
+
+        mulesoftResponse.success = true;
+        mulesoftResponse.message = 'only for test';
+        mulesoftResponse.techOffId = technicalOfferId;
+        mulesoftResponse.bodyResponse = '{"newCode": "newValue"}';
+
+        return mulesoftResponse;
+
+    }
+
+    public static HDT_WS_MulesoftCaller.HDT_WRP_HttpObj setHttpObject(HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj){
+
+        httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+        httpObj.headersMap = new Map<String, String>();
+
+        //if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
+            httpObj.endPoint = '';
+            httpObj.headersMap.put('Authorization', '');
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Content-Type', 'application/json');
+        //} else {
+        //    httpObj = null;
+        //}
+
+        return httpObj;
+    }
 
 }

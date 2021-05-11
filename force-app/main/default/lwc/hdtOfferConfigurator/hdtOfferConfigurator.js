@@ -232,7 +232,15 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         });
     }
 
-    saveAction(event){
+    saveAction(){
+        this.saveActionDispatcher(false);
+    }
+
+    saveAndSend(){
+        this.saveActionDispatcher(true);
+    }
+
+    saveActionDispatcher(sendToSap){
         console.log('# Save offert configured #');
 
         var start = new Date();
@@ -241,7 +249,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
 
-        var obj = this.sendToApex();
+        var obj = this.sendToApex(sendToSap);
 
         var end = new Date();
         var t1 = end.getSeconds();
@@ -255,6 +263,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                         title: obj.title,
                         message: obj.message,
                         variant: obj.variant,
+                        mode: 'sticky'
                     })
                 );
         
@@ -272,6 +281,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                     title: obj.title,
                     message: obj.message,
                     variant: obj.variant,
+                    mode: 'sticky'
                 })
             );
     
@@ -285,15 +295,15 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
     }
 
-    sendToApex(){
+    sendToApex(sendToSap){
         console.log('# sendToApex #');
-        console.log('# this.technicalofferid #' + this.technicalofferid);
+        console.log('# this.technicalofferid > ' + this.technicalofferid);
+        console.log('# this.product.rateCategory > ' + this.product.rateCategory);
+        console.log('# sendToSap > ' + sendToSap);
 
         var toastObj = {success: true, title: '', message: '', variant: ''};
 
-        console.log('# sendToApex >>> ' + this.product.rateCategory);
-
-        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory})
+        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory, sendToSap: sendToSap})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
@@ -323,10 +333,6 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         });
         return toastObj;
-    }
-
-    saveAndSend(event){
-        console.log('# Save and Send to SAP #');
     }
 
     back(event){

@@ -27,6 +27,7 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public String techOffId;
+        @auraEnabled public String bodyResponse;
         @AuraEnabled public Boolean dataError;
         @AuraEnabled public List<HDT_WRP_LineError> errorData;
     }
@@ -55,6 +56,7 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
 
     public class HDT_WRP_MatrixSingleRow {
         @auraEnabled public String id;
+        @auraEnabled public String rowId;
         @auraEnabled public String tecName;
         @auraEnabled public String definition;
         @auraEnabled public String type;
