@@ -17,7 +17,7 @@ export default class hdtBillingProfileForm extends LightningElement {
     @track tipologiaIntestatarioFields = [];
     wrapAddressObject = {};
     dataToSubmit = {};
-    saveErrorMessage = '';
+    saveErrorMessage = [];
     cloneObject = {};
     isVerifiedAddress = false;
     isForeignAddress = false;
@@ -36,6 +36,7 @@ export default class hdtBillingProfileForm extends LightningElement {
                 data.choosenFields.forEach(el => {
                     let value = '';
                     let disable = false;
+                    let required = false;
 
                     switch (el) {
                         case 'XMLType__c':
@@ -47,17 +48,44 @@ export default class hdtBillingProfileForm extends LightningElement {
                             value = 'IT';
                             disable = true;
                             break;
-                    
+                        
+                        case 'BillSendingMethod__c':
+                            required = true;
+                            break;
+
+                        case 'SubjectCode__c':
+                            required = true;
+                            break;
+
+                        case 'ElectronicInvoicingMethod__c':
+                            required = true;
+                            break;
+                        
+                        case 'XMLType__c':
+                            required = true;
+                            break;
+                        case 'CIG__c':
+                            required = true;
+                            break;
+                        case 'CUP__c':
+                            required = true;
+                            break;
+                        case 'SubjectCodeStartDate__c':
+                            required = true;
+                            break;
+                        case 'SignatoryType__c':
+                            required = true;
+                            break;
                         default:
                             break;
                     }
-
 
                     this.fields.push({
                         fieldName: el,
                         visibility: (el !== 'InvoiceCertifiedEmailAddress__c' && el !== 'SendCertifiedEmailConsentDate__c' && el !== 'IBAN__c'),
                         disabled: disable,
-                        value: value
+                        value: value,
+                        required: required
                     });
                     value = '';
                 });
@@ -283,71 +311,120 @@ export default class hdtBillingProfileForm extends LightningElement {
     validFields() {
 
         let isValid = true;
+        let concatBillingErrorFields = '';
+        let concatAddressErrorFields = '';
 
-        const inputFields = this.template.querySelectorAll(
-            'lightning-input-field'
-        );
-        if (inputFields) {
-            inputFields.forEach(field => {
+        if (this.template.querySelector("[data-id='PaymentMethod__c']") !== null && this.template.querySelector("[data-id='PaymentMethod__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Metodo di pagamento, ');
+        }
 
-                switch (field.fieldName) {
-                    case 'PaymentMethod__c':
-                        if(field.value == null){
-                            isValid = false;
-                            field.reportValidity();
-                            this.saveErrorMessage = 'Devi scegliere un metodo di pagamento';
-                        }
-                        break;
-                    // case 'InvoiceEmailAddress__c':
-                    //     if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
-                    //         isValid = false;
-                    //         field.reportValidity();
-                    //     }
-                    //     break;
-                    // case 'InvoiceCertifiedEmailAddress__c':
-                    //     if (field.value !== null && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value)) {
-                    //         isValid = false;
-                    //         field.reportValidity();
-                    //     }
-                    //     break;
-                }
+        if (this.template.querySelector("[data-id='BillSendingMethod__c']") !== null && this.template.querySelector("[data-id='BillSendingMethod__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio bolletta, ');
+        }
 
-            });
-        } else {
+        if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null && this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
+        }
+
+        if (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null && this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC') {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Email PEC invio Bolletta, ');
+        }
+
+        if (this.template.querySelector("[data-id='SubjectCode__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Codice Destinatario, ');
+        }
+
+        if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
+        }
+
+        if (this.template.querySelector("[data-id='XMLType__c']") !== null && this.template.querySelector("[data-id='XMLType__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Tipo XML, ');
+        }
+
+        if (this.template.querySelector("[data-id='CIG__c']") !== null && this.template.querySelector("[data-id='CIG__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('CIG, ');
+        }
+
+        if (this.template.querySelector("[data-id='CUP__c']") !== null && this.template.querySelector("[data-id='CUP__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('CUP, ');
+        }
+
+        if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null && this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Data inizio Validità Codice Destinatario, ');
+        }
+
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanCIN__c']") !== null && this.template.querySelector("[data-id='IbanCIN__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('CIN, ');
+        }
+
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanABI__c']") !== null && this.template.querySelector("[data-id='IbanABI__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('ABI, ');
+        }
+
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanCAB__c']") !== null && this.template.querySelector("[data-id='IbanCAB__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('CAB, ');
+        }
+
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanCodeNumber__c']") !== null && this.template.querySelector("[data-id='IbanCodeNumber__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Numero Conto, ');
+        }
+
+        if (this.template.querySelector("[data-id='SignatoryType__c']") !== null && this.template.querySelector("[data-id='SignatoryType__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Tipo Sottoscrittore, ');
+        }
+
+        if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Codice Fiscale Sottoscrittore CC, ');
+        }
+
+        if (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']") !== null && this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Nome sottoscrittore CC, ');
+        }
+
+        if (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']") !== null && this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Cognome sottoscrittore CC, ');
+        }
+
+        //validate billing profile fields
+        console.log('concatBillingErrorFields: ', concatBillingErrorFields);
+        if (concatBillingErrorFields !== '') {
+            
             isValid = false;
+            this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di billing profile: ' + concatBillingErrorFields.slice(0, -2));
         }
     
         //Validate address
         if(!this.isForeignAddress){
             if (!this.isVerifiedAddress) {
                 isValid = false;
-                this.saveErrorMessage = 'E\' necessario verificare l\'indirizzo per poter procedere al salvataggio';
+                this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
             }
         } else {
-            let foreignAddressMsg = 'Per poter salvare popolare i seguenti campi: ';
+            let foreignAddressMsg = 'Per poter salvare popolare i seguenti campi di indirizzo: ';
 
             if (this.dataToSubmit['InvoicingCountry__c'] === undefined || this.dataToSubmit['InvoicingCountry__c'] === '') {
-                foreignAddressMsg = foreignAddressMsg.concat('Stato, ');
+                concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
             }
             if (this.dataToSubmit['InvoicingProvince__c'] === undefined || this.dataToSubmit['InvoicingProvince__c'] === '') {
-                foreignAddressMsg = foreignAddressMsg.concat('Provincia, ');
+                concatAddressErrorFields = concatAddressErrorFields.concat('Provincia, ');
             }
             if (this.dataToSubmit['InvoicingCity__c'] === undefined || this.dataToSubmit['InvoicingCity__c'] === '') {
-                foreignAddressMsg = foreignAddressMsg.concat('Comune, ');
+                concatAddressErrorFields = concatAddressErrorFields.concat('Comune, ');
             }
             if (this.dataToSubmit['InvoicingStreetName__c'] === undefined || this.dataToSubmit['InvoicingStreetName__c'] === '') {
-                foreignAddressMsg = foreignAddressMsg.concat('Via, ');
+                concatAddressErrorFields = concatAddressErrorFields.concat('Via, ');
             }
             if (this.dataToSubmit['InvoicingStreetNumber__c'] === undefined || this.dataToSubmit['InvoicingStreetNumber__c'] === '') {
-                foreignAddressMsg = foreignAddressMsg.concat('Civico, ');
+                concatAddressErrorFields = concatAddressErrorFields.concat('Civico, ');
             }
             if (this.dataToSubmit['InvoicingPostalCode__c'] === undefined || this.dataToSubmit['InvoicingPostalCode__c'] === '') {
-                foreignAddressMsg = foreignAddressMsg.concat('CAP, ');
+                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
             }
 
-            if (foreignAddressMsg !== 'Per poter salvare popolare i seguenti campi: ') {
+            if (concatAddressErrorFields !== '') {
                 isValid = false;
-                this.saveErrorMessage = foreignAddressMsg.slice(0, -2);
+                this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
             }
         }
 
@@ -488,14 +565,17 @@ export default class hdtBillingProfileForm extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
             });
         } else {
-            console.log(this.saveErrorMessage);
-            const saveToastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: this.saveErrorMessage,
-                variant: 'error',
-                mode: 'sticky'
+            console.log('Errors: ',this.saveErrorMessage);
+            this.saveErrorMessage.forEach(message => {
+                const saveToastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: message,
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(saveToastErrorMessage);
             });
-            this.dispatchEvent(saveToastErrorMessage);
+            this.saveErrorMessage = [];
         }
 
     }
