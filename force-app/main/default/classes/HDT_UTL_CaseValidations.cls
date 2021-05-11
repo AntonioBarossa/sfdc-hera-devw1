@@ -14,7 +14,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if(caseType == 'Reclamo Scritto/Rich. Info' || caseType == 'Richiesta Parere'){
 
-            result = validateReclamoScritto(fields, recordId);
+            result = validateReclamoScritto(fields, recordId, currentCase);
 
         } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
         || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' ||
@@ -346,9 +346,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateReclamoScritto(String fields, string recordId){
+    public String validateReclamoScritto(String fields, string recordId, Case currentCase){
 
         String result;
+
+        List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();
         
         String delegateName = getFieldValue(fields,'DelegateName__c');
 
@@ -362,17 +364,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire indirizzo Email provenienza reclamo'));
         }else if(delegateName != null && delegateName != ''){
             
-            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
-            WHERE LinkedEntityId = :recordId 
-            WITH SECURITY_ENFORCED];
+            attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
             
             if(attachedDocument.size() == 0){
             
-                   result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
                 
             }else{
             
-                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                  
             }
        
@@ -389,7 +389,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             String opinionRequest = getFieldValue(fields, 'OpinionRequest__c');
 
-            String currentOpinionRequest = [SELECT OpinionRequest__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED].OpinionRequest__c;
+            String currentOpinionRequest = currentCase.OpinionRequest__c;
 
             if(opinionRequest.trim() == currentOpinionRequest.trim()){
 
