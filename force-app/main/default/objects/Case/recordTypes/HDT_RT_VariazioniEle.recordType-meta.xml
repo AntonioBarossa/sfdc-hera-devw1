@@ -10114,17 +10114,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>UseTypeEnergy__c</picklist>
         <values>
             <fullName>03 Illuminazione Pubblica</fullName>
