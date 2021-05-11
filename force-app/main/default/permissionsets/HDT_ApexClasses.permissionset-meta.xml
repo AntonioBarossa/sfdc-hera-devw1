@@ -957,6 +957,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_BpCaVariationVatGroup</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_EligibilityCriteria</apexClass>
         <enabled>true</enabled>
     </classAccesses>
