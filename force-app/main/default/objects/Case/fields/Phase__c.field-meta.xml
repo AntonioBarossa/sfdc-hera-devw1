@@ -673,6 +673,11 @@
                 <label>Annullamento - Revocato</label>
             </value>
             <value>
+                <fullName>Attesa Modulo Firmato</fullName>
+                <default>false</default>
+                <label>Attesa Modulo Firmato</label>
+            </value>
+            <value>
                 <fullName>Errore invio a DL/SII</fullName>
                 <default>false</default>
                 <label>Errore invio a DL/SII</label>
@@ -698,18 +703,6 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Presa in Carico OK</label>
-            </value>
-            <value>
-                <fullName>Ricezione 0152</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ricezione 0152</label>
-            </value>
-            <value>
-                <fullName>Ricezione 0153</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Ricezione 0153</label>
             </value>
             <value>
                 <fullName>Risposta non Ricevuta</fullName>
