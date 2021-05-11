@@ -89,13 +89,6 @@
                 <elementReference>GetCaseAggiornato.Iban__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ProcessTypeFormFlow</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Richiesta Domiciliazione - Estero</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Validazione_Iban</targetReference>
         </connector>
@@ -116,14 +109,14 @@
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AccountFirstName</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.FirstName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryLastName__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>AccountLastName</elementReference>
+                <elementReference>Get_Case_Aggiornato.Account.LastName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -173,13 +166,6 @@
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ProcessTypeFormFlow</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Validazione_Iban</targetReference>
         </connector>
@@ -217,13 +203,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Ibans</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ProcessTypeFormFlow</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Richiesta Domiciliazione - Italiano</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -561,7 +540,7 @@
             <name>Inserimento_Iban_Manuale</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Ibans</leftValueReference>
+                <leftValueReference>IbanSelection</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>BlankIban</elementReference>
@@ -755,6 +734,11 @@
         <name>ItalianIbanFormula</name>
         <dataType>String</dataType>
         <expression>&quot;IT&quot;&amp;{!GetCaseAggiornato.IbanCIN_IBAN__c}&amp;{!GetCaseAggiornato.IbanCIN__c}&amp;{!GetCaseAggiornato.IbanABI__c}&amp;{!GetCaseAggiornato.IbanCAB__c}&amp;{!GetCaseAggiornato.IbanCodeNumber__c}</expression>
+    </formulas>
+    <formulas>
+        <name>ProcessTypeFormula</name>
+        <dataType>String</dataType>
+        <expression>IF({!IbanIsForeign} = false, &quot;Richiesta Domiciliazione - Italiano&quot;,&quot;Richiesta Domiciliazione - Estero&quot;)</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_RichiestaDomiciliazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Richiesta Domiciliazione/Attivazione Click&amp;Pay</label>
@@ -1178,7 +1162,7 @@
             <inputParameters>
                 <name>isCancel</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1191,6 +1175,30 @@
                 <name>standAlone</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>loadingSpinner</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Annulla</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
@@ -1350,7 +1358,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessTypeFormFlow</elementReference>
+                    <elementReference>ProcessTypeFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

@@ -124,7 +124,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         */
     selectContentDocument(){
 
-        if(this.documentRecordId === null){
+        if(this.documentRecordId == null || this.documentRecordId == undefined || this.documentRecordId == ''){
             this.documentRecordId = this.recordId;
         }
 
@@ -152,6 +152,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log(this.acceptedFormats);
             this.formats = this.acceptedFormats.split(";");
             console.log(JSON.stringify(this.formats));
+        }
+        if(this.previousButton && !this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
         }
         
     }

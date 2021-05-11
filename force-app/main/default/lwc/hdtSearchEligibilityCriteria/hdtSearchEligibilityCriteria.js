@@ -4,25 +4,13 @@ import getRecords from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.g
 import cloneRecord from  '@salesforce/apex/HDT_LC_EligibilityCriteriaController.cloneEligibilityCriteriaRecord';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
-const columns = [
-    { label: 'Definizione', fieldName: 'Definition__c' },
-    { label: 'M', fieldName: 'M__c', type: 'boolean'},
-    { label: 'V', fieldName: 'V__c', type: 'boolean' },
-    { label: 'Tipo tariffa', fieldName: 'FareType__c'},
-    { label: 'Gruppo info', fieldName: 'InfoGroup__c'},
-    { label: 'Valore numerico', fieldName: 'NumericValue__c'},
-    { label: 'Flag', fieldName: 'Flag__c', type: 'boolean'},
-    { label: 'Codice prezzo', fieldName: 'PriceCode__c'},
-    { label: 'Stringa testuale', fieldName: 'StringValue__c'},
-    { label: 'Nome Tecn.', fieldName: 'Operand__c'}   
-];
-
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
     data = [];
-    columns = columns;
+    //data2 = [];
     detailFields = ['Version__c', 'ProductCode__c'];
     filter;
     showTable = false;
+    showTree = false;
 
     @api productid;
     @api template;
@@ -64,6 +52,9 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
         productCode: 'PRODUCT CODE'
     };
 
+    titleTreeAvailable = 'Comuni eleggibili';
+    titleTreeNotAvailable = 'Comuni non eleggibili';
+
     connectedCallback(){
         this.filter = 'Product__r.Template__c=\''+ this.template +'\'';
     }
@@ -96,16 +87,26 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
 
                 if(result){
                     console.log('# success #');
-                    this.data = result;
 
-                    if(this.data.length===0){
-                        this.result.show = true;
-                        this.showTable = false;
-                        this.result.message = 'Non è stato trovato nessuna configurazione';
+                    if(result.eligibleForAllCities){
+                        this.showTree = false;
+                    } else {
+                        this.data = result.treeItemList;
+                        //this.data2 = result.treeNotAvailableItemList;
+                        this.showTree = true;
+
+                        if(this.data.length===0){
+                            this.showTree = false;
+                            this.result.show = true;
+                            this.showTable = false;
+                            this.result.message = 'Non è stata trovata nessuna configurazione';
+                        }
                     }
+
 
                     this.spinnerObj.spinner = false;
                     this.showTable = true;
+
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';
@@ -180,10 +181,18 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
 
     handleSelection(event){
         console.log('# handleSelection #');
-        console.log('# set -> ' + event.detail.selectedId + ' - ' + event.detail.code + '- ' + event.detail.selectedObj);
+        console.log('# from lookup: ' + event.detail.selectedId + ' - ' + event.detail.name + ' - ' + event.detail.code);
+
+        if(event.detail.selectedId === undefined || event.detail.name === undefined){
+            this.showTable = false;
+            return;
+        }
+
         this.item.selectedId = event.detail.selectedId;
         this.item.name = event.detail.code;
-        this.item.code = event.detail.selectedObj;
+
+        this.searchClick();     
+
     }
 
     back(event){

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Service__c</fullName>
     <externalId>false</externalId>
-    <formula>TEXT(SBQQ__ConfiguredSKU__r.Service__c)</formula>
+    <formula>TEXT(SBQQ__OptionalSKU__r.Service__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Servizio</label>
     <required>false</required>

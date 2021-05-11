@@ -1,0 +1,11 @@
+.orange-icon {
+    --sds-c-icon-color-foreground-default: orange;
+}
+
+.red-icon {
+    --sds-c-icon-color-foreground-default: red;
+}
+
+.yellow-icon {
+    --sds-c-icon-color-foreground-default: yellow;
+}

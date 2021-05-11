@@ -9,7 +9,10 @@ public inherited sharing class HDT_QR_CaseValidations {
         CommodityFormula__c,
         ServicePoint__r.ServicePointCode__c,
         OpinionRequest__c,
-        AttachmentManagement__c
+        AttachmentManagement__c,
+        BillingProfile__c,
+        AccountId,
+        ContactId
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
@@ -53,6 +56,20 @@ public inherited sharing class HDT_QR_CaseValidations {
         ].UserRole.Name;
 
         return roleName;
+
+    }
+
+    public BillingProfile__c getBillingProfileInfo(String recordId){
+
+        return [SELECT Id,
+        PaymentMethod__c
+        FROM
+        BillingProfile__c
+        WHERE
+        Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1
+        ];
 
     }
 

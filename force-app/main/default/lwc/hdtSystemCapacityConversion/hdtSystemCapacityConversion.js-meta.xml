@@ -8,9 +8,10 @@
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="outcomeCaliberClass" type="String" label="Outcome Capacity" description="System Capacity in KWh" role="outputOnly"/>
+            <property name="outcomeCaliberClass" type="String" label="Outcome Capacity" description="Caliber Class" role="outputOnly"/>
             <property name="outcomeSystemCapacity" type="String" label="Outcome Capacity" description="System Capacity in KWh" role="outputOnly"/>
             <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
+            <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
             <property name="defaultCaliberClass" type="String" label="Default Caliber Class" description="Default value for CaliberRequested__c" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>

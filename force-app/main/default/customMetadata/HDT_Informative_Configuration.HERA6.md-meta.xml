@@ -39,12 +39,16 @@
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
+        <field>GlobalAction__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>IndemnitiesList__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>InformationDetail__c</field>
-        <value xsi:type="xsd:string">Problemi di navigazione</value>
+        <value xsi:type="xsd:string">Problemi pagamento Sol e App</value>
     </values>
     <values>
         <field>InstallmentList__c</field>

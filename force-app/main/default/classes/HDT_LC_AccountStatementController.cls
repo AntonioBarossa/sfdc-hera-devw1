@@ -5,7 +5,7 @@ public inherited sharing class HDT_LC_AccountStatementController {
         return HDT_LC_AccountStatementCtrlHelper.getTabsMetaDataHelper();
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumns(String tabValue) {
         return HDT_LC_AccountStatementCtrlHelper.getSecondLevelColumnsHelper(tabValue);
     }
@@ -47,9 +47,14 @@ public inherited sharing class HDT_LC_AccountStatementController {
     }
 
     @AuraEnabled(Cacheable=true)
-    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValues(){
+    public static String getPicklistValue(String tabCode, String fieldName){
+        return HDT_LC_AccountStatementCtrlHelper.getPicklistValueHelper(tabCode, fieldName);
+    }
+
+    @AuraEnabled(Cacheable=true)
+    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValues(String tabCode){
         HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj;
-        pickObj = HDT_LC_AccountStatementCtrlHelper.getFieldValuesHelper(pickObj);
+        pickObj = HDT_LC_AccountStatementCtrlHelper.getFieldValuesHelper(pickObj, tabCode);
         return pickObj;
     }
 

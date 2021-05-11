@@ -20,6 +20,9 @@
         //variabile per informative
         var context = myPageRef.state.c__context;
 
+        //variabile per innesco da altri case
+        var parentRecordId = myPageRef.state.c__parentRecordId;
+
 
         console.log('# attribute to run flow #');
         console.log('# caseId -> ' + caseId);
@@ -33,6 +36,7 @@
         console.log('# recordToCancell -> ' + recordToCancell);
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
         console.log('# context -> '+context);
+        console.log('# parentRecordId -> ' +parentRecordId);
         console.log('# ----------------- #');
 
         var workspaceAPI = component.find("workspace");
@@ -103,6 +107,9 @@
         if(serviceCatalogId != null){
             inputVariables.push({ name : 'serviceCatalogId', type : 'String', value : serviceCatalogId });
         }
+        if(parentRecordId != null){
+            inputVariables.push({ name : 'ParentRecordId', type: 'String', value : parentRecordId });
+        }
 
         console.log('## inputVariables -> ');
         inputVariables.forEach(e => console.log('# ' + e.name + '- ' + e.value));
@@ -114,10 +121,25 @@
     handleStatusChange : function (component, event) {
        console.log('### EVENT STATUS: ' + event.getParam("status"));
        var workspaceAPI = component.find("workspace");
-       //TODO getire eventuali errori provenienti dal flow 
-       //event.getParam("status") === "ERROR" 
 
-       if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
+       if(event.getParam("status") === "FINISHED" 
+       || event.getParam("status") === "FINISHED_SCREEN"
+       || event.getParam("status") === "ERROR") {
+
+            
+            if(event.getParam("status") === "ERROR"){
+                console.log('Inside Error condition');
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "title": "Errore",
+                    "message": "Non è stato possibile portare a termine le operazioni.\nSi prega di contattare l'Amministratore di sistema",
+                    "type" : "error"
+                });
+                toastEvent.fire();
+            }
+
+            var flowfinal = component.find("flowData");
+            flowfinal.destroy();
             var accountTabId = component.get("v.accountTabId");
             var subTabToClose = component.get("v.subTabToClose");
             var enableRefresh = component.get('v.enableRefresh');
@@ -143,11 +165,43 @@
                 newCaseId=component.get("v.recordid");
             }
 
+            if(!enableRefresh){
+                workspaceAPI.openSubtab({
+                    parentTabId: accountTabId,
+                    pageReference: {
+                        type: "standard__recordPage",
+                        attributes: {
+                            recordId: newCaseId,
+                            objectApiName: "Case",
+                            actionName: "view"
+                        }
+                    },
+                    focus: true
+                }).then(function(response){
 
-        if(!enableRefresh){
-            workspaceAPI.openSubtab({
-                parentTabId: accountTabId,
-                pageReference: {
+                    workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
+                        console.log('# Refresh page -> ' + enableRefresh);
+                        console.log('# OK Refresh page #');
+                        $A.get('e.force:refreshView').fire();
+                        
+        
+                        //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
+                        //    workspaceAPI.refreshTab({
+                        //        tabId: subTabToRefresh,
+                        //        includeAllSubtabs: true
+                        //    }).catch(function(error) {
+                        //        console.log(error);
+                        //    });
+                        //});
+        
+                        }).catch(function(error) {
+                            console.log(error);
+                        });
+                    });
+            }else{
+
+                workspaceAPI.focusTab({
+                    pageReference: {
                     type: "standard__recordPage",
                     attributes: {
                         recordId: newCaseId,
@@ -156,39 +210,6 @@
                     }
                 },
                 focus: true
-            }).then(function(response){
-
-                workspaceAPI.closeTab({ tabId: subTabToClose }).then(function(response) {
-                    console.log('# Refresh page -> ' + enableRefresh);
-                    console.log('# OK Refresh page #');
-                    $A.get('e.force:refreshView').fire();
-                    
-    
-                    //workspaceAPI.focusTab({tabId : subTabToRefresh}).then(function(response) {
-                    //    workspaceAPI.refreshTab({
-                    //        tabId: subTabToRefresh,
-                    //        includeAllSubtabs: true
-                    //    }).catch(function(error) {
-                    //        console.log(error);
-                    //    });
-                    //});
-    
-                    }).catch(function(error) {
-                        console.log(error);
-                    });
-                });
-            }else{
-
-                workspaceAPI.openSubtab({
-                    parentTabId: accountTabId,
-                    pageReference: {
-                    type: "standard__recordPage",
-                    attributes: {
-                        recordId: newCaseId,
-                        objectApiName: "Case",
-                        actionName: "view"
-                    }
-                }
                 })
                 .then(function(response) {
                     workspaceAPI.closeTab({ tabId: subTabToClose}).then(function(response){

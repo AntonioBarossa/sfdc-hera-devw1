@@ -6,6 +6,11 @@ public inherited sharing class HDT_QR_Contact {
             SELECT
             FirstName,
             LastName,
+            MobilePhone,
+            Phone,
+            Email,
+            Fax,
+            CertifiedEmail__c,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
@@ -80,11 +85,15 @@ public inherited sharing class HDT_QR_Contact {
 
     // INIZIO SVILUPPI EVERIS
 
-    public LIst<Contact> getRecordsByIds(Set<Id> ids) {
+    public List<Contact> getRecordsByIds(Set<Id> ids) {
         return [
             SELECT 
             Id,
+            Name,
+            Email,
+            Phone,
             MobilePhone,
+            Fax,
             CertifiedEmail__c,
             CompanyOwner__c
             FROM Contact 

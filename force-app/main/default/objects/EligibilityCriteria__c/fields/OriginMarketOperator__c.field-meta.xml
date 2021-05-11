@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OriginMarketOperator__c</fullName>
+    <description>Mercato di origine del criterio.</description>
+    <externalId>false</externalId>
+    <label>Mercato Provenienza Operatore</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_EligibilityParameteOperator</valueSetName>
+    </valueSet>
+</CustomField>

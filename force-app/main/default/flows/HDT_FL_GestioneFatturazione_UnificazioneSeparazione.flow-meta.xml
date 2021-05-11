@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
     <assignments>
         <name>Set_Descrizione_Account</name>
         <label>Set Descrizione Account</label>
         <locationX>2468</locationX>
-        <locationY>511</locationY>
+        <locationY>923</locationY>
         <assignmentItems>
             <assignToReference>FinalDescription</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Set_Descrizione_Contratti</name>
         <label>Set Descrizione Contratti</label>
         <locationX>2712</locationX>
-        <locationY>34</locationY>
+        <locationY>446</locationY>
         <assignmentItems>
             <assignToReference>FinalDescription</assignToReference>
             <operator>Assign</operator>
@@ -42,6 +42,46 @@
         </value>
     </choices>
     <choices>
+        <name>SeparazioneBollettaChoice</name>
+        <choiceText>Separazione bolletta</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Separazione bolletta</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>SeparazioneCAChoice</name>
+        <choiceText>Separazione CA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Separazione CA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UnificazioneBollettaChoice</name>
+        <choiceText>Unificazione bolletta</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unificazione bolletta</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UnificazioneBPChoice</name>
+        <choiceText>Unificazione BP</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unificazione BP</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>UnificazioneCAChoice</name>
+        <choiceText>Unificazione CA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Unificazione CA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>YesChoice</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
@@ -53,7 +93,7 @@
         <name>Check_Tipo_Operazione</name>
         <label>Tipo Operazione?</label>
         <locationX>1793</locationX>
-        <locationY>199</locationY>
+        <locationY>611</locationY>
         <defaultConnector>
             <targetReference>Input_Dati</targetReference>
         </defaultConnector>
@@ -100,7 +140,7 @@
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>2707</locationX>
-        <locationY>208</locationY>
+        <locationY>620</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -133,14 +173,43 @@
             <label>Salva in bozza</label>
         </rules>
     </decisions>
-    <dynamicChoiceSets>
-        <name>TipoOperazioneChoiceSet</name>
-        <dataType>Picklist</dataType>
-        <displayField xsi:nil="true"/>
-        <object xsi:nil="true"/>
-        <picklistField>OperationType__c</picklistField>
-        <picklistObject>Case</picklistObject>
-    </dynamicChoiceSets>
+    <decisions>
+        <name>Next_Step2</name>
+        <label>Next Step?</label>
+        <locationX>2300</locationX>
+        <locationY>274</locationY>
+        <defaultConnector>
+            <targetReference>Input_Letture</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento2</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_in_bozza2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva in bozza</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>TipoOperazioneCAFormula</name>
         <dataType>String</dataType>
@@ -171,7 +240,7 @@
         <name>Get_Account_Master</name>
         <label>Get Account Master</label>
         <locationX>2267</locationX>
-        <locationY>512</locationY>
+        <locationY>924</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Descrizione_Account</targetReference>
@@ -192,7 +261,7 @@
         <name>Query_Case</name>
         <label>Query Case</label>
         <locationX>1049</locationX>
-        <locationY>197</locationY>
+        <locationY>609</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Selezione_Tipo_Operazione</targetReference>
@@ -213,7 +282,7 @@
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
         <locationX>1579</locationX>
-        <locationY>197</locationY>
+        <locationY>609</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Tipo_Operazione</targetReference>
@@ -234,7 +303,7 @@
         <name>Set_Fase_In_Lavorazione</name>
         <label>Set Fase In Lavorazione</label>
         <locationX>3009</locationX>
-        <locationY>207</locationY>
+        <locationY>619</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -267,7 +336,7 @@
         <name>Update_Case_1</name>
         <label>Update Case 1</label>
         <locationX>1370</locationX>
-        <locationY>197</locationY>
+        <locationY>609</locationY>
         <connector>
             <targetReference>Refresh_Case</targetReference>
         </connector>
@@ -297,7 +366,7 @@
         <name>Input_Dati</name>
         <label>Input Dati</label>
         <locationX>2467</locationX>
-        <locationY>206</locationY>
+        <locationY>618</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -415,12 +484,12 @@
         <name>Input_Dati_CA</name>
         <label>Input Dati (CA)</label>
         <locationX>2222</locationX>
-        <locationY>34</locationY>
+        <locationY>446</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Input_Letture</targetReference>
+            <targetReference>Next_Step2</targetReference>
         </connector>
         <fields>
             <name>DT5</name>
@@ -557,7 +626,7 @@
         <name>Input_Letture</name>
         <label>Input Letture</label>
         <locationX>2419</locationX>
-        <locationY>34</locationY>
+        <locationY>446</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -633,6 +702,12 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>servicePointId</name>
+                <value>
+                    <elementReference>Query_Case.ServicePoint__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -655,7 +730,7 @@
         <name>Selezione_Account</name>
         <label>Selezione Account</label>
         <locationX>1805</locationX>
-        <locationY>512</locationY>
+        <locationY>924</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -698,13 +773,13 @@
             <inputParameters>
                 <name>showCancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>showDraftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -735,7 +810,7 @@
         <name>Selezione_Account_Master</name>
         <label>Selezione Account Master</label>
         <locationX>2037</locationX>
-        <locationY>512</locationY>
+        <locationY>924</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -815,7 +890,7 @@
         <name>Selezione_Contratti</name>
         <label>Selezione Contratti</label>
         <locationX>2049</locationX>
-        <locationY>34</locationY>
+        <locationY>446</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -870,13 +945,13 @@
             <inputParameters>
                 <name>showCancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>showDraftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -901,7 +976,7 @@
         <name>Selezione_Tipo_Operazione</name>
         <label>Selezione Tipo Operazione</label>
         <locationX>1189</locationX>
-        <locationY>197</locationY>
+        <locationY>609</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -915,7 +990,11 @@
         </fields>
         <fields>
             <name>TipoOperazioneSelezionato</name>
-            <choiceReferences>TipoOperazioneChoiceSet</choiceReferences>
+            <choiceReferences>UnificazioneCAChoice</choiceReferences>
+            <choiceReferences>SeparazioneCAChoice</choiceReferences>
+            <choiceReferences>UnificazioneBollettaChoice</choiceReferences>
+            <choiceReferences>SeparazioneBollettaChoice</choiceReferences>
+            <choiceReferences>UnificazioneBPChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Selezionare l&apos;operazione desiderata:</fieldText>
             <fieldType>RadioButtons</fieldType>
@@ -946,7 +1025,7 @@
     </screens>
     <start>
         <locationX>650</locationX>
-        <locationY>179</locationY>
+        <locationY>591</locationY>
         <connector>
             <targetReference>Query_Case</targetReference>
         </connector>
@@ -956,7 +1035,7 @@
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>2713</locationX>
-        <locationY>415</locationY>
+        <locationY>827</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -980,6 +1059,31 @@
             <name>sObjectRecordToCancell</name>
             <value>
                 <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Annullamento2</name>
+        <label>Gestione Annullamento</label>
+        <locationX>2308</locationX>
+        <locationY>50</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>recordToCancell</name>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
             </value>
         </inputAssignments>
     </subflows>
