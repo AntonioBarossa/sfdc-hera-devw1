@@ -307,7 +307,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String newEndDate = getFieldValue(fields, 'VATGroupEndDate__c') != null ? getFieldValue(fields, 'VATGroupEndDate__c') : '';
 
         HDT_QR_Account queryHandler = new HDT_QR_Account();
-        String queryFields = 'IsVATGroupJoined__c,VATGroup__c,VATGroupStartDate__c,VATGroupEndDate__c';
+        String queryFields = 'IsVATGroupJoined__c,VATGroup__c,VATGroupStartDate__c,VATGroupEndDate__c,VATNumber__c';
         Account a = queryHandler.getRecordById(accountId, queryFields);
         Boolean currentIsJoined = a.IsVATGroupJoined__c;
         String currentGroup = a.VATGroup__c != null ? a.VATGroup__c : '';
@@ -319,6 +319,25 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if (newIsJoined == currentIsJoined && newGroup.equals(currentGroup) && newStartDate.equals(currentStartDate) && newEndDate.equals(currentEndDate)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un campo per poter proseguire.'));
+            return result;
+        }
+
+        if (newIsJoined) {
+            if (String.isBlank(newGroup)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Se si abilita il Flag Adesione Gruppo IVA è necessario valorizzare il campo Partita IVA di Gruppo.'));
+            } else if (String.isBlank(newStartDate)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Se si abilita il Flag Adesione Gruppo IVA è necessario valorizzare il campo Data Inizio Piva di Gruppo.'));
+            } else if (String.isBlank(newEndDate)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Se si abilita il Flag Adesione Gruppo IVA è necessario valorizzare il campo Data Fine Piva di Gruppo.'));
+            } else if (!String.isBlank(newGroup) && newGroup.equals(a.VATNumber__c)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire una Partita IVA di Gruppo diversa dalla Partita IVA del cliente.'));
+            } else if (!String.isBlank(newStartDate) && !String.isBlank(newEndDate)) {
+                Date startDate = Date.valueOf(newStartDate);
+                Date endDate = Date.valueOf(newEndDate);
+                if (endDate <= startDate) {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'La Data Fine Piva di Gruppo deve essere successiva alla  Data Inizio Piva di Gruppo.'));
+                }
+            }
         }
 
         return result;
