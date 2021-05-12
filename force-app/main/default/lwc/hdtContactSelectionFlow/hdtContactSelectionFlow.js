@@ -16,6 +16,7 @@ export default class HdtContactSelectionFlow extends LightningElement {
     @api nextLabel;
     @api saveDraft;
     @api cancelCase;
+    @api showAdministrators;
     @api availableActions = [];
     
     @track queryParams;
