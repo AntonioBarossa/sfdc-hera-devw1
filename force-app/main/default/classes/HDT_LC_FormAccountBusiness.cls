@@ -5,7 +5,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
     private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
     private static HDT_SRV_AccountContactRelation accoContRelSrv = new HDT_SRV_AccountContactRelation();
     private static HDT_SRV_Contact contactSrv = new HDT_SRV_Contact();
-
+    private static HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
     @AuraEnabled
     public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress){
 
@@ -110,7 +110,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             System.debug('contact is null');
 
             String recordTypeResId='';
-            RecordType recordtype=HDT_QR_RecordType.getRecordType('HDT_RT_Residenziale', 'Account');
+            RecordType recordtype=recordtypeQR.getRecordType('HDT_RT_Residenziale', 'Account');
             if(recordtype != null){
                 recordTypeResId= recordtype.Id;
             }

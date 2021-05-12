@@ -1,4 +1,4 @@
-public with sharing class HDT_LC_CalculateFiscalCode {
+public with sharing class HDT_UTL_CalculateFiscalCode {
 
     private static String vowels='AEIUO';
     private static String[] vowelsLetters=new List<String>();
@@ -12,7 +12,8 @@ public with sharing class HDT_LC_CalculateFiscalCode {
         fiscalCode += getYear(infoData.get('birthDate'));
         fiscalCode += getMonthLetter(infoData.get('birthDate'));
         fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));
-        fiscalCode += HDT_QR_Comune.getIstatCode(infoData.get('birthPlace'));
+        fiscalCode += HDT_QR_City.getCityCode(infoData.get('birthPlace').toUpperCase());
+        System.debug(HDT_QR_City.getCityCode(infoData.get('birthPlace').toUpperCase()));
         fiscalCode += getControlLetter(fiscalCode);
         return fiscalCode;
     }
