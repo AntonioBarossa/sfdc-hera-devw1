@@ -1,9 +1,10 @@
 public with sharing class HDT_LC_LeadCalculateFiscalCode {
+    HDT_QR_Lead leadQR = new HDT_QR_Lead():
     @AuraEnabled
     public static String calculateLeadFiscalCode(String leadId){
         System.debug(leadId);
         String validateFields='';
-        Lead l= HDT_QR_Lead.getRecordById(leadId);
+        Lead l= leadQR.getRecordById(leadId);
         System.debug(l);
         Map<String,String> row = new Map<String, String>();
 
