@@ -11,7 +11,7 @@ import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
-import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
+//import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
 
@@ -132,10 +132,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                                 birthDate: this.birthDate, 
                                 birthPlace: this.birthPlace
                             };
-            calculateFiscalCode({infoData: information}).then((response) => {
+         /*   calculateFiscalCode({infoData: information}).then((response) => {
 
                 this.fiscalCode.value= response;
-            }).catch((errorMsg) => {
+            }).catch((errorMsg) => { 
                 this.showError(errorMsg);
                 const event = new ShowToastEvent({
                     message: this.errorMessage,
@@ -143,7 +143,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(event);
-            });             
+            });  */           
         }else{
             const event = new ShowToastEvent({
                 message: 'Inserire le Informazioni Mancanti',
