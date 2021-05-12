@@ -27,7 +27,7 @@ public with sharing class HDT_LC_AdvancedSearch {
             Map<String,String> row = new Map<String, String>();
 			
 				String value = servicePoint.SupplyAddress__c;
-				String label = 'Indirizzo Fornitura';
+				String label = '';
 				if(value!=',,,,,,,'){
 					row.put(label,value);
 				}
@@ -43,29 +43,29 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	@AuraEnabled
 	public static List<Map<String,String>> getIndirizzo(String accountId) {
-		system.debug('ACCOUNTID **********************'+accountId);
-		Map<String,String> outPutIndirizzo = new Map<String,String>();
-		HDT_QR_Contract bp = new HDT_QR_Contract();
+		HDT_QR_BillingProfile bp = new HDT_QR_BillingProfile();
 		List<BillingProfile__c> listBp = new List<BillingProfile__c>();
 		
 		if(accountId != null || accountId != ''){
-			listBp = bp.getInd(accountId);
+			listBp = bp.getAddressByBillingProfile(accountId);
 		}
 		
 		List<Map<String,String>> customBp = new List<Map<String,String>>();
 		
 		if(!listBp.isEmpty()){
-		for (BillingProfile__c BillingProfile : listBp) {
+		for (BillingProfile__c billingProfile : listBp) {
             Map<String,String> row = new Map<String, String>();
 			
-				String value = BillingProfile.InvoicingAddressFormula__c;
-				String label = 'Indirizzo';
-
-				row.put(label,value);
+				String value = billingProfile.InvoicingAddressFormula__c;
+				String label = '';
+				if(value!=',,,,,,,'){
+					row.put(label,value);
+				}
+				
 			
             customBp.add(row);
 		}
-	}
+		}
 
 		return customBp;
 	}
@@ -486,10 +486,19 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 				}
 				if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
 					spNew.ServicePointCode__c   = mapRes.get('POD');
+                    spNew.Name   = mapRes.get('POD');
+
+
 				}
 				if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
 				
-					spNew.CommoditySector__c = mapRes.get('DESCRCOMM');
+                    if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
+                        spNew.CommoditySector__c = 'Energia Elettrica';
+
+                    }else
+                    {
+					    spNew.CommoditySector__c = 'Gas';
+                    }
 		
 				}
 				if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){
