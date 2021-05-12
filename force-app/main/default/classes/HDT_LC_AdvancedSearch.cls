@@ -43,29 +43,29 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	@AuraEnabled
 	public static List<Map<String,String>> getIndirizzo(String accountId) {
-		HDT_QR_BillingProfile bp = new HDT_QR_BillingProfile();
+		system.debug('ACCOUNTID **********************'+accountId);
+		Map<String,String> outPutIndirizzo = new Map<String,String>();
+		HDT_QR_Contract bp = new HDT_QR_Contract();
 		List<BillingProfile__c> listBp = new List<BillingProfile__c>();
 		
 		if(accountId != null || accountId != ''){
-			listBp = bp.getAddressByBillingProfile(accountId);
+			listBp = bp.getInd(accountId);
 		}
 		
 		List<Map<String,String>> customBp = new List<Map<String,String>>();
 		
 		if(!listBp.isEmpty()){
-		for (BillingProfile__c billingProfile : listBp) {
+		for (BillingProfile__c BillingProfile : listBp) {
             Map<String,String> row = new Map<String, String>();
 			
-				String value = billingProfile.InvoicingAddressFormula__c;
+				String value = BillingProfile.InvoicingAddressFormula__c;
 				String label = '';
-				if(value!=',,,,,,,'){
-					row.put(label,value);
-				}
-				
+
+				row.put(label,value);
 			
             customBp.add(row);
 		}
-		}
+	}
 
 		return customBp;
 	}
