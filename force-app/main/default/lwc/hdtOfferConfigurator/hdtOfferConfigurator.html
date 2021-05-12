@@ -31,7 +31,7 @@
             <p slot="actions" >
                 <lightning-button-group>
                     <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} icon-name="utility:save" ></lightning-button>
-                    <lightning-button label="Salva ed invia" name="saveAndSend" onclick={openConfirmation} variant="success" icon-name="utility:send" ></lightning-button>
+                    <lightning-button label="Salva ed invia" name="saveAndSend" onclick={openConfirmation} variant="brand" icon-name="utility:send" ></lightning-button>
                     <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="destructive" icon-name="utility:close" ></lightning-button>
                     <lightning-button if:true={showDelete} label="Elimina" name="delete" onclick={openConfirmation} variant="destructive-text" icon-name="utility:delete" ></lightning-button>
                 </lightning-button-group>

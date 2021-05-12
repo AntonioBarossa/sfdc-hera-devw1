@@ -2,11 +2,13 @@ import { LightningElement, track, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 import saveNewOfferConfigured from '@salesforce/apex/HDT_LC_OfferConfiguratorController.saveNewOfferConfigured';
+import sendTechOfferToSAP from '@salesforce/apex/HDT_LC_OfferConfiguratorController.sendTechOfferToSAP';
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
 import deleteTechnicalOffer from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.deleteTechnicalOffer';
 import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtOfferConfigurator extends NavigationMixin(LightningElement) {
+    
     @track dataRows = [];
     @track selection;
     @api productid;
@@ -216,14 +218,6 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
             this.spinnerObj.spinner = false;
 
-            //this.dispatchEvent(
-            //    new ShowToastEvent({
-            //        title: toastObj.title,
-            //        message: toastObj.message,
-            //        variant: toastObj.variant
-            //    }),
-            //);
-
         })
         .catch(error => {
             this.errorObj.showError = true;
@@ -232,78 +226,129 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         });
     }
 
+    //saveActionDispatcher(sendToSap){
+    //    console.log('# Save offert configured #');
+    //
+    //    var start = new Date();
+    //    var t0 = start.getSeconds();
+    //
+    //    this.spinnerObj.spinner = true;
+    //    this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
+    //
+    //    var obj = this.sendToApex(sendToSap);
+    //
+    //    var end = new Date();
+    //    var t1 = end.getSeconds();
+    //    var diff = t1-t0;
+    //    
+    //    if(diff<1){
+    //        console.log('# setTimeout #');
+    //        setTimeout(() => {
+    //            this.dispatchEvent(
+    //                new ShowToastEvent({
+    //                    title: obj.title,
+    //                    message: obj.message,
+    //                    variant: obj.variant,
+    //                    mode: 'sticky'
+    //                })
+    //            );
+    //    
+    //            if(obj.success){
+    //                this.spinnerObj.spinner = false;
+    //                this.goBackToRecord();
+    //            } else {
+    //                this.spinnerObj.spinner = false;
+    //            }
+    //        }, 2000);
+    //    } else {
+    //        console.log('# no time out #');
+    //        this.dispatchEvent(
+    //            new ShowToastEvent({
+    //                title: obj.title,
+    //                message: obj.message,
+    //                variant: obj.variant,
+    //                mode: 'sticky'
+    //            })
+    //        );
+    //
+    //        if(obj.success){
+    //            this.spinnerObj.spinner = false;
+    //            this.goBackToRecord();
+    //        } else {
+    //
+    //        }
+    //    }
+    //
+    //}
+
     saveAction(){
-        this.saveActionDispatcher(false);
+        this.sendToApex(false);
     }
 
     saveAndSend(){
-        this.saveActionDispatcher(true);
-    }
-
-    saveActionDispatcher(sendToSap){
-        console.log('# Save offert configured #');
-
-        var start = new Date();
-        var t0 = start.getSeconds();
-
-        this.spinnerObj.spinner = true;
-        this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
-
-        var obj = this.sendToApex(sendToSap);
-
-        var end = new Date();
-        var t1 = end.getSeconds();
-        var diff = t1-t0;
-        
-        if(diff<1){
-            console.log('# setTimeout #');
-            setTimeout(() => {
-                this.dispatchEvent(
-                    new ShowToastEvent({
-                        title: obj.title,
-                        message: obj.message,
-                        variant: obj.variant,
-                        mode: 'sticky'
-                    })
-                );
-        
-                if(obj.success){
-                    this.spinnerObj.spinner = false;
-                    this.goBackToRecord();
-                } else {
-                    this.spinnerObj.spinner = false;
-                }
-            }, 2000);
-        } else {
-            console.log('# no time out #');
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: obj.title,
-                    message: obj.message,
-                    variant: obj.variant,
-                    mode: 'sticky'
-                })
-            );
-    
-            if(obj.success){
-                this.spinnerObj.spinner = false;
-                this.goBackToRecord();
-            } else {
-    
-            }
-        }
-
+        this.sendToApex(true);
     }
 
     sendToApex(sendToSap){
         console.log('# sendToApex #');
         console.log('# this.technicalofferid > ' + this.technicalofferid);
         console.log('# this.product.rateCategory > ' + this.product.rateCategory);
-        console.log('# sendToSap > ' + sendToSap);
 
-        var toastObj = {success: true, title: '', message: '', variant: ''};
+        this.spinnerObj.spinner = true;
+        this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
+
+        var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
 
         saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory, sendToSap: sendToSap})
+        .then(result => {
+            console.log('# save success #');
+            console.log('# resp -> ' + JSON.stringify(result));
+
+            if(result.success){
+                toastObj.success = true;
+                toastObj.title = 'Successo';
+                toastObj.message = result.message;
+                toastObj.variant = 'success';
+
+                if(sendToSap){
+                    this.sendToSapHandler(result.techOffId);
+                } else {
+                    this.goBackToRecord();
+                }
+
+            } else {
+                toastObj.success = false;
+                toastObj.title = 'Attenzione';
+                toastObj.message = result.message;
+                toastObj.variant = 'warning';                  
+            }
+
+            this.showToastHandler(toastObj);
+            this.spinnerObj.spinner = false;
+
+        })
+        .catch(error => {
+            this.errorObj.showError = true;
+            this.errorObj.errorString = error.body.message;
+            this.spinnerObj.spinner = false;
+
+            toastObj.success = false;
+            toastObj.title = 'Attenzione';
+            toastObj.message = error.body.message;
+            toastObj.variant = 'warning'; 
+
+            this.showToastHandler(toastObj);
+        });
+
+    }
+
+    sendToSapHandler(techOffId){
+        console.log('# sendToSapHandler #');
+        console.log('# this.technicalofferid > ' + techOffId);
+
+        var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
+
+        sendTechOfferToSAP({technicalofferid: techOffId})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + result.success);
@@ -319,7 +364,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 toastObj.message = result.message;
                 toastObj.variant = 'warning';                  
             }
-            
+
+            this.showToastHandler(toastObj);
+            this.goBackToRecord();
+
         })
         .catch(error => {
             this.errorObj.showError = true;
@@ -329,10 +377,12 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             toastObj.success = false;
             toastObj.title = 'Attenzione';
             toastObj.message = error.body.message;
-            toastObj.variant = 'warning'; 
+            toastObj.variant = 'warning';
+
+            this.showToastHandler(toastObj);
 
         });
-        return toastObj;
+
     }
 
     back(event){
@@ -414,7 +464,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'deletingdata slds-text-heading_small';
 
-        var toastObj = {success: true, title: '', message: '', variant: ''};
+        var toastObj = {success: true, title: '', message: '', variant: '', mode: ''};
 
         deleteTechnicalOffer({productId: this.productid, technicalOfferId: this.technicalofferid})
         .then(result => {
@@ -442,13 +492,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             
             this.spinnerObj.spinner = false;
 
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: toastObj.title,
-                    message: toastObj.message,
-                    variant: toastObj.variant,
-                })
-            );
+            toastObj.mode = 'dismissible';
+            this.showToastHandler(toastObj);    
 
         })
         .catch(error => {
@@ -460,9 +505,21 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             toastObj.title = 'Attenzione';
             toastObj.message = error.body.message;
             toastObj.variant = 'warning'; 
-
+            toastObj.mode = 'sticky';
+            this.showToastHandler(toastObj);
         });
 
+    }
+
+    showToastHandler(toastObj){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: toastObj.title,
+                message: toastObj.message,
+                variant: toastObj.variant,
+                mode: toastObj.mode
+            })
+        );
     }
 
 }

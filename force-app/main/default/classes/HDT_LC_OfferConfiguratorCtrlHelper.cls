@@ -79,6 +79,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             saveResponse.message = '# ERROR: insert failed';
         } else {
             saveResponse.success = true;
+            saveResponse.message = 'Offerta salvata correttamente';
             saveResponse.techOffId = tecOffId;
         }
         
@@ -305,11 +306,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     }
 
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSAP(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse mulesoftResponse, String technicalOfferId){
+        System.debug('>>> sendTechOfferToSAP ');
 
         mulesoftResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
 
         TechnicalOffer__c techOff;
-        techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
+        techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferForWebService(techOff, technicalOfferId);
 
         if(techOff == null){
             mulesoftResponse.success = false;
@@ -317,28 +319,34 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             return mulesoftResponse;
         }
 
+        HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService bodyObj;
+        bodyObj = generateHttpBody(bodyObj, techOff);
+
+        if(!bodyObj.success){
+            mulesoftResponse.success = false;
+            mulesoftResponse.message = 'Errore nella configurazione chiamata SAP';
+            return mulesoftResponse;  
+        }
+
         HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj;
         httpObj = setHttpObject(httpObj);
 
-        String body = JSON.serialize('{"key": "value"}', true);
+        String body = JSON.serialize(bodyObj.header);
         System.debug('>>> body obj > ' + body);
 
-        //HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
-        //if(!responseCtrl.success){
-        //    mulesoftResponse.success = false;
-        //    mulesoftResponse.message = responseCtrl.message;
-        //    return mulesoftResponse;
-        //}
+        if(!responseCtrl.success){
+            mulesoftResponse.success = false;
+            mulesoftResponse.message = responseCtrl.message;
+            return mulesoftResponse;
+        }
 
-        //mulesoftResponse.success = true;
-        //mulesoftResponse.message = responseCtrl.message;
-        //mulesoftResponse.bodyResponse = responseCtrl.body;
-
+        updateProductAfterSap(technicalOfferId, '');
 
         mulesoftResponse.success = true;
-        mulesoftResponse.message = 'only for test';
-        mulesoftResponse.techOffId = technicalOfferId;
+        mulesoftResponse.message = 'Offerta inviata a SAP correttamente';
         mulesoftResponse.bodyResponse = '{"newCode": "newValue"}';
 
         return mulesoftResponse;
@@ -351,8 +359,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         httpObj.headersMap = new Map<String, String>();
 
         //if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
-            httpObj.endPoint = '';
-            httpObj.headersMap.put('Authorization', '');
+            httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/CreateNewOffer';
+            httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');
         //} else {
@@ -360,6 +368,88 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         //}
 
         return httpObj;
+    }
+
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService generateHttpBody(HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService obj, TechnicalOffer__c techOff){
+
+        obj = new HDT_WRP_TechnicalOffer.HDT_WRP_TechnicalOfferWebService();
+
+        try{
+            obj.header = new HDT_WRP_TechnicalOffer.HDT_WRP_Header();
+            obj.header.offerta = '';
+            obj.header.profilo = '';
+            obj.header.rateCategory = '';
+            obj.header.descrizioneOff = '';
+            obj.header.descrizioneProf = '';
+            obj.header.mercato = '';
+            obj.header.tipoProcesso = '';
+            obj.header.offertaPlacet = '';
+            obj.header.prodotto = '';
+            obj.header.zttContr = '';
+            obj.header.ab = '';
+            obj.header.bis = '';
+            obj.header.passoSn = '';
+            obj.header.verlaEng = '';
+            obj.header.verper = '';
+            obj.header.disdettaSn = '';
+            obj.header.kfrist = '';
+            obj.header.kuenper = '';
+            obj.header.recessoSn = '';
+            obj.header.trece = '';
+            obj.header.trper = '';
+            obj.header.modProfilo = '';
+
+            obj.header.positionList = new List<HDT_WRP_TechnicalOffer.HDT_WRP_Position>();
+
+            HDT_WRP_TechnicalOffer.HDT_WRP_Position position;
+            for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){
+                position = new HDT_WRP_TechnicalOffer.HDT_WRP_Position();
+
+                //Type__c,
+                //Definition__c,
+                //M__c,
+                //V__c,
+                //Flag__c,
+                
+                position.operando = item.Operand__c;
+                position.gestibile = '';
+                position.modificabile = '';
+                position.statoOperando = '';
+                position.tariffa = item.FareTypeValue__c;
+                position.gruppoInfo = item.InfoGroupValue__c;
+                position.prezzo = item.PriceCodeValue__c;
+                position.sconto = '';
+                position.valore = item.NumericValue__c;
+                position.stringa = item.StringValue__c;
+                obj.header.positionList.add(position);
+            }
+
+            obj.success = true;
+
+        } catch(Exception ex){
+            System.debug('> ERROR: ' + ex.getMessage() + ', at line [' + String.valueOf(ex.getLineNumber()) + ']');
+            obj.success = false;
+            obj.message = '> ERROR: ' + ex.getMessage() + ', at line [' + String.valueOf(ex.getLineNumber()) + ']';
+        }
+
+        return obj;
+    }
+
+    public static Boolean updateProductAfterSap(String technicalOfferId, String bodyResponse){
+        List<TechnicalOffer__c> tecOffList;
+        tecOffList = HDT_QR_TechnicalOffer.getOfferById(tecOffList, technicalOfferId);
+
+        tecOffList[0].OfferCode__c = 'newOfferSapCode';
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isUpdateable()){
+            update tecOffList;
+        }
+
+        return true;
+
     }
 
 }

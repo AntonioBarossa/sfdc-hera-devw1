@@ -79,4 +79,49 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         @auraEnabled public Boolean enabled;
     }
 
+    public class HDT_WRP_TechnicalOfferWebService {
+        public Boolean success;
+        public String message;
+        public HDT_WRP_Header header;
+    }
+
+    public class HDT_WRP_Header {
+        public String offerta;
+        public String profilo;
+        public String rateCategory;
+        public String descrizioneOff;
+        public String descrizioneProf;
+        public String mercato;
+        public String tipoProcesso;
+        public String offertaPlacet;
+        public String prodotto;
+        public String zttContr;
+        public String ab;
+        public String bis;
+        public String passoSn;
+        public String verlaEng;
+        public String verper;
+        public String disdettaSn;
+        public String kfrist;
+        public String kuenper;
+        public String recessoSn;
+        public String trece;
+        public String trper;
+        public String modProfilo;
+        public List<HDT_WRP_Position> positionList;
+    }
+
+    public class HDT_WRP_Position {
+        public String operando;
+        public String gestibile;
+        public String modificabile;
+        public String statoOperando;
+        public String tariffa;
+        public String gruppoInfo;
+        public String prezzo;
+        public String sconto;
+        public String valore;
+        public String stringa;
+    }
+
 }
