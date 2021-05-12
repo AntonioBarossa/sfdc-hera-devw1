@@ -5,6 +5,7 @@
   <name>ApexClass</name>
 </types>
  <types>
+  <members>AccountContactMultiRoles</members>
   <members>AccountType</members>
   <members>OrderStatus</members>
   <members>CaseOrigin</members>
