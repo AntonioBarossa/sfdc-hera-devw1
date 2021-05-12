@@ -232,6 +232,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String fromq = 'Case';
         String queryString;
         fieldq = 'Id,Account.CustomerCode__c,Contact.LastName,CaseNumber';
+        fieldq += ',BillingCity__c,BillingCountry__c,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingPostalCode__c,BillingProvince__c,BillingStreetName__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
