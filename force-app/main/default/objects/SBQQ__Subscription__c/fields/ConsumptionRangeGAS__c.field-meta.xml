@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ConsumptionRangeGAS__c</fullName>
-    <description>Campo di configurazione usato per indicare la fascia di Consumo GAS per il record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
+    <description>Campo di configurazione usato per indicare la fascia di Consumo GAS per il record di criterio nella funzionalità di Configurazione Offerta Tecnica.</description>
     <externalId>false</externalId>
-    <formula>TEXT( Range__r.RangeConsumptionGas__c )</formula>
     <label>Fasce Consumo GAS</label>
+    <precision>18</precision>
     <required>false</required>
+    <scale>2</scale>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
+    <type>Number</type>
     <unique>false</unique>
 </CustomField>

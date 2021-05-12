@@ -3,7 +3,7 @@
     <fullName>BillingAddressFormula__c</fullName>
     <description>Formula che raggruppa i campi principali dell&apos;indirizzo</description>
     <externalId>false</externalId>
-    <formula>BillingStreetName__c &amp;&apos; &apos;&amp; BillingStreetNumber__c &amp;&apos;&apos;&amp; BillingStreetNumberExtension__c &amp;&apos;, &apos;&amp; BillingCity &amp;&apos; &apos;&amp; BillingState &amp;&apos;, &apos;&amp; BillingPostalCode &amp;&apos; &apos;&amp; BillingCountry</formula>
+    <formula>BillingStreetName__c &amp;&apos;, &apos;&amp; BillingStreetNumber__c &amp;&apos;, &apos;&amp; BillingStreetNumberExtension__c &amp;&apos;, &apos;&amp; BillingCity &amp;&apos;, &apos;&amp; BillingState &amp;&apos;, &apos;&amp; BillingPostalCode &amp;&apos;, &apos;&amp; BillingCountry</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>ndirizzo Residenza/Sede Legale</label>
     <required>false</required>

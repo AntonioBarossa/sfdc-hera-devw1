@@ -8,8 +8,9 @@
     { &quot;label&quot;: &quot;Codice&quot;, &quot;fieldName&quot;: &quot;ContractAccountCode__c&quot; },
     { &quot;label&quot;: &quot;Stato&quot;, &quot;fieldName&quot;: &quot;Status__c&quot; },
 	{ &quot;label&quot;: &quot;Data Attivazione&quot;, &quot;fieldName&quot;: &quot;ActivationDate__c&quot; },
-	{ &quot;label&quot;: &quot;Modalità Pagamento&quot;, &quot;fieldName&quot;: &quot;PaymentMethod__c&quot; }
-	
+	{ &quot;label&quot;: &quot;Modalità Pagamento&quot;, &quot;fieldName&quot;: &quot;PaymentMethod__c&quot; },
+{&quot;label&quot;:&quot;Indirizzo Spedizione&quot;, &quot;fieldName&quot;:&quot;InvoicingAddressFormula__c&quot;},
+{&quot;label&quot;:&quot;Modalita Invio Bolletta&quot;, &quot;fieldName&quot;:&quot;BillSendingMethod__c&quot;}
 ]</value>
     </values>
     <values>
@@ -22,7 +23,7 @@
     </values>
     <values>
         <field>Fields__c</field>
-        <value xsi:type="xsd:string">Status__c,ContractAccountCode__c,ActivationDate__c,PaymentMethod__c</value>
+        <value xsi:type="xsd:string">Status__c,ContractAccountCode__c,ActivationDate__c,PaymentMethod__c,InvoicingAddressFormula__c,BillSendingMethod__c</value>
     </values>
     <values>
         <field>Max_Rows__c</field>
@@ -38,7 +39,7 @@
     </values>
     <values>
         <field>Where_Conditions__c</field>
-        <value xsi:type="xsd:string">Status__c = &apos;Attivo&apos;</value>
+        <value xsi:type="xsd:string">Status__c = &apos;Attivo&apos; AND PaymentMethod__c &lt;&gt; &apos;RID&apos;</value>
     </values>
     <values>
         <field>sObject__c</field>

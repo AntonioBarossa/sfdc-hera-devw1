@@ -111,7 +111,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         }
 
         for(HDT_ButtonDetails__mdt butMdt : mdtButtonList){
-            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c));
+            objDetail.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(butMdt.MasterLabel, butMdt.ButtonCode__c, butMdt.IsVisible__c, butMdt.ButtonType__c, butMdt.Parameters__c));
         }
 
         return objDetail;
@@ -155,7 +155,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         obj.buttonList = new List<HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail>();
 
         for(HDT_ButtonDetails__mdt button_mdt : mdtButtonList){
-            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c));
+            obj.buttonList.add(new HDT_WRP_AccountStatement.HDT_WRP_ButtonObjDetail(button_mdt.MasterLabel, button_mdt.ButtonCode__c, button_mdt.IsVisible__c, button_mdt.ButtonType__c, ''));
         }
 
         obj.success = true;
@@ -250,35 +250,49 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
 
     }
 
-    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValuesHelper(HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj){
+    public static String getPicklistValueHelper(String tabCode, String fieldName){
+        List<HDT_StatementRequest__mdt> mdtList;
+        mdtList = HDT_QR_AccountStatement.getStatementRequestMetaData(mdtList, fieldName);
+        return mdtList[0].PicklistValues__c;
+    }
+
+    public static HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist getFieldValuesHelper(HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist pickObj, String tabCode){
         
         pickObj = new HDT_WRP_AccountStatement.HDT_WRP_ReturnPicklist();
         
         try{
             pickObj.companyList = new List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>();
             pickObj.joinLevelList = new List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>();
-
+            List<HDT_StatementRequest__mdt> mdtList;
             List<HDT_HeraCompany__mdt> companyList;
+            String deserializeThis = '';
+
             companyList = HDT_QR_AccountStatement.getCompanyList(companyList);
 
             HDT_WRP_AccountStatement.HDT_WRP_PicklistObj company;
             for(HDT_HeraCompany__mdt hc : companyList){
                 company  = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
                 company.label = hc.Label;
-                company.value = hc.DeveloperName;
+                company.value = hc.CompanyCode__c;
                 pickObj.companyList.add(company);
             }
 
-            Schema.DescribeFieldResult fieldResult = HDT_StatementRequest__mdt.Aggregation__c.getDescribe();
-            List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-            HDT_WRP_AccountStatement.HDT_WRP_PicklistObj joinLevel;
-            for( Schema.PicklistEntry f : ple){
-                joinLevel = new HDT_WRP_AccountStatement.HDT_WRP_PicklistObj();
-                joinLevel.label = f.getLabel();
-                joinLevel.value = f.getValue();
-                pickObj.joinLevelList.add(joinLevel);
-            }     
+            switch on tabCode {
+                when 'EC' {
+                    deserializeThis = 'AggregazioneTabEc';
+                }
+    
+                when 'EC1' {
+                    deserializeThis = 'AggregazioneTabEc1';
+                }
+                
+                when 'EC4' {
+                    deserializeThis = 'AggregazioneTabEc4';
+                }                       
+            }
 
+            mdtList = HDT_QR_AccountStatement.getStatementRequestMetaData(mdtList, deserializeThis);
+            pickObj.joinLevelList = (List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>)JSON.deserialize(mdtList[0].PicklistValues__c, List<HDT_WRP_AccountStatement.HDT_WRP_PicklistObj>.class);
             pickObj.success = true;
 
         } catch (Exception ex){
@@ -292,9 +306,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
     public static HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogBackendHelper(String tabValue, String recordId, String records, HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse serviceCatalogResponse, String level){
 
         serviceCatalogResponse = new HDT_WRP_AccountStatement.HDT_WRP_ServiceCatalogResponse();
-        
-        //List<HDT_ColumnsFirstLevel__mdt> columnMdtList;
-        //columnMdtList = HDT_QR_AccountStatement.getColumnMetaDataList(columnMdtList, tabValue);
 
         try{
 
@@ -302,12 +313,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             System.debug('> RecordId > ' + recordId);
             System.debug('> Records > ' + records);
             System.debug('> level > ' + level);
-
-            //if(columnMdtList.size()==0){
-            //    serviceCatalogResponse.success = false;
-            //    serviceCatalogResponse.message = 'NO ColumnsFirstLevel metadata found';
-            //    return serviceCatalogResponse;
-            //}
 
             Id currentUserId = UserInfo.getUserId();
             AccountStatementFilter__c serviceCatalog = new AccountStatementFilter__c();
@@ -327,7 +332,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'InstallmentsView';
             }
             
-
             /*
                 1° livello
                     - Single Record:
@@ -351,7 +355,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                             = IsRaiFee__c
             */
 
-
             System.debug('>>> recordsList: ' + String.valueOf(recordsList.size()));
 
             if(recordsList.size() > 1){
@@ -360,9 +363,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog);
             }
 
-            //- Settare nel campo DocumentSelected__c il JSON delle fatture selezionate (sia 1 che 2 livello)
             serviceCatalog.DocumentSelected__c = records;
-
+            serviceCatalog.Account__c = recordId;
             serviceCatalog.UpsertKey__c = currentUserId + '_' + serviceCatalog.Context__c;
 
             Boolean upsertResult = HDT_UTL_DatabaseService.upsertSObjectExternalId(new List<SObject>{serviceCatalog}, 'AccountStatementFilter__c', 'UpsertKey__c');
@@ -372,17 +374,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalogResponse.message = '> ERROR on object permission';
                 return serviceCatalogResponse;
             }
-
-            //SObjectType objtype = Schema.getGlobalDescribe().get('AccountStatementFilter__c');
-            //Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-        
-            //if(objRes.isUpdateable()){
-            //    upsert serviceCatalog UpsertKey__c;
-            //} else {
-            //    serviceCatalogResponse.success = false;
-            //    serviceCatalogResponse.message = '> ERROR on object permission';
-            //    return serviceCatalogResponse;
-            //}
 
             serviceCatalogResponse.success = true;
             serviceCatalogResponse.serviceCatalogId = serviceCatalog.Id;

@@ -270,11 +270,6 @@
                 <label>Errata Emissione</label>
             </value>
             <value>
-                <fullName>Chiamata Mura</fullName>
-                <default>false</default>
-                <label>Chiamata Mura</label>
-            </value>
-            <value>
                 <fullName>Caduta Linea</fullName>
                 <default>false</default>
                 <label>Caduta Linea</label>
@@ -474,20 +469,44 @@
             <valueName>TCP Comune no Int</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Malfunzionamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
+            <valueName>Prima Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
+            <valueName>Bolletta Periodica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Cessazione utilizzo apparecchiatura elettromedicale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Caduta Linea</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Sollecito Emissione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Errata Emissione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
-            <valueName>Chiamata Mura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
-            <valueName>Caduta Linea</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

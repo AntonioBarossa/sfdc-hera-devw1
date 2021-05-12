@@ -19,6 +19,7 @@
 
     <template if:true={joinFilterModal} >
         <c-hdt-join-filter-modal
+                tab-code={tabCode}
                 onclosemodal={closeModalHandler}
                 fields-to-filter={fieldsToFilter}
                 onsetobjfilter={applyFilter}
@@ -98,7 +99,15 @@
                 <div class="slds-col">
                     <div class="slds-button-group" role="group">
                         <template for:each={confObj} for:item="c">
-                            <button key={c.name} if:true={c.enable} class="slds-button slds-button_neutral mainbutton" data-type={c.type} name={c.name} onclick={buttonHandler} >{c.label}</button>
+                            <button
+                                key={c.name}
+                                if:true={c.enable}
+                                class="slds-button slds-button_neutral mainbutton"
+                                data-type={c.type}
+                                data-parameters={c.parameters}
+                                name={c.name}
+                                onclick={buttonHandler}
+                            >{c.label}</button>
                         </template>
                     </div>
                 </div>
@@ -314,6 +323,7 @@
         <!-- Section 3: data of sevond level -->
         <div if:true={showSecondLevel} class="slds-col slds-size_1-of-1" style="height: 22vh;" >
             <c-hdt-account-statement-detail-viewer
+                account-id={recordid}
                 tab-code={tabCode}
                 first-level={firstLevel}
                 accountdetails={secondLevelList}

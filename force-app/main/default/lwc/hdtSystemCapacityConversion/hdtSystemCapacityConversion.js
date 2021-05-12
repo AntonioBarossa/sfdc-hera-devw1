@@ -11,6 +11,7 @@ export default class HdtSystemCapacityConversion extends LightningElement {
 
 
     @api saveInDraft;
+    @api cancelCase;
     @api outcomeCaliberClass;
     @api outcomeSystemCapacity;
     @api defaultCaliberClass;
@@ -168,6 +169,8 @@ export default class HdtSystemCapacityConversion extends LightningElement {
 
                     this.saveInDraft = false;
 
+                    this.cancelCase = false;
+
                     const navigateNextEvent = new FlowNavigationNextEvent();
         
                     this.dispatchEvent(navigateNextEvent);
@@ -198,6 +201,8 @@ export default class HdtSystemCapacityConversion extends LightningElement {
 
                     this.saveInDraft = true;
 
+                    this.cancelCase = false;
+
                     const navigateNextEvent = new FlowNavigationNextEvent();
         
                     this.dispatchEvent(navigateNextEvent);
@@ -224,8 +229,15 @@ export default class HdtSystemCapacityConversion extends LightningElement {
 
         } else if(event.target.name === "cancel"){
 
-            return;
+            if(this.availableActions.find(action => action === "NEXT")){
 
+                this.cancelCase = true;
+
+                const navigateNextEvent = new FlowNavigationNextEvent();
+        
+                this.dispatchEvent(navigateNextEvent);
+
+            }
         }
 
     }

@@ -27,7 +27,9 @@ public inherited sharing class HDT_QR_Contract {
             ContractNumber,
             BillingProfile__c,
             Status,
-            SBQQ__Order__r.BillingProfile__c
+            SBQQ__Order__r.BillingProfile__c,
+            ServicePoint__c,
+            ServicePoint__r.RecordType.DeveloperName
             FROM
             Contract
             WHERE Id = :contractId
@@ -47,11 +49,14 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,			
             ContractNumber,
-            Status 
+            Status,
+            ServicePoint__c,
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__r.SupplyAddress__c
             FROM
             Contract
             WHERE AccountId = :accountId									 
-            AND Status = 'Activated'
+            AND Status IN ('Activated', 'Attivo')
             WITH SECURITY_ENFORCED
         ];
     }

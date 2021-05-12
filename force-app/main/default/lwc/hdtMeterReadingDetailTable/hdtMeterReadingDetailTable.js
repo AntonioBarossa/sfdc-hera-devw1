@@ -1,28 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getMeterReadingRecords from '@salesforce/apex/HDT_LC_MeterReadingController.getMeterReadingRecords';
 
-/*const columns = [
-    { label: 'Data lettura', fieldName: 'lectureDate', initialWidth: 150},
-    { label: 'Fascia', fieldName: 'slot', initialWidth: 150},
-    { label: 'Lettura (Interi)', fieldName: 'lectureInt', initialWidth: 150},
-    { label: 'Lettura (Decimal)', fieldName: 'lectureDecimal', initialWidth: 150},
-    { label: 'Consumo', fieldName: 'consumed', initialWidth: 150},
-    { label: 'Codice Apparecchio', fieldName: 'assetCode', initialWidth: 150},
-    { label: 'Codice Contratto', fieldName: 'contractCode', initialWidth: 150},
-    { label: 'Stato', fieldName: 'status', initialWidth: 150},
-    { label: 'Tipo lettura', fieldName: 'lectureType', initialWidth: 150},
-    { label: 'Causale', fieldName: 'reason', initialWidth: 150},
-    { label: 'Giorni di fatturazione', fieldName: 'billingDate', initialWidth: 150},
-    { label: 'Consumo medio', fieldName: 'consumedAvg', initialWidth: 150},
-    { label: 'Tipo registro', fieldName: 'regType', initialWidth: 150},
-    { label: 'Consumo', fieldName: 'consumed', initialWidth: 150},
-    { label: 'Unità di misura', fieldName: 'meters', initialWidth: 150},
-    { label: 'Tipo di consumo', fieldName: 'consumedType', initialWidth: 150},
-    { label: 'Settore merceologico', fieldName: 'sector', initialWidth: 150},
-    { label: 'Flag lettura', fieldName: 'consumed', initialWidth: 150},
-    { label: 'Motivazione', fieldName: 'reasonWhy', initialWidth: 150}
-];*/
-
 export default class HdtMeterReadingDetailTable extends LightningElement {
 
     @api columnsobj;
@@ -31,12 +9,11 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     @api hideCheckboxColumn;
     @track meterReadingData;
     @track detailTableHeader = 'Letture';
-    @track columns;// = columns;
     meterReadingError = false;
     meterReadingErrorMessage = '';
 
     connectedCallback(){
-        this.columns = this.columnsobj;
+        console.log('HdtMeterReadingDetailTable loaded.');
     }
 
     @api loadingData(){
@@ -73,9 +50,16 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         this.dispatchEvent(dataLoad);
     }
 
-    operation(){
-        var selectedRow = this.template.querySelector('lightning-datatable').getSelectedRows();
-        console.log(JSON.stringify(selectedRow));
+    @api
+    getSelectedReadingsValue() {
+        var totalReadingValue = 0;
+        var selectedRows = this.template.querySelector('lightning-datatable').getSelectedRows();
+        selectedRows.forEach(row => {
+            const readingValue = parseInt(row.posizioniPrecedentiLaVirgola);
+            totalReadingValue += (isNaN(readingValue) ? 0 : readingValue);
+        });
+
+        return totalReadingValue;
     }
 
     /*@api meterReadingBackendCall(contractNumber){

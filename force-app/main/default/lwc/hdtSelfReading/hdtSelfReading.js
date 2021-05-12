@@ -3,6 +3,7 @@ import insertSelfReading from '@salesforce/apex/HDT_LC_SelfReading.insertSelfRea
 import updateSelfReading from '@salesforce/apex/HDT_LC_SelfReading.updateSelfReading';
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId';
+import checkLastReadings from '@salesforce/apex/HDT_LC_SelfReading.checkLastReadings';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -13,6 +14,8 @@ export default class HdtSelfReading extends LightningElement {
     @api recordId;
 
     @api object;
+
+    @api servicePointId;
 
     @api isVolture;
 
@@ -42,6 +45,17 @@ export default class HdtSelfReading extends LightningElement {
 
     @api isSaved = false;
 
+    @api allowSmallerReading = false;
+
+    @api oldTotalReadingValue;
+
+    @api newTotalReadingValue;
+
+    @api selectedReadingValue;
+
+    @api isRettificaConsumi;
+
+
     recordKey;
 
     selfReadingObj = [];
@@ -66,6 +80,8 @@ export default class HdtSelfReading extends LightningElement {
 
     connectedCallback(){
 
+        this.oldTotalReadingValue = 0;
+        this.newTotalReadingValue = 0;
         this.readingCustomerDate = this.sysdate();
 
         this.recordKey = this.object === 'Order' ? 
@@ -147,26 +163,103 @@ export default class HdtSelfReading extends LightningElement {
         this.buttonDisabled = true;
         this.lastReadingsChecked = true;
 
-        if(this.commodity == 'Energia Elettrica'){
+        checkLastReadings({servicePointId:this.servicePointId})
+        .then(result =>{
+            console.log('checkLastReadings results: ' + result);
+            if (result == null) {
+                this.errorAdvanceMessage = 'Errore di sistema, impossibile recuperare le ultime letture. Contattare un amministratore di sistema.';
+                this.showToastMessage(this.errorAdvanceMessage);
+                return;
+            }
+            const parsedResult = JSON.parse(result);
+            // Verifichiamo se la response contiene un errore da SAP.
+            if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
+                this.errorAdvanceMessage = 'Errore da SAP: ' + parsedResult.errorDetails[0].message;
+                this.showToastMessage(this.errorAdvanceMessage);
+                return;
+            }
+            const lastReadings = this.fillLastReadingsArray(parsedResult);
+            console.log('filled obj: ' + JSON.stringify( lastReadings));
 
-            this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+            if(this.commodity == 'Energia Elettrica'){
+                this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+                    element.handleLastReading(lastReadings);
+                    //element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
+                });
+            } else if(this.commodity == 'Gas'){
+                this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+                    element.handleLastReading(lastReadings);
+                    //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
+                });
+            }
 
-                element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
+        }).catch(error =>{
+            console.log('checkLastReadings failed: ' + error);
+        });
+    }
 
+    fillLastReadingsArray(lastReadingsResponse){
+        /*
+        [{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]'
+        */
+
+        const lastReadings = lastReadingsResponse.data;
+
+        let registers = [];
+        let finalRegisters = []
+
+        try {
+            for (const key in lastReadings) {
+                console.log('processing key: ' + key);
+                const match = key.match(/\d+/);
+                const index = match ? match[0] : -1;
+
+                if (index < 0) {
+                    continue;
+                }
+
+                const i = index - 1; // Indice effettivo, la response inizia da 1 anzichè da 0.
+                if (registers[i] === undefined) {
+                    registers[i] = {};
+                }
+
+                registers[i].register = index;
+
+                console.log('index: ' + i);
+                if (key.startsWith('herTipologiaMisuratore')) {
+                    registers[i].readingType = lastReadings[key];
+                } else if (key.startsWith('herMatricolaMisuratore')) {
+                    registers[i].readingSerialNumber = lastReadings[key];
+                } else if (key.startsWith('herDataLettura')) {
+                    const readingDate = lastReadings[key];
+                    // La response di SAP valorizza solo la data lettura a null se il registro non ha una lettura
+                    // Skippiamo questa key in modo da marcare l'oggetto del registro come 'da rimuovere'
+                    if (readingDate === null) {
+                        continue;
+                    }
+                    registers[i].readingDate = this.convertItalianDate(readingDate);
+                } else if (key.startsWith('herFascia')) {
+                    registers[i].readingBand = lastReadings[key];
+                } else if (key.startsWith('herLettura')) {
+                    let reading = lastReadings[key];
+                    reading = reading.split('.').join('');  // rimuoviamo il separatore delle migliaia per poter parsare come int.
+                    registers[i].readingOldValue = reading;
+                }
+                // TODO: add missing fields
+            }
+
+            // Lasciamo solo i registri che hanno una lettura, ovvero quelli che hanno la property readingDate.
+            registers.forEach(register => {
+                if ('readingDate' in register) {
+                    finalRegisters.push(register);
+                }
             });
 
-        } else if(this.commodity == 'Gas'){
+          } catch (error) {
+            console.error(error);
+          }
 
-            this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
-
-                //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
-                element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
-
-            });
-
-        }
-
-
+        return finalRegisters;
     }
 
     // event è definito solo per la voltura (this.isVolture) 
@@ -233,6 +326,23 @@ export default class HdtSelfReading extends LightningElement {
                 }
 
                 console.log(result);
+
+                this.oldTotalReadingValue += element.oldReadingValue();
+                this.newTotalReadingValue += element.newReadingValue();
+
+                console.log('oldTotalReadingValue: ' + this.oldTotalReadingValue)
+                console.log('newTotalReadingValue: ' + this.newTotalReadingValue)
+
+                if (this.isRettificaConsumi === true) {
+                    if ((this.newTotalReadingValue > this.oldTotalReadingValue) ||
+                        (this.selectedReadingValue != 0 && this.newTotalReadingValue > this.oldTotalReadingValue && 
+                         this.newTotalReadingValue > this.selectedReadingValue)) {
+                        console.log('Alert per verificare necessità di autolettura.');
+                        this.errorAdvanceMessage = 'Verificare la lettura inserita. Se la lettura risulta corretta, è necessario annullare questo Case e proseguire con una Autolettura.';
+                        this.showToastMessage(this.errorAdvanceMessage);
+                        throw BreakException;
+                    }
+                }
 
                 for(const [key,value] of Object.entries(result)){
 
@@ -332,6 +442,7 @@ export default class HdtSelfReading extends LightningElement {
         if(action === 'next' || action === 'draft' || action === 'save'){
 
             this.saveDraft = action === 'draft'; 
+            this.cancelCase = false;
 
             if(this.availableActions.find(action => action === 'NEXT')){
 
@@ -418,6 +529,15 @@ export default class HdtSelfReading extends LightningElement {
         return sysdateIso.substr(0, sysdateIso.indexOf('T'));
     }
 
+    convertItalianDate(italianDate){
+        var parts = italianDate.split("/");
+        var date = new Date(parseInt(parts[2], 10),
+                            parseInt(parts[1], 10) - 1,
+                            parseInt(parts[0], 10));
+
+        var dateIso = date.toISOString(); // Es: 2021-03-01T15:34:47.987Z
+        return dateIso.substr(0, dateIso.indexOf('T'));
+    }
 
     reverseDate(inputDate){
 

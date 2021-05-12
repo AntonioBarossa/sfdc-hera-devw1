@@ -2,16 +2,28 @@ public inherited sharing class HDT_QR_Contact {
     
     public Contact getRecordById(String id) {
 
-        return [
+        List<Contact> contactsList = [
             SELECT
             FirstName,
             LastName,
+            MobilePhone,
+            Phone,
+            Email,
+            Fax,
+            CertifiedEmail__c,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
             WITH SECURITY_ENFORCED
-            LIMIT 1
         ];
+
+        Contact contact = new Contact();
+
+        if (!contactsList.isEmpty()) {
+            contact = contactsList[0];
+        }
+
+        return contact;
     }
  public List<Contact> getRecordsById(List<String> ids) {
 
@@ -73,11 +85,15 @@ public inherited sharing class HDT_QR_Contact {
 
     // INIZIO SVILUPPI EVERIS
 
-    public LIst<Contact> getRecordsByIds(Set<Id> ids) {
+    public List<Contact> getRecordsByIds(Set<Id> ids) {
         return [
             SELECT 
             Id,
+            Name,
+            Email,
+            Phone,
             MobilePhone,
+            Fax,
             CertifiedEmail__c,
             CompanyOwner__c
             FROM Contact 

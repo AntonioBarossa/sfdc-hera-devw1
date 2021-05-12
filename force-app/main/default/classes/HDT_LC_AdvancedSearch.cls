@@ -28,8 +28,10 @@ public with sharing class HDT_LC_AdvancedSearch {
 			
 				String value = servicePoint.SupplyAddress__c;
 				String label = 'Indirizzo Fornitura';
-
-				row.put(label,value);
+				if(value!=',,,,,,,'){
+					row.put(label,value);
+				}
+				
 			
             customBp.add(row);
 		}
@@ -77,27 +79,33 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	if(accountId!=null){
 		ac = qr.getBillingAddressAccount(accountId);
 	}
-	system.debug('BillingAddress******'+ ac.BillingAddress);
+	system.debug('BillingAddress******'+ ac.BillingAddressFormula__c);
+	String[] billingAddressSplit = ac.BillingAddressFormula__c.split(',');
 
-	if(ac.BillingAddress!=null){
 
-		if(ac.BillingAddress.getState()!= null){
-			outPut.put('Comune',ac.BillingAddress.getState());
+	if(ac.BillingAddressFormula__c!=null){
+		system.debug('entra in if ');
+
+		if(billingAddressSplit[3]!= null){
+			outPut.put('Comune',billingAddressSplit[3]);
 		}
-		if(ac.BillingAddress.getStreet().split('\\r?\\n').get(1)!= null){
-			outPut.put('Civico', ac.BillingAddress.getStreet().split('\\r?\\n').get(1));
+		if(billingAddressSplit[1]!= null){
+			outPut.put('Civico',billingAddressSplit[1]);
 		}
-		if(ac.BillingAddress.getPostalCode()!= null){
-			outPut.put('CAP',ac.BillingAddress.getPostalCode());
+		if(billingAddressSplit[5]!= null){
+			outPut.put('CAP',billingAddressSplit[5]);
 		}
-		if(ac.BillingAddress.getStreet()!= null){
-			outPut.put('Via',ac.BillingAddress.getStreet().split('\\r?\\n').get(0));
+		if(billingAddressSplit[0]!= null){
+			outPut.put('Via',billingAddressSplit[0]);
 		}
-		if(ac.BillingAddress.getCity()!= null){
-			outPut.put('Provincia',ac.BillingAddress.getCity());
+		if(billingAddressSplit[4]!= null){
+			outPut.put('Provincia',billingAddressSplit[4]);
 		}
-		if(ac.BillingAddress.getCountry()!= null){
-			outPut.put('Stato',ac.BillingAddress.getCountry());
+		if(billingAddressSplit[6]!= null){
+			outPut.put('Stato',billingAddressSplit[6]);
+		}
+		if(billingAddressSplit[2]!= null){
+			outPut.put('Est.Civico',billingAddressSplit[2]);
 		}
 	
 	}
@@ -118,10 +126,7 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 		system.debug('queryType' + queryType);
 		system.debug('additionalFilter' + additionalFilter);												
 		switch on queryType {
-			when 'serialnumber' {
-
-							   
-																									 
+			when 'serialnumber' {																				 
 	 
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				if(additionalFilter=='' || additionalFilter== null){
@@ -188,9 +193,12 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 					}
 				}
 			}
+			system.debug('record***********'+record);
 			output.add(new Map<String, Object>(record));
 			record.clear();
 		}
+
+
 		return output;
 	}
 
@@ -425,5 +433,164 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 	}
 
 
+	@AuraEnabled
+	public static List<Map<String,string>> extractDataFromArriccDataService(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response ){
+		
+			servicePoint__c spNew = new servicePoint__c();
+			if(sp!= null){
+				system.debug('entra in sp diverso da null' + sp);
+				spNew = sp;
+			}
+		Map<string,string> mapRes = new Map<string,string>();
+		system.debug('posizioni ***************************'+response.data.posizioni[0]);
+	
+			for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject r : response.data.posizioni){
+				if(!String.isBlank(r.campo) && mapRes.get(r.campo.toUpperCase()) == null){
+					system.debug('campo ****' + r.campo);
+					system.debug('valore ****' + r.valore);
+					mapRes.put(r.campo.toUpperCase(),r.valore);
+				}
+	
+			}
 
+		
+		/*	
+		if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
+			spNew.MeterClass__c = mapRes.get('CALIBRO1');
+		}
+		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
+			spNew.RemiCode__c = mapRes.get('CODICEREMI');
+		}
+
+		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
+			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
+		}
+
+		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
+			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
+		}
+
+		if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
+			spNew.RequestPhase__c  = mapRes.get('FASE');
+		}
+
+		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
+			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
+		}
+
+		*/
+
+				//campi fornitura
+				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
+					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
+				}
+				if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
+					spNew.ServicePointCode__c   = mapRes.get('POD');
+				}
+				if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
+				
+					spNew.CommoditySector__c = mapRes.get('DESCRCOMM');
+		
+				}
+				if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){
+		
+					spNew.ImplantType__c = mapRes.get('IMPIANTO');
+				}
+				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
+		
+					spNew.ImplantType__c  = mapRes.get('TIPOIMPIANTO')+'-'+mapRes.get('DESCRTIPOIMP');		
+				}
+				if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){
+		
+					spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
+				}
+				if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
+		
+					spNew.MarketOrigin__c = mapRes.get('MERCATO');
+				}
+				if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){
+		
+					spNew.IsRemoteManaged__c =Boolean.valueOf(mapRes.get('FLAGTELEGESTIBILE'));
+				}
+				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
+					spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+				}
+				if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){
+					spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.')+1)) ;
+				}
+				if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){
+		
+					spNew.VoltageLevel__c = mapRes.get('TENSIONE');
+				}
+				if(mapRes.get('RESIDENTINDFORNITURA')!=null && !String.isBlank(mapRes.get('RESIDENTINDFORNITURA'))){
+		
+					spNew.Resident__c = Boolean.valueOf(mapRes.get('RESIDENTINDFORNITURA'));
+				}
+
+				//campi indirizzo
+				if(mapRes.get('CAP')!=null && !String.isBlank(mapRes.get('CAP'))){
+
+					spNew.SupplyPostalCode__c = mapRes.get('CAP');
+				}
+				if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
+					spNew.SupplyStreet__c  = mapRes.get('VIA');
+				}
+				if(mapRes.get('TIPOVIA')!=null && !String.isBlank(mapRes.get('TIPOVIA'))){
+					spNew.SupplyStreetToponym__c  = mapRes.get('TIPOVIA');
+				}
+				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
+					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
+				}
+				if(mapRes.get('LOCALITÀ')!=null && !String.isBlank(mapRes.get('LOCALITÀ'))){
+					spNew.SupplyPlace__c  = mapRes.get('LOCALITÀ');
+				}
+				if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
+					spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
+				}
+				if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
+					spNew.SupplySAPCityCode__c = mapRes.get('CODICEPAESE');
+				}
+				if(mapRes.get('REGIONE')!=null && !String.isBlank(mapRes.get('REGIONE'))){
+
+					spNew.SupplyPostalCode__c = mapRes.get('REGIONE');
+				}
+		system.debug('spNew*****************' + spNew);
+		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
+		servicePoints.add(spNew);
+
+		String type='ServicePoint__c';
+		String fieldForniture = customSetting.OutputServicePoint__c;
+		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
+		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+		Schema.SObjectType leadSchema = schemaMap.get(type);
+		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+
+        List<Map<String,String>> customSp = new List<Map<String,String>>();
+		for (ServicePoint__c spo : servicePoints) {
+            Map<String,String> row = new Map<String, String>();
+			for(String field : listField){
+				String value = '';
+				String label = '';
+				if(!field.contains('__r')){
+					value = (String)spo.get(field);
+					label = fieldMap.get(field).getDescribe().getLabel();
+				}
+	
+				row.put(label,value);
+			}
+            customSp.add(row);
+		}
+
+		return customSp;
+	}
+
+	
+
+//creare metodo per riempimento lista posizioni (response) e upsert punto di fornitura
+//CREARE OGGETTO WRAP
+public class HDT_WRP_FieldsObject {
+	@AuraEnabled public String statusCode{get;set;}
+	@AuraEnabled public String message{get;set;}
+	@AuraEnabled public String idFornitura{get;set;}
+}
 }

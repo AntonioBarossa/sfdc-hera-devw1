@@ -200,7 +200,7 @@
             <targetReference>Tipo_Documento_to_Uppercase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>InputCase</name>
         <dataType>SObject</dataType>

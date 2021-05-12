@@ -2,33 +2,45 @@
     <lightning-record-edit-form object-api-name={objectapiname}>
         
         <div class="slds-border_bottom slds-m-top_large">
-            <h3 class="slds-text-heading_medium slds-hyphenate">Indirizzo di Fornitura</h3>
-            <lightning-button   label="Copia Residenza" variant="brand" onclick={handleAddressFromAccount} ></lightning-button>            
-            <lightning-button  style="margin-left:10px;" label="Selezione Indirizzi " variant="brand"  onclick={submitIndirizzo}></lightning-button>
+            <h3 class="slds-text-heading_medium slds-hyphenate">Indirizzo</h3>
+            <template if:true={visibleCopiaResidenza}>
+            <lightning-button   label="Copia Residenza/Sede legale" variant="brand" onclick={handleAddressFromAccount} ></lightning-button>   
+            </template>
+            <template if:true={visibleSelezioneIndirizzi}>      
+            <lightning-button  style="margin-left:10px;" label="Indirizzi Cliente" variant="brand"  onclick={submitIndirizzo}></lightning-button>
+            </template> 
         </div>
-
+        
 
         <div class="slds-grid slds-wrap slds-m-top_small">
-            <!--<template for:each={wrapAddressObject} for:item="fieldAddress">
+                <!--<<<<*****<template for:each={wrapAddressObject} for:item="fieldAddress">
                 <lightning-input type="Text" key={fieldAddress.fieldname} name={fieldAddress.fieldname} value={fieldAddress.value} label={fieldAddress.fieldname} class="slds-size_1-of-3" variant="label-stacked" onchange={handleFieldsDataChange} ></lightning-input>
                 <lightning-input-field value={fieldAddress.value} required={fieldAddress.required} onchange={handleFieldsDataChange} class="slds-size_1-of-3" data-name={fieldAddress.fieldname} key={fieldAddress.fieldname} field-name={fieldAddress.fieldname} variant="label-stacked"></lightning-input-field>
-            </template>-->
-            <lightning-input type="Text"  name='Stato' value={stato} label='Stato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
-            <lightning-input type="Text"  name='Provincia' value={provincia} label='Provincia' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
-            <lightning-input type="Text"  name='Comune' value={comune} label='Comune' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
-            <lightning-input type="Text"  name='CAP' value={cap} label='CAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
-            <lightning-input type="Text"  name='Via' value={via} label='Via' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            </template>*********<<<<<<-->
+            
+            
+            <lightning-input disabled={disableStato} id="input" type="Text"  name='Stato' value={stato} label='Stato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input disabled={disableProvincia}  type="Text"  name='Provincia' value={provincia} label='Provincia' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input type="Text"   name='Comune' value={comune} label='Comune' class="slds-size_1-of-3" variant="label-stacked" onkeypress={handleKeyPress}   onchange={handleChangeComune} required=true></lightning-input>
+            <lightning-input type="Text"  name='Via' value={via} label='Via' class="slds-size_1-of-3" variant="label-stacked" onkeypress={handleKeyPress}  onchange={handleChangeIndirizz} required=true></lightning-input>
             <lightning-input type="Text"  name='Civico' value={civico} label='Civico' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
-            <lightning-input type="Text"  name='Estens.Civico' value={estensCivico} label='Estens.Civico' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
-            <lightning-input type="Text"  name='Codice Comune SAP' value={codComuneSAP} label='Codice Comune SAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
-            <lightning-input type="Text"  name='Codice Via Stradario SAP' value={codStradarioSAP} label='Codice Via Stradario SAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
-            <lightning-input type="Checkbox"  name='Indirizzo Estero' value={IndEstero} label='Indirizzo Estero' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input>
-            <lightning-input type="Checkbox"  name='Flag Verificato' value={flagVerifiacto} label='Flag Verificato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input>
+            <lightning-input type="Text"  name='Estens.Civico' value={estensCivico} label='Barrato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
+            <lightning-input disabled={disableCap} type="Text"  name='CAP' value={cap} label='CAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} required=true></lightning-input>
+            <lightning-input disabled={disableCodComuneSap} type="Text"  name='Codice Comune SAP' value={codComuneSAP} label='Codice Comune SAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
+            <lightning-input disabled={disableCodViaSap} type="Text"  name='Codice Via Stradario SAP' value={codStradarioSAP} label='Codice Via Stradario SAP' class="slds-size_1-of-3" variant="label-stacked" onchange={handleTextChange} ></lightning-input>
+            <lightning-input type="Checkbox"  name='Indirizzo Estero' checked={IndEstero} label='Indirizzo Estero' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input>
+            <lightning-input disabled={disableFlagVerificato} type="Checkbox"  name='Flag Verificato' checked={flagVerificato} label='Flag Verificato' class="slds-size_1-of-3" variant="label-stacked" onchange={handleCheckBoxChange} ></lightning-input> 
+
 
         </div>
+        
+        <template if:true={booleanForm}>
+        <c-hdt-selection-address-response filterinputword={comune} filterinputword2={via} tableoriginaldata={herokuAddressServiceData} headertoshow={headertoshow} onselectedvalue={handleSelectedValue} listobjtoshow={herokuAddressServiceData} objectapiname={objectapiname} prevwrapaddressobject={wrapAddressObject} accountid={accountid} previsionecomune={comune} prevcap={cap} prevvia={via} prevprovincia={provincia} prevrowtosend={rowToSend}></c-hdt-selection-address-response>
+         </template>
+        
         <div class="slds-clearfix">
             <div class="slds-float_right">
-                <lightning-button disabled={verifyFieldsAddressDisabled} onclick={handleAddressVerification} label="Verifica Indirizzo" variant="brand"></lightning-button>
+                <lightning-button disabled={disableVerifIndiButton} onclick={handleAddressVerification} label="Verifica Indirizzo" variant="brand"></lightning-button>
             </div>
         </div>
         <template if:true={openmodel} style="height: auto;">  

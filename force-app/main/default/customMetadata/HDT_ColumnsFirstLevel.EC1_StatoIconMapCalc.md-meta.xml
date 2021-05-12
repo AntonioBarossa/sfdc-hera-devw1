@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>FieldType__c</field>
-        <value xsi:type="xsd:string">text</value>
+        <value xsi:type="xsd:string">icon</value>
     </values>
     <values>
         <field>IsAmountField__c</field>

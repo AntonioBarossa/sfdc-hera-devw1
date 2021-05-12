@@ -12,8 +12,8 @@ public with sharing class HDT_QR_InstallmentPlans {
             AND ApplicationInterests__c = :c.ApplicationInterests__c
             AND InstallmentPlanReason__c = :c.Reason__c
             AND CAWithOrWithoutSEPA__c = :c.CAWithOrWithoutSEPA__c
-            AND (ExistingInstallmentPlanUnpaidFrom__c <= :decimal.valueof(c.ExistingInstallmentPlanUnpaid__c) OR ExistingInstallmentPlanUnpaidFrom__c = null)
-            AND (ExistingInstallmentPlanUnpaidTo__c >= :decimal.valueof(c.ExistingInstallmentPlanUnpaid__c) OR ExistingInstallmentPlanUnpaidTo__c = null)
+            AND (ExistingInstallmentPlanUnpaidFrom__c <= :c.ExistingInstallmentsPlanNumber__c OR ExistingInstallmentPlanUnpaidFrom__c = null)
+            AND (ExistingInstallmentPlanUnpaidTo__c >= :c.ExistingInstallmentsPlanNumber__c OR ExistingInstallmentPlanUnpaidTo__c = null)
             AND (AmountToPayInInstallmentsFrom__c <= :c.AmountToPayInInstallments__c OR AmountToPayInInstallmentsFrom__c = null)
             AND (AmountToPayInInstallmentsTo__c >= :c.AmountToPayInInstallments__c OR AmountToPayInInstallmentsTo__c= null)
             AND SuspensionInPastTwelveMonths__c = :c.SuspensionInThePastTwelveMonths__c
@@ -31,5 +31,75 @@ public with sharing class HDT_QR_InstallmentPlans {
         }
 
         return rule;
+    }
+
+    public Case getCaseById(String recordId){
+
+        return [SELECT 
+        CaseNumber,
+        DepositPaymentMode__c,
+        InstallmentPlanNumber__c,
+        ClientCategory__c,
+        TypeInstallmentPlan__c,
+        Reason__c,
+        CAWithOrWithoutSEPA__c,
+        ExistingInstallmentsPlanNumber__c,
+        AmountToPayInInstallments__c,
+        Deposit__c,
+        Amount__c,
+        CutomerAssisted__c,
+        RefundableEscape__c,
+        WorkStatus__c,
+        ApplicationInterests__c,
+        SuspensionInThePastTwelveMonths__c,
+        CreatedDate,
+        FirstExpirationDate__c
+        FROM Case
+        WHERE Id = :recordId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+
+    }
+
+    public List<DocumentSelected__c> getDocumentSelectedByCase(String recordId){
+
+        return [SELECT Id,
+        Bill__c,
+        DocumentNumber__c,
+        ExpirationDate__c,
+        Type__c
+        FROM DocumentSelected__c
+        WHERE Case__c = :recordId
+        WITH SECURITY_ENFORCED];
+
+    }
+
+
+    public List<Case> getSuspensionCaseByAccountId(String accountId){
+
+        List<Case> cases = new List<Case>();
+
+        DateTime pastTwelveMonth = (DateTime) System.today().addMonths(-12); 
+
+        try{
+
+            cases = [SELECT Id
+            FROM Case
+            WHERE Type = 'Sospesione Fornitura'
+            AND Phase__c = 'Completata'
+            AND CreatedDate >= :pastTwelveMonth
+            AND AccountId = :accountId
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+
+        } catch(Exception e){
+
+            System.debug('QR_InstallmentPlans Exception--> ' + e.getMessage());
+            
+        }
+
+        return cases;
+
+
     }
 }
