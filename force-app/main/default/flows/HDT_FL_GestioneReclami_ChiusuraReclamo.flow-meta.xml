@@ -177,6 +177,11 @@
         <picklistField>CustomerRequestAccomplished__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>ClosureProcessType</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!GetInputCase.Phase__c})=&quot;Risposta Inviata&quot;,&quot;Reclami Chiusura&quot;,&quot;Reclami Chiusura Rettifica&quot;)</expression>
+    </formulas>
     <interviewLabel>GestioneReclami_ChiusuraCase {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Chiusura/Sospensione Reclamo</label>
     <processMetadataValues>
@@ -277,7 +282,7 @@
         </connector>
         <fields>
             <name>DisplayHeader_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Id}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila manualmente i dati sottostanti&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Sospensione Case&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila il campo sottostante per procedere alla chiusura del Reclamo/Rich. Info&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -388,7 +393,7 @@
         </connector>
         <fields>
             <name>DisplayHeader_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255)); color: var(--lwc-colorTextWeak,rgb(62, 62, 60)); font-family: var(--lwc-fontFamily,&amp;quot;Salesforce Sans&amp;quot;, Arial, sans-serif); font-size: 18px;&quot;&gt;Processo di &lt;/b&gt;&lt;b style=&quot;font-size: 18px; background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255)); color: var(--lwc-colorTextWeak,rgb(62, 62, 60));&quot;&gt;{!GetInputCase.Id}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Chiusura Case&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Compila il campo sottostante per procedere alla chiusura del Relcamo/Rich. Info&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -440,7 +445,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Reclami Chiusura</stringValue>
+                    <elementReference>ClosureProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -464,7 +469,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -487,7 +492,7 @@
             <targetReference>GetInputCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>CaseId</name>
         <dataType>String</dataType>
