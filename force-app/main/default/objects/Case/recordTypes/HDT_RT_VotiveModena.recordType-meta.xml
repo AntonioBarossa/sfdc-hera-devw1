@@ -727,7 +727,71 @@
     <picklistValues>
         <picklist>CemeteryName__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Albareto Vecchio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggiovara Nuovo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Baggiovara Vecchio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cittanova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Collegara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Freto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ganaceto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lesignana</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marzaglia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Portile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saliceto Panaro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Cataldo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Cesario sul Panaro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Donnino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>San Matteo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Santa Maria di Mugnano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Villanova</fullName>
             <default>false</default>
         </values>
     </picklistValues>

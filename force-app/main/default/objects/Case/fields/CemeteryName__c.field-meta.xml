@@ -18,6 +18,91 @@
                 <default>false</default>
                 <label>TBD</label>
             </value>
+            <value>
+                <fullName>Albareto Vecchio</fullName>
+                <default>false</default>
+                <label>Albareto Vecchio</label>
+            </value>
+            <value>
+                <fullName>Baggiovara Nuovo</fullName>
+                <default>false</default>
+                <label>Baggiovara Nuovo</label>
+            </value>
+            <value>
+                <fullName>Baggiovara Vecchio</fullName>
+                <default>false</default>
+                <label>Baggiovara Vecchio</label>
+            </value>
+            <value>
+                <fullName>Cittanova</fullName>
+                <default>false</default>
+                <label>Cittanova</label>
+            </value>
+            <value>
+                <fullName>Collegara</fullName>
+                <default>false</default>
+                <label>Collegara</label>
+            </value>
+            <value>
+                <fullName>Freto</fullName>
+                <default>false</default>
+                <label>Freto</label>
+            </value>
+            <value>
+                <fullName>Ganaceto</fullName>
+                <default>false</default>
+                <label>Ganaceto</label>
+            </value>
+            <value>
+                <fullName>Lesignana</fullName>
+                <default>false</default>
+                <label>Lesignana</label>
+            </value>
+            <value>
+                <fullName>Marzaglia</fullName>
+                <default>false</default>
+                <label>Marzaglia</label>
+            </value>
+            <value>
+                <fullName>Portile</fullName>
+                <default>false</default>
+                <label>Portile</label>
+            </value>
+            <value>
+                <fullName>Saliceto Panaro</fullName>
+                <default>false</default>
+                <label>Saliceto Panaro</label>
+            </value>
+            <value>
+                <fullName>San Cataldo</fullName>
+                <default>false</default>
+                <label>San Cataldo</label>
+            </value>
+            <value>
+                <fullName>San Cesario sul Panaro</fullName>
+                <default>false</default>
+                <label>San Cesario sul Panaro</label>
+            </value>
+            <value>
+                <fullName>San Donnino</fullName>
+                <default>false</default>
+                <label>San Donnino</label>
+            </value>
+            <value>
+                <fullName>San Matteo</fullName>
+                <default>false</default>
+                <label>San Matteo</label>
+            </value>
+            <value>
+                <fullName>Santa Maria di Mugnano</fullName>
+                <default>false</default>
+                <label>Santa Maria di Mugnano</label>
+            </value>
+            <value>
+                <fullName>Villanova</fullName>
+                <default>false</default>
+                <label>Villanova</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
