@@ -7233,35 +7233,7 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Acconto Paperless Non Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Acconto Paperless Pagato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento - Revocato</fullName>
+            <fullName>Bozza</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7269,35 +7241,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Approvazione KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Approvazione OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Info da Banca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa conferma preventivo cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Avvenuta Riduzione Potenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attesa Modulo Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BL010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bozza</fullName>
+            <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7305,11 +7249,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Comunicazione verso Heroku KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione verso Heroku OK</fullName>
+            <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7317,51 +7257,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Esecuzione Prevista</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>E-Mail Non Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elaborazione Manuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO tentativo riattivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7369,63 +7265,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito OK da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR010</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>IR020</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Allineamento Anagrafica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In Attesa Approvazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviare preventivo ricalcolato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Definitivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>KO Rilavorato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7477,6 +7321,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SMS Inviato</fullName>
             <default>false</default>
         </values>
@@ -7490,6 +7338,18 @@
         </values>
         <values>
             <fullName>Verifica in laboratorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10118,17 +9978,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseChangeCharge__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

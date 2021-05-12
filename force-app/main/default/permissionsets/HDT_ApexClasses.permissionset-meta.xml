@@ -153,6 +153,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_GestionePrivacyField</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_LeadChangeRecordType</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -345,6 +349,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_EligibilityCriteria</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_FileTemplate</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -385,6 +393,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_LoginGroupItem</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_MassiveLoaderProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -406,6 +418,18 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_OrderItem</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_Paperless</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PaymentCommunication</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PriceBook</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -453,6 +477,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_SearchPlug</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_SelfReadings</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -477,6 +505,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_UserQueries</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Variations</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -490,6 +522,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_AccountContactRelation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_AccountInstallmentsCheck</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -577,6 +613,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_InstallmentPlans</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Lead</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -598,6 +638,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_OrderItem</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_Paperless</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_PaymentCommunication</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -909,6 +957,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_BpCaVariationVatGroup</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_EligibilityCriteria</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -997,6 +1049,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WS_InstallmentPlans</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WS_MakeMulesoftCall</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1018,6 +1074,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_MulesoftCallerHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_Paperless</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_PaymentCommunication</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

@@ -326,6 +326,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     handleChange(event){
 
+        //Reclami customizations
+
         let five = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')).length === 0)
         ? this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')
         : this.secondColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c');
@@ -375,12 +377,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
             }
 
-
-
         }
 
+        //Reclami customizations
 
     }
-
-
+ 
 }

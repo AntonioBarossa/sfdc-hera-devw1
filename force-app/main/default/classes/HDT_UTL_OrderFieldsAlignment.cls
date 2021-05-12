@@ -84,7 +84,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.AtecoCode__c = '999999';
         orderToUpdate.InstanceSelfCertification__c = 'SI';
         orderToUpdate.ConnectionMandate__c = 'SI';
-        orderToUpdate.SelfCertificationConnection__c = 'Contratto Firmato';
+        orderToUpdate.SelfCertificationConnection__c = '02';
+        // orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerContractual__c);
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
@@ -132,6 +133,54 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
         }
 
+    }
+
+    public static String calculateRequestedOption(String implantType, Decimal powerContractual){
+
+        String result = '';
+
+        switch on implantType {
+            when '13A0-Usi di Abitazione BT' {
+                result = '13FM-Non domestici AT';
+            }
+            when '13BB-Illuminazione pubblica BT' {
+                result = 'AEEG Opzione BTIP-E_BTIP';
+            }
+            when '13CB-Non domestici in BT' {
+
+                if(powerContractual > 0 && powerContractual <= 1.5) {
+                    result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
+                } else if(powerContractual > 1.5 && powerContractual <= 3) {
+                    result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';
+                } else if(powerContractual > 3 && powerContractual <= 6) {
+                    result = 'AEEG Op BTA3 >3 <=6 kW-E_BTA3';
+                } else if(powerContractual > 6 && powerContractual <= 10) {
+                    result = 'AEEG Op BTA4 >6 <=10 kW-E_BTA4';
+                } else if(powerContractual > 10 && powerContractual <= 16.5) {
+                     result = 'AEEG Op BTA5 > 10 kW-E_BTA5';
+                } else if(powerContractual > 16.5) {
+                    result = 'AEEG Op BTA6 olt 16,5kW-E_BTA6';
+                }
+
+            }
+            when '13EM-Non domestici MT' {
+                if(powerContractual > 0 && powerContractual <= 100) {
+                    result = 'AEEG Opz MTA1 fin 100kW-E_MTA1';
+                } else if(powerContractual > 100 && powerContractual <= 500) {
+                    result = 'AEEG Op MTA2 >100 <=500-E_MTA2';
+                } else if(powerContractual > 500) {
+                    result = 'AEEG Op MTA3 olt 500kW-E_MTA3';
+                }
+            }
+            when '13DM-Illuminazione pubblica MT' {
+                result = 'AEEG Opzione MTIP-E_MTIP';
+            }
+            when '13FM-Non domestici AT' {
+                result = 'AEEG Op ALTA fin 220 kV-E_ALTA';
+            }
+        }
+
+        return result;
     }
 
     public static void alignFields(Order order) {
