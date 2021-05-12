@@ -457,9 +457,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -502,6 +514,12 @@
             <field>ServicePoint__c</field>
             <value>
                 <elementReference>GetParentCase.ServicePoint__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Verifica Dati al DL</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
