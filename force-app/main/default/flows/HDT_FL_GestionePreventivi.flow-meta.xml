@@ -290,6 +290,13 @@
                 <elementReference>Get_Input_Case.PhaseTypeAvailable__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.VoltageLevelRequested__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Input_Case.VoltageLevelAvailable__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
         </connector>
@@ -1214,7 +1221,7 @@
     <formulas>
         <name>ProcessTypeCommodity</name>
         <dataType>String</dataType>
-        <expression>IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;), ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))</expression>
+        <expression>IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Nuovo Impianto - Aggiunta Attacco&quot;), ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Mod. Imp. - Em. Imp. - Var. Portata&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Rimozione Impianto&quot;),ISPICKVAL({!Get_Input_Case.Type},&quot;Modifica Impianto&quot;)),TEXT({!Get_Input_Case.Type}) + &quot; &quot; + {!Get_Input_Case.CommodityFormula__c}, TEXT({!Get_Input_Case.Type}))</expression>
     </formulas>
     <formulas>
         <name>ProcessTypeRecapFormula</name>
@@ -1765,6 +1772,18 @@
                 <name>quoteType</name>
                 <value>
                     <elementReference>Calcola_Info_Preventivo.QuoteType__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.AccountId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
