@@ -142,7 +142,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         switch on triggerObj {
             when Case triggerCase {
                 Map<String, Object> inputMap = new Map<String, Object>();
-                inputMap.put('recordType', 'HDT_RT_AllineamentoAnagrafica');
+                HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+                String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+                inputMap.put('recordTypeId', recordTypeId);
                 inputMap.put('cluster', 'Modifiche Anagrafiche');
                 inputMap.put('type', 'Allineamento Anagrafica');
                 inputMap.put('inputSObj', triggerObj);
@@ -202,10 +204,13 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         System.debug('createAnagAlignmentCasesModAnagCliente: # contratti attivi: ' + activeContracts.size());
 
         Map<String, Object> inputMap = new Map<String, Object>();
-        inputMap.put('recordType', 'HDT_RT_AllineamentoAnagrafica'); // TODO: modificare in recordTypeId per evitare query dentro il loop.
+        HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+        inputMap.put('recordTypeId', recordTypeId);
         inputMap.put('cluster', 'Modifiche Anagrafiche');
         inputMap.put('type', 'Allineamento Anagrafica');
         inputMap.put('inputSObj', triggerObj);
+
         HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
 
         List<Case> anagAlignCases = new List<Case>();
