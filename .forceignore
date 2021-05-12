@@ -34,4 +34,3 @@ package.xml
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
 **objects/Account/recordTypes/HDT_RT_Other*
 **objects/SBQQ__Quote__c/fields/Login__c*
-**objects/ServicePoint__c/fields/ImplantType__c*
