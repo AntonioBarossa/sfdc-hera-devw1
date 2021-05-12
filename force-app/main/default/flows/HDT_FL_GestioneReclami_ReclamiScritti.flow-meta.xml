@@ -98,22 +98,6 @@
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
     </assignments>
-    <assignments>
-        <name>AssegnaValori_0_0_0</name>
-        <label>AssegnaValori</label>
-        <locationX>314</locationX>
-        <locationY>638</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>No</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Cerca_Case_reiterazione</targetReference>
-        </connector>
-    </assignments>
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
@@ -152,7 +136,7 @@
         <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_0_0_0</targetReference>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -433,7 +417,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -442,6 +426,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -455,7 +440,7 @@
             <targetReference>Prima_Classificazione</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
