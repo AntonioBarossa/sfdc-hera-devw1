@@ -1,5 +1,5 @@
 public with sharing class HDT_LC_LeadCalculateFiscalCode {
-    HDT_QR_Lead leadQR = new HDT_QR_Lead():
+    public static HDT_QR_Lead leadQR = new HDT_QR_Lead();
     @AuraEnabled
     public static String calculateLeadFiscalCode(String leadId){
         System.debug(leadId);
@@ -21,8 +21,8 @@ public with sharing class HDT_LC_LeadCalculateFiscalCode {
         if(String.valueOf(l.Gender__c)== null || String.valueOf(l.Gender__c)== ''){
             validateFields += 'Gender ';
         }
-        if(String.valueOf(l.Birthplace__c)== null || String.valueOf(l.Birthplace__c)== ''){
-            validateFields += 'Birthplace ';
+        if(String.valueOf(l.Birthcity__c)== null || String.valueOf(l.Birthcity__c)== ''){
+            validateFields += 'Birthcity ';
         }
         if(String.isNotBlank(validateFields)){
             validateFields += 'must be completed!';
