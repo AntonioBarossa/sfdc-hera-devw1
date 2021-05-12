@@ -30,7 +30,7 @@
                                 <template if:true={tipologiaIntestatarioFields}>
                                     <div class="slds-grid slds-wrap slds-m-top_small">
                                         <template for:each={tipologiaIntestatarioFields} for:item="tipologiaIntestatarioField">
-                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} required={tipologiaIntestatarioField.required} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </div>
                                 </template>
