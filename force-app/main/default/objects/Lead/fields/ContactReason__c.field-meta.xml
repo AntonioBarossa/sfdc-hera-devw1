@@ -5,16 +5,10 @@
     <label>Motivo Di Contatto</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>TBD</fullName>
-                <default>false</default>
-                <label>TBD</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_ContactReason</valueSetName>
     </valueSet>
 </CustomField>
