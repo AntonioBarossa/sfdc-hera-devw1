@@ -271,7 +271,7 @@
         <name>Assegna_Case_Id_Modifiche_Anagrafiche</name>
         <label>Assegna Case Id</label>
         <locationX>2756</locationX>
-        <locationY>974</locationY>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -457,6 +457,38 @@
             <targetReference>Crea_Case_0_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Set_RT_Mod_Anagrafica</name>
+        <label>Set RT Mod. Anagrafica</label>
+        <locationX>2888</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>RecordTypeModificaAnagrafica</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>RecordTypeName</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_RT_Votiva_Modena</name>
+        <label>Set RT Votiva Modena</label>
+        <locationX>2624</locationX>
+        <locationY>854</locationY>
+        <assignmentItems>
+            <assignToReference>RecordTypeModificaAnagrafica</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>HDT_RT_VotiveModena</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>ModificaDatiContattoChoice</name>
         <choiceText>Modifica Dati di Contatto (Telefono, Email, PEC, Fax)</choiceText>
@@ -479,6 +511,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>Modifica Dati di Recapito</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ModificaDatiRecapitoVotivaModenaChoice</name>
+        <choiceText>Modifica Dati di Recapito su Votiva Modena</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Modifica Dati di Recapito Votiva Modena</stringValue>
         </value>
     </choices>
     <choices>
@@ -515,7 +555,7 @@
         <name>Check_Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica?</label>
         <locationX>2756</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </defaultConnector>
@@ -542,7 +582,7 @@
         <locationX>2756</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Processo senza fornitura</defaultConnectorLabel>
         <rules>
@@ -574,6 +614,31 @@
                 <targetReference>Selezione_Fornitura_ModAnagrafica</targetReference>
             </connector>
             <label>Processo con fornitura</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Votiva_Modena_ModAnag</name>
+        <label>Votiva Modena?</label>
+        <locationX>2756</locationX>
+        <locationY>734</locationY>
+        <defaultConnector>
+            <targetReference>Set_RT_Mod_Anagrafica</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>SubprocessChoice</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>ModificaDatiRecapitoVotivaModenaChoice</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_RT_Votiva_Modena</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <decisions>
@@ -1918,7 +1983,7 @@
         <name>Crea_Case_Modifiche_Anagrafiche</name>
         <label>Crea Case</label>
         <locationX>2756</locationX>
-        <locationY>854</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche</targetReference>
         </connector>
@@ -2620,7 +2685,7 @@
         <name>Get_RT_Modifiche_Anagrafiche</name>
         <label>Get RT Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>734</locationY>
+        <locationY>1070</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Modifiche_Anagrafiche</targetReference>
@@ -2630,7 +2695,7 @@
             <field>DeveloperName</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>RecordTypeName</elementReference>
+                <elementReference>RecordTypeModificaAnagrafica</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2850,7 +2915,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
         </connector>
         <fields>
             <name>VariazioneClienteHeaderText</name>
@@ -2863,6 +2928,7 @@
             <choiceReferences>ModificaDatiRecapitoChoice</choiceReferences>
             <choiceReferences>ModificaDatiFiscaliChoice</choiceReferences>
             <choiceReferences>VariazioneGruppoIVAChoice</choiceReferences>
+            <choiceReferences>ModificaDatiRecapitoVotivaModenaChoice</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Sotto-processo</fieldText>
             <fieldType>RadioButtons</fieldType>
@@ -3028,7 +3094,7 @@
         <name>Arricchimento_Dati_Mod_Anagrafica</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
         <locationX>2624</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
         </connector>
@@ -3168,7 +3234,7 @@
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
         <locationX>2756</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <flowName>HDT_FL_GestioneModificheAnagrafiche</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3605,7 +3671,7 @@
         <locationX>2756</locationX>
         <locationY>518</locationY>
         <connector>
-            <targetReference>Get_RT_Modifiche_Anagrafiche</targetReference>
+            <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
         </connector>
         <flowName>HDT_FL_SupplySelection</flowName>
         <inputAssignments>
@@ -3902,6 +3968,13 @@
     </variables>
     <variables>
         <name>RecordTypeCalculated</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>RecordTypeModificaAnagrafica</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
