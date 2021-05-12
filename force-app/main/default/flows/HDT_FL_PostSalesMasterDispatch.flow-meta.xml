@@ -911,7 +911,7 @@
         </rules>
         <rules>
             <name>Cluster_Reclami</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>RecordTypeName</leftValueReference>
                 <operator>EqualTo</operator>

@@ -581,6 +581,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }else if(caseType == 'Modifica Tariffa Residente/Non Residente'){
 
+            Date residenceChangeDate = Date.valueOf(getFieldValue(fields, 'ResidenceChangeDate__c'));
+
             if(HDT_UTL_Variations.modifyRate(recordId)){
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -588,6 +590,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             } else {
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+
+            }
+
+            if(residenceChangeDate < System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+            
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
  
