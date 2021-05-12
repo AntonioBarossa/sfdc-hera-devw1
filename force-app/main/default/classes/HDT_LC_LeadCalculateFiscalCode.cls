@@ -32,7 +32,7 @@ public with sharing class HDT_LC_LeadCalculateFiscalCode {
             row.put('firstName', l.FirstName);
             row.put('birthDate', String.valueOf(l.Birthdate__c));
             row.put('gender', l.Gender__c);
-            row.put('birthPlace', l.Birthplace__c);
+            row.put('birthPlace', l.Birthcity__c);
             System.debug(row);
             String fiscalCode= HDT_UTL_CalculateFiscalCode.calculateFiscalCode(row);
             Lead lead= new Lead(Id=leadId,FiscalCode__c=fiscalCode);
