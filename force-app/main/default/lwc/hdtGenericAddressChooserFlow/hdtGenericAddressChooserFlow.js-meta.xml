@@ -12,6 +12,7 @@
             <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>           
             <property name="accountId" type="String" label="Account Id" description="Account Id" role="inputOnly"/>
             <property name="addressType" type="String" label="Address Type" description="Address Type" role="inputOnly"/>
+            <property name="addressLabel" type="String" label="Address Label" description="Address Label" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
     <!--targetConfigs>
