@@ -197,7 +197,20 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             phase = 'Comunicazione verso Heroku KO';
                         }
                     }
-                } when else {
+                } when 'ANNULL'{
+                    errorMessage = responseResult.responseMap.get('errorMessage');
+                    System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
+                    switch on responseResult.responseMap.get('result'){
+                        when 'OK'{
+                            phase = 'Annullamento - Comunicazione verso Heroku OK';
+                        } 
+                        when else{
+                            //FASE NON PRESENTE
+
+                        }
+                    }
+                } 
+                when else {
                     System.debug('Error non existing request');
                     return null;
                 }
@@ -206,7 +219,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         if(currentCase.Phase__c  == 'Da Inviare' 
         || currentCase.Phase__c == 'Preventivo accettato' 
-        || currentCase.Phase__c == 'Comunicazione verso Heroku KO'){
+        || currentCase.Phase__c == 'Comunicazione verso Heroku KO'
+        || currentCase.Phase__c == 'Annullamento - Da inviare'){
 
             System.debug('SRV_Class_Phase--> '+phase);
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);

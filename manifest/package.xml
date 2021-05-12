@@ -57,6 +57,10 @@
   <name>CompactLayout</name>
 </types>
 <types>
+		<members>*</members>
+		<name>CustomApplication</name>
+	</types>
+<types>
   <members>*</members>
   <name>CustomField</name>
 </types>
