@@ -227,10 +227,11 @@ handleAddressValuesIfSap(servicePointRetrievedData){
 
     handleConfirm(){
         console.log('entra in handleconfirm');
+        console.log(' rowToSend**************'+JSON.stringify(this.rowToSend));
         this.preloading = true;
         this.closeModal();
 		let data = [];
-        console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo']));
+        console.log(' rowToSend indirizzo**************'+JSON.stringify(this.rowToSend['Indirizzo']));
         if(this.rowToSend['Indirizzo']!=undefined){
             data = this.rowToSend['Indirizzo'].split(",");
             console.log('data after rowToSend**************'+JSON.stringify(data));
@@ -287,6 +288,7 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             }
         
         this.preloading = false;
+        console.log(' THERECORD**************'+JSON.stringify(this.theRecord));
         console.log('esce da handleconfirm');
 
     }
@@ -528,34 +530,43 @@ handleAddressValues(servicePointRetrievedData){
         switch(key){
             case 'Stato':
                 this.stato = servicePointRetrievedData[key] ;
+                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
             break;
             case 'Provincia':
                 this.provincia= servicePointRetrievedData[key] ;
+                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
             break;
             case 'Comune':
                 this.comune= servicePointRetrievedData[key] ;
+                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
             break;
             case 'CAP':
                 this.cap = servicePointRetrievedData[key] ;
+                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
             break;
             case 'Via':
                 this.via = servicePointRetrievedData[key] ;
+                this.theRecord['Via'] = servicePointRetrievedData[key] ;
             break;
             case 'Civico':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.civico = servicePointRetrievedData[key] ;
+                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
             break;
             case 'EstensCivico':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.estensCivico = servicePointRetrievedData[key] ;
+                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
             break;
             case 'CodiceComuneSAP':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.codComuneSAP = servicePointRetrievedData[key] ;
+                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
             break;
             case 'CodiceViaStradarioSAP':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.codStradarioSAP = servicePointRetrievedData[key] ;
+                this.theRecord['Codice Via Stradario SAP'] = servicePointRetrievedData[key] ;
             break;
             case 'IndirizzoEstero':
                 this.IndEstero = servicePointRetrievedData[key] ;
