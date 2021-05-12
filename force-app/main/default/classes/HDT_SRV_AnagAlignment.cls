@@ -36,19 +36,16 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         switch on context {
             when 'SERVICE_CATALOG' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG)[0].Id;
             }
             when 'VARIAZIONI_MARCATURA_USO_PDR' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_MARCATURA_USO_PDR);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_MARCATURA_USO_PDR)[0].Id;
             }
             when 'VARIAZIONI_INDIRIZZO_FORNITURA' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_INDIRIZZO_FORNITURA);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_INDIRIZZO_FORNITURA)[0].Id;
             }
             when 'VARIAZIONI_TARIFFA_RES_NONRES' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_TARIFFA_RES_NONRES);
-            }
-            when 'VARIAZIONE_ANAGRAFICA_CLIENTE' {
-                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+                result = handleAnagAlignment(inputCase, HDT_ENU_AnagAlignmentContext.VARIAZIONI_TARIFFA_RES_NONRES)[0].Id;
             }
         }
 
@@ -56,12 +53,18 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return resultList;
     }
 
-    public static Id handleAnagAlignment(SObject triggerObj, HDT_ENU_AnagAlignmentContext context) {
+    /**
+     * Dispatcher per la gestione delle varie casistiche di Allineamento Anagrafica.
+     * Restituisce la lista di Case di Allineamento Anagrafica che sono stati creati o modificati.
+     */
+    public static List<Case> handleAnagAlignment(SObject triggerObj, HDT_ENU_AnagAlignmentContext context) {
+
+        List<Case> returnCases = new List<Case>();
 
         switch on context {
             when SERVICE_CATALOG {
                 updateAnagAlignmentCaseServiceConsole((Case) triggerObj);
-                return triggerObj.Id;
+                returnCases.add((Case) triggerObj);
             }
             when VARIAZIONI_FISCALE {
                 // TODO
@@ -71,9 +74,12 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                  VARIAZIONI_TARIFFA_RES_NONRES {
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
                 updateAnagAlignmentCaseVariazioni(anagAlignCase, (Case) triggerObj, context);
+                returnCases.add(anagAlignCase);
             }
             when VARIAZIONE_ANAGRAFICA_CLIENTE {
-                // TODO
+                Case varAnagCase = (Case) triggerObj;
+                List<Case> anagAlignCases = createAnagAlignmentCasesModAnagCliente(triggerObj);
+                returnCases.addAll(anagAlignCases);
             }
             when VARIAZIONE_STATO_POD {
                 // TODO
@@ -83,7 +89,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             }
         }
 
-        return null;
+        return returnCases;
     }
 
 
@@ -177,6 +183,91 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         }
 
         return False;
+    }
+
+    /**
+     * Il processo di Variazione Anagrafica Cliente modifica direttamente le entità master (Account/Contact/BillingProfile) senza un ServicePoint di riferimento.
+     * Per questo motivo vanno N Case di Allineamento Anagrafica, uno per ogni contratto attivo sul cliente.
+     * Per ognuni di essi richiamiamo l'arricchimento dati e valorizziamo i dati come nello scenario di innesco da Service Catalog.
+     */
+    private static List<Case> createAnagAlignmentCasesModAnagCliente(SObject triggerObj) {
+        if (triggerObj == null) {
+            System.debug('createAnagAlignmentCasesModAnagCliente: null object in input');
+            return null;
+        }
+
+        Case triggerCase = (Case) triggerObj;
+        HDT_QR_Contract contractQueryHandler = new HDT_QR_Contract();
+        List<Contract> activeContracts = contractQueryHandler.getActiveRecordsByAccountId(triggerCase.AccountId);
+        System.debug('createAnagAlignmentCasesModAnagCliente: # contratti attivi: ' + activeContracts.size());
+
+        Map<String, Object> inputMap = new Map<String, Object>();
+        inputMap.put('recordType', 'HDT_RT_AllineamentoAnagrafica'); // TODO: modificare in recordTypeId per evitare query dentro il loop.
+        inputMap.put('cluster', 'Modifiche Anagrafiche');
+        inputMap.put('type', 'Allineamento Anagrafica');
+        inputMap.put('inputSObj', triggerObj);
+        HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+
+        List<Case> anagAlignCases = new List<Case>();
+        for (Contract contract : activeContracts) {
+            Case anagAlignCase = createCaseUtility.createCaseFromCase(inputMap)[0];
+            anagAlignCase.Contract__c = contract.Id;
+            anagAlignCase.ServicePoint__c = contract.ServicePoint__c;
+            anagAlignCases.add(anagAlignCase);
+        }
+
+        Boolean outcome = HDT_UTL_DatabaseService.insertSObject(anagAlignCases);
+        if (outcome) {
+            System.debug('createAnagAlignmentCasesModAnagCliente: # Case creati: ' + anagAlignCases.size());
+        }
+
+        HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
+        HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
+        String accountQueryFields = '';
+        // DATI INDIRIZZO DI RESIDENZA
+        accountQueryFields += 'BillingStreetToponym__c,BillingState,BillingStreetNumber__c,BillingPlace__c,BillingStreetName__c,BillingPostalCode,BillingCountry,BillingCityCode__c';
+        // DATI CLIENTE FINALE
+        accountQueryFields += ',FirstName__c,LastName__c,FiscalCode__c,VATNumber__c';
+        Account caseAccount = accountQueryHandler.getRecordById(triggerCase.AccountId, accountQueryFields);
+        Map<Id, Contact> contactsMap = new Map<Id, Contact>();
+        Set<Id> contactIds = new Set<Id>();
+        for (Case anagAlignCase : anagAlignCases) {
+            contactIds.add(anagAlignCase.ContactId);
+        }
+        List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
+        for (Contact c : contacts) {
+            contactsMap.put(c.Id, c);
+        }
+
+        for (Case anagAlignCase : anagAlignCases) {
+
+            // DATI INDIRIZZO DI RESIDENZA
+            anagAlignCase.BillingStreetToponym__c = caseAccount.BillingStreetToponym__c;
+            anagAlignCase.BillingProvince__c = caseAccount.BillingState;
+            anagAlignCase.BillingStreetNumber__c = caseAccount.BillingStreetNumber__c;
+            anagAlignCase.BillingPlace__c = caseAccount.BillingPlace__c;
+            anagAlignCase.BillingStreetName__c = caseAccount.BillingStreetName__c;
+            anagAlignCase.BillingPostalCode__c = caseAccount.BillingPostalCode;
+            anagAlignCase.BillingCountry__c = caseAccount.BillingCountry;
+            anagAlignCase.BillingCityCode__c = caseAccount.BillingCityCode__c;
+
+            // DATI CLIENTE FINALE
+            anagAlignCase.FirstName__c = caseAccount.FirstName__c;
+            anagAlignCase.LastName__c = caseAccount.LastName__c;
+            anagAlignCase.VATNumber__c = caseAccount.VATNumber__c;
+            anagAlignCase.FiscalCode__c = caseAccount.FiscalCode__c;
+            Contact caseContact = contactsMap.get(anagAlignCase.ContactId);
+            anagAlignCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
+
+            anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(anagAlignCases);
+
+        // Queueable per invocare l'arricchimento dati su ogni Case e per inviarli ad heroku.
+        System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
+
+        return anagAlignCases;
     }
 
     /**
