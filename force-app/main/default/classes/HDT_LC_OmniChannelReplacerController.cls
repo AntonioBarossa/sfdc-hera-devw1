@@ -25,7 +25,7 @@
                 wrts_prcgvr__Activity__c
             WHERE
                 QAdLogin__c =: QAdLogin AND
-                (Type__c = 'Sportello' OR ContactReason__c != null) AND
+                Type__c = 'Sportello' AND
                 (wrts_prcgvr__Status__c != 'Completed' OR CreatedDate = TODAY)
             WITH SECURITY_ENFORCED
             ORDER BY
