@@ -132,7 +132,7 @@
             <name>No</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornato.CorrectionRightPicklist__c</leftValueReference>
+                <leftValueReference>GetCaseAggiornato.CorrectionRight__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>No</stringValue>
