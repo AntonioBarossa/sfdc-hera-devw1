@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ImplantType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipologia Impianto</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>CommoditySector__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_ImplantType</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13A0-Usi di Abitazione BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13BB-Illuminazione pubblica BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13CB-Non domestici in BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13CT-Forn temporanee &lt; 21 gg</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13DM-Illuminazione pubblica MT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13EM-Non domestici MT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13FM-Non domestici AT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13X0-Usi interni BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13Y0-Usi interni MT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>13Z0-Grossisti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1001-Cottura cibi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1002-Cottura/Produz acq calda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1003-Riscaldamento esclusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1004-Riscaldamento promiscuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1005-Risc. centraliz esclusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1006-Risc. centraliz promiscuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1007-Attivita produttive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1008-Promiscuo (prod+ risc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1009-Reti (cabine primo salto)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>1010-Usi interni</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

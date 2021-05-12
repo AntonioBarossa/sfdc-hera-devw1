@@ -2,6 +2,7 @@ import { LightningElement,api } from 'lwc';
 
 export default class hdtCreateBillingProfile extends LightningElement {
 
+    @api sale;
     @api accountId;
     @api disabledInput;
     showForm = false;

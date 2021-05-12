@@ -35,10 +35,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DistributorFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>PODPDRFormula__c</field>
             </layoutItems>
             <layoutItems>

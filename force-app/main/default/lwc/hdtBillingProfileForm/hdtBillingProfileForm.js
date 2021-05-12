@@ -8,6 +8,7 @@ import getCloneBillingProfile from '@salesforce/apex/HDT_LC_BillingProfileForm.g
 
 export default class hdtBillingProfileForm extends LightningElement {
 
+    @api sale;
     @api accountId;
     @api recordId;
     loading = false;
@@ -21,6 +22,25 @@ export default class hdtBillingProfileForm extends LightningElement {
     cloneObject = {};
     isVerifiedAddress = false;
     isForeignAddress = false;
+    signatoryTypeIsVisible = false;
+
+    get signatoryTypeOptions() {
+        let options = [
+            { label: 'Pagatore Alternativo', value: 'Pagatore Alternativo' }
+        ];
+
+        if (this.sale.Account__r.Category__c === 'Famiglie' 
+            || this.sale.Account__r.Category__c === 'Parti comuni'
+            || this.sale.Account__r.Category__c === 'Ditta individuale') {
+            options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
+        } else if (this.sale.Account__r.Category__c !== 'Famiglie' 
+                    && this.sale.Account__r.Category__c !== 'Parti comuni'
+                    && this.sale.Account__r.Category__c !== 'Ditta individuale') {
+            options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
+        }
+
+        return options;
+    }
 
     handleCancelEvent(){
         this.dispatchEvent(new CustomEvent('cancel'));
@@ -30,6 +50,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         getFormFields({paymentMethod: paymentMethod, accountId: this.accountId}).then(data =>{
             this.loading = false;
             // this.fields = data.choosenFields;
+            this.signatoryTypeIsVisible = false;
             
             this.fields = [];
             if(data.choosenFields !== undefined){
@@ -42,25 +63,20 @@ export default class hdtBillingProfileForm extends LightningElement {
                         case 'XMLType__c':
                             value = 'Sintetico';
                             console.log('XMLType__c default: ', value);
-
                             break;
                         case 'IbanCountry__c':
                             value = 'IT';
                             disable = true;
                             break;
-                        
                         case 'BillSendingMethod__c':
                             required = true;
                             break;
-
                         case 'SubjectCode__c':
                             required = true;
                             break;
-
                         case 'ElectronicInvoicingMethod__c':
                             required = true;
                             break;
-                        
                         case 'XMLType__c':
                             required = true;
                             break;
@@ -74,6 +90,9 @@ export default class hdtBillingProfileForm extends LightningElement {
                             required = true;
                             break;
                         case 'SignatoryType__c':
+                            required = true;
+                            break;
+                        case 'InvoiceEmailAddress__c':
                             required = true;
                             break;
                         default:
@@ -98,13 +117,28 @@ export default class hdtBillingProfileForm extends LightningElement {
 
             if (data.tipologiaIntestatario !== undefined) {
                 data.tipologiaIntestatario.forEach(el => {
+
+                    let disable = false;
+                    let required = false;
+
+                    switch (el) {
+                        case 'SignatoryType__c':
+                            required = true;
+                            break;
+                        default:
+                            break;
+                    }
+
                     this.tipologiaIntestatarioFields.push({
                         fieldName: el,
                         visibility: (el === 'BankAccountSignatoryFiscalCode__c' || el === 'BankAccountSignatoryFirstName__c' || el === 'BankAccountSignatoryLastName__c' || el === 'OtherPayer__c' || el === 'LegalAgent__c') ? false : true,
                         disabled: (el === 'BankAccountSignatoryFiscalCode__c' || el === 'BankAccountSignatoryFirstName__c' || el === 'BankAccountSignatoryLastName__c') ? true : false,
-                        value: ''
+                        value: '',
+                        required: required
                     });
                 });
+
+                this.signatoryTypeIsVisible = this.tipologiaIntestatarioFields.length > 0;
             }
             
         }).catch(error => {
@@ -213,7 +247,8 @@ export default class hdtBillingProfileForm extends LightningElement {
     handleCollectFieldsData(event){
         this.dataToSubmit[event.target.fieldName] = event.target.value;
 
-        if (event.target.fieldName === 'SignatoryType__c') {
+        if (event.target.name === 'SignatoryType__c') {
+            this.dataToSubmit[event.target.name] = event.target.value;
             this.resetTipologiaIntestatario();
             this.tipologiaIntestatarioInit(event.target.value);
         }
@@ -314,78 +349,163 @@ export default class hdtBillingProfileForm extends LightningElement {
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
 
-        if (this.template.querySelector("[data-id='PaymentMethod__c']") !== null && this.template.querySelector("[data-id='PaymentMethod__c']").value === null) {
+        //check iban fields logic start
+        if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCIN__c']").value !== null
+            && this.template.querySelector("[data-id='IbanCIN__c']").value.length !== 1) {
+            this.saveErrorMessage.push('Il campo CIN deve avere 1 carattere');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value !== null
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value.length !== 2) {
+            this.saveErrorMessage.push('Il campo CIN-IBAN deve avere 2 caratteri');
+        }
+        if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value !== null
+             && !/^[0-9]+$/.test(this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value)) {
+            this.saveErrorMessage.push('Il campo CIN-IBAN può avere solo caratteri numerici');
+        }
+
+        if (this.template.querySelector("[data-id='IbanABI__c']") !== null 
+             && this.template.querySelector("[data-id='IbanABI__c']").value !== null
+             && this.template.querySelector("[data-id='IbanABI__c']").value.length !== 5) {
+            this.saveErrorMessage.push('Il campo ABI deve avere 5 caratteri');
+        }
+        if (this.template.querySelector("[data-id='IbanABI__c']") !== null 
+             && this.template.querySelector("[data-id='IbanABI__c']").value !== null
+             && !/^[0-9]+$/.test(this.template.querySelector("[data-id='IbanABI__c']").value)) {
+            this.saveErrorMessage.push('Il campo ABI può avere solo caratteri numerici');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCAB__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCAB__c']").value !== null
+             && this.template.querySelector("[data-id='IbanCAB__c']").value.length !== 5) {
+            this.saveErrorMessage.push('Il campo CAB deve avere 5 caratteri');
+        }
+        if (this.template.querySelector("[data-id='IbanCAB__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCAB__c']").value !== null
+             && !/^[0-9]+$/.test(this.template.querySelector("[data-id='IbanCAB__c']").value)) {
+            this.saveErrorMessage.push('Il campo CAB può avere solo caratteri numerici');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCodeNumber__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCodeNumber__c']").value !== null
+             && this.template.querySelector("[data-id='IbanCodeNumber__c']").value.length !== 12) {
+            this.saveErrorMessage.push('Il campo Numero Conto deve avere 12 caratteri');
+        }
+        //check iban fields logic end
+
+        //check required fields start
+        if (this.template.querySelector("[data-id='PaymentMethod__c']") !== null 
+            && (this.template.querySelector("[data-id='PaymentMethod__c']").value === null || this.template.querySelector("[data-id='PaymentMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Metodo di pagamento, ');
         }
 
-        if (this.template.querySelector("[data-id='BillSendingMethod__c']") !== null && this.template.querySelector("[data-id='BillSendingMethod__c']").value === null) {
+        if (this.template.querySelector("[data-id='BillSendingMethod__c']") !== null 
+            && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === null || this.template.querySelector("[data-id='BillSendingMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio bolletta, ');
         }
 
-        if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null && this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
+        if (this.template.querySelector("[data-id='InvoiceEmailAddress__c']") !== null 
+            && (this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === null || this.template.querySelector("[data-id='InvoiceEmailAddress__c']").value === '') 
+            && (this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail' || this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Bolletta per e-mail + Carta')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
         }
 
-        if (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null && this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC') {
+        if (this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") !== null 
+            && this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null 
+            && this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC') {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email PEC invio Bolletta, ');
         }
 
-        if (this.template.querySelector("[data-id='SubjectCode__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']").value === null) {
+        if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
+            && this.template.querySelector("[data-id='SubjectCode__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Destinatario, ');
         }
 
-        if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null) {
+        if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
+            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
-        if (this.template.querySelector("[data-id='XMLType__c']") !== null && this.template.querySelector("[data-id='XMLType__c']").value === null) {
+        if (this.template.querySelector("[data-id='XMLType__c']") !== null 
+            && this.template.querySelector("[data-id='XMLType__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo XML, ');
         }
 
-        if (this.template.querySelector("[data-id='CIG__c']") !== null && this.template.querySelector("[data-id='CIG__c']").value === null) {
+        if (this.template.querySelector("[data-id='CIG__c']") !== null 
+            && this.template.querySelector("[data-id='CIG__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('CIG, ');
         }
 
-        if (this.template.querySelector("[data-id='CUP__c']") !== null && this.template.querySelector("[data-id='CUP__c']").value === null) {
+        if (this.template.querySelector("[data-id='CUP__c']") !== null 
+            && this.template.querySelector("[data-id='CUP__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('CUP, ');
         }
 
-        if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null && this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null) {
+        if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null 
+            && this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Data inizio Validità Codice Destinatario, ');
         }
 
-        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanCIN__c']") !== null && this.template.querySelector("[data-id='IbanCIN__c']").value === null) {
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
+            && this.template.querySelector("[data-id='IbanCIN__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCIN__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('CIN, ');
         }
 
-        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanABI__c']") !== null && this.template.querySelector("[data-id='IbanABI__c']").value === null) {
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID'
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value === null) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('IbanCIN, ');
+        }
+
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
+            && this.template.querySelector("[data-id='IbanABI__c']") !== null 
+            && this.template.querySelector("[data-id='IbanABI__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('ABI, ');
         }
 
-        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanCAB__c']") !== null && this.template.querySelector("[data-id='IbanCAB__c']").value === null) {
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
+            && this.template.querySelector("[data-id='IbanCAB__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCAB__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('CAB, ');
         }
 
-        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' && this.template.querySelector("[data-id='IbanCodeNumber__c']") !== null && this.template.querySelector("[data-id='IbanCodeNumber__c']").value === null) {
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
+            && this.template.querySelector("[data-id='IbanCodeNumber__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCodeNumber__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Numero Conto, ');
         }
 
-        if (this.template.querySelector("[data-id='SignatoryType__c']") !== null && this.template.querySelector("[data-id='SignatoryType__c']").value === null) {
+        if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
+            && this.template.querySelector("[data-id='IbanIsForeign__c']").value
+            && (this.dataToSubmit['IBAN__c'] === undefined || this.dataToSubmit['IBAN__c'] === '')) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Iban, ');
+        }
+
+        if (this.template.querySelector("[data-id='SignatoryType__c']") !== null 
+            && this.template.querySelector("[data-id='SignatoryType__c']").value === '') {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo Sottoscrittore, ');
         }
 
-        if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {
+        if (this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']") !== null 
+            && this.template.querySelector("[data-id='BankAccountSignatoryFiscalCode__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Fiscale Sottoscrittore CC, ');
         }
 
-        if (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']") !== null && this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null) {
+        if (this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']") !== null 
+            && this.template.querySelector("[data-id='BankAccountSignatoryFirstName__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Nome sottoscrittore CC, ');
         }
 
-        if (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']") !== null && this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null) {
+        if (this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']") !== null 
+            && this.template.querySelector("[data-id='BankAccountSignatoryLastName__c']").value === null) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Cognome sottoscrittore CC, ');
         }
-
+        //check required fields end
+        
         //validate billing profile fields
         console.log('concatBillingErrorFields: ', concatBillingErrorFields);
         if (concatBillingErrorFields !== '') {
@@ -536,6 +656,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.validFields()){
 
             this.dataToSubmit['Account__c'] = this.accountId;
+            this.dataToSubmit['IbanCountry__c'] = 'IT';
 
             this.loading = true;
             createBillingProfile({billingProfile: this.dataToSubmit}).then(data =>{
@@ -584,5 +705,6 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.recordId !== undefined && this.recordId !== ''){
             this.getClone();
         }
+        console.log('connectedCallback sale billing form: ', JSON.stringify(this.sale));
     }
 }

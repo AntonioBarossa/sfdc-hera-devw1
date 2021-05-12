@@ -28,9 +28,21 @@
                                     </template>
                                 </div>
                                 <template if:true={tipologiaIntestatarioFields}>
+                                    <lightning-combobox
+                                    if:true={signatoryTypeIsVisible}
+                                    class="slds-size_1-of-3 fieldsData"
+                                    data-id="SignatoryType__c"
+                                    field-name="SignatoryType__c"
+                                    name="SignatoryType__c"
+                                    required
+                                    label="Tipo Sottoscrittore"
+                                    value=""
+                                    placeholder=""
+                                    options={signatoryTypeOptions}
+                                    onchange={handleCollectFieldsData} ></lightning-combobox>
                                     <div class="slds-grid slds-wrap slds-m-top_small">
                                         <template for:each={tipologiaIntestatarioFields} for:item="tipologiaIntestatarioField">
-                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} required={tipologiaIntestatarioField.required} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </div>
                                 </template>

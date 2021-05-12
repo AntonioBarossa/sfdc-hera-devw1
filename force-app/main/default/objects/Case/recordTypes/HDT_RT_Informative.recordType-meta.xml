@@ -874,6 +874,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CompetentOffice__c</picklist>
         <values>
             <fullName>Aziende outMercato</fullName>
@@ -7560,13 +7579,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Nome_cimitero__c</picklist>
-        <values>
-            <fullName>null</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NotJustMotivation__c</picklist>
         <values>
             <fullName>Analisi incompleta</fullName>
@@ -7709,10 +7721,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Errore invio a DL%2FSII</fullName>
             <default>false</default>
         </values>
@@ -7722,6 +7730,10 @@
         </values>
         <values>
             <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10518,6 +10530,17 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseChangeCharge__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
