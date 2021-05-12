@@ -4633,11 +4633,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.Nome_cimitero__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.NominativeHavingRightCeaseConcession__c</field>
         <readable>true</readable>
     </fieldPermissions>
