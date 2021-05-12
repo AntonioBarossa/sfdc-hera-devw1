@@ -350,10 +350,50 @@ export default class hdtBillingProfileForm extends LightningElement {
         let concatAddressErrorFields = '';
 
         //check iban fields logic start
-        // if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
-        //     && this.template.querySelector("[data-id='IbanCIN__c']").value !== null) {
-            
-        // }
+        if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCIN__c']").value !== null
+            && this.template.querySelector("[data-id='IbanCIN__c']").value.length !== 1) {
+            this.saveErrorMessage.push('Il campo CIN deve avere 1 carattere');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value !== null
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value.length !== 2) {
+            this.saveErrorMessage.push('Il campo CIN-IBAN deve avere 2 caratteri');
+        }
+        if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value !== null
+             && !/^[0-9]+$/.test(this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value)) {
+            this.saveErrorMessage.push('Il campo CIN-IBAN può avere solo caratteri numerici');
+        }
+
+        if (this.template.querySelector("[data-id='IbanABI__c']") !== null 
+             && this.template.querySelector("[data-id='IbanABI__c']").value !== null
+             && this.template.querySelector("[data-id='IbanABI__c']").value.length !== 5) {
+            this.saveErrorMessage.push('Il campo ABI deve avere 5 caratteri');
+        }
+        if (this.template.querySelector("[data-id='IbanABI__c']") !== null 
+             && this.template.querySelector("[data-id='IbanABI__c']").value !== null
+             && !/^[0-9]+$/.test(this.template.querySelector("[data-id='IbanABI__c']").value)) {
+            this.saveErrorMessage.push('Il campo ABI può avere solo caratteri numerici');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCAB__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCAB__c']").value !== null
+             && this.template.querySelector("[data-id='IbanCAB__c']").value.length !== 5) {
+            this.saveErrorMessage.push('Il campo CAB deve avere 5 caratteri');
+        }
+        if (this.template.querySelector("[data-id='IbanCAB__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCAB__c']").value !== null
+             && !/^[0-9]+$/.test(this.template.querySelector("[data-id='IbanCAB__c']").value)) {
+            this.saveErrorMessage.push('Il campo CAB può avere solo caratteri numerici');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCodeNumber__c']") !== null 
+             && this.template.querySelector("[data-id='IbanCodeNumber__c']").value !== null
+             && this.template.querySelector("[data-id='IbanCodeNumber__c']").value.length !== 12) {
+            this.saveErrorMessage.push('Il campo Numero Conto deve avere 12 caratteri');
+        }
         //check iban fields logic end
 
         //check required fields start
