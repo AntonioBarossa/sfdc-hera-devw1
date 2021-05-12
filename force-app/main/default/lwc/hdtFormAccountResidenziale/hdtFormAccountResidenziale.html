@@ -26,7 +26,7 @@
                                 <div class="slds-col slds-grid">
                                     <div class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                         <template if:true={customerMarkingOptions.data}>
-                                            <lightning-combobox data-id="customerMarking" name="customerMarking" label="Marcatura Cliente"
+                                            <lightning-combobox data-id="customerMarking" name="customerMarking" label="Marcatura"
                                                 placeholder="Seleziona Marcatura" value={markingValue} options={customerMarkingOptions.data.values}
                                                 required>
                                             </lightning-combobox>
@@ -95,20 +95,27 @@
 
                                     <div class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                         <template if:true={companyOwnerOptions.data}>
-                                            <lightning-combobox data-id="companyOwner" name="companyOwner" label="Società Gruppo Hera" placeholder="Seleziona Società"
+                                            <lightning-combobox data-id="companyOwner" name="companyOwner" label="Silos" placeholder="Seleziona Società"
                                                 options={companyOwnerOptions.data.values} required>
                                             </lightning-combobox>
                                         </template>
-                                    </div>
-                                    
-                                    <!-- <div
-                                    class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <c-hdt-calcola-codice-fiscale></c-hdt-calcola-codice-fiscale>
-                                    <lightning-button class="slds-form-element" name="calculateFiscalCode" type="submit"
-                                        label="Calcola Codice Fiscale" onclick={handleCalculation}></lightning-button>
-                                </div> -->
+                                    </div> 
+                                </div>
+                                <div class="slds-col slds-grid">
+                                <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-button class="slds-form-element" name="calculateFiscalCode" type="submit"
+                                            label="Calcola Codice Fiscale" onclick={handleCalculation}></lightning-button>
+                                    </div> 
                                 </div>
                             </div>
+                        </lightning-card>
+
+                        <lightning-card title="Indirizzi">
+                            <div class="slds-p-left_x-large slds-p-right_x-large">
+                                <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}></c-hdt-target-object-address-fields>
+                            </div>
+
                         </lightning-card>
                         <!-- <div class="slds-m-top_x-large">
                             <h3
