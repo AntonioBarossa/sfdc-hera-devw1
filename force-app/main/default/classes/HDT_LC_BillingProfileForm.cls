@@ -81,6 +81,9 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             when  'Bollettino'{
                 resultMap.put('choosenFields', bollettionoPostale);
             }
+            when  'Bollettino postale'{
+                resultMap.put('choosenFields', bollettionoPostale);
+            }
             when 'RID' {
                 resultMap.put('choosenFields', rid);
                 resultMap.put('tipologiaIntestatario', tipologiaIntestatario);
@@ -106,11 +109,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     @AuraEnabled
     public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
 
-        // IF( ISPICKVAL(PaymentMethod__c, 'RID'),
-        //     IF(IbanIsForeign__c = true ,IBAN__c , IbanCountry__c + IbanCIN_IBAN__c + IbanCIN__c + IbanABI__c + IbanCAB__c + IbanCodeNumber__c),
-        // '')
-
-        if(billingProfile.PaymentMethod__c == 'RID' && billingProfile.IbanIsForeign__c){
+        if(billingProfile.PaymentMethod__c == 'RID' && !billingProfile.IbanIsForeign__c){
             billingProfile.IBAN__c = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
         }
 
