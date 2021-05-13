@@ -67,6 +67,94 @@
     <navType>Console</navType>
     <profileActionOverrides>
         <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>lead_recordpage2</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>Lead</pageOrSobjectType>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
         <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
