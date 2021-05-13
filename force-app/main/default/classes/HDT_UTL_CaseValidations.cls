@@ -61,6 +61,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
+        } else if (caseType == 'Verifica Titolarità POD/PDR') {
+
+            result = validateVerificaTitolarita(currentCase);
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -79,7 +83,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug(getFieldValue(fields, 'Type'));
 
-        if(caseType == 'Piano Rateizzazione'){            
+        if(caseType == 'Piano Rateizzazione'){
 
             if((fields == null || fields == '') && currentCase.AttachmentManagement__c == true){
 
@@ -681,6 +685,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return validateModificaDatiRecapito(fields);
 
     }
+
+    private String validateVerificaTitolarita(Case currentCase) {
+
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
+        if(attachedDocument.size() == 0){
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+        }
+            
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
