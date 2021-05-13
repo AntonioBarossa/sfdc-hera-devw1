@@ -25594,17 +25594,6 @@
         <layout>RateTemplate__c-Rate Template Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Reading__c-Lettura Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Reading__c-Lettura Layout</layout>
-        <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Reading__c-Lettura Layout</layout>
-        <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>RentProcessRule__c-Layout Regola rateizzazione</layout>
     </layoutAssignments>
     <layoutAssignments>
