@@ -7003,18 +7003,18 @@
             <fullName>Voltura</fullName>
             <default>false</default>
         </values>
-        <value>
+        <values>
             <fullName>PostSales VAS</fullName>
             <default>false</default>
-        </value>
-        <value>
+        </values>
+        <values>
             <fullName>Generiche Attivazioni</fullName>
             <default>false</default>
-        </value>
-        <value>
+        </values>
+        <values>
             <fullName>Generiche VAS</fullName>
             <default>false</default>
-        </value>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
