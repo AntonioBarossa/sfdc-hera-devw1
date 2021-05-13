@@ -309,7 +309,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!legalForm.reportValidity()){
             isValidated=false;
         }
-        if(!phoneNumber.reportValidity()){
+        if(!phoneNumber.reportValidity() && !mobilephoneNumber.reportValidity() && !email.reportValidity()){
             isValidated=false;
         }
         if(!role.reportValidity()){
