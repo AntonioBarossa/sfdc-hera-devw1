@@ -93,7 +93,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
                     infoCase.Market__c = contextObj.Market__c;
                     infoCase.BillingProfile__c = contextObj.BillingProfile__c;
                     infoCase.InformativeCluster__c = contextObj.Cluster__c;
-                    infoCase.InformativeType__c = contextObj.Subprocess__c; //qui capire che campo bisogna prendere
+                    infoCase.InformativeType__c = contextObj.ProcessType__c; //qui capire che campo bisogna prendere
                     infoCase.SalesCompany__c = contextObj.SalesCompany__c;
                     infoCase.Contract__c = contextObj.ContractId; // qui capire che campo bisogna prendere
                     infoCase.Order__c = contextId;
