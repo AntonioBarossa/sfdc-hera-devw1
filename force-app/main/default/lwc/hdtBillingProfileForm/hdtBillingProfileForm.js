@@ -420,32 +420,32 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-            && this.template.querySelector("[data-id='SubjectCode__c']").value === null) {
+            && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Destinatario, ');
         }
 
         if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
-            && this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null) {
+            && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
         if (this.template.querySelector("[data-id='XMLType__c']") !== null 
-            && this.template.querySelector("[data-id='XMLType__c']").value === null) {
+            && (this.template.querySelector("[data-id='XMLType__c']").value === null || this.template.querySelector("[data-id='XMLType__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Tipo XML, ');
         }
 
         if (this.template.querySelector("[data-id='CIG__c']") !== null 
-            && this.template.querySelector("[data-id='CIG__c']").value === null) {
+            && (this.template.querySelector("[data-id='CIG__c']").value === null || this.template.querySelector("[data-id='CIG__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('CIG, ');
         }
 
         if (this.template.querySelector("[data-id='CUP__c']") !== null 
-            && this.template.querySelector("[data-id='CUP__c']").value === null) {
+            && (this.template.querySelector("[data-id='CUP__c']").value === null || this.template.querySelector("[data-id='CUP__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('CUP, ');
         }
 
         if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null 
-            && this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null) {
+            && (this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null || this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === '' )) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Data inizio Validità Codice Destinatario, ');
         }
 
