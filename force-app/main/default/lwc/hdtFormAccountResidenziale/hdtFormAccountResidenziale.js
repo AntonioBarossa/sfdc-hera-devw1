@@ -11,7 +11,7 @@ import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
 import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
-//import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
+import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
 
@@ -23,7 +23,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
     @track fiscalCode;
-    currentObjectApiName;
+    currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
     settlementMunicipality;
@@ -132,7 +132,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                                 birthDate: this.birthDate, 
                                 birthPlace: this.birthPlace
                             };
-         /*   calculateFiscalCode({infoData: information}).then((response) => {
+            calculateFiscalCode({infoData: information}).then((response) => {
 
                 this.fiscalCode.value= response;
             }).catch((errorMsg) => { 
@@ -143,7 +143,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                     mode: 'dismissable'
                 });
                 this.dispatchEvent(event);
-            });  */           
+            });            
         }else{
             const event = new ShowToastEvent({
                 message: 'Inserire le Informazioni Mancanti',
@@ -289,15 +289,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
 
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<10){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
                 isValidated=false;
-                messageError=" Il numero di cellulare non può essere meno di 10 cifre!";
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
         }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
-            if(phoneNumber.value.length>11){
+            if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono non può essere più di 11 cifre!";
+                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
         if(!(email.value=== undefined || email.value.trim()==='')){
