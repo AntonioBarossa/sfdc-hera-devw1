@@ -545,8 +545,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if(currentSectionName === 'dettaglioImpianto'){
 
-
-            console.log('RequestPhase__c value: ', this.template.querySelector("[data-id='RequestPhase__c']").value);
             if(this.template.querySelector("[data-id='RequestPhase__c']") !== null 
                 && (this.template.querySelector("[data-id='RequestPhase__c']").value === ''
                     || this.template.querySelector("[data-id='RequestPhase__c']").value === null)) {
