@@ -70,6 +70,12 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     visibleCopiaResidenza=false;
     visibleSelezioneIndirizzi=false;
     disableFlagVerificato=false;
+    boolProvincia=false;
+    boolCap = false;
+    boolComune = false;
+    boolVia = false;
+    boolCivico = false;
+    statusCodeComune='';
     
     
 
@@ -232,17 +238,17 @@ handleAddressValuesIfSap(servicePointRetrievedData){
         this.closeModal();
 		let data = [];
         console.log(' rowToSend indirizzo**************'+JSON.stringify(this.rowToSend['Indirizzo']));
-        if(this.rowToSend['Indirizzo']!=undefined){
-            data = this.rowToSend['Indirizzo'].split(",");
+        if(this.rowToSend['']!=undefined){
+            data = this.rowToSend[''].split(",");
             console.log('data after rowToSend**************'+JSON.stringify(data));
         }
-        else if(this.rowToSend['Indirizzo Fornitura']!=undefined)
+       /* else if(this.rowToSend['Indirizzo Fornitura']!=undefined)
         {
             console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo Fornitura']));
-            data = this.rowToSend['Indirizzo Fornitura'].split(",");
+            data = this.rowToSend[''].split(",");
             console.log('data after rowToSend**************'+JSON.stringify(data));
 
-        }
+        }*/
 
         if(data!= undefined){
 
@@ -443,6 +449,7 @@ handleAddressValuesIfSap(servicePointRetrievedData){
      * Create Data-Table
      */
     createTable(data) {
+        console.log('data table ' + JSON.stringify(data));
         let i, j, temporary, chunk = 5;
         this.pages = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
@@ -454,6 +461,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
     }
 
     createTableFornitura(data) {
+        console.log('data table fornitura ' + JSON.stringify(data));
+
         let i, j, temporary, chunk = 5;
         this.pagesFornitura = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
@@ -640,6 +649,13 @@ disableFieldByIndEstero(){
         this.disableCap=true;
         this.disableCodComuneSap=true;
         this.disableCodViaSap=true;
+       
+        this.boolProvincia=false;
+        this.boolCap = false;
+        this.boolComune = false;
+        this.boolVia = false;
+        this.boolCivico = false;
+
     }
     if(this.IndEstero === true)
     {
@@ -649,6 +665,12 @@ disableFieldByIndEstero(){
         this.disableCap=false;
         this.disableCodComuneSap=false;
         this.disableCodViaSap=false;
+
+        this.boolProvincia=true;
+        this.boolCap = true;
+        this.boolComune = true;
+        this.boolVia = true;
+        this.boolCivico = true;
     }
     console.log('disableFieldByIndEstero END');
 
@@ -660,6 +682,7 @@ handleChangeComune(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+    
     if(this.IndEstero==true){
 
     }else{
@@ -671,6 +694,7 @@ handleChangeComune(event){
                 
                 console.log("******HOLAHOLA:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                    this.statusCodeComune = data['statusCode'];
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
@@ -684,9 +708,10 @@ handleChangeComune(event){
 
                         this.template.querySelector('c-hdt-selection-address-response').openedForm();
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
+                        this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
+
                     }
                     
-
                 }
                 else{
                     let event2;
@@ -712,6 +737,12 @@ handleChangeComune(event){
     
         });
     }
+
+        if(this.statusCodeComune==200){
+            console.log('entra in if statusCodeComune == 200');
+            this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
+
+        }
     }
     
 

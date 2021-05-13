@@ -1762,11 +1762,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.Nome_cimitero__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.NotPerformedBefore__c</field>
         <readable>false</readable>
     </fieldPermissions>
