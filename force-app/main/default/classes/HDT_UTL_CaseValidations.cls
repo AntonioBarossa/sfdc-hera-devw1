@@ -61,6 +61,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
+        }else if(caseType == 'Votive Modena Contestazione Fattura'){
+
+            result= validateVotiveModena(fields);
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -679,6 +683,26 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     private String validateUnificazioneSeparazione(String fields) {
 
         return validateModificaDatiRecapito(fields);
+
+    }
+
+    private String validateVotiveModena(String fields){
+
+        String billingProfile = getFieldValue(fields, 'BillingProfile__c');
+        String reason = getFieldValue(fields, 'Reason__c');
+        String result;
+
+        if(reason == 'Errata Emissione' && (billingProfile == null || billingProfile == '')){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario Valorizzare Billing Profile'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
+
+        return result;
 
     }
 
