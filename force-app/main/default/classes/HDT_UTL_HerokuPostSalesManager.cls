@@ -247,9 +247,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     public List<case> handleRequest(HDT_WRP_HerokuPostSalesManager reqWrp){
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
-        System.debug(reqWrp.requestMap);
-        System.debug(reqWrp.requestMap.get('RECORD_ID'));
+        String recordId = reqWrp.requestMap.get('RECORD_ID');
+        if(String.isBlank(recordId)) return caseUpdate;
         currentCase.Id = reqWrp.requestMap.get('RECORD_ID');
+        Case recordCase = hpsmQr.getCaseRecord(reqWrp.requestMap.get('RECORD_ID'));
+        Datetime nowDate = Datetime.now();
+        String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
         switch on reqWrp.requestMap.get('METHOD'){
             when 'esito_intermedio'{
                 if(reqWrp.requestMap.get('FASE') != null && reqWrp.requestMap.get('FASE') != ''){
@@ -264,12 +267,33 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Amount__c = Decimal.valueOf(reqWrp.requestMap.get('IMP_PREV_DIST'));
                 }
                 if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
-                    currentCase.Description = reqWrp.requestMap.get('TESTO_ERRR');
+                    String description = recordCase.Description != null?recordCase.Description:'';
+                    currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
                 }
             }
             when 'esito_finale'{
-                currentCase.Phase__c = reqWrp.requestMap.get('FASE');
-                handleEntityUpdate(reqWrp);
+                String currentPhase = recordCase.Phase__c;
+                String nextPhase = reqWrp.requestMap.get('FASE');
+                String noteSap = reqWrp.requestMap.get('NOTA_HK');
+                String odv = reqWrp.requestMap.get('VBLEN');
+                String currentDescription = recordCase.Description != null?recordCase.Description:'';
+                String newDescription = '';
+                if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
+                    //no action needed
+                }else{
+                    currentCase.Phase__c = nextPhase;
+                    handleEntityUpdate(reqWrp);
+                }
+
+                if(noteSap != null && noteSap != ''){
+                    newDescription = nowDateFormat + ': ' + noteSap + '\n';
+                }
+                if(odv != null && odv != ''){
+                    newDescription =  nowDateFormat + ': ' + odv + '\n' + newDescription;
+                }
+                if(String.isNotBlank(newDescription)){
+                    currentCase.Description = newDescription + '\n' + currentDescription;
+                }
             }
         }
 

@@ -18,7 +18,7 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
         return userInputFlow;
     }
 
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static String validateRecord(String validateClass, String fields, String recordId) {
         String result;
         System.debug('in class ' + fields);

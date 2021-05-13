@@ -13,7 +13,7 @@
                                 <div class="slds-text-title slds-truncate" title="Account Name">Cognome</div>
                                 <div class="slds-truncate" title="Account Name">{order.Account.LastName__c}</div>
                             </li>
-                            <li class="slds-page-header__detail-block">
+                            <li if:true={isAccountResidential} class="slds-page-header__detail-block">
                                 <div class="slds-text-title slds-truncate" title="Codice Fiscale">
                                     Codice Fiscale
                                 </div>
