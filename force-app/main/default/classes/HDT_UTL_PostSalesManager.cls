@@ -80,6 +80,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     public void handleVariazioneAnagraficaCliente(SObject inputCase) {
 
+        if (inputCase == null) {
+            System.debug('handleVariazioneAnagraficaCliente: null input case.');
+            return;
+        }
+
         Case currentCase = (Case) inputCase;
         System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.VatNumber__c);
         SObject objToUpdate = null;
@@ -167,6 +172,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         }
+    }
+
+    public void innescoAllineamentoAnagraficaFiscale(SObject inputCase) {
+        if (inputCase == null) {
+            System.debug('innescoAllineamentoAnagraficaFiscale: null input case.');
+            return;
+        }
+
+        System.debug('Innesco Allineamento Anagrafica alla chiusura del Case Fiscale: ' + inputCase.Id);
+        List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
+        System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
     }
 
 

@@ -63,13 +63,11 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         switch on context {
             when SERVICE_CATALOG {
-                updateAnagAlignmentCaseServiceConsole((Case) triggerObj);
+                updateAnagAlignmentCaseServiceCatalog((Case) triggerObj);
                 returnCases.add((Case) triggerObj);
             }
-            when VARIAZIONI_FISCALE {
-                // TODO
-            }
-            when VARIAZIONI_MARCATURA_USO_PDR,
+            when VARIAZIONI_FISCALE,
+                 VARIAZIONI_MARCATURA_USO_PDR,
                  VARIAZIONI_INDIRIZZO_FORNITURA,
                  VARIAZIONI_TARIFFA_RES_NONRES {
                 Case anagAlignCase = createAnagAlignmentCase(triggerObj);
@@ -92,10 +90,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return returnCases;
     }
 
-
-    // Aggiorna il Case creato da Service Catalog con i dati necessari per l'allineamento anagrafica.
-    // Si assume che che l'arricchimento dati è già stato effettuato sul Case.
-    private static Boolean updateAnagAlignmentCaseServiceConsole(Case inputCase) {
+    // Aggiorna il Case di Allineamento Anagrafica con i dati fiscali e di contatto presenti sull'Account.
+    private static void updateAnagAlignmentCaseCustomerData(Case inputCase) {
 
         HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
@@ -124,6 +120,15 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputCase.FiscalCode__c = caseAccount.FiscalCode__c;
         Contact caseContact = contactQueryHandler.getRecordById(inputCase.ContactId);
         inputCase.Mobile__c = caseContact.MobilePhone != null ? caseContact.MobilePhone : caseContact.Phone;
+    }
+
+
+    // Aggiorna il Case creato da Service Catalog con i dati necessari per l'allineamento anagrafica.
+    // Si assume che che l'arricchimento dati è già stato effettuato sul Case.
+    // Il passaggio alla fase 'Da Inviare' viene fatto dal flow.
+    private static Boolean updateAnagAlignmentCaseServiceCatalog(Case inputCase) {
+
+        updateAnagAlignmentCaseCustomerData(inputCase);
 
         inputCase.CausalCode__c = causalCodeAnagAlignment(inputCase.CommodityFormula__c, HDT_ENU_AnagAlignmentContext.SERVICE_CATALOG);
 
@@ -167,24 +172,36 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     }
 
     /**
-     * Richiama l'arricchimento dati sul Case di Allineamento Anagrafica;
-     * Poi valorizza in base al contesto i dati specifici presi dal Case di Variazioni.
+     * Valorizza in base al contesto i dati specifici presi dal Case di Variazioni.
+     * Invece di richiamare l'arricchimento dati sul Case di Allineamento Anagrafica,
+     * ribaltiamo i dati dal Case sorgente di Variazioni.
      */
     private static Boolean updateAnagAlignmentCaseVariazioni(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
 
-        String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(triggerCase.PODPDRFormula__c, triggerCase.ContractCode__c);
-        anagAlignCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
+        updateAnagAlignmentCaseCustomerData(anagAlignCase);
+
+        // TODO: ribaltamento campi di arricchimento dati da Case sorgente triggerCase
+
 
         switch on context {
             when VARIAZIONI_FISCALE {
-                // TODO
+                // TODO: ribaltare dati specifici Case sorgente triggerCase
             }
-            when else {
-                // TODO
+            when VARIAZIONI_MARCATURA_USO_PDR {
+                // TODO: ribaltare dati specifici Case sorgente triggerCase
+            }
+            when VARIAZIONI_INDIRIZZO_FORNITURA {
+                // TODO: ribaltare dati specifici Case sorgente triggerCase
+            }
+            when VARIAZIONI_TARIFFA_RES_NONRES {
+                // TODO: ribaltare dati specifici Case sorgente triggerCase
             }
         }
 
-        return False;
+        anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+        anagAlignCase.Phase__c = 'Da Inviare';
+
+        return HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
     }
 
     /**
