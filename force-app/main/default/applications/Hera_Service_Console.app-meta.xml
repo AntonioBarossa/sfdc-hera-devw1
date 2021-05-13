@@ -155,6 +155,7 @@
         <type>Flexipage</type>
         <profile>Hera M2M Integration User</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
         <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
