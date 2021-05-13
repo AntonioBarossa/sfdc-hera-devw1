@@ -28,6 +28,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     @track mobilePhonePrefixOptions;
     @track makerequired= false;
     @track personFiscalCode;
+    @track mobilephonePrefix2 = '+39';
+    @track phonePrefixValue2 = '+39';
 
     gender;
     birthDate;
@@ -328,14 +330,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
         }
 
-        if((mobilePhone.value=== undefined || mobilePhone.value.trim()==='') && (contactEmail.value=== undefined || contactEmail.value.trim()==='')
-        && (contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='') && (contactElectronicMail.value=== undefined || contactElectronicMail.value.trim()==='') 
-        && (contactFax.value=== undefined || contactFax.value.trim()=== '') ){
-            if(isValidated){
-                messageError=" Almeno un dato di contatto è obbligatorio!";
-            }
-            isValidated=false;
-        }
+    
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
                 isValidated=false;
@@ -372,7 +367,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 messageError=" Formato pec errato !";
             }
         }
-        
+        if((mobilePhone.value=== undefined || mobilePhone.value.trim()==='') && (contactEmail.value=== undefined || contactEmail.value.trim()==='')
+        && (contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='') && (contactElectronicMail.value=== undefined || contactElectronicMail.value.trim()==='') 
+        && (contactFax.value=== undefined || contactFax.value.trim()=== '') ){
+            if(isValidated){
+                messageError=" Almeno un dato di contatto è obbligatorio!";
+            }
+            isValidated=false;
+        }
 
         if(isValidated){
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
@@ -475,10 +477,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         this.spinner=false;
                     });
                 }else{
+                    console.log("*******PRI");
                     dataAccount={
                         "businessName" : businessName.value,
                         "vatNumber" : vatNumber.value,
-                        "fiscalCode" : fiscalCode.value.replace(/ /g,""),
+                 //       "fiscalCode" : fiscalCode.value.replace(/ /g,""),
                         "legalForm" : legalForm.value,
                         "customerMarking" : customerMarking.value,
                         "category" : category.value,
@@ -488,14 +491,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "email" : email.value,
                         "electronicMail" : electronicMail.value,
                         "numberFax" : numberFax.value,
-                        "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
-                        "mobilephoneNumber" : mobilephoneNumber,
+              //          "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+              //          "mobilephoneNumber" : mobilephoneNumber,
                         "firstName" : firstName.value,
                         "gender" : this.gender,
                         "lastName" : lastName.value,
                         "birthDate" : this.birthDate,
                         "birthplace": this.birthPlace,
-                        "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
+                 //       "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
                         "role" : role.value,
                         "mobilePhone" : mobilePhone.value,
                         "contactEmail" : contactEmail.value,
@@ -509,6 +512,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "phonePrefix" : phonePrefix.value ,
                         "mobilePhonePrefix" : mobilePhonePrefix.value 
                     };
+                    console.log("*******DOP");
                     insertAccount({
                         dataAccount: dataAccount,
                         accountAddress: this.fieldsToUpdate
