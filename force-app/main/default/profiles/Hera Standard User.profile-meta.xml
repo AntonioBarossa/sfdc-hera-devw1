@@ -5,6 +5,221 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Lead_Generation</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Relationship_Management</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>SBQQ__QuoteQuickly</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Sales_Leadership</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Sales_Operations</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__AllTabSet</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__AppLauncher</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Chatter</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Community</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Content</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Insights</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningBolt</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningSales</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningSalesConsole</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__LightningService</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Marketing</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Platform</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Sales</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__SalesforceCMS</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__Service</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>standard__ServiceConsole</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>trailheadapp__Trailhead_Tracker</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>wrts_prcgvr__ProcessClick</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_AccountDataEnrichment__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_AdminServiceDispatcher__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ButtonDetails__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CampaignMemberStatus__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CausalCodeCalculation__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ClusterProcess__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ColumnsFirstLevel__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ColumnsSecondLevel__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_DataEnrichmentTransocode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_FiltriProcessiSelFornitura__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_Generic_Record_Selection__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_HeraCompany__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ImageURL__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_Informative_Configuration__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_InvoiceType__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_LeadValidityDate__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_LocalDispatcherInrete__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_MarkingConsistency__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_MassiveLoaderProcess__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_MeterReadingTranscodeMap__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_PowerRangeValue__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ProcessCancellationReason__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_RequestEstrattoConto__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_SapWsConfiguration__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_SelfReadings__mdt</name>
+    </customMetadataTypeAccesses>
     <custom>true</custom>
     <customSettingAccesses>
         <enabled>true</enabled>
@@ -4058,11 +4273,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.DistributorFormula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.DistributorName__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4634,11 +4844,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.NewMeterCode__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.Nome_cimitero__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5835,6 +6040,16 @@
         <editable>true</editable>
         <field>Contact.AccountId</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.birthCity__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.MailingRegion__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -8864,6 +9079,36 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.StreetNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.CityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.StreetCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.StreetNumberExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.StreetName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19898,11 +20143,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.ImplantType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>ServicePoint__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -24631,6 +24871,839 @@
         <field>wrts_prcgvr__TransitionActivityTemplate__c.wrts_prcgvr__IsRequired__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <layoutAssignments>
+        <layout>Account-Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-CPQ Account Layout Service Console</layout>
+        <recordType>Account.HDT_RT_Business</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account-CPQ Account Layout Service Console</layout>
+        <recordType>Account.HDT_RT_Residenziale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountBalance__c-Estratto Conto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountBrand-Account Brand Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountContactRelation-Account Contact Relationship Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountDataEnrichment__mdt-Account data enrichment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AccountStatementFilter__c-Filtro Estratto Conto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AdminPriceQuote__c-Administration Price Quote Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AgentMatrix__c-Matrice Agenti Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AlertAccountConfiguration__c-Abilitazioni Alert Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AlertConfiguration__c-Regola Alert Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_CompositionVASproductsnotbillable</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_SectionBonusforEEservice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_SectionBonusforGasservice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_SectionContributesforEEservice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_SectionContributesforGasservice</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_VASConsumptionanalysis</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_VASPoductsnotbillable</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Asset-Asset Layout</layout>
+        <recordType>Asset.HDT_RT_VASServicesnotbillable</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AssetRelationship-Asset Relationship Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AuthorizationForm-Authorization Form Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AuthorizationFormConsent-Authorization Form Consent Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AuthorizationFormDataUse-Authorization Form Data Use Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AuthorizationFormText-Authorization Form Text Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>BillingProfile__c-Billing Profile Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Campaign-Campaign Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaignEasyCIM__c-Campagna EasyCIM Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaignEligibilityGroup__c-Gruppo Eleggibilità Campagne Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaignMember-Campaign Member Page Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaignMemberAssigmentItem__c-Assegnazione Campaign Member Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaignMemberAssigment__c-Assegnazione Campaign Member Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaignMemberLeadAssigment__c-Assegnazione Campaign Member su base Lea Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CampaingMemberLeadAssigment__c-Assegnazione Campaign Member Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_AttivazionePODVariazionePDR</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_CambioUsoTec</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ComportamentoVenditori</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_GenericheVas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ModContrattoPreAtt</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_PostSalesVAS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_RichiestaParere</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_Subentro_EE</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_Subentro_GAS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-Case Layout</layout>
+        <recordType>Case.HDT_RT_VolturaTecnica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_AlertDisassociazioneUtenteWeb</layout>
+        <recordType>Case.HDT_RT_AlertDisassociazioneUtenteWeb</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_AllineamentoAnagrafica</layout>
+        <recordType>Case.HDT_RT_AllineamentoAnagrafica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_AltreInformative</layout>
+        <recordType>Case.HDT_RT_AltreInformative</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Annullamento</layout>
+        <recordType>Case.HDT_RT_Annullamento</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Autolettura</layout>
+        <recordType>Case.HDT_RT_Autolettura</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_CanoneRai</layout>
+        <recordType>Case.HDT_RT_CanoneRai</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ComunicazionePagamento</layout>
+        <recordType>Case.HDT_RT_ComunicazionePagamento</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Disattivazioni</layout>
+        <recordType>Case.HDT_RT_Disattivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Domiciliazione</layout>
+        <recordType>Case.HDT_RT_Domiciliazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_FatturazioneConsumi</layout>
+        <recordType>Case.HDT_RT_FatturazioneConsumi</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GestioneBolletta</layout>
+        <recordType>Case.HDT_RT_GestioneBolletta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GestioneBonusSociale</layout>
+        <recordType>Case.HDT_RT_GestioneBonusSociale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GestionePrivacy</layout>
+        <recordType>Case.HDT_RT_GestionePrivacy</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Informative</layout>
+        <recordType>Case.HDT_RT_Informative</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_InversioneContatore</layout>
+        <recordType>Case.HDT_RT_InversioneContatore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Morosita</layout>
+        <recordType>Case.HDT_RT_Morosita</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PagamentiAltriProcessi</layout>
+        <recordType>Case.HDT_RT_AltriProcessiPagamenti</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PianoRateizzazione</layout>
+        <recordType>Case.HDT_RT_PianoRateizzazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PreventiviEle</layout>
+        <recordType>Case.HDT_RT_PreventiviEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_PreventiviGas</layout>
+        <recordType>Case.HDT_RT_PreventiviGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Rimborso</layout>
+        <recordType>Case.HDT_RT_Rimborso</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_UnificazioneSeparazioneCABolletta</layout>
+        <recordType>Case.HDT_RT_UnificazioneSeparazioneCABolletta</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VariazioneAmministratore</layout>
+        <recordType>Case.HDT_RT_VariazioneAmministratore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VariazioneAnagraficaCliente</layout>
+        <recordType>Case.HDT_RT_VariazioneAnagraficaCliente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VariazioniEle</layout>
+        <recordType>Case.HDT_RT_VariazioniEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificaTitolaritaPodPdr</layout>
+        <recordType>Case.HDT_RT_VerificaTitolaritaPodPdr</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheEle</layout>
+        <recordType>Case.HDT_RT_VerificheEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheGas</layout>
+        <recordType>Case.HDT_RT_VariazioniGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheGas</layout>
+        <recordType>Case.HDT_RT_VerificheGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VotiveModena</layout>
+        <recordType>Case.HDT_RT_VotiveModena</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-Close Case Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseInteraction-Case Feed Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>City__c-Città Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CollaborationGroup-Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ComfortQualityCall__c-Comfort e Quality Call Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CommercialCode__c-Codice Commerciale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CommunicationLog__c-Log Comunicazioni Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ConsumptionRate-Layout Tasso di consumo</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ConsumptionSchedule-Layout Pianificazione del consumo</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Contact-Contact Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContactPointEmail-Layout Email punto di contatto</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContactPointPhone-Layout Telefono punto di contatto</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContactPointTypeConsent-Contact Point Type Consent Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContactRequest-Layout Richiesta di contatto</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContentVersion-Content Version</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DataUseLegalBasis-Data Use Legal Basis Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DataUsePurpose-Data Use Purpose Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DelegatedAccount-Layout account gestito esterno</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DiscountListP__c-Lista Sconto P Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DiscountListaA__c-Lista Sconto A Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DistributorPointCode__c-Codice Punto Distributore Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DocumentSelected__c-Layout Documento selezionato</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DocumentSendTracking__c-Comunicazione Documentale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DocumentalActivity__c-Attività Documentale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DocumentalEnvelopeAttachment__c-Allegato Plico Documentale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DocumentalPayloadAdministration__c-Amministrazione Payload Documentale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>DuplicateRecordSet-Duplicate Record Set Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EligibilityCriteria__c-Criterio di Eleggibilita Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EligibleMunicipality__c-Comune Eleggibile Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>EmailMessage-Email Message Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Event-Event Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FUBProcessingItem__c-Lavorazione FUB item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FUBProcessing__c-Lavorazione FUB Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FareTypeList__c-Lista Tipo Tariffa Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FeedItem-Feed Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FileTemplateColumn__c-Layout FileTemplateColumn</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>FileTemplate__c-Layout FileTemplate</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GeneralTermsCondition__c-Condizioni Generali di Contratto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Global-Global Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_AccountDataEnrichment__mdt-Account data enrichment Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_AdminServiceDispatcher__mdt-Gestione Prestazione Distributore Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_ButtonDetails__mdt-Button Details Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_CampaignMemberStatus__mdt-CampaignMemberStatus Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_CausalCodeCalculation__mdt-Calcolo Codice Causale Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_ClusterProcess__mdt-HDT_ClusterProcess Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_ColumnsFirstLevel__mdt-Columns First Level Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_ColumnsSecondLevel__mdt-Columns Second Level Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_DataEnrichmentTransocode__mdt-Transcodifica Arricchimento Dati Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_FiltriProcessiSelFornitura__mdt-FiltriProcessiSelFornitura Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_Generic_Record_Selection__mdt-HDT Generic Record Selection Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_HeraCompany__mdt-Società Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_ImageURL__mdt-Image URL Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_Informative_Configuration__mdt-HDT_Informative_Configuration Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_InvoiceType__mdt-HDT InvoiceType Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_LeadValidityDate__mdt-LeadValidityDate Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_LocalDispatcherInrete__mdt-Local Dispatcher InRete Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_MarkingConsistency__mdt-Coerenza Marcatura PdR Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_MassiveLoaderProcess__mdt-HDT Massive Loader Process Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_MeterReadingTranscodeMap__mdt-Transcodifica Valori SAP Letture Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_PowerRangeValue__mdt-Power Range Value Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_ProcessCancellationReason__mdt-Layout Process Cancellation Reason</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_RequestEstrattoConto__mdt-Request Estratto Conto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_SapWsConfiguration__mdt-HDT Sap WS Configuration Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_SelfReadings__mdt-Self Readings Setting Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_StatementRequest__mdt-Request Estratto Conto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_SystemCapacityConfiguration__mdt-Configurazione Portata Impianto Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_TabConfiguration__mdt-Tab Configuration Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_TechnicalCancellationReason__mdt-Layout Technical Cancellation Reason</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>HDT_UserInputFlow__mdt-HDT_UserInputFlow Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Idea-Idea Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Individual-Prototipo_2</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Info1GroupList__c-Lista Grouppo Info1 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Info2GroupList__c-Lista Gruppo Info 2 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Info3GroupList__c-Lista Gruppo Info 3 Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_Generico</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_GestionePratiche</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_News</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_PraticheDiScarto</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_SchedaComunce</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_Template</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Knowledge__kav-Knowledge Layout</layout>
+        <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Acquisizione Lead Layout</layout>
+        <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Lead Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Lead-Lead Layout</layout>
+        <recordType>Lead.HDT_RT_Main</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LoginGroupItem__c-Login Group Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LoginGroup__c-Login Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Macro-Macro Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>MacroActivityEasyCIM__c-Macro Attivita Easy CIM Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>MassiveLoaderRequest__c-Richiesta Caricatore Massivo Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>NewsNotificationCenter__c-Regola Notifiche News Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OperandField__c-Campo Operando Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OperandTemplate__c-Template Operando Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>OpportunityLineItem-Opportunity Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Dossier</layout>
+        <recordType>Order.HDT_RT_OrderDossier</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-HDT_Voltura</layout>
+        <recordType>Order.HDT_RT_Voltura</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Prima attivazione</layout>
+        <recordType>Order.HDT_RT_Attivazione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Prima attivazione con modifica</layout>
+        <recordType>Order.HDT_RT_AttivazioneConModifica</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Sconti o Bonus VAS</layout>
+        <recordType>Order.HDT_RT_ScontiBonus</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Subentro</layout>
+        <recordType>Order.HDT_RT_Subentro</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Switch in</layout>
+        <recordType>Order.HDT_RT_SwitchIn</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-VAS</layout>
+        <recordType>Order.HDT_RT_VAS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaperCampaignParameter__c-Parametri Campagna Cartacea Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaperCommunication__c-Comunicazione Cartacea Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PaperProcessing__c-Lavorazione Cartecea Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PriceListL__c-Lista Prezzo L Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PriceListQ__c-Lista Prezzo Q Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PriceListT__c-Lista Prezzo T Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Pricebook2-Price Book Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PricebookEntry-Price Book Entry Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProcessException-Layout Eccezione del processo</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Product2-CPQ Product Layout New</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProductConsumptionSchedule-Layout Pianificazione del consumo dei prodotti</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProfileGroup__c-Profile Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProfileSkill-Skill Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProfileSkillEndorsement-Endorsement Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ProfileSkillUser-Skill User Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>PushTracking__c-Push Tracking Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>QuickText-Quick Text Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Quote-Quote Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>QuoteLineItem-Quote Line Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>QuoteManagement__c-Quote Management Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Range__c-Fascia Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RateTemplate__c-Rate Template Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-Lettura Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-Lettura Layout</layout>
+        <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-Lettura Layout</layout>
+        <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RentProcessRule__c-Layout Regola rateizzazione</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ResponseTemplate__c-Template Risposta Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>RoleGroup__c-Role Group Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SMSTracking__c-SMS Tracking Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SaleServiceItem__c-Sale Service Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Sale__c-Vendita Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Scorecard-Scorecard Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ScorecardAssociation-Scorecard Association Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ScorecardMetric-Scorecard Metric Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Layout</layout>
+        <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ServicePoint__c-Service Point Layout</layout>
+        <recordType>ServicePoint__c.HDT_RT_Gas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SocialPersona-Social Persona Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SocialPost-Social Post Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SolTracking__c-Notifica SOL Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Solution-Solution Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SurveyCRM__c-Survey CRM Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SurveyResponse__c-Survey Response Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Task-Task Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>TechnicalOfferItem__c-Technical Offer Item Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>TechnicalOffer__c-Technical Offer Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>User-User Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UserAlt-User Profile Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UserAppMenuItem-Application Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UserProvAccount-Layout Account provisioning utente</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UserProvisioningLog-Layout Registro provisioning utente</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>UserProvisioningRequest-Layout Richiesta di provisioning utente</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>WorkAccess-Access Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>WorkBadge-Badge Received Layout 192</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>WorkBadgeDefinition-Badge Layout 192</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>WorkThanks-Thanks Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Call</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_HCPoint</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Sportello</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
@@ -26685,7 +27758,6 @@
     </objectPermissions>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.HDT_RT_Business</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -26707,42 +27779,42 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_CompositionVASproductsnotbillable</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Asset.HDT_RT_SectionBonusforEEservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_SectionBonusforGasservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_SectionContributesforEEservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_SectionContributesforGasservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_VASConsumptionanalysis</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_VASPoductsnotbillable</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Asset.HDT_RT_VASServicesnotbillable</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26757,7 +27829,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_AltreInformative</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26777,12 +27849,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_Autolettura</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_CambioUsoTec</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26792,7 +27864,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_ComportamentoVenditori</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26800,15 +27872,14 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
         <recordType>Case.HDT_RT_Disattivazioni</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_DocCopiaContratto</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26823,12 +27894,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_GenericheAttivazioni</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_GenericheVas</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26848,17 +27919,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_Informative</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_InversioneContatore</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_ModContrattoPreAtt</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26873,7 +27944,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_PostSalesVAS</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26888,17 +27959,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_ProrogaTemporanea</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_RichiestaParere</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26908,17 +27979,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Case.HDT_RT_Subentro_EE</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26938,17 +28009,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VariazioniEle</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VariazioniGas</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26958,17 +28029,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VerificheEle</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VerificheGas</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.HDT_RT_VolturaTecnica</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -26977,87 +28048,81 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Idea.InternalIdeasIdeaRecordType</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_FAQ</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Formazione</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Knowledge__kav.HDT_RT_Generico</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_GestionePratiche</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_News</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_PraticheDiScarto</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_SchedaComunce</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Template</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontPrincipale</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingFrontSecondario</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiPrincipale</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Lead.HDT_RT_CreazioneManuale</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
         <recordType>Order.HDT_RT_Attivazione</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -27069,17 +28134,17 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_CambioOfferta</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_CambioUso</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_ConnessioneConAttivazione</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -27094,7 +28159,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_Proroga</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -27104,12 +28169,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_ScontiBonus</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Order.HDT_RT_Subentro</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -27124,27 +28189,27 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_TemporaneaNuovaAtt</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_VAS</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Order.HDT_RT_Voltura</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -27159,46 +28224,125 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_CompositionVASproductsnotbillable</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_SectionBonusForGasService</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_SectionBonusforEEservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_SectionContributesforEEservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_SectionContributesforGasservice</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_VASConsumptionanalysis</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_VASPoductsnotbillable</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>SBQQ__ProductOption__c.HDT_RT_VASServicesnotbillable</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_CompositionVASproductsnotbillable</recordType>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_SectionBonusforEEservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_SectionBonusforGasservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_SectionContributesforEEservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_SectionContributesforGasservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_VASConsumptionanalysis</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_VASPoductsnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__QuoteLine__c.HDT_RT_VASServicesnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_CompositionVASproductsnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_SectionBonusforEEservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_SectionBonusforGasservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_SectionContributesforEEservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_SectionContributesforGasservice</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_VASConsumptionanalysis</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_VASPoductsnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SBQQ__Subscription__c.HDT_RT_VASServicesnotbillable</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
         <recordType>ServicePoint__c.HDT_RT_Ele</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -27234,7 +28378,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>et4ae5__SendDefinition__c.et4ae5__Send_Definition</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -27246,61 +28389,60 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Default</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>wrts_prcgvr__CompatibilityCriteriaItem__c.wrts_prcgvr__Candidate</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -27321,7 +28463,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
         <recordType>wrts_prcgvr__ServiceCriteriaItem__c.wrts_prcgvr__Render</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

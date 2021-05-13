@@ -164,7 +164,23 @@
     <picklistValues>
         <picklist>ContactReason__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Gestione contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info commerciali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolletta e pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altro</fullName>
             <default>false</default>
         </values>
     </picklistValues>

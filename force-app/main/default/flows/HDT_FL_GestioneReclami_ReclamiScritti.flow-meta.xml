@@ -1,13 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
+    <assignments>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Si</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Cerca_Case_reiterazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_0</name>
+        <label>AssegnaValori</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Classificazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.IsReiteration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Cerca_Case_reiterazione.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_0_0</name>
+        <label>AssegnaValori</label>
+        <locationX>314</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Classificazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.IsReiteration__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_0</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
-            <targetReference>Aggiorna_Case_0</targetReference>
+            <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Linkare</defaultConnectorLabel>
         <rules>
@@ -28,7 +125,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Case</targetReference>
+                <targetReference>AssegnaValori_0</targetReference>
             </connector>
             <label>Linkare</label>
         </rules>
@@ -53,7 +150,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Cerca_Case_reiterazione</targetReference>
+                <targetReference>AssegnaValori</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -61,7 +158,7 @@
     <decisions>
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>278</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -74,14 +171,42 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Get_Input_Case_Aggiornato</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Annulla_Prestazione</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
     </decisions>
-    <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info
---&gt; Modifiche per change DM</description>
+    <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info</description>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
@@ -112,7 +237,7 @@
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -175,84 +300,20 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>974</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ChangePhaseDate__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>IsReiteration__c</field>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>In Classificazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>RelatedCase__c</field>
-            <value>
-                <elementReference>Cerca_Case_reiterazione.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <locationY>1214</locationY>
+        <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>314</locationX>
-        <locationY>974</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ChangePhaseDate__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Phase__c</field>
-            <value>
-                <stringValue>In Classificazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Status</field>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <locationY>1214</locationY>
+        <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
-        <locationX>380</locationX>
+        <locationX>512</locationX>
         <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -356,7 +417,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -365,6 +426,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -372,13 +434,38 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>254</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Prima_Classificazione</targetReference>
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Annulla_Prestazione</name>
+        <label>Annulla Prestazione</label>
+        <locationX>578</locationX>
+        <locationY>398</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annulla prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>DirittoRettifica</name>
         <dataType>Boolean</dataType>

@@ -3997,11 +3997,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Case.DistributorFormula__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Case.DistributorName__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -4573,11 +4568,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.NewMeterCode__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Case.Nome_cimitero__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

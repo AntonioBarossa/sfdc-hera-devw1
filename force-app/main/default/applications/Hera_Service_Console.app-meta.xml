@@ -45,6 +45,14 @@
         <type>Flexipage</type>
         <pageOrSobjectType>Order</pageOrSobjectType>
     </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <content>Home_Page_Hera_Service_Console</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>standard-home</pageOrSobjectType>
+    </actionOverrides>
     <brand>
         <headerColor>#0070D2</headerColor>
         <logo>logo_new</logo>
@@ -437,13 +445,19 @@
         <type>Flexipage</type>
         <profile>HDT_TelesellingCommunity</profile>
     </profileActionOverrides>
+    <tabs>standard-home</tabs>
+    <tabs>standard-Lead</tabs>
     <tabs>standard-Account</tabs>
-    <tabs>standard-Case</tabs>
-    <tabs>standard-Opportunity</tabs>
+    <tabs>standard-Contact</tabs>
     <tabs>standard-Contract</tabs>
+    <tabs>ServicePoint__c</tabs>
+    <tabs>standard-Case</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>ServicePoint__c</tab>
+        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>
@@ -452,12 +466,17 @@
             <tab>standard-Case</tab>
         </mappings>
         <mappings>
+            <tab>standard-Contact</tab>
+        </mappings>
+        <mappings>
             <fieldName>AccountId</fieldName>
             <tab>standard-Contract</tab>
         </mappings>
         <mappings>
-            <fieldName>AccountId</fieldName>
-            <tab>standard-Opportunity</tab>
+            <tab>standard-Lead</tab>
+        </mappings>
+        <mappings>
+            <tab>standard-home</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

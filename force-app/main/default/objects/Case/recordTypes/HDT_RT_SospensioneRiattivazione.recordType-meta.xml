@@ -867,6 +867,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CompetentOffice__c</picklist>
         <values>
             <fullName>Aziende outMercato</fullName>
@@ -7585,13 +7604,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Nome_cimitero__c</picklist>
-        <values>
-            <fullName>null</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NotJustMotivation__c</picklist>
         <values>
             <fullName>Analisi incompleta</fullName>
@@ -7722,11 +7734,23 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Completata</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Bozza</fullName>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7735,6 +7759,90 @@
         </values>
         <values>
             <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Non Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rata Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presenza Atti Autorizzativi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Non Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK DL simulata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica in laboratorio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10756,6 +10864,129 @@
         </values>
         <values>
             <fullName>Split payment soc gruppo10%25-S4</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VasStatus__c</picklist>
+        <values>
+            <fullName>ANNUL PER CESSAZIONE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNUL PER RECESSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNUL PER RIPENS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNULLATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CESS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHIUSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COFF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FAT SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FATT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FATTURA SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO DIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO ODV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO PAREG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO RTZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO STORN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK ODV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK PAREG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECESSO DA FORNITORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIPENS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RTZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOLL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL_TAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STORN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
