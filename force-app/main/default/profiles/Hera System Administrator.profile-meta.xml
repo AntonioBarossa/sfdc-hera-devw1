@@ -23719,7 +23719,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.CommoditySector__c</field>
+        <field>ServicePoint__c.CommoditySector__c</field> 
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
