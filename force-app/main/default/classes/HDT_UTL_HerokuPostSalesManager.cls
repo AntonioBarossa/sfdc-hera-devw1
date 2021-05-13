@@ -274,11 +274,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             when 'esito_finale'{
                 String currentPhase = recordCase.Phase__c;
                 String nextPhase = reqWrp.requestMap.get('FASE');
-                String noteSAP = reqWrp.requestMap.get('NOTA_HK');
+                String noteSap = reqWrp.requestMap.get('NOTA_HK');
                 if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
-                    if(noteSAP != null && noteSAP != ''){
+                    if(noteSap != null && noteSap != ''){
                         String description = recordCase.Description != null?recordCase.Description:'';
-                        currentCase.Description = nowDateFormat + ': ' + noteSAP + '\n' + description;
+                        currentCase.Description = nowDateFormat + ': ' + noteSap + '\n' + description;
                     }
                 }else{
                     currentCase.Phase__c = nextPhase;
