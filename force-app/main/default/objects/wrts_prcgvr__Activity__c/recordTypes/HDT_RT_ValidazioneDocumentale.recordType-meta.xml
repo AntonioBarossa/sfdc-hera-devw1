@@ -321,10 +321,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavorazione Reclamo Post Survey</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Modifica Contratti PreAttivazione</fullName>
             <default>false</default>
         </values>
