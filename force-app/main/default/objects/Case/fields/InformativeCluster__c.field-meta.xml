@@ -98,6 +98,21 @@
                 <default>false</default>
                 <label>Voltura</label>
             </value>
+            <value>
+                <fullName>PostSales VAS</fullName>
+                <default>false</default>
+                <label>PostSales VAS</label>
+            </value>
+			<value>
+                <fullName>Generiche Attivazioni</fullName>
+                <default>false</default>
+                <label>Generiche Attivazioni</label>
+            </value>
+			<value>
+                <fullName>Generiche VAS</fullName>
+                <default>false</default>
+                <label>Generiche VAS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
