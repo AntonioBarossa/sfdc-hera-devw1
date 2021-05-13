@@ -47,6 +47,64 @@ public with sharing class HDT_LC_ContactSelection {
         return recordListString;
     }
 
+    @AuraEnabled(cacheable = false)
+    public static String getAdministrators(String accountId){
+        String recordListString;
+        try{
+            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId);
+
+            List<List<sObject>> recordList = new List<List<sObject>>();
+            Map<Id, String> rolesMap = new Map<Id, String>();
+
+            HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+            List<AccountContactRelation> relationList = acrQueryHandler.getAdministratorRelations();
+            Set<Id> contactIds = new Set<Id>();
+            Id accountAdministratorId = null;
+            for (AccountContactRelation acr : relationList) {
+                System.debug('HDT_LC_ContactSelection: ACR: ' + acr);
+                if (acr.AccountId == accountId) {
+                    // Memorizziamo l'Id dell'amministratore che gestisce l'Account in modo da poterlo togliere dopo.
+                    accountAdministratorId = acr.ContactId;
+                }
+                contactIds.add(acr.ContactId);
+                rolesMap.put(acr.ContactId, acr.Roles);
+            }
+
+            // Rimuoviamo l'Id dell'amministratore attuale dell'Account.
+            if (accountAdministratorId != null) {
+                contactIds.remove(accountAdministratorId);
+                rolesMap.remove(accountAdministratorId);
+            }
+
+            HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
+            List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
+
+            JSONGenerator gen = JSON.createGenerator(false);
+            gen.writeStartArray();
+            for (Contact contact : contacts) {
+                gen.writeStartObject();
+                gen.writeStringField('Id', contact.Id);
+                writeIfNotNull(gen, 'Name', contact.Name);
+                writeIfNotNull(gen, 'Phone', contact.Phone);
+                writeIfNotNull(gen, 'MobilePhone', contact.MobilePhone);
+                writeIfNotNull(gen, 'Email', contact.Email);
+                writeIfNotNull(gen, 'Fax', contact.Fax);
+                writeIfNotNull(gen, 'CertifiedEmail__c', contact.CertifiedEmail__c);
+                writeIfNotNull(gen, 'MailingAddressFormula__c', contact.MailingAddressFormula__c);
+                writeIfNotNull(gen, 'Roles', rolesMap.get(contact.Id));
+                gen.writeEndObject();
+            }
+
+            gen.writeEndArray();
+            recordListString = gen.getAsString();
+            System.debug('HDT_LC_ContactSelection: recordListString: ' + recordListString);
+
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
+        return recordListString;
+    }
+
     private static void writeIfNotNull(JSONGenerator generator, String key, String value) {
         if (value != null) {
             generator.writeStringField(key, value);
