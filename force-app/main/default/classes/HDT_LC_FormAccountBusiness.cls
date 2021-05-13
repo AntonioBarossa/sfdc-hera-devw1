@@ -26,6 +26,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         for(String s: accountAddress.keySet()){
             account.put(s, accountAddress.get(s));
         }
+        System.debug('ACCOUNT:' + account);
         accountSrv.checkCreateAccess(account);
         Account acct= accountSrv.createRecord(account);
         

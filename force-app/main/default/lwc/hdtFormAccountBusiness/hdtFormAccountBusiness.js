@@ -218,9 +218,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let businessName =this.template.querySelector('[data-id="businessName"]');
         let vatNumber =this.template.querySelector('[data-id="vatNumber"]');
         this.personFiscalCode= this.template.querySelector('[data-id="personFiscalCode"]');
-        let prefixPhoneNumber = this.template.querySelector('[data-id="phonePrefix2"]');
+        let prefixPhoneNumber = this.phonePrefixValue2;
         let phoneNumber= this.template.querySelector('[data-id="phoneNumber"]');
-        let prefixMobilePhoneNumber = this.template.querySelector('[data-id="mobilephonePrefix2"]');
+        let prefixMobilePhoneNumber = this.mobilephonePrefix2;
         let mobilephoneNumber= this.template.querySelector('[data-id="mobilePhoneNumber"]');
         let contactPhoneNumber =this.template.querySelector('[data-id="contactPhoneNumber"]');
         let customerMarking =this.template.querySelector('[data-id="customerMarking"]');
@@ -415,6 +415,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "firstIndividualName" : firstIndividualName.value,
                             "lastIndividualName" : lastIndividualName.value,
                             "prefixPhoneNumber" : prefixPhoneNumber,
+                            "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+                            "mobilephoneNumber" : mobilephoneNumber,
                             "phoneNumber" : phoneNumber.value,
                             "email" : email.value,
                             "electronicMail" : electronicMail.value,
@@ -481,7 +483,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     dataAccount={
                         "businessName" : businessName.value,
                         "vatNumber" : vatNumber.value,
-                 //       "fiscalCode" : fiscalCode.value.replace(/ /g,""),
+                        "fiscalCode" : fiscalCode.value.replace(/ /g,""),
                         "legalForm" : legalForm.value,
                         "customerMarking" : customerMarking.value,
                         "category" : category.value,
@@ -491,14 +493,15 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "email" : email.value,
                         "electronicMail" : electronicMail.value,
                         "numberFax" : numberFax.value,
-              //          "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
-              //          "mobilephoneNumber" : mobilephoneNumber,
+                        "prefixPhoneNumber" : prefixPhoneNumber,
+                        "prefixMobilePhoneNumber" : prefixMobilePhoneNumber,
+                        "mobilephoneNumber" : mobilephoneNumber,
                         "firstName" : firstName.value,
                         "gender" : this.gender,
                         "lastName" : lastName.value,
                         "birthDate" : this.birthDate,
                         "birthplace": this.birthPlace,
-                 //       "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
+                        "personFiscalCode" : this.personFiscalCode.value.replace(/ /g,""),
                         "role" : role.value,
                         "mobilePhone" : mobilePhone.value,
                         "contactEmail" : contactEmail.value,
