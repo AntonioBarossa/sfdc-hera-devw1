@@ -123,7 +123,7 @@ public inherited sharing class HDT_QR_Order {
             ParentOrder__r.SignedDate__c,
             OrderNumber,
             Phase__c, 
-            // RequestOption__c,
+            RequestOption__c,
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
             PreviousTrader__c,
