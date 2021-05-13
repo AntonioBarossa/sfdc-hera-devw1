@@ -9,6 +9,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
+    showEditForm = false;
     //rateTemplate;
     //rateName;
     rateObj;
@@ -25,7 +26,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         hasRecords: false,
         records: []
     };
-
+    productCodeIsAlreadyPresent = false;
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
@@ -92,6 +93,9 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                     this.selectionObj.hasRecords = false;
                 }
 
+                this.productCodeIsAlreadyPresent = result.data.productCodeIsAlreadyPresent;
+                console.log('>>>>>> productCodeIsAlreadyPresent > ' + this.productCodeIsAlreadyPresent);
+
                 this.showWelcom = true;
 
                //if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
@@ -139,7 +143,13 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         //this.rateTemplate = event.detail.rateTemplate;
         //this.rateName = event.detail.rateName;
         this.showWelcom = false;
-        this.showCreateOffer = true;
+
+        if(this.productCodeIsAlreadyPresent){
+            this.showCreateOffer = true;
+        } else {
+            this.showEditForm = true;
+        }
+        
     }
 
     search(event){
@@ -187,6 +197,17 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
     handleSelection(event){
         console.log('###');
+    }
+
+    openEditForm(event){
+        this.showWelcom = false;
+        this.showSearchOffer = false;
+        this.showCreateOffer = false;
+        this.showEditForm = true;
+    }
+
+    newTechOfferCreated(event){
+        console.log('>>> newOfferCreated > ' + event.detail.newTechOfferId);
     }
 
 }

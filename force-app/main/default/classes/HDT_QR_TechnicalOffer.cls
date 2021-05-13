@@ -136,4 +136,16 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         ];
     }
 
+    public static List<Product2> getProduct2ByCode(List<Product2> prodList, String productCode, Id productId){
+        prodList = new List<Product2>();
+        prodList = [
+            SELECT Id, (SELECT Id FROM Technical_Offer__r LIMIT 1)
+            FROM Product2
+            WHERE Id !=: productId AND ProductCode = :productCode
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+        return prodList;
+    }
+
 }

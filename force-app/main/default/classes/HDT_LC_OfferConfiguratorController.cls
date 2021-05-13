@@ -31,13 +31,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
         System.debug('### recordId -> ' + productId);
 
         HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer respObj = new HDT_WRP_TechnicalOffer.HDT_WRP_ResponseTecOffer();
+        List<TechnicalOffer__c> tecOffList;
+        List<Product2> thisProduct;
+        List<Product2> prodList;
         
         try{
             respObj.success = true;
             respObj.errorMessage = '';
             respObj.data = new HDT_WRP_TechnicalOffer.HDT_WRP_TecnicalOfferObj();
 
-            List<TechnicalOffer__c> tecOffList;
             tecOffList = HDT_QR_TechnicalOffer.queryTechnicalOfferByProductId(productId, tecOffList);
 
             if(tecOffList != null && tecOffList.size() > 0){
@@ -51,6 +53,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             } else {
                 respObj.data.offerIsPresent = false;
                 respObj.data.tecnicalOffers = null;            
+            }
+
+            thisProduct = HDT_QR_TechnicalOffer.getProductById(thisProduct, productId);
+            prodList = HDT_QR_TechnicalOffer.getProduct2ByCode(prodList, thisProduct[0].ProductCode, productId);
+
+            if(prodList.size() > 0){
+                respObj.data.productCodeIsAlreadyPresent = true;
+            } else {
+                respObj.data.productCodeIsAlreadyPresent = false;
             }
 
         } catch (Exception ex){
