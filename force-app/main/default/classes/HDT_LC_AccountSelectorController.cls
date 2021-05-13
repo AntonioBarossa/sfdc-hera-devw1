@@ -47,6 +47,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static String getLeadsAndContacts(String queryString) {
 		try {
+			queryString = '%' + queryString + '%';
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
 			result.leads = getLeads(queryString);
 			result.contacts = getContacts(queryString);

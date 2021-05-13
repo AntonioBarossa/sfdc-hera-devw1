@@ -61,6 +61,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             result = validateUnificazioneSeparazione(fields);
 
+        }else if(caseType == 'Votive Modena Contestazione Fattura'){
+
+            result= validateVotiveModena(fields);
+        } else if (caseType == 'Verifica Titolarità POD/PDR') {
+
+            result = validateVerificaTitolarita(currentCase);
+
         } else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -79,7 +86,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         System.debug(getFieldValue(fields, 'Type'));
 
-        if(caseType == 'Piano Rateizzazione'){            
+        if(caseType == 'Piano Rateizzazione'){
 
             if((fields == null || fields == '') && currentCase.AttachmentManagement__c == true){
 
@@ -307,7 +314,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String newEndDate = getFieldValue(fields, 'VATGroupEndDate__c') != null ? getFieldValue(fields, 'VATGroupEndDate__c') : '';
 
         HDT_QR_Account queryHandler = new HDT_QR_Account();
-        String queryFields = 'IsVATGroupJoined__c,VATGroup__c,VATGroupStartDate__c,VATGroupEndDate__c';
+        String queryFields = 'IsVATGroupJoined__c,VATGroup__c,VATGroupStartDate__c,VATGroupEndDate__c,VATNumber__c';
         Account a = queryHandler.getRecordById(accountId, queryFields);
         Boolean currentIsJoined = a.IsVATGroupJoined__c;
         String currentGroup = a.VATGroup__c != null ? a.VATGroup__c : '';
@@ -319,6 +326,25 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if (newIsJoined == currentIsJoined && newGroup.equals(currentGroup) && newStartDate.equals(currentStartDate) && newEndDate.equals(currentEndDate)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un campo per poter proseguire.'));
+            return result;
+        }
+
+        if (newIsJoined) {
+            if (String.isBlank(newGroup)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Se si abilita il Flag Adesione Gruppo IVA è necessario valorizzare il campo Partita IVA di Gruppo.'));
+            } else if (String.isBlank(newStartDate)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Se si abilita il Flag Adesione Gruppo IVA è necessario valorizzare il campo Data Inizio Piva di Gruppo.'));
+            } else if (String.isBlank(newEndDate)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Se si abilita il Flag Adesione Gruppo IVA è necessario valorizzare il campo Data Fine Piva di Gruppo.'));
+            } else if (!String.isBlank(newGroup) && newGroup.equals(a.VATNumber__c)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire una Partita IVA di Gruppo diversa dalla Partita IVA del cliente.'));
+            } else if (!String.isBlank(newStartDate) && !String.isBlank(newEndDate)) {
+                Date startDate = Date.valueOf(newStartDate);
+                Date endDate = Date.valueOf(newEndDate);
+                if (endDate <= startDate) {
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'La Data Fine Piva di Gruppo deve essere successiva alla  Data Inizio Piva di Gruppo.'));
+                }
+            }
         }
 
         return result;
@@ -562,6 +588,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }else if(caseType == 'Modifica Tariffa Residente/Non Residente'){
 
+            Date residenceChangeDate = Date.valueOf(getFieldValue(fields, 'ResidenceChangeDate__c'));
+
             if(HDT_UTL_Variations.modifyRate(recordId)){
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
@@ -569,6 +597,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             } else {
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+
+            }
+
+            if(residenceChangeDate < System.today()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+            
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
             }
  
@@ -650,6 +688,38 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return validateModificaDatiRecapito(fields);
 
     }
+
+    private String validateVotiveModena(String fields){
+
+        String billingProfile = getFieldValue(fields, 'BillingProfile__c');
+        String reason = getFieldValue(fields, 'Reason__c');
+        String result;
+
+        if(reason == 'Errata Emissione' && (billingProfile == null || billingProfile == '')){
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario Valorizzare Billing Profile'));
+
+        } else {
+
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+        }
+
+        return result;
+
+    }
+
+    private String validateVerificaTitolarita(Case currentCase) {
+
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
+        if(attachedDocument.size() == 0){
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+        }
+            
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
