@@ -7,8 +7,8 @@ public with sharing class HDT_SRV_EmailMessage {
         Id parentId;
         String objectName='';
         for(EmailMessage email : emailList){
-            parentId = email.parentId != null? email.parentId:'';
-            if(String.isNotBlank(parentId)){
+            parentId = email.parentId;
+            if(parentId != null){
                 objectName = parentId.getSObjectType().getDescribe().getName();
             }else {
                 objectName = '';
