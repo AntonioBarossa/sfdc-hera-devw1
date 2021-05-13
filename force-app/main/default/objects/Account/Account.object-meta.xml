@@ -116,7 +116,7 @@
         <actionName>New</actionName>
         <content>HDT_LCP_AccountNewOverride</content>
         <formFactor>Large</formFactor>
-        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <skipRecordTypeSelect>true</skipRecordTypeSelect>
         <type>LightningComponent</type>
     </actionOverrides>
     <actionOverrides>
