@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Check_Lunghezza_Mobile_Phone</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(ISBLANK(MobilePhone),false, if(LEN(MobilePhone)=10,false,true))</errorConditionFormula>
+    <errorConditionFormula>IF(ISBLANK(MobilePhone),false, if(REGEX(MobilePhone, &quot;^[0-9]{9,12}$&quot;),false,true))</errorConditionFormula>
     <errorDisplayField>MobilePhone</errorDisplayField>
-    <errorMessage>Lunghezza Numero Cellulare Minima Deve essere di 10 caratteri</errorMessage>
+    <errorMessage>Lunghezza Numero Cellulare Deve essere di minimo 9 e massimo 12 cifre</errorMessage>
 </ValidationRule>

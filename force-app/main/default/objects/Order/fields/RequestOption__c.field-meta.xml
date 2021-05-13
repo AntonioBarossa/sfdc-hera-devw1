@@ -3,10 +3,78 @@
     <fullName>RequestOption__c</fullName>
     <description>UNB_OPZIONE(Lov Siebel che verra ceensita su CMD e poi riportata la scelta sul campo)</description>
     <externalId>false</externalId>
-    <label>Opzione Richiesta</label>
-    <length>100</length>
+    <label>Opzione di Distribuzione</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Domestici-TD</fullName>
+                <default>false</default>
+                <label>Domestici-TD</label>
+            </value>
+            <value>
+                <fullName>AEEG Opzione BTIP-E_BTIP</fullName>
+                <default>false</default>
+                <label>AEEG Opzione BTIP-E_BTIP</label>
+            </value>
+            <value>
+                <fullName>AEEG Opz BTA1 &lt;= 1,5 kW-E_BTA1</fullName>
+                <default>false</default>
+                <label>AEEG Opz BTA1 &lt;= 1,5 kW-E_BTA1</label>
+            </value>
+            <value>
+                <fullName>AEEG Op BTA2 &gt;1,5&lt;=3 kW-E_BTA2</fullName>
+                <default>false</default>
+                <label>AEEG Op BTA2 &gt;1,5&lt;=3 kW-E_BTA2</label>
+            </value>
+            <value>
+                <fullName>AEEG Op BTA3 &gt;3 &lt;=6 kW-E_BTA3</fullName>
+                <default>false</default>
+                <label>AEEG Op BTA3 &gt;3 &lt;=6 kW-E_BTA3</label>
+            </value>
+            <value>
+                <fullName>AEEG Op BTA4 &gt;6 &lt;=10 kW-E_BTA4</fullName>
+                <default>false</default>
+                <label>AEEG Op BTA4 &gt;6 &lt;=10 kW-E_BTA4</label>
+            </value>
+            <value>
+                <fullName>AEEG Op BTA5 &gt; 10 kW-E_BTA5</fullName>
+                <default>false</default>
+                <label>AEEG Op BTA5 &gt; 10 kW-E_BTA5</label>
+            </value>
+            <value>
+                <fullName>AEEG Op BTA6 olt 16,5kW-E_BTA6</fullName>
+                <default>false</default>
+                <label>AEEG Op BTA6 olt 16,5kW-E_BTA6</label>
+            </value>
+            <value>
+                <fullName>AEEG Opz MTA1 fin 100kW-E_MTA1</fullName>
+                <default>false</default>
+                <label>AEEG Opz MTA1 fin 100kW-E_MTA1</label>
+            </value>
+            <value>
+                <fullName>AEEG Op MTA2 &gt;100 &lt;=500-E_MTA2</fullName>
+                <default>false</default>
+                <label>AEEG Op MTA2 &gt;100 &lt;=500-E_MTA2</label>
+            </value>
+            <value>
+                <fullName>AEEG Op MTA3 olt 500kW-E_MTA3</fullName>
+                <default>false</default>
+                <label>AEEG Op MTA3 olt 500kW-E_MTA3</label>
+            </value>
+            <value>
+                <fullName>AEEG Opzione MTIP-E_MTIP</fullName>
+                <default>false</default>
+                <label>AEEG Opzione MTIP-E_MTIP</label>
+            </value>
+            <value>
+                <fullName>AEEG Op ALTA fin 220 kV-E_ALTA</fullName>
+                <default>false</default>
+                <label>AEEG Op ALTA fin 220 kV-E_ALTA</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

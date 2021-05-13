@@ -4,10 +4,6 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
-            <inputField>InterestArea__c</inputField>
-            <outputField>InterestArea__c</outputField>
-        </mappingFields>
-        <mappingFields>
             <inputField>FiscalCode__c</inputField>
             <outputField>FiscalCode__c</outputField>
         </mappingFields>

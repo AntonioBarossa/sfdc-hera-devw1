@@ -81,8 +81,8 @@
     <decisions>
         <name>Check_Processo</name>
         <label>Check Processo</label>
-        <locationX>925</locationX>
-        <locationY>1011</locationY>
+        <locationX>926</locationX>
+        <locationY>1010</locationY>
         <defaultConnector>
             <targetReference>Set_Tipo_Processo</targetReference>
         </defaultConnector>
@@ -158,7 +158,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
+                <targetReference>Gestione_Votiva_Modena</targetReference>
             </connector>
             <label>Modifica Dati di Recapito Votiva Modena</label>
         </rules>
@@ -229,64 +229,31 @@
             </connector>
             <label>Modifica Privacy</label>
         </rules>
+        <rules>
+            <name>Variazione_Amministratore</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Variazione su Amministratore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Variazione_Amministratore</targetReference>
+            </connector>
+            <label>Variazione Amministratore</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Check_Processo_2</name>
         <label>Check Processo 2</label>
-        <locationX>2611</locationX>
+        <locationX>2610</locationX>
         <locationY>491</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_Da_Inviare</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Modifica_Dati_di_Contatto_Outcome2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Refresh_Case.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica Dati di Contatto</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Modifica Dati di Contatto</label>
-        </rules>
-        <rules>
-            <name>Modifica_Dati_Fiscali_Outcome2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Refresh_Case.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica Dati Fiscali</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Modifica Dati Fiscali</label>
-        </rules>
-        <rules>
-            <name>Variazione_Gruppo_IVA_Outcome2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Refresh_Case.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Variazione Gruppo IVA</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Variazione Gruppo IVA</label>
-        </rules>
-        <rules>
-            <name>Modifica_Dati_di_Recapito_Outcome2</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Refresh_Case.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica Dati di Recapito</stringValue>
-                </rightValue>
-            </conditions>
-            <label>Modifica Dati di Recapito</label>
-        </rules>
+        <defaultConnectorLabel>Da Inviare</defaultConnectorLabel>
         <rules>
             <name>Modifica_Dati_di_Recapito_Votiva_Modena_Outcome2</name>
             <conditionLogic>and</conditionLogic>
@@ -390,8 +357,8 @@
     <recordLookups>
         <name>Get_Billing_Profile</name>
         <label>Get Billing Profile</label>
-        <locationX>1304</locationX>
-        <locationY>758</locationY>
+        <locationX>1328</locationX>
+        <locationY>757</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Predefault_Dati_di_Recapito</targetReference>
@@ -528,8 +495,8 @@
     <recordUpdates>
         <name>Predefault_Dati_di_Recapito</name>
         <label>Predefault Dati di Recapito</label>
-        <locationX>1642</locationX>
-        <locationY>759</locationY>
+        <locationX>1664</locationX>
+        <locationY>757</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -545,6 +512,24 @@
             <field>BillSendingMethod__c</field>
             <value>
                 <stringValue>Bolletta per e-mail</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingProfile__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CareOf__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.CareOf__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DeliveryAddress__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingAddressFormula__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -569,6 +554,72 @@
             <field>InvoiceEmail__c</field>
             <value>
                 <elementReference>Get_Billing_Profile.InvoiceEmailAddress__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingCityCode__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingCityCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingCity__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingCity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingCountry__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingCountry__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingPlace__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingPlace__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingPostalCode__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingPostalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingProvince__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingProvince__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetCode__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingStreetCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetName__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingStreetName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetNumberExtension__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetNumber__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>InvoicingStreetToponym__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.InvoicingStreetToponym__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -610,6 +661,54 @@
                 <elementReference>InputCase</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>AlternativeAddress__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingAddressFormula__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCity__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCountry__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingPostalCode__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingProvince__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreetName__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingStreetName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreetNumberExtension__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingStreetNumberExtension__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreetNumber__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingStreetNumber__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CustomerMarking__c</field>
             <value>
@@ -726,7 +825,7 @@
     <recordUpdates>
         <name>Predefault_Gruppo_IVA_No_Validation</name>
         <label>Predefault Gruppo IVA No Validation</label>
-        <locationX>2126</locationX>
+        <locationX>2127</locationX>
         <locationY>1429</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
@@ -854,7 +953,7 @@ Inserisci manualmente i seguenti campi:</description>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtGenericAddressChooserFlow</name>
+            <name>hdtGenericAddressChooserFlowBillingProfile</name>
             <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -875,6 +974,12 @@ Inserisci manualmente i seguenti campi:</description>
                     <elementReference>Query_Case.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di spedizione</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -885,6 +990,48 @@ Inserisci manualmente i seguenti campi:</description>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Modifica Dati di Recapito</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtGenericAddressChooserFlowAccount</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>Account</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di residenza/sede legale.</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Modifica Dati Fiscali</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1219,9 +1366,35 @@ Inserisci manualmente i seguenti campi:</description>
     <subflows>
         <name>Gestione_Privacy</name>
         <label>Gestione Privacy</label>
-        <locationX>399</locationX>
-        <locationY>855</locationY>
+        <locationX>716</locationX>
+        <locationY>832</locationY>
         <flowName>HDT_FL_Gestione_Modifiche_Anagrafiche_Modifica_Privacy</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Variazione_Amministratore</name>
+        <label>Gestione Variazione Amministratore</label>
+        <locationX>766</locationX>
+        <locationY>1277</locationY>
+        <flowName>HDT_FL_Gestione_Modifiche_Anagrafiche_Variazione_Amministratore</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Gestione_Votiva_Modena</name>
+        <label>Gestione Votiva Modena</label>
+        <locationX>328</locationX>
+        <locationY>895</locationY>
+        <flowName>HDT_FL_GestioneVotiveModena</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
