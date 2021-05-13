@@ -175,7 +175,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 SBQQ__Primary__c = true,
                 Agency__c = sale.Agency__c,
                 Market__c = servicePoint.MarketOrigin__c,
-                Channel__c = sale.Channel__c,
+                // Channel__c = sale.Channel__c,
                 FriendCode__c = sale.FriendCode__c,
                 CampaignCode__c = sale.CampaignCode__c,
                 CreatedBy__c = sale.CreatedBy__c,

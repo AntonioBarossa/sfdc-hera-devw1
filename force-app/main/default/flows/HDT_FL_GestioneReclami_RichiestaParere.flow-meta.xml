@@ -145,6 +145,13 @@
                 <elementReference>GetRichiestaParere</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCaseCollection</targetReference>
         </connector>
@@ -714,6 +721,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -818,6 +826,7 @@
                     <stringValue>Salva In Bozza</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

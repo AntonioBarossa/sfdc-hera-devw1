@@ -27,7 +27,7 @@ public with sharing class HDT_LC_AdvancedSearch {
             Map<String,String> row = new Map<String, String>();
 			
 				String value = servicePoint.SupplyAddress__c;
-				String label = 'Indirizzo Fornitura';
+				String label = '';
 				if(value!=',,,,,,,'){
 					row.put(label,value);
 				}
@@ -59,7 +59,7 @@ public with sharing class HDT_LC_AdvancedSearch {
             Map<String,String> row = new Map<String, String>();
 			
 				String value = BillingProfile.InvoicingAddressFormula__c;
-				String label = 'Indirizzo';
+				String label = '';
 
 				row.put(label,value);
 			
@@ -486,10 +486,19 @@ public static Map<String,String> getAddressFromAccount(String accountId)
 				}
 				if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
 					spNew.ServicePointCode__c   = mapRes.get('POD');
+                    spNew.Name   = mapRes.get('POD');
+
+
 				}
 				if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){
 				
-					spNew.CommoditySector__c = mapRes.get('DESCRCOMM');
+                    if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
+                        spNew.CommoditySector__c = 'Energia Elettrica';
+
+                    }else
+                    {
+					    spNew.CommoditySector__c = 'Gas';
+                    }
 		
 				}
 				if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){

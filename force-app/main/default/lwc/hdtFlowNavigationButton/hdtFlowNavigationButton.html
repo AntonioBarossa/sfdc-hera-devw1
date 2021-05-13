@@ -7,10 +7,10 @@
     </template>
 
     <template if:false={loadingSpinner}>
-        <div class=" actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionButtonBar slds-grid slds-grid_align-spread">
             <div class="actionsLeft">
             </div>
-            <div class="actionsRight">
+            <div class="actionsRight slds-p-around_small">
                 <lightning-button
                     class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                     variant="brand" type="button" name="save" label={nextLabel} onclick={handleClick}>
