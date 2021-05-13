@@ -156,6 +156,7 @@
         <profile>Hera M2M Integration User</profile>
     </profileActionOverrides>
     <profileActionOverrides>
+    <actionName>View</actionName>
         <content>HDT_Order_Default</content>
         <formFactor>Large</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>

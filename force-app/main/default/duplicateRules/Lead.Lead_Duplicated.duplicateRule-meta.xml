@@ -53,5 +53,5 @@
     <isActive>true</isActive>
     <masterLabel>Lead Duplicated</masterLabel>
     <securityOption>EnforceSharingRules</securityOption>
-    <sortOrder>1</sortOrder>
+    <sortOrder>3</sortOrder>
 </DuplicateRule>
