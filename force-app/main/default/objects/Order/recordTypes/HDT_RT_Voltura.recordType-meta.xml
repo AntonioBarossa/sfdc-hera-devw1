@@ -368,6 +368,10 @@
             <fullName>Attivazioni</fullName>
             <default>true</default>
         </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CommercialAction__c</picklist>

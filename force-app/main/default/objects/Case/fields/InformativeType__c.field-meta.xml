@@ -493,6 +493,116 @@
                 <default>false</default>
                 <label>Votive Modena Pagamenti Morosità</label>
             </value>
+            <value>
+                <fullName>Prima Attivazione Ele</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Ele</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione In delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione In delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione Fuori delibera</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Fuori delibera</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione con modifica</fullName>
+                <default>false</default>
+                <label>Prima Attivazione con modifica</label>
+            </value>
+            <value>
+                <fullName>Cambio Offerta</fullName>
+                <default>false</default>
+                <label>Cambio Offerta</label>
+            </value>
+            <value>
+                <fullName>Cambio Uso</fullName>
+                <default>false</default>
+                <label>Cambio Uso</label>
+            </value>
+            <value>
+                <fullName>Connessione con Attivazione</fullName>
+                <default>false</default>
+                <label>Connessione con Attivazione</label>
+            </value>
+            <value>
+                <fullName>Riattivazione non morose</fullName>
+                <default>false</default>
+                <label>Riattivazione non morose</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
+                <fullName>Subentro Gas</fullName>
+                <default>false</default>
+                <label>Subentro Gas</label>
+            </value>
+            <value>
+                <fullName>Subentro Ele</fullName>
+                <default>false</default>
+                <label>Subentro Ele</label>
+            </value>
+            <value>
+                <fullName>Switch in con voltura tecnica</fullName>
+                <default>false</default>
+                <label>Switch in con voltura tecnica</label>
+            </value>
+            <value>
+                <fullName>Voltura con Switch</fullName>
+                <default>false</default>
+                <label>Voltura con Switch</label>
+            </value>
+            <value>
+                <fullName>Switch in Ripristinatorio</fullName>
+                <default>false</default>
+                <label>Switch in Ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Switch in Reseller</fullName>
+                <default>false</default>
+                <label>Switch in Reseller</label>
+            </value>
+            <value>
+                <fullName>Switch in Fittizio</fullName>
+                <default>false</default>
+                <label>Switch in Fittizio</label>
+            </value>
+            <value>
+                <fullName>Switch in Winback</fullName>
+                <default>false</default>
+                <label>Switch in Winback</label>
+            </value>
+            <value>
+                <fullName>Switch in Gas</fullName>
+                <default>false</default>
+                <label>Switch in Gas</label>
+            </value>
+            <value>
+                <fullName>Switch in Ele</fullName>
+                <default>false</default>
+                <label>Switch in Ele</label>
+            </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS Ele</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+                <default>false</default>
+                <label>Aggiunta Sconti o Bonus VAS Gas</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
