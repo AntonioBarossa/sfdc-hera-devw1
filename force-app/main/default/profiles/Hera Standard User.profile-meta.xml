@@ -25265,9 +25265,6 @@
         <layout>DuplicateRecordSet-Duplicate Record Set Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>EligibilityCriteria__c-Criterio di Eleggibilita Layout</layout>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>EligibleMunicipality__c-Comune Eleggibile Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
