@@ -545,7 +545,37 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if(currentSectionName === 'dettaglioImpianto'){
 
-            if(this.template.querySelector("[data-id='RequestPhase__c']") !== null && this.template.querySelector("[data-id='RequestPhase__c']").value === '') {
+            if(this.template.querySelector("[data-id='CommentForDL__c']") !== null 
+                && (this.template.querySelector("[data-id='CommentForDL__c']").value === ''
+                    || this.template.querySelector("[data-id='CommentForDL__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Note per il DL',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
+                && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
+                    || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Tipo di Connessione',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='RequestPhase__c']") !== null 
+                && (this.template.querySelector("[data-id='RequestPhase__c']").value === ''
+                    || this.template.querySelector("[data-id='RequestPhase__c']").value === null)) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -557,7 +587,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
             
-            if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null && this.template.querySelector("[data-id='PhoneNumber__c']").value === '') {
+            if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null 
+            && (this.template.querySelector("[data-id='PhoneNumber__c']").value === ''
+                || this.template.querySelector("[data-id='PhoneNumber__c']").value === null)) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -1574,7 +1606,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'ConnectionType__c',
                     'apiname': 'ConnectionType__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': '',
@@ -1692,6 +1724,51 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Autocert Instanza',
                     'apiname': 'InstanceSelfCertification__c',
                     'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'SAPImplantCode__c',
+                    'apiname': 'SAPImplantCode__c',
+                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'SurfaceServed__c',
+                    'apiname': 'SurfaceServed__c',
+                    'typeVisibility': this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Note per il DL',
+                    'apiname': 'CommentForDL__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Convenzione/Associazione',
+                    'apiname': 'ConventionAssociation__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': false,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Delibera',
+                    'apiname': 'Deliberation__c',
+                    'typeVisibility': this.typeVisibility('gas'),
                     'required': false,
                     'disabled': false,
                     'value': '',

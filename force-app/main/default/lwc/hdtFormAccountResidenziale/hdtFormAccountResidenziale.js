@@ -10,6 +10,8 @@ import EDUCATIONALQUALIFICATION from '@salesforce/schema/Account.DegreeOfStudies
 import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
+import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
+import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountResidenziale.insertAccount';
 export default class HdtFormAccountResidenziale extends NavigationMixin(LightningElement) {
 
@@ -20,7 +22,8 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @track phonePrefixOptions;
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
-
+    @track fiscalCode;
+    currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
     settlementMunicipality;
@@ -33,6 +36,10 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     settlementPostalCode;
     gender;
     birthDate;
+    birthPlace;
+    accountAddress;
+    fieldsToUpdate= {};
+    isVerified= false;
     showModal= true;
     @api RecordTypeId;
 
@@ -88,48 +95,100 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         window.history.back();
     }
 
-    // handleCalculation(){
+    connectedCallback(){
+        this.currentObjectApiName= 'Account';
+    }
 
-    //     var isValidated= true;
-    //     let firstName =this.template.querySelector('[data-id="firstName"]').value;
-    //     let lastName= this.template.querySelector('[data-id="lastName"]').value;
-    //     this.gender=this.template.querySelector('[data-id="gender"]').value;
-    //     this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
-    //     let birthPlace=this.template.querySelector('[data-id="birthPlace"]').value;
+    handleCalculation(){
 
-    //     if(firstName=== undefined || firstName.trim()===''){
-    //         isValidated= false;
-    //     }
-    //     if(lastName=== undefined || lastName.trim()===''){
-    //         isValidated= false;
-    //     }
-    //     if(this.gender=== undefined || this.gender.trim()===''){
-    //         isValidated= false;
-    //     }
-    //     if(this.birthDate=== undefined || this.birthDate.trim()===''){
-    //         isValidated= false;
-    //     }
-    //     if(birthPlace=== undefined || birthPlace.trim()===''){
-    //         isValidated= false;
-    //     }
-    //     if(isValidated){
-    //         var information={
-    //                             firstName:firstName, 
-    //                             lastName:lastName, 
-    //                             gender: this.gender, 
-    //                             birthDate: this.birthDate, 
-    //                             birthPlace: birthPlace
-    //                         };
-    //         this.template.querySelector("c-hdt-calcola-codice-fiscale").calculateFiscalCode(information);
-    //     }else{
-    //         const event = new ShowToastEvent({
-    //             message: 'Please complete all the information!',
-    //             variant: 'error',
-    //             mode: 'dismissable'
-    //         });
-    //         this.dispatchEvent(event);
-    //     }
-    // }
+        var isValidated= true;
+        let firstName =this.template.querySelector('[data-id="firstName"]').value;
+        let lastName= this.template.querySelector('[data-id="lastName"]').value;
+        this.gender=this.template.querySelector('[data-id="gender"]').value;
+        this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
+        this.fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
+        this.birthPlace=this.template.querySelector('[data-id="birthPlace"]').value;
+
+        if(firstName=== undefined || firstName.trim()===''){
+            isValidated= false;
+        }
+        if(lastName=== undefined || lastName.trim()===''){
+            isValidated= false;
+        }
+        if(this.gender=== undefined || this.gender.trim()===''){
+            isValidated= false;
+        }
+        if(this.birthDate=== undefined || this.birthDate.trim()===''){
+            isValidated= false;
+        }
+        if(this.birthPlace=== undefined || this.birthPlace.trim()===''){
+            isValidated= false;
+        }
+        if(isValidated){
+            var information={
+                                firstName:firstName, 
+                                lastName:lastName, 
+                                gender: this.gender, 
+                                birthDate: this.birthDate, 
+                                birthPlace: this.birthPlace
+                            };
+            calculateFiscalCode({infoData: information}).then((response) => {
+
+                this.fiscalCode.value= response;
+            }).catch((errorMsg) => { 
+                this.showError(errorMsg);
+                const event = new ShowToastEvent({
+                    message: this.errorMessage,
+                    variant: 'error',
+                    mode: 'dismissable'
+                });
+                this.dispatchEvent(event);
+            });            
+        }else{
+            const event = new ShowToastEvent({
+                message: 'Inserire le Informazioni Mancanti',
+                variant: 'error',
+                mode: 'dismissable'
+            });
+            this.dispatchEvent(event);
+        }
+    }
+    getAccountAdress(){
+
+        if(this.accountAddress!= undefined){
+
+            if(this.accountAddress['Via'] != null){
+                this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
+            }
+            if(this.accountAddress['Comune'] != null){
+                this.fieldsToUpdate['BillingCity'] = this.accountAddress['Comune'];
+            }
+            if(this.accountAddress['CAP'] != null){
+                this.fieldsToUpdate['BillingPostalCode'] = this.accountAddress['CAP'];
+            }
+            if(this.accountAddress['Stato'] != null){
+                this.fieldsToUpdate['BillingCountry'] = this.accountAddress['Stato'];
+            }
+            if(this.accountAddress['Provincia'] != null){
+                this.fieldsToUpdate['BillingState'] = this.accountAddress['Provincia'];
+            }
+            if(this.accountAddress['Codice Comune SAP'] != null){
+                this.fieldsToUpdate['BillingCityCode__c'] = this.accountAddress['Codice Comune SAP'];
+            }
+            if(this.accountAddress['Codice Via Stradario SAP'] != null){
+                this.fieldsToUpdate['BillingStreetCode__c'] = this.accountAddress['Codice Via Stradario SAP'];
+            }
+            if(this.accountAddress['Estens.Civico'] != null){
+                this.fieldsToUpdate['BillingStreetNumberExtension__c'] = this.accountAddress['Estens.Civico'];
+            }
+            if(this.accountAddress['Civico'] != null){
+                this.fieldsToUpdate['BillingStreetNumber__c'] = this.accountAddress['Civico'];
+            }
+            if(this.accountAddress['Flag Verificato'] !=null){
+                this.isVerified = this.accountAddress['Flag Verificato'];
+            }
+        }
+    }
 
     handleSave(){
         console.log(this.RecordTypeId);
@@ -137,7 +196,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let isValidated= true;
         let firstName =this.template.querySelector('[data-id="firstName"]');
         let lastName= this.template.querySelector('[data-id="lastName"]');
-        let fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
+        this.fiscalCode= this.template.querySelector('[data-id="fiscalCode"]');
         let customerMarking =this.template.querySelector('[data-id="customerMarking"]');
         let category= this.template.querySelector('[data-id="category"]');
         let phonePrefix= this.template.querySelector('[data-id="phonePrefix"]');
@@ -161,6 +220,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         let profession= this.template.querySelector('[data-id="profession"]');   
         this.gender=this.template.querySelector('[data-id="gender"]').value;
         this.birthDate=this.template.querySelector('[data-id="birthDate"]').value;
+        this.birthPlace= this.template.querySelector('[data-id="birthPlace"]').value;
         this.spinner= true;
         let messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
@@ -171,7 +231,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         if(!lastName.reportValidity()){
             isValidated=false;
         } 
-        if(!fiscalCode.reportValidity()){
+        if(!this.fiscalCode.reportValidity()){
             isValidated=false;
         } 
         if(!category.reportValidity()){
@@ -229,15 +289,15 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
 
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<10){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
                 isValidated=false;
-                messageError=" Il numero di cellulare non può essere meno di 10 cifre!";
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
         }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
-            if(phoneNumber.value.length>11){
+            if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono non può essere più di 11 cifre!";
+                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
         if(!(email.value=== undefined || email.value.trim()==='')){
@@ -248,131 +308,154 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         }
 
         if(isValidated){
-            // var isEmpty=false;
-            // if(this.gender === undefined || this.gender.trim()===''){
-            //     isEmpty= true;
-            // }
-            // if(this.birthDate === undefined || this.birthDate.trim()===''){
-            //     isEmpty= true;
-            // }
-            // if(isEmpty){
-            //     getFromFiscalCode({
-            //         fiscalC : fiscalCode.value
-            //     }).then((response) => {
-            //         if(this.gender === undefined || this.gender.trim()===''){
-            //             this.gender= response.gender;
-            //         }
-            //         if(this.birthDate === undefined || this.birthDate.trim()===''){
-            //             this.birthDate= response.birthDate;
-            //         }
-            //         let acc= {
-            //             "firstName": firstName.value,
-            //             "lastName": lastName.value,
-            //             "fiscalCode": fiscalCode.value.replace(/ /g,""),
-            //             "phoneNumber": phoneNumber.value,
-            //             "mobilePhone" : mobilePhone.value,
-            //             "name": lastName.value+' '+firstName.value,
-            //             "email": email.value,
-            //             "recordTypeId" : this.RecordTypeId,
-            //             "category" : category.value,
-            //             "customerMarking" : customerMarking.value,
-            //             "gender" : this.gender,
-            //             "otherPhoneNumber" : otherPhoneNumber.value,
-            //             "education" : education.value,
-            //             "profession" : profession.value,
-            //             "role" : role.value,
-            //             "birthDate" : this.birthDate,
-            //             "companyOwner" : companyOwner.value,  
-            //         };
-            //         console.log(acc);
-            //         insertAccount({
-            //             dataAccount : acc
-            //         }).then((response) => {
-            //             const event = new ShowToastEvent({
-            //                 message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
-            //                 variant: 'success',
-            //                 mode: 'dismissable'
-            //             });
-            //             this.dispatchEvent(event);
-            //             this.showModal= false;
-            //             this[NavigationMixin.Navigate]({
-            //                 type: 'standard__recordPage',
-            //                 attributes: {
-            //                     recordId: response.Id,
-            //                     objectApiName: 'Account',
-            //                     actionName: 'view'
-            //                 }
-            //             });
-            //         }).catch((errorMsg) => {
-            //             this.showError(errorMsg);
-            //             const event = new ShowToastEvent({
-            //                 message: this.errorMessage,
-            //                 variant: 'error',
-            //                 mode: 'dismissable'
-            //             });
-            //             this.dispatchEvent(event);
-            //             this.spinner=false;
-            //         });
-            //     }).catch((errorMsg) => {
-            //         const event = new ShowToastEvent({
-            //             message: 'Entra un valido codice fiscale!',
-            //             variant: 'error',
-            //             mode: 'dismissable'
-            //         });
-            //         this.dispatchEvent(event);
-            //         this.spinner=false;
-            //     });
-            // }else{
-                let acc= {
-                    "firstName": firstName.value,
-                    "lastName": lastName.value,
-                    "fiscalCode": fiscalCode.value.replace(/ /g,""),
-                    "phoneNumber": phoneNumber.value,
-                    "mobilePhone" : mobilePhone.value,
-                    "name": lastName.value+' '+firstName.value,
-                    "email": email.value,
-                    "recordTypeId" : this.RecordTypeId,
-                    "category" : category.value,
-                    "customerMarking" : customerMarking.value,
-                    "gender" : this.gender,
-                    "education" : education.value,
-                    "profession" : profession.value,
-                    "role" : role.value,
-                    "birthDate" : this.birthDate,
-                    "companyOwner" : companyOwner.value ,
-                    "phonePrefix" : phonePrefix.value ,
-                    "mobilePhonePrefix" : mobilePhonePrefix.value 
-                };
-                console.log(acc);
-                insertAccount({
-                    dataAccount : acc
-                }).then((response) => {
-                    const event = new ShowToastEvent({
-                        message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
-                        variant: 'success',
-                        mode: 'dismissable'
-                    });
-                    this.dispatchEvent(event);
-                    this.showModal= false;
-                    this[NavigationMixin.Navigate]({
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: response.Id,
-                            objectApiName: 'Account',
-                            actionName: 'view'
+            this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+            this.getAccountAdress();
+            if(this.isVerified){
+                var isEmpty=false;
+                if(this.gender === undefined || this.gender.trim()===''){
+                    isEmpty= true;
+                }
+                if(this.birthDate === undefined || this.birthDate.trim()===''){
+                    isEmpty= true;
+                }
+                if(this.birthPlace === undefined || this.birthPlace.trim()===''){
+                    isEmpty= true;
+                }
+                if(isEmpty){
+                    getFromFiscalCode({
+                        fiscalCodes : {'Account' : this.fiscalCode.value.replace(/ /g,"")}
+                    }).then((response) => {
+                        let fiscData= response.Account;
+                        if(this.gender === undefined || this.gender.trim()===''){
+                            this.gender= fiscData.gender;
                         }
+                        if(this.birthDate === undefined || this.birthDate.trim()===''){
+                            this.birthDate= fiscData.birthDate;
+                        }
+                        if(this.birthPlace === undefined || this.birthPlace.trim()===''){
+                            this.birthPlace= fiscData.birthPlace;
+                        }
+                        
+                        let acc= {
+                            "firstName": firstName.value,
+                            "lastName": lastName.value,
+                            "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
+                            "phoneNumber": phoneNumber.value,
+                            "mobilePhone" : mobilePhone.value,
+                            "name": lastName.value+' '+firstName.value,
+                            "email": email.value,
+                            "birthplace": this.birthPlace,
+                            "recordTypeId" : this.RecordTypeId,
+                            "category" : category.value,
+                            "customerMarking" : customerMarking.value,
+                            "gender" : this.gender,
+                            "education" : education.value,
+                            "profession" : profession.value,
+                            "role" : role.value,
+                            "birthDate" : this.birthDate,
+                            "companyOwner" : companyOwner.value ,
+                            "phonePrefix" : phonePrefix.value ,
+                            "mobilePhonePrefix" : mobilePhonePrefix.value   
+                        };
+                        insertAccount({
+                            dataAccount : acc,
+                            accountAddress: this.fieldsToUpdate
+                        }).then((response) => {
+                            const event = new ShowToastEvent({
+                                message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                                variant: 'success',
+                                mode: 'dismissable'
+                            });
+                            this.dispatchEvent(event);
+                            this.showModal= false;
+                            this[NavigationMixin.Navigate]({
+                                type: 'standard__recordPage',
+                                attributes: {
+                                    recordId: response.Id,
+                                    objectApiName: 'Account',
+                                    actionName: 'view'
+                                }
+                            });
+                        }).catch((errorMsg) => {
+                            this.showError(errorMsg);
+                            const event = new ShowToastEvent({
+                                message: this.errorMessage,
+                                variant: 'error',
+                                mode: 'dismissable'
+                            });
+                            this.dispatchEvent(event);
+                            this.spinner=false;
+                        });
+                    }).catch((errorMsg) => {
+                        const event = new ShowToastEvent({
+                            message: 'Entra un valido codice fiscale!',
+                            variant: 'error',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        this.spinner=false;
                     });
-                }).catch((errorMsg) => {
-                    this.showError(errorMsg);
-                    const event = new ShowToastEvent({
-                        message: this.errorMessage,
-                        variant: 'error',
-                        mode: 'dismissable'
+                }else{
+                    let acc= {
+                        "firstName": firstName.value,
+                        "lastName": lastName.value,
+                        "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
+                        "phoneNumber": phoneNumber.value,
+                        "mobilePhone" : mobilePhone.value,
+                        "name": lastName.value+' '+firstName.value,
+                        "email": email.value,
+                        "birthplace": this.birthPlace,
+                        "recordTypeId" : this.RecordTypeId,
+                        "category" : category.value,
+                        "customerMarking" : customerMarking.value,
+                        "gender" : this.gender,
+                        "education" : education.value,
+                        "profession" : profession.value,
+                        "role" : role.value,
+                        "birthDate" : this.birthDate,
+                        "companyOwner" : companyOwner.value ,
+                        "phonePrefix" : phonePrefix.value ,
+                        "mobilePhonePrefix" : mobilePhonePrefix.value 
+                    };
+                    insertAccount({
+                        dataAccount : acc,
+                        accountAddress: this.fieldsToUpdate
+                    }).then((response) => {
+                        const event = new ShowToastEvent({
+                            message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
+                            variant: 'success',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        this.showModal= false;
+                        this[NavigationMixin.Navigate]({
+                            type: 'standard__recordPage',
+                            attributes: {
+                                recordId: response.Id,
+                                objectApiName: 'Account',
+                                actionName: 'view'
+                            }
+                        });
+                    }).catch((errorMsg) => {
+                        this.showError(errorMsg);
+                        const event = new ShowToastEvent({
+                            message: this.errorMessage,
+                            variant: 'error',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
+                        this.spinner=false;
                     });
-                    this.dispatchEvent(event);
-                    this.spinner=false;
+                }
+            }else{
+                const event = new ShowToastEvent({
+                    message: " L\'indirizzo non è stato verificato! ",
+                    variant: 'error',
+                    mode: 'dismissable'
                 });
-            // }
+                this.dispatchEvent(event);
+                this.spinner=false;
+            }
             
         }else{
             const event = new ShowToastEvent({

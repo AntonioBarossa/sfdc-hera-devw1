@@ -5,6 +5,7 @@
      	   "entityApiName": "Lead",
      	   "defaultFieldValues": {
      	   'Company' : 'Default',
+           'LeadSource' : 'Creazione manuale' 
     	}
    	 	});
     	createRecordEvent.fire();

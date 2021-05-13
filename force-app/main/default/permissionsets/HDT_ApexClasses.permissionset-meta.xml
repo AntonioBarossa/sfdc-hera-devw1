@@ -5,6 +5,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_IndemnityConfirmation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_IndemnityConfirmation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_PostSalesCriteriaManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_PostSalesCriteriaManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_MassiveLoader</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -954,6 +970,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_BpCaVariation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WRP_BpCaVariationVatGroup</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

@@ -12,6 +12,7 @@ public inherited sharing class HDT_LC_SaleVas {
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 
@@ -91,6 +92,30 @@ public inherited sharing class HDT_LC_SaleVas {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check for duplicated contract/order reference in current sale
+     * @param String saleId
+     * @param String objectId (OrderReference__c/ContractReference__c)
+     * @param String type (contract or order)
+     */
+    private static Boolean isDuplicated(String saleId, String objectId, String type) {
+        Boolean result = false;
+
+        List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
+
+        switch on type {
+            when 'contract' {
+                resultsList = quoteQr.getQuotesBySaleAndContractReference(saleId, objectId);
+            }
+            when 'order' {
+                resultsList = quoteQr.getQuotesBySaleAndOrderReference(saleId, objectId);
+            }
+        }
+
+        return !resultsList.isEmpty();
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
      * @param Order order
      * @param String supplyCity
@@ -99,6 +124,10 @@ public inherited sharing class HDT_LC_SaleVas {
         
         if (order.Id == null) {
             throw new AuraHandledException('Devi scegliere un ordine!');
+        }
+
+        if (isDuplicated(sale.Id, order.Id, 'order')) {
+            throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -117,7 +146,7 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Primary__c = true,
             Agency__c = sale.Agency__c,
             Market__c = sale.Market__c,
-            Channel__c = sale.Channel__c,
+            // Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
@@ -125,7 +154,7 @@ public inherited sharing class HDT_LC_SaleVas {
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             IsVAS__c = true,
-            SBQQ__PriceBook__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
+            SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -145,6 +174,10 @@ public inherited sharing class HDT_LC_SaleVas {
             throw new AuraHandledException('Devi scegliere un contrato!');
         }
 
+        if (isDuplicated(sale.Id, contract.Id, 'contract')) {
+            throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
+        }
+
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
             Sale__c = sale.Id,
             Name = opportunitySrv.generateName(sale) + ' VAS',
@@ -161,7 +194,7 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__Primary__c = true,
             Agency__c = sale.Agency__c,
             Market__c = sale.Market__c,
-            Channel__c = sale.Channel__c,
+            // Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
@@ -169,7 +202,7 @@ public inherited sharing class HDT_LC_SaleVas {
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
             IsVAS__c = true,
-            SBQQ__PriceBook__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
+            SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -205,13 +238,13 @@ public inherited sharing class HDT_LC_SaleVas {
             SupplyCity__c = supplyCity,
             Agency__c = sale.Agency__c,
             Market__c = sale.Market__c,
-            Channel__c = sale.Channel__c,
+            // Channel__c = sale.Channel__c,
             FriendCode__c = sale.FriendCode__c,
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
             SalesCompany__c = sale.SalesCompany__c,
             IsVAS__c = true,
-            SBQQ__PriceBook__c = getPricebookId('VAS Standalone')
+            SBQQ__PricebookId__c = getPricebookId('VAS Standalone')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -226,9 +259,11 @@ public inherited sharing class HDT_LC_SaleVas {
 
         if(!pricebook.isEmpty()) {
             result = pricebook[0].Id;
+        } else {
+            result = null;
         }
 
-        return null;
+        return result;
     }
 
     private static String checkCommodityContract(String contractId) {

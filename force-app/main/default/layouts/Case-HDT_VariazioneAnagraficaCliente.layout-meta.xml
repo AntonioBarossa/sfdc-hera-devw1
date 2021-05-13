@@ -78,6 +78,10 @@
                 <behavior>Edit</behavior>
                 <field>VatNumber__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>AlternativeAddress__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

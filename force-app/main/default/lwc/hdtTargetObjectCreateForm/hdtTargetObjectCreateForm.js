@@ -57,7 +57,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @api rowsplitgas = [];
     @api responseArriccData;
     isSap= false;
-    @api titleComponent='Fornitura';
+    isValid = false;
+    isValidFields = false;
+
 
     
     
@@ -717,7 +719,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.allSubmitedFields['SupplyStreetNumber__c'] = this.theRecord['Civico'];
             }
             if(this.allSubmitedFields['SupplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']){
-                this.allSubmitedFields['SupplyIsAddressVerified__c'] === this.theRecord['Flag Verificato'];
+                this.allSubmitedFields['SupplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
             }
         }
 
@@ -732,6 +734,57 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         dispatchEvent(event);
     }
 
+    validFields() {
+        console.log('validFields START');
+        let isValid = true;
+        this.isValidFields = true;
+        let concatBillingErrorFields = '';
+        let concatAddressErrorFields = '';
+        //Validate address
+        if(!this.theRecord['Indirizzo Estero']){
+            console.log('entra in if ind estero');
+            if (!this.theRecord['Flag Verificato']) {
+                console.log('entra in flag verificato false ');
+                isValid = false;
+                this.isValidFields = false;
+               // this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
+                this.alert('Dati tabella','E\' necessario verificare l\'indirizzo per poter procedere al salvataggio','error')
+
+            }
+        } else {
+            console.log('entra in else ind estero ');
+
+            let foreignAddressMsg = 'Per poter salvare popolare i seguenti campi di indirizzo: ';
+            if (this.theRecord['Stato'] === undefined || this.theRecord['Stato'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Stato, ');
+            }
+            if (this.theRecord['Provincia'] === undefined || this.theRecord['Provincia'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Provincia, ');
+            }
+            if (this.theRecord['Comune'] === undefined || this.theRecord['Comune'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Comune, ');
+            }
+            if (this.theRecord['Via'] === undefined || this.theRecord['Via'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Via, ');
+            }
+            if (this.theRecord['Civico'] === undefined || this.theRecord['Civico'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('Civico, ');
+            }
+            if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
+            }
+            if (concatAddressErrorFields !== '') {
+                isValid = false;
+                this.isValidFields = false;
+                //this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
+                this.alert('Dati tabella','Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2),'error')
+            }
+        }
+        console.log('validFields END');
+
+        return isValid;
+    }
+
     /**
      * Handle new record creation
      */
@@ -739,14 +792,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('save');
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord ));
-        if((this.theRecord['Flag Verificato'] != true && this.theRecord['Indirizzo Estero'] != true)
-            ||
-            (this.theRecord['Flag Verificato'] != true && this.theRecord['Indirizzo Estero'] == true))
-            {
-            this.alert('Dati tabella','Per poter Confermare è necessario verificare l'+' indirizzo','error')
-        }
-        else
-        {
+
+        this.validFields();
+        if(this.isValidFields == true){
 
         
         this.validationChecks();
@@ -775,13 +823,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             
         }
-        }
+    }
     }
 
     /**
      * Get form title
      */
     get formTitle(){
+        console.log('selectedServicePoint formtitle'+ JSON.stringify(this.selectedservicepoint));
         if(this.selectedservicepoint != undefined){
             return 'Service Point: ' + this.selectedservicepoint['Codice Punto'];
         } else {

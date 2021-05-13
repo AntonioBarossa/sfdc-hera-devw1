@@ -874,6 +874,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CompetentOffice__c</picklist>
         <values>
             <fullName>Aziende outMercato</fullName>
@@ -6984,9 +7003,33 @@
             <fullName>Voltura</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>PostSales VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche VAS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
@@ -7028,6 +7071,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambio Offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio contatore non registrato</fullName>
             <default>false</default>
         </values>
@@ -7053,6 +7104,10 @@
         </values>
         <values>
             <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connessione con Attivazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7196,6 +7251,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prima Attivazione Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione In delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recesso per Altri Motivi</fullName>
             <default>false</default>
         </values>
@@ -7225,6 +7296,10 @@
         </values>
         <values>
             <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7300,7 +7375,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Switch Out SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Fittizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Reseller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Winback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in con voltura tecnica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7340,6 +7451,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Variazione su Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica Dati al DL</fullName>
             <default>false</default>
         </values>
@@ -7357,6 +7472,14 @@
         </values>
         <values>
             <fullName>Verifica Titolarità POD%2FPDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Switch</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7560,13 +7683,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Nome_cimitero__c</picklist>
-        <values>
-            <fullName>null</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NotJustMotivation__c</picklist>
         <values>
             <fullName>Analisi incompleta</fullName>
@@ -7706,6 +7822,22 @@
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

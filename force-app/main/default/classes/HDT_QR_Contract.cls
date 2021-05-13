@@ -56,7 +56,7 @@ public inherited sharing class HDT_QR_Contract {
             FROM
             Contract
             WHERE AccountId = :accountId									 
-            AND Status = 'Activated'
+            AND Status IN ('Activated', 'Attivo')
             WITH SECURITY_ENFORCED
         ];
     }
@@ -80,7 +80,7 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId
             AND ServicePoint__c = :servicePointId
-            AND Status = 'Activated'
+            AND Status IN ('Activated', 'Attivo')
             WITH SECURITY_ENFORCED
         ];
     }

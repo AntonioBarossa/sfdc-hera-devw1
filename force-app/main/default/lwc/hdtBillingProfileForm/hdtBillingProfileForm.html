@@ -15,22 +15,34 @@
                         
                         <lightning-record-edit-form record-id={recordId} object-api-name="BillingProfile__c">
                             
-                            <lightning-input-field required onchange={handlePaymentMethodSelect} field-name="PaymentMethod__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field required onchange={handlePaymentMethodSelect} data-id="PaymentMethod__c" field-name="PaymentMethod__c" variant="label-stacked"></lightning-input-field>
                             <template if:true={fields}>    
                                 <div class="slds-grid slds-wrap slds-m-top_small">
                                     <template for:each={fields} for:item="field">
                                         <template if:true={field.value}>
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} if:true={field.visibility} value={field.value} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} required={field.required} if:true={field.visibility} value={field.value} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} data-id={field.fieldName} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                         <template if:false={field.value}>
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} if:true={field.visibility} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" disabled={field.disabled} required={field.required} if:true={field.visibility} onchange={handleCollectFieldsData} data-name={field.fieldName} key={field} data-id={field.fieldName} field-name={field.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </template>
                                 </div>
                                 <template if:true={tipologiaIntestatarioFields}>
+                                    <lightning-combobox
+                                    if:true={signatoryTypeIsVisible}
+                                    class="slds-size_1-of-3 fieldsData"
+                                    data-id="SignatoryType__c"
+                                    field-name="SignatoryType__c"
+                                    name="SignatoryType__c"
+                                    required
+                                    label="Tipo Sottoscrittore"
+                                    value=""
+                                    placeholder=""
+                                    options={signatoryTypeOptions}
+                                    onchange={handleCollectFieldsData} ></lightning-combobox>
                                     <div class="slds-grid slds-wrap slds-m-top_small">
                                         <template for:each={tipologiaIntestatarioFields} for:item="tipologiaIntestatarioField">
-                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field if:true={tipologiaIntestatarioField.visibility} required={tipologiaIntestatarioField.required} value={tipologiaIntestatarioField.value} disabled={tipologiaIntestatarioField.disabled} class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-id={tipologiaIntestatarioField.fieldName} data-name={tipologiaIntestatarioField.fieldName} key={tipologiaIntestatarioField.fieldName} field-name={tipologiaIntestatarioField.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </div>
                                 </template>
@@ -38,7 +50,7 @@
                                     <div class="slds-text-heading_small slds-m-top_small">Fatturazione elettronica</div>
                                     <div class="slds-grid slds-wrap slds-m-top_small">
                                         <template for:each={fatturazioneElettronicaFields} for:item="fatturazioneElettronicaField">
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={fatturazioneElettronicaField} key={fatturazioneElettronicaField} field-name={fatturazioneElettronicaField} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={fatturazioneElettronicaField} key={fatturazioneElettronicaField} data-id={fatturazioneElettronicaField} field-name={fatturazioneElettronicaField} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </div>
                                 </template>

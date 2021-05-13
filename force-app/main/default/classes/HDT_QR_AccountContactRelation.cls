@@ -70,6 +70,21 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         ];
 
     }
+
+    public List<AccountContactRelation> getAdministratorRelations() {
+    
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE Roles INCLUDES ('Amministratore condominio')
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
     // FINE SVILUPPI EVERIS
 
 }

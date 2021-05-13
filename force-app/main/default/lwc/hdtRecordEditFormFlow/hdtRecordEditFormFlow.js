@@ -84,12 +84,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }
                     });
                 }
-                this.variablesLoaded = true;
+                
                 if(this.recordId != null){
                     updateRecord({fields: { Id: this.recordId }}).then(() => {
                        console.log('Record Refreshato');
+                       console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                       this.variablesLoaded = true;
                     }).catch(error => {
                         console.log('Error Refreshing record');
+                        this.error = true;
                     });
                 }
             } else if (error) {
@@ -326,6 +329,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     handleChange(event){
 
+        //Reclami customizations
+
         let five = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')).length === 0)
         ? this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')
         : this.secondColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c');
@@ -375,12 +380,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
             }
 
-
-
         }
 
+        //Reclami customizations
 
     }
-
-
+ 
 }
