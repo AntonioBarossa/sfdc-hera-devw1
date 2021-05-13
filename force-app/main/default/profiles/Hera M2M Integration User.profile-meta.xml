@@ -29511,7 +29511,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Lead.HDT_RT_Main</recordType>
-        <visible>true</visible>
+        <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

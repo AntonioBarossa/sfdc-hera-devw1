@@ -5,11 +5,12 @@ import updateLead from '@salesforce/apex/HDT_UTL_Lead.updateLead';
 export default class HdtLeadAddress extends LightningElement {
 
     @api recordId;
+    @api vis = false;
     @track addressObject;
-    @track flag = false;
+    @track flag = true;
     @api objectApiName;
-    @track currentObjectName;
-    leadAddress;
+    @track currentObjectName = 'Lead';
+    @api leadAddress = [];
     fieldsToUpdate;
     isVerified= false;
 
@@ -34,6 +35,7 @@ export default class HdtLeadAddress extends LightningElement {
     handleSave(){
         //this.template.querySelector("c-hdt-target-object-address-fields").handleConfirm();
         this.leadAddress=this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+        console.log("PROVAPROVAPROVA_:" + JSON.stringify(this.leadAddress));
         this.updateLeadAdress();
         if(this.isVerified){
             if(this.fieldsToUpdate !=undefined){
