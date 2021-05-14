@@ -27974,7 +27974,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>wrts_prcgvr__Activity__c.vActivityDurationFormula__c</field>
+        <field>wrts_prcgvr__Activity__c.ActivityDurationFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
