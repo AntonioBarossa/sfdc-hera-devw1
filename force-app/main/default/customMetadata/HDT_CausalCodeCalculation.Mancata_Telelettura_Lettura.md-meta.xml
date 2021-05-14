@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Mancata Telelettura/Lettura</label>
+    <protected>false</protected>
+    <values>
+        <field>CausalCode__c</field>
+        <value xsi:type="xsd:string">C03</value>
+    </values>
+    <values>
+        <field>Cluster__c</field>
+        <value xsi:type="xsd:string">Variazioni</value>
+    </values>
+    <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Energia Elettrica</value>
+    </values>
+    <values>
+        <field>OperationCode__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Process__c</field>
+        <value xsi:type="xsd:string">Mancata Telelettura/lettura</value>
+    </values>
+    <values>
+        <field>Subprocess__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
