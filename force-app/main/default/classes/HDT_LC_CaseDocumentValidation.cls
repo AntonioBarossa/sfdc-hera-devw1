@@ -13,11 +13,17 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
     @AuraEnabled
     public static void saveValidation(String caseId, Boolean allValidated){
         Case currentCase = new Case();
+        String phase;
 
-        currentCase.Id = caseId;
+        currentCase = caseQr.getRecordById(caseId);
 
         if(allValidated){
-            currentCase.Phase__c = 'Da Inviare';
+            if(currentCase.Subprocess__c == 'Accise - Energia Elettrica'){
+                phase = 'Elaborazione Manuale';
+            } else {
+                phase = 'Da Inviare';
+            }
+            currentCase.Phase__c = phase;
             currentCase.CompletedDocumentationDate__c = System.today();
         } else {
 

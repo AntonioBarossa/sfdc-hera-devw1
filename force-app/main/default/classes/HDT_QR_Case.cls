@@ -13,6 +13,7 @@ public inherited sharing class HDT_QR_Case {
             Id,
             Status,
             Subject,
+            Subprocess__c,
             AccountId
             FROM Case
             where Id = :Id
