@@ -497,6 +497,46 @@
             <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Permanenza condizioni di disagio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Malfunzionamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Portabilità dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Cancellazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Rettifica dati personali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Accesso dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Limitazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Opposizione</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
             <valueName>Caduta Linea</valueName>
         </valueSettings>
