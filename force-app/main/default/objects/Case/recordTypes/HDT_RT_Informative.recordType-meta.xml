@@ -7008,6 +7008,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Generiche Attivazioni</fullName>
             <default>false</default>
         </values>
