@@ -87,7 +87,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SurfaceServed__c = 75;
         orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerContractual__c);
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
-        orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.WithdrawalClass__c : null;
+        orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
