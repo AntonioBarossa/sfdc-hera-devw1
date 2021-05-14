@@ -338,13 +338,7 @@
                 <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
-            </value>
-            <value>
-                <fullName>Chiamata Mura</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Chiamata Mura</label>
-            </value>
+          </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
@@ -503,6 +497,22 @@
             <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Permanenza condizioni di disagio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Malfunzionamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
             <valueName>Portabilità dei dati</valueName>
         </valueSettings>
@@ -529,6 +539,10 @@
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
             <valueName>Caduta Linea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Chiamata Muta</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>

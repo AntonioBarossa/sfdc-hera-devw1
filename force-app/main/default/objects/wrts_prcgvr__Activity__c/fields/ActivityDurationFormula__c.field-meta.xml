@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>vActivityDurationFormula__c</fullName>
+    <fullName>ActivityDurationFormula__c</fullName>
     <description>Durata attivita</description>
     <externalId>false</externalId>
     <formula>(ActivityEndTime__c - ActivityStartTime__c)*24*60</formula>

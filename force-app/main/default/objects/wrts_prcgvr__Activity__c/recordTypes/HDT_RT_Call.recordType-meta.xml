@@ -241,7 +241,15 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Chiamata inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Callback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata outbound</fullName>
             <default>false</default>
         </values>
     </picklistValues>
