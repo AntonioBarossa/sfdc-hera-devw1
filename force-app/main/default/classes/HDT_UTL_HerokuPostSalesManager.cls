@@ -185,7 +185,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String currentPhase = recordCase.Phase__c;
                 String nextPhase = reqWrp.requestMap.get('FASE');
                 String noteSap = reqWrp.requestMap.get('NOTA_HK');
-                String odv = reqWrp.requestMap.get('VBLEN');
+                String odv = reqWrp.requestMap.get('VBELN');
                 String currentDescription = recordCase.Description != null?recordCase.Description:'';
                 String newDescription = '';
                 if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
