@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <height>550</height>
+    <height>675</height>
     <label>Validazione Documentale</label>
     <lightningComponent>HDT_LCP_CaseDocumentValidation</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
