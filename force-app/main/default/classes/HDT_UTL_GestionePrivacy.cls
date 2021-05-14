@@ -99,12 +99,14 @@ public with sharing class HDT_UTL_GestionePrivacy {
                 phones.put(contact.IndividualId, phone);
             }
         }
-        if(check){
-            primaryPhone= new Map<String,String>();
-            HDT_UTL_ContactPoint.createContactPointPhone(primaryPhone,phonesHome ,phonePrefixes ,'Casa');
-        }else{
-            phone.remove(0);
-            HDT_UTL_ContactPoint.createContactPointPhone(primaryPhone,phones, phonePrefixes,'Casa');
+        if((mapPhone != null && !mapPhone.isEmpty()) || (mapMobilePhone != null && !mapMobilePhone.isEmpty()) ){
+            if(check){
+                primaryPhone= new Map<String,String>();
+                HDT_UTL_ContactPoint.createContactPointPhone(primaryPhone,phonesHome ,phonePrefixes ,'Casa');
+            }else{
+                phone.remove(0);
+                HDT_UTL_ContactPoint.createContactPointPhone(primaryPhone,phones, phonePrefixes,'Casa');
+            }
         }
     }
 

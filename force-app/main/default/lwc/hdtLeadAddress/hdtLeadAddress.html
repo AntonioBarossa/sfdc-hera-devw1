@@ -2,7 +2,7 @@
     <lightning-card>
         <div class="slds-p-left_x-small slds-p-right_x-small">
             <template if:true={flag}>
-                <c-hdt-target-object-address-fields wrap-address-object={addressObject} objectapiname={currentObjectName}></c-hdt-target-object-address-fields>
+                <c-hdt-target-object-address-fields visiblecopiaresidenza={vis} visibleselezioneindirizzi={vis} wrap-address-object={addressObject} objectapiname={currentObjectName}></c-hdt-target-object-address-fields>
             </template>
             <lightning-button variant="brand" name="" type="submit" label="Salva" onclick={handleSave}>
             </lightning-button>

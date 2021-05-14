@@ -12,5 +12,4 @@ package.xml
 **/__tests__/**
 **dashboards/trailheadapp__Trailhead_Dashboards
 **dashboards/Sales_and_Marketing_Dashboards
-**settings
 **profiles/Minimum Access - Salesforce.profile

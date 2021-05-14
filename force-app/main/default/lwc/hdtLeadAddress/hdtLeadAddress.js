@@ -1,21 +1,23 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getAddressObject from '@salesforce/apex/HDT_UTL_Lead.getAddressObject'; 
-import updateLead from '@salesforce/apex/HDT_UTL_Lead.updateLead'; 
+import updateLead2 from '@salesforce/apex/HDT_UTL_Lead.updateLeadAddress'; 
 export default class HdtLeadAddress extends LightningElement {
 
     @api recordId;
-    @track addressObject;
-    @track flag = false;
+    @api vis = false;
+    @api addressObject;
+    flag = true;
     @api objectApiName;
-    @track currentObjectName;
-    leadAddress;
-    fieldsToUpdate;
+    @track currentObjectName = 'Lead';
+    @api leadAddress = [];
+    @api fieldsToUpdate = []; 
     isVerified= false;
 
-    @wire(getAddressObject, {Id: '$recordId'})
+   /*@wire(getAddressObject, {Id: '$recordId'})
     addressInfo({ error, data }) {
         if(data){
+            console.log('******:'+ data);
             this.addressObject= data;
             this.flag= true;
         }
@@ -23,9 +25,15 @@ export default class HdtLeadAddress extends LightningElement {
             console.log(error);
         }
 
-    }
-    renderedCallback(){
+    }*/
+    connectedCallback(){
         this.currentObjectName = this.objectApiName;
+        console.log('******PROVA3:' + JSON.stringify(this.recordId));
+        getAddressObject({id: this.recordId}).then((response) => { 
+            console.log('******PROVA2:'+ JSON.stringify(response));
+            this.addressObject = response;
+            this.template.querySelector("c-hdt-target-object-address-fields").handleAddressValues(response);
+        });
         // if(this.flag){
         //     this.template.querySelector("c-hdt-target-object-address-fields").toObjectAddress();
         // }
@@ -34,13 +42,22 @@ export default class HdtLeadAddress extends LightningElement {
     handleSave(){
         //this.template.querySelector("c-hdt-target-object-address-fields").handleConfirm();
         this.leadAddress=this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
+        console.log("PROVAPROVAPROVA_:" + JSON.stringify(this.leadAddress));
         this.updateLeadAdress();
         if(this.isVerified){
             if(this.fieldsToUpdate !=undefined){
                 this.fieldsToUpdate['Id']= this.recordId;
                 console.log(this.fieldsToUpdate);
-                updateLead({
-                    lead: this.fieldsToUpdate
+                updateLead2({
+                    recordid : this.recordId,
+                    lead: this.leadAddress
+                }).then((response) => {
+                    const event = new ShowToastEvent({
+                        message: "Successo",
+                        variant: 'Successo',
+                        mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
                 });
             }
         }else{
