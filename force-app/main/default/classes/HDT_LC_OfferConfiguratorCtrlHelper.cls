@@ -1,8 +1,7 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList, String technicalofferid, String productId, String rate) {
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse, String techOffObj, String idToClone, String offerJson, String technicalofferid, String productId, String rate) {
         System.debug('# saveTechnicalOffer controller helper #');
-        System.debug('# offerList size -> ' + offerList.size());
         System.debug('# rate -> ' + rate);
 
         saveResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
@@ -15,18 +14,19 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         if(!isUpsert){
 
-            List<Product2> prodList;
-            prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
+            tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
+            //List<Product2> prodList;
+            //prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
 
-            List<RateTemplate__c> rateList;
-            rateList = HDT_QR_TechnicalOffer.getRateByName(rateList, rate);
-            Id rateId = rateList[0].Id;
+            //List<RateTemplate__c> rateList;
+            //rateList = HDT_QR_TechnicalOffer.getRateByName(rateList, rate);
+            //Id rateId = rateList[0].Id;
 
-            tecOff = new TechnicalOffer__c();
-            //Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
-            tecOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
-            tecOff.Product__c = productId;
-            tecOff.RateCategory__c = rateId;
+            //tecOff = new TechnicalOffer__c();
+            ////Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
+            //tecOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
+            //tecOff.Product__c = productId;
+            //tecOff.RateCategory__c = rateId;
             
             try{
                 SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
@@ -57,6 +57,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             tecOffId = technicalofferid;
         }
 
+        List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
+        offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
+        System.debug('# offerList size -> ' + offerList.size());
+
         List<TechnicalOfferItem__c> itemList = new List<TechnicalOfferItem__c>();
         TechnicalOfferItem__c tecOffItem;
 
@@ -85,6 +89,40 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         
         return saveResponse;
 
+    }
+
+    public static TechnicalOffer__c generateTechnicalOfferRecord(TechnicalOffer__c technicalOffer, String productId, String rate, String techOffObj, String idToClone){
+
+        List<Product2> prodList;
+        List<RateTemplate__c> rateList;
+        technicalOffer = new TechnicalOffer__c();
+
+        if(!String.isEmpty(techOffObj)){
+            //In this case we set manual configuration from UI
+            technicalOffer = (TechnicalOffer__c)JSON.deserialize(techOffObj, TechnicalOffer__c.class);
+            System.debug('# newTechnicalOffer > ' + technicalOffer);
+        }
+
+        if(!String.isEmpty(idToClone)){
+            //In this case we have to clone TechnicalOffer__c record using recordId
+            TechnicalOffer__c recToClone;
+            recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordById(recToClone, idToClone);
+            technicalOffer = recToClone.clone(false, true, false, false);
+            System.debug('# clonedTechnicalOffer > ' + technicalOffer);
+        }
+
+        //Last configuration of the TechnicalOffer__c record
+        prodList = HDT_QR_TechnicalOffer.getProductById(prodList, productId);
+        rateList = HDT_QR_TechnicalOffer.getRateByName(rateList, rate);
+
+        Id rateId = rateList[0].Id;
+
+        //EXAMPLE --> Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
+        technicalOffer.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
+        technicalOffer.Product__c = productId;
+        technicalOffer.RateCategory__c = rateId;
+
+        return technicalOffer;
     }
 
     public static List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> databaseInsert(List<TechnicalOfferItem__c> itemList, List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError> errorData){
@@ -376,28 +414,29 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         try{
             obj.header = new HDT_WRP_TechnicalOffer.HDT_WRP_Header();
-            obj.header.offerta = '';
-            obj.header.profilo = '';
-            obj.header.rateCategory = '';
-            obj.header.descrizioneOff = '';
-            obj.header.descrizioneProf = '';
-            obj.header.mercato = '';
-            obj.header.tipoProcesso = '';
-            obj.header.offertaPlacet = '';
-            obj.header.prodotto = '';
-            obj.header.zttContr = '';
-            obj.header.ab = '';
-            obj.header.bis = '';
-            obj.header.passoSn = '';
-            obj.header.verlaEng = '';
-            obj.header.verper = '';
-            obj.header.disdettaSn = '';
-            obj.header.kfrist = '';
-            obj.header.kuenper = '';
-            obj.header.recessoSn = '';
-            obj.header.trece = '';
-            obj.header.trper = '';
-            obj.header.modProfilo = '';
+            obj.header.offerta = techOff.Product__r.ProductCode;
+            obj.header.profilo = techOff.Version__c;
+            obj.header.rateCategory = techOff.RateCategory__r.Name;
+            obj.header.descrizioneOff = techOff.Product__r.DescriptionSAP__c;
+            obj.header.descrizioneProf = techOff.Product__r.DescriptionSAP__c;
+            obj.header.mercato = techOff.Market__c;
+            obj.header.tipoProcesso = techOff.ProcessType__c;
+            obj.header.offertaPlacet = techOff.PlacetOffer__c;
+            obj.header.prodotto = techOff.ServiceProduct__c;
+            obj.header.zttContr = techOff.ContractId__c;
+            obj.header.ab = String.valueOf(techOff.StartDate__c);
+            obj.header.bis = String.valueOf(techOff.EndDate__c);
+            obj.header.passoSn = techOff.StepAllowed__c;
+            obj.header.verlaEng = techOff.NumberTimeExtension__c;
+            obj.header.verper = techOff.UnitTimeExtension__c;
+            obj.header.disdettaSn = techOff.CancellationAllowed__c;
+            obj.header.kfrist = techOff.NunmberDaysMonthsYears__c;
+            obj.header.kuenper = techOff.UnitTerminationTime__c;
+            obj.header.recessoSn = techOff.RecessAdmitted__c;
+            obj.header.trece = techOff.NumberOfTimeUnits__c;
+            obj.header.trper = techOff.UnitOfTimeMeasurement__c;
+            obj.header.modProfilo = (techOff.AdmittingProfileModification__c) ? 'X' : '';
+            obj.header.modifica = (techOff.OfferToBeModified__c) ? 'X' : '';
 
             obj.header.positionList = new List<HDT_WRP_TechnicalOffer.HDT_WRP_Position>();
 

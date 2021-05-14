@@ -58,8 +58,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
             thisProduct = HDT_QR_TechnicalOffer.getProductById(thisProduct, productId);
             prodList = HDT_QR_TechnicalOffer.getProduct2ByCode(prodList, thisProduct[0].ProductCode, productId);
 
-            if(prodList.size() > 0){
+            if(prodList.size() > 0 && prodList[0].Technical_Offer__r.size() > 0){
                 respObj.data.productCodeIsAlreadyPresent = true;
+                respObj.data.techOffIdToClone = prodList[0].Technical_Offer__r[0].Id;
             } else {
                 respObj.data.productCodeIsAlreadyPresent = false;
             }
@@ -161,8 +162,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String offerJson, String productId, String technicalofferid, String rate, Boolean sendToSap){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveNewOfferConfigured(String techOffObj, String idToClone, String offerJson, String productId, String technicalofferid, String rate, Boolean sendToSap){
+        
         System.debug('# saveNewOfferConfigured #');
+        System.debug('# techOffObj > ' + techOffObj);
+        System.debug('# idToClone > ' + idToClone);
         System.debug('# technicalofferid > ' + technicalofferid);
         System.debug('# sendToSap > ' + sendToSap);
 
@@ -170,9 +174,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
         try{
 
-            List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
-            offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
-            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(saveResponse, offerList, technicalofferid, productId, rate);
+            //List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
+            //offerList = (List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>)JSON.deserialize(offerJson, List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow>.class);
+            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.saveTechnicalOffer(saveResponse, techOffObj, idToClone, offerJson, technicalofferid, productId, rate);
 
             //if(saveResponse.success && sendToSap && !String.isEmpty(saveResponse.techOffId)){
             //    System.debug('>>> sendToSap');

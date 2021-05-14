@@ -3,6 +3,7 @@ import { LightningElement, api } from 'lwc';
 export default class HdtTechnicalOfferEditForm extends LightningElement {
     @api productId;
     technicalOfferId = '';
+    techOffId;
     fieldsList = [
         'Market__c',
         'ProcessType__c',
@@ -35,7 +36,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
             detail: {newTechOfferId: event.detail.id}
         });
         // Fire the custom event
-        this.dispatchEvent(newOffer);       
+        this.dispatchEvent(newOffer);
     }
 
     handleError(event){
@@ -46,16 +47,23 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     handleSubmit(event){
         console.log('>>>> handleSubmit ');
-        //event.preventDefault();       // stop the form from submitting
-        //const fields = event.detail.fields;
-        //fields.Street = '32 Prince Street';
-        //this.template.querySelector('lightning-record-edit-form').submit(fields);
     }
 
     saveAction(){
         console.log('>>>> saveAction ');
+        var techOffObj = {};
         const fields = this.template.querySelectorAll('lightning-input-field');
-        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        //this.template.querySelector('lightning-record-edit-form').submit(fields);
+        this.template.querySelectorAll('lightning-input-field').forEach((field) => {
+            techOffObj[field.fieldName] = field.value;
+        });
+
+        const newOffer = new CustomEvent('newoffercreated', {
+            detail: {newTechOfferObj: JSON.stringify(techOffObj)}
+        });
+        // Fire the custom event
+        this.dispatchEvent(newOffer);
+
     }
 
     closeModal(event){

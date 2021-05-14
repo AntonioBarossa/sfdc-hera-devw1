@@ -13,6 +13,8 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     //rateTemplate;
     //rateName;
     rateObj;
+    newTechOfferObj;
+    techOffIdToClone;
     @track technicalOfferId;
 
     @track rtObj = {
@@ -95,6 +97,8 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
                 this.productCodeIsAlreadyPresent = result.data.productCodeIsAlreadyPresent;
                 console.log('>>>>>> productCodeIsAlreadyPresent > ' + this.productCodeIsAlreadyPresent);
+                console.log('>>>>>> techOffIdToClone: ' + result.data.techOffIdToClone);
+                this.techOffIdToClone = result.data.techOffIdToClone;
 
                 this.showWelcom = true;
 
@@ -195,11 +199,11 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
     }
 
-    handleSelection(event){
+    handleSelection(){
         console.log('###');
     }
 
-    openEditForm(event){
+    openEditForm(){
         this.showWelcom = false;
         this.showSearchOffer = false;
         this.showCreateOffer = false;
@@ -207,7 +211,10 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     }
 
     newTechOfferCreated(event){
-        console.log('>>> newOfferCreated > ' + event.detail.newTechOfferId);
+        console.log('>>> newOfferCreated > ' + event.detail.newTechOfferObj);
+        this.showEditForm = false;
+        this.newTechOfferObj = event.detail.newTechOfferObj;
+        this.showCreateOffer = true;
     }
 
 }

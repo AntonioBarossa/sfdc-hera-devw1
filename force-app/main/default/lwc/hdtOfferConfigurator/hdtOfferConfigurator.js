@@ -13,6 +13,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     @track selection;
     @api productid;
     @api technicalofferid;
+    @api newTechOfferObj;
+    @api techOffIdToClone;
     @api rateObj;
     showDelete = false;
     @track spinnerObj = {
@@ -74,6 +76,8 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     }
 
     connectedCallback() {
+        console.log('>>> newTechOfferObj > ' + this.newTechOfferObj);
+        console.log('>>> techOffIdToClone > ' + this.techOffIdToClone);
         this.spinnerObj.spinner = true;
         this.spinnerObj.spincss = 'loadingdata slds-text-heading_small';
 
@@ -299,7 +303,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         var toastObj = {success: true, title: '', message: '', variant: '', mode: 'sticky'};
 
-        saveNewOfferConfigured({offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory, sendToSap: sendToSap})
+        saveNewOfferConfigured({techOffObj: this.newTechOfferObj, idToClone: this.techOffIdToClone, offerJson: JSON.stringify(this.dataRows), productId: this.productid, technicalofferid: this.technicalofferid, rate: this.product.rateCategory, sendToSap: sendToSap})
         .then(result => {
             console.log('# save success #');
             console.log('# resp -> ' + JSON.stringify(result));

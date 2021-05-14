@@ -38,7 +38,11 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static TechnicalOffer__c queryTechnicalOfferForWebService(TechnicalOffer__c techOff, Id recId){
         techOff = [
-            SELECT Id, Name, RateCategory__r.Name, (
+            SELECT Id, Name, Product__r.ProductCode, Product__r.DescriptionSAP__c, RateCategory__r.Name, Market__c, ProcessType__c, PlacetOffer__c, ServiceProduct__c, StepAllowed__c, StartDate__c, EndDate__c,
+                   ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, CancellationAllowed__c, NunmberDaysMonthsYears__c,
+                   UnitTerminationTime__c, RecessAdmitted__c, NumberOfTimeUnits__c, UnitOfTimeMeasurement__c, AdmittingProfileModification__c,
+                   OfferToBeModified__c,
+                (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
@@ -58,6 +62,20 @@ public inherited sharing class HDT_QR_TechnicalOffer {
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
                 )
+            FROM TechnicalOffer__c
+            WHERE Id =: recId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+        return techOff;
+    }
+
+    public static TechnicalOffer__c queryTechnicalOfferRecordById(TechnicalOffer__c techOff, String recId){
+        techOff = [
+            SELECT Id, Market__c, ProcessType__c, PlacetOffer__c, ServiceProduct__c, StepAllowed__c, StartDate__c, EndDate__c,
+                   ContractId__c, NumberTimeExtension__c, UnitTimeExtension__c, CancellationAllowed__c, NunmberDaysMonthsYears__c,
+                   UnitTerminationTime__c, RecessAdmitted__c, NumberOfTimeUnits__c, UnitOfTimeMeasurement__c, AdmittingProfileModification__c,
+                   OfferToBeModified__c
             FROM TechnicalOffer__c
             WHERE Id =: recId
             WITH SECURITY_ENFORCED
