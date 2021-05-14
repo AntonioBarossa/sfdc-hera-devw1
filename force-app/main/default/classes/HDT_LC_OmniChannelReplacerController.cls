@@ -1,4 +1,4 @@
-    public with sharing class HDT_LC_OmniChannelReplacerController {
+public with sharing class HDT_LC_OmniChannelReplacerController {
     @AuraEnabled
     public static String getSigmaLogin() {
         return [SELECT FederationIdentifier FROM User WHERE Id =: UserInfo.getUserID() WITH SECURITY_ENFORCED].FederationIdentifier;
@@ -19,7 +19,7 @@
                 Account__c,
                 QAdTicketCallTime__c,
                 ActivityEndTime__c,
-                ActivityDuration__c,
+                ActivityDurationFormula__c,
                 wrts_prcgvr__Status__c
             FROM
                 wrts_prcgvr__Activity__c

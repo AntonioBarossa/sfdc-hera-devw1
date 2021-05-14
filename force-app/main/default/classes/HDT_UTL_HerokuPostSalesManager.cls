@@ -175,7 +175,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String dlCode;
         String sendDlDate;
         String errorMessage;
-
+        String comunicationChannel;
+        String responseStatus;
         Case caseNew = new Case();
 
 
@@ -188,15 +189,23 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     dlCode = responseResult.responseMap.get('COD_PRAT_DISTR');
                     sendDlDate = responseResult.responseMap.get('DT_INVIO_DL');
                     errorMessage = responseResult.responseMap.get('errorMessage');
-                    System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
-                    switch on responseResult.responseMap.get('result'){
+                    comunicationChannel = responseResult.responseMap.get('comunicationChannel');
+                    responseStatus = responseResult.responseMap.get('result');
+                    switch on responseStatus{
                         when 'OK'{
-                            phase = 'Comunicazione verso Heroku OK';
+                            switch on comunicationChannel{
+                                when 'ATOA'{
+                                    phase = responseResult.responseMap.get('FASE');
+                                } 
+                                when else{
+                                    phase = 'Comunicazione verso Heroku OK';
+                                }
+                            }
                         } 
                         when else{
                             phase = 'Comunicazione verso Heroku KO';
                         }
-                    }
+                    }                    
                 } when 'ANNULL'{
                     errorMessage = responseResult.responseMap.get('errorMessage');
                     System.debug('SRV_Class_result--> '+responseResult.responseMap.get('result'));
@@ -206,7 +215,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         } 
                         when else{
                             //FASE NON PRESENTE
-
                         }
                     }
                 } 
