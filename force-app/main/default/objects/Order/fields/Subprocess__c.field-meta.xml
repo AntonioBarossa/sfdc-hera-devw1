@@ -8,23 +8,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Standard</fullName>
-                <default>false</default>
-                <label>Standard</label>
-            </value>
-            <value>
-                <fullName>Con Autolettura</fullName>
-                <default>false</default>
-                <label>Con Autolettura</label>
-            </value>
-            <value>
-                <fullName>Retroattiva</fullName>
-                <default>false</default>
-                <label>Retroattiva</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_OrderSubprocess</valueSetName>
     </valueSet>
 </CustomField>
