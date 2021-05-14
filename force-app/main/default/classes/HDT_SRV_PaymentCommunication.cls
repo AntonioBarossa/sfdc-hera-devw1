@@ -1,9 +1,15 @@
 public inherited sharing class HDT_SRV_PaymentCommunication {
 
     HDT_QR_PaymentCommunication paymentQr = new HDT_QR_PaymentCommunication();
+    HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
     public String createRequestBody(String recordId){
 
+        List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput> inputList = new List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput>();
+        HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput caseInput = new HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput();
+        HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput documentInput = new HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput();
+        List<Map<String, Object>> documentsListMap = new List<Map<String, Object>>();
+        List<Map<String, Object>> caseListMap = new List<Map<String, Object>>();
         List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
         Case currentCase = new Case();
         String pretty;
@@ -22,65 +28,42 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
             'acconto' => currentCase.Deposit__c
         };
 
-        JSONGenerator gen = JSON.createGenerator(true);
+        caseListMap.add(caseMap);
 
-        gen.writeStartObject();
-        for(String mapKey : caseMap.keySet()){
+        caseInput.isParent = true;
+        caseInput.isChild = false;
+        caseInput.configMapList = caseListMap;
 
-            if(caseMap.get(mapKey) != null){
+        inputList.add(caseInput);
 
-                if(caseMap.get(mapKey) instanceof String){
-
-                    gen.writeStringField(mapKey, (String) caseMap.get(mapKey));
-
-                } else if(caseMap.get(mapKey) instanceof Integer){
-
-                    gen.writeNumberField(mapKey, (Integer) caseMap.get(mapKey));
-
-                }else if(caseMap.get(mapKey) instanceof Decimal){
-
-                    gen.writeNumberField(mapKey, (Decimal) caseMap.get(mapKey));
-
-                } else if(caseMap.get(mapKey) instanceof Date){
-
-                    gen.writeDateField(mapKey, (Date) caseMap.get(mapKey));
-
-                } else if(caseMap.get(mapKey) instanceof Boolean){
-
-                    gen.writeBooleanField(mapKey, (Boolean) caseMap.get(mapKey));
-
-                }
-
-            }else{
-
-                gen.writeNullField(mapKey);
-
-            }
-
-        }
-        gen.writeFieldName('pagamenti');
-        gen.writeStartArray();
         for(DocumentSelected__c document : documents){
+            documentsListMap.add(
+                new Map<String, Object>{
+                    'numeroBollettino' => document.Bill__c,
+                    'numeroFattura' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
+                    'numeroFattura1' => '',
+                    'rataFattura' => '',
+                    'scadenza' => document.ExpirationDate__c,
+                    'pagato' => document.PaidCustomer__c,
+                    'infoBlocco' => '',
+                    'idProcesso' => '',
+                    'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
+                    'dataFattura' => document.IssueDate__c,
+                    'totaleParziale' => document.TotalCommunicationPayment__c
+                }
+            );
 
-            gen.writeStartObject();
-            gen.writeStringField('numeroBollettino','');
-            gen.writeStringField('numeroFattura',document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '');
-            gen.writeStringField('numeroFattura1','');
-            gen.writeStringField('rataFattura','');
-            gen.writeDateField('scadenza',document.ExpirationDate__c);
-            //gen.writeNumberField('pagato',document.PaidCustomer__c);
-            gen.writeStringField('infoBlocco','');
-            gen.writeStringField('idProcesso','');
-            gen.writeStringField('numeroDocumento',document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c);
-            //gen.writeStringField('rateizzazione',document.Extension__c);
-            gen.writeDateField('dataFattura',document.IssueDate__c);
-            gen.writeNumberField('totaleParziale',document.TotalCommunicationPayment__c);
-            gen.writeEndObject();
         }
-        gen.writeEndArray();
-        gen.writeEndObject();
+
+        documentInput.isParent = false;
+        documentInput.isChild = true;
+        documentInput.childObjName = 'pagamenti';
+        documentInput.configMapList = documentsListMap;
+
+        inputList.add(documentInput);
     
-        pretty = gen.getAsString();
+
+        pretty = paymentsUtl.createBodyRequest(inputList);
 
         System.debug('SRV_PaymentCommunication -->' +pretty);
 

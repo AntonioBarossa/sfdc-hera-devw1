@@ -18,7 +18,10 @@ public inherited sharing class HDT_QR_Paperless {
         return [SELECT Id,
         Amount__c,
         DocumentNumber__c,
-        ExpirationDate__c
+        ExpirationDate__c,
+        Position1__c,
+        Position2__c,
+        Position3__c
         FROM DocumentSelected__c
         WHERE Case__c = :recordId
         WITH SECURITY_ENFORCED];
