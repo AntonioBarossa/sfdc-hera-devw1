@@ -265,4 +265,22 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
     }
 
+    /**
+      Possibili valori mandati nei campi FATTURACOLLETTIVA/DESCRFATTURACOLL
+       1 - Il contratto deve essere fatturato con altri contratti
+       2 - Il contratto può essere fatturato con altri contratti
+       3 - Il contratto non può mai essere fatt. con altri contratti
+       Poichè questi valori servono solo sul processo 'Unificazione/Separazione BP-CA-Bolletta',
+       scriviamo la DESCRFATTURACOLL sul campo Note__c del Case. Siccome questo campo
+       è usato anche da altri processo per altri scopi, limitiamo la scrittura del campo solo al processo dedicato.
+     */
+    public String writeCollectiveBillType(String sapValue, Case currentCase) {
+
+        if (currentCase.Type.equals('Unificazione/Separazione BP-CA-Bolletta')) {
+            return 'Tipo fattura collettiva: ' + sapValue;
+        }
+
+        return '';
+    }
+
 }
