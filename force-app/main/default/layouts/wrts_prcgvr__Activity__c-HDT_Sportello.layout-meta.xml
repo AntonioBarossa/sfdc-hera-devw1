@@ -12,8 +12,8 @@
                 <field>ActivityStartTime__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ActivityDuration__c</field>
+                <behavior>Readonly</behavior>
+                <field>ActivityDurationFormula__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -43,11 +43,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>wrts_prcgvr__Status__c</field>
+                <field>Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Lead__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -74,6 +78,10 @@
                 <behavior>Edit</behavior>
                 <field>QAdTicketBookingTime__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>QAdTicketNumber__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -87,6 +95,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>QAdTicketCallTime__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>QAdCallStatus__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

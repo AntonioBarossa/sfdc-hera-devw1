@@ -46,6 +46,24 @@
         <pageOrSobjectType>Order</pageOrSobjectType>
     </actionOverrides>
     <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_Activity_Default_Record_Page</content>
+        <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>HDT_Activity_Default_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>wrts_prcgvr__Activity__c</pageOrSobjectType>
+    </actionOverrides>
+    <actionOverrides>
         <actionName>Tab</actionName>
         <content>Home_Page_Hera_Service_Console</content>
         <formFactor>Large</formFactor>

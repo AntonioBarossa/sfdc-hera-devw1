@@ -1,46 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Individual.HDT_LeadFieldShower</members>
-        <members>Lead.HDT_CalculateFiscalCode</members>
+        <members>Case.HDT_CaseDocumentValidation</members>
         <name>QuickAction</name>
     </types>
     <types>
-        <members>Lead_Record_Page</members>
-        <members>lead_recordpage2</members>
+        <members>HDT_Activity_Default_Record_Page</members>
         <name>FlexiPage</name>
     </types>
     <types>
-        <members>Lead</members>
+        <members>Activity</members>
+        <members>Event</members>
+        <members>HDT_ServiceCatalogProfileFilter__mdt</members>
+        <members>Task</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Lead.HDT_LeadsCustomCompact_Layout</members>
+        <members>AgentMatrix__c.HDT_MatriceAgenti</members>
         <name>CompactLayout</name>
     </types>
     <types>
-        <members>hdtBillingProfileForm</members>
+        <members>hdtAccountStatementViewer</members>
+        <members>hdtCampaignGeolocation</members>
         <members>hdtChildOrderProcessDetails</members>
-        <members>hdtChildOrderProcessHeader</members>
-        <members>hdtContactSelection</members>
-        <members>hdtContactSelectionFlow</members>
         <members>hdtFormAccountBusiness</members>
-        <members>hdtFormAccountResidenziale</members>
-        <members>hdtLeadAddress</members>
+        <members>hdtGenericRecordSelection</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
-        <members>Door2Door Profile</members>
-        <members>HDT_TelesellingCommunity</members>
-        <members>Hera Door2Door Partner User</members>
         <members>Hera M2M Integration User</members>
-        <members>Hera Partner Community</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <members>Partner Community User</members>
         <name>Profile</name>
     </types>
     <types>
@@ -48,314 +40,129 @@
         <name>CustomApplication</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneModificheAnagrafiche</members>
-        <members>HDT_FL_GestioneReclami</members>
+        <members>HDT_FL_GestioneFatturazione</members>
+        <members>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</members>
+        <members>HDT_FL_GestioneReclami_VerificheDatiAlDl</members>
         <members>HDT_FL_GestioneVariazioni</members>
-        <members>HDT_FL_Gestione_Modifiche_Anagrafiche_Variazione_Amministratore</members>
-        <members>HDT_FL_UserLoginFlow</members>
         <name>Flow</name>
     </types>
     <types>
-        <members>Lead.Check_Contatti_Obbligatori</members>
-        <members>Lead.Check_Lunghezza_Mobile_Phone</members>
-        <members>Lead.Check_Name_Field</members>
-        <members>Lead.Check_Phone</members>
-        <name>ValidationRule</name>
-    </types>
-    <types>
-        <members>HDT_CP_ApproveRejectCase</members>
-        <members>HDT_CP_CGCmanagement</members>
-        <members>HDT_CP_CadutaLinea</members>
-        <members>HDT_CP_CambioOfferta</members>
-        <members>HDT_CP_CambioUsoFittizio</members>
-        <members>HDT_CP_CancelResolution</members>
-        <members>HDT_CP_ChiamataMuta</members>
-        <members>HDT_CP_ComunicazioneDiFallimento</members>
-        <members>HDT_CP_ContenzionsoInCorso</members>
-        <members>HDT_CP_ContrattoNonRichiesto</members>
-        <members>HDT_CP_EnableCreditCheck</members>
-        <members>HDT_CP_EnableMUC</members>
-        <members>HDT_CP_Errore</members>
-        <members>HDT_CP_GestioneLavorazioniFUB</members>
-        <members>HDT_CP_ModificaPrivacyAnagrafica</members>
-        <members>HDT_CP_PostsalesProcess</members>
-        <members>HDT_CP_PraticheM01M02</members>
-        <members>HDT_CP_PrescrizioneFatture</members>
-        <members>HDT_CP_RicostruzioneConsumi</members>
-        <members>HDT_CP_SW</members>
-        <members>HDT_CP_SalesProcess</members>
-        <members>HDT_CP_ScontiBonusVas</members>
-        <members>HDT_CP_SubentroSuGDMchiuso</members>
-        <members>HDT_CP_SupplySelectionSearch</members>
-        <members>HDT_CP_TypeInstallmentPlan</members>
-        <members>HDT_CP_VAS</members>
-        <members>HDT_CP_VolturaRetroattiva</members>
-        <members>HDT_CP_VolturaTecnica</members>
-        <name>CustomPermission</name>
-    </types>
-    <types>
-        <members>Account.Account_Duplicated</members>
-        <members>Contact.Contact_Duplicated</members>
-        <members>Lead.Lead_Duplicated</members>
-        <name>DuplicateRule</name>
-    </types>
-    <types>
-        <members>Account.HDT_RT_Business</members>
-        <members>Account.HDT_RT_Residenziale</members>
-        <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case.HDT_RT_AllineamentoAnagrafica</members>
-        <members>Case.HDT_RT_ComportamentoVenditori</members>
-        <members>Case.HDT_RT_GestionePrivacy</members>
         <members>Case.HDT_RT_Informative</members>
-        <members>Case.HDT_RT_ReclamiScrittiRichiesteInfo</members>
-        <members>Case.HDT_RT_VariazioneAmministratore</members>
-        <members>Case.HDT_RT_VariazioneAnagraficaCliente</members>
-        <members>Lead.HDT_RT_CreazioneManuale</members>
-        <members>Lead.HDT_RT_Main</members>
-        <members>Order.HDT_RT_Voltura</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__Configuration_Attribute</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__Global_Attribute</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
+        <members>ServicePoint__c.HDT_RT_Ele</members>
+        <members>ServicePoint__c.HDT_RT_Gas</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
         <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>Case-HDT_ComportamentoVenditori</members>
-        <members>Case-HDT_VariazioneAmministratore</members>
-        <members>Case-HDT_VotiveModena</members>
-        <members>Lead-Acquisizione Lead Layout</members>
-        <members>Lead-Lead Layout</members>
+        <members>AgentMatrix__c-Matrice Agenti Layout</members>
+        <members>Case-HDT_Disattivazioni</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Call</members>
+        <members>wrts_prcgvr__Activity__c-HDT_HCPoint</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Sportello</members>
         <name>Layout</name>
     </types>
     <types>
         <members>HDT_ApexClasses</members>
-        <members>HDT_ApproveRejectCase</members>
-        <members>HDT_CGCmanagement</members>
-        <members>HDT_CadutaLinea</members>
-        <members>HDT_CambioOfferta</members>
-        <members>HDT_CambioUsoFittizio</members>
-        <members>HDT_CancelResolution</members>
-        <members>HDT_ChiamataMuta</members>
-        <members>HDT_ComunicazioneDiFallimento</members>
-        <members>HDT_ContenzionsoInCorso</members>
-        <members>HDT_ContrattoNonRichiesto</members>
-        <members>HDT_EnableCreditCheck</members>
-        <members>HDT_EnableMUC</members>
-        <members>HDT_Errore</members>
-        <members>HDT_FUBjobsManagement</members>
-        <members>HDT_ModificaPrivacyAnagrafica</members>
-        <members>HDT_PostsalesProcess</members>
-        <members>HDT_PraticheM01M02</members>
-        <members>HDT_PrescrizioneFatture</members>
-        <members>HDT_RicostruzioneConsumi</members>
-        <members>HDT_SW</members>
-        <members>HDT_SalesProcess</members>
-        <members>HDT_ScontiBonusVas</members>
-        <members>HDT_SubentroSuGDMchiuso</members>
-        <members>HDT_SupplySelectionSearch</members>
-        <members>HDT_TypeInstallmentPlan</members>
-        <members>HDT_UserProvisioning</members>
-        <members>HDT_VAS</members>
-        <members>HDT_VolturaRetroattiva</members>
-        <members>HDT_VolturaTecnica</members>
         <name>PermissionSet</name>
     </types>
     <types>
-        <members>HDT_LC_ContactSelection</members>
-        <members>HDT_LC_FormAccountBusiness</members>
-        <members>HDT_LC_FormAccountResidenziale</members>
-        <members>HDT_LC_LeadCalculateFiscalCode</members>
-        <members>HDT_LC_RecordEditFormFlowController</members>
-        <members>HDT_QR_AccountContactRelation</members>
-        <members>HDT_QR_City</members>
+        <members>HDT_LC_CaseDocumentValidation</members>
+        <members>HDT_LC_ChildOrderProcessActions</members>
+        <members>HDT_LC_GeolocationCommunity</members>
+        <members>HDT_LC_OmniChannelReplacerController</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_SaleVas</members>
+        <members>HDT_QR_CampaignMember</members>
+        <members>HDT_QR_Case</members>
         <members>HDT_QR_Contact</members>
-        <members>HDT_QR_HerokuPostSalesManager</members>
-        <members>HDT_QR_InformativeManager</members>
-        <members>HDT_QR_Lead</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_SRV_AnagAlignment</members>
-        <members>HDT_SRV_BpCaVariation</members>
-        <members>HDT_SRV_PostSalesManager</members>
-        <members>HDT_UTL_CalculateFiscalCode</members>
+        <members>HDT_QR_Paperless</members>
+        <members>HDT_QR_PermissionSet</members>
+        <members>HDT_SRV_DataEnrichmentPostSales</members>
+        <members>HDT_SRV_EmailMessage</members>
+        <members>HDT_SRV_InstallmentPlans</members>
+        <members>HDT_SRV_Paperless</members>
+        <members>HDT_SRV_PaymentCommunication</members>
+        <members>HDT_SRV_Reimbursement</members>
+        <members>HDT_SRV_ReminderBlock</members>
+        <members>HDT_SRV_SaleServiceItem</members>
         <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_CheckFiscalCodeTaxNumber</members>
+        <members>HDT_UTL_CreatePaymentsRequestBody</members>
+        <members>HDT_UTL_DataEnrichmentPostSales</members>
         <members>HDT_UTL_GestionePrivacy</members>
         <members>HDT_UTL_HerokuPostSalesManager</members>
-        <members>HDT_UTL_Lead</members>
+        <members>HDT_UTL_Individual</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_UTL_ServiceCatalogProfileCriteria</members>
+        <members>HDT_WS_InstallmentPlans</members>
+        <members>HDT_WS_Paperless</members>
+        <members>HDT_WS_PaymentCommunication</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Account.BillingCityCode__c</members>
-        <members>Asset.SuperUser__c</members>
-        <members>Case.CustomerRequestDate__c</members>
         <members>Case.InformativeCluster__c</members>
-        <members>Case.InformativeType__c</members>
-        <members>Case.SurveySource__c</members>
-        <members>Contact.Birthcity__c</members>
-        <members>Contact.MailingRegion__c</members>
-        <members>Lead.Birthcity__c</members>
-        <members>Lead.Birthdate__c</members>
-        <members>Lead.CityCode__c</members>
-        <members>Lead.Company</members>
-        <members>Lead.CompanyOwner__c</members>
-        <members>Lead.ContactReason__c</members>
-        <members>Lead.CustomerMarking__c</members>
-        <members>Lead.Email</members>
-        <members>Lead.InterestArea__c</members>
-        <members>Lead.MobilePhone</members>
-        <members>Lead.Name</members>
-        <members>Lead.PhonePrefix__c</members>
-        <members>Lead.Profession__c</members>
-        <members>Lead.Region__c</members>
-        <members>Lead.Status</members>
-        <members>Lead.StreetCode__c</members>
-        <members>Lead.StreetName__c</members>
-        <members>Lead.StreetNumberExtension__c</members>
-        <members>Lead.StreetNumber__c</members>
-        <members>Lead.VATNumber__c</members>
-        <members>Order.AccountholderTypeBeneficiary__c</members>
-        <members>Order.AnnualConsumption__c</members>
-        <members>Order.AtecoCode__c</members>
-        <members>Order.Cluster__c</members>
-        <members>Order.Disconnectable__c</members>
-        <members>Order.DisconnectibilityType__c</members>
-        <members>Order.RequestOption__c</members>
-        <members>Order.Resident__c</members>
-        <members>Order.SurveySource__c</members>
-        <members>OrderItem.SuperUser__c</members>
-        <members>SBQQ__ConfigurationAttribute__c.SBQQ__TargetField__c</members>
-        <members>SBQQ__ProductOption__c.SuperUser__c</members>
-        <members>SBQQ__QuoteLine__c.SuperUser__c</members>
-        <members>SBQQ__Quote__c.SuperUser__c</members>
-        <members>SBQQ__Subscription__c.SuperUser__c</members>
-        <members>Sale__c.Channel__c</members>
-        <members>ServicePoint__c.MeterClass__c</members>
-        <members>wrts_prcgvr__Activity__c.PraxidiaPostWorkAction__c</members>
-        <members>wrts_prcgvr__Activity__c.PraxidiaPostWorkCause__c</members>
-        <members>wrts_prcgvr__Activity__c.PraxidiaPostWorkOutcome__c</members>
+        <members>Case.Reason__c</members>
+        <members>HDT_ServiceCatalogProfileFilter__mdt.Process__c</members>
+        <members>HDT_ServiceCatalogProfileFilter__mdt.Visibility__c</members>
+        <members>SBQQ__ProductFeature__c.SBQQ__Category__c</members>
+        <members>wrts_prcgvr__Activity__c.ActivityDurationFormula__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_LeadCalculateFiscalCode</members>
-        <members>HDT_LCP_LeadNewOverride</members>
-        <members>HDT_LCP_RegistryAcquisitionForm</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>LeadConfig</members>
-        <name>Settings</name>
-    </types>
-    <types>
-        <members>HDT_Informative_Configuration.Attivazioni_13</members>
-        <members>HDT_Informative_Configuration.Attivazioni_14</members>
-        <members>HDT_Informative_Configuration.Attivazioni_15</members>
-        <members>HDT_Informative_Configuration.Attivazioni_16</members>
-        <members>HDT_Informative_Configuration.Attivazioni_17</members>
-        <members>HDT_Informative_Configuration.Attivazioni_18</members>
-        <members>HDT_Informative_Configuration.Attivazioni_19</members>
-        <members>HDT_Informative_Configuration.Attivazioni_20</members>
-        <members>HDT_Informative_Configuration.Attivazioni_21</members>
-        <members>HDT_ProcessCancellationReason.Config1</members>
-        <members>HDT_ProcessCancellationReason.Config10</members>
-        <members>HDT_ProcessCancellationReason.Config11</members>
-        <members>HDT_ProcessCancellationReason.Config12</members>
-        <members>HDT_ProcessCancellationReason.Config13</members>
-        <members>HDT_ProcessCancellationReason.Config14</members>
-        <members>HDT_ProcessCancellationReason.Config15</members>
-        <members>HDT_ProcessCancellationReason.Config16</members>
-        <members>HDT_ProcessCancellationReason.Config17</members>
-        <members>HDT_ProcessCancellationReason.Config18</members>
-        <members>HDT_ProcessCancellationReason.Config19</members>
-        <members>HDT_ProcessCancellationReason.Config2</members>
-        <members>HDT_ProcessCancellationReason.Config20</members>
-        <members>HDT_ProcessCancellationReason.Config21</members>
-        <members>HDT_ProcessCancellationReason.Config22</members>
-        <members>HDT_ProcessCancellationReason.Config23</members>
-        <members>HDT_ProcessCancellationReason.Config24</members>
-        <members>HDT_ProcessCancellationReason.Config25</members>
-        <members>HDT_ProcessCancellationReason.Config26</members>
-        <members>HDT_ProcessCancellationReason.Config27</members>
-        <members>HDT_ProcessCancellationReason.Config28</members>
-        <members>HDT_ProcessCancellationReason.Config29</members>
-        <members>HDT_ProcessCancellationReason.Config3</members>
-        <members>HDT_ProcessCancellationReason.Config30</members>
-        <members>HDT_ProcessCancellationReason.Config31</members>
-        <members>HDT_ProcessCancellationReason.Config32</members>
-        <members>HDT_ProcessCancellationReason.Config33</members>
-        <members>HDT_ProcessCancellationReason.Config34</members>
-        <members>HDT_ProcessCancellationReason.Config35</members>
-        <members>HDT_ProcessCancellationReason.Config36</members>
-        <members>HDT_ProcessCancellationReason.Config37</members>
-        <members>HDT_ProcessCancellationReason.Config38</members>
-        <members>HDT_ProcessCancellationReason.Config39</members>
-        <members>HDT_ProcessCancellationReason.Config4</members>
-        <members>HDT_ProcessCancellationReason.Config40</members>
-        <members>HDT_ProcessCancellationReason.Config41</members>
-        <members>HDT_ProcessCancellationReason.Config42</members>
-        <members>HDT_ProcessCancellationReason.Config43</members>
-        <members>HDT_ProcessCancellationReason.Config44</members>
-        <members>HDT_ProcessCancellationReason.Config45</members>
-        <members>HDT_ProcessCancellationReason.Config46</members>
-        <members>HDT_ProcessCancellationReason.Config47</members>
-        <members>HDT_ProcessCancellationReason.Config48</members>
-        <members>HDT_ProcessCancellationReason.Config49</members>
-        <members>HDT_ProcessCancellationReason.Config5</members>
-        <members>HDT_ProcessCancellationReason.Config50</members>
-        <members>HDT_ProcessCancellationReason.Config51</members>
-        <members>HDT_ProcessCancellationReason.Config52</members>
-        <members>HDT_ProcessCancellationReason.Config53</members>
-        <members>HDT_ProcessCancellationReason.Config54</members>
-        <members>HDT_ProcessCancellationReason.Config55</members>
-        <members>HDT_ProcessCancellationReason.Config56</members>
-        <members>HDT_ProcessCancellationReason.Config57</members>
-        <members>HDT_ProcessCancellationReason.Config58</members>
-        <members>HDT_ProcessCancellationReason.Config59</members>
-        <members>HDT_ProcessCancellationReason.Config6</members>
-        <members>HDT_ProcessCancellationReason.Config60</members>
-        <members>HDT_ProcessCancellationReason.Config61</members>
-        <members>HDT_ProcessCancellationReason.Config62</members>
-        <members>HDT_ProcessCancellationReason.Config63</members>
-        <members>HDT_ProcessCancellationReason.Config64</members>
-        <members>HDT_ProcessCancellationReason.Config65</members>
-        <members>HDT_ProcessCancellationReason.Config66</members>
-        <members>HDT_ProcessCancellationReason.Config67</members>
-        <members>HDT_ProcessCancellationReason.Config68</members>
-        <members>HDT_ProcessCancellationReason.Config69</members>
-        <members>HDT_ProcessCancellationReason.Config7</members>
-        <members>HDT_ProcessCancellationReason.Config70</members>
-        <members>HDT_ProcessCancellationReason.Config71</members>
-        <members>HDT_ProcessCancellationReason.Config72</members>
-        <members>HDT_ProcessCancellationReason.Config73</members>
-        <members>HDT_ProcessCancellationReason.Config74</members>
-        <members>HDT_ProcessCancellationReason.Config75</members>
-        <members>HDT_ProcessCancellationReason.Config76</members>
-        <members>HDT_ProcessCancellationReason.Config77</members>
-        <members>HDT_ProcessCancellationReason.Config78</members>
-        <members>HDT_ProcessCancellationReason.Config79</members>
-        <members>HDT_ProcessCancellationReason.Config8</members>
-        <members>HDT_ProcessCancellationReason.Config80</members>
-        <members>HDT_ProcessCancellationReason.Config81</members>
-        <members>HDT_ProcessCancellationReason.Config82</members>
-        <members>HDT_ProcessCancellationReason.Config83</members>
-        <members>HDT_ProcessCancellationReason.Config84</members>
-        <members>HDT_ProcessCancellationReason.Config9</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Altri_Motivi_Richiesta</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Rifiuto_Voltura</members>
-        <members>HDT_UserInputFlow.Reclami_Altri_Venditori</members>
-        <members>HDT_UserInputFlow.Reclami_Venditori_HC</members>
-        <members>HDT_UserInputFlow.Reclami_Votive_Modena_Contestazione</members>
-        <members>HDT_UserInputFlow.Verifica_Titolarit_POD_PDR</members>
+        <members>HDT_CausalCodeCalculation.Cambio_Contatore_Non_registrato</members>
+        <members>HDT_CausalCodeCalculation.Mancata_Telelettura_Lettura</members>
+        <members>HDT_CausalCodeCalculation.Reclami_Verifica_Dati_al_DL</members>
+        <members>HDT_CausalCodeCalculation.Reclami_Verifica_Dati_al_DL_Gas</members>
+        <members>HDT_CausalCodeCalculation.Reclami_Verifica_Dati_al_DL_M02</members>
+        <members>HDT_CausalCodeCalculation.Reclami_Verifica_Dati_al_DL_M02_Gas</members>
+        <members>HDT_DataEnrichmentTransocode.DESCRFATTURACOLL</members>
+        <members>HDT_ServiceCatalogProfileFilter.CadutaLinea</members>
+        <members>HDT_ServiceCatalogProfileFilter.CambioUsoFittizio</members>
+        <members>HDT_ServiceCatalogProfileFilter.ChiamataMuta</members>
+        <members>HDT_ServiceCatalogProfileFilter.CominicazioneDiFallimento</members>
+        <members>HDT_ServiceCatalogProfileFilter.ContenzionsoInCorso</members>
+        <members>HDT_ServiceCatalogProfileFilter.ContrattoNonRichiesto</members>
+        <members>HDT_ServiceCatalogProfileFilter.Errore</members>
+        <members>HDT_ServiceCatalogProfileFilter.PraticheM01M02</members>
+        <members>HDT_ServiceCatalogProfileFilter.PrescrizioneFatture</members>
+        <members>HDT_ServiceCatalogProfileFilter.RicostruzioneConsumi</members>
+        <members>HDT_ServiceCatalogProfileFilter.VolturaRetroattiva</members>
+        <members>HDT_ServiceCatalogProfileFilter.VolturaTecnica</members>
+        <members>HDT_TechnicalCancellationReason.Config1</members>
+        <members>HDT_TechnicalCancellationReason.Config10</members>
+        <members>HDT_TechnicalCancellationReason.Config11</members>
+        <members>HDT_TechnicalCancellationReason.Config12</members>
+        <members>HDT_TechnicalCancellationReason.Config13</members>
+        <members>HDT_TechnicalCancellationReason.Config14</members>
+        <members>HDT_TechnicalCancellationReason.Config15</members>
+        <members>HDT_TechnicalCancellationReason.Config16</members>
+        <members>HDT_TechnicalCancellationReason.Config17</members>
+        <members>HDT_TechnicalCancellationReason.Config18</members>
+        <members>HDT_TechnicalCancellationReason.Config19</members>
+        <members>HDT_TechnicalCancellationReason.Config2</members>
+        <members>HDT_TechnicalCancellationReason.Config20</members>
+        <members>HDT_TechnicalCancellationReason.Config21</members>
+        <members>HDT_TechnicalCancellationReason.Config22</members>
+        <members>HDT_TechnicalCancellationReason.Config23</members>
+        <members>HDT_TechnicalCancellationReason.Config24</members>
+        <members>HDT_TechnicalCancellationReason.Config25</members>
+        <members>HDT_TechnicalCancellationReason.Config26</members>
+        <members>HDT_TechnicalCancellationReason.Config27</members>
+        <members>HDT_TechnicalCancellationReason.Config28</members>
+        <members>HDT_TechnicalCancellationReason.Config29</members>
+        <members>HDT_TechnicalCancellationReason.Config3</members>
+        <members>HDT_TechnicalCancellationReason.Config4</members>
+        <members>HDT_TechnicalCancellationReason.Config5</members>
+        <members>HDT_TechnicalCancellationReason.Config6</members>
+        <members>HDT_TechnicalCancellationReason.Config7</members>
+        <members>HDT_TechnicalCancellationReason.Config8</members>
+        <members>HDT_TechnicalCancellationReason.Config9</members>
+        <members>HDT_UserInputFlow.Fatturazione_Separazione_Bolletta</members>
+        <members>HDT_UserInputFlow.Fatturazione_Unificazione_Bolletta</members>
+        <members>HDT_UserInputFlow.Gestione_Bonus_Sociale_Cessazione</members>
+        <members>HDT_UserInputFlow.Variazioni_Condizioni_Contrattuali_Err</members>
+        <members>HDT_UserInputFlow.Variazioni_Mancata_Telelettura_Lettura</members>
         <name>CustomMetadata</name>
     </types>
     <version>49</version>
