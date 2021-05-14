@@ -87,6 +87,16 @@
                 <default>false</default>
                 <label>VAS Opzione Fatturabili</label>
             </value>
+            <value>
+                <fullName>VAS Non Fatturabili</fullName>
+                <default>false</default>
+                <label>VAS Non Fatturabili</label>
+            </value>
+            <value>
+                <fullName>VAS</fullName>
+                <default>false</default>
+                <label>VAS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
