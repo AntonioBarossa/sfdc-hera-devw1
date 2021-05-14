@@ -1,6 +1,8 @@
 public inherited sharing class HDT_SRV_InstallmentPlans {
 
     HDT_QR_InstallmentPlans installmentsQr = new HDT_QR_InstallmentPlans();
+    HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
+
 
     @InvocableMethod(label = 'Predefault valori pianoRate')
     public static void predefaultInstallmentsValues(List<HDT_UTL_FlowInputs> inputs){
@@ -51,6 +53,11 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
     public String createRequestBody(String recordId){
 
+        List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput> inputList = new List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput>();
+        HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput caseInput = new HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput();
+        HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput documentInput = new HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput();
+        List<Map<String, Object>> documentsListMap = new List<Map<String, Object>>();
+        List<Map<String, Object>> caseListMap = new List<Map<String, Object>>();
         List<DocumentSelected__c> documents = new List<DocumentSelected__c>();
         Case currentCase = new Case();
         String pretty;
@@ -58,33 +65,49 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         currentCase = installmentsQr.getCaseById(recordId);
         documents = installmentsQr.getDocumentSelectedByCase(recordId);
 
-        JSONGenerator gen = JSON.createGenerator(true);
+        System.debug('SRV_InstallmentPlans Case--> '+currentCase);
+        System.debug('SRV_InstallmentPlans Documetns--> '+documents);
 
-        gen.writeStartObject();
-        gen.writeStringField('numeroSR', currentCase.CaseNumber);
-        gen.writeStringField('tipoPiano', currentCase.TypeInstallmentPlan__c);
-        gen.writeNumberField('totale', currentCase.AmountToPayInInstallments__c);
-        gen.writeStringField('numeroRata', currentCase.InstallmentPlanNumber__c);
-        gen.writeDateField('dataInizio', currentCase.FirstExpirationDate__c);
-        gen.writeBooleanField('acconto', currentCase.Deposit__c);
-        gen.writeBooleanField('contestazioneCliente', currentCase.ApplicationInterests__c);
-        gen.writeStringField('modalitaPagamentoAcconto', currentCase.DepositPaymentMode__c);
-        gen.writeFieldName('documenti');
-        gen.writeStartArray();
-        for(DocumentSelected__c document : documents){ 
-            gen.writeStartObject();
-            gen.writeStringField('numeroBollettino', '');
-            gen.writeStringField('numeroDocumetno', document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c);
-            gen.writeStringField('numeroFatturaRata',document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '');
-            gen.writeDateField('scadenzaRata',document.ExpirationDate__c);
-            gen.writeStringField('tipoDocumento',document.Type__c);
-            gen.writeEndObject();
+        Map<String, Object> caseMap = new Map<String, Object>{
+            'numeroSR' => currentCase.CaseNumber,
+            'tipoPiano' => currentCase.TypeInstallmentPlan__c,
+            'totale' => currentCase.AmountToPayInInstallments__c,
+            'numeroRata' => currentCase.InstallmentPlanNumber__c,
+            'dataInizio' => currentCase.FirstExpirationDate__c,
+            'acconto' => currentCase.Deposit__c,
+            'contestazioneCliente' => currentCase.ApplicationInterests__c,
+            'modalitaPagamentoAcconto' => currentCase.DepositPaymentMode__c
+        };
+
+        caseListMap.add(caseMap);
+
+        caseInput.isParent = true;
+        caseInput.isChild = false;
+        caseInput.configMapList = caseListMap;
+
+        inputList.add(caseInput);
+
+        for(DocumentSelected__c document : documents){
+            documentsListMap.add(
+                new Map<String, Object>{
+                    'numeroBollettino' => document.Bill__c,
+                    'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
+                    'numeroFatturaRata' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
+                    'scadenzaRata' => document.ExpirationDate__c,
+                    'tipoDocumento' => document.Type__c
+                }
+            );
         }
-        gen.writeEndArray();
-        gen.writeStringField('pianoPersonalizzato','');
-        gen.writeEndObject();
 
-        pretty = gen.getAsString();
+        documentInput.isParent = false;
+        documentInput.isChild = true;
+        documentInput.childObjName = 'documenti';
+        documentInput.configMapList = documentsListMap;
+
+        inputList.add(documentInput);
+    
+
+        pretty = paymentsUtl.createBodyRequest(inputList);
 
         System.debug('SRV_InstallmentPlans -->' +pretty);
 
