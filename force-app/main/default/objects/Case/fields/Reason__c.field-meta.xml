@@ -339,6 +339,12 @@
                 <default>false</default>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
             </value>
+            <value>
+                <fullName>Chiamata Mura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata Mura</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
@@ -495,6 +501,30 @@
         <valueSettings>
             <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
             <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Portabilità dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Cancellazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Rettifica dati personali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Accesso dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Limitazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Opposizione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
