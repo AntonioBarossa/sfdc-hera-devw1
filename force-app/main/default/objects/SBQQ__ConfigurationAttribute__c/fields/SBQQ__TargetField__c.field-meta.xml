@@ -13,11 +13,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>DurationVAS__c</fullName>
-                <default>false</default>
-                <label>DurationVAS__c</label>
-            </value>
-            <value>
                 <fullName>Agency__c</fullName>
                 <default>false</default>
                 <label>Agency__c</label>
@@ -411,6 +406,11 @@
                 <fullName>ServicePointLinkItem__c</fullName>
                 <default>false</default>
                 <label>ServicePointLinkItem__c</label>
+            </value>
+            <value>
+                <fullName>SuperUser__c</fullName>
+                <default>false</default>
+                <label>SuperUser__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

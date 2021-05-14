@@ -172,7 +172,7 @@
   <name>Role</name>
 </types>
 <types>
-  <members>*</members>
+  <members>LeadConfig</members>
   <name>Settings</name>
 </types>
 <types>
