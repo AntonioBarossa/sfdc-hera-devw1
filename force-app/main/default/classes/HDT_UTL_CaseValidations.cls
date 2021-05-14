@@ -43,7 +43,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Condizioni Contrattuali Errate' 
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'
-        || caseType == 'Modifica Tariffa Residente/Non Residente'){
+        || caseType == 'Modifica Tariffa Residente/Non Residente'
+        || caseType == 'Mancata Telelettura/lettura'
+        || caseType == 'Cambio contatore non registrato	'){
 
             System.debug('Inside Variazioni Validations');
 
@@ -623,6 +625,35 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                 
+            }
+
+        }else if(caseType == 'Mancata Telelettura/lettura'){
+
+            Date readingDate = Date.valueOf(getFieldValue(fields, 'ReadingDate__c'));
+            Date limitDate = Date.newinstance(2019, 1, 1);
+
+            if(readingDate < limitDate){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data deve essere successiva al 01/01/2019'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        }else if(caseType == 'Cambio contatore non registrato'){
+
+            String reading = getFieldValue(fields, 'Reading__c');
+
+            if(!reading.isNumeric()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valore inserito non corretto'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
             }
 
         } else {

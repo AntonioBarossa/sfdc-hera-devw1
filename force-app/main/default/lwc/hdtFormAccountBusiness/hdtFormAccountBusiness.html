@@ -95,7 +95,7 @@
                                 </div>
                             </div>
                         </div>
-                     <!--   <div class="slds-m-top_x-large">
+                        <div class="slds-m-top_x-large">
                             <h3 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
                                 Indirizzi </h3>
                         </div>
@@ -106,7 +106,7 @@
                             <h3
                                 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
                                 Sede Legale e Contatti </h3>
-                        </div> -->
+                        </div> 
                         <div class="slds-grid slds-grid_vertical">
                             <div class="slds-col slds-grid">
                                 <!-- <div
@@ -114,10 +114,36 @@
                                     <lightning-input type="text" data-id="region" label="Regione">
                                     </lightning-input>
                                 </div> -->
-
+                                <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-combobox data-id="phonePrefix2" name="phonePrefix2" label="Prefisso telefono cliente"
+                                            placeholder="Seleziona prefisso" value={phonePrefixValue2} default="+39" options={phonePrefixOptions}
+                                            required>
+                                        </lightning-combobox>
+                                    </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Cliente" required
+                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Cliente" 
+                                    maxlength="11">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <!-- <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="region" label="Regione">
+                                    </lightning-input>
+                                </div> -->
+                                <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-combobox data-id="mobilephonePrefix2" name="mobilephonePrefix2" label="Prefisso telefono cellulare cliente"
+                                            placeholder="Seleziona prefisso" value={mobilephonePrefix2} default="+39" options={phonePrefixOptions}
+                                            required>
+                                        </lightning-combobox>
+                                    </div>
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="tel" data-id="mobilePhoneNumber" label="Telefono Cellulare Cliente" 
                                     maxlength="11">
                                     </lightning-input>
                                 </div>
@@ -268,9 +294,9 @@
                                         </div>
                                          <div
                                             class="slds-form-element__control slds-size_1-of-2 slds-m-top_x-large slds-p-left_small slds-p-right_x-large">
-                                          <!--  <lightning-button class="slds-form-element" name="calculateFiscalCode"
+                                            <lightning-button class="slds-form-element" name="calculateFiscalCode"
                                                 type="submit" label="Calcola Codice Fiscale"
-                                                onclick={handleCalculation}></lightning-button> -->
+                                                onclick={handleCalculation}></lightning-button> 
                                         </div> 
 
                                     </div>
