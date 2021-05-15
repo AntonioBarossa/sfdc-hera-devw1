@@ -171,7 +171,7 @@ export default class HdtAccountAlerts extends LightningElement {
                         variant: 'error'
                     })
                 );
-
+                this.draftValues = [];
                 return;
             }
         }
@@ -195,7 +195,7 @@ export default class HdtAccountAlerts extends LightningElement {
                     variant: 'error'
                 })
             );
-
+            this.draftValues = [];
             return;
         }
 
@@ -206,7 +206,7 @@ export default class HdtAccountAlerts extends LightningElement {
             })
             .then(result => {
                 console.log('updateAlert result: ' + result);
-                this.draftValues = []; // per nascondere i pulsanti Salva/Cancella
+                this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
