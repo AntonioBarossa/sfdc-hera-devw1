@@ -159,7 +159,7 @@ export default class HdtAccountAlerts extends LightningElement {
 
         // Verifica se l'operatore sta provando ad abilitare un canale che è disabilitato al livello di regola alert.
         let channels = ['Email', 'Sms', 'Push', 'Sol'];
-        channels.forEach(channel => {
+        for (const channel of channels) {
             let activeKey = `Is${channel}ChannelActive__c`;
             let allowedKey = `Is${channel}ChannelAllowed__c`;
 
@@ -174,7 +174,7 @@ export default class HdtAccountAlerts extends LightningElement {
 
                 return;
             }
-        });
+        }
 
         let newAlert = JSON.parse(JSON.stringify(oldAlert)); // deep copy
         Object.keys(draftAlert).forEach(key => {
