@@ -171,6 +171,8 @@ export default class HdtAccountAlerts extends LightningElement {
                         variant: 'error'
                     })
                 );
+
+                return;
             }
         });
 
@@ -193,6 +195,8 @@ export default class HdtAccountAlerts extends LightningElement {
                     variant: 'error'
                 })
             );
+
+            return;
         }
 
         // TODO: verificare anche se il cliente ha cellulare/mail/contattoSol per poter ricevere l'alert?
