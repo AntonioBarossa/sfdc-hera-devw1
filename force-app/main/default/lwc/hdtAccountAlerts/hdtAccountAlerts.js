@@ -11,7 +11,8 @@ import ACCOUNT_CATEGORY from '@salesforce/schema/Account.Category__c';
 
 const columns = [
     { label: 'Regola Alert', fieldName: 'AlertRule__c' },
-    { label: 'Alert Attivo', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Stato Alert', fieldName: 'AlertState__c' },
+    { label: 'Flag Attivazione', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
