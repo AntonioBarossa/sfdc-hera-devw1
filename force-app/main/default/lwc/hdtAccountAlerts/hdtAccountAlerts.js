@@ -24,9 +24,11 @@ export default class HdtAccountAlerts extends LightningElement {
     @track record;
     @track wireError;
     @track alertColumns;
-    @track accountAlerts = [];  // Gli alert creati sul Cliente
+    @track accountAlerts = [];    // Gli alert creati sul Cliente
     @track menuItems = [];
-    availableAlerts;            // L'elenco di alert abilitabili per il Cliente (in base alla sua categoria)
+    @track availableAlerts = [];  // L'elenco di alert abilitabili per il Cliente (in base alla sua categoria)
+    @track noAlertsMessage = '';
+    @track noAlertRulesMessage = '';
     accountCategory = '';
     draftValues = [];
 
@@ -50,6 +52,15 @@ export default class HdtAccountAlerts extends LightningElement {
 
     get hasAlerts(){
         return this.accountAlerts.length > 0;
+    }
+
+    get canActivateAlerts(){
+        return this.availableAlerts.length > 0;
+    }
+
+    setErrorMessages(){
+        this.noAlertsMessage = 'Nessun Alert configurato per il Cliente.';
+        this.noAlertRulesMessage = 'Nessun Alert configurabile per questa categoria di cliente.';
     }
 
     getAvailableRules(){
@@ -80,7 +91,8 @@ export default class HdtAccountAlerts extends LightningElement {
                     this.accountAlerts = JSON.parse(result);
                     // getAvailableRules chiama refreshAccountAlertsAndMenu, quindi qui siamo sicuri di poter chiamare updateAlertMenu.
                     this.updateAlertMenu();
-                    
+                    // Settiamo gli error messages solo adesso per evitare che si vedano sempre e poi scompaiano dopo aver popolato gli array con gli alert.
+                    this.setErrorMessages();
                 })
                 .catch(error => {
                     console.log('failed to get account alerts, accountId: ' + this.recordId);

@@ -36,7 +36,15 @@
             </template>
 
             <template if:false={hasAlerts}>
-                <p><lightning-formatted-text value="Nessun Alert configurato per il Cliente." ></lightning-formatted-text></p>
+
+                <template if:false={canActivateAlerts}>
+                    <p><lightning-formatted-text value={noAlertRulesMessage}></lightning-formatted-text></p>
+                </template>
+
+                <template if:true={canActivateAlerts}>
+                    <p><lightning-formatted-text value={noAlertsMessage}></lightning-formatted-text></p>
+                </template>
+
             </template>
 
         </p>
