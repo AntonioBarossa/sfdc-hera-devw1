@@ -24,9 +24,9 @@ export default class HdtAccountAlerts extends LightningElement {
     @track record;
     @track wireError;
     @track alertColumns;
-    @track accountAlerts = [];
+    @track accountAlerts = [];  // Gli alert creati sul Cliente
     @track menuItems = [];
-    availableAlerts;
+    availableAlerts;            // L'elenco di alert abilitabili per il Cliente (in base alla sua categoria)
     accountCategory = '';
     draftValues = [];
 
@@ -52,24 +52,6 @@ export default class HdtAccountAlerts extends LightningElement {
         return this.accountAlerts.length > 0;
     }
 
-    getAccountAlerts(){
-        try{
-            getAccountAlerts({
-                accountId: this.recordId
-                })
-                .then(result => {
-                    //console.log('getAccountAlerts result: ' + result);
-                    this.accountAlerts = JSON.parse(result);
-                    
-                })
-                .catch(error => {
-                    console.log('failed to get account alerts, accountId: ' + this.recordId);
-                });
-        }catch(error){
-                console.error(error);
-        }
-    }
-
     getAvailableRules(){
         try{
             getAvailableRules({
@@ -78,7 +60,7 @@ export default class HdtAccountAlerts extends LightningElement {
                 .then(result => {
                     //console.log('result: ' + result);
                     this.availableAlerts = JSON.parse(result);
-                    this.updateAlertMenu();
+                    this.refreshAccountAlertsAndMenu();
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
@@ -96,6 +78,7 @@ export default class HdtAccountAlerts extends LightningElement {
                 .then(result => {
                     //console.log('getAccountAlerts result: ' + result);
                     this.accountAlerts = JSON.parse(result);
+                    // getAvailableRules chiama refreshAccountAlertsAndMenu, quindi qui siamo sicuri di poter chiamare updateAlertMenu.
                     this.updateAlertMenu();
                     
                 })
@@ -110,9 +93,10 @@ export default class HdtAccountAlerts extends LightningElement {
     connectedCallback() {
         console.log('account id: ' + this.recordId);
         this.alertColumns = columns;
-        this.getAccountAlerts();
     }
 
+    // Aggiorna this.menuItems con gli alert che il cliente non ha ancora mai abilitato.
+    // Richiede che this.accountAlerts e this.availableAlerts siano entrambi popolati.
     updateAlertMenu() {
         let menuItems = [];
         let activeRules = new Set();
@@ -121,8 +105,6 @@ export default class HdtAccountAlerts extends LightningElement {
         });
 
         this.availableAlerts.forEach(alert => {
-            //console.log('alert: ' + JSON.stringify(alert));
-
             if (!activeRules.has(alert.AlertRule__c)) {
                 menuItems.push(
                     {
