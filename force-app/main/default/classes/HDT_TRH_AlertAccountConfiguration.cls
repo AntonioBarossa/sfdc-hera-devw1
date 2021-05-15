@@ -30,8 +30,13 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         }
 
         HDT_UTL_DatabaseService.insertSObject(alertCases);
-        // TODO: invio a SAP
 
+        // Invio a SAP tramite pclick callout.
+        for (Case alertCase : alertCases) {
+            alertCase.Phase__c = 'Da Inviare';
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(alertCases);
     }
 
 }
