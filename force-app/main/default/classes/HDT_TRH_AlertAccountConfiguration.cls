@@ -20,6 +20,12 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
 
         List<Case> alertCases = new List<Case>();
         for (AlertAccountConfiguration__c alert : (List<AlertAccountConfiguration__c>) Trigger.new) {
+            // Skippiamo gli alert inizialmente inattivi e senza canali, creati di default dall'lwc sulla service console.
+            if (Trigger.isInsert && !alert.IsActive__c && !alert.IsEmailChannelActive__c
+                && !alert.IsSmsChannelActive__c && !alert.IsPushChannelActive__c && !alert.IsSolChannelActive__c) {
+                continue;
+            }
+
             inputsMap.put('accountId', alert.Account__c);
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
