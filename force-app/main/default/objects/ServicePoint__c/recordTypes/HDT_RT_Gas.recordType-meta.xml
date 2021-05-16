@@ -334,163 +334,75 @@
     <picklistValues>
         <picklist>MeterClass__c</picklist>
         <values>
-            <fullName>100</fullName>
+            <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>100 Volt</fullName>
+            <fullName>G10</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>230 Volt</fullName>
+            <fullName>G100</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>30</fullName>
+            <fullName>G1000</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>4</fullName>
+            <fullName>G16</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>400 Volt</fullName>
+            <fullName>G160</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>50</fullName>
+            <fullName>G1600</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>8</fullName>
+            <fullName>G2</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DIR Biorario</fullName>
+            <fullName>G2%2C5</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DIR Monorario</fullName>
+            <fullName>G25</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DIR Orario</fullName>
+            <fullName>G250</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Elettronico</fullName>
+            <fullName>G4</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G1%2C6 Pareti def%2E</fullName>
+            <fullName>G40</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G10 Pareti def%2E</fullName>
+            <fullName>G400</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G100 Pareti def%2E</fullName>
+            <fullName>G4000</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G100 Turbina</fullName>
+            <fullName>G6</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G1000 Pistoni rot%2E</fullName>
+            <fullName>G65</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>G1000 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G16 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G160 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G160 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G160 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G1600 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G2%2C5 pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G25 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G250 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G250 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G250G Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G4 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G40 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G40 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G400 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G400 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G4000 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G6 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G65 Pareti def%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G65 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G65 Turbina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G650 Pistoni rot%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>G650 Turbina</fullName>
+            <fullName>G650</fullName>
             <default>false</default>
         </values>
         <values>

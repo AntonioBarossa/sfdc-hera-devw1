@@ -545,6 +545,90 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         if(currentSectionName === 'dettaglioImpianto'){
 
+            if(this.template.querySelector("[data-id='ConnectionMandate__c']") !== null 
+                && (this.template.querySelector("[data-id='ConnectionMandate__c']").value === ''
+                    || this.template.querySelector("[data-id='ConnectionMandate__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Mandato di connessione',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='AtecoCode__c']") !== null 
+                && (this.template.querySelector("[data-id='AtecoCode__c']").value === ''
+                    || this.template.querySelector("[data-id='AtecoCode__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Cod Ateco',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='InstanceSelfCertification__c']") !== null 
+                && (this.template.querySelector("[data-id='InstanceSelfCertification__c']").value === ''
+                    || this.template.querySelector("[data-id='InstanceSelfCertification__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Autocert. Istanza',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+            
+            if(this.template.querySelector("[data-id='SelfCertificationConnection__c']") !== null 
+                && (this.template.querySelector("[data-id='SelfCertificationConnection__c']").value === ''
+                    || this.template.querySelector("[data-id='SelfCertificationConnection__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Autocert. contr connessione',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='Pressure__c']") !== null 
+                && (this.template.querySelector("[data-id='Pressure__c']").value === ''
+                    || this.template.querySelector("[data-id='Pressure__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Pressione fornitura',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
+            if(this.template.querySelector("[data-id='WithdrawalClass__c']") !== null 
+                && (this.template.querySelector("[data-id='WithdrawalClass__c']").value === ''
+                    || this.template.querySelector("[data-id='WithdrawalClass__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Classe Profilo Prelievo',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
+
             if(this.template.querySelector("[data-id='CommentForDL__c']") !== null 
                 && (this.template.querySelector("[data-id='CommentForDL__c']").value === ''
                     || this.template.querySelector("[data-id='CommentForDL__c']").value === null)) {
@@ -1409,26 +1493,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Tipo Impianto',
-                    'apiname': 'ImplantType__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
-                    'label': 'Consumi Anno',
-                    'apiname': 'AnnualConsumption__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': true,
-                    'disabled': true,
-                    'value': '',
-                    'processVisibility': ''
-                },
-                {
                     'label': 'Setore merceologico',
                     'apiname': 'CommodityFormula__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Distributore',
+                    'apiname': 'DistributorFormula__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
                     'disabled': true,
@@ -1445,8 +1520,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Distributore',
-                    'apiname': 'DistributorFormula__c',
+                    'label': 'Tipo Impianto',
+                    'apiname': 'ImplantType__c',
+                    'typeVisibility': this.typeVisibility('both'),
+                    'required': true,
+                    'disabled': true,
+                    'value': '',
+                    'processVisibility': ''
+                },
+                {
+                    'label': 'Consumi Anno',
+                    'apiname': 'AnnualConsumption__c',
                     'typeVisibility': this.typeVisibility('both'),
                     'required': true,
                     'disabled': true,
@@ -1511,7 +1595,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Residente all\'indirizzo di Fornitura',
                     'apiname': 'Resident__c',
-                    'typeVisibility': this.typeVisibility('ele'),
+                    'typeVisibility': this.typeVisibility('both'),
                     'required': true,
                     'disabled': true,
                     'value': '',
@@ -1558,7 +1642,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'apiname': 'WithdrawalClass__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
-                    'disabled': true,
+                    'disabled': false,
                     'value': '',
                     'processVisibility': ''
                 },
@@ -1584,7 +1668,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'ConnectionMandate__c',
                     'apiname': 'ConnectionMandate__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': '',
@@ -1592,10 +1676,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     // 'diffRecordId': this.order.Id
                 },
                 {
-                    'label': 'SelfCertificationConnection__c',
+                    'label': 'Autocert. contr connessione',
                     'apiname': 'SelfCertificationConnection__c',
                     'typeVisibility': this.typeVisibility('ele'),
-                    'required': false,
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': '',
@@ -1715,7 +1799,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Codice Ateco',
                     'apiname': 'AtecoCode__c',
                     'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
@@ -1723,8 +1807,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Autocert Instanza',
                     'apiname': 'InstanceSelfCertification__c',
-                    'typeVisibility': this.typeVisibility('both'),
-                    'required': false,
+                    'typeVisibility': this.typeVisibility('ele'),
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
@@ -1732,7 +1816,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'SAPImplantCode__c',
                     'apiname': 'SAPImplantCode__c',
-                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'),
+                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'),
                     'required': false,
                     'disabled': false,
                     'value': '',
@@ -1766,14 +1850,23 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'processVisibility': ''
                 },
                 {
-                    'label': 'Delibera',
-                    'apiname': 'Deliberation__c',
-                    'typeVisibility': this.typeVisibility('gas'),
+                    'label': 'Esclusione dal deposito cauzionale',
+                    'apiname': 'SecurityDepositExcluded__c',
+                    'typeVisibility': this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'),
                     'required': false,
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
-                }
+                },
+                {
+                    'label': 'Pressione fornitura',
+                    'apiname': 'Pressure__c',
+                    'typeVisibility': this.typeVisibility('gas'),
+                    'required': true,
+                    'disabled': false,
+                    'value': '',
+                    'processVisibility': ''
+                }	
                ]
             },
             {
