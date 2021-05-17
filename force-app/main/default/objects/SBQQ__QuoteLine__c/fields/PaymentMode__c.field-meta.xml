@@ -17,9 +17,9 @@
                 <label>RID</label>
             </value>
             <value>
-                <fullName>Bollettino</fullName>
+                <fullName>BollettinoPostale</fullName>
                 <default>false</default>
-                <label>Bollettino</label>
+                <label>Bollettino postale</label>
             </value>
         </valueSetDefinition>
     </valueSet>

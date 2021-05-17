@@ -20,6 +20,6 @@
         <default>false</default>
         <label>Standard</label>
     </customValue>
-    <masterLabel>Modalita di Pagamento</masterLabel>
+    <masterLabel>Bollettino postale</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
