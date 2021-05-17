@@ -207,11 +207,15 @@ export default class HdtAccountAlerts extends LightningElement {
             })
             .then(result => {
                 console.log('updateAlert result: ' + result);
+                let toastMsg = 'Alert aggiornato';
+                if ('IsActive__c' in draftAlert) {
+                    toastMsg = draftAlert['IsActive__c'] === true ? 'Alert attivato. Case di Modifica Alert creato.' : 'Alert disattivato. Case di Modifica Alert creato.';
+                }
                 this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Alert aggiornato', // TODO: avvisare che il case è stato innescato.
+                        message: toastMsg,
                         variant: 'success'
                     })
                 );

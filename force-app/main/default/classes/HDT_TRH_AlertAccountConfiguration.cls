@@ -8,6 +8,9 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         handleAlerts();
     }
 
+    /**
+     * Crea il Case di Modifica Alert e lo invia a SAP.
+     */
     private void handleAlerts() {
 
         HDT_QR_RecordType rtQueryHandler = new HDT_QR_RecordType();
@@ -24,6 +27,14 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
             if (Trigger.isInsert && !alert.IsActive__c && !alert.IsEmailChannelActive__c
                 && !alert.IsSmsChannelActive__c && !alert.IsPushChannelActive__c && !alert.IsSolChannelActive__c) {
                 continue;
+            }
+
+            // In caso di update creiamo il Case solo se il flag di attivazione è stato modificato.
+            if (Trigger.isUpdate) {
+                AlertAccountConfiguration__c oldAlert = (AlertAccountConfiguration__c) Trigger.oldMap.get(alert.Id);
+                if (oldAlert != null && oldAlert.IsActive__c == alert.IsActive__c) {
+                    continue;
+                }
             }
 
             inputsMap.put('accountId', alert.Account__c);
