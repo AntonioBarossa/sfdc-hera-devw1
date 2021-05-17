@@ -394,15 +394,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Bolletta Fuga H2O</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Calamità Naturali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Delibera 655 2016</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
@@ -427,10 +419,6 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Evasione/Elusione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Fattura Plurim_TLR_Tur + 3.5%</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
@@ -459,14 +447,6 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Piano d&apos;autorità</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>TARI</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>TCP Comune no Int</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
