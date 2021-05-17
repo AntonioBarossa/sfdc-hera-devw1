@@ -11,7 +11,8 @@ import ACCOUNT_CATEGORY from '@salesforce/schema/Account.Category__c';
 
 const columns = [
     { label: 'Regola Alert', fieldName: 'AlertRule__c' },
-    { label: 'Alert Attivo', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Stato Alert', fieldName: 'AlertState__c' },
+    { label: 'Flag Attivazione', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
@@ -24,9 +25,11 @@ export default class HdtAccountAlerts extends LightningElement {
     @track record;
     @track wireError;
     @track alertColumns;
-    @track accountAlerts = [];
+    @track accountAlerts = [];    // Gli alert creati sul Cliente
     @track menuItems = [];
-    availableAlerts;
+    @track availableAlerts = [];  // L'elenco di alert abilitabili per il Cliente (in base alla sua categoria)
+    @track noAlertsMessage = '';
+    @track noAlertRulesMessage = '';
     accountCategory = '';
     draftValues = [];
 
@@ -52,22 +55,13 @@ export default class HdtAccountAlerts extends LightningElement {
         return this.accountAlerts.length > 0;
     }
 
-    getAccountAlerts(){
-        try{
-            getAccountAlerts({
-                accountId: this.recordId
-                })
-                .then(result => {
-                    //console.log('getAccountAlerts result: ' + result);
-                    this.accountAlerts = JSON.parse(result);
-                    
-                })
-                .catch(error => {
-                    console.log('failed to get account alerts, accountId: ' + this.recordId);
-                });
-        }catch(error){
-                console.error(error);
-        }
+    get canActivateAlerts(){
+        return this.availableAlerts.length > 0;
+    }
+
+    setErrorMessages(){
+        this.noAlertsMessage = 'Nessun Alert configurato per il Cliente.';
+        this.noAlertRulesMessage = 'Nessun Alert configurabile per questa categoria di cliente.';
     }
 
     getAvailableRules(){
@@ -78,7 +72,7 @@ export default class HdtAccountAlerts extends LightningElement {
                 .then(result => {
                     //console.log('result: ' + result);
                     this.availableAlerts = JSON.parse(result);
-                    this.updateAlertMenu();
+                    this.refreshAccountAlertsAndMenu();
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
@@ -96,8 +90,10 @@ export default class HdtAccountAlerts extends LightningElement {
                 .then(result => {
                     //console.log('getAccountAlerts result: ' + result);
                     this.accountAlerts = JSON.parse(result);
+                    // getAvailableRules chiama refreshAccountAlertsAndMenu, quindi qui siamo sicuri di poter chiamare updateAlertMenu.
                     this.updateAlertMenu();
-                    
+                    // Settiamo gli error messages solo adesso per evitare che si vedano sempre e poi scompaiano dopo aver popolato gli array con gli alert.
+                    this.setErrorMessages();
                 })
                 .catch(error => {
                     console.log('failed to get account alerts, accountId: ' + this.recordId);
@@ -110,9 +106,10 @@ export default class HdtAccountAlerts extends LightningElement {
     connectedCallback() {
         console.log('account id: ' + this.recordId);
         this.alertColumns = columns;
-        this.getAccountAlerts();
     }
 
+    // Aggiorna this.menuItems con gli alert che il cliente non ha ancora mai abilitato.
+    // Richiede che this.accountAlerts e this.availableAlerts siano entrambi popolati.
     updateAlertMenu() {
         let menuItems = [];
         let activeRules = new Set();
@@ -121,8 +118,6 @@ export default class HdtAccountAlerts extends LightningElement {
         });
 
         this.availableAlerts.forEach(alert => {
-            //console.log('alert: ' + JSON.stringify(alert));
-
             if (!activeRules.has(alert.AlertRule__c)) {
                 menuItems.push(
                     {
@@ -165,7 +160,7 @@ export default class HdtAccountAlerts extends LightningElement {
 
         // Verifica se l'operatore sta provando ad abilitare un canale che è disabilitato al livello di regola alert.
         let channels = ['Email', 'Sms', 'Push', 'Sol'];
-        channels.forEach(channel => {
+        for (const channel of channels) {
             let activeKey = `Is${channel}ChannelActive__c`;
             let allowedKey = `Is${channel}ChannelAllowed__c`;
 
@@ -177,8 +172,10 @@ export default class HdtAccountAlerts extends LightningElement {
                         variant: 'error'
                     })
                 );
+                this.draftValues = [];
+                return;
             }
-        });
+        }
 
         let newAlert = JSON.parse(JSON.stringify(oldAlert)); // deep copy
         Object.keys(draftAlert).forEach(key => {
@@ -199,6 +196,8 @@ export default class HdtAccountAlerts extends LightningElement {
                     variant: 'error'
                 })
             );
+            this.draftValues = [];
+            return;
         }
 
         // TODO: verificare anche se il cliente ha cellulare/mail/contattoSol per poter ricevere l'alert?
@@ -208,11 +207,15 @@ export default class HdtAccountAlerts extends LightningElement {
             })
             .then(result => {
                 console.log('updateAlert result: ' + result);
-                this.draftValues = []; // per nascondere i pulsanti Salva/Cancella
+                let toastMsg = 'Alert aggiornato';
+                if ('IsActive__c' in draftAlert) {
+                    toastMsg = draftAlert['IsActive__c'] === true ? 'Alert attivato. Case di Modifica Alert creato.' : 'Alert disattivato. Case di Modifica Alert creato.';
+                }
+                this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Alert aggiornato', // TODO: avvisare che il case è stato innescato.
+                        message: toastMsg,
                         variant: 'success'
                     })
                 );
