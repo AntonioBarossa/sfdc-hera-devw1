@@ -1,5 +1,5 @@
 public with sharing class HDT_UTL_ServicePoint {
-    private static HDT_QR_Account accountQR = new HDT_QR_Account();
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
     public HDT_UTL_ServicePoint() {
 
     }
@@ -63,7 +63,7 @@ public with sharing class HDT_UTL_ServicePoint {
 				//campi fornitura
 				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
 					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
-                    Account a = accountQR.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
+                    Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
                     spNew.Distributor__c = a.id;
                     System.debug('SOLILLO');
 				}
