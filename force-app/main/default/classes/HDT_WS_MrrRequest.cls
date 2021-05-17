@@ -62,17 +62,8 @@ global with sharing class HDT_WS_MrrRequest {
                     //INIZIO SVILUPPI EVERIS
 
                     postSalesRequest = request;
-                    result = hpsmSrv.handleInboundRequest(postSalesRequest);
-
-                    responseField.fieldType = 'TEXT';
-                    responseField.name = 'ESITO';
-                    responseField.value = 'OK';
-
-                    responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
+                    responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
                     mrrResponseItem.objects.add(responseObject);
-                    
-                    RestContext.response.statusCode = 200;
-
                     //FINE SVILUPPI EVERIS
 
                 } else if (header.fields.get(0).value == 'sales') {
