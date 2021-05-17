@@ -8,6 +8,9 @@ package.xml
 **/jsconfig.json
 **/.eslintrc.json
 
+# Manually deployed
+**namedCredentials
+
 # LWC Jest
 **/__tests__/**
 **settings
