@@ -2644,6 +2644,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>BillingProfile__c.IsInactiveSAPContractAccount__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BillingProfile__c.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6410,6 +6415,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.ReportsToId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.SAPIntegrationID__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23799,7 +23809,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.CommoditySector__c</field>
+        <field>ServicePoint__c.CommoditySector__c</field> 
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
