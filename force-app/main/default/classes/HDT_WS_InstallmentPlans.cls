@@ -1,5 +1,7 @@
 global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
 
+    //OLD
+
     HDT_SRV_InstallmentPlans installmentsSrv = new HDT_SRV_InstallmentPlans();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
@@ -23,6 +25,7 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
         Case currentCase = new Case();
 
         recordId = (String) obj.get('Id');
+        String process =  (String) obj.get('Type');
         currentCase.Id = recordId;
         requestBody = installmentsSrv.createRequestBody(recordId);
 
@@ -42,7 +45,7 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
 
         }
 
-        paymentsUtl.handleResponse(recordId, response);
+        paymentsUtl.handleResponse(recordId, process, response);
 
         return responseReturn;
     }

@@ -8195,19 +8195,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agevolazioni non Energy indirette</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Assistenza Sociale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bolletta Fuga H2O</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bonus integrativo solo per non Energy</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8271,10 +8259,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delibera 655 2016</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Disagio Economico</fullName>
             <default>false</default>
         </values>
@@ -8308,10 +8292,6 @@
         </values>
         <values>
             <fullName>Evasione%2FElusione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura Plurim_TLR_Tur %2B 3%2E5%25</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8404,14 +8384,6 @@
         </values>
         <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TARI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TCP Comune no Int</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10874,7 +10846,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GENERICI 20%25-02</fullName>
+            <fullName>GENERICI 22%25-02</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10902,7 +10874,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E COLLEGATE 20%25-06</fullName>
+            <fullName>SOC%2E COLLEGATE 22%25-06</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10910,7 +10882,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E CONTROLLANTI 20%25-08</fullName>
+            <fullName>SOC%2E CONTROLLANTI 22%25-08</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10922,11 +10894,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E PARTECIPATE 20%25-16</fullName>
+            <fullName>SOC%2E PARTECIPATE 22%25-16</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2ECONTROLLATE 20%25-04</fullName>
+            <fullName>SOC%2ECONTROLLATE 22%25-04</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10934,7 +10906,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOCIETA%27 DEL GRUPPO 20%25-10</fullName>
+            <fullName>SOCIETA%27 DEL GRUPPO 22%25-10</fullName>
             <default>false</default>
         </values>
         <values>

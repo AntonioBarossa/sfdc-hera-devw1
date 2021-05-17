@@ -9,7 +9,7 @@ package.xml
 **/.eslintrc.json
 
 # Manually deployed
-**namedCredentials
+#**namedCredentials
 
 # LWC Jest
 **/__tests__/**
