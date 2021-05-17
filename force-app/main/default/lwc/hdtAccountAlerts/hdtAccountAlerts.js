@@ -69,8 +69,12 @@ export default class HdtAccountAlerts extends LightningElement {
         this.selectedRows = event.detail.selectedRows;
     }
 
-    showContactsModal(){
+    showModal(){
         this.showContactsModal = true;
+    }
+
+    hideModal(){
+        this.showContactsModal = false;
     }
 
     setErrorMessages(){

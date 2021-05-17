@@ -4,7 +4,7 @@
 
         <div class="slds-p-around_medium lgc-bg slds-p-left_small" slot="actions">
 
-            <lightning-button label="Modifica Contatto SOL" onclick={showContactsModal} disabled={disableContactsModal}></lightning-button>
+            <lightning-button label="Modifica Contatto SOL" onclick={showModal} disabled={disableContactsModal}></lightning-button>
 
             <lightning-button-menu 
                 label="Abilita Alert"
@@ -27,29 +27,76 @@
 
         <p class="slds-p-horizontal_small">
 
-            <template if:true={hasAlerts}>
-                <lightning-datatable
-                    key-field="Id"
-                    data={accountAlerts}
-                    columns={alertColumns}
-                    onsave={handleSave}
-                    draft-values={draftValues}
-                    onrowselection={handleRowSelection}
-                    max-row-selection=1>
-                </lightning-datatable>
+            <template if:true={showContactsModal}>
+                
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+   
+                    <div class="slds-modal__container">
+            
+                        <!-- modal header start -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                            </button>
+                            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Selezione Contatto SOL</h2>
+                        </header>
+            
+                        <!-- modal body start -->        
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="height: min-content;">
+                    
+                            <div class="slds-form slds-m-top_x-large slds-m-bottom_x-large" >
+            
+                                <c-hdt-contact-selection
+                                    account-id={recordId}
+                                    onrecordselected={handleRecordSelection}>
+                                </c-hdt-contact-selection>
+            
+                            </div>
+            
+                        </div>
+                        <!-- modal footer start-->
+                        <footer class="slds-modal__footer">
+                            <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Seleziona" title="confirm" onclick={applyFilter} ></lightning-button>
+                            <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={closeModal} ></lightning-button>
+                        </footer>
+            
+                    </div>
+            
+                </section>
+            
+                <div class="slds-backdrop slds-backdrop_open"></div>
+
             </template>
 
-            <template if:false={hasAlerts}>
-
-                <template if:false={canActivateAlerts}>
-                    <p><lightning-formatted-text value={noAlertRulesMessage}></lightning-formatted-text></p>
+            <template if:false={showContactsModal}>
+                
+                <template if:true={hasAlerts}>
+                    <lightning-datatable
+                        key-field="Id"
+                        data={accountAlerts}
+                        columns={alertColumns}
+                        onsave={handleSave}
+                        draft-values={draftValues}
+                        onrowselection={handleRowSelection}
+                        max-row-selection=1>
+                    </lightning-datatable>
                 </template>
-
-                <template if:true={canActivateAlerts}>
-                    <p><lightning-formatted-text value={noAlertsMessage}></lightning-formatted-text></p>
+    
+                <template if:false={hasAlerts}>
+    
+                    <template if:false={canActivateAlerts}>
+                        <p><lightning-formatted-text value={noAlertRulesMessage}></lightning-formatted-text></p>
+                    </template>
+    
+                    <template if:true={canActivateAlerts}>
+                        <p><lightning-formatted-text value={noAlertsMessage}></lightning-formatted-text></p>
+                    </template>
+    
                 </template>
 
             </template>
+
+            
 
         </p>
 

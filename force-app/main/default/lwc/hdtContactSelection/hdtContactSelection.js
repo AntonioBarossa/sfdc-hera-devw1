@@ -98,6 +98,7 @@ export default class HdtContactSelection extends LightningElement {
     connectedCallback(){
         this.isLoading = true;
         this.queryParamsString = this.queryParams;
+        this.maxRow = 1;
         //this.columns = JSON.parse(this.columns);
         this.columns = [
             { label: 'Nome Contatto', fieldName: 'Name', type: 'text' },
@@ -120,10 +121,8 @@ export default class HdtContactSelection extends LightningElement {
         ];
 
         if (this.showAdministrators === true) {
-            console.log('ADMIN: ' + this.showAdministrators);
             this.getAdministrators();
         } else {
-            console.log('NO ADMIN: ' + this.showAdministrators);
             this.getListRecords();
         }
     }
