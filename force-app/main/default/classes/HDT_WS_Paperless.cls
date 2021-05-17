@@ -1,5 +1,7 @@
 global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
+    //OLD
+
     HDT_SRV_Paperless paperlessSrv = new HDT_SRV_Paperless();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
@@ -23,6 +25,7 @@ global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interface
         Case currentCase = new Case();
 
         recordId = (String) obj.get('Id');
+        String process =  (String) obj.get('Type');
         requestBody = paperlessSrv.createRequestBody(recordId);
 
         try{
@@ -41,7 +44,7 @@ global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interface
 
         }
 
-        paymentsUtl.handleResponse(recordId, response);
+        paymentsUtl.handleResponse(recordId, process,  response);
 
         return responseReturn;
 

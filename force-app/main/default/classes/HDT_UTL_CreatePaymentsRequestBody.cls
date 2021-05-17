@@ -78,7 +78,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     }
 
 
-    public void handleResponse(String recordId, HttpResponse response){
+    public void handleResponse(String recordId, String process, HttpResponse response){
 
         Case caseToUpdate = new Case();
 
@@ -94,10 +94,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                         (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
 
                     System.debug('WS_ReminderBlock successResponse--> ' + successResponse);
-
-                    caseToUpdate.Phase__c = 'Inviata a SAP';
-
-
+                    if(process == 'Comunicazione Pagamento'
+                    || process == 'Piano Rateizzazione'
+                    || process == 'Paperless'){
+                        caseToUpdate.Phase__c = 'Inviata a SAP';
+                    }
 
                 }
                 when else{
@@ -106,8 +107,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                         (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
 
                     System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
-
-                    caseToUpdate.Phase__c = 'Non Inviata a SAP';
+                    if(process == 'Comunicazione Pagamento'
+                    || process == 'Piano Rateizzazione'
+                    || process == 'Paperless'){
+                        caseToUpdate.Phase__c = 'Non Inviata a SAP';
+                    }
                     caseToUpdate.Description = errorResponse.errorDetails[0].message;
 
                 }
