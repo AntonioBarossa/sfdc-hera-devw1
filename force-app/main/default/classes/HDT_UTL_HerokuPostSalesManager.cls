@@ -239,7 +239,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 if(String.isNotBlank(codiceCliente))
                     account = qrClass.getAccount(codiceCliente);
                 else {
-                    account = qrClass.getAccountFromSP(pod);
+                    account = qrClass.getAccountFromSp(pod);
                 }
                 if(account != null){
                     if(String.isNotBlank(tipo) && String.isNotBlank(sottotipo)){
