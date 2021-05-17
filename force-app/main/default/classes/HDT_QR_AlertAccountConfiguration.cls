@@ -9,6 +9,8 @@ public with sharing class HDT_QR_AlertAccountConfiguration {
             AlertRule__c,
             AlertState__c,
             IsActive__c, 
+            Contact__c,
+            Contact__r.Name,
             IsEmailChannelActive__c, 
             IsSmsChannelActive__c, 
             IsPushChannelActive__c, 

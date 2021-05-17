@@ -1,6 +1,7 @@
 import { LightningElement,api,track } from 'lwc';
 import getListRecords from '@salesforce/apex/HDT_LC_ContactSelection.getListRecords';
 import getAdministrators from '@salesforce/apex/HDT_LC_ContactSelection.getAdministrators';
+import getSolContacts from '@salesforce/apex/HDT_LC_ContactSelection.getSolContacts';
 
 export default class HdtContactSelection extends LightningElement {
 
@@ -8,6 +9,7 @@ export default class HdtContactSelection extends LightningElement {
     @api searchVariant;
     @api searchPlaceholder;
     @api showAdministrators;
+    @api showSolContacts;
     @api maxRow;
     @api results;
     @api accountId;
@@ -15,6 +17,7 @@ export default class HdtContactSelection extends LightningElement {
 
     @track columns;
     @track administratorColumns;
+    @track solColumns;
     @track data;
     @track isLoading;
     @track queryParamsString;
@@ -37,7 +40,11 @@ export default class HdtContactSelection extends LightningElement {
     }
 
     get shownColumns(){
-        return this.showAdministrators === true ? this.administratorColumns : this.columns;
+        if (this.showAdministrators === true) {
+            return this.administratorColumns;
+        }
+
+        return this.showSolContacts === true ? this.solColumns : this.columns;
     }
 
     getAdministrators(){
@@ -66,6 +73,34 @@ export default class HdtContactSelection extends LightningElement {
                 console.error(error);
             }
     }
+
+    getSolContacts(){
+        try{
+            getSolContacts({
+                accountId: this.accountId
+                })
+                .then(result => {
+                    console.log('RESULT: ' + result)
+                    var wiredResponse = JSON.parse(result);
+                    if(Object.keys(wiredResponse).length > 0){
+                        this.data = wiredResponse;
+                        this.showNoRecordMessage = false;
+                    }else{
+                        this.data = null;
+                        this.showNoRecordMessage = true;
+                    }
+                    
+                    this.isLoading = false;
+                })
+                .catch(error => {
+                    console.log('error ' + JSON.stringify(error) + ' ' + this.queryParamsString);
+                    this.isLoading = false;
+                });
+            }catch(error){
+                console.error(error);
+            }
+    }
+
 
     getListRecords(){
         try{
@@ -96,8 +131,10 @@ export default class HdtContactSelection extends LightningElement {
 
 
     connectedCallback(){
+        console.log('show amministratori? ' + this.showAdministrators + ' - show contatti sol? ' + this.showSolContacts);
         this.isLoading = true;
         this.queryParamsString = this.queryParams;
+        this.maxRow = 1;
         //this.columns = JSON.parse(this.columns);
         this.columns = [
             { label: 'Nome Contatto', fieldName: 'Name', type: 'text' },
@@ -119,11 +156,19 @@ export default class HdtContactSelection extends LightningElement {
             //{ label: 'Fax', fieldName: 'Fax', type: 'phone' }
         ];
 
+        this.solColumns = [
+            { label: 'Nome Contatto', fieldName: 'Name', type: 'text' },
+            { label: 'Ruolo', fieldName: 'Roles', type: 'text' },
+            //{ label: 'Email', fieldName: 'Email', type: 'email' },
+            //{ label: 'PEC', fieldName: 'CertifiedEmail__c', type: 'email' },
+            //{ label: 'Fax', fieldName: 'Fax', type: 'phone' }
+        ];
+
         if (this.showAdministrators === true) {
-            console.log('ADMIN: ' + this.showAdministrators);
             this.getAdministrators();
+        } else if (this.showSolContacts === true) {
+            this.getSolContacts();
         } else {
-            console.log('NO ADMIN: ' + this.showAdministrators);
             this.getListRecords();
         }
     }
