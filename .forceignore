@@ -9,6 +9,9 @@ package.xml
 **/jsconfig.json
 **/.eslintrc.json
 
+# Manually deployed
+**namedCredentials
+
 # LWC Jest
 **/__tests__/**
 **dashboards/trailheadapp__Trailhead_Dashboards
