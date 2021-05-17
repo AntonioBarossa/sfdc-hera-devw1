@@ -8,9 +8,20 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             when 'FareTypeList__c' {
                 fieldsApiName = 'Description__c, Sector__c, PossibleValue__c';
             }
-            when 'a' {
+            when 'DiscountListaA__c' {
+                fieldsApiName = 'ValidityStartDate__c, Description__c, Sector__c, DiscountType__c, PossibleValue__c, DiscountValue__c';
             }
-            when 'b' {
+            when 'DiscountListP__c' {
+                fieldsApiName = 'ValidityStartDate__c, Description__c, Sector__c, DiscountType__c, PossibleValue__c, DiscountValue__c';
+            }
+            when 'PriceListT__c' {
+                fieldsApiName = 'ValidityStartDate__c,Description__c,Sector__c,DiscountType__c,PossibleValue__c,PriceValue__c';
+            }
+            when 'PriceListL__c' {
+                fieldsApiName = 'ValidityStartDate__c,Description__c,Sector__c,DiscountType__c,PossibleValue__c,PriceValue__c';
+            }
+            when 'PriceListQ__c' {
+                fieldsApiName = 'ValidityStartDate__c,Description__c,Sector__c,DiscountType__c,PossibleValue__c,PriceValue__c';
             }
         }
 

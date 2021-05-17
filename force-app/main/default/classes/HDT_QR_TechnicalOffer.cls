@@ -170,8 +170,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         allValues = new List<sObject>();
         String myQuery = 'SELECT Id,';
         myQuery += fieldsApiName;
-        myQuery += ' FROM ' + objectApiName;
-        System.debug('>>> ' + myQuery);
+        myQuery += ' FROM ' + objectApiName + ' LIMIT 20';
         allValues = database.query(myQuery);
         return allValues;
     }
