@@ -95,19 +95,9 @@
                 <label>Assistenza Sociale</label>
             </value>
             <value>
-                <fullName>Bolletta Fuga H2O</fullName>
-                <default>false</default>
-                <label>Bolletta Fuga H2O</label>
-            </value>
-            <value>
                 <fullName>Calamità Naturali</fullName>
                 <default>false</default>
                 <label>Calamità Naturali</label>
-            </value>
-            <value>
-                <fullName>Delibera 655 2016</fullName>
-                <default>false</default>
-                <label>Delibera 655 2016</label>
             </value>
             <value>
                 <fullName>Disagio Economico</fullName>
@@ -145,11 +135,6 @@
                 <label>Evasione/Elusione</label>
             </value>
             <value>
-                <fullName>Fattura Plurim_TLR_Tur + 3.5%</fullName>
-                <default>false</default>
-                <label>Fattura Plurim_TLR_Tur + 3.5%</label>
-            </value>
-            <value>
                 <fullName>Fattura SD</fullName>
                 <default>false</default>
                 <label>Fattura SD</label>
@@ -185,16 +170,6 @@
                 <label>Piano d&apos;autorità</label>
             </value>
             <value>
-                <fullName>TARI</fullName>
-                <default>false</default>
-                <label>TARI</label>
-            </value>
-            <value>
-                <fullName>TCP Comune no Int</fullName>
-                <default>false</default>
-                <label>TCP Comune no Int</label>
-            </value>
-            <value>
                 <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</fullName>
                 <default>false</default>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</label>
@@ -218,16 +193,6 @@
                 <fullName>Permanenza condizioni di disagio</fullName>
                 <default>false</default>
                 <label>Permanenza condizioni di disagio</label>
-            </value>
-            <value>
-                <fullName>Bonus integrativo solo per non Energy</fullName>
-                <default>false</default>
-                <label>Bonus integrativo solo per non Energy</label>
-            </value>
-            <value>
-                <fullName>Agevolazioni non Energy indirette</fullName>
-                <default>false</default>
-                <label>Agevolazioni non Energy indirette</label>
             </value>
             <value>
                 <fullName>Portabilità dei dati</fullName>
@@ -339,6 +304,54 @@
                 <default>false</default>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
             </value>
+            <value>
+                <fullName>Agevolazioni non Energy indirette</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Agevolazioni non Energy indirette</label>
+            </value>
+            <value>
+                <fullName>Bolletta Fuga H2O</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bolletta Fuga H2O</label>
+            </value>
+            <value>
+                <fullName>Bonus integrativo solo per non Energy</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Bonus integrativo solo per non Energy</label>
+            </value>
+            <value>
+                <fullName>Chiamata Mura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Chiamata Mura</label>
+            </value>
+            <value>
+                <fullName>Delibera 655 2016</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Delibera 655 2016</label>
+            </value>
+            <value>
+                <fullName>Fattura Plurim_TLR_Tur + 3.5%</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Fattura Plurim_TLR_Tur + 3.5%</label>
+            </value>
+            <value>
+                <fullName>TARI</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TARI</label>
+            </value>
+            <value>
+                <fullName>TCP Comune no Int</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TCP Comune no Int</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
@@ -394,15 +407,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Bolletta Fuga H2O</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Calamità Naturali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Delibera 655 2016</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
@@ -427,10 +432,6 @@
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Evasione/Elusione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Fattura Plurim_TLR_Tur + 3.5%</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
@@ -461,14 +462,6 @@
             <valueName>Piano d&apos;autorità</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>TARI</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>TCP Comune no Int</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
             <valueName>Malfunzionamento</valueName>
         </valueSettings>
@@ -497,22 +490,6 @@
             <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
-            <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
-            <valueName>Permanenza condizioni di disagio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
-            <valueName>Malfunzionamento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
-            <valueName>Blocco per frode</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
             <valueName>Portabilità dei dati</valueName>
         </valueSettings>
@@ -539,10 +516,6 @@
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
             <valueName>Caduta Linea</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
-            <valueName>Chiamata Muta</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
