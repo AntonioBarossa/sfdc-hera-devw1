@@ -15,7 +15,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
-        billingProfileSrv.checkReadAccess('SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
+        billingProfileSrv.checkReadAccess('SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
         BillingProfile__c billingProfile = billingProfileQr.getRecordById(billingProfileId);
 
         orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
@@ -44,12 +44,13 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BillingPostalCode__c = billingProfile.InvoicingPostalCode__c;
         orderToUpdate.BillingCityCode__c = billingProfile.InvoicingCityCode__c;
         orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
+        orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
     }
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        servicePointSrv.checkReadAccess('MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
@@ -58,10 +59,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
-        orderToUpdate.MaxRequiredPotential__c = servicePoint.MaxRequiredPotential__c;
-        orderToUpdate.UseTypeEnergy__c = servicePoint.UseTypeEnergy__c;
+        orderToUpdate.MaxRequiredPotential__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MaxRequiredPotential__c : null;
+        orderToUpdate.UseTypeEnergy__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Ele' && servicePoint.UseTypeEnergy__c == null ? 'Ordinaria (Perm)' : servicePoint.UseTypeEnergy__c;
         orderToUpdate.UseCategory__c = servicePoint.UseCategory__c;
-        // orderToUpdate.WithdrawalClass__c = servicePoint.WithdrawalClass__c;
         orderToUpdate.MeterSN__c = servicePoint.MeterSN__c;
         orderToUpdate.Resident__c = servicePoint.Resident__c;
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
@@ -73,16 +73,27 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SupplyCountry__c = servicePoint.SupplyCountry__c;
         orderToUpdate.PowerCommitted__c = servicePoint.PowerContractual__c;
         orderToUpdate.ServicePointCode__c = servicePoint.ServicePointCode__c;
-        orderToUpdate.SAPImplantCode__c = servicePoint.SAPImplantCode__c != null ? servicePoint.SAPImplantCode__c : '12345';
+        orderToUpdate.SAPImplantCode__c = servicePoint.SAPImplantCode__c;
         orderToUpdate.ImplantType__c = servicePoint.ImplantType__c;
         orderToUpdate.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
         orderToUpdate.SupplyState__c = servicePoint.SupplyProvince__c;
+        orderToUpdate.Disconnectable__c = servicePoint.Disconnectable__c != null ? servicePoint.Disconnectable__c : 'Si';
+        orderToUpdate.DisconnectibilityType__c = servicePoint.DisconnectibilityType__c;
+        orderToUpdate.ConnectionType__c = 'Permanente';
+        orderToUpdate.AtecoCode__c = '999999';
+        orderToUpdate.InstanceSelfCertification__c = 'SI';
+        orderToUpdate.ConnectionMandate__c = 'SI';
+        orderToUpdate.SelfCertificationConnection__c = '02';
+        orderToUpdate.SurfaceServed__c = 75;
+        orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerContractual__c);
+        orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
+        orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
 
-        accountSrv.checkReadAccess('BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        Account account = accountQr.getRecordById(accountId, 'BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        accountSrv.checkReadAccess('BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        Account account = accountQr.getRecordById(accountId, 'BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
 
         String customerName = null;
 
@@ -99,18 +110,19 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.Email__c = account.PrimaryEmail__c;
         orderToUpdate.PhoneNumber__c = account.Phone;
         orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
-        // orderToUpdate.CustomerMarking__c = account.CustomerMarking__c; //Is a formula field
         orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
+        orderToUpdate.ResidentialCityCode__c = account.BillingCityCode__c;
 
     }
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
-        saleSrv.checkReadAccess('SaleBy__c,Campaign__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c');
+        saleSrv.checkReadAccess('SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone');
+        Sale__c sale = saleQr.getRecordById(saleId, 'SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.Phone');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
+        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
@@ -123,6 +135,54 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
         }
 
+    }
+
+    public static String calculateRequestedOption(String implantType, Decimal powerContractual){
+
+        String result = '';
+
+        switch on implantType {
+            when '13A0-Usi di Abitazione BT' {
+                result = '13FM-Non domestici AT';
+            }
+            when '13BB-Illuminazione pubblica BT' {
+                result = 'AEEG Opzione BTIP-E_BTIP';
+            }
+            when '13CB-Non domestici in BT' {
+
+                if(powerContractual > 0 && powerContractual <= 1.5) {
+                    result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
+                } else if(powerContractual > 1.5 && powerContractual <= 3) {
+                    result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';
+                } else if(powerContractual > 3 && powerContractual <= 6) {
+                    result = 'AEEG Op BTA3 >3 <=6 kW-E_BTA3';
+                } else if(powerContractual > 6 && powerContractual <= 10) {
+                    result = 'AEEG Op BTA4 >6 <=10 kW-E_BTA4';
+                } else if(powerContractual > 10 && powerContractual <= 16.5) {
+                     result = 'AEEG Op BTA5 > 10 kW-E_BTA5';
+                } else if(powerContractual > 16.5) {
+                    result = 'AEEG Op BTA6 olt 16,5kW-E_BTA6';
+                }
+
+            }
+            when '13EM-Non domestici MT' {
+                if(powerContractual > 0 && powerContractual <= 100) {
+                    result = 'AEEG Opz MTA1 fin 100kW-E_MTA1';
+                } else if(powerContractual > 100 && powerContractual <= 500) {
+                    result = 'AEEG Op MTA2 >100 <=500-E_MTA2';
+                } else if(powerContractual > 500) {
+                    result = 'AEEG Op MTA3 olt 500kW-E_MTA3';
+                }
+            }
+            when '13DM-Illuminazione pubblica MT' {
+                result = 'AEEG Opzione MTIP-E_MTIP';
+            }
+            when '13FM-Non domestici AT' {
+                result = 'AEEG Op ALTA fin 220 kV-E_ALTA';
+            }
+        }
+
+        return result;
     }
 
     public static void alignFields(Order order) {

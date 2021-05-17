@@ -28,6 +28,16 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
 
     }
 
+    public Case getCaseRecord(String recordId){
+        Case recordCase = new Case();
+        try {
+            recordCase = [SELECT Id, Description, Phase__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+        } catch (DmlException ex) {
+            System.debug(ex.getMessage());
+        }
+        return recordCase;
+    }
+
 
     public wrts_prcgvr__AsyncJob__c getAsyncJobByJobItem(String recordId){
 
@@ -41,6 +51,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         FROM wrts_prcgvr__AsyncJob__c
         WHERE wrts_prcgvr__JobItem__c = :recordId
         AND (wrts_prcgvr__Status__c = 'Completed'
+        
             OR wrts_prcgvr__Status__c = 'Queued')
         WITH SECURITY_ENFORCED
         LIMIT 1];

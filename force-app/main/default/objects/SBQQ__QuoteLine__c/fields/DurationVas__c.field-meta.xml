@@ -4,7 +4,7 @@
     <description>Durata di applicazione del contratto dei VAS</description>
     <externalId>false</externalId>
     <label>VAS - Durata</label>
-    <precision>18</precision>
+    <precision>3</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

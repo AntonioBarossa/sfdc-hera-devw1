@@ -4,7 +4,7 @@
     <description>Codice Comune SAP</description>
     <externalId>false</externalId>
     <label>Codice ISTAT [Residenziale/Sede Legale]</label>
-    <length>6</length>
+    <length>30</length>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ReadingType4__c</fullName>
     <externalId>false</externalId>
-    <label>Tipo Lettura 4</label>
+    <label>Tipo Lettura F4</label>
     <length>50</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

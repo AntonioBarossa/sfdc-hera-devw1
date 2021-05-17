@@ -12,11 +12,11 @@
                     <lightning-button onclick={handleCancel} disabled={disabledCancel} icon-name="utility:cancel_file_request" variant="brand" label="Annulla" title="Cancel action"></lightning-button>
                 </li>
                 <li>
-                    <lightning-button onclick={handleSaveDraft} disabled={disabledSaveDraft} icon-name="standard:drafts" variant="neutral" label="Salva in bozza" title="Save Draft action"></lightning-button>
+                    <lightning-button onclick={handleSaveDraft} class="slds-m-left_x-small" disabled={disabledSaveDraft} icon-name="standard:drafts" variant="brand" label="Salva in bozza" title="Save Draft action"></lightning-button>
                 </li>
                 <li>
                     <!--EVERIS: Bottone riporato in brand come richiesto BSN-->
-                    <lightning-button onclick={handleSave} disabled={disabledSave} icon-name="utility:save" variant="brand" label="Conferma" title="Save action"></lightning-button>
+                    <lightning-button onclick={handleSave} class="slds-m-left_x-small" disabled={disabledSave} icon-name="utility:save" variant="brand" label="Conferma" title="Save action"></lightning-button>
                 </li>
             </ul>
             <c-hdt-confirmation-dialog-dropdown

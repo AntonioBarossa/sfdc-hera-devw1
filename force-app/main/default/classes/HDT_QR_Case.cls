@@ -13,6 +13,7 @@ public inherited sharing class HDT_QR_Case {
             Id,
             Status,
             Subject,
+            Subprocess__c,
             AccountId
             FROM Case
             where Id = :Id
@@ -31,5 +32,19 @@ public inherited sharing class HDT_QR_Case {
         WITH SECURITY_ENFORCED];
         
     }
+
+    public Case getParentCaseById(String caseId){
+
+        return [SELECT Id,
+        Type,
+        Phase__c,
+        DistributorName__c
+        FROM Case
+        WHERE Id = :caseId
+        WITH SECURITY_ENFORCED
+        LIMIT 1];
+
+    }
+
 
 }

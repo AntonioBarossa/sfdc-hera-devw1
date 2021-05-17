@@ -270,11 +270,6 @@
                 <label>Errata Emissione</label>
             </value>
             <value>
-                <fullName>Chiamata Mura</fullName>
-                <default>false</default>
-                <label>Chiamata Mura</label>
-            </value>
-            <value>
                 <fullName>Caduta Linea</fullName>
                 <default>false</default>
                 <label>Caduta Linea</label>
@@ -315,34 +310,34 @@
                 <label>DISATTIVATO/DISDETTO (SERVIZIO)</label>
             </value>
             <value>
+                <fullName>Chiamata Muta</fullName>
+                <default>false</default>
+                <label>Chiamata Muta</label>
+            </value>
+            <value>
+                <fullName>Malfunzionamento</fullName>
+                <default>false</default>
+                <label>Malfunzionamento</label>
+            </value>
+            <value>
                 <fullName>Blocco per frode</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Blocco per frode</label>
+            </value>
+            <value>
+                <fullName>Prima Bolletta</fullName>
+                <default>false</default>
+                <label>Prima Bolletta</label>
             </value>
             <value>
                 <fullName>Bolletta Periodica</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Bolletta Periodica</label>
             </value>
             <value>
                 <fullName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
-            </value>
-            <value>
-                <fullName>Malfunzionamento</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Malfunzionamento</label>
-            </value>
-            <value>
-                <fullName>Prima Bolletta</fullName>
-                <default>false</default>
-                <isActive>false</isActive>
-                <label>Prima Bolletta</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -474,20 +469,88 @@
             <valueName>TCP Comune no Int</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Malfunzionamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
+            <valueName>Prima Bolletta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
+            <valueName>Bolletta Periodica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Cessazione utilizzo apparecchiatura elettromedicale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Mancata erogazione Bonus con domanda di attivazione/rinnovo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Richiesta documentazione che attesti la presenza di un contratto Energy attivo e relativo CF</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Permanenza condizioni di disagio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Malfunzionamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Portabilità dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Cancellazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Rettifica dati personali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Accesso dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Limitazione dei dati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
+            <valueName>Opposizione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Caduta Linea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
+            <valueName>Chiamata Muta</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Sollecito Emissione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Votive Modena Contestazione Fattura</controllingFieldValue>
             <valueName>Errata Emissione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
-            <valueName>Chiamata Mura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>
-            <valueName>Caduta Linea</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -25,8 +25,23 @@
         <property name="accountId" type="String" label="accountId" description="accountId" role="inputOnly" required="true"/>
             
         <property name="selectionType" type="String" label="selectionType" description="selectionType" role="inputOnly" required="true"/>
-            
+        
+        <property name="showDraftButton" type="Boolean" label="Show Draft Button?" description="Whether to show the Draft Button" role="inputOnly"/>
+
+        <property name="showBackButton" type="Boolean" label="Show Back Button?" description="Whether to show the Back Button" role="inputOnly"/>
+
+        <property name="showCancelButton" type="Boolean" label="Show Cancel Button?" description="Whether to show the Cancel Button" role="inputOnly"/>
+
+        <property name="nextLabel" type="String" label="Next Label" description="The Label of the Next Button" role="inputOnly"/>
+
+        <property name="showAdministrators" type="Boolean" label="Show Administrators Only" description="Per mostrare solo contatti con ruolo Amministratore" role="inputOnly" default="false"/>
+
+        <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
+
+        <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>
+
         <property name="results" type="String" label="results" description="results" role="outputOnly"/>
+
             
         </targetConfig>
         

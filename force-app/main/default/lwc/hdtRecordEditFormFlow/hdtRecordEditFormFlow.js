@@ -32,6 +32,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api availableActions = [];
     @api variantSaveButton;
     @api outputId;
+    @api documentRecordId;
 
     @track errorMessage;
     @track error;
@@ -83,12 +84,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }
                     });
                 }
-                this.variablesLoaded = true;
+                
                 if(this.recordId != null){
                     updateRecord({fields: { Id: this.recordId }}).then(() => {
                        console.log('Record Refreshato');
+                       console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                       this.variablesLoaded = true;
                     }).catch(error => {
                         console.log('Error Refreshing record');
+                        this.error = true;
                     });
                 }
             } else if (error) {
@@ -122,8 +126,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }
         */
     selectContentDocument(){
+
+        if(this.documentRecordId == null || this.documentRecordId == undefined || this.documentRecordId == ''){
+            this.documentRecordId = this.recordId;
+        }
+
         getContentDocs({
-            arecordId: this.recordId
+            arecordId: this.documentRecordId
             })
             .then(result => {
                 console.log(JSON.stringify(result));
@@ -146,6 +155,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log(this.acceptedFormats);
             this.formats = this.acceptedFormats.split(";");
             console.log(JSON.stringify(this.formats));
+        }
+        if(this.previousButton && !this.availableActions.find(action => action === 'BACK')){
+            this.previousButton = false;
         }
         
     }
@@ -199,10 +211,11 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleError(event){
+        console.log('Error Loading');
         let obj = event.detail.output.fieldErrors;
-
+ 
         let message = obj[Object.keys(obj)[0]][0].message;
-
+        console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Errore',
@@ -211,7 +224,6 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }),
         );
     }
-
     handleDraft(event){
         console.log('draft handle');
         if(event.target.name === 'draft'){
@@ -317,6 +329,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
     handleChange(event){
 
+        //Reclami customizations
+
         let five = !(Object.keys(this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')).length === 0)
         ? this.firstColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c')
         : this.secondColumn.filter(element => element['FieldName'] === 'FithLevelComplaintClassification__c');
@@ -366,12 +380,10 @@ export default class HdtRecordEditFormFlow extends LightningElement {
 
             }
 
-
-
         }
 
+        //Reclami customizations
 
     }
-
-
+ 
 }

@@ -13,8 +13,12 @@
         //var cluster = myPageRef.state.c__cluster;
         var recordToCancell = myPageRef.state.c__recordToCancell;
         var sObjectRecordToCancell = myPageRef.state.c__sObjectRecordToCancell;
-
+        var createDocuments = myPageRef.state.c__createDocuments;
+        var serviceCatalogId = myPageRef.state.c__catalogId;
         var context = myPageRef.state.c__context;
+
+        //variabile per innesco da altri case
+        var parentRecordId = myPageRef.state.c__parentRecordId;
 
         console.log('# context -> '+ context);
         console.log('# accId -> ' + accId);
@@ -26,6 +30,7 @@
         //console.log('# cluster -> ' + cluster);
         console.log('# recordToCancell -> ' + recordToCancell);
         console.log('# sObjectRecordToCancell -> ' + sObjectRecordToCancell);
+        console.log('# parentRecordId --> '+ parentRecordId);
 
                 
         var workspaceAPI = component.find("workspace");
@@ -69,7 +74,10 @@
                         c__recordTypeName: recordTypeName,
                         c__recordToCancell: recordToCancell,
                         c__sObjectRecordToCancell: sObjectRecordToCancell,
-                        c__context: context
+                        c__context: context,
+                        c__createDocuments: createDocuments,
+                        c__catalogId: serviceCatalogId,
+                        c__parentRecordId: parentRecordId
                     }
                 },
                 focus: true

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>NewClient__c</fullName>
-    <defaultValue>false</defaultValue>
-    <description>Indica se tale record di asset è associabile ai new client</description>
+    <description>indica se tale record di product option è associabile ai new client.</description>
     <externalId>false</externalId>
     <label>Nuovo Cliente</label>
+    <length>1</length>
+    <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Checkbox</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

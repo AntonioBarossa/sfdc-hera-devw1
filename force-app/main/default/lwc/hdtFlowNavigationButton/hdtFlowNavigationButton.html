@@ -7,13 +7,13 @@
     </template>
 
     <template if:false={loadingSpinner}>
-        <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+        <div class="actionButtonBar slds-grid slds-grid_align-spread">
             <div class="actionsLeft">
             </div>
-            <div class="actionsRight">
+            <div class="actionsRight slds-p-around_small">
                 <lightning-button
                     class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                    variant={nextVariant} type="button" name="save" label={nextLabel} onclick={handleClick}>
+                    variant="brand" type="button" name="save" label={nextLabel} onclick={handleClick}>
                 </lightning-button>
                 <lightning-button if:true={isDraft}
                 class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
@@ -25,7 +25,7 @@
                 </lightning-button>
                 <lightning-button if:true={isCancel}
                 class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                variant="destructive" type="button" name="cancel" label="Annulla" onclick={handleClick}>
+                variant="brand" type="button" name="cancel" label="Annulla" onclick={handleClick}>
                 </lightning-button>
             </div>
         </div>

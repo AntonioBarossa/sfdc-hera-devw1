@@ -492,11 +492,7 @@
         <values>
             <fullName>G650 Turbina</fullName>
             <default>false</default>
-        </values>
-        <values>
-            <fullName>G6500</fullName>
-            <default>false</default>
-        </values>
+        </values>        
     </picklistValues>
     <picklistValues>
         <picklist>MeterType__c</picklist>

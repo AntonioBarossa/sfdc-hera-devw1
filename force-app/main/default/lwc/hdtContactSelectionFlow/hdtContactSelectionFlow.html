@@ -1,16 +1,28 @@
 <template>
-    <c-hdt-contact-selection if:true={showSelector} account-id={accountId} search-variant={searchVariant} search-placeholder={searchPlaceholder} max-row={maxRow} columns={columns} query-params={queryParams} onrecordselected={handleRecordSelection}></c-hdt-contact-selection>
+    
+    <c-hdt-contact-selection if:true={showSelector} 
+        account-id={accountId} 
+        show-administrators={showAdministrators}
+        search-variant={searchVariant} 
+        search-placeholder={searchPlaceholder} 
+        max-row={maxRow} 
+        columns={columns} 
+        query-params={queryParams} 
+        onrecordselected={handleRecordSelection}>
+    </c-hdt-contact-selection>
+    
     <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
         </div>
         <div class="actionsRight">
-            <lightning-button
-                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                variant="brand" type="button" name="save" label="Avanti" onclick={handleNext}>
-            </lightning-button>
-            <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
-                variant="destructive" type="button" name="cancel" label="Annulla" onclick={handleCancell}>
-            </lightning-button>
+            <c-hdt-flow-navigation-button
+            next-label={nextLabel}
+            next-variant="brand"
+            is-draft={showDraftButton}
+            is-previous={showBackButton}
+            is-cancel={showCancelButton}
+            onnavigation={handleNavigation}>
+            </c-hdt-flow-navigation-button>
         </div>
     </div>
 </template>

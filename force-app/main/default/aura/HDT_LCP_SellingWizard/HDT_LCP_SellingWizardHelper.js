@@ -35,7 +35,7 @@
 
     getSaleRecord : function(component) {
         var saleIdParam = component.get("v.saleId");
-        var fieldsParam = 'Id,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c';
+        var fieldsParam = 'Id,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c';
 
         var action = component.get("c.getSale");
         action.setParams({id : saleIdParam, fields: fieldsParam});
@@ -61,30 +61,10 @@
             var focusedTabId = response.parentTabId;
             var focusedTab = response.tabId;
             
-            console.log("Begin Redirect_3_: " + focusedTabId);
-            console.log("Begin Redirect_4_: " + objectId);
-            console.log("Begin Redirect_5_: " + objectApiname);
+            console.log("focusedTab: " + focusedTab);
+            console.log("objectId: " + objectId);
+            console.log("objectApiname: " + objectApiname);
             
-            if (objectApiname == 'Sale__c') {
-                console.log('subTab Sale');
-                workspaceAPI.openSubtab({//Subtab({
-                    parentTabId: focusedTabId,
-                    pageReference: {
-                        type: 'standard__recordPage',
-                        attributes: {
-                            recordId: objectId,
-                            objectApiName: objectApiname,
-                            actionName : 'view'
-                        }
-                    },
-                    focus: true
-                }).then(function(response2){
-                    workspaceAPI.closeTab({tabId: focusedTab});
-                })
-                .catch(function(error) {
-                    console.log('******' + error);
-                });
-            } else {
                 workspaceAPI.openTab({//Subtab({
                     parentTabId: focusedTabId,
                     pageReference: {
@@ -102,7 +82,6 @@
                 .catch(function(error) {
                     console.log('******' + error);
                 });
-            }
         })
         .catch(function(error) {
             console.log('******' + error);

@@ -6,6 +6,19 @@
 */
 public inherited sharing class HDT_QR_AccountContactRelation {
     
+    public List<AccountContactRelation> getAccountContactRelation(Id accountId, Id contactId, String fields){
+        String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId = :accountId And ContactId = :contactId';
+        List<AccountContactRelation> listAccCon= Database.query(query);
+
+        return listAccCon;
+    }
+    public List<AccountContactRelation> getAccountContactRelation(List<String> accountId, List<String> contactId, String fields){
+        String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId IN :accountId And ContactId IN :contactId';
+        List<AccountContactRelation> listAccCon= Database.query(query);
+
+        return listAccCon;
+    }
+
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Get records filtered by account and contact
@@ -41,5 +54,37 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
 
     }
+
+    // INIZIO SVILUPPI EVERIS
+
+    public List<AccountContactRelation> getContactsByAccountWithRoles(String accountId) {
+    
+        return [
+            SELECT 
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE 
+            AccountId = :accountId 
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public List<AccountContactRelation> getAdministratorRelations() {
+    
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE Roles INCLUDES ('Amministratore condominio')
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    // FINE SVILUPPI EVERIS
 
 }

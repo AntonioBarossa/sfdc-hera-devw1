@@ -1,34 +1,20 @@
 public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
-   
-
-    @InvocableMethod(label='Handle Response Data Enrichment')
-    public static List<Case> handleResponse(List<HDT_UTL_FlowInput> inputs){
-
+    public static Case handleResponse(String serializedResponse, Case currentCase){
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
-
-        List<Case> caseList = new List<Case>();
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
         List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigList = new List<HDT_DataEnrichmentTransocode__mdt>();
-        
         Map<String, Object> transcodeMap = new Map<String, Object>();
-
-        String serializedResponse = inputs[0].serializedResponse;
-        Case currentCase = inputs[0].currentCase;
-        
         String billingProfileCode;
         String billingProfilesfdcField;
         String billingProfileId;
         String modInvioBolletta;
         String pecBolletta;
         String emailBolletta;
-
         String deliveryAddress;
-
         String salesCompanyCode;
         String salesCompany;
-
         String method;
         String value;
         Decimal decValue;
@@ -39,90 +25,59 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         transcodeConfigList = depsQr.getTranscodeConfig();
 
         for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
-
             for(HDT_DataEnrichmentTransocode__mdt transcodeConfig : transcodeConfigList){
-
                 if(position.campo == transcodeConfig.SapField__c){
-
                     if(transcodeConfig.IsNumber__c){
-
                         if(transcodeConfig.Precision__c == 0){
                             try{
-
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 Integer.valueOf(position.valore));
-
                             }catch(Exception e){
-
                                 System.debug(e.getMessage());
-
                             }
-
                         }else if(transcodeConfig.Precision__c > 0){
                             try{
-
                                 decValue = Decimal.valueOf(position.valore);
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
                                 decValue.setScale(Integer.valueOf(transcodeConfig.Precision__c)));
-
                             }catch(Exception e){
-
                                 System.debug(e.getMessage());
-                                
                             }
-
                         }
-
                     } else if(transcodeConfig.IsTranscode__c){
-
-                        method = transcodeConfig.Method__c;
-                        
+                        method = transcodeConfig.Method__c;                        
                         switch on method{
-
                             when 'getPicklistValue'{
-
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.getPicklistValue('Case', transcodeConfig.SfdcField__c, position.valore));
-
                             }
                             when 'getBoolFromString'{
-
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.getBoolFromString(position.valore));
-
                             }
                             when 'getDateByYear'{
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
                                 depsSrv.getDateByYear(position.valore));
                             }
                             when 'getBillingProfileIdBySapCode'{
-
                                 billingProfilesfdcField = transcodeConfig.SfdcField__c;
                                 billingProfileCode = position.valore;
-
                             }
                             when 'getCaliber'{
-
                                 transcodeMap.put(transcodeConfig.SfdcField__c, 
                                 depsSrv.getCaliber(position.valore));
-
                             }
-
+                            when 'writeCollectiveBillType' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.writeCollectiveBillType(position.valore, currentCase));
+                            }
                         }
-
                     } else {
-
                         transcodeMap.put(transcodeConfig.SfdcField__c, position.valore);
-
                     }
-
                 }
-
             }
-
-
         }
-
         //BILLING PROFILE 
         try{
             BillingProfile__c billingRecord = depsQr.getBillingProfileIdBySapCode(billingProfileCode);
@@ -153,26 +108,27 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('InvoicingStreetNumberExtension__c', suffissoRecapito);
             transcodeMap.put('InvoicingStreetName__c', viaRecapito);
             transcodeMap.put('InvoicingCountry__c', nazioneRecapito);
-
-
         } catch(Exception e) {
-
             System.debug('Billing Profile non presente a sistema');
-
         }
 
         //SALESCOMPANY
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
-
         transcodeMap.put('SalesCompany__c', salesCompany);
 
+        return depsSrv.populateCase(transcodeMap, currentCase);
+    }
 
-        caseList.add(depsSrv.populateCase(transcodeMap, currentCase));
-
+    // Wrapper per i flow
+    @InvocableMethod(label='Handle Response Data Enrichment')
+    public static List<Case> handleResponseFlow(List<HDT_UTL_FlowInput> inputs){
+        String serializedResponse = inputs[0].serializedResponse;
+        Case currentCase = inputs[0].currentCase;
+        
+        List<Case> caseList = new List<Case>();
+        caseList.add(handleResponse(serializedResponse, currentCase));
         return caseList;
-
-
     }
 
 

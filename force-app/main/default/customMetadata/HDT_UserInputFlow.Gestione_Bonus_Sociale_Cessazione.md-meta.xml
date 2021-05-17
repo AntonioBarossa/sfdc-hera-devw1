@@ -13,7 +13,7 @@
     {
         &quot;FieldName&quot; : &quot;SocialBonusEndDate__c&quot;,
         &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 1
+        &quot;Column&quot;   : 2
     }
 ]</value>
     </values>
@@ -44,6 +44,21 @@
         &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactMobile&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Market__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
     }
 ]</value>
     </values>

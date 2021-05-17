@@ -149,6 +149,59 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PraxidiaPostWorkAction__c</picklist>
+        <values>
+            <fullName>Contattare tramite email</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Ricontattare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo reclamo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiamare</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PraxidiaPostWorkCause__c</picklist>
+        <values>
+            <fullName>Risposta OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta incompleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta non corretta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta poco chiara</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PraxidiaPostWorkOutcome__c</picklist>
+        <values>
+            <fullName>Non risponde</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non soddisfatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Soddisfatto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Dimostrata Estraneità</fullName>
@@ -188,7 +241,7 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Approvazione Quote</fullName>
+            <fullName>Sportello</fullName>
             <default>false</default>
         </values>
     </picklistValues>

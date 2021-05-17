@@ -5,6 +5,101 @@
     <businessProcess>Default</businessProcess>
     <label>Creazione Manuale</label>
     <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>Accedi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende Soho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca centrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comuni Territorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Default gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intercompany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NRI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piccoli Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller - Extra Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller - Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Societa Vendita Terze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VIP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CompanyOwner__c</picklist>
         <values>
             <fullName>AAA-EBT</fullName>
@@ -42,7 +137,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC%2BHCM%2BHCNE</fullName>
+            <fullName>HC%2BHCM%2BEENE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -69,7 +164,50 @@
     <picklistValues>
         <picklist>ContactReason__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Gestione contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info commerciali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolletta e pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DegreeOfStudies__c</picklist>
+        <values>
+            <fullName>Diploma scuola media inferiore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Diploma scuola media superiore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Laurea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Licenza elementare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Master</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nessun titolo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -341,6 +479,13 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MobilePhonePrefix__c</picklist>
+        <values>
+            <fullName>%2B39</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Name</picklist>
         <values>
             <fullName>Dr%2E</fullName>
@@ -379,6 +524,112 @@
         </values>
         <values>
             <fullName>Non interessato all%27offerta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PhonePrefix__c</picklist>
+        <values>
+            <fullName>%2B39</fullName>
+            <default>true</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Profession__c</picklist>
+        <values>
+            <fullName>Agricoltore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Artigiano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avvocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Casalinga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commercialista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commerciante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Commesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dipendente privato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dipendente pubblico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dirigente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disoccupato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Funzionario %2F Quadro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Giornalista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Impiegato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imprenditore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Insegnante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Libero professionista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Medico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notaio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Operaio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pensionato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Precario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Studente</fullName>
             <default>false</default>
         </values>
     </picklistValues>

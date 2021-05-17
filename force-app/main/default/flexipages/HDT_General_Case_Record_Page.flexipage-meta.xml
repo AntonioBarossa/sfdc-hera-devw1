@@ -344,10 +344,16 @@
                         <valueListItems>
                             <value>CustomButton.Case.HDT_Annullamento</value>
                             <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NotCancellable__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -380,6 +386,16 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_AltreInformative</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.HDT_CaseDocumentValidation</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In attesa validazione</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

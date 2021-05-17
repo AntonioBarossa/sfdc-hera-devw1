@@ -16,17 +16,17 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;FiscalCode__c&quot;,
+        &quot;FieldName&quot; : &quot;CustomerMarking__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;FiscalCode__c&quot;,
+        &quot;Required&quot;   : false,
+        &quot;Column&quot;   : 2
     },
     {
         &quot;FieldName&quot; : &quot;VatNumber__c&quot;,
-        &quot;Required&quot;   : false,
-        &quot;Column&quot;   : 1
-    },
-    {
-        &quot;FieldName&quot; : &quot;CustomerMarking__c&quot;,
         &quot;Required&quot;   : false,
         &quot;Column&quot;   : 2
     }
@@ -58,6 +58,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CompanyOwner__c</fullName>
-    <description>Campo di configurazione usato per indicare la Company Owner del record di criterio nella funzionalità di Configurazione Offerta Tecnica</description>
+    <description>Campo di configurazione usato per indicare la Company Owner del record di criterio nella funzionalità di Configurazione Offerta Tecnica.</description>
     <externalId>false</externalId>
     <label>Company Owner</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>CompanyOwnerOperator__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_CompanyOwner</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>AAA-EBT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>HERA COMM</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>MMS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>Reseller</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>

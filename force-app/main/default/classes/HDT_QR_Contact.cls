@@ -2,17 +2,36 @@ public inherited sharing class HDT_QR_Contact {
     
     public Contact getRecordById(String id) {
 
-        return [
+        List<Contact> contactsList = [
             SELECT
             FirstName,
             LastName,
+            MobilePhone,
+            Phone,
+            Email,
+            Fax,
+            CertifiedEmail__c,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
             WITH SECURITY_ENFORCED
-            LIMIT 1
         ];
+
+        Contact contact = new Contact();
+
+        if (!contactsList.isEmpty()) {
+            contact = contactsList[0];
+        }
+
+        return contact;
     }
+ public List<Contact> getRecordsById(List<String> ids) {
+
+        String query = 'SELECT  Firstname,LastName, IndividualId  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        List<Contact> contacts = Database.query(query);
+        return contacts;
+    }
+
 
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -66,12 +85,17 @@ public inherited sharing class HDT_QR_Contact {
 
     // INIZIO SVILUPPI EVERIS
 
-    public LIst<Contact> getRecordsByIds(Set<Id> ids) {
+    public List<Contact> getRecordsByIds(Set<Id> ids) {
         return [
             SELECT 
             Id,
+            Name,
+            Email,
+            Phone,
             MobilePhone,
+            Fax,
             CertifiedEmail__c,
+            MailingAddressFormula__c,
             CompanyOwner__c
             FROM Contact 
             WHERE Id IN :ids
@@ -80,4 +104,40 @@ public inherited sharing class HDT_QR_Contact {
     }
 
     // FINE SVILUPPI EVERIS
+
+    public Contact getRecordByFiscalCode(String fiscalCode) {
+        String query = 'SELECT  Id, Email , MobilePhone , Phone FROM Contact WHERE FiscalCode__c = :fiscalCode WITH SECURITY_ENFORCED';
+        List<Contact> contacts = Database.query(query);
+        if(contacts.size()>0){
+            return contacts[0];
+        }else{
+            return null;
+
+        }
+    }
+
+    public List<Contact> getContactsByOwnerId(String ownerId, String ownerName) {
+        return [
+            SELECT Id,
+            Name,
+            MailingLatitude,
+            MailingLongitude
+            FROM Contact
+            WHERE OwnerId = :ownerId
+            AND Name = :ownerName
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Contact getContactCoordinates(String contactId) {
+        return [
+            SELECT Id,
+            Name,
+            MailingLatitude,
+            MailingLongitude
+            FROM Contact
+            WHERE Id = :contactId
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

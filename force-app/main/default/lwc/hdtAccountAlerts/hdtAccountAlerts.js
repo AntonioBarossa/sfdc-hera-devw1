@@ -4,6 +4,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getAccountAlerts from '@salesforce/apex/HDT_LC_AccountAlerts.getAccountAlerts';
 import getAvailableRules from '@salesforce/apex/HDT_LC_AccountAlerts.getAvailableRulesFor';
 import addAlertToAccount from '@salesforce/apex/HDT_LC_AccountAlerts.addAlertToAccount';
+import updateAlert from '@salesforce/apex/HDT_LC_AccountAlerts.updateAlert';
 import ACCOUNT_CATEGORY from '@salesforce/schema/Account.Category__c';
 
 
@@ -27,6 +28,7 @@ export default class HdtAccountAlerts extends LightningElement {
     @track menuItems = [];
     availableAlerts;
     accountCategory = '';
+    draftValues = [];
 
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_CATEGORY] })
     wiredAccount({ error, data }) {
@@ -201,7 +203,24 @@ export default class HdtAccountAlerts extends LightningElement {
 
         // TODO: verificare anche se il cliente ha cellulare/mail/contattoSol per poter ricevere l'alert?
 
-        // TODO: update DML for newAlert
+        updateAlert({
+            alert: JSON.stringify(newAlert)
+            })
+            .then(result => {
+                console.log('updateAlert result: ' + result);
+                this.draftValues = []; // per nascondere i pulsanti Salva/Cancella
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Alert aggiornato', // TODO: avvisare che il case è stato innescato.
+                        variant: 'success'
+                    })
+                );
+                this.refreshAccountAlertsAndMenu();
+            })
+            .catch(error => {
+                console.log('error ' + JSON.stringify(error));
+            });
     }
 
     getAccountAlertById(alertId){

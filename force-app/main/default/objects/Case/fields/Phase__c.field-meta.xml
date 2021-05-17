@@ -633,6 +633,11 @@
                 <label>Annullamento - Esito KO da DL/SII</label>
             </value>
             <value>
+                <fullName>In Attesa Allineamento Anagrafica</fullName>
+                <default>false</default>
+                <label>In Attesa Allineamento Anagrafica</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito OK da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito OK da DL/SII</label>
@@ -661,6 +666,54 @@
                 <fullName>Esito KO tentativo riattivazione</fullName>
                 <default>false</default>
                 <label>Esito KO tentativo riattivazione</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Revocato</fullName>
+                <default>false</default>
+                <label>Annullamento - Revocato</label>
+            </value>
+            <value>
+                <fullName>Attesa Modulo Firmato</fullName>
+                <default>false</default>
+                <label>Attesa Modulo Firmato</label>
+            </value>
+            <value>
+                <fullName>Ripensamento - Revocato</fullName>
+                <default>false</default>
+                <label>Ripensamento - Revocato</label>
+            </value>
+            <value>
+                <fullName>Errore invio a DL/SII</fullName>
+                <default>false</default>
+                <label>Errore invio a DL/SII</label>
+            </value>
+            <value>
+                <fullName>Flusso bloccato in assenza del precedente</fullName>
+                <default>false</default>
+                <label>Flusso bloccato in assenza del precedente</label>
+            </value>
+            <value>
+                <fullName>Errore tecnico invio a SAP</fullName>
+                <default>false</default>
+                <label>Errore tecnico invio a SAP</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico KO</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico KO</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico OK</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Presa in Carico OK</label>
+            </value>
+            <value>
+                <fullName>Risposta non Ricevuta</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Risposta non Ricevuta</label>
             </value>
         </valueSetDefinition>
     </valueSet>

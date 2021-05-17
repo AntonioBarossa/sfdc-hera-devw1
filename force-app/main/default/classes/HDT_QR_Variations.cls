@@ -39,14 +39,17 @@ public inherited sharing class HDT_QR_Variations {
     public static List<ServicePoint__c> queryServicePoint(String accountId, String commodity, String servicePointId){
 
         List<ServicePoint__c> toReturnList = new List<ServicePoint__c>();
-        
-        toReturnList = [SELECT Id 
-        FROM ServicePoint__c
-        WHERE Id != :servicePointId
-        AND CommoditySector__c = :commodity
-        AND Account__c = :accountId
-        AND Resident__c = true
-        WITH SECURITY_ENFORCED];
+        try{
+            toReturnList = [SELECT Id 
+            FROM ServicePoint__c
+            WHERE Id != :servicePointId
+            AND CommoditySector__c = :commodity
+            AND Account__c = :accountId
+            AND Resident__c = true
+            WITH SECURITY_ENFORCED];
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
 
         return toReturnList;
 
@@ -56,14 +59,42 @@ public inherited sharing class HDT_QR_Variations {
     public static List<Case> queryOtherCases(List<Id> servicePointIds, String caseId){
 
         List<Case> toReturnList = new List<Case>();
-
-        toReturnList = [SELECT Id 
-        FROM Case
-        WHERE Id IN :servicePointIds
-        AND Id != :caseId
-        WITH SECURITY_ENFORCED];
+        try{
+            toReturnList = [SELECT Id 
+            FROM Case
+            WHERE Id IN :servicePointIds
+            AND Id != :caseId
+            AND Resident__c = false
+            WITH SECURITY_ENFORCED];
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
 
         return toReturnList;
+
+    }
+
+    public static Case getCaseInfo(String caseId){
+
+        Case currentCase = new Case();
+
+        try{
+
+            currentCase = [SELECT AccountId,
+            ServicePoint__c,
+            CommodityFormula__c
+            FROM Case
+            WHERE Id = :caseId
+            WITH SECURITY_ENFORCED
+            LIMIT 1];
+
+        }catch(Exception e){
+
+            System.debug(e.getMessage());
+
+        }
+
+        return currentCase;
 
     }
 

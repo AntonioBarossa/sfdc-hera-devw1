@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customLabels>
+        <label><!-- Error --></label>
+        <name>Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoader --></label>
+        <name>MassiveLoader</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderCompleteImport --></label>
+        <name>MassiveLoaderCompleteImport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderDesiredAction --></label>
+        <name>MassiveLoaderDesiredAction</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderExportTemplate --></label>
+        <name>MassiveLoaderExportTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderExtentionError --></label>
+        <name>MassiveLoaderExtentionError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderFileCheckError --></label>
+        <name>MassiveLoaderFileCheckError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderFileDownload --></label>
+        <name>MassiveLoaderFileDownload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderFileNameError --></label>
+        <name>MassiveLoaderFileNameError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderFileNotFound --></label>
+        <name>MassiveLoaderFileNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderFileUpload --></label>
+        <name>MassiveLoaderFileUpload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderGoToRecord --></label>
+        <name>MassiveLoaderGoToRecord</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderImportProcesses --></label>
+        <name>MassiveLoaderImportProcesses</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderImportSuccess --></label>
+        <name>MassiveLoaderImportSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderParsingError --></label>
+        <name>MassiveLoaderParsingError</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderPicklistPlaceholder --></label>
+        <name>MassiveLoaderPicklistPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderRequestType --></label>
+        <name>MassiveLoaderRequestType</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- MassiveLoaderReset --></label>
+        <name>MassiveLoaderReset</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Success --></label>
+        <name>Success</name>
+    </customLabels>
+</Translations>
