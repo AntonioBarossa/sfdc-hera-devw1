@@ -166,4 +166,14 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         return prodList;
     }
 
+    public static List<sObject> getRecordsList(List<sObject> allValues, String objectApiName, String fieldsApiName){
+        allValues = new List<sObject>();
+        String myQuery = 'SELECT Id,';
+        myQuery += fieldsApiName;
+        myQuery += ' FROM ' + objectApiName;
+        System.debug('>>> ' + myQuery);
+        allValues = database.query(myQuery);
+        return allValues;
+    }
+
 }

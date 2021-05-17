@@ -1,24 +1,26 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled(cacheable=true)
-    public static String getTableData(String searchTerm){
-        String result = '';
+    public static List<sObject> getTableData(String objectApiName){
+        //String result = '';
         try{
-            if(searchTerm != 'RateTemplate__c'){
-                StaticResource sr = HDT_QR_TechnicalOffer.getStaticResourceByName('DataHelper');
-                result = sr.Body.toString();
-            } else {
-                //List<RateTemplate__c> rtList = new List<RateTemplate__c>();
-                //rtList = [
-                //    SELECT Id, Name
-                //    FROM RateTemplate__c
-                //];
-                //result = JSON;
-            }
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName);
+
+            //if(searchTerm != 'RateTemplate__c'){
+            //    StaticResource sr = HDT_QR_TechnicalOffer.getStaticResourceByName('DataHelper');
+            //    result = sr.Body.toString();
+            //} else {
+            //    //List<RateTemplate__c> rtList = new List<RateTemplate__c>();
+            //    //rtList = [
+            //    //    SELECT Id, Name
+            //    //    FROM RateTemplate__c
+            //    //];
+            //    //result = JSON;
+            //}
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
-        return result;
+
     }
 
     @AuraEnabled(cacheable=true)

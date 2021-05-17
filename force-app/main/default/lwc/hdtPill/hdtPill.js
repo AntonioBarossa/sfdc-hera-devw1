@@ -7,16 +7,19 @@ export default class HdtPill extends LightningElement {
     @api icon;
     @track showTable = false;
     @track showPill = false;
+    relatedToTable = '';
     pillIcon;
     pillLabel;
 
     connectedCallback(){
-
         this.pillIcon = this.icon;
         if(this.pillObj.label != '' && this.pillObj.label != undefined){
             //console.log('>>> ' + this.pillObj.label);
             this.pillLabel = this.pillObj.label;
             this.showPill = true;
+        }
+        if(this.pillObj.relatedTo != '' && this.pillObj.relatedTo != undefined){
+            this.relatedToTable = this.pillObj.relatedTo;
         }
     }
 
@@ -38,21 +41,26 @@ export default class HdtPill extends LightningElement {
         console.log('# pills:' + event.detail.rowId + '; ' + event.detail.fieldName);
         console.log('# pills: ' + event.detail.recId + '; ' + event.detail.label);
 
-        const selectedEvent = new CustomEvent("setvaluetoparent", {
-            detail:  {
-                        rowId: event.detail.rowId,
-                        fieldName: event.detail.fieldName,
-                        recId: event.detail.recId,
-                        label: event.detail.label
-                     }
-        });
+        try{
+            const selectedEvent = new CustomEvent("setvaluetoparent", {
+                detail:  {
+                            rowId: event.detail.rowId,
+                            fieldName: event.detail.fieldName,
+                            recId: event.detail.recId,
+                            label: event.detail.label
+                        }
+            });
 
-        // Dispatches the event.
-        this.dispatchEvent(selectedEvent);
-        this.pillIcon = event.detail.icon;
-        this.pillLabel = event.detail.label;
-        this.showPill = true;
-        this.showTable = false;
+            // Dispatches the event.
+            this.dispatchEvent(selectedEvent);
+            this.pillIcon = event.detail.icon;
+            this.pillLabel = event.detail.label;
+            this.showPill = true;
+            this.showTable = false;
+        } catch (e){
+            console.log('>>> ERROR: ');
+            console.log(e);
+        }
     }
 
 }

@@ -1,5 +1,23 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
+    public static List<sObject> getTableDataHelper(String objectApiName){
+        List<sObject> allValues;
+
+        String fieldsApiName = '';
+        switch on objectApiName {
+            when 'FareTypeList__c' {
+                fieldsApiName = 'Description__c, Sector__c, PossibleValue__c';
+            }
+            when 'a' {
+            }
+            when 'b' {
+            }
+        }
+
+        allValues = HDT_QR_TechnicalOffer.getRecordsList(allValues, objectApiName, fieldsApiName);
+        return allValues;
+    }
+
     public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveTechnicalOffer(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse, String techOffObj, String idToClone, String offerJson, String technicalofferid, String productId, String rate) {
         System.debug('# saveTechnicalOffer controller helper #');
         System.debug('# rate -> ' + rate);

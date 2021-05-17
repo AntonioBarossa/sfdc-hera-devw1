@@ -115,26 +115,30 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     }
 
     handleSetvaluetoparent(event){
-        let element = this.dataRows.find(ele  => ele.id === event.detail.rowId);
-        var field = event.detail.fieldName;
+        try{
+            let element = this.dataRows.find(ele  => ele.id === event.detail.rowId);
+            var field = event.detail.fieldName;
 
-        element[field].value = event.detail.recId;
-        element[field].label = event.detail.label;
+            element[field].value = event.detail.recId;
+            element[field].label = event.detail.label;
 
-        //check row value and get error in case
-        //put error to row
-        let e = this.template.querySelector('[data-id="' + event.detail.rowId + '"]');
-        //
-        var rowChecked = this.checkRowValues(e);
-        console.log('@ ' + rowChecked.success + ' - ' + rowChecked.message);
-        if(rowChecked.success){
-            //success
+            //check row value and get error in case
+            //put error to row
+            let e = this.template.querySelector('[data-id="' + event.detail.rowId + '"]');
+            //
+            var rowChecked = this.checkRowValues(e);
+            console.log('@ ' + rowChecked.success + ' - ' + rowChecked.message);
+            if(rowChecked.success){
+                //success
 
-        } else {
-            //error
-            e.classList.add('alertRow');
+            } else {
+                //error
+                e.classList.add('alertRow');
+            }
+        } catch (e){
+            console.log('>>> ERROR: ');
+            console.log(e);
         }
-
     }
 
     checkRowValues(rowElement) {

@@ -16,17 +16,21 @@ const firstRow = [
 ];
 
 const amountColumns = [
-    {label: 'Tipo Tariffa', fieldName: 'col1'},
-    {label: 'Settore Merceologico', fieldName: 'col2'},
-    {label: 'Classe Calcolo', fieldName: 'col3'},
-    {label: 'Numeratore Ammesso', fieldName: 'col4', type: 'boolean'},
-    {label: 'Apparecchiatura Ammessa', fieldName: 'col5', type: 'boolean'},
-    {label: 'Info Ammesse', fieldName: 'col6', type: 'boolean'},
-    {label: 'Ammissibilità contatori dell\'intervallo', fieldName: 'col7', type: 'boolean'},
-    {label: 'Ammesso per calcolo finale', fieldName: 'col8', type: 'boolean'},
-    {label: 'Ammissibilità nel calcolo dei rifiuti', fieldName: 'col9', type: 'boolean'},
-    {label: 'Ignorare attr. contr. del numeratore durante estrapolazione', fieldName: 'col10', type: 'boolean'},
-    {label: 'Testo', fieldName: 'col11'}
+    {label: 'Valore possibile', fieldName: 'PossibleValue__c'},
+    {label: 'Settore', fieldName: 'Sector__c'},
+    {label: 'Descrizione', fieldName: 'Description__c'},
+
+    //{label: 'Tipo Tariffa', fieldName: 'col1'},
+    //{label: 'Settore Merceologico', fieldName: 'col2'},
+    //{label: 'Classe Calcolo', fieldName: 'col3'},
+    //{label: 'Numeratore Ammesso', fieldName: 'col4', type: 'boolean'},
+    //{label: 'Apparecchiatura Ammessa', fieldName: 'col5', type: 'boolean'},
+    //{label: 'Info Ammesse', fieldName: 'col6', type: 'boolean'},
+    //{label: 'Ammissibilità contatori dell\'intervallo', fieldName: 'col7', type: 'boolean'},
+    //{label: 'Ammesso per calcolo finale', fieldName: 'col8', type: 'boolean'},
+    //{label: 'Ammissibilità nel calcolo dei rifiuti', fieldName: 'col9', type: 'boolean'},
+    //{label: 'Ignorare attr. contr. del numeratore durante estrapolazione', fieldName: 'col10', type: 'boolean'},
+    //{label: 'Testo', fieldName: 'col11'}
 ];
 
 const grInfoColumns = [
@@ -102,11 +106,12 @@ const rate = [
 ];
 
 export default class HdtModalDataTable extends LightningElement {
-    @track data = [];
-    @track columns = [];
+    @api relatedToTable;
     @api rowId;
     @api fieldName;
     @api icon;
+    @track data = [];
+    @track columns = [];
     @track error = {show: false, message: ''};
     @track spinner = true;
     modalHeader;
@@ -114,9 +119,9 @@ export default class HdtModalDataTable extends LightningElement {
 
     connectedCallback() {
         this.spinner = true;
-        switch (this.fieldName) {
+        switch (this.relatedToTable) {
 
-            case 'rateType':
+            case 'FareTypeList__c':
                 this.modalHeader = 'Seleziona la tariffa';
                 this.columns = firstRow.concat(amountColumns);
                 break;
@@ -141,15 +146,16 @@ export default class HdtModalDataTable extends LightningElement {
     backendCall(){
         console.log('# getTableData #');
 
-        getTableData({searchTerm: this.fieldName})
+        getTableData({objectApiName: this.fieldName})
             .then(result => {
                 console.log('# call result #');
 
                 if(result){
                     console.log('# success #');
-                    var obj = JSON.parse(result);
-                    this.data = obj[this.fieldName];
-                    console.log(this.data);
+                    this.data = result;
+                    //var obj = JSON.parse(result);
+                    //this.data = obj[this.fieldName];
+                    //console.log(this.data);
                 } else {
                     this.error.show = true;
                     this.error.message = 'Backend error';                    
@@ -179,8 +185,29 @@ export default class HdtModalDataTable extends LightningElement {
         const row = event.detail.row;
         this.record = row;
 
+        var recordId = '';
+        var recordLabel = '';
+        //var fieldName = '';
+
+        switch (this.relatedToTable) {
+
+            case 'FareTypeList__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
+                //fieldName = 'rateType';
+                break;
+            case 'infoGroup':
+
+                break;
+            case 'priceCode':
+
+                break;
+
+
+        }
+
         const selectedEvent = new CustomEvent("setvalue", {
-            detail:  {rowId: this.rowId, fieldName: this.fieldName, recId: this.record.Id, label: this.record.col1, icon: this.iconHeader}
+            detail:  {rowId: this.rowId, fieldName: this.fieldName, recId: recordId, label: recordLabel, icon: this.iconHeader}
         });
 
         // Dispatches the event.
