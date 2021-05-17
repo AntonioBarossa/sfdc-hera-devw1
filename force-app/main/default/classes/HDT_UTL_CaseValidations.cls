@@ -604,7 +604,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             if(residenceChangeDate < System.today()){
 
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
             
             } else {
 
