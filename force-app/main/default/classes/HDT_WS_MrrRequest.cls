@@ -46,32 +46,24 @@ global with sharing class HDT_WS_MrrRequest {
             String body = RestContext.request.requestBody.toString();
 
             HDT_WRP_MrrRequest requestBody = (HDT_WRP_MrrRequest) JSON.deserialize(body, HDT_WRP_MrrRequest.class);
-
+            
             for (HDT_WRP_MrrRequest.HDT_WRP_Request request : requestBody.requests) {
-
                 mrrResponseItem = new HDT_WRP_MrrResponse.HDT_WRP_Response();
-                
                 HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
-
                 mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(request), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
-                
                 mrrResponseItem.objects.clear();
-
-                if(header.fields.get(0).value == 'postsales'){
-
-                    //INIZIO SVILUPPI EVERIS
-
-                    postSalesRequest = request;
-                    responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
-                    mrrResponseItem.objects.add(responseObject);
-                    //FINE SVILUPPI EVERIS
-
-                } else if (header.fields.get(0).value == 'sales') {
-
+                if (header.fields.get(0).value == 'sales') {
                     mrrResponseItem = salesHandlerSrv.manageSalesProcessCategory(request, mrrResponseItem);
-                    
                 }
-
+            }
+            if(requestBody.requests[0].header.fields.get(0).value == 'postsales'){
+                //INIZIO SVILUPPI EVERIS
+                mrrResponseItem = (HDT_WRP_MrrResponse.HDT_WRP_Response) JSON.deserialize(JSON.serialize(requestBody.requests[0]), HDT_WRP_MrrResponse.HDT_WRP_Response.class);
+                mrrResponseItem.objects.clear();
+                postSalesRequest = requestBody.requests[0];
+                responseObject = hpsmSrv.handleInboundRequest(postSalesRequest);
+                mrrResponseItem.objects.add(responseObject);
+                //FINE SVILUPPI EVERIS
             }
             
         } catch (JSONException jsonEx) {
