@@ -85,6 +85,21 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
     }
 
+    public AccountContactRelation getSolContactRelation(String accountId) {
+    
+        return [
+            SELECT
+            Id,
+            AccountId,
+            ContactId
+            FROM AccountContactRelation
+            WHERE
+            AccountId = :accountId
+            AND IsManagerSOL__c = True
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     // FINE SVILUPPI EVERIS
 
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>VerificaUltimaLettura</label>
+    <protected>false</protected>
+    <values>
+        <field>JSON__c</field>
+        <value xsi:type="xsd:string">{
+    &quot;requestType&quot;: &quot;VerificaUltimaLettura&quot;,
+    &quot;objects&quot;: [
+        {
+            &quot;objectLabel&quot;: &quot;ServicePoint&quot;,
+            &quot;objectName&quot;: &quot;ServicePoint__c&quot;,
+            &quot;fields&quot;: [
+                {
+                    &quot;fieldType&quot;: &quot;&quot;,
+                    &quot;apiName&quot;: &quot;ServicePointCode__c&quot;,
+                    &quot;label&quot;: &quot;herPodPdr&quot;
+                },
+                {
+                    &quot;fieldType&quot;: &quot;&quot;,
+                    &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+                    &quot;label&quot;: &quot;assetNumber&quot;
+                }
+            ],
+            &quot;childObjects&quot;:[]
+        }
+    ]
+}</value>
+    </values>
+    <values>
+        <field>NamedCredential__c</field>
+        <value xsi:type="xsd:string">Callout:CheckLastReading</value>
+    </values>
+</CustomMetadata>
