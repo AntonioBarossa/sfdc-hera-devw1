@@ -224,6 +224,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String dataDecorrenza = '';
         Contract contract;
         ServicePoint__c sp;
+        Account account;
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         try {
             tipo = reqWrp.requestMap.get('TIPO_SIEBEL');
@@ -234,9 +235,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             codiceCliente = reqWrp.requestMap.get('CODICE_CLIENTE');
             pod = reqWrp.requestMap.get('CODICE_PRESA');
             dataDecorrenza = reqWrp.requestMap.get('DATA_DECORRENZA');
-            if(String.isNotBlank(codiceCliente) && String.isNotBlank(pod)){
-                
-                Account account = qrClass.getAccount(codiceCliente);
+            if(String.isNotBlank(pod)){
+                if(String.isNotBlank(codiceCliente))
+                    account = qrClass.getAccount(codiceCliente);
+                else {
+                    account = qrClass.getAccountFromSP(pod);
+                }
                 if(account != null){
                     if(String.isNotBlank(tipo) && String.isNotBlank(sottotipo)){
                         //REQUEST FROM SAP - MOROSITA
@@ -293,7 +297,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
                 
             }else {
-                throw new HDT_UTL_RichPassException('Codice Cliente o POD non valorizzati');
+                throw new HDT_UTL_RichPassException('POD non valorizzato');
             }            
             HDT_UTL_DatabaseService.insertSObject(currentCase);
             if(currentCase.EarlyRecess__c){

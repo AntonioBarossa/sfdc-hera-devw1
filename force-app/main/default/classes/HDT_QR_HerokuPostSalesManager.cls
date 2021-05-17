@@ -41,6 +41,12 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     public Account getAccount(String accountCode){
         return [SELECT Id, FiscalCode__c,VATNumber__c FROM Account WHERE CustomerCode__c=:accountCode WITH SECURITY_ENFORCED LIMIT 1];
     }
+
+    public Account getAccountFromSP(String pod){
+        ServicePoint__c sp = [SELECT Account__r.Id, Account__r.FiscalCode__c,Account__r.VATNumber__c FROM ServicePoint__c WHERE ServicePointCode__c =:pod WITH SECURITY_ENFORCED LIMIT 1];
+        Account account = sp.Account__r;
+        return account;
+    }
     public Contact getContact(String accountId){
         AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id FROM AccountContactRelation WHERE AccountId =:accountId AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
         Contact contact = rel.Contact;
