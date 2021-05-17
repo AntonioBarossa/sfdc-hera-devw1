@@ -46,6 +46,11 @@
         <label>Consip</label>
     </customValue>
     <customValue>
+        <fullName>Da PGM</fullName>
+        <default>false</default>
+        <label>Da PGM</label>
+    </customValue>
+    <customValue>
         <fullName>HC_WEB</fullName>
         <default>false</default>
         <label>HC_WEB</label>
