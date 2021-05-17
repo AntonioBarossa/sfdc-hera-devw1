@@ -34,6 +34,7 @@ export default class HdtAccountAlerts extends LightningElement {
     accountCategory = '';
     draftValues = [];
     selectedRows = null;
+    showSolContacts = true;
 
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_CATEGORY] })
     wiredAccount({ error, data }) {

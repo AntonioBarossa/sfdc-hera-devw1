@@ -35,7 +35,7 @@
             
                         <!-- modal header start -->
                         <header class="slds-modal__header">
-                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideModal}>
                             <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
                             </button>
                             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Selezione Contatto SOL</h2>
@@ -48,6 +48,7 @@
             
                                 <c-hdt-contact-selection
                                     account-id={recordId}
+                                    show-sol-contacts={showSolContacts}
                                     onrecordselected={handleRecordSelection}>
                                 </c-hdt-contact-selection>
             
@@ -57,7 +58,7 @@
                         <!-- modal footer start-->
                         <footer class="slds-modal__footer">
                             <lightning-button class="slds-m-left_x-small" variant="brand-outline" label="Seleziona" title="confirm" onclick={applyFilter} ></lightning-button>
-                            <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={closeModal} ></lightning-button>
+                            <lightning-button class="slds-m-left_x-small" variant="brand" label="Annulla" title="Close" onclick={hideModal} ></lightning-button>
                         </footer>
             
                     </div>
