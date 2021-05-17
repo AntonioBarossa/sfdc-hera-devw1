@@ -7980,10 +7980,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bolletta Fuga H2O</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>CLIENTE NON TROVATO</fullName>
             <default>false</default>
         </values>
@@ -8032,10 +8028,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delibera 655 2016</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Disagio Economico</fullName>
             <default>false</default>
         </values>
@@ -8069,10 +8061,6 @@
         </values>
         <values>
             <fullName>Evasione%2FElusione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura Plurim_TLR_Tur %2B 3%2E5%25</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8137,14 +8125,6 @@
         </values>
         <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TARI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TCP Comune no Int</fullName>
             <default>false</default>
         </values>
         <values>

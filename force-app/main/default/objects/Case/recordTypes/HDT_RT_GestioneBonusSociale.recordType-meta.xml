@@ -7912,14 +7912,6 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Agevolazioni non Energy indirette</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bonus integrativo solo per non Energy</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>CLIENTE NON TROVATO</fullName>
             <default>false</default>
         </values>
