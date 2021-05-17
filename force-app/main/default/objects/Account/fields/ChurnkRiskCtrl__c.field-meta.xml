@@ -4,11 +4,10 @@
     <description>Campo tecnico nascosto. Necessario per calcolo KPI Propensione abbandono.  Valorizzato da Mulesoft su input di DWH.</description>
     <externalId>false</externalId>
     <label>Churn Risk</label>
-    <precision>2</precision>
+    <length>255</length>
     <required>false</required>
-    <scale>0</scale>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>
