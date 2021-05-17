@@ -34,5 +34,42 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         return newCases;
     }
 
+    /**
+     * Crea un Case da zero. Input obbligatori:
+     * - recordTypeId
+     * - cluster
+     * - type
+     * - accountId
+     */
+    public Case createCase(Map<String, Object> inputs){
+
+        String recordTypeId = (String) inputs.get('recordTypeId');
+        String caseType = (String) inputs.get('type');
+        String caseCluster = (String) inputs.get('cluster');
+        String accountId = (String) inputs.get('accountId');
+        String origin = (String) inputs.get('origin');
+
+        if (String.isBlank(recordTypeId) || String.isBlank(accountId) || String.isBlank(caseCluster) || String.isBlank(caseType)) {
+            System.debug('HDT_UTL_CreateGenericCase::createCase - invalid inputs: ' + inputs);
+            return null;
+        }
+
+        Case newCase = new Case();
+
+        newCase.AccountId = accountId;
+        newCase.RecordTypeId = recordTypeId;
+        newCase.Type = caseType;
+        newCase.Cluster__c = caseCluster;
+        newCase.Origin = origin;
+        newCase.WrittenReceiptRequestDate__c = Date.today();
+
+        //newCase.ContactId = currentCase.ContactId;
+        //newCase.PhoneNumber__c = currentCase.PhoneNumber__c;
+
+        newCase.Phase__c = 'Bozza';
+
+        return newCase;
+    }
+
 
 }

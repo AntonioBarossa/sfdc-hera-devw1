@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>To define</fullName>
+        <default>false</default>
+        <label>To define</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione Ele</fullName>
+        <default>false</default>
+        <label>Prima Attivazione Ele</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione In delibera</fullName>
+        <default>false</default>
+        <label>Prima Attivazione In delibera</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione Fuori delibera</fullName>
+        <default>false</default>
+        <label>Prima Attivazione Fuori delibera</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione con modifica</fullName>
+        <default>false</default>
+        <label>Prima Attivazione con modifica</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Offerta</fullName>
+        <default>false</default>
+        <label>Cambio Offerta</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Uso</fullName>
+        <default>false</default>
+        <label>Cambio Uso</label>
+    </customValue>
+    <customValue>
+        <fullName>Connessione con Attivazione</fullName>
+        <default>false</default>
+        <label>Connessione con Attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Riattivazione non morose</fullName>
+        <default>false</default>
+        <label>Riattivazione non morose</label>
+    </customValue>
+    <customValue>
+        <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+        <default>false</default>
+        <label>Aggiunta Sconti o Bonus VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Subentro Gas</fullName>
+        <default>false</default>
+        <label>Subentro Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Subentro Ele</fullName>
+        <default>false</default>
+        <label>Subentro Ele</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in con voltura tecnica</fullName>
+        <default>false</default>
+        <label>Switch in con voltura tecnica</label>
+    </customValue>
+    <customValue>
+        <fullName>Voltura con Switch</fullName>
+        <default>false</default>
+        <label>Voltura con Switch</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in Ripristinatorio</fullName>
+        <default>false</default>
+        <label>Switch in Ripristinatorio</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in Reseller</fullName>
+        <default>false</default>
+        <label>Switch in Reseller</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in Fittizio</fullName>
+        <default>false</default>
+        <label>Switch in Fittizio</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in Winback</fullName>
+        <default>false</default>
+        <label>Switch in Winback</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in Gas</fullName>
+        <default>false</default>
+        <label>Switch in Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in Ele</fullName>
+        <default>false</default>
+        <label>Switch in Ele</label>
+    </customValue>
+    <customValue>
+        <fullName>Voltura</fullName>
+        <default>false</default>
+        <label>Voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+        <default>false</default>
+        <label>Aggiunta Sconti o Bonus VAS Ele</label>
+    </customValue>
+    <customValue>
+        <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+        <default>false</default>
+        <label>Aggiunta Sconti o Bonus VAS Gas</label>
+    </customValue>
+    <description>Lista Processi.</description>
+    <masterLabel>Processo Ordine</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>
