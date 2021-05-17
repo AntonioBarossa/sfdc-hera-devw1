@@ -95,6 +95,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             switch on comunicationChannel{
                                 when 'ATOA'{
                                     phase = responseResult.responseMap.get('FASE');
+                                    if(String.isEmpty(phase) || String.isBlank(phase)){
+                                        phase = 'Comunicazione verso Heroku OK';
+                                    }
                                 } 
                                 when else{
                                     phase = 'Comunicazione verso Heroku OK';

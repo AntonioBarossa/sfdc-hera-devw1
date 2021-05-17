@@ -7916,7 +7916,155 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prima Bolletta</fullName>
+            <fullName>CLIENTE NON TROVATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calamità Naturali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Conto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio da Click%26Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio modalità di pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusura Conto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente paga un acconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DISATTIVATO%2FDISDETTO %28SERVIZIO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagio Economico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagio Economico %28Bonus Sociale%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disguido Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disoccupato%2FCassintegrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doc%2E ricevuto dopo scadenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domiciliazione non attiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errata Domiciliazione%2Fnon richiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evasione%2FElusione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_EE %28noD1%29_GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_EE SME ML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_Gas%3E5000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione bloccata plurim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INSTALLAZIONE FALLITA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incongruenza sui sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazione su doppio pagamento%2Fincasso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malfunzione Gruppo di misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rate errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano d%27autorità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Rate non ricevute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RESO %28PRODOTTO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIFIUTATO preventivamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rinuncia piano rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione doppio pagamento non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TEL - CLT NON TROVATO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10627,7 +10775,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GENERICI 20%25-02</fullName>
+            <fullName>GENERICI 22%25-02</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10655,7 +10803,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E COLLEGATE 20%25-06</fullName>
+            <fullName>SOC%2E COLLEGATE 22%25-06</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10663,7 +10811,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E CONTROLLANTI 20%25-08</fullName>
+            <fullName>SOC%2E CONTROLLANTI 22%25-08</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10675,11 +10823,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E PARTECIPATE 20%25-16</fullName>
+            <fullName>SOC%2E PARTECIPATE 22%25-16</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2ECONTROLLATE 20%25-04</fullName>
+            <fullName>SOC%2ECONTROLLATE 22%25-04</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10687,7 +10835,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOCIETA%27 DEL GRUPPO 20%25-10</fullName>
+            <fullName>SOCIETA%27 DEL GRUPPO 22%25-10</fullName>
             <default>false</default>
         </values>
         <values>

@@ -11,9 +11,10 @@ global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements 
         boolean res = false;
         if(permissionName != null){
             SetupEntityAccess obj = permQr.getSetupEntityAccess(permissionName.Visibility__c);
+            System.debug('*********:' + obj);
             if(obj != null){  
-				List<PermissionSetAssignment> perAssign = permQr.getPermissionSetAssignment(obj.ParentId,userId);                   
-                if(perAssign != null){
+				List<PermissionSetAssignment> perAssign = permQr.getPermissionSetAssignment(obj.ParentId,userId);                
+                if(perAssign != null && perAssign.size()> 0){
                     res = true;
                 }    
             }
