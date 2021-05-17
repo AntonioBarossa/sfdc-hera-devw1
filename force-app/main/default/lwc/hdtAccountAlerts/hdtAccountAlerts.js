@@ -30,10 +30,10 @@ export default class HdtAccountAlerts extends LightningElement {
     @track availableAlerts = [];  // L'elenco di alert abilitabili per il Cliente (in base alla sua categoria)
     @track noAlertsMessage = '';
     @track noAlertRulesMessage = '';
+    @track showContactsModal = false;
     accountCategory = '';
     draftValues = [];
-    selectedRows;
-    showContactsModal = false;
+    selectedRows = null;
 
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_CATEGORY] })
     wiredAccount({ error, data }) {
@@ -62,7 +62,7 @@ export default class HdtAccountAlerts extends LightningElement {
     }
 
     get disableContactsModal(){
-        return this.selectedRows === undefined;
+        return this.selectedRows === null;
     }
 
     handleRowSelection(event){
@@ -74,6 +74,7 @@ export default class HdtAccountAlerts extends LightningElement {
     }
 
     hideModal(){
+        this.selectedRows = null;
         this.showContactsModal = false;
     }
 
