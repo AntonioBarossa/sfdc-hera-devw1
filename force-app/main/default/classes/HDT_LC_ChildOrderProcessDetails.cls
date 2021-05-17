@@ -47,10 +47,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
                     throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
 
-
                 } else{
-
-
 
                     order.RetroactiveDate__c = order.EffectiveDate__c;
                     order.Subprocess__c = 'Retroattiva';
