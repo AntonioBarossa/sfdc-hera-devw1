@@ -2,7 +2,10 @@
 
     <lightning-card title="Alert del Cliente" icon-name="utility:alert">
 
-        <div class="slds-p-around_medium lgc-bg" slot="actions">
+        <div class="slds-p-around_medium lgc-bg slds-p-left_small" slot="actions">
+
+            <lightning-button label="Modifica Contatto SOL" onclick={showContactsModal} disabled={disableContactsModal}></lightning-button>
+
             <lightning-button-menu 
                 label="Abilita Alert"
                 alternative-text="Abilita Alert"
@@ -31,7 +34,8 @@
                     columns={alertColumns}
                     onsave={handleSave}
                     draft-values={draftValues}
-                    hide-checkbox-column>
+                    onrowselection={handleRowSelection}
+                    max-row-selection=1>
                 </lightning-datatable>
             </template>
 

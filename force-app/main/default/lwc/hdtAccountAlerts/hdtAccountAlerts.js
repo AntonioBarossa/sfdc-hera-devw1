@@ -32,6 +32,8 @@ export default class HdtAccountAlerts extends LightningElement {
     @track noAlertRulesMessage = '';
     accountCategory = '';
     draftValues = [];
+    selectedRows;
+    showContactsModal = false;
 
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_CATEGORY] })
     wiredAccount({ error, data }) {
@@ -57,6 +59,18 @@ export default class HdtAccountAlerts extends LightningElement {
 
     get canActivateAlerts(){
         return this.availableAlerts.length > 0;
+    }
+
+    get disableContactsModal(){
+        return this.selectedRows === undefined;
+    }
+
+    handleRowSelection(event){
+        this.selectedRows = event.detail.selectedRows;
+    }
+
+    showContactsModal(){
+        this.showContactsModal = true;
     }
 
     setErrorMessages(){
