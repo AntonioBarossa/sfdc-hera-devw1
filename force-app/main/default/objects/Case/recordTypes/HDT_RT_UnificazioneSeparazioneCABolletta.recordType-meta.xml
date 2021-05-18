@@ -10016,6 +10016,10 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento Canone Rai</fullName>
             <default>false</default>
         </values>
@@ -10064,6 +10068,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Emissione Impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Feature Request</fullName>
             <default>false</default>
         </values>
@@ -10081,6 +10089,14 @@
         </values>
         <values>
             <fullName>Mod%2E Imp%2E - Em%2E Imp%2E - Var%2E Portata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10201,6 +10217,10 @@
         </values>
         <values>
             <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Portata</fullName>
             <default>false</default>
         </values>
         <values>

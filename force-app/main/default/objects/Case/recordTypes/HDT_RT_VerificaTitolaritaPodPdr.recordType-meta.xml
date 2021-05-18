@@ -10016,6 +10016,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
@@ -10132,6 +10136,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Emissione Impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore Chiamata</fullName>
             <default>false</default>
         </values>
@@ -10208,6 +10216,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica Layout di dettaglio</fullName>
             <default>false</default>
         </values>
@@ -10233,6 +10245,10 @@
         </values>
         <values>
             <fullName>Notifica Variazione Stato PDR SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10429,6 +10445,10 @@
         </values>
         <values>
             <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Portata</fullName>
             <default>false</default>
         </values>
         <values>
