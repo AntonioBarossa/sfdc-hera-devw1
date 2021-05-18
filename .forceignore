@@ -32,6 +32,7 @@ package.xml
 **objects/SBQQ__ProductAction__c/fields/SBQQ__FilterField__c*
 **objects/Case/recordTypes/HDT_RT_FatturazioneConsumi*
 **objects/WorkBadge/WorkBadge*
+**objects/SBQQ__Subscription__c/fields/CompanyOwner__c*
 **objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
 **objects/Account/recordTypes/HDT_RT_Other*
