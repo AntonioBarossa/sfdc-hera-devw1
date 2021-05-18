@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;EffectiveDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
     </values>
     <values>

@@ -2512,6 +2512,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>BillingProfile__c.DirectDebitStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>BillingProfile__c.DivergentSubject__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6213,6 +6218,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.birthCity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.LastGeolocationLatitude__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.LastGeolocationLongitude__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

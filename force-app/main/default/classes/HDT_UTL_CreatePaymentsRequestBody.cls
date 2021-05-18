@@ -58,7 +58,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
                 } else if(configMap.get(mapKey) instanceof Date){
 
-                    gen.writeDateField(mapKey, (Date) configMap.get(mapKey));
+                    gen.writeStringField(mapKey, ((Date) configMap.get(mapKey)).format());
 
                 } else if(configMap.get(mapKey) instanceof Boolean){
 
