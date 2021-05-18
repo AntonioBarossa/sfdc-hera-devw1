@@ -154,7 +154,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
+    <externalSharingModel>Private</externalSharingModel>
     <label>Individual Email Result</label>
     <nameField>
         <label>Email Name</label>
@@ -162,7 +162,7 @@
     </nameField>
     <pluralLabel>Individual Email Results</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Private</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>

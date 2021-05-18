@@ -153,7 +153,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>Read</externalSharingModel>
     <gender>Feminine</gender>
     <label>Matrice Agenti</label>
     <nameField>
@@ -163,6 +163,6 @@
     </nameField>
     <pluralLabel>Matrici Agenti</pluralLabel>
     <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
+    <sharingModel>Read</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
