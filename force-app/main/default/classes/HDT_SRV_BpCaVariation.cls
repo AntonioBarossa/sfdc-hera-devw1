@@ -78,6 +78,40 @@ public with sharing class HDT_SRV_BpCaVariation {
         Case caseRecord = (Case) sobjectRecordList[0];
         Account acc = (Account) caseRecord.Account;
         BillingProfile__c bp = (BillingProfile__c) caseRecord.BillingProfile__r;
+        String fatturaXml = (String) caseRecord.get('XMLType__c');
+        if (String.isNotBlank(fatturaXml)) {
+            switch on fatturaXml {
+                when 'Sintetico'{
+                    fatturaXml = 'S';
+                }
+                when 'Dettaglio'{
+                    fatturaXml = 'A';
+                }
+                when else{
+                    fatturaXml = '';
+                }
+            }
+        }
+        String modello = (String) caseRecord.get('ElectronicInvoicingMethod__c');
+        if(String.isNotBlank(modello)){
+            switch on modello {
+                when 'XML'{
+                    modello = '01';
+                }
+                when 'XML PA'{
+                    modello = '02';
+                }
+                when 'Estero'{
+                    modello = '04';
+                }
+                when 'XML + carta/emai'{
+                    modello = '03';
+                }
+                when else{
+                    modello = '';
+                }
+            }
+        }
         requestBody.numeroSr = (String) caseRecord.get('CaseNumber');
         requestBody.codiceCausale = 'MA3';
         requestBody.dataCreazione = getFormattedToday();
@@ -97,8 +131,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.modInvioBolletta = (String) caseRecord.get('BillSendingMethod__c');
         requestBody.ordine.fattura.codiceUfficio = (String) caseRecord.get('OfficeSubjectCode__c');
         requestBody.ordine.fattura.mailPec = (String) caseRecord.get('ElectronicInvoiceCertifiedEmailAddress__c');
-        requestBody.ordine.fattura.modello = (String) caseRecord.get('XMLType__c');
-        requestBody.ordine.fattura.fatturaXml = (String) caseRecord.get('ElectronicInvoicingMethod__c');
+        requestBody.ordine.fattura.modello = modello;
+        requestBody.ordine.fattura.fatturaXml = fatturaXml;
         System.debug('requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
