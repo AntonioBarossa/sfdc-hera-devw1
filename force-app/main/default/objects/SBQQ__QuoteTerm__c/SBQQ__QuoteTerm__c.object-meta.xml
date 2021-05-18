@@ -156,6 +156,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Quote Term</label>
     <nameField>
         <displayFormat>QT-{0000}</displayFormat>
