@@ -11,6 +11,7 @@ public inherited sharing class HDT_QR_Contact {
             Email,
             Fax,
             CertifiedEmail__c,
+            IndividualId,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
@@ -134,7 +135,9 @@ public inherited sharing class HDT_QR_Contact {
             SELECT Id,
             Name,
             MailingLatitude,
-            MailingLongitude
+            MailingLongitude,
+            LastGeolocationLatitude__c,
+            LastGeolocationLongitude__c
             FROM Contact
             WHERE Id = :contactId
             WITH SECURITY_ENFORCED
