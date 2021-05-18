@@ -9,6 +9,233 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetName>HDT_Caliber</valueSetName>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>G100 Turbina</fullName>
+                <default>false</default>
+                <label>G100 Turbina</label>
+            </value>
+            <value>
+                <fullName>G160 Turbina</fullName>
+                <default>false</default>
+                <label>G160 Turbina</label>
+            </value>
+            <value>
+                <fullName>G250 Turbina</fullName>
+                <default>false</default>
+                <label>G250 Turbina</label>
+            </value>
+            <value>
+                <fullName>G400 Turbina</fullName>
+                <default>false</default>
+                <label>G400 Turbina</label>
+            </value>
+            <value>
+                <fullName>G40 Turbina</fullName>
+                <default>false</default>
+                <label>G40 Turbina</label>
+            </value>
+            <value>
+                <fullName>G65 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G65 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G160 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G160 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G250 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G250 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G250G Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G250G Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G650 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G650 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G1000 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G1000 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G400 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G400 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G1600 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G1600 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>G4000 Pistoni rot.</fullName>
+                <default>false</default>
+                <label>G4000 Pistoni rot.</label>
+            </value>
+            <value>
+                <fullName>DIR Monorario</fullName>
+                <default>false</default>
+                <label>DIR Monorario</label>
+            </value>
+            <value>
+                <fullName>DIR Orario</fullName>
+                <default>false</default>
+                <label>DIR Orario</label>
+            </value>
+            <value>
+                <fullName>DIR Biorario</fullName>
+                <default>false</default>
+                <label>DIR Biorario</label>
+            </value>
+            <value>
+                <fullName>100 Volt</fullName>
+                <default>false</default>
+                <label>100 Volt</label>
+            </value>
+            <value>
+                <fullName>400 Volt</fullName>
+                <default>false</default>
+                <label>400 Volt</label>
+            </value>
+            <value>
+                <fullName>230 Volt</fullName>
+                <default>false</default>
+                <label>230 Volt</label>
+            </value>
+            <value>
+                <fullName>Elettronico</fullName>
+                <default>false</default>
+                <label>Elettronico</label>
+            </value>
+            <value>
+                <fullName>8</fullName>
+                <default>false</default>
+                <label>8</label>
+            </value>
+            <value>
+                <fullName>100</fullName>
+                <default>false</default>
+                <label>100</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>4</label>
+            </value>
+            <value>
+                <fullName>30</fullName>
+                <default>false</default>
+                <label>30</label>
+            </value>
+            <value>
+                <fullName>50</fullName>
+                <default>false</default>
+                <label>50</label>
+            </value>
+            <value>
+                <fullName>G1,6</fullName>
+                <default>false</default>
+                <label>G1,6</label>
+            </value>
+            <value>
+                <fullName>G10</fullName>
+                <default>false</default>
+                <label>G10</label>
+            </value>
+            <value>
+                <fullName>G100</fullName>
+                <default>false</default>
+                <label>G100</label>
+            </value>
+            <value>
+                <fullName>G1000</fullName>
+                <default>false</default>
+                <label>G1000</label>
+            </value>
+            <value>
+                <fullName>G16</fullName>
+                <default>false</default>
+                <label>G16</label>
+            </value>
+            <value>
+                <fullName>G160</fullName>
+                <default>false</default>
+                <label>G160</label>
+            </value>
+            <value>
+                <fullName>G1600</fullName>
+                <default>false</default>
+                <label>G1600</label>
+            </value>
+            <value>
+                <fullName>G2</fullName>
+                <default>false</default>
+                <label>G2</label>
+            </value>
+            <value>
+                <fullName>G2,5</fullName>
+                <default>false</default>
+                <label>G2,5</label>
+            </value>
+            <value>
+                <fullName>G25</fullName>
+                <default>false</default>
+                <label>G25</label>
+            </value>
+            <value>
+                <fullName>G250</fullName>
+                <default>false</default>
+                <label>G250</label>
+            </value>
+            <value>
+                <fullName>G4</fullName>
+                <default>false</default>
+                <label>G4</label>
+            </value>
+            <value>
+                <fullName>G40</fullName>
+                <default>false</default>
+                <label>G40</label>
+            </value>
+            <value>
+                <fullName>G400</fullName>
+                <default>false</default>
+                <label>G400</label>
+            </value>
+            <value>
+                <fullName>G4000</fullName>
+                <default>false</default>
+                <label>G4000</label>
+            </value>
+            <value>
+                <fullName>G6</fullName>
+                <default>false</default>
+                <label>G6</label>
+            </value>
+            <value>
+                <fullName>G65</fullName>
+                <default>false</default>
+                <label>G65</label>
+            </value>
+            <value>
+                <fullName>G650</fullName>
+                <default>false</default>
+                <label>G650</label>
+            </value>
+            <value>
+                <fullName>G6500</fullName>
+                <default>false</default>
+                <label>G6500</label>
+            </value>
+        </valueSetDefinition>
     </valueSet>
 </CustomField>
