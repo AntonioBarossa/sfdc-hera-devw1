@@ -153,7 +153,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <gender>Masculine</gender>
     <label>Filtro Estratto Conto</label>
     <nameField>
@@ -162,7 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Filtri Estratto Conto</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

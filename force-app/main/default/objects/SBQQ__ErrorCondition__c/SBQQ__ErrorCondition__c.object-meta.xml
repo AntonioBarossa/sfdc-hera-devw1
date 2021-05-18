@@ -156,6 +156,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Error Condition</label>
     <nameField>
         <displayFormat>{000000}</displayFormat>
