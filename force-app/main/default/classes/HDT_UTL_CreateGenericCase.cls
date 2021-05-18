@@ -4,26 +4,50 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
     public List<Case> createCaseFromCase(Map<String, Object> inputs){
 
-        String recordTypeId = (String) inputs.get('recordTypeId');
+        String recordTypeId = cgcQr.getRecordTypeByDevName((String) inputs.get('recordType'))[0].Id;
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
         Case parentCase = (Case) inputs.get('inputSObj');
 
         List<Case> childCases = new List<Case>();
         Map<String, Object> populateFields = new Map<String, Object>();
-
+        Set<String> fieldExcludeList = new Set<String>
+            {
+                'LastModifiedDate', 
+                'Id', 
+                'SystemModstamp', 
+                'Phase__c', 
+                'Status',
+                'Cluster__c',
+                'Type',
+                'RecordTypeId'
+            };
         Case childCase = new Case();
         
         populateFields = parentCase.getPopulatedFieldsAsMap();
-        String removeId = (String) populateFields.remove('Id');
+        
+        for(String fieldName : populateFields.keySet()){
+            try{
+                if(!fieldExcludeList.contains(fieldName)){
 
-        childCase = (Case) JSON.deserialize(JSON.Serialize(populateFields), Case.class);
+                    childCase.put(fieldName, populateFields.get(fieldName));
+
+                }
+            }catch(Exception e){
+                System.debug('Exception--> '+e.getMessage());
+
+            }   
+
+        }
+        
+        System.debug('RecordTypeId' +recordTypeId);
 
         childCase.put('Phase__c', 'Bozza');
-        childCase.put('Stauts', 'New');
+        childCase.put('Status', 'New');
         childCase.put('Cluster__c', caseCluster);
         childCase.put('Type',caseType);
         childCase.put('RecordTypeId', recordTypeId);
+        childCase.put('ParentId',parentCase.Id);
 
         /*newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
