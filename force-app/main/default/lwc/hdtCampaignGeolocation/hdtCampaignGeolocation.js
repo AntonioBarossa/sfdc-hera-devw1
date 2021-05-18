@@ -25,7 +25,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
     @track timer;
     @wire(getRecord, {
         recordId: USER_ID,
-        fields: [NAME_FIELD]
+        fields: [NAME_FIELD,CONTACT_FIELD]
     }) wireuser({
         error,
         data
@@ -33,8 +33,10 @@ export default class HdtCampaignGeolocation extends LightningElement {
         if (error) {
             console.log(JSON.stringify(error));
         } else if (data) {
+            console.log("******Before1:" +JSON.stringify(data));
             this.userName = data.fields.Name.value;
             this.userId = data.id;
+            console.log("******Before2:" +this.userId);
             if (data.fields.ContactId != undefined) {
                 this.contactId = data.fields.ContactId.value;
             }
@@ -53,11 +55,13 @@ export default class HdtCampaignGeolocation extends LightningElement {
                         this.userMailingLongitude = data.MailingLongitude;
                         //update LastGeolocation__c
                         updateContactLastLocation({ contactId: this.contactId, latitude: data.MailingLatitude, longitude: data.MailingLongitude }).then(data => {
-                            console.log("ok " + JSON.stringify(data));
+                            console.log("ok NO PROBLEMA" + JSON.stringify(data));
+                            clearInterval(this.timer);
+                            this.getContactsAndLeads();
                         }).catch(err => {
                             console.log(err.body.message);
                         });
-                        this.getContactsAndLeads();
+                        
                     } else {
                         //this.showSpinner = false;
                         console.log("coordinates not updated" + this.attempts);
@@ -107,6 +111,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
 
     getContactsAndLeads() {
         this.dataList = [];
+        console.log("PROVA GET TEST:");
         //get Contacts
         getContactsWithinDistance({
             latitude: this.userMailingLatitude,
@@ -127,6 +132,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
                 });
             });
             //get Leads
+            console.log("****** POST CONTACT");
             getLeadsWithinDistance({
                 latitude: this.userMailingLatitude,
                 longitude: this.userMailingLongitude,

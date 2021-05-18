@@ -141,7 +141,11 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
     handleCloseModal(event){
         var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log(JSON.stringify(addressWrapper));
-        if((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != ""){
+        if(((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != "") || 
+            (addressWrapper.Via != null && addressWrapper.Via != "" && 
+            addressWrapper.CAP != null && addressWrapper.CAP != "" &&
+            addressWrapper.Civico != null && addressWrapper.Civico != "")
+        ){
             console.log('New Address');
             this.handleNewAddress();
             this.isModalOpen = false;
@@ -157,7 +161,6 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 }),
             );
         }
-        
     }
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
