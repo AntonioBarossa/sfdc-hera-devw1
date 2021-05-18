@@ -596,4 +596,29 @@
         <default>false</default>
         <label>Rettifica Consumi</label>
     </standardValue>
+    <standardValue>
+        <fullName>Aggiunta Attacco</fullName>
+        <default>false</default>
+        <label>Aggiunta Attacco</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Nuovo Impianto</fullName>
+        <default>false</default>
+        <label>Nuovo Impianto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Modifica Impianto</fullName>
+        <default>false</default>
+        <label>Modifica Impianto</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Emissione Impulsi</fullName>
+        <default>false</default>
+        <label>Emissione Impulsi</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Variazione Portata</fullName>
+        <default>false</default>
+        <label>Variazione Portata</label>
+    </standardValue>
 </StandardValueSet>

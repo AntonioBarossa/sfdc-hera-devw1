@@ -1,8 +1,6 @@
-global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
+global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
-    //OLD
-
-    HDT_SRV_InstallmentPlans installmentsSrv = new HDT_SRV_InstallmentPlans();
+    HDT_SRV_Payments paymentsSrv = new HDT_SRV_Payments();
     HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
     global Object execute(Object args){
@@ -20,18 +18,17 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
         HttpResponse response = new HttpResponse();
         String result;
         String recordId;
+        String process;
         String requestBody;
-
-        Case currentCase = new Case();
+        String endpoint = 'Callout:' + method;
 
         recordId = (String) obj.get('Id');
-        String process =  (String) obj.get('Type');
-        currentCase.Id = recordId;
-        requestBody = installmentsSrv.createRequestBody(recordId);
+        process = (String) obj.get('Type');
+        requestBody = paymentsSrv.createRequestBody(method, recordId);
 
         try{
 
-            request.setEndpoint('Callout:HDT_InstallmentPlans');
+            request.setEndpoint(endpoint);
             request.setMethod('POST');
             request.setBody(requestBody);
             request.setHeader('Accept','application/json');
@@ -45,8 +42,12 @@ global inherited sharing class HDT_WS_InstallmentPlans implements wrts_prcgvr.In
 
         }
 
-        paymentsUtl.handleResponse(recordId, process, response);
+        if(response != null){
+            paymentsUtl.handleResponse(recordId, process, response);
+        }
 
         return responseReturn;
+
     }
+
 }

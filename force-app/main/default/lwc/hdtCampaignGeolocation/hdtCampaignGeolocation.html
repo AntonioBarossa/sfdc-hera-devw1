@@ -3,7 +3,7 @@
         <div class="slds-card__body slds-m-around--x-small">
             <div class="slds-grid" style="min-height: 180px;">
                 <template if:false={showSpinner}>
-                    <lightning-record-edit-form class="slds-size--1-of-1" id="recordViewForm" object-api-name="Contact"
+                    <lightning-record-edit-form class="slds-size--1-of-1" record-id={contactId} id="recordViewForm" object-api-name="Contact"
                         onsubmit={submitAddress} onsuccess={handleSuccess} autocomplete="off">
                         <lightning-messages></lightning-messages>
                         <div class="slds-grid">

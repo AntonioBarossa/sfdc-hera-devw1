@@ -85,13 +85,14 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
     }
 
-    public AccountContactRelation getSolContactRelation(String accountId) {
+    public List<AccountContactRelation> getSolContactRelations(String accountId) {
     
         return [
             SELECT
             Id,
             AccountId,
-            ContactId
+            ContactId,
+            Roles
             FROM AccountContactRelation
             WHERE
             AccountId = :accountId

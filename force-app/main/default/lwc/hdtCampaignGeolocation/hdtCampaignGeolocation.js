@@ -3,16 +3,17 @@ import getContactsByOwnerId from '@salesforce/apex/HDT_LC_GeolocationCommunity.g
 import getContactCoordinates from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactCoordinates';
 import getContactsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactsWithinDistance';
 import getLeadsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity.getLeadsWithinDistance';
-import { getRecord, deleteRecord } from 'lightning/uiRecordApi';
+import updateContactLastLocation from '@salesforce/apex/HDT_LC_GeolocationCommunity.updateContactLastLocation';
+import { getRecord } from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
-import { refreshApex } from '@salesforce/apex';
+import CONTACT_FIELD from '@salesforce/schema/User.ContactId';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtCampaignGeolocation extends LightningElement {
     @track distance = 5;
     @track userId;
     @track contactId = null;
-    @track oldContactId = null;
     @track userName;
     @track userMailingLatitude = null;
     @track userMailingLongitude = null;
@@ -34,18 +35,12 @@ export default class HdtCampaignGeolocation extends LightningElement {
         } else if (data) {
             this.userName = data.fields.Name.value;
             this.userId = data.id;
+            if (data.fields.ContactId != undefined) {
+                this.contactId = data.fields.ContactId.value;
+            }
+            console.log('ContactId ' + this.contactId);
         }
     }
-
-    @wire(getContactsByOwnerId, { ownerId: '$userId', ownerName: '$userName' })
-    getUserContactByOwnerId(result) {
-        if (result.data && result.data.length > 0) {
-            this.contactId = result.data[0].Id;
-            console.log(this.contactId);
-        } else {
-            console.log(JSON.stringify(result.error));
-        }
-    };
 
     getCoordinates() {
         if (this.attempts < 10) {
@@ -53,13 +48,19 @@ export default class HdtCampaignGeolocation extends LightningElement {
                 this.attempts++;
                 console.log("ok " + JSON.stringify(data));
                 if (data != null) {
-                    if (data.hasOwnProperty("MailingLatitude")) {
+                    if (data.MailingLatitude != data.LastGeolocationLatitude__c && data.MailingLongitude != data.LastGeolocationLongitude__c) {
                         this.userMailingLatitude = data.MailingLatitude;
                         this.userMailingLongitude = data.MailingLongitude;
+                        //update LastGeolocation__c
+                        updateContactLastLocation({ contactId: this.contactId, latitude: data.MailingLatitude, longitude: data.MailingLongitude }).then(data => {
+                            console.log("ok " + JSON.stringify(data));
+                        }).catch(err => {
+                            console.log(err.body.message);
+                        });
                         this.getContactsAndLeads();
                     } else {
                         //this.showSpinner = false;
-                        console.log("missing coordinates " + this.attempts);
+                        console.log("coordinates not updated" + this.attempts);
                     }
                 } else {
                     this.showSpinner = false;
@@ -67,11 +68,18 @@ export default class HdtCampaignGeolocation extends LightningElement {
                 }
             }).catch(err => {
                 console.log(JSON.stringify(err));
+                this.showSpinner = false;
+                clearInterval(this.timer);
             });
         } else {
             clearInterval(this.timer);
             console.log("timer stopped " + this.attempts);
             this.showSpinner = false;
+            this.dispatchEvent(new ShowToastEvent({
+                title: '',
+                message: 'Nessun locazzione trovato',
+                variant: 'error'
+            }));
         }
     }
 
@@ -89,27 +97,12 @@ export default class HdtCampaignGeolocation extends LightningElement {
         event.preventDefault();
         this.showListView = false;
         const fields = event.detail.fields;
-        //delete existing contact
-        if (this.contactId != null) {
-            this.oldContactId = this.contactId;
-            deleteRecord(this.contactId).then(() => {
-                //create new contact
-                fields.FirstName = this.userName.split(' ')[0];
-                fields.LastName = this.userName.split(' ')[1];
-                fields.MailingCountry = 'Italy';
-                this.template.querySelector('lightning-record-edit-form').submit(fields);
-                this.showSpinner = true;
-            }).catch(err => {
-                console.log(JSON.stringify(err));
-            });
-        } else {
-            //create new contact
-            fields.FirstName = this.userName.split(' ')[0];
-            fields.LastName = this.userName.split(' ')[1];
-            fields.MailingCountry = 'Italy';
-            this.template.querySelector('lightning-record-edit-form').submit(fields);
-            this.showSpinner = true;
-        }
+        //create new contact
+        fields.FirstName = this.userName.split(' ')[0];
+        fields.LastName = this.userName.split(' ')[1];
+        fields.MailingCountry = 'Italy';
+        this.template.querySelector('lightning-record-edit-form').submit(fields);
+        this.showSpinner = true;
     }
 
     getContactsAndLeads() {
