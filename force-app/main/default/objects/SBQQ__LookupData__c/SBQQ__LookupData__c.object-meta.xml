@@ -154,6 +154,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Lookup Data</label>
     <nameField>
         <displayFormat>DATA-{0000}</displayFormat>

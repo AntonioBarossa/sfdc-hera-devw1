@@ -162,7 +162,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Notifiche SOL</pluralLabel>
-    <searchLayouts></searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
