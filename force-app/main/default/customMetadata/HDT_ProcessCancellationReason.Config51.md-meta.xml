@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Process_Type_to_Cancell__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">DUPLICATO</value>
     </values>
     <values>
         <field>RecordType__c</field>
