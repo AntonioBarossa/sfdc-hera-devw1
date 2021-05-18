@@ -4,7 +4,7 @@
     <description>Codice comune SAP</description>
     <externalId>false</externalId>
     <label>Codice ISTAT [Spedizione/Fatturazione]</label>
-    <length>6</length>
+    <length>30</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>

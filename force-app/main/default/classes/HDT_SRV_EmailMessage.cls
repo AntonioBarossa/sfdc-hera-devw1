@@ -43,7 +43,8 @@ public with sharing class HDT_SRV_EmailMessage {
             EmailMessage email = (EmailMessage) emailObj;
             if(email.Incoming){
                 Case caseRecord = mapIdCase.get(email.ParentId);
-                if(caseRecord.Type == 'Comunicazione di Fallimento'){
+                if(caseRecord.Type == 'Comunicazione di Fallimento'
+                || caseRecord.Type == 'Dichiarazione di intento'){
                     caseRecord.Phase__c = 'Risposta Ricevuta';
                 }
                 caseToUpdate.add(caseRecord);
