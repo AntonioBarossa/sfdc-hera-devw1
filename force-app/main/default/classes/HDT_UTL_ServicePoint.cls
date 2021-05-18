@@ -1,5 +1,5 @@
 public with sharing class HDT_UTL_ServicePoint {
-
+    private static HDT_QR_Account accountQr = new HDT_QR_Account();
     public HDT_UTL_ServicePoint() {
 
     }
@@ -26,8 +26,8 @@ public with sharing class HDT_UTL_ServicePoint {
 			}
 
 		
-		/*	
-		if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
+					
+	/*	if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
 			spNew.MeterClass__c = mapRes.get('CALIBRO1');
 		}
 		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
@@ -38,23 +38,34 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.TemporaryContractCode__c = mapRes.get('CONTRATTO');
 		}
 
-		if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
+	/*	if(mapRes.get('CONTRATTO')!=null && !String.isBlank(mapRes.get('CONTRATTO'))){
 			spNew.Disconnectable__c = mapRes.get('CONTRATTO');
-		}
+		}*/
 
-		if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
+		/*if(mapRes.get('FASE')!=null && !String.isBlank(mapRes.get('FASE'))){
 			spNew.RequestPhase__c  = mapRes.get('FASE');
 		}
-
+*/
 		if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
 			spNew.Pressure__c  = integer.valueOf(mapRes.get('PRESSIONE'));
 		}
 
-		*/
+		if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
+			spNew.RemiCode__c = mapRes.get('CODICEREMI');
+		}
+        if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
+			spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4 Pareti def.' : 'G6 Pareti def.' ;
+		}
+        if(mapRes.get('MATRICOLA1')!=null && !String.isBlank(mapRes.get('MATRICOLA1'))){
+			spNew.MeterSN__c = mapRes.get('MATRICOLA1');
+		}
 
 				//campi fornitura
 				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
 					//spNew.Account__r.id =mapRes.get('DISTRIBUTORE') ;
+                    Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
+                    spNew.Distributor__c = a.id;
+                    System.debug('SOLILLO');
 				}
 				if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
 					spNew.ServicePointCode__c   = mapRes.get('POD');
@@ -73,9 +84,18 @@ public with sharing class HDT_UTL_ServicePoint {
                     }
 		
 				}
+                if(mapRes.get('MOTGARANZIAFORN')==null){
+				
+                    spNew.Disconnectable__c = 'Si';
+				}
+                else if (mapRes.get('MOTGARANZIAFORN') == ''){
+				
+                    spNew.Disconnectable__c = 'No';
+				}
+
 				if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){
 		
-					spNew.ImplantType__c = mapRes.get('IMPIANTO');
+					spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
 				}
 				if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
 		
@@ -85,13 +105,17 @@ public with sharing class HDT_UTL_ServicePoint {
 		
 					spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOCAPDR'));
 				}
-				if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
+                if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){
 		
-					//spNew.MarketOrigin__c = mapRes.get('MERCATO');
+					spNew.AnnualConsumption__c = integer.valueOf(mapRes.get('CONSUMOANNUOEE'));
+				}
+				if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
+                    String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+					spNew.MarketOrigin__c = mercato;
 				}
 				if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){
 		
-					spNew.IsRemoteManaged__c =Boolean.valueOf(mapRes.get('FLAGTELEGESTIBILE'));
+					spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
 					spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
@@ -103,9 +127,9 @@ public with sharing class HDT_UTL_ServicePoint {
 		
 					spNew.VoltageLevel__c = mapRes.get('TENSIONE');
 				}
-				if(mapRes.get('RESIDENTINDFORNITURA')!=null && !String.isBlank(mapRes.get('RESIDENTINDFORNITURA'))){
+				if(mapRes.get('RESIDENTEINDFORN')!=null && !String.isBlank(mapRes.get('RESIDENTEINDFORN'))){
 		
-					spNew.Resident__c = Boolean.valueOf(mapRes.get('RESIDENTINDFORNITURA'));
+					spNew.Resident__c = mapRes.get('RESIDENTEINDFORN') == 'SI' ? true : false;
 				}
 
 				//campi indirizzo
@@ -122,18 +146,22 @@ public with sharing class HDT_UTL_ServicePoint {
 				if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
 					spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
 				}
-				if(mapRes.get('LOCALITÀ')!=null && !String.isBlank(mapRes.get('LOCALITÀ'))){
-					spNew.SupplyCity__c  = mapRes.get('LOCALITÀ');
+				if(mapRes.get('LOCALITA')!=null && !String.isBlank(mapRes.get('LOCALITA'))){
+					spNew.SupplyCity__c  = mapRes.get('LOCALITA');
 				}
 				if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
 					spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
 				}
-				if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
-					//spNew.SupplySAPCityCode__c = mapRes.get('CODICEPAESE');
+                if(mapRes.get('REGIONE')!=null && !String.isBlank(mapRes.get('REGIONE'))){
+					spNew.SupplyProvince__c = mapRes.get('REGIONE');
+				}
+				if(mapRes.get('CODIFICALOCALITA')!=null && !String.isBlank(mapRes.get('CODIFICALOCALITA'))){
+					spNew.SupplySAPCityCode__c = mapRes.get('CODIFICALOCALITA');
 				}
                 if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
-					spNew.SupplyCountry__c = mapRes.get('CODICEPAESE');
+					spNew.SupplyCountry__c = mapRes.get('CODICEPAESE') == 'IT' ? 'Italia' : 'Estero';
 				}
+
 
 		system.debug('spNew*****************' + spNew);
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
