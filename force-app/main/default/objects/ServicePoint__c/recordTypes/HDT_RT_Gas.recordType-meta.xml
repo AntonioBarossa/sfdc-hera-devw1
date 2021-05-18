@@ -409,11 +409,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G10</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -429,11 +441,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G16</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>G16 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G160</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -461,7 +485,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -485,7 +517,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G4 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Pareti def%2E</fullName>
             <default>false</default>
         </values>
         <values>
@@ -517,11 +557,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>G6 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G65</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
@@ -530,6 +582,10 @@
         </values>
         <values>
             <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
