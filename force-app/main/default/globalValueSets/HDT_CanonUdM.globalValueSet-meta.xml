@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>25-25 di ogni mese o primo feriale successivo</fullName>
+        <default>false</default>
+        <label>25-25 di ogni mese o primo feriale successivo</label>
+    </customValue>
+    <customValue>
+        <fullName>41-Quadrimestrale: ult. del mese</fullName>
+        <default>false</default>
+        <label>41-Quadrimestrale: ult. del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>47-Quadrimestrale: primo del mese</fullName>
+        <default>false</default>
+        <label>47-Quadrimestrale: primo del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>50-Mensile: Primo del mese</fullName>
+        <default>false</default>
+        <label>50-Mensile: Primo del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>51-Mensile: ult. del mese</fullName>
+        <default>false</default>
+        <label>51-Mensile: ult. del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>53-Trimestrale: ult. del mese</fullName>
+        <default>false</default>
+        <label>53-Trimestrale: ult. del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>54-Bimestrale: ultimo del mese</fullName>
+        <default>false</default>
+        <label>54-Bimestrale: ultimo del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>55-Semestrale: ultimo del mese</fullName>
+        <default>false</default>
+        <label>55-Semestrale: ultimo del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>56-Annuale: ult. del mese</fullName>
+        <default>false</default>
+        <label>56-Annuale: ult. del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>61-Trimestrale: primo del mese</fullName>
+        <default>false</default>
+        <label>61-Trimestrale: primo del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>62-Semestrale: primo del mese</fullName>
+        <default>false</default>
+        <label>62-Semestrale: primo del mese</label>
+    </customValue>
+    <customValue>
+        <fullName>64-Bimestrale: primo del mese</fullName>
+        <default>false</default>
+        <label>64-Bimestrale: primo del mese</label>
+    </customValue>
+    <masterLabel>Canone UDM</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -229,7 +229,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     public static void cancel(Order order, String cancellationReason){
         orderSrv.updateRecord(new Order(
             Id = order.Id,
-            Status = 'Annullato',
+            Status = 'Activated', //Chiuso
             Phase__c = 'Annullato',
             CancellationReason__c = cancellationReason
         ));

@@ -11,11 +11,13 @@ import ACCOUNT_CATEGORY from '@salesforce/schema/Account.Category__c';
 
 const columns = [
     { label: 'Regola Alert', fieldName: 'AlertRule__c' },
-    { label: 'Alert Attivo', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Stato Alert', fieldName: 'AlertState__c' },
+    { label: 'Flag Attivazione', fieldName: 'IsActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale Email', fieldName: 'IsEmailChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale SMS', fieldName: 'IsSmsChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale Push', fieldName: 'IsPushChannelActive__c', type: 'boolean', editable : 'true'},
     { label: 'Canale SOL', fieldName: 'IsSolChannelActive__c', type: 'boolean', editable : 'true'},
+    { label: 'Contatto SOL', fieldName: 'ContactName', type: 'text'}
 ];
 
 export default class HdtAccountAlerts extends LightningElement {
@@ -24,11 +26,17 @@ export default class HdtAccountAlerts extends LightningElement {
     @track record;
     @track wireError;
     @track alertColumns;
-    @track accountAlerts = [];
+    @track accountAlerts = [];    // Gli alert creati sul Cliente
     @track menuItems = [];
-    availableAlerts;
+    @track availableAlerts = [];  // L'elenco di alert abilitabili per il Cliente (in base alla sua categoria)
+    @track noAlertsMessage = '';
+    @track noAlertRulesMessage = '';
+    @track showContactsModal = false;
     accountCategory = '';
     draftValues = [];
+    selectedAlert = null;
+    showSolContacts = true;
+    selectedContactId;
 
     @wire(getRecord, { recordId: '$recordId', fields: [ACCOUNT_CATEGORY] })
     wiredAccount({ error, data }) {
@@ -52,22 +60,34 @@ export default class HdtAccountAlerts extends LightningElement {
         return this.accountAlerts.length > 0;
     }
 
-    getAccountAlerts(){
-        try{
-            getAccountAlerts({
-                accountId: this.recordId
-                })
-                .then(result => {
-                    //console.log('getAccountAlerts result: ' + result);
-                    this.accountAlerts = JSON.parse(result);
-                    
-                })
-                .catch(error => {
-                    console.log('failed to get account alerts, accountId: ' + this.recordId);
-                });
-        }catch(error){
-                console.error(error);
-        }
+    get canActivateAlerts(){
+        return this.availableAlerts.length > 0;
+    }
+
+    get disableContactsModal(){
+        return this.selectedAlert === null;
+    }
+
+    handleRowSelection(event){
+        this.selectedAlert = event.detail.selectedRows;
+    }
+
+    handleRecordSelection(event){
+        this.selectedContactId = event.detail.selectedRows[0].Id;
+    }
+
+    showModal(){
+        this.showContactsModal = true;
+    }
+
+    hideModal(){
+        this.selectedRows = null;
+        this.showContactsModal = false;
+    }
+
+    setErrorMessages(){
+        this.noAlertsMessage = 'Nessun Alert configurato per il Cliente.';
+        this.noAlertRulesMessage = 'Nessun Alert configurabile per questa categoria di cliente.';
     }
 
     getAvailableRules(){
@@ -78,7 +98,7 @@ export default class HdtAccountAlerts extends LightningElement {
                 .then(result => {
                     //console.log('result: ' + result);
                     this.availableAlerts = JSON.parse(result);
-                    this.updateAlertMenu();
+                    this.refreshAccountAlertsAndMenu();
                 })
                 .catch(error => {
                     console.log('error ' + JSON.stringify(error));
@@ -94,12 +114,24 @@ export default class HdtAccountAlerts extends LightningElement {
                 accountId: this.recordId
                 })
                 .then(result => {
-                    //console.log('getAccountAlerts result: ' + result);
-                    this.accountAlerts = JSON.parse(result);
+                    console.log('getAccountAlerts result: ' + result);
+                    let parsedResult = JSON.parse(result);
+                    // Convertiamo il json per raggiungere il campo Contact__r.Name
+                    this.accountAlerts = parsedResult.map(record => {
+                        if (record.Contact__r !== undefined) {
+                            return Object.assign({'ContactName': record.Contact__r.Name }, record);
+                        } else {
+                            return Object.assign({'ContactName': '' }, record);
+                        }
+                    });
+
+                    // getAvailableRules chiama refreshAccountAlertsAndMenu, quindi qui siamo sicuri di poter chiamare updateAlertMenu.
                     this.updateAlertMenu();
-                    
+                    // Settiamo gli error messages solo adesso per evitare che si vedano sempre e poi scompaiano dopo aver popolato gli array con gli alert.
+                    this.setErrorMessages();
                 })
                 .catch(error => {
+                    console.log('error: ' + error);
                     console.log('failed to get account alerts, accountId: ' + this.recordId);
                 });
         }catch(error){
@@ -110,9 +142,10 @@ export default class HdtAccountAlerts extends LightningElement {
     connectedCallback() {
         console.log('account id: ' + this.recordId);
         this.alertColumns = columns;
-        this.getAccountAlerts();
     }
 
+    // Aggiorna this.menuItems con gli alert che il cliente non ha ancora mai abilitato.
+    // Richiede che this.accountAlerts e this.availableAlerts siano entrambi popolati.
     updateAlertMenu() {
         let menuItems = [];
         let activeRules = new Set();
@@ -121,8 +154,6 @@ export default class HdtAccountAlerts extends LightningElement {
         });
 
         this.availableAlerts.forEach(alert => {
-            //console.log('alert: ' + JSON.stringify(alert));
-
             if (!activeRules.has(alert.AlertRule__c)) {
                 menuItems.push(
                     {
@@ -165,7 +196,7 @@ export default class HdtAccountAlerts extends LightningElement {
 
         // Verifica se l'operatore sta provando ad abilitare un canale che è disabilitato al livello di regola alert.
         let channels = ['Email', 'Sms', 'Push', 'Sol'];
-        channels.forEach(channel => {
+        for (const channel of channels) {
             let activeKey = `Is${channel}ChannelActive__c`;
             let allowedKey = `Is${channel}ChannelAllowed__c`;
 
@@ -177,8 +208,10 @@ export default class HdtAccountAlerts extends LightningElement {
                         variant: 'error'
                     })
                 );
+                this.draftValues = [];
+                return;
             }
-        });
+        }
 
         let newAlert = JSON.parse(JSON.stringify(oldAlert)); // deep copy
         Object.keys(draftAlert).forEach(key => {
@@ -199,6 +232,8 @@ export default class HdtAccountAlerts extends LightningElement {
                     variant: 'error'
                 })
             );
+            this.draftValues = [];
+            return;
         }
 
         // TODO: verificare anche se il cliente ha cellulare/mail/contattoSol per poter ricevere l'alert?
@@ -208,14 +243,52 @@ export default class HdtAccountAlerts extends LightningElement {
             })
             .then(result => {
                 console.log('updateAlert result: ' + result);
-                this.draftValues = []; // per nascondere i pulsanti Salva/Cancella
+                let toastMsg = 'Alert aggiornato';
+                if ('IsActive__c' in draftAlert) {
+                    toastMsg = draftAlert['IsActive__c'] === true ? 'Alert attivato. Case di Modifica Alert creato.' : 'Alert disattivato. Case di Modifica Alert creato.';
+                }
+                this.draftValues = [];
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'Success',
-                        message: 'Alert aggiornato', // TODO: avvisare che il case è stato innescato.
+                        message: toastMsg,
                         variant: 'success'
                     })
                 );
+                this.refreshAccountAlertsAndMenu();
+            })
+            .catch(error => {
+                console.log('error ' + JSON.stringify(error));
+            });
+    }
+
+    updateAlertContact(){
+        console.log('selected sol contact: ' + this.selectedContactId);
+        if (this.selectedContactId === undefined) {
+            return;
+        }
+
+        const alertId = this.selectedAlert[0].Id;
+        let oldAlert = this.getAccountAlertById(alertId);
+
+        let newAlert = JSON.parse(JSON.stringify(oldAlert)); // deep copy
+        newAlert['Contact__c'] = this.selectedContactId;
+
+        updateAlert({
+            alert: JSON.stringify(newAlert)
+            })
+            .then(result => {
+                console.log('updateAlert result: ' + result);
+                let toastMsg = 'Contatto SOL aggiornato per l\'Alert.';
+                this.draftValues = [];
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: toastMsg,
+                        variant: 'success'
+                    })
+                );
+                this.hideModal();
                 this.refreshAccountAlertsAndMenu();
             })
             .catch(error => {

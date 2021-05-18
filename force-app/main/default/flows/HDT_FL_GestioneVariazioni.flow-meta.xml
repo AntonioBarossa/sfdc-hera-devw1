@@ -130,8 +130,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>2383</locationX>
-        <locationY>1904</locationY>
+        <locationX>2390</locationX>
+        <locationY>1942</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -453,7 +453,7 @@
         <name>Assegna_Codice_Causale</name>
         <label>Assegna Codice Causale</label>
         <locationX>578</locationX>
-        <locationY>2114</locationY>
+        <locationY>2115</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -481,14 +481,14 @@
             <assignToReference>GetCaseAggiornato_0_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+                <elementReference>Calcolo_Codice_Causale_0.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcolo_Codice_Causale.OperationCode__c</elementReference>
+                <elementReference>Calcolo_Codice_Causale_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -504,14 +504,14 @@
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+                <elementReference>Calcolo_Codice_Causale_0_0.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcolo_Codice_Causale.OperationCode__c</elementReference>
+                <elementReference>Calcolo_Codice_Causale_0_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -527,14 +527,14 @@
             <assignToReference>GetCaseAggiornato_0_0_0_0_0_0.CausalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+                <elementReference>Calcolo_Codice_Causale_0_0_0.CausalCode__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0_0_0_0.OperationCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calcolo_Codice_Causale.OperationCode__c</elementReference>
+                <elementReference>Calcolo_Codice_Causale_0_0_0.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1654,8 +1654,7 @@
             <label>Uguale</label>
         </rules>
     </decisions>
-    <description>Flow per la gestione dei processi del Cluster Variazioni
---&gt; Inserito screen indirizzi corretto</description>
+    <description>Flow per la gestione dei processi del Cluster Variazioni</description>
     <formulas>
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
