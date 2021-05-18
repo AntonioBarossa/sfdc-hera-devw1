@@ -7,13 +7,25 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String recordTypeId = (String) inputs.get('recordTypeId');
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
-        Case currentCase = (Case) inputs.get('inputSObj');
+        Case parentCase = (Case) inputs.get('inputSObj');
 
-        List<Case> newCases = new List<Case>();
+        List<Case> childCases = new List<Case>();
+        Map<String, Object> populateFields = new Map<String, Object>();
 
-        Case newCase = new Case();
+        Case childCase = new Case();
+        
+        populateFields = parentCase.getPopulatedFieldsAsMap();
+        String removeId = (String) populateFields.remove('Id');
 
-        newCase.Type = caseType;
+        childCase = (Case) JSON.deserialize(JSON.Serialize(populateFields), Case.class);
+
+        childCase.put('Phase__c', 'Bozza');
+        childCase.put('Stauts', 'New');
+        childCase.put('Cluster__c', caseCluster);
+        childCase.put('Type',caseType);
+        childCase.put('RecordTypeId', recordTypeId);
+
+        /*newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
         newCase.RecordTypeId = recordTypeId;
         newCase.ContactId = currentCase.ContactId;
@@ -26,12 +38,12 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.SuppliedEmail = currentCase.SuppliedEmail;
         newCase.SuppliedPhone = currentCase.SuppliedPhone;
         newCase.Phase__c = 'Bozza';
-        newCase.ParentId = currentCase.Id;
+        newCase.ParentId = currentCase.Id;*/
 
 
-        newCases.add(newCase);
+        childCases.add(childCase);
 
-        return newCases;
+        return childCases;
     }
 
     /**
