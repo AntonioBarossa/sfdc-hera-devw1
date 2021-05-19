@@ -2003,6 +2003,61 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestOption__c</picklist>
+        <values>
+            <fullName>AEEG Op ALTA fin 220 kV-E_ALTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA2 %3E1%2C5%3C%3D3 kW-E_BTA2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA3 %3E3 %3C%3D6 kW-E_BTA3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA4 %3E6 %3C%3D10 kW-E_BTA4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA5 %3E 10 kW-E_BTA5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA6 olt 16%2C5kW-E_BTA6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op MTA2 %3E100 %3C%3D500-E_MTA2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op MTA3 olt 500kW-E_MTA3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opz BTA1 %3C%3D 1%2C5 kW-E_BTA1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opz MTA1 fin 100kW-E_MTA1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opzione BTIP-E_BTIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opzione MTIP-E_MTIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domestici-TD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>RequestPhase__c</picklist>
         <values>
             <fullName>Monofase</fullName>

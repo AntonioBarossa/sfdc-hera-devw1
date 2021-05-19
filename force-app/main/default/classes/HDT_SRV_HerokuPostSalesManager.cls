@@ -79,14 +79,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
          System.debug(res.getStatusCode());
          System.debug(res.getStatus());*/
 
-
-       
-
     }catch(Exception ex){
-
+        //Error Handling
         System.debug(ex.getMessage());
-        return ex.getMessage();
-
     }
 
     System.debug('ResponseMrr --> '+responseMrr);

@@ -329,7 +329,6 @@ export default class HdtSelfReading extends LightningElement {
 
                 this.oldTotalReadingValue += element.oldReadingValue();
                 this.newTotalReadingValue += element.newReadingValue();
-
                 console.log('oldTotalReadingValue: ' + this.oldTotalReadingValue)
                 console.log('newTotalReadingValue: ' + this.newTotalReadingValue)
 
