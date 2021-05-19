@@ -4,16 +4,52 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
 
     public List<Case> createCaseFromCase(Map<String, Object> inputs){
 
-        String recordTypeId = (String) inputs.get('recordTypeId');
+        String recordTypeId = cgcQr.getRecordTypeByDevName((String) inputs.get('recordType'))[0].Id;
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
-        Case currentCase = (Case) inputs.get('inputSObj');
+        Case parentCase = (Case) inputs.get('inputSObj');
 
-        List<Case> newCases = new List<Case>();
+        List<Case> childCases = new List<Case>();
+        Map<String, Object> populateFields = new Map<String, Object>();
+        Set<String> fieldExcludeList = new Set<String>
+            {
+                'LastModifiedDate', 
+                'Id', 
+                'SystemModstamp', 
+                'Phase__c', 
+                'Status',
+                'Cluster__c',
+                'Type',
+                'RecordTypeId'
+            };
+        Case childCase = new Case();
+        
+        populateFields = parentCase.getPopulatedFieldsAsMap();
+        
+        for(String fieldName : populateFields.keySet()){
+            try{
+                if(!fieldExcludeList.contains(fieldName)){
 
-        Case newCase = new Case();
+                    childCase.put(fieldName, populateFields.get(fieldName));
 
-        newCase.Type = caseType;
+                }
+            }catch(Exception e){
+                System.debug('Exception--> '+e.getMessage());
+
+            }   
+
+        }
+        
+        System.debug('RecordTypeId' +recordTypeId);
+
+        childCase.put('Phase__c', 'Bozza');
+        childCase.put('Status', 'New');
+        childCase.put('Cluster__c', caseCluster);
+        childCase.put('Type',caseType);
+        childCase.put('RecordTypeId', recordTypeId);
+        childCase.put('ParentId',parentCase.Id);
+
+        /*newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
         newCase.RecordTypeId = recordTypeId;
         newCase.ContactId = currentCase.ContactId;
@@ -26,12 +62,12 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.SuppliedEmail = currentCase.SuppliedEmail;
         newCase.SuppliedPhone = currentCase.SuppliedPhone;
         newCase.Phase__c = 'Bozza';
-        newCase.ParentId = currentCase.Id;
+        newCase.ParentId = currentCase.Id;*/
 
 
-        newCases.add(newCase);
+        childCases.add(childCase);
 
-        return newCases;
+        return childCases;
     }
 
     /**
