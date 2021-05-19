@@ -43,7 +43,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
                    UnitTerminationTime__c, RecessAdmitted__c, NumberOfTimeUnits__c, UnitOfTimeMeasurement__c, AdmittingProfileModification__c,
                    OfferToBeModified__c,
                 (
-                    SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c,TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
+                    SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c,TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
                 )
@@ -58,7 +58,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
     public static TechnicalOffer__c queryTechnicalOfferRecordWithChild(TechnicalOffer__c techOff, Id recId){
         techOff = [
             SELECT Id, Name, RateCategory__r.Name, (
-                    SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,StringValue__c,
+                    SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
                 )

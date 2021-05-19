@@ -221,6 +221,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         //singleRow.flag.value = (String)tempItem.get('Flag__c');
         setSingleRow.priceCode.label = tempItem.PriceCode__c;
         setSingleRow.priceCode.value = tempItem.PriceCodeValue__c;
+        setSingleRow.discountCode.label = tempItem.DiscountCode__c;
+        setSingleRow.discountCode.value = tempItem.DiscountCodeValue__c;
+
         setSingleRow.stringValue.label = tempItem.StringValue__c;
         return setSingleRow;
     }
@@ -267,6 +270,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.Flag__c = true;//offerLine.flag.value;
         tecOffItem.PriceCode__c = offerLine.priceCode.label;//label
         tecOffItem.PriceCodeValue__c = offerLine.infoGroup.value;//value
+        tecOffItem.DiscountCode__c = offerLine.discountCode.label;//label
+        tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;//value
         tecOffItem.StringValue__c = offerLine.stringValue.value;
         return tecOffItem;
     }

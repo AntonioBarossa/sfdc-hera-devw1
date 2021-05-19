@@ -99,7 +99,7 @@ export default class HdtModalDataTable extends LightningElement {
                 this.modalHeader = 'Lista Sconti P';
                 this.columns = firstRow.concat(discountPColumns);
                 break;
-            case 'DiscountListA__c':
+            case 'DiscountListaA__c':
                 this.modalHeader = 'Lista Sconti A';
                 this.columns = firstRow.concat(discountAColumns);
                 break;                
@@ -177,23 +177,44 @@ export default class HdtModalDataTable extends LightningElement {
 
         var recordId = '';
         var recordLabel = '';
-        //var fieldName = '';
 
         switch (this.relatedToTable) {
 
             case 'FareTypeList__c':
                 recordId = this.record['PossibleValue__c'];
                 recordLabel = this.record['PossibleValue__c'];
-                //fieldName = 'rateType';
                 break;
+            case 'DiscountListP__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
+                break;
+            case 'DiscountListaA__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
+                break;                
+            case 'PriceListT__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
+                break;
+            case 'PriceListL__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
+                break;
+            case 'PriceListQ__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
+                break;        
             case 'infoGroup':
-
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
                 break;
             case 'priceCode':
-
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
                 break;
-
-
+            case 'RateTemplate__c':
+                recordId = this.record['PossibleValue__c'];
+                recordLabel = this.record['PossibleValue__c'];
         }
 
         const selectedEvent = new CustomEvent("setvalue", {

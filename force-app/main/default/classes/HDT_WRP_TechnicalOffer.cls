@@ -73,6 +73,7 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         @auraEnabled public HDT_WRP_RowDetail numValue;
         @auraEnabled public HDT_WRP_RowDetail flag;
         @auraEnabled public HDT_WRP_RowDetail priceCode;
+        @auraEnabled public HDT_WRP_RowDetail discountCode;
         @auraEnabled public HDT_WRP_RowDetail stringValue;
     }
 

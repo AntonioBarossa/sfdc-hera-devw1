@@ -130,7 +130,7 @@
                                 </th>-->
                             <!-- # COLUMN 6 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Tipo tariffa">Tipo tariffa</div>
+                                    <div class="slds-truncate" title="Tipo tariffa">Tariffa</div>
                                 </th>
                             <!-- # COLUMN 7 # -->    
                                 <th class="" scope="col">
@@ -138,7 +138,7 @@
                                 </th>
                             <!-- # COLUMN 8 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Valore numerico">Valore numerico</div>
+                                    <div class="slds-truncate" title="Valore numerico">Valore</div>
                                 </th>
                             <!-- # COLUMN 9 # -->    
                                 <th class="" scope="col">
@@ -146,11 +146,15 @@
                                 </th>
                             <!-- # COLUMN 10 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Codice prezzo">Codice prezzo</div>
+                                    <div class="slds-truncate" title="Codice prezzo">Prezzo</div>
                                 </th>
+                            <!-- # COLUMN xx # -->    
+                            <th class="" scope="col">
+                                <div class="slds-truncate" title="Codice sconto">Sconto</div>
+                            </th>
                             <!-- # COLUMN 11 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Stringa testuale">Stringa testuale</div>
+                                    <div class="slds-truncate" title="Stringa testuale">Stringa</div>
                                 </th>
                                 <!-- # COLUMN 12 # -->    
                                 <th class="firstcol" scope="col" >
@@ -344,6 +348,26 @@
                                             </template>
                                         <!--</div>-->
                                     </td>
+
+                                <!-- # COLUMN 9 # -->    
+                                <td data-label="Codice sconto">
+                                    <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
+                                        <template if:true={d.discountCode.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="discountCode"
+                                                icon="standard:variable"
+                                                pill-obj={d.discountCode}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.discountCode.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                    <!--</div>-->
+                                </td>
 
                                 <!-- # COLUMN 10 # -->    
                                     <td data-label="stringValue">

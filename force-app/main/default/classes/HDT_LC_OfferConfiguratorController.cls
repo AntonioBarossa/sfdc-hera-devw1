@@ -122,6 +122,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 singleRow.priceCode.relatedTo = rowDetailMap.get('priceCode').relatedTo;
                 singleRow.priceCode.enabled = rowDetailMap.get('priceCode').enabled;
 
+                singleRow.discountCode = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
+                singleRow.discountCode.relatedTo = rowDetailMap.get('discountCode').relatedTo;
+                singleRow.discountCode.enabled = rowDetailMap.get('discountCode').enabled;
+
                 singleRow.stringValue = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
                 singleRow.stringValue.relatedTo = rowDetailMap.get('stringValue').relatedTo;
                 singleRow.stringValue.enabled = rowDetailMap.get('stringValue').enabled;
