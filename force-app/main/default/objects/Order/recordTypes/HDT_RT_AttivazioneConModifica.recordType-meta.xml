@@ -2156,6 +2156,61 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestOption__c</picklist>
+        <values>
+            <fullName>AEEG Op ALTA fin 220 kV-E_ALTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA2 %3E1%2C5%3C%3D3 kW-E_BTA2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA3 %3E3 %3C%3D6 kW-E_BTA3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA4 %3E6 %3C%3D10 kW-E_BTA4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA5 %3E 10 kW-E_BTA5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op BTA6 olt 16%2C5kW-E_BTA6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op MTA2 %3E100 %3C%3D500-E_MTA2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Op MTA3 olt 500kW-E_MTA3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opz BTA1 %3C%3D 1%2C5 kW-E_BTA1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opz MTA1 fin 100kW-E_MTA1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opzione BTIP-E_BTIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AEEG Opzione MTIP-E_MTIP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domestici-TD</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>RequestPhase__c</picklist>
         <values>
             <fullName>Monofase</fullName>
@@ -2544,6 +2599,129 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VasStatus__c</picklist>
+        <values>
+            <fullName>ANNUL PER CESSAZIONE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNUL PER RECESSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNUL PER RIPENS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ANNULLATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CESS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHIUSO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>COFF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FAT SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FATT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FATTURA SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO DIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO ODV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO PAREG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO RTZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO STORN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK ODV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK PAREG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECESSO DA FORNITORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIPENS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RTZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOLL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL_TAG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STORN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
