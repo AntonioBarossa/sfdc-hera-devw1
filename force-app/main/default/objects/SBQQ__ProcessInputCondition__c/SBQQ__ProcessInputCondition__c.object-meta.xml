@@ -155,7 +155,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Process Input Condition</label>
     <nameField>
         <label>Process Input Conditions Name</label>

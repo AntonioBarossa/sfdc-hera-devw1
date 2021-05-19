@@ -153,7 +153,6 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Attribute Set</label>
     <nameField>
         <label>Attribute Set Name</label>
