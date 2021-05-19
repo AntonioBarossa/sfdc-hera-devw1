@@ -625,18 +625,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }else if(caseType == 'Mancata Telelettura/lettura'){
 
-            Date readingDate = Date.valueOf(getFieldValue(fields, 'ReadingDate__c'));
-            Date limitDate = Date.newinstance(2019, 1, 1);
-
-            if(readingDate < limitDate){
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data deve essere successiva al 01/01/2019'));
-
-            } else {
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
-            }
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
         }else if(caseType == 'Cambio contatore non registrato'){
 
