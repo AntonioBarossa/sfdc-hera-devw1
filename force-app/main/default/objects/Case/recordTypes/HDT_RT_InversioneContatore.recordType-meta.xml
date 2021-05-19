@@ -9615,6 +9615,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Edif%2E Attesa affitto%2Fvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio in ristrutturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio non abitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
             <default>false</default>
         </values>
@@ -9719,11 +9731,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Seconda casa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Sollecito Emissione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima errata disguido Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima errata per tipo utilizzo</fullName>
             <default>false</default>
         </values>
         <values>
