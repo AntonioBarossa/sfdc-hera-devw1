@@ -508,21 +508,15 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             HDT_WRP_TechnicalOffer.HDT_WRP_Position position;
             for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){
                 position = new HDT_WRP_TechnicalOffer.HDT_WRP_Position();
-
-                //Type__c,
-                //Definition__c,
-                //M__c,
-                //V__c,
-                //Flag__c,
                 
                 position.operando = item.Operand__c;
-                position.gestibile = '';
-                position.modificabile = '';
-                position.statoOperando = '';
+                position.gestibile = (item.G__C) ? 'X' : null;
+                position.modificabile = (item.M__C) ? 'X' : null;
+                position.statoOperando = item.S__c;
                 position.tariffa = item.FareTypeValue__c;
                 position.gruppoInfo = item.InfoGroupValue__c;
                 position.prezzo = item.PriceCodeValue__c;
-                position.sconto = '';
+                position.sconto = item.DiscountCodeValue__c;
                 position.valore = item.NumericValue__c;
                 position.stringa = item.StringValue__c;
                 obj.header.positionList.add(position);

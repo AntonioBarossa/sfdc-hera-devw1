@@ -109,11 +109,11 @@
                                     <div class="slds-truncate" title=""></div>
                                 </th>
                                 <!-- # COLUMN 3 # -->    
-                                <th class="" scope="col">
+                                <th class="checkboxCol" scope="col">
                                     <div class="slds-truncate" title="G">G</div>
                                 </th>
                                 <!-- # COLUMN 4 # -->    
-                                <th class="" scope="col">
+                                <th class="checkboxCol" scope="col">
                                     <div class="slds-truncate" title="M-V">M - V</div>
                                 </th>
                                 <!-- # COLUMN 5 # -->    
@@ -157,7 +157,7 @@
                                     <div class="slds-truncate" title="Stringa testuale">Stringa</div>
                                 </th>
                                 <!-- # COLUMN 12 # -->    
-                                <th class="firstcol" scope="col" >
+                                <th class="lastCol" scope="col" >
                                     <div class="slds-truncate" title="Operando" >Operando</div>
                                 </th>
 
@@ -179,7 +179,7 @@
                                         </div>
                                     </td>
 
-                                <td data-label="G">
+                                <td class="checkboxCol" data-label="G">
                                     <div class="slds-form-element">
                                         <div class="slds-form-element__control">
                                             <span class="slds-checkbox slds-checkbox_standalone">
@@ -192,7 +192,7 @@
                                 </td>
 
                                 <!-- # COLUMN X # -->    
-                                <td class="alertcol" data-label="M-V">
+                                <td class="checkboxCol" data-label="M-V">
                                     <div title="MV" class="slds-truncate slds-form-element__control">
                                         <c-hdt-radio-group row-id={d.id} options={options} onradioselect={radioselect} ></c-hdt-radio-group>
                                     </div>
@@ -396,7 +396,7 @@
                                         </div>-->
                                     </td>
                                     <!-- # COLUMN X # -->
-                                    <td class="firstcol" data-label="Operando">
+                                    <td class="lastCol" data-label="Operando">
                                         <div class="slds-truncate" title="Operando">{d.tecName}</div>
                                     </td>
                                 </tr>
