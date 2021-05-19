@@ -2238,11 +2238,7 @@
     <picklistValues>
         <picklist>EndCustomerRequestType__c</picklist>
         <values>
-            <fullName>Reclamo scritto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta info</fullName>
+            <fullName>Richiesta Info Scritta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7413,6 +7409,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IsSameReasonComplaint__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LitigationType__c</picklist>
         <values>
             <fullName>Area</fullName>
@@ -7742,6 +7749,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Elaborazione Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da SAP</fullName>
             <default>false</default>
         </values>
@@ -7755,6 +7766,10 @@
         </values>
         <values>
             <fullName>Non Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Parere Ricevuta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8298,10 +8313,6 @@
         </values>
         <values>
             <fullName>Contratto SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratto Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10213,6 +10224,10 @@
         </values>
         <values>
             <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
         <values>
