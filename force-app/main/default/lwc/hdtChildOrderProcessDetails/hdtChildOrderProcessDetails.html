@@ -85,7 +85,10 @@
                                 <div class="slds-clearfix slds-p-around_small">
                                     <div class="slds-float_right">
                                         <template if:true={section.hasCalculateButton}>
-                                            <c-hdt-calculate-estimated-cost record-id={section.diffRecordId}></c-hdt-calculate-estimated-cost>
+                                            <c-hdt-calculate-estimated-cost record-id={section.recordId}></c-hdt-calculate-estimated-cost>
+                                        </template>
+                                        <template if:true={section.hasIvaAcciseUploadButton}>
+                                            <c-hdt-upload-documents title="Carica Documenti Iva e Accise" record-id={order.Id} accepted-formats={acceptedFormatsIvaAcciseUpload}></c-hdt-upload-documents>
                                         </template>
                                         <lightning-button if:true={section.readingButton} class="slds-p-around_small" value={section.name} onclick={handleNext} label="Inserisci Autolettura" name='goReading' variant="brand" icon-name="utility:right"></lightning-button>
                                         <lightning-button if:false={section.firstStep} value={section.name} onclick={handlePrevious} label="Indietro" variant="brand" icon-name="utility:left" class="slds-m-left_x-small"></lightning-button>
@@ -98,7 +101,6 @@
 
                     </lightning-accordion>
 
-                    <!-- <div class="slds-border_bottom"></div> -->
                     <c-hdt-accordion-with-click sections={confirmedSteps}></c-hdt-accordion-with-click>
 
                 </lightning-layout-item>

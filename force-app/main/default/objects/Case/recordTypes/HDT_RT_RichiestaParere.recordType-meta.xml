@@ -996,215 +996,215 @@
     <picklistValues>
         <picklist>ConcessionType__c</picklist>
         <values>
-            <fullName>Altro%C2%A0</fullName>
+            <fullName>Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imosta%C2%A0Autopr-Prod%C2%A0EE%C2%A0Industr%C2%A0%28Cod%2E G_I15%29%C2%A0</fullName>
+            <fullName>Imosta%C2%A0Autopr-Prod%C2%A0EE%C2%A0Industr%C2%A0%28Cod%2E G_I15%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta %25 Usi%C2%A0Chim%C2%A0Metall%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0%C2%A0 %28Cod%2E E_IE_11D%29%C2%A0</fullName>
+            <fullName>Imposta %25 Usi%C2%A0Chim%C2%A0Metall%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0%C2%A0 %28Cod%2E E_IE_11D%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta %25 Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11C%29%C2%A0</fullName>
+            <fullName>Imposta %25 Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11C%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Autotrazione %28Cod%2E G_I09%29%C2%A0</fullName>
+            <fullName>Imposta Autotrazione %28Cod%2E G_I09%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta C En%3E50%25 unità%C2%A0prod%C2%A0%28Cod%2E E_IE_14A%29%C2%A0</fullName>
+            <fullName>Imposta C En%3E50%25 unità%C2%A0prod%C2%A0%28Cod%2E E_IE_14A%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Esente Forze Armate NATO %28Cod%2E E_IE_L10%29%C2%A0%C2%A0</fullName>
+            <fullName>Imposta Esente Forze Armate NATO %28Cod%2E E_IE_L10%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta FFSS %28Cod%2E E_IE_L03%29%C2%A0</fullName>
+            <fullName>Imposta FFSS %28Cod%2E E_IE_L03%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Forze Armate NATO %28Cod%2E G_I25%29%C2%A0</fullName>
+            <fullName>Imposta Forze Armate NATO %28Cod%2E G_I25%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Forze Armate Nazionali %28Cod%2E G_I24%29%C2%A0%C2%A0</fullName>
+            <fullName>Imposta Forze Armate Nazionali %28Cod%2E G_I24%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Opifici %28Cod%2E E_IE_L13%29%C2%A0</fullName>
+            <fullName>Imposta Opifici %28Cod%2E E_IE_L13%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Processi Elettrolitici %28Cod%2E G_I21%29%C2%A0</fullName>
+            <fullName>Imposta Processi Elettrolitici %28Cod%2E G_I21%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Processi Metallurgici %28Cod%2E G_I22%29%C2%A0</fullName>
+            <fullName>Imposta Processi Metallurgici %28Cod%2E G_I22%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Processi Mineralogici %28Cod%2E G_I23%29%C2%A0</fullName>
+            <fullName>Imposta Processi Mineralogici %28Cod%2E G_I23%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Sedi Diplomatiche %28Cod%2EE_IE_L02%29%C2%A0</fullName>
+            <fullName>Imposta Sedi Diplomatiche %28Cod%2EE_IE_L02%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Sedi Diplomatiche - Art%2E22 %28Cod%2E G_I26%29%C2%A0</fullName>
+            <fullName>Imposta Sedi Diplomatiche - Art%2E22 %28Cod%2E G_I26%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Usi Domestici %28Cod%2E G_ICD%29%C2%A0</fullName>
+            <fullName>Imposta Usi Domestici %28Cod%2E G_ICD%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Usi%C2%A0Chim%C2%A0Elettrol%C2%A0Metal No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_L11%29%C2%A0</fullName>
+            <fullName>Imposta Usi%C2%A0Chim%C2%A0Elettrol%C2%A0Metal No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_L11%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11A%29%C2%A0</fullName>
+            <fullName>Imposta Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11A%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta esente Prod%2EEE %28Cod%2E E_IE_L06%29%C2%A0%C2%A0</fullName>
+            <fullName>Imposta esente Prod%2EEE %28Cod%2E E_IE_L06%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta ordinaria Altri Usi %28Cod%2E E_IE_M04%29%C2%A0</fullName>
+            <fullName>Imposta ordinaria Altri Usi %28Cod%2E E_IE_M04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi domestici%C2%A0</fullName>
+            <fullName>Imposta usi domestici</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi industriali %28Cod%2E G_I04%29%C2%A0</fullName>
+            <fullName>Imposta usi industriali %28Cod%2E G_I04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi non domestici iva 10%25 %28Cod%2E G_ICC10%29%C2%A0</fullName>
+            <fullName>Imposta usi non domestici iva 10%25 %28Cod%2E G_ICC10%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29%C2%A0</fullName>
+            <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta%C2%A0Grossiti%C2%A0EE Non%C2%A0Domest%C2%A0%28Cod%2E E_IE_L98%29%C2%A0</fullName>
+            <fullName>Imposta%C2%A0Grossiti%C2%A0EE Non%C2%A0Domest%C2%A0%28Cod%2E E_IE_L98%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta%C2%A0Illum%C2%A0Pubbl%C2%A0%28Cod%2E E_IE_L01%29%C2%A0</fullName>
+            <fullName>Imposta%C2%A0Illum%C2%A0Pubbl%C2%A0%28Cod%2E E_IE_L01%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta%C2%A0Trasp%C2%A0Urb%2E %28Cod%2E E_IE_L04%29%C2%A0</fullName>
+            <fullName>Imposta%C2%A0Trasp%C2%A0Urb%2E %28Cod%2E E_IE_L04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25 %28Cod%2E 01%29%C2%A0</fullName>
+            <fullName>Iva 10%25 %28Cod%2E 01%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25 Consociate %28Cod%2E 27%29%C2%A0</fullName>
+            <fullName>Iva 10%25 Consociate %28Cod%2E 27%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Collegate %28Cod%2E 05%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Collegate %28Cod%2E 05%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Controllanti %28Cod%2E 07%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Controllanti %28Cod%2E 07%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Controllate %28Cod%2E 03%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Controllate %28Cod%2E 03%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Partecipate %28Cod%2E 14%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Partecipate %28Cod%2E 14%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E 09%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E 09%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25 %28Cod%2E 02%29%C2%A0</fullName>
+            <fullName>Iva 22%25 %28Cod%2E 02%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25 Consociate %28Cod%2E 28%29%C2%A0</fullName>
+            <fullName>Iva 22%25 Consociate %28Cod%2E 28%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Collegate %28Cod%2E 06%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Collegate %28Cod%2E 06%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Controllanti %28Cod%2E 08%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Controllanti %28Cod%2E 08%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Controllate %28Cod%2E 04%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Controllate %28Cod%2E 04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Partecipate %28Cod%2E 15%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Partecipate %28Cod%2E 15%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E 10%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E 10%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Fuori Campo Livigno %28Cod%2E 19%29%C2%A0</fullName>
+            <fullName>Iva Fuori Campo Livigno %28Cod%2E 19%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Fuori Campo%C2%A0Autofatt%2E Art 2 %28Cod%2E 13%29%C2%A0</fullName>
+            <fullName>Iva Fuori Campo%C2%A0Autofatt%2E Art 2 %28Cod%2E 13%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Reverse%C2%A0Charge%C2%A0%28Cod%2E 25%29%C2%A0</fullName>
+            <fullName>Iva Reverse%C2%A0Charge%C2%A0%28Cod%2E 25%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 10%25 %28Cod%2E S1%29%C2%A0</fullName>
+            <fullName>Iva Split payment 10%25 %28Cod%2E S1%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E S3%29%C2%A0</fullName>
+            <fullName>Iva Split payment 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E S3%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 22%25 %28Cod%2E S2%29%C2%A0</fullName>
+            <fullName>Iva Split payment 22%25 %28Cod%2E S2%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E S4%29%C2%A0</fullName>
+            <fullName>Iva Split payment 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E S4%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva esente-non%C2%A0imp%C2%A0Art 72 %28Cod%2E 12%29%C2%A0</fullName>
+            <fullName>Iva esente-non%C2%A0imp%C2%A0Art 72 %28Cod%2E 12%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva esente-non%C2%A0imp%C2%A0art 8 S%2E Marino %28Cod%2E 17%29%C2%A0</fullName>
+            <fullName>Iva esente-non%C2%A0imp%C2%A0art 8 S%2E Marino %28Cod%2E 17%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva%C2%A0Reseller esente %28Cod%2E 26%29%C2%A0</fullName>
+            <fullName>Iva%C2%A0Reseller esente %28Cod%2E 26%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>No sottoposto 100%25 Off%2E%C2%A0Acquisto_Min%2EChim%2EMetall%2E %28Cod%2E E_IE_06C%29%C2%A0</fullName>
+            <fullName>No sottoposto 100%25 Off%2E%C2%A0Acquisto_Min%2EChim%2EMetall%2E %28Cod%2E E_IE_06C%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8204,6 +8204,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Edif%2E Attesa affitto%2Fvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio in ristrutturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio non abitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
             <default>false</default>
         </values>
@@ -8304,7 +8316,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Seconda casa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima errata disguido Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima errata per tipo utilizzo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10256,6 +10280,10 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
@@ -10356,6 +10384,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Emissione Impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore di Fatturazione</fullName>
             <default>false</default>
         </values>
@@ -10416,6 +10448,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica Layout di dettaglio</fullName>
             <default>false</default>
         </values>
@@ -10433,6 +10469,10 @@
         </values>
         <values>
             <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10605,6 +10645,10 @@
         </values>
         <values>
             <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Portata</fullName>
             <default>false</default>
         </values>
         <values>

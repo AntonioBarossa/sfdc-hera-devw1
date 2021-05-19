@@ -155,7 +155,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Process Input Values</label>
     <nameField>
         <label>Quote Process Value Name</label>

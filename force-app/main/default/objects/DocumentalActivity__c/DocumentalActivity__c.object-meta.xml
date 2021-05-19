@@ -161,8 +161,8 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Attività Documentali</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>Private</sharingModel>
+    <searchLayouts></searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>
 </CustomObject>
