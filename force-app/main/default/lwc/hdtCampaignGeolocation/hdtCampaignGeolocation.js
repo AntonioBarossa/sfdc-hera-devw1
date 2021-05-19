@@ -1,5 +1,4 @@
 import { LightningElement, track, wire } from 'lwc';
-import getContactsByOwnerId from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactsByOwnerId';
 import getContactCoordinates from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactCoordinates';
 import getContactsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactsWithinDistance';
 import getLeadsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity.getLeadsWithinDistance';
@@ -7,7 +6,6 @@ import updateContactLastLocation from '@salesforce/apex/HDT_LC_GeolocationCommun
 import { getRecord } from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
-import CONTACT_FIELD from '@salesforce/schema/User.ContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtCampaignGeolocation extends LightningElement {
@@ -37,6 +35,16 @@ export default class HdtCampaignGeolocation extends LightningElement {
             this.userId = data.id;
             if (data.fields.ContactId != undefined) {
                 this.contactId = data.fields.ContactId.value;
+                getContactCoordinates({ contactId: this.contactId }).then((data) => {
+                    if (data.hasOwnProperty('MailingLatitude') && data.hasOwnProperty('MailingLongitude')) {
+                        this.userMailingLatitude = data.MailingLatitude;
+                        this.userMailingLongitude = data.MailingLongitude;
+                        this.getContactsAndLeads();
+                    }
+                    console.log(JSON.stringify(data));
+                }).catch(err => {
+                    console.log(JSON.stringify(err));
+                });         
             }
             console.log('ContactId ' + this.contactId);
         }
@@ -59,7 +67,9 @@ export default class HdtCampaignGeolocation extends LightningElement {
                         });
                         this.getContactsAndLeads();
                     } else {
-                        //this.showSpinner = false;
+                        if (this.userMailingLatitude != null && this.userMailingLongitude != null) {
+                            this.getContactsAndLeads();
+                        }
                         console.log("coordinates not updated" + this.attempts);
                     }
                 } else {
@@ -122,8 +132,8 @@ export default class HdtCampaignGeolocation extends LightningElement {
                     email: obj.Contact.Email,
                     mailingAddress: `${obj.Contact.MailingAddress.street}, ${obj.Contact.MailingAddress.postalCode}, ${obj.Contact.MailingAddress.city}`,
                     campaign: obj.Campaign.Name,
-                    campaignUrl: `/${obj.Campaign.Id}`,
-                    link: `/${obj.Contact.Id}`
+                    campaignUrl: `/campaign/${obj.Campaign.Id}`,
+                    link: `/contact/${obj.Contact.Id}`
                 });
             });
             //get Leads
@@ -141,8 +151,8 @@ export default class HdtCampaignGeolocation extends LightningElement {
                         email: obj.Lead.Email,
                         mailingAddress: `${obj.Lead.Address.street}, ${obj.Lead.Address.postalCode}, ${obj.Lead.Address.city}`,
                         campaign: obj.Campaign.Name,
-                        campaignUrl: `/${obj.Campaign.Id}`,
-                        link: `/${obj.Lead.Id}`
+                        campaignUrl: `/campaign/${obj.Campaign.Id}`,
+                        link: `/lead/${obj.Lead.Id}`
                     });
                 });
                 this.showListView = true;
