@@ -45,10 +45,10 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     helpTxt3 = 'This field3 indicate that...';
     error;
 
-    @track options = [
-        {label: 'M', value: 'm', checked: '0'},
-        {label: 'V', value: 'v', checked: '1'}
-    ];
+    //@track options = [
+    //    {label: 'M', value: 'm', checked: '0'},
+    //    {label: 'V', value: 'v', checked: '1'}
+    //];
 
     @wire(getRecord, { recordId: '$productid', fields: ['Product2.Version__c', 'Product2.Template__c', 'Product2.RateCategory__r.Name', 'Product2.ProductCode'] })
     wiredOptions({ error, data }) {
