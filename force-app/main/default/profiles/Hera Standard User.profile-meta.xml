@@ -1132,6 +1132,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AdminPriceQuote__c.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AdminPriceQuote__c.DefaultPrice__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1148,6 +1153,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AdminPriceQuote__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AdminPriceQuote__c.MeterManufactureYear__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AdminPriceQuote__c.ProcessCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
