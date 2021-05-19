@@ -156,7 +156,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Subscribed Asset</label>
     <nameField>
         <displayFormat>SA-{00000000}</displayFormat>

@@ -156,7 +156,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Contracted Price</label>
     <nameField>
         <displayFormat>CP-{00000}</displayFormat>

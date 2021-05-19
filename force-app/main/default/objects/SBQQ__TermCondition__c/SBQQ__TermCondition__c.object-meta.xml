@@ -156,7 +156,6 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Term Condition</label>
     <nameField>
         <displayFormat>{00000}</displayFormat>
