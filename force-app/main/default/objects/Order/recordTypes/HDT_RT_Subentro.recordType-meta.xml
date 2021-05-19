@@ -1898,6 +1898,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza</fullName>
             <default>true</default>
         </values>
@@ -1926,6 +1930,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esecuzione Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito DL KO</fullName>
             <default>false</default>
         </values>
@@ -1934,11 +1946,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione appuntamento su portale DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa appuntamento DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esecuzione appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
         <values>
