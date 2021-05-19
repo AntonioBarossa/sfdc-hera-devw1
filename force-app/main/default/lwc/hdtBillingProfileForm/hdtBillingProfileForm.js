@@ -419,7 +419,13 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email PEC invio Bolletta, ');
         }
 
-        if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
+        if (this.template.querySelector("[data-id='XMLType__c']") !== null 
+            && (this.template.querySelector("[data-id='XMLType__c']").value === null || this.template.querySelector("[data-id='XMLType__c']").value === '')) {
+            concatBillingErrorFields = concatBillingErrorFields.concat('Tipo XML, ');
+        }
+
+        //check req fields fatturazione elettronica start
+        /*if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
             && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Codice Destinatario, ');
         }
@@ -427,11 +433,6 @@ export default class hdtBillingProfileForm extends LightningElement {
         if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
             && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
-        }
-
-        if (this.template.querySelector("[data-id='XMLType__c']") !== null 
-            && (this.template.querySelector("[data-id='XMLType__c']").value === null || this.template.querySelector("[data-id='XMLType__c']").value === '')) {
-            concatBillingErrorFields = concatBillingErrorFields.concat('Tipo XML, ');
         }
 
         if (this.template.querySelector("[data-id='CIG__c']") !== null 
@@ -447,7 +448,8 @@ export default class hdtBillingProfileForm extends LightningElement {
         if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null 
             && (this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null || this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === '' )) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Data inizio Validità Codice Destinatario, ');
-        }
+        }*/
+        //check req fields fatturazione elettronica end
 
         if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
             && this.template.querySelector("[data-id='IbanCIN__c']") !== null 

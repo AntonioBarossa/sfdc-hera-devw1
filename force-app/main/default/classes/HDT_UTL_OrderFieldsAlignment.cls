@@ -15,7 +15,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
-        billingProfileSrv.checkReadAccess('SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
+        billingProfileSrv.checkReadAccess('CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
         BillingProfile__c billingProfile = billingProfileQr.getRecordById(billingProfileId);
 
         orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
@@ -45,6 +45,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BillingCityCode__c = billingProfile.InvoicingCityCode__c;
         orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
         orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
+        orderToUpdate.CreateContractAccount__c = billingProfile.CreateContractAccount__c;
     }
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
@@ -92,8 +93,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
 
-        accountSrv.checkReadAccess('BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        Account account = accountQr.getRecordById(accountId, 'BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        accountSrv.checkReadAccess('BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
+        Account account = accountQr.getRecordById(accountId, 'BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
 
         String customerName = null;
 
@@ -111,8 +112,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.PhoneNumber__c = account.Phone;
         orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
         orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
+        orderToUpdate.ResidentialStreetName__c = account.BillingStreetName__c;
+        orderToUpdate.ResidentialStreetNumber__c = account.BillingStreetNumber__c;
+        orderToUpdate.ResidentialIsAddressVerified__c = account.BillingIsAddressVerified__c;
+        orderToUpdate.ResidentialCity__c = account.BillingCity;
+        orderToUpdate.ResidentialState__c = account.BillingState;
+        orderToUpdate.ResidentialPostalCode__c = account.BillingPostalCode;
+        orderToUpdate.ResidentialCountry__c = account.BillingCountry;
         orderToUpdate.ResidentialCityCode__c = account.BillingCityCode__c;
-
     }
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
