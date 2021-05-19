@@ -41,7 +41,7 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
                 alertCase.IsAlertActive__c = alert.IsActive__c;
-                alertCase.AlertType__c = alert.AlertType__c;
+                alertCase.AlertType__c = transcodeAlertType(alert.AlertType__c);
                 alertCases.add(alertCase);
             }
         }
@@ -54,6 +54,26 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
         }
 
         HDT_UTL_DatabaseService.updateSObject(alertCases);
+    }
+
+    /**
+     * Transcodifica il tipo di alert. SAP si aspetta solo questi due valori: 'Emissione bolletta' oppure 'Inizio periodo autolettura'
+     */
+    private String transcodeAlertType(String alertType) {
+        if (String.isBlank(alertType)) {
+            return '';
+        }
+
+        switch on alertType {
+            when 'Emissione bolletta/fattura' {
+                return 'Emissione bolletta';
+            }
+            when 'Periodo autolettura' {
+                return 'Inizio periodo autolettura';
+            }
+        }
+
+        return '';
     }
 
 }

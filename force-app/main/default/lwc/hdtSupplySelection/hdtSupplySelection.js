@@ -1,6 +1,8 @@
 import { LightningElement,track, api } from 'lwc';
 import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
 import getContractFromRow from '@salesforce/apex/HDT_QR_Contract.getContractFromRow';
+
+
 export default class hdtSupplySelection extends LightningElement {
     @api processType;
     @api accountId;
@@ -13,16 +15,19 @@ export default class hdtSupplySelection extends LightningElement {
     showCreateTargetObjectButton = false;
     showCreateTargetObjectMod = false;
     selectedServicePoint;
-    @api disabledInput;
+    disabledInput = false;
     disabledNext = false;
     hiddenEdit = true;
     @api outputContract;
+    @api responseArriccData;
+    @api isRicercainSAP=false;
+
 
     /**
      * Show create button when process is undefined
      */
     connectedCallback(){
- 
+        
 
         console.log('connectedCallback START');
         console.log('targetObject 2*****'+ JSON.stringify(this.targetObject));
@@ -31,8 +36,7 @@ export default class hdtSupplySelection extends LightningElement {
             console.log('showCreateTargetObjectButton true')
             this.showCreateTargetObjectButton = true;
             this.showCreateTargetObjectMod= true;
-            console.log('showButtonContract: ', this.showButtonContract);
-            this.showButtonForniture = true; //added temporarely
+																		 
         }else{
             getCustomMetadata({processType:this.processType}).then(data =>{
                 console.log('data custom metadata '+JSON.stringify(data));
@@ -62,7 +66,7 @@ export default class hdtSupplySelection extends LightningElement {
                         TipoServizioSplit = data.TipoServizio__c.split(",");
                         console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
                     }
-
+                    
                 }
 
                if(statusSplit.length > 1){
@@ -70,14 +74,15 @@ export default class hdtSupplySelection extends LightningElement {
                     this.showButtonContract= true;
                     this.additionalFilter= 'AND (status =\''+statusSplit[0]+'\''+'OR status = \''+statusSplit[1]+'\')';
                     console.log('entra in contratti si');
-                    //this.handleAdditionalFilter(this.processType);
+                    //this.handleAdditionalFilter(this.processType);          
+
                 
                }
                else if(statusSplit.length > 0)
                {
 
-                    this.additionalFilter= 'AND status =\''+data.StatoContratto__c+'\'';
-                    // this.handleAdditionalFilter(this.processType);       
+                    this.additionalFilter= 'AND status =\''+data.StatoContratto__c+'\''; 
+                   // this.handleAdditionalFilter(this.processType);          
 
                }
                 if(TipoServizioSplit.length >1){
@@ -95,19 +100,20 @@ export default class hdtSupplySelection extends LightningElement {
                         this.showCreateTargetObjectMod= true;
                         this.additionalFilter='AND CommoditySector__c = \''+data.TipoServizio__c+'\'';
                         console.log('AdditionalFilter**********'+JSON.stringify(this.additionalFilter));
-                        //this.handleAdditionalFilter(this.processType);
-                    
+                        //this.handleAdditionalFilter(this.processType);          
+
                 }
 
 
             });
 
         }
+
         
         console.log('connectedCallback END');
     }
-
-    @api
+ 
+@api
     handleAdditionalFilter(processType){
         let processT = processType;
         console.log('enter in handleAdditionalFilter');
@@ -125,10 +131,16 @@ export default class hdtSupplySelection extends LightningElement {
             
         }
     }
-    
+
     @api
     handleAddFilter(){
         return this.additionalFilter;
+    }
+
+
+    handleIsRicercaInSap(event){
+        console.log('handleIsRicercaInSap START' + JSON.stringify(event));
+        this.isRicercainSAP = event.detail;
     }
     /**
      * Get selected service point
@@ -136,23 +148,24 @@ export default class hdtSupplySelection extends LightningElement {
     handleServicePointSelection(event){
         console.log('handleServicePointSelection' + JSON.stringify(event.detail));
         this.selectedServicePoint = event.detail;
-        //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
-        this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
-            detail: event.detail
-        }));
         let contractNumber = this.selectedServicePoint['Contract Number'];
         console.log('rowToSend for Contract'+ JSON.stringify(contractNumber));
-        
         getContractFromRow({cNumber:contractNumber,accountId:this.AccountId}).then(data=>{
             this.outputContract= data;
-            console.log('outputContract *******'+ JSON.stringify(this.outputContract));
+            console.log('outputContract *******'+ JSON.stringify(data));
         });
 
-        //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
+		   //Creato evento per intercettare sul flow Post Sales il Service Point selezionato
         this.dispatchEvent(new CustomEvent('servicepointselectionflow', {
             detail: event.detail
-        }));
+        }));																				 
+																		 
     }
+
+   
+
+    
+
 
     /**
 
@@ -172,29 +185,27 @@ export default class hdtSupplySelection extends LightningElement {
         this.template.querySelector('c-hdt-sale-service-items-tiles').getTilesData();
     }
 
-    // toggle(){
-    //     this.disabledInput = !this.disabledInput;
-    //     this.disabledNext = !this.disabledNext;
-    //     this.hiddenEdit = !this.hiddenEdit;
-    // }
+    toggle(){
+        this.disabledInput = !this.disabledInput;
+        this.disabledNext = !this.disabledNext;
+        this.hiddenEdit = !this.hiddenEdit;
+    }
 
-    // handleNext(){
-    //     this.toggle();
-    // }
+    handleNext(){
+        this.toggle();
+    }
 
-    // handleEdit(){
-    //     this.toggle();
-    // }
+    handleEdit(){
+        this.toggle();
+    }
        /**
 
      * Dispatch confirmed service point
      */
     handleConfirmServicePoint(event){
         console.log('handleConfirmServicePoint');
-        let data = event.detail;
-        console.log('hdtSupplySelection - handleConfirmServicePoint: ', JSON.stringify(data));
-        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: data}));
+        let servicePoint = event.detail;
+        this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 
 }
-

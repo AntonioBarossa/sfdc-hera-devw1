@@ -24,8 +24,11 @@ export default class HdtAccountStatementPickerFlow extends LightningElement {
         this.dispatchEvent(navigateBackEvent);
     }
     handleNext() {
+        console.log('BillingProblems --> ' + this.billingProblems);
+        let returnValue = this.template.querySelector('c-hdt-account-statement-picker').checkBillingProblems();
+        console.log('returnValue--> '+returnValue);
 
-        if(this.template.queryselector('c-hdt-account-statement-picker').checkBillingProblems){
+        if(returnValue){
 
             return;
 

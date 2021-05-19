@@ -265,6 +265,57 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
     }
 
+    public String getOpzione(String option){
+
+        String result;
+
+        switch on option{
+
+            when 'E_UD_TDR','E_UD_TDNR'{
+                result = 'Domestici-TD';
+            }
+            when 'E_MTIP'{
+                result = 'AEEG Opzione MTIP-E_MTIP';
+            }
+            when 'E_BTIP'{
+                result = 'AEEG Opzione BTIP-E_BTIP';
+            }
+            when 'E_MTA1'{
+                result = 'AEEG Opz MTA1 fin 100kW-E_MTA1';
+            }
+            when 'E_BTA1'{
+                result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
+            }
+            when 'E_MTA3'{
+                result = 'AEEG Op MTA3 olt 500kW-E_MTA3';
+            }
+            when 'E_MTA2'{
+                result = 'AEEG Op MTA2 >100 <=500-E_MTA2';
+            }
+            when 'E_BTA6'{
+                result = 'AEEG Op BTA6 olt 16,5kW-E_BTA6';
+            }
+            when 'E_BTA5'{
+                result = 'AEEG Op BTA5 > 10 kW-E_BTA5';
+            }
+            when 'E_BTA4'{
+                result = 'AEEG Op BTA4 >6 <=10 kW-E_BTA4';
+            }
+            when 'E_BTA3'{
+                result = 'AEEG Op BTA3 >3 <=6 kW-E_BTA3';
+            }
+            when 'E_BTA2'{
+                result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';
+            }
+            when 'E_ALTA'{
+                result = 'AEEG Op ALTA fin 220 kV-E_ALTA';
+            }
+        }
+
+        return result;
+
+    }
+
     /**
       Possibili valori mandati nei campi FATTURACOLLETTIVA/DESCRFATTURACOLL
        1 - Il contratto deve essere fatturato con altri contratti
