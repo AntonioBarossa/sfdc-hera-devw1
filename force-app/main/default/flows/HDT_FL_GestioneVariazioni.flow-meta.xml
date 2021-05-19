@@ -44,7 +44,7 @@
     <actionCalls>
         <name>Crea_Case_Allineamento_Anagrafica</name>
         <label>Crea Case Allineamento Anagrafica</label>
-        <locationX>2383</locationX>
+        <locationX>2384</locationX>
         <locationY>1784</locationY>
         <actionName>HDT_SRV_CreateGenericCase</actionName>
         <actionType>apex</actionType>
@@ -1720,6 +1720,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Account/Billing Profile - errata categoria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <connector>
