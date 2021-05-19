@@ -8,6 +8,7 @@ export default class HdtAccountStatementPickerFlow extends LightningElement {
     @api caseId;
     @api processType;
     @api accountId;
+    @api billingProblems;
 
     @api availableActions = [];
     @api saveButton;
@@ -23,7 +24,18 @@ export default class HdtAccountStatementPickerFlow extends LightningElement {
         this.dispatchEvent(navigateBackEvent);
     }
     handleNext() {
-        if(this.availableActions.find(action => action === 'NEXT')){
+        console.log('BillingProblems --> ' + this.billingProblems);
+        let returnValue = this.template.querySelector('c-hdt-account-statement-picker').checkBillingProblems();
+        console.log('returnValue--> '+returnValue);
+
+        if(returnValue){
+
+            return;
+
+        }
+
+
+        if(this.availableActions.find(action => action === 'NEXT')){    
 
             const navigateNextEvent = new FlowNavigationNextEvent();
 

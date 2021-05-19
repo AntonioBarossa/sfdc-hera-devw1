@@ -67,6 +67,7 @@ public class HDT_WRP_BpCaVariation {
 		public String cap;
 		public String provincia;
 		public String via;
+		public String presso;
 	}
 
 	public class HDT_WRP_BpCaVariationGruppoIva {
@@ -93,6 +94,7 @@ public class HDT_WRP_BpCaVariation {
 		public String emailInvioBolletta;
 		public String creaNuovoCa;
 		public String pecInvioBolletta;
+		public String modInvioBolletta;
 		public HDT_WRP_BpCaVariationBancari datiBancari;
 		public HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt indirizzo;
 		public HDT_WRP_BpCaVariationDestinatarioDivergente destinatarioDivergente;

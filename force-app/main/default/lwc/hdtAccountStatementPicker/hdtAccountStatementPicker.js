@@ -61,6 +61,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     @api caseId;
     @api processType;
     @api accountId;
+    @api billingProblems;
     @track documents;
     @track wiredDocumentsResult;
     @track showSpinner = true;
@@ -383,4 +384,31 @@ export default class HdtAccountStatementPicker extends LightningElement {
             console.error(error);
         }
     }
+
+    //Metodo per Variazioni
+    @api
+    checkBillingProblems(){
+
+        console.log('Check Started');
+        console.log('BillingProblem--> '+this.billingProblems);
+        console.log('Documents--> '+this.documents);
+
+        if(this.billingProblems && (this.documents === null || this.documents === undefined)){
+
+            new ShowToastEvent({
+                title: 'Errore',
+                messagge: 'Necessario selezionare almeno una fattura',
+                variant: 'error'
+            });
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
+
+    }
+
 }

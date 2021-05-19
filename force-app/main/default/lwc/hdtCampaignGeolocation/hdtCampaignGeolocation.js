@@ -31,6 +31,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
             console.log(JSON.stringify(error));
         } else if (data) {
             this.userId = data.id;
+            console.log("******Before2:" +this.userId);
             if (data.fields.ContactId != undefined) {
                 this.contactId = data.fields.ContactId.value;
                 getContactCoordinates({ contactId: this.contactId }).then((data) => {
@@ -59,11 +60,13 @@ export default class HdtCampaignGeolocation extends LightningElement {
                         this.userMailingLongitude = data.MailingLongitude;
                         //update LastGeolocation__c
                         updateContactLastLocation({ contactId: this.contactId, latitude: data.MailingLatitude, longitude: data.MailingLongitude }).then(data => {
-                            console.log("ok " + JSON.stringify(data));
+                            console.log("ok NO PROBLEMA" + JSON.stringify(data));
+                            clearInterval(this.timer);
+                            this.getContactsAndLeads();
                         }).catch(err => {
                             console.log(err.body.message);
                         });
-                        this.getContactsAndLeads();
+                        
                     } else {
                         if (this.userMailingLatitude != null && this.userMailingLongitude != null) {
                             this.getContactsAndLeads();
@@ -112,6 +115,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
 
     getContactsAndLeads() {
         this.dataList = [];
+        console.log("PROVA GET TEST:");
         //get Contacts
         getContactsWithinDistance({
             latitude: this.userMailingLatitude,
@@ -132,6 +136,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
                 });
             });
             //get Leads
+            console.log("****** POST CONTACT");
             getLeadsWithinDistance({
                 latitude: this.userMailingLatitude,
                 longitude: this.userMailingLongitude,
