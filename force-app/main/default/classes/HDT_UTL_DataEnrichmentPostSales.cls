@@ -92,6 +92,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             String provinciaRecapito = billingRecord.InvoicingProvince__c != null? billingRecord.InvoicingProvince__c :'';
             String nazioneRecapito = billingRecord.InvoicingCountry__c != null? billingRecord.InvoicingCountry__c :'';
             nazioneRecapito = nazioneRecapito.length()>0?nazioneRecapito.substring(0,2):nazioneRecapito;
+            String codiceUfficio = billingRecord.SubjectCode__c != null?billingRecord.SubjectCode__c:'';
+            String tipoXml = billingRecord.XMLType__c != null?billingRecord.XMLType__c:'';
+            String pecElettronica = billingRecord.ElectronicInvoiceCertifiedEmailAddress__c != null?billingRecord.ElectronicInvoiceCertifiedEmailAddress__c:'';
+            String modInvioFatt = billingRecord.ElectronicInvoicingMethod__c != null?billingRecord.ElectronicInvoicingMethod__c:'';
+            Date dataConsensoPEc = billingRecord.SendCertifiedEmailConsentDate__c;
             modInvioBolletta = billingRecord.BillSendingMethod__c;
             pecBolletta = billingRecord.InvoiceCertifiedEmailAddress__c;
             emailBolletta = billingRecord.InvoiceEmailAddress__c;
@@ -107,7 +112,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
             transcodeMap.put('InvoicingCity__c', comuneRecapito);
             transcodeMap.put('InvoicingStreetNumberExtension__c', suffissoRecapito);
             transcodeMap.put('InvoicingStreetName__c', viaRecapito);
-            transcodeMap.put('InvoicingCountry__c', nazioneRecapito);
+            transcodeMap.put('OfficeSubjectCode__c', codiceUfficio);
+            transcodeMap.put('XMLType__c', tipoXml);
+            transcodeMap.put('ElectronicInvoiceCertifiedEmailAddress__c', pecElettronica);
+            transcodeMap.put('ElectronicInvoicingMethod__c', modInvioFatt);
+            transcodeMap.put('SendCertifiedEmailConsentDate__c', dataConsensoPEc);
+
         } catch(Exception e) {
             System.debug('Billing Profile non presente a sistema');
         }
