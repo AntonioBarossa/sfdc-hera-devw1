@@ -156,7 +156,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>Private</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Subscription</label>
     <nameField>
         <displayFormat>SUB-{0000000}</displayFormat>
@@ -164,7 +164,7 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Subscriptions</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>Private</sharingModel>
+    <searchLayouts></searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
