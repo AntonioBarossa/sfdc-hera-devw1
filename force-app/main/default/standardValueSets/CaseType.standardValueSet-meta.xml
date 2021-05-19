@@ -597,6 +597,11 @@
         <label>Rettifica Consumi</label>
     </standardValue>
     <standardValue>
+        <fullName>Richiesta Parere</fullName>
+        <default>false</default>
+        <label>Richiesta Parere</label>
+    </standardValue>
+    <standardValue>
         <fullName>Aggiunta Attacco</fullName>
         <default>false</default>
         <label>Aggiunta Attacco</label>

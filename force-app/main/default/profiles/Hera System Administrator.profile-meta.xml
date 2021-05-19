@@ -4932,6 +4932,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.IsSameReasonComplaint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IsVATGroupJoined__c</field>
         <readable>true</readable>
     </fieldPermissions>
