@@ -1,6 +1,6 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static List<sObject> getTableDataHelper(String objectApiName){
+    public static List<sObject> getTableDataHelper(String objectApiName, String rate){
         List<sObject> allValues;
 
         String fieldsApiName = '';
@@ -22,6 +22,19 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             }
             when 'PriceListQ__c' {
                 fieldsApiName = 'ValidityStartDate__c,Description__c,Sector__c,DiscountType__c,PossibleValue__c,PriceValue__c';
+            }
+            when 'infoGroup' {
+                List<Info1GroupList__c> info1GroupList;
+                info1GroupList = HDT_QR_TechnicalOffer.getTariffDetails(info1GroupList, rate);
+                
+                List<String> tariffList = new List<String>();
+                for(Info1GroupList__c infoGroup : info1GroupList){
+                    tariffList.add(infoGroup.DetTariffa__c);
+                }
+
+                List<Info2GroupList__c> info2GroupList;
+                info2GroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(info2GroupList, tariffList);
+                return info2GroupList;
             }
         }
 
@@ -147,7 +160,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         Id rateId = rateList[0].Id;
 
         //EXAMPLE --> Hera Impronta Zero Casa Sole Luna [Versione] [EVVUD]
-        technicalOffer.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + rate + ']';
+        technicalOffer.Name = prodList[0].ProductCode + ' [' + prodList[0].Version__c + '] [' + rate + ']';
+        technicalOffer.NameExternalId__c = technicalOffer.Name;
         technicalOffer.Product__c = productId;
         technicalOffer.RateCategory__c = rateId;
 
@@ -189,8 +203,16 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         setSingleRow.rowId = tempItem.Id;
         setSingleRow.definition = tempItem.Definition__c;
         setSingleRow.type = tempItem.Type__c;
+        setSingleRow.g = tempItem.G__c;
         setSingleRow.m = tempItem.M__c;
         setSingleRow.v = tempItem.V__c;
+
+        if(String.isEmpty(tempItem.S__c)){
+            setSingleRow.s = 'x';
+        } else {
+            setSingleRow.s = tempItem.S__c;
+        }
+        
         setSingleRow.rateType.label = tempItem.FareType__c;
         setSingleRow.rateType.value = tempItem.FareTypeValue__c;
         setSingleRow.infoGroup.label = tempItem.InfoGroup__c;
@@ -226,8 +248,16 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffItem.RowId__c = offerLine.id;
         tecOffItem.Type__c = offerLine.type;
         tecOffItem.Definition__c = offerLine.definition;
+        tecOffItem.G__c = offerLine.g;
         tecOffItem.V__c = offerLine.v;
         tecOffItem.M__c = offerLine.m;
+
+        if(offerLine.s.equalsIgnoreCase('x')){
+            tecOffItem.S__c = null;
+        } else {
+            tecOffItem.S__c = offerLine.s;
+        }
+
         tecOffItem.Operand__c = offerLine.tecName;
         tecOffItem.FareType__c = offerLine.rateType.label;//label
         tecOffItem.FareTypeValue__c = offerLine.rateType.value;//value
@@ -255,7 +285,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         recToClone = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(recToClone, recIdToClone);
 
         newTechOff = recToClone.clone(false, true, false, false);
-        newTechOff.Name = prodList[0].Name + ' [' + prodList[0].Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
+        newTechOff.Name = prodList[0].ProductCode + ' [' + prodList[0].Version__c + '] [' + recToClone.RateCategory__r.Name + ']';
+        newTechOff.NameExternalId__c = newTechOff.Name;
         newTechOff.Product__c = productId;
 
         System.debug('# clone this -> ' + newTechOff);

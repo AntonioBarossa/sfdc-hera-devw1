@@ -1,10 +1,10 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
     @AuraEnabled(cacheable=true)
-    public static List<sObject> getTableData(String objectApiName){
+    public static List<sObject> getTableData(String objectApiName, String rate){
         //String result = '';
         try{
-            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName);
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate);
 
             //if(searchTerm != 'RateTemplate__c'){
             //    StaticResource sr = HDT_QR_TechnicalOffer.getStaticResourceByName('DataHelper');
@@ -97,8 +97,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 singleRow.Id = String.valueOf(n);
                 singleRow.definition = operands[n].Definition__c;
                 singleRow.type = operands[n].Typology__c;
+                singleRow.g = false;
                 singleRow.m = false;
                 singleRow.v = true;
+                singleRow.s = 'x';
 
                 singleRow.rateType = new HDT_WRP_TechnicalOffer.HDT_WRP_RowDetail();
                 singleRow.rateType.relatedTo = rowDetailMap.get('rateType').relatedTo;

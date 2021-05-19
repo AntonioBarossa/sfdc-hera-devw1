@@ -62,8 +62,10 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         @auraEnabled public String tecName;
         @auraEnabled public String definition;
         @auraEnabled public String type;
+        @auraEnabled public Boolean g;
         @auraEnabled public Boolean m;
         @auraEnabled public Boolean v;
+        @auraEnabled public String s;
         //@auraEnabled public HDT_WRP_RowDetail startDate;
         //@auraEnabled public HDT_WRP_RowDetail endDate;
         @auraEnabled public HDT_WRP_RowDetail rateType;

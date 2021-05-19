@@ -108,10 +108,18 @@
                                 <th class="alertcol" scope="col">
                                     <div class="slds-truncate" title=""></div>
                                 </th>
-                                <!-- # COLUMN X # -->    
+                                <!-- # COLUMN 3 # -->    
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="G">G</div>
+                                </th>
+                                <!-- # COLUMN 4 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="M-V">M - V</div>
-                                </th>                                
+                                </th>
+                                <!-- # COLUMN 5 # -->    
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="S">S</div>
+                                </th>                           
                             <!-- # COLUMN 3 # /-/->                       
                                 <th class="" scope="col" >
                                     <div class="slds-truncate" title="Data Inizio" >Data inizio</div>
@@ -120,31 +128,31 @@
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Data fine">Data fine</div>
                                 </th>-->
-                            <!-- # COLUMN 5 # -->    
+                            <!-- # COLUMN 6 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Tipo tariffa">Tipo tariffa</div>
                                 </th>
-                            <!-- # COLUMN 6 # -->    
+                            <!-- # COLUMN 7 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Gruppo info">Gruppo info</div>
                                 </th>
-                            <!-- # COLUMN 7 # -->    
+                            <!-- # COLUMN 8 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Valore numerico">Valore numerico</div>
                                 </th>
-                            <!-- # COLUMN 8 # -->    
+                            <!-- # COLUMN 9 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Flag">Flag</div>
                                 </th>
-                            <!-- # COLUMN 9 # -->    
+                            <!-- # COLUMN 10 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Codice prezzo">Codice prezzo</div>
                                 </th>
-                            <!-- # COLUMN 10 # -->    
+                            <!-- # COLUMN 11 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Stringa testuale">Stringa testuale</div>
                                 </th>
-                                <!-- # COLUMN 1 # -->    
+                                <!-- # COLUMN 12 # -->    
                                 <th class="firstcol" scope="col" >
                                     <div class="slds-truncate" title="Operando" >Operando</div>
                                 </th>
@@ -167,10 +175,36 @@
                                         </div>
                                     </td>
 
+                                <td data-label="G">
+                                    <div class="slds-form-element">
+                                        <div class="slds-form-element__control">
+                                            <span class="slds-checkbox slds-checkbox_standalone">
+                                                <input if:true={d.g} type="checkbox" data-id={d.id} checked name="label" value={d.id} onclick={checkboxHandler} />
+                                                <input if:false={d.g} type="checkbox" data-id={d.id} name="label" value={d.id} onclick={checkboxHandler} />
+                                                <span class="slds-checkbox_faux"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+
                                 <!-- # COLUMN X # -->    
                                 <td class="alertcol" data-label="M-V">
                                     <div title="MV" class="slds-truncate slds-form-element__control">
                                         <c-hdt-radio-group row-id={d.id} options={options} onradioselect={radioselect} ></c-hdt-radio-group>
+                                    </div>
+                                </td>
+
+                                <td data-label="S">
+                                    <div title="S" class="slds-truncate slds-form-element__control" style="overflow: initial;" >
+                                        <lightning-combobox
+                                            data-id={d.id}
+                                            name="operandStatus"
+                                            label="operandStatus"
+                                            variant="label-hidden"
+                                            value={d.s}
+                                            options={sOptions}
+                                            onchange={handleComboboxChange}
+                                        ></lightning-combobox>
                                     </div>
                                 </td>
 
@@ -238,6 +272,7 @@
                                                     field-name="infoGroup"
                                                     icon="standard:announcement"
                                                     pill-obj={d.infoGroup}
+                                                    rate={product.rateCategory}
                                                     onsetvaluetoparent={handleSetvaluetoparent}
                                                 ></c-hdt-pill>
                                             </template>

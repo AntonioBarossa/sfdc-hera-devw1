@@ -22,20 +22,9 @@ const amountColumns = [
 ];
 
 const grInfoColumns = [
-    {label: 'Gr. info', fieldName: 'col1'},
-    {label: 'Operando', fieldName: 'col2'},
-    {label: 'Stagione', fieldName: 'col3'},
-    {label: 'Fine val.', fieldName: 'col4'},
-    {label: 'In. val.', fieldName: 'col5'},
-    {label: 'Val. acq.', fieldName: 'col6'},
-    {label: 'Val.da cl.', fieldName: 'col7'},
-    {label: '1ｰ campo chiave di un valore operando', fieldName: 'col8'},
-    {label: 'Chiave 2', fieldName: 'col9'},
-    {label: 'Chiave 3', fieldName: 'col10'},
-    {label: 'Chiave 4', fieldName: 'col11'},
-    {label: 'S', fieldName: 'col12'},
-    {label: 'Importo', fieldName: 'col13'},
-    {label: 'Div.', fieldName: 'col14'}
+    {label: 'Valore Possibile', fieldName: 'PossibleValue__c'},
+    {label: 'Descrizione Valore', fieldName: 'ValueDescription__c'},
+    {label: 'Det Tariffa', fieldName: 'DetRate__c'}
 ];
 
 const discountAColumns = [
@@ -88,6 +77,7 @@ export default class HdtModalDataTable extends LightningElement {
     @api rowId;
     @api fieldName;
     @api icon;
+    @api rate;
     @track data = [];
     @track columns = [];
     @track error = {show: false, message: ''};
@@ -97,7 +87,8 @@ export default class HdtModalDataTable extends LightningElement {
 
     connectedCallback() {
         this.spinner = true;
-        console.log('>>> ' + this.relatedToTable);
+        console.log('>>> ' + this.relatedToTable + ' - rate cat >>> ' + this.rate);
+
         switch (this.relatedToTable) {
 
             case 'FareTypeList__c':
@@ -145,7 +136,7 @@ export default class HdtModalDataTable extends LightningElement {
     backendCall(){
         console.log('# getTableData #');
 
-        getTableData({objectApiName: this.relatedToTable})
+        getTableData({objectApiName: this.relatedToTable, rate: this.rate})
             .then(result => {
                 console.log('# call result #');
 

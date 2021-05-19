@@ -61,12 +61,12 @@
         {
           "fieldName": "rateType",
           "enabled": true,
-          "relatedTo": "tipiTariffa"
+          "relatedTo": "FareTypeList__c"
         },
         {
           "fieldName": "infoGroup",
           "enabled": true,
-          "relatedTo": "gruppiInfo"
+          "relatedTo": "infoGroup"
         },
         {
           "fieldName": "numValue",
@@ -261,7 +261,7 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "priceQ"
+          "relatedTo": "PriceListQ__c"
         },
         {
           "fieldName": "stringValue",
@@ -306,7 +306,7 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "priceT"
+          "relatedTo": "PriceListT__c"
         },
         {
           "fieldName": "stringValue",
@@ -441,7 +441,7 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "discountA"
+          "relatedTo": "DiscountListaA__c"
         },
         {
           "fieldName": "stringValue",
@@ -486,7 +486,7 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "discountA"
+          "relatedTo": "DiscountListaA__c"
         },
         {
           "fieldName": "stringValue",
@@ -531,7 +531,7 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "discountP"
+          "relatedTo": "DiscountListP__c"
         },
         {
           "fieldName": "stringValue",
@@ -576,7 +576,7 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "priceL"
+          "relatedTo": "PriceListL__c"
         },
         {
           "fieldName": "stringValue",

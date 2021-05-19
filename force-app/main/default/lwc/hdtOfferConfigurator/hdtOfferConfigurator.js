@@ -75,6 +75,14 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         }
     }
 
+    get sOptions() {
+        return [
+            { label: 'Non Esiste', value: 'x' },
+            { label: 'Facoltativo', value: 'F' },
+            { label: 'Obbligatorio', value: 'O' },
+        ];
+    }
+
     connectedCallback() {
         console.log('>>> newTechOfferObj > ' + this.newTechOfferObj);
         console.log('>>> techOffIdToClone > ' + this.techOffIdToClone);
@@ -91,6 +99,13 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         this.getMatrixData();
 
+    }
+
+    checkboxHandler(event){
+        //used with input checkbox
+        var rowValue = event.currentTarget.dataset.id
+        let foundRow = this.dataRows.find(ele  => ele.id === rowValue);
+        foundRow.g = event.target.checked;
     }
 
     setParam(event){
@@ -148,6 +163,14 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
             message: 'nothing to declare'
         };
         return retError;
+    }
+
+    handleComboboxChange(event){
+        console.log('# handleComboboxChange #');
+        var rowId = event.currentTarget.getAttribute('data-id');
+        console.log('>>> rowId -> ' + rowId + ' - ' + event.detail.value);
+        let element = this.dataRows.find(ele  => ele.id === rowId);
+        element.s = event.detail.value;
     }
 
     handleChange(event){
@@ -212,8 +235,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
-                this.dataRows = result.rowList;
-                
+                this.dataRows = result.rowList;                
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;
