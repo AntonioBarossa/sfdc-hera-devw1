@@ -5,7 +5,6 @@ import getLeadsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity
 import updateContactLastLocation from '@salesforce/apex/HDT_LC_GeolocationCommunity.updateContactLastLocation';
 import { getRecord } from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
-import NAME_FIELD from '@salesforce/schema/User.Name';
 import CONTACT_FIELD from '@salesforce/schema/User.ContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -13,7 +12,6 @@ export default class HdtCampaignGeolocation extends LightningElement {
     @track distance = 5;
     @track userId;
     @track contactId = null;
-    @track userName;
     @track userMailingLatitude = null;
     @track userMailingLongitude = null;
     @track showListView = false;
@@ -24,7 +22,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
     @track timer;
     @wire(getRecord, {
         recordId: USER_ID,
-        fields: [NAME_FIELD, CONTACT_FIELD]
+        fields: [CONTACT_FIELD]
     }) wireuser({
         error,
         data
@@ -32,7 +30,6 @@ export default class HdtCampaignGeolocation extends LightningElement {
         if (error) {
             console.log(JSON.stringify(error));
         } else if (data) {
-            this.userName = data.fields.Name.value;
             this.userId = data.id;
             if (data.fields.ContactId != undefined) {
                 this.contactId = data.fields.ContactId.value;
@@ -108,9 +105,6 @@ export default class HdtCampaignGeolocation extends LightningElement {
         event.preventDefault();
         this.showListView = false;
         const fields = event.detail.fields;
-        //create new contact
-        fields.FirstName = this.userName.split(' ')[0];
-        fields.LastName = this.userName.split(' ')[1];
         fields.MailingCountry = 'Italy';
         this.template.querySelector('lightning-record-edit-form').submit(fields);
         this.showSpinner = true;
