@@ -305,6 +305,36 @@
                 <label>Comunicazione cessazione al diritto del Bonus fisico per Mortis causa o cessazione utilizzo apparecchiatura elettromedicale</label>
             </value>
             <value>
+                <fullName>Edificio in ristrutturazione</fullName>
+                <default>false</default>
+                <label>Edificio in ristrutturazione</label>
+            </value>
+            <value>
+                <fullName>Edificio non abitato</fullName>
+                <default>false</default>
+                <label>Edificio non abitato</label>
+            </value>
+            <value>
+                <fullName>Seconda casa</fullName>
+                <default>false</default>
+                <label>Seconda casa</label>
+            </value>
+            <value>
+                <fullName>Edif. Attesa affitto/vendita</fullName>
+                <default>false</default>
+                <label>Edif. Attesa affitto/vendita</label>
+            </value>
+            <value>
+                <fullName>Stima errata disguido Hera</fullName>
+                <default>false</default>
+                <label>Stima errata disguido Hera</label>
+            </value>
+            <value>
+                <fullName>Stima errata per tipo utilizzo</fullName>
+                <default>false</default>
+                <label>Stima errata per tipo utilizzo</label>
+            </value>
+            <value>
                 <fullName>Agevolazioni non Energy indirette</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -353,6 +383,30 @@
                 <label>TCP Comune no Int</label>
             </value>
         </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
+            <valueName>Edificio in ristrutturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
+            <valueName>Edificio non abitato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
+            <valueName>Seconda casa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
+            <valueName>Edif. Attesa affitto/vendita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
+            <valueName>Stima errata disguido Hera</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
+            <valueName>Stima errata per tipo utilizzo</valueName>
+        </valueSettings>
         <valueSettings>
             <controllingFieldValue>Storno Rateizzazione</controllingFieldValue>
             <valueName>Plico Rate non ricevute</valueName>

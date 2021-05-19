@@ -1,12 +1,10 @@
 import { LightningElement, track, wire } from 'lwc';
-import getContactsByOwnerId from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactsByOwnerId';
 import getContactCoordinates from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactCoordinates';
 import getContactsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity.getContactsWithinDistance';
 import getLeadsWithinDistance from '@salesforce/apex/HDT_LC_GeolocationCommunity.getLeadsWithinDistance';
 import updateContactLastLocation from '@salesforce/apex/HDT_LC_GeolocationCommunity.updateContactLastLocation';
 import { getRecord } from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
-import NAME_FIELD from '@salesforce/schema/User.Name';
 import CONTACT_FIELD from '@salesforce/schema/User.ContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -14,7 +12,6 @@ export default class HdtCampaignGeolocation extends LightningElement {
     @track distance = 5;
     @track userId;
     @track contactId = null;
-    @track userName;
     @track userMailingLatitude = null;
     @track userMailingLongitude = null;
     @track showListView = false;
@@ -25,7 +22,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
     @track timer;
     @wire(getRecord, {
         recordId: USER_ID,
-        fields: [NAME_FIELD]
+        fields: [CONTACT_FIELD]
     }) wireuser({
         error,
         data
@@ -33,10 +30,20 @@ export default class HdtCampaignGeolocation extends LightningElement {
         if (error) {
             console.log(JSON.stringify(error));
         } else if (data) {
-            this.userName = data.fields.Name.value;
             this.userId = data.id;
+            console.log("******Before2:" +this.userId);
             if (data.fields.ContactId != undefined) {
                 this.contactId = data.fields.ContactId.value;
+                getContactCoordinates({ contactId: this.contactId }).then((data) => {
+                    if (data.hasOwnProperty('MailingLatitude') && data.hasOwnProperty('MailingLongitude')) {
+                        this.userMailingLatitude = data.MailingLatitude;
+                        this.userMailingLongitude = data.MailingLongitude;
+                        this.getContactsAndLeads();
+                    }
+                    console.log(JSON.stringify(data));
+                }).catch(err => {
+                    console.log(JSON.stringify(err));
+                });         
             }
             console.log('ContactId ' + this.contactId);
         }
@@ -53,13 +60,17 @@ export default class HdtCampaignGeolocation extends LightningElement {
                         this.userMailingLongitude = data.MailingLongitude;
                         //update LastGeolocation__c
                         updateContactLastLocation({ contactId: this.contactId, latitude: data.MailingLatitude, longitude: data.MailingLongitude }).then(data => {
-                            console.log("ok " + JSON.stringify(data));
+                            console.log("ok NO PROBLEMA" + JSON.stringify(data));
+                            clearInterval(this.timer);
+                            this.getContactsAndLeads();
                         }).catch(err => {
                             console.log(err.body.message);
                         });
-                        this.getContactsAndLeads();
+                        
                     } else {
-                        //this.showSpinner = false;
+                        if (this.userMailingLatitude != null && this.userMailingLongitude != null) {
+                            this.getContactsAndLeads();
+                        }
                         console.log("coordinates not updated" + this.attempts);
                     }
                 } else {
@@ -97,9 +108,6 @@ export default class HdtCampaignGeolocation extends LightningElement {
         event.preventDefault();
         this.showListView = false;
         const fields = event.detail.fields;
-        //create new contact
-        fields.FirstName = this.userName.split(' ')[0];
-        fields.LastName = this.userName.split(' ')[1];
         fields.MailingCountry = 'Italy';
         this.template.querySelector('lightning-record-edit-form').submit(fields);
         this.showSpinner = true;
@@ -107,6 +115,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
 
     getContactsAndLeads() {
         this.dataList = [];
+        console.log("PROVA GET TEST:");
         //get Contacts
         getContactsWithinDistance({
             latitude: this.userMailingLatitude,
@@ -122,11 +131,12 @@ export default class HdtCampaignGeolocation extends LightningElement {
                     email: obj.Contact.Email,
                     mailingAddress: `${obj.Contact.MailingAddress.street}, ${obj.Contact.MailingAddress.postalCode}, ${obj.Contact.MailingAddress.city}`,
                     campaign: obj.Campaign.Name,
-                    campaignUrl: `/${obj.Campaign.Id}`,
-                    link: `/${obj.Contact.Id}`
+                    campaignUrl: `/campaign/${obj.Campaign.Id}`,
+                    link: `/contact/${obj.Contact.Id}`
                 });
             });
             //get Leads
+            console.log("****** POST CONTACT");
             getLeadsWithinDistance({
                 latitude: this.userMailingLatitude,
                 longitude: this.userMailingLongitude,
@@ -141,8 +151,8 @@ export default class HdtCampaignGeolocation extends LightningElement {
                         email: obj.Lead.Email,
                         mailingAddress: `${obj.Lead.Address.street}, ${obj.Lead.Address.postalCode}, ${obj.Lead.Address.city}`,
                         campaign: obj.Campaign.Name,
-                        campaignUrl: `/${obj.Campaign.Id}`,
-                        link: `/${obj.Lead.Id}`
+                        campaignUrl: `/campaign/${obj.Campaign.Id}`,
+                        link: `/lead/${obj.Lead.Id}`
                     });
                 });
                 this.showListView = true;
