@@ -271,6 +271,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.BillingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.BillingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -737,6 +742,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.ShippingAddress</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ShippingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ShippingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2363,6 +2378,11 @@
         <editable>false</editable>
         <field>BillingProfile__c.InvoicingIsAddressVerified__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BillingProfile__c.InvoicingPlaceCode__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -5091,6 +5111,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.RateCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.ReadType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5392,6 +5417,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.SupplyIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SupplyPlaceCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6093,6 +6123,11 @@
         <editable>false</editable>
         <field>Contact.MailingIsAddressVerified__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingPlaceCode__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -9295,6 +9330,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Lead.PlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Lead.Place__c</field>
         <readable>false</readable>
@@ -9820,6 +9860,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ActivationPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.ActivationPlace__c</field>
         <readable>false</readable>
@@ -9977,6 +10022,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.BillingIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BillingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BillingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10871,6 +10926,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ResidentialPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ResidentialPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11080,6 +11140,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ShippingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.ShippingPlace__c</field>
         <readable>false</readable>
@@ -11192,6 +11257,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SupplyIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SupplyPlaceCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20193,6 +20263,11 @@
         <editable>false</editable>
         <field>ServicePoint__c.SupplyIsAddressVerified__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SupplyPlaceCode__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
