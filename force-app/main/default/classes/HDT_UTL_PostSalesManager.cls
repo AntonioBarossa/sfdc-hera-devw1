@@ -1,8 +1,9 @@
 public inherited sharing class HDT_UTL_PostSalesManager{
 
-    HDT_QR_Contract contractQr = new HDT_QR_Contract();
-    HDT_QR_Case caseQr = new HDT_QR_Case();
-
+    private HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private HDT_QR_Case caseQr = new HDT_QR_Case();
+    private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
+    private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public void changeCaseValue(Sobject inputCase){
 
@@ -63,7 +64,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
             if(currentCase.Phase__c == 'KO definitivo'
-            || [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: parentCase.DistributorName__c] > 0){
+            || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
                 
                 parentCase.Phase__c = 'Elaborazione Manuale';
             } else {
@@ -183,6 +184,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         System.debug('Innesco Allineamento Anagrafica alla chiusura del Case Fiscale: ' + inputCase.Id);
         List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
         System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+    }
+
+    public void evaluateEffectiveDate(SObject inputOrder){
+
+        Order currentOrder = (Order) inputOrder;
+
+        if(currentOrder.EffectiveDate__c != null && System.today() > currentOrder.EffectiveDate__c){
+
+            currentOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+
+        }
+
     }
 
 
