@@ -177,7 +177,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_GeolocationCommunity</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_GestionePrivacyField</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_LeadCalculateFiscalCode</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -285,6 +293,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QBL_AnagAlignment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Account</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -345,6 +357,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_City</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Contact</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -401,6 +417,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_IndemnityConfirmation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_InformativeManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -450,6 +470,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_PaymentCommunication</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PermissionSet</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -617,6 +641,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_EditAlert</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_EmailMessage</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -626,6 +654,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_HerokuPostSalesManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_IndemnityConfirmation</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -673,7 +705,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_Payments</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_PianoRateizzazione</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_PostSalesCriteriaManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -726,6 +766,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_ServicePoint</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_AlertAccountConfiguration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -785,6 +829,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_CalculateFiscalCode</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_CampaignMember</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -825,6 +873,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_CheckFiscalCodeTaxNumber</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_ComboboxOptionsFactory</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -850,6 +902,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CreateGenericCase</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CreatePaymentsRequestBody</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -889,6 +945,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_Lead</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_NewsNotificationCenter</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -906,6 +966,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_PhoneNumbers</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_PostSalesCriteriaManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -942,6 +1006,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SelfReadings</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ServiceCatalogProfileCriteria</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1106,6 +1174,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_PaymentCommunication</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_Payments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

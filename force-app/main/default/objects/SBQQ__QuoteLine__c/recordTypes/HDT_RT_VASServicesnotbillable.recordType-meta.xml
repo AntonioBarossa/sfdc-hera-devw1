@@ -91,7 +91,7 @@
     <picklistValues>
         <picklist>PaymentMode__c</picklist>
         <values>
-            <fullName>Bollettino</fullName>
+            <fullName>BollettinoPostale</fullName>
             <default>false</default>
         </values>
         <values>

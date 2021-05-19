@@ -105,6 +105,53 @@ public with sharing class HDT_LC_ContactSelection {
         return recordListString;
     }
 
+    @AuraEnabled(cacheable = false)
+    public static String getSolContacts(String accountId){
+        String recordListString;
+        try{
+            System.debug('HDT_LC_ContactSelection: accountId: ' + accountId);
+
+            List<List<sObject>> recordList = new List<List<sObject>>();
+            Map<Id, String> rolesMap = new Map<Id, String>();
+
+            HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+            List<AccountContactRelation> relationList = acrQueryHandler.getSolContactRelations(accountId);
+            Set<Id> contactIds = new Set<Id>();
+            for (AccountContactRelation acr : relationList) {
+                System.debug('HDT_LC_ContactSelection: ACR: ' + acr);
+                contactIds.add(acr.ContactId);
+                rolesMap.put(acr.ContactId, acr.Roles);
+            }
+
+            HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
+            List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
+
+            JSONGenerator gen = JSON.createGenerator(false);
+            gen.writeStartArray();
+            for (Contact contact : contacts) {
+                gen.writeStartObject();
+                gen.writeStringField('Id', contact.Id);
+                writeIfNotNull(gen, 'Name', contact.Name);
+                writeIfNotNull(gen, 'Phone', contact.Phone);
+                writeIfNotNull(gen, 'MobilePhone', contact.MobilePhone);
+                writeIfNotNull(gen, 'Email', contact.Email);
+                writeIfNotNull(gen, 'Fax', contact.Fax);
+                writeIfNotNull(gen, 'CertifiedEmail__c', contact.CertifiedEmail__c);
+                writeIfNotNull(gen, 'MailingAddressFormula__c', contact.MailingAddressFormula__c);
+                writeIfNotNull(gen, 'Roles', rolesMap.get(contact.Id));
+                gen.writeEndObject();
+            }
+
+            gen.writeEndArray();
+            recordListString = gen.getAsString();
+            System.debug('HDT_LC_ContactSelection: recordListString: ' + recordListString);
+
+        }catch(Exception e){
+            System.debug(e.getMessage());
+        }
+        return recordListString;
+    }
+
     private static void writeIfNotNull(JSONGenerator generator, String key, String value) {
         if (value != null) {
             generator.writeStringField(key, value);

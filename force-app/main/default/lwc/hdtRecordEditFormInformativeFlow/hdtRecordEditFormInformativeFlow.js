@@ -305,7 +305,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
         var info = event.detail;
         console.log('in check ' + info);
         this.selectedDettaglioInfo = info;
-        if(info.localeCompare('Info non censita') === 0){
+        if(info.localeCompare('Info non censita') === 0 || info.localeCompare('Info non Censita') === 0){
             this.showTitolo = true;
             this.requiredTitolo = true;
             console.log('equals ' + info.localeCompare('Info non censita'))
