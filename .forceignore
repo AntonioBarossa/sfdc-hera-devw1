@@ -32,6 +32,7 @@ package.xml
 **objects/WorkBadge/WorkBadge*
 **objects/SBQQ__Subscription__c/fields/CompanyOwner__c*
 **objects/SBQQ__Subscription__c/recordTypes/*
+**objects/ServicePoint__c/fields/Disconnectable__c*
 **objects/ServicePoint__c/fields/DisconnectibilityType__c*
 **objects/Account/recordTypes/HDT_RT_Other*
 **objects/SBQQ__Quote__c/fields/Login__c*
