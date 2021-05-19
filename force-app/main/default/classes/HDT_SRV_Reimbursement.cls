@@ -2,6 +2,7 @@ public inherited sharing class HDT_SRV_Reimbursement {
 
     HDT_QR_Reimbursement reimbursementQr = new HDT_QR_Reimbursement();
     HDT_WS_Reimbursement reimbursementWs = new HDT_WS_Reimbursement();
+    HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
     
     public Boolean checkDocumentDate(String recordId){
 
@@ -29,17 +30,28 @@ public inherited sharing class HDT_SRV_Reimbursement {
 
     public Boolean checkAccountBalance(String customerCode){
 
-        JSONGenerator gen = JSON.createGenerator(true);
+        List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput> inputList = new List<HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput>();
+        HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput caseInput = new HDT_UTL_CreatePaymentsRequestBody.HDT_UTL_WrapperInput();
+        List<Map<String, Object>> caseListMap = new List<Map<String, Object>>();
+
         String pretty;
         String result;
         Boolean flag = false;
 
-        gen.writeStartObject();
-        gen.writeStringField('codiceCliente', customerCode);
-        gen.writeStringField('tipoEstrattoConto', 'ORDINARIO');
-        gen.writeEndObject();
+        Map<String, Object> caseMap = new Map<String, Object>{
+            'codiceCliente' => customerCode,
+            'tipoEstrattoConto' => 'ORDINARIO'
+        };
 
-        pretty = gen.getAsString();
+        caseListMap.add(caseMap);
+
+        caseInput.isParent = true;
+        caseInput.isChild = false;
+        caseInput.configMapList = caseListMap;
+
+        inputList.add(caseInput);
+
+        pretty = paymentsUtl.createBodyRequest(inputList);
 
         System.debug('SRV_Reimbursement bodyRequest--> '+pretty);
 
@@ -53,8 +65,6 @@ public inherited sharing class HDT_SRV_Reimbursement {
 
         return flag;
 
-
     }
-
 
 }

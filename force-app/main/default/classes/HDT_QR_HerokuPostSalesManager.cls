@@ -31,11 +31,34 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     public Case getCaseRecord(String recordId){
         Case recordCase = new Case();
         try {
-            recordCase = [SELECT Id, Description, Phase__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+            recordCase = [SELECT Id, Description, Phase__c,CaseNumber FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
         } catch (DmlException ex) {
-            System.debug(ex.getMessage());
+            throw ex;
         }
         return recordCase;
+    }
+
+    public Account getAccount(String accountCode){
+        return [SELECT Id, FiscalCode__c,VATNumber__c FROM Account WHERE CustomerCode__c=:accountCode WITH SECURITY_ENFORCED LIMIT 1];
+    }
+
+    public Account getAccountFromSp(String pod){
+        ServicePoint__c sp = [SELECT Account__r.Id, Account__r.FiscalCode__c,Account__r.VATNumber__c FROM ServicePoint__c WHERE ServicePointCode__c =:pod WITH SECURITY_ENFORCED LIMIT 1];
+        Account account = sp.Account__r;
+        return account;
+    }
+    public Contact getContact(String accountId){
+        AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id FROM AccountContactRelation WHERE AccountId =:accountId AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
+        Contact contact = rel.Contact;
+        return contact;
+    }
+
+    public ServicePoint__c getServicePoint(String code){
+        return [SELECT Id FROM ServicePoint__c WHERE ServicePointCode__c=:code WITH SECURITY_ENFORCED LIMIT 1];
+    }
+
+    public Contract getContract(String servicePointId){
+        return [SELECT Id,BillingProfile__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
     }
 
 

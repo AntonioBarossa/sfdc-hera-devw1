@@ -11,6 +11,7 @@ public inherited sharing class HDT_QR_Contact {
             Email,
             Fax,
             CertifiedEmail__c,
+            IndividualId,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
@@ -114,5 +115,32 @@ public inherited sharing class HDT_QR_Contact {
             return null;
 
         }
+    }
+
+    public List<Contact> getContactsByOwnerId(String ownerId, String ownerName) {
+        return [
+            SELECT Id,
+            Name,
+            MailingLatitude,
+            MailingLongitude
+            FROM Contact
+            WHERE OwnerId = :ownerId
+            AND Name = :ownerName
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Contact getContactCoordinates(String contactId) {
+        return [
+            SELECT Id,
+            Name,
+            MailingLatitude,
+            MailingLongitude,
+            LastGeolocationLatitude__c,
+            LastGeolocationLongitude__c
+            FROM Contact
+            WHERE Id = :contactId
+            WITH SECURITY_ENFORCED
+        ];
     }
 }

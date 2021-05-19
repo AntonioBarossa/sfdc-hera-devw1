@@ -43,7 +43,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Condizioni Contrattuali Errate' 
         || caseType == 'BP/CA - errata categoria'
         || caseType == 'Modifica/Azzeramento Consumo Annuo'
-        || caseType == 'Modifica Tariffa Residente/Non Residente'){
+        || caseType == 'Modifica Tariffa Residente/Non Residente'
+        || caseType == 'Mancata Telelettura/lettura'
+        || caseType == 'Cambio contatore non registrato	'){
 
             System.debug('Inside Variazioni Validations');
 
@@ -469,11 +471,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         }else if(caseType == 'Gestione Disalimentabilità'){
 
-            List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
-            WHERE LinkedEntityId = :recordId 
-            WITH SECURITY_ENFORCED];
+            List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();
 
-
+            attachedDocument = caseValidationQr.getDocumentByCaseId(recordId); 
 
             if(disconnectable == 'false' 
             && ((disconnectableCategory == 'null' || disconnectableCategory == '') 
@@ -522,14 +522,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(caseType == 'BP/CA - errata categoria'){
 
             String billingProblem = getFieldValue(fields, 'BillingProblem__c');
-            String bill = getFieldValue(fields, 'Bill__c');
             String dlNote = getFieldValue(fields, 'Note__c');
             String customerAggreement = getFieldValue(fields, 'CustomerPaymentAgreements__c');
 
             if(billingProblem == 'Si' 
             && (
-                (bill == null || bill == '')
-                ||(dlNote == null || dlNote == '')
+                (dlNote == null || dlNote == '')
                 ||(customerAggreement == null || customerAggreement == '')
                 )
             ){
@@ -566,10 +564,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             if(subprocess != 'IVA - Errata applicazione' && subprocess != 'Accise - Errata applicazione'){
 
-                List<ContentDocumentLink> attachedDocument = [SELECT Id FROM ContentDocumentLink 
-                WHERE LinkedEntityId = :recordId 
-                WITH SECURITY_ENFORCED];
+                List<ContentDocumentLink> attachedDocument = new List<ContentDocumentLink>();
 
+                attachedDocument = caseValidationQr.getDocumentByCaseId(recordId);
+                
                 if(attachedDocument.size() == 0){
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Necessario inserire allegato'));
@@ -602,7 +600,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             if(residenceChangeDate < System.today()){
 
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Vi sono più forniture con Residente a SI'));
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
             
             } else {
 
@@ -623,6 +621,35 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
                 
+            }
+
+        }else if(caseType == 'Mancata Telelettura/lettura'){
+
+            Date readingDate = Date.valueOf(getFieldValue(fields, 'ReadingDate__c'));
+            Date limitDate = Date.newinstance(2019, 1, 1);
+
+            if(readingDate < limitDate){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data deve essere successiva al 01/01/2019'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+            }
+
+        }else if(caseType == 'Cambio contatore non registrato'){
+
+            String reading = getFieldValue(fields, 'Reading__c');
+
+            if(!reading.isNumeric()){
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valore inserito non corretto'));
+
+            } else {
+
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
             }
 
         } else {

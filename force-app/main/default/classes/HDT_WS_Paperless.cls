@@ -1,6 +1,9 @@
 global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
+    //OLD
+
     HDT_SRV_Paperless paperlessSrv = new HDT_SRV_Paperless();
+    HDT_UTL_CreatePaymentsRequestBody paymentsUtl = new HDT_UTL_CreatePaymentsRequestBody();
 
     global Object execute(Object args){
 
@@ -22,7 +25,7 @@ global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interface
         Case currentCase = new Case();
 
         recordId = (String) obj.get('Id');
-        currentCase.Id = recordId;
+        String process =  (String) obj.get('Type');
         requestBody = paperlessSrv.createRequestBody(recordId);
 
         try{
@@ -41,76 +44,9 @@ global inherited sharing class HDT_WS_Paperless implements wrts_prcgvr.Interface
 
         }
 
-        if(response != null){
-
-            switch on response.getStatusCode(){
-                
-                when 200{
-
-                    HDT_WRP_SuccessResponse successResponse = 
-                        (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
-
-                    System.debug('WS_ReminderBlock successResponse--> ' + successResponse);
-
-                    currentCase.Phase__c = 'Inviato a SAP';
-
-                }
-                when else{
-
-                    HDT_WRP_ErrorResponse errorResponse = 
-                        (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
-
-                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
-
-                    currentCase.Phase__c = 'Non Inviato a SAP';
-                    currentCase.Description = errorResponse.errorDetails[0].message;
-
-
-                }
-
-
-            }
-
-
-        }
-
-        updateFuture(JSON.serialize(currentCase));
+        paymentsUtl.handleResponse(recordId, process,  response);
 
         return responseReturn;
-    }
-
-    @Future
-    private static void updateFuture(String inputString){
-
-        Case c = (Case) JSON.deserialize(inputString, Case.class);
-
-        HDT_UTL_DatabaseService.updateSObject(c);
-
-    }
-
-
-    public class HDT_WRP_SuccessResponse{
-
-        public String status;
-        public String correlationId;
-        public String timestamp;
-
-    }
-
-    public class HDT_WRP_ErrorResponse{
-
-        public String status;
-        public String correlationId;
-        public String timestamp;
-        public List<HDT_WRP_Error> errorDetails;
-    }
-
-
-    public class HDT_WRP_Error{
-
-        public string code;
-        public string message;
-        public string additionalInfo;
 
     }
 
