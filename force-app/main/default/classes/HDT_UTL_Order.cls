@@ -36,6 +36,7 @@ public inherited sharing class HDT_UTL_Order {
         newOrder.WithdrawalClass__c = servicePointList[0].WithdrawalClass__c;
         newOrder.Market__c = servicePointList[0].MarketOrigin__c;
         //newOrder.PaymentMode__c = billingProfileList.PaymentMethod__c;
+        newOrder.BillingProfile__c = billingProfileId;
         newOrder.BillSendMode__c  = billingProfileList.BillSendingMethod__c;
         newOrder.BillToContactId = accountContactRelList[0].ContactId;
         newOrder.PhoneNumber__c = accountContactRelList[0].Contact.MobilePhone;

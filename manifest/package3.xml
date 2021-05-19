@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account_Service_Console</members>
+        <members>HDT_General_Case_Record_Page</members>
         <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Case</members>
+        <name>CustomObject</name>
+    </types>
+    <types>
+        <members>hdtAccountStatementPicker</members>
+        <members>hdtAccountStatementPickerFlow</members>
+        <members>hdtChildOrderProcessDetails</members>
+        <members>hdtGenericAddressChooserFlow</members>
+        <members>hdtSelfReading</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>Case.HDT_RipristinaFase</members>
+        <name>WebLink</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_GestioneVariazioni</members>
+        <members>HDT_FL_GestioneVerifiche</members>
+        <name>Flow</name>
     </types>
     <types>
         <members>Case.HDT_RT_AlertDisassociazioneUtenteWeb</members>
@@ -51,69 +83,82 @@
         <members>Case.HDT_RT_VerificheGas</members>
         <members>Case.HDT_RT_VolturaTecnica</members>
         <members>Case.HDT_RT_VotiveModena</members>
+        <members>Order.HDT_RT_Attivazione</members>
+        <members>Order.HDT_RT_AttivazioneConModifica</members>
+        <members>Order.HDT_RT_CambioOfferta</members>
+        <members>Order.HDT_RT_CambioUso</members>
+        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
+        <members>Order.HDT_RT_Default</members>
+        <members>Order.HDT_RT_OrderDossier</members>
+        <members>Order.HDT_RT_Proroga</members>
+        <members>Order.HDT_RT_RiattivazioniNonMorose</members>
+        <members>Order.HDT_RT_ScontiBonus</members>
+        <members>Order.HDT_RT_Subentro</members>
+        <members>Order.HDT_RT_SwitchIn</members>
+        <members>Order.HDT_RT_SwitchInVolturaTecnica</members>
+        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
+        <members>Order.HDT_RT_VAS</members>
+        <members>Order.HDT_RT_Voltura</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>Case-HDT_AlertDisassociazioneUtenteWeb</members>
-        <members>Case-HDT_AllineamentoAnagrafica</members>
-        <members>Case-HDT_Autolettura</members>
         <members>Case-HDT_Disattivazioni</members>
-        <members>Case-HDT_Domiciliazione</members>
-        <members>Case-HDT_FatturazioneConsumi</members>
-        <members>Case-HDT_GestioneBolletta</members>
-        <members>Case-HDT_Informative</members>
-        <members>Case-HDT_InversioneContatore</members>
-        <members>Case-HDT_PianoRateizzazione</members>
-        <members>Case-HDT_SospensioneRiattivazione</members>
-        <members>Case-HDT_UnificazioneSeparazioneCABolletta</members>
-        <members>Case-HDT_VariazioneAmministratore</members>
-        <members>Case-HDT_VariazioneAnagraficaCliente</members>
         <members>Case-HDT_VariazioniEle</members>
-        <members>Case-HDT_VerificaTitolaritaPodPdr</members>
+        <members>Case-HDT_VariazioniGas</members>
+        <members>Case-HDT_VerificheEle</members>
         <members>Case-HDT_VerificheGas</members>
         <name>Layout</name>
     </types>
     <types>
+        <members>HDT_ApexClasses</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
         <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_QR_DataEnrichmentPostSales</members>
-        <members>HDT_SRV_BpCaVariation</members>
-        <members>HDT_SRV_DataEnrichmentPostSales</members>
-        <members>HDT_UTL_CaseValidations</members>
-        <members>HDT_UTL_CreateGenericCase</members>
-        <members>HDT_UTL_DataEnrichmentPostSales</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_QR_PostSalesManager</members>
+        <members>HDT_SRV_HerokuPostSalesManager</members>
+        <members>HDT_SRV_PostSalesManager</members>
+        <members>HDT_UTL_Order</members>
         <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_PostSalesManager</members>
+        <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.Reason__c</members>
+        <members>Account.BillingPlaceCode__c</members>
+        <members>Account.ShippingPlaceCode__c</members>
+        <members>Account.ShippingPlace__c</members>
+        <members>BillingProfile__c.InvoicingPlaceCode__c</members>
+        <members>Case.EndCustomerRequestType__c</members>
+        <members>Case.IsSameReasonComplaint__c</members>
+        <members>Case.NotJustMotivation__c</members>
+        <members>Case.Phase__c</members>
+        <members>Case.RateCategory__c</members>
+        <members>Case.Reading__c</members>
+        <members>Case.SecondLevelOpinion__c</members>
+        <members>Case.Subprocess__c</members>
+        <members>Case.SupplyPlaceCode__c</members>
+        <members>Contact.MailingPlaceCode__c</members>
+        <members>Lead.PlaceCode__c</members>
+        <members>Order.ActivationPlaceCode__c</members>
+        <members>Order.BillingPlaceCode__c</members>
+        <members>Order.BillingPlace__c</members>
+        <members>Order.ResidentialPlaceCode__c</members>
+        <members>Order.ShippingPlaceCode__c</members>
+        <members>Order.SupplyPlaceCode__c</members>
+        <members>ServicePoint__c.SupplyPlaceCode__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_LCP_RunFlowFromAura</members>
-        <name>AuraDefinitionBundle</name>
+        <members>CaseType</members>
+        <name>StandardValueSet</name>
     </types>
     <types>
-        <members>hdtAccordionWithClick</members>
-        <members>hdtBillingProfileForm</members>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtConfigureProduct</members>
-        <members>hdtRecordEditFormInformativeFlow</members>
-        <members>hdtTargetObjectCreateForm</members>
-        <members>hdtUploadDocuments</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>HDT_DataEnrichmentTransocode.OPZIONE</members>
-        <members>HDT_UserInputFlow.Rettifica_Consumi_Errore_Stima_Consumi</members>
-        <members>HDT_UserInputFlow.Variazioni_BP_CA_Errata_Categoria_New</members>
-        <members>HDT_UserInputFlow.Variazioni_Condizioni_Contrattuali_Err</members>
+        <members>HDT_ButtonDetails.paperless_1_RunFlowFromAuraGenerate</members>
+        <members>HDT_ClusterProcess.Attivazioni</members>
         <name>CustomMetadata</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneDisattivazioni</members>
-        <members>HDT_FL_GestioneVariazioni</members>
-        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

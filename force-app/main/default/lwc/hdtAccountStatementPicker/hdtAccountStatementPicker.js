@@ -388,7 +388,12 @@ export default class HdtAccountStatementPicker extends LightningElement {
     //Metodo per Variazioni
     @api
     checkBillingProblems(){
-        if(this.billingProblems && this.documents === null){
+
+        console.log('Check Started');
+        console.log('BillingProblem--> '+this.billingProblems);
+        console.log('Documents--> '+this.documents);
+
+        if(this.billingProblems && (this.documents === null || this.documents === undefined)){
 
             new ShowToastEvent({
                 title: 'Errore',

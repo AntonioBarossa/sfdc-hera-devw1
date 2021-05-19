@@ -143,6 +143,21 @@
                 <default>false</default>
                 <label>Errore Stima Consumi</label>
             </value>
+            <value>
+                <fullName>Processo M01</fullName>
+                <default>false</default>
+                <label>Processo M01</label>
+            </value>
+            <value>
+                <fullName>Processo M02</fullName>
+                <default>false</default>
+                <label>Processo M02</label>
+            </value>
+            <value>
+                <fullName>Processo M03</fullName>
+                <default>false</default>
+                <label>Processo M03</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
