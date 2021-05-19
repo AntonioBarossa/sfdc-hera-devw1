@@ -6,6 +6,7 @@ import updateContactLastLocation from '@salesforce/apex/HDT_LC_GeolocationCommun
 import { getRecord } from 'lightning/uiRecordApi';
 import USER_ID from '@salesforce/user/Id';
 import NAME_FIELD from '@salesforce/schema/User.Name';
+import CONTACT_FIELD from '@salesforce/schema/User.ContactId';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtCampaignGeolocation extends LightningElement {
@@ -23,7 +24,7 @@ export default class HdtCampaignGeolocation extends LightningElement {
     @track timer;
     @wire(getRecord, {
         recordId: USER_ID,
-        fields: [NAME_FIELD]
+        fields: [NAME_FIELD, CONTACT_FIELD]
     }) wireuser({
         error,
         data
