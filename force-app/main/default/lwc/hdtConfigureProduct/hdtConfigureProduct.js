@@ -70,15 +70,13 @@ export default class hdtConfigureProduct extends LightningElement {
     }
 
     @api
-    getQuotesData(){
+    getQuotesData(isCancelActionCheck = false){
         this.loaded = false;
         getQuotes({saleId: this.saleRecord.Id}).then(data =>{
             this.loaded = true;
 
             let quotesArray = [];
             let count = 0;
-
-            console.log('getQuotesData: ', JSON.parse(JSON.stringify(data)));
 
             data.forEach(el => {
                 quotesArray.push({
@@ -95,6 +93,12 @@ export default class hdtConfigureProduct extends LightningElement {
             });
 
             this.quotesData = quotesArray;
+
+            if (isCancelActionCheck) {
+                if (this.quotesData.length === 0) {
+                    this.updateSaleRecordPrevious({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep - 1});
+                }
+            }
 
         }).catch(error => {
             this.loaded = true;
@@ -172,7 +176,7 @@ export default class hdtConfigureProduct extends LightningElement {
                 }).then(data =>{
                 this.loaded = true;
     
-                this.getQuotesData();
+                this.getQuotesData(true);
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Quote eliminata con successo',

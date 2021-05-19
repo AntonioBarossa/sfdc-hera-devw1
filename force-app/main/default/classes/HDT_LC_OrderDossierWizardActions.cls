@@ -84,7 +84,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         for (Order childOrder : childOrders) {
             ordersToUpdate.add(new Order(
                 Id = childOrder.Id,
-                Status = 'Activated', //Chiuso
+                Status = 'Annullato', //Chiuso
                 Phase__c = 'Annullato',
                 CancellationReason__c = cancellationReason
             ));
@@ -93,7 +93,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         //update parent order
         ordersToUpdate.add(new Order(
             Id = orderParent.Id,
-            Status = 'Activated', //Chiuso
+            Status = 'Annullato', //Chiuso
             Phase__c = 'Annullato',
             CancellationReason__c = cancellationReason
         ));
