@@ -34,7 +34,7 @@
       &quot;Column&quot;:1
    },  
    {
-      &quot;FieldName&quot;:&quot;PODPDRFormula__c&quot;,
+      &quot;FieldName&quot;:&quot;ServicePoint__c&quot;,
       &quot;Column&quot;:1
    },
    {
@@ -54,7 +54,7 @@
       &quot;Column&quot;:1
    },
    {
-      &quot;FieldName&quot;:&quot;Email__c&quot;,
+      &quot;FieldName&quot;:&quot;ContactEmail&quot;,
       &quot;Column&quot;:1
    },
    {
@@ -99,6 +99,7 @@
    },
 {
 &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
+&quot;Required&quot; : true,
 &quot;Column&quot; : 2
 }
 ]</value>

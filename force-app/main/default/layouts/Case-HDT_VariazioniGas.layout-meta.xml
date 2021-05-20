@@ -29,6 +29,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ServicePoint__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CommodityFormula__c</field>
             </layoutItems>
             <layoutItems>
@@ -38,14 +42,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Market__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ServicePoint__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PODPDRFormula__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -92,14 +88,18 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PowerContractualFormula__c</field>
+                <field>VATPercentage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ConcessionType__c</field>
+                <field>Taxes__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PowerContractualFormula__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CalculationBlock__c</field>
@@ -245,10 +245,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ServicePointType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Taxes__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
