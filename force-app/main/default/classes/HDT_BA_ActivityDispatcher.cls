@@ -93,7 +93,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     public String getQuery(AssignmentRule__c rule) {
-        Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
+        Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap().clone();
         // REMOVING NON-MAPPED FIELDS
         ruleMap.remove('Id');
         ruleMap.remove('Name');
@@ -109,8 +109,8 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         // ADD EACH INDIVIDUAL WHERE CONDITION TO THE QUERY LIST
         for(String key : ruleMap.keySet()) {
             mapping = MAPPINGS.get(key);
-            value = (String) ruleMap.get(key);
-            condition = mapping.replace(PLACEHOLDER, value.replace(';',','));
+            value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
+            condition = mapping.replace(PLACEHOLDER, value);
             query.add(condition);
         }
         // RETURN THE UNIFIED VALUES
