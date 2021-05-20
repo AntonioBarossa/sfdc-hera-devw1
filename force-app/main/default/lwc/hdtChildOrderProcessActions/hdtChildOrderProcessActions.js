@@ -13,6 +13,13 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api diffFields;
     loading = false;
     isDialogVisible = false;
+
+    get cancellationOptions() {
+        return [
+            { label: 'Pratica errata', value: 'Pratica errata' },
+            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' }
+        ];
+    }
     
     get disabledSave(){
         //INIZIO SVILUPPI EVERIS
