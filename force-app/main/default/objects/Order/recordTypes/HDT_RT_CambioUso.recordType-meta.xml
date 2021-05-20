@@ -1965,11 +1965,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL KO</fullName>
+            <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL OK</fullName>
+            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2005,15 +2005,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In registrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Inviato a DL</fullName>
+            <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2022,22 +2018,6 @@
         </values>
         <values>
             <fullName>OK SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico Firmato da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico inviato da firmare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico validato Firmato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2050,10 +2030,6 @@
         </values>
         <values>
             <fullName>Registrazione  da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2550,6 +2526,105 @@
         </values>
         <values>
             <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VAT__c</picklist>
+        <values>
+            <fullName>Iva 10%25 %28Cod%2E 01%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 10%25 Consociate %28Cod%2E 27%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 10%25 Soc%2E Collegate %28Cod%2E 05%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 10%25 Soc%2E Controllanti %28Cod%2E 07%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 10%25 Soc%2E Controllate %28Cod%2E 03%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 10%25 Soc%2E Partecipate %28Cod%2E 14%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 10%25 Soc%2E del Gruppo %28Cod%2E 09%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 %28Cod%2E 02%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 Consociate %28Cod%2E 28%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 Soc%2E Collegate %28Cod%2E 06%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 Soc%2E Controllanti %28Cod%2E 08%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 Soc%2E Controllate %28Cod%2E 04%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 Soc%2E Partecipate %28Cod%2E 15%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva 22%25 Soc%2E del Gruppo %28Cod%2E 10%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Fuori Campo Autofatt%2E Art 2 %28Cod%2E 13%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Fuori Campo Livigno %28Cod%2E 19%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Reseller esente %28Cod%2E 26%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Reverse Charge %28Cod%2E 25%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Split payment 10%25 %28Cod%2E S1%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Split payment 10%25 Soc%2E del Gruppo %28Cod%2E S3%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Split payment 22%25 %28Cod%2E S2%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva Split payment 22%25 Soc%2E del Gruppo %28Cod%2E S4%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva esente-non imp Art 72 %28Cod%2E 12%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva esente-non imp art 8 S%2E Marino %28Cod%2E 17%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>

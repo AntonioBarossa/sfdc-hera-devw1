@@ -51,19 +51,19 @@
                 <label>Comunicazione verso Heroku OK</label>
             </value>
             <value>
-                <fullName>Inviato a DL</fullName>
+                <fullName>Inviato al DL</fullName>
                 <default>false</default>
-                <label>Inviato a DL</label>
+                <label>Inviato al DL</label>
             </value>
             <value>
-                <fullName>Esito DL OK</fullName>
+                <fullName>Esito OK da DL</fullName>
                 <default>false</default>
-                <label>Esito DL OK</label>
+                <label>Esito OK da DL</label>
             </value>
             <value>
-                <fullName>Esito DL KO</fullName>
+                <fullName>Esito KO da DL</fullName>
                 <default>false</default>
-                <label>Esito DL KO</label>
+                <label>Esito KO da DL</label>
             </value>
             <value>
                 <fullName>Accettazione pagamento a DL</fullName>
@@ -201,39 +201,9 @@
                 <label>In Lavorazione</label>
             </value>
             <value>
-                <fullName>Plico da inviare</fullName>
-                <default>false</default>
-                <label>Plico da inviare</label>
-            </value>
-            <value>
                 <fullName>Registrazione  da validare</fullName>
                 <default>false</default>
                 <label>Registrazione  da validare</label>
-            </value>
-            <value>
-                <fullName>Plico Firmato da validare</fullName>
-                <default>false</default>
-                <label>Plico Firmato da validare</label>
-            </value>
-            <value>
-                <fullName>In registrazione</fullName>
-                <default>false</default>
-                <label>In registrazione</label>
-            </value>
-            <value>
-                <fullName>Plico inviato da firmare</fullName>
-                <default>false</default>
-                <label>Plico inviato da firmare</label>
-            </value>
-            <value>
-                <fullName>Registrazione validata  Firmato/Inviato</fullName>
-                <default>false</default>
-                <label>Registrazione validata  Firmato/Inviato</label>
-            </value>
-            <value>
-                <fullName>Plico validato Firmato</fullName>
-                <default>false</default>
-                <label>Plico validato Firmato</label>
             </value>
             <value>
                 <fullName>Comunicazione verso Motore VAS OK</fullName>
@@ -364,6 +334,66 @@
                 <fullName>Ripensamento - Revocato</fullName>
                 <default>false</default>
                 <label>Ripensamento - Revocato</label>
+            </value>
+            <value>
+                <fullName>Documentazione da firmare</fullName>
+                <default>false</default>
+                <label>Documentazione da firmare</label>
+            </value>
+            <value>
+                <fullName>Documentazione da inviare</fullName>
+                <default>false</default>
+                <label>Documentazione da inviare</label>
+            </value>
+            <value>
+                <fullName>Documentazione da validare</fullName>
+                <default>false</default>
+                <label>Documentazione da validare</label>
+            </value>
+            <value>
+                <fullName>Documentazione Gestita</fullName>
+                <default>false</default>
+                <label>Documentazione Gestita</label>
+            </value>
+            <value>
+                <fullName>Voltura c/o VT</fullName>
+                <default>false</default>
+                <label>Voltura c/o VT</label>
+            </value>
+            <value>
+                <fullName>Inviato Precheck al SII</fullName>
+                <default>false</default>
+                <label>Inviato Precheck al SII</label>
+            </value>
+            <value>
+                <fullName>Amm. Precheck KO SII</fullName>
+                <default>false</default>
+                <label>Amm. Precheck KO SII</label>
+            </value>
+            <value>
+                <fullName>Dati discordanti</fullName>
+                <default>false</default>
+                <label>Dati discordanti</label>
+            </value>
+            <value>
+                <fullName>In attesa di quality call</fullName>
+                <default>false</default>
+                <label>In attesa di quality call</label>
+            </value>
+            <value>
+                <fullName>Quality Call OK</fullName>
+                <default>false</default>
+                <label>Quality Call OK</label>
+            </value>
+            <value>
+                <fullName>Quality Call KO</fullName>
+                <default>false</default>
+                <label>Quality Call KO</label>
+            </value>
+            <value>
+                <fullName>Annullamento dal SII</fullName>
+                <default>false</default>
+                <label>Annullamento dal SII</label>
             </value>
             <value>
                 <fullName>BL010</fullName>
