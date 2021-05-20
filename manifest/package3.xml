@@ -1,33 +1,109 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_ApexClasses</members>
-        <name>PermissionSet</name>
+        <members>PowerVaration__c</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_SRV_CommunicationLog</members>
-        <members>HDT_TRH_Case</members>
+        <members>Asset.HDT_RT_CompositionVASproductsnotbillable</members>
+        <members>Asset.HDT_RT_SectionBonusforEEservice</members>
+        <members>Asset.HDT_RT_SectionBonusforGasservice</members>
+        <members>Asset.HDT_RT_SectionContributesforEEservice</members>
+        <members>Asset.HDT_RT_SectionContributesforGasservice</members>
+        <members>Asset.HDT_RT_VASConsumptionanalysis</members>
+        <members>Asset.HDT_RT_VASPoductsnotbillable</members>
+        <members>Asset.HDT_RT_VASServicesnotbillable</members>
+        <members>Case.HDT_RT_VariazioniEle</members>
+        <members>Case.HDT_RT_VariazioniGas</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
+        <name>RecordType</name>
+    </types>
+    <types>
+        <members>Case-HDT_VariazioniEle</members>
+        <members>Case-HDT_VariazioniGas</members>
+        <members>SolTracking__c-Notifica SOL Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_ApplyBillingProfileModal</members>
+        <members>HDT_QR_QuoteLine</members>
+        <members>HDT_SRV_PrescrizioneFattura</members>
+        <members>HDT_TRH_SolTracking</members>
+        <members>HDT_TRH_Task</members>
         <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_CommunicationLog</members>
-        <members>HDT_UTL_OrderProcess</members>
+        <members>HDT_UTL_ServicePoint</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Case.RecipientStructure__c</members>
+        <members>AdminPriceQuote__c.Commodity__c</members>
+        <members>AdminPriceQuote__c.MeterManufactureYear__c</members>
+        <members>AdminPriceQuote__c.ProcessCode__c</members>
+        <members>Asset.CompanyOwner__c</members>
+        <members>Case.ClientCategory__c</members>
+        <members>CommunicationLog__c.Causale__c</members>
+        <members>PowerVaration__c.CustomerCode__c</members>
+        <members>PowerVaration__c.FiscalCode__c</members>
+        <members>PowerVaration__c.NetDebit__c</members>
+        <members>PowerVaration__c.Price0__c</members>
+        <members>PowerVaration__c.Price1__c</members>
+        <members>PowerVaration__c.Price2__c</members>
+        <members>PowerVaration__c.PriceM__c</members>
+        <members>PowerVaration__c.ServicePointCode__c</members>
+        <members>PowerVaration__c.ServicePoint__c</members>
+        <members>PowerVaration__c.VariationDate__c</members>
+        <members>PowerVaration__c.VatNumberPayment__c</members>
+        <members>PowerVaration__c.VatNumberRequest__c</members>
+        <members>SBQQ__Quote__c.CompanyOwner__c</members>
+        <members>User.LoginADN__c</members>
+        <members>wrts_prcgvr__Activity__c.BillTransfer__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>CaseStatus</members>
-        <name>StandardValueSet</name>
-    </types>
-    <types>
-        <members>hdtCampaignGeolocation</members>
+        <members>hdtApplyBillingProfileModal</members>
+        <members>hdtSelfReading</members>
+        <members>hdtSelfReadingRegister</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>Case.SupportProcessDefault</members>
-        <name>BusinessProcess</name>
+        <members>HDT_SolTracking</members>
+        <name>ApexTrigger</name>
+    </types>
+    <types>
+        <members>Admin</members>
+        <members>Hera Door2Door Partner User</members>
+        <members>Hera M2M Integration User</members>
+        <members>Hera Standard User</members>
+        <members>Hera System Administrator</members>
+        <members>Hera System Integrator</members>
+        <members>Hera Teleseller Partner User</members>
+        <name>Profile</name>
+    </types>
+    <types>
+        <members>Hera_Service_Console</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>HDT_DataEnrichmentTransocode.CATEGORIATARIFFA</members>
+        <members>HDT_UserInputFlow.Prescrizione_Fatture</members>
+        <members>HDT_UserInputFlow.Variazioni_Fiscale_Ele_Accise</members>
+        <members>HDT_UserInputFlow.Variazioni_Fiscale_Ele_IVA</members>
+        <members>HDT_UserInputFlow.Variazioni_Fiscale_Gas_Accise</members>
+        <members>HDT_UserInputFlow.Variazioni_Fiscale_Gas_IVA</members>
+        <name>CustomMetadata</name>
+    </types>
+    <types>
+        <members>HDT_FL_GestioneVariazioni</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

@@ -54,7 +54,7 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RemiCode__c = mapRes.get('CODICEREMI');
 		}
         if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4 Pareti def.' : 'G6 Pareti def.' ;
+			spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4' : 'G6' ;
 		}
         if(mapRes.get('MATRICOLA1')!=null && !String.isBlank(mapRes.get('MATRICOLA1'))){
 			spNew.MeterSN__c = mapRes.get('MATRICOLA1');
