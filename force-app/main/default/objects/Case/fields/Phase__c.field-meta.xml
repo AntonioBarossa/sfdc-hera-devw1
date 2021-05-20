@@ -698,6 +698,16 @@
                 <label>Errore tecnico invio a SAP</label>
             </value>
             <value>
+                <fullName>Elaborazione Risposta</fullName>
+                <default>false</default>
+                <label>Elaborazione Risposta</label>
+            </value>
+            <value>
+                <fullName>Risposta Parere Ricevuta</fullName>
+                <default>false</default>
+                <label>Risposta Parere Ricevuta</label>
+            </value>
+            <value>
                 <fullName>Presa in Carico KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -708,6 +718,18 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Presa in Carico OK</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0152</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0152</label>
+            </value>
+            <value>
+                <fullName>Ricezione 0153</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Ricezione 0153</label>
             </value>
             <value>
                 <fullName>Risposta non Ricevuta</fullName>

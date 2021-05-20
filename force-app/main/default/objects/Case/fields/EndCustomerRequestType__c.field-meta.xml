@@ -13,14 +13,29 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Reclamo scritto</fullName>
+                <fullName>Conciliazione paritetica</fullName>
+                <default>false</default>
+                <label>Conciliazione paritetica</label>
+            </value>
+            <value>
+                <fullName>Reclamo Scritto</fullName>
                 <default>false</default>
                 <label>Reclamo Scritto</label>
             </value>
             <value>
-                <fullName>Richiesta info</fullName>
+                <fullName>Reclamo Telefonico</fullName>
+                <default>false</default>
+                <label>Reclamo Telefonico</label>
+            </value>
+            <value>
+                <fullName>Richiesta Info Scritta</fullName>
                 <default>false</default>
                 <label>Richiesta Info Scritta</label>
+            </value>
+            <value>
+                <fullName>Richiesta info Telefonica</fullName>
+                <default>false</default>
+                <label>Richiesta info Telefonica</label>
             </value>
         </valueSetDefinition>
     </valueSet>
