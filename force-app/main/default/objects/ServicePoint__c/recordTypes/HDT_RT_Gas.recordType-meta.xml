@@ -592,15 +592,12 @@
             <fullName>G6500</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>MeterType__c</picklist>
         <values>
-            <fullName>Monorario</fullName>
+            <fullName>G650 Turbina</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Multiorario</fullName>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
