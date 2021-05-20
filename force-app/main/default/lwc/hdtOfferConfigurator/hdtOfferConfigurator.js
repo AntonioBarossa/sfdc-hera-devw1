@@ -44,6 +44,7 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
     helpTxt2 = 'This field2 indicate that...';
     helpTxt3 = 'This field3 indicate that...';
     error;
+    showAlert = false;
 
     //@track options = [
     //    {label: 'M', value: 'm', checked: '0'},

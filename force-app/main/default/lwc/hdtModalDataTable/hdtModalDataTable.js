@@ -16,9 +16,9 @@ const firstRow = [
 ];
 
 const amountColumns = [
-    {label: 'Valore possibile', fieldName: 'PossibleValue__c'},
-    {label: 'Settore', fieldName: 'Sector__c'},
-    {label: 'Descrizione', fieldName: 'Description__c'},
+    {label: 'Valore possibile', fieldName: 'PossibleValue__c', type: 'text'},
+    {label: 'Settore', fieldName: 'Sector__c', type: 'text'},
+    {label: 'Descrizione', fieldName: 'Description__c', type: 'text'},
 ];
 
 const grInfoColumns = [

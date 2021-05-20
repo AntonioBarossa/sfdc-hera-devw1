@@ -17,9 +17,9 @@
 
         <div slot="actions">
             <lightning-button-group>
-                <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} icon-name="utility:save"></lightning-button>
-                <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="destructive" icon-name="utility:close"></lightning-button>
-                <lightning-button if:true={showDelete} label="Elimina" name="delete" onclick={openConfirmation} variant="destructive-text" icon-name="utility:delete" ></lightning-button>
+                <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} variant="neutral" icon-name="utility:save"></lightning-button>
+                <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
+                <lightning-button if:true={showDelete} label="Elimina" name="delete" onclick={openConfirmation} variant="neutral" icon-name="utility:delete" ></lightning-button>
             </lightning-button-group>
         </div>
         
