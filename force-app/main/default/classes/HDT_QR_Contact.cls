@@ -28,7 +28,7 @@ public inherited sharing class HDT_QR_Contact {
     }
  public List<Contact> getRecordsById(List<String> ids) {
 
-        String query = 'SELECT  Firstname,LastName, IndividualId  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        String query = 'SELECT  Firstname,LastName, IndividualId,Company__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
         List<Contact> contacts = Database.query(query);
         return contacts;
     }

@@ -418,8 +418,8 @@
     <decisions>
         <name>Tipo_Preventivo</name>
         <label>Tipo Preventivo</label>
-        <locationX>1320</locationX>
-        <locationY>941</locationY>
+        <locationX>1319</locationX>
+        <locationY>940</locationY>
         <defaultConnector>
             <targetReference>Predeterminabile</targetReference>
         </defaultConnector>
@@ -431,7 +431,7 @@
                 <leftValueReference>Get_Case.QuotationType__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Rapido</elementReference>
+                    <stringValue>Rapido</stringValue>
                 </rightValue>
             </conditions>
             <connector>
