@@ -18,6 +18,12 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
         Set<Id> contactIds = new Set<Id>();
 
         for (Task t : (List<Task>) Trigger.new) {
+
+            // Sostituiamo gli UserTags solo in before.
+            if (Trigger.isBefore) {
+                replaceUserTags(t);
+            }
+
             if (t.IsSms__c == True) {
                 // TODO: rendere parametrica la lunghezza.
                 if (t.Description.length() > 320) {
@@ -91,6 +97,29 @@ public inherited sharing class HDT_TRH_Task extends HDT_TRH_TriggerHandler {
             }
         }
 
+    }
+
+    /**
+     * Sostituisce gli UserTag presenti nel testo del Task in input.
+     * Marketing Cloud inserisce le stringhe "UserTagN" senza nessun carattere speciale (parentesi o altro).
+     */
+    private void replaceUserTags(Task t) {
+
+        if (t.Description  != null && t.Description .contains('UserTag')) {
+            String userTag1 = t.UserTag1__c != null ? t.UserTag1__c : '';
+            String userTag2 = t.UserTag2__c != null ? t.UserTag2__c : '';
+            String userTag3 = t.UserTag3__c != null ? t.UserTag3__c : '';
+            String userTag4 = t.UserTag4__c != null ? t.UserTag4__c : '';
+            String userTag5 = t.UserTag5__c != null ? t.UserTag5__c : '';
+
+            String replacedText = t.Description.replace('UserTag1', userTag1);
+            replacedText = replacedText.replace('UserTag2', userTag2);
+            replacedText = replacedText.replace('UserTag3', userTag3);
+            replacedText = replacedText.replace('UserTag4', userTag4);
+            replacedText = replacedText.replace('UserTag5', userTag5);
+
+            t.Description  = replacedText;
+        }
     }
 
     // Rimuove il WhoId, qualora presente, se l'operatore ha inserito un destinatario alternativo (cellulare o PEC).
