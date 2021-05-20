@@ -592,15 +592,8 @@
             <fullName>G6500</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>MeterType__c</picklist>
         <values>
-            <fullName>Monorario</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Multiorario</fullName>
+            <fullName>G6500</fullName>
             <default>false</default>
         </values>
     </picklistValues>
