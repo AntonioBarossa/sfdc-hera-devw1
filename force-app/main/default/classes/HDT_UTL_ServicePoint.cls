@@ -54,11 +54,75 @@ public with sharing class HDT_UTL_ServicePoint {
 			spNew.RemiCode__c = mapRes.get('CODICEREMI');
 		}
         if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
-			spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4' : 'G6' ;
+			//spNew.MeterClass__c = mapRes.get('CALIBRO1') == 'GRT003' ? 'G4' : 'G6' ;
+           if(mapRes.get('CALIBRO1')=='GRT005'){
+            spNew.MeterClass__c = 'G10';
+
+           }
+           if(mapRes.get('CALIBRO1')=='GRT010'){
+            spNew.MeterClass__c = 'G100';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT015'){
+            spNew.MeterClass__c = 'G100';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT006'){
+            spNew.MeterClass__c = 'G16';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT011'){
+            spNew.MeterClass__c = 'G160';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT016'){
+            spNew.MeterClass__c = 'G1600';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT002'){
+            spNew.MeterClass__c = 'G2,5';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT007'){
+            spNew.MeterClass__c = 'G25';
+            
+           }
+           if(mapRes.get('CALIBRO1')=='GRT012'){
+            spNew.MeterClass__c = 'G250';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT003'){
+            spNew.MeterClass__c = 'G4';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT008'){
+            spNew.MeterClass__c = 'G40';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT013'){
+            spNew.MeterClass__c = 'G400';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT017'){
+            spNew.MeterClass__c = 'G4000';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT004'){
+            spNew.MeterClass__c = 'G6';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT009'){
+            spNew.MeterClass__c = 'G65';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT014'){
+            spNew.MeterClass__c = 'G650';
+           }
+           if(mapRes.get('CALIBRO1')=='GRT018'){
+            spNew.MeterClass__c = 'G6500';
+           }
+
 		}
         if(mapRes.get('MATRICOLA1')!=null && !String.isBlank(mapRes.get('MATRICOLA1'))){
 			spNew.MeterSN__c = mapRes.get('MATRICOLA1');
 		}
+        if(mapRes.get('BRANDSOCIETARIO')!=null && !String.isBlank(mapRes.get('BRANDSOCIETARIO'))){
+			spNew.BrandLogo__c   = mapRes.get('BRANDSOCIETARIO');
+		}
+
 
 				//campi fornitura
 				if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
