@@ -2045,14 +2045,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Preventivo Accettato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivo rifiutato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
