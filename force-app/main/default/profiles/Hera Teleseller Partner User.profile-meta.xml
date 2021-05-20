@@ -4791,20 +4791,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> bf779dc734565773794b24ca3fdb47a4a16b2e3f
         <field>Case.IsSameReasonComplaint__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-<<<<<<< HEAD
-=======
->>>>>>> DEVW1
-=======
->>>>>>> bf779dc734565773794b24ca3fdb47a4a16b2e3f
         <field>Case.IsVATGroupJoined__c</field>
         <readable>true</readable>
     </fieldPermissions>
