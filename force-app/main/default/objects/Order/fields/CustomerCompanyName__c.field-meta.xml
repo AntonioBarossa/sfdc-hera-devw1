@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>VAT__c</fullName>
+    <fullName>CustomerCompanyName__c</fullName>
     <externalId>false</externalId>
-    <label>IVA</label>
+    <label>Ragione sociale cliente</label>
+    <length>150</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
-    <type>Picklist</type>
-    <valueSet>
-        <restricted>true</restricted>
-        <valueSetName>HDT_TaxRate</valueSetName>
-    </valueSet>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>

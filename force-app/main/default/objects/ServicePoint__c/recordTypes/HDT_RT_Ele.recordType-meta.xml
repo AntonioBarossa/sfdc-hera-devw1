@@ -549,6 +549,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>MeterStatus__c</picklist>
+        <values>
+            <fullName>Attivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inattivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PlugPresence__c</picklist>
         <values>
             <fullName>No</fullName>
