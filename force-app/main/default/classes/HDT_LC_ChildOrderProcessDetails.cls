@@ -62,7 +62,31 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 
+        exeChecks(order);
+
         orderSrv.updateRecord(order);
+    }
+
+    private static void exeChecks(Order order){
+        //Check RequestOption__c (Opzione di Distribuzione) START
+        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+            orderSrv.checkReadAccess('RequestOption__c');
+            Order oldOrder = orderQr.getRecordById(order.Id);
+
+            String calculatedRequestOption = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(oldOrder.ImplantType__c, oldOrder.PowerCommitted__c);
+
+            if (calculatedRequestOption != oldOrder.RequestOption__c) {
+                throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
+            }
+        } else if(order.RequestOption__c != null){
+            orderSrv.checkReadAccess('RequestOption__c');
+            Order oldOrder = orderQr.getRecordById(order.Id);
+
+            if (order.RequestOption__c != '' && oldOrder.RequestOption__c != null && order.RequestOption__c != oldOrder.RequestOption__c) {
+                throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
+            }
+        }
+        //Check RequestOption__c (Opzione di Distribuzione) END
     }
 
 }
