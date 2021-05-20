@@ -10,7 +10,7 @@
         <connector>
             <targetReference>Check_Lettura_Stimata</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
             <name>contractCode</name>
             <value>

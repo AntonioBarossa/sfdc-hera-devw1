@@ -5,7 +5,7 @@
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
         <locationX>50</locationX>
-        <locationY>2246</locationY>
+        <locationY>3278</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -42,7 +42,7 @@
         <name>AssegnaVariabili_0</name>
         <label>AssegnaVariabili</label>
         <locationX>314</locationX>
-        <locationY>2126</locationY>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -64,8 +64,8 @@
     <assignments>
         <name>AssegnaVariabili_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>952</locationX>
-        <locationY>638</locationY>
+        <locationX>886</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -84,11 +84,161 @@
             <targetReference>Aggiornamento_Case_Fine_Bozza_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>AssignCollectionSize</name>
+        <label>AssignCollectionSize</label>
+        <locationX>512</locationX>
+        <locationY>1670</locationY>
+        <assignmentItems>
+            <assignToReference>CollectionSize</assignToReference>
+            <operator>AssignCount</operator>
+            <value>
+                <elementReference>Documenti_Selezionati</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_DocumentSelected</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignCollectionToFakeCollection</name>
+        <label>AssignCollectionToFakeCollection</label>
+        <locationX>600</locationX>
+        <locationY>2606</locationY>
+        <assignmentItems>
+            <assignToReference>RealCollection</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FakeCollection</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_DocumentSelected</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignCollectionToFakeCollection_0</name>
+        <label>AssignCollectionToFakeCollection</label>
+        <locationX>1040</locationX>
+        <locationY>2606</locationY>
+        <assignmentItems>
+            <assignToReference>RealCollection</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>FakeCollection</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Loop_DocumentSelected</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignGetCollectionToVariableCollection</name>
+        <label>AssignGetCollectionToVariableCollection</label>
+        <locationX>512</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>RealCollection</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Documenti_Selezionati</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssignCollectionSize</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignNextLabel</name>
+        <label>AssignNextLabel</label>
+        <locationX>688</locationX>
+        <locationY>2150</locationY>
+        <assignmentItems>
+            <assignToReference>nextLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Conferma Pratica</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_nel_documento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>increaseItemNumber</name>
+        <label>increaseItemNumber</label>
+        <locationX>820</locationX>
+        <locationY>1910</locationY>
+        <assignmentItems>
+            <assignToReference>currentItem</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>IsLastItem</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Avanzamento</name>
+        <label>Avanzamento?</label>
+        <locationX>820</locationX>
+        <locationY>2486</locationY>
+        <defaultConnector>
+            <targetReference>AssignCollectionToFakeCollection_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <rules>
+            <name>Annulla_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignCollectionToFakeCollection</targetReference>
+            </connector>
+            <label>Annulla</label>
+        </rules>
+        <rules>
+            <name>Conferma_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Loop_DocumentSelected</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Bozza</name>
         <label>Bozza?</label>
-        <locationX>820</locationX>
-        <locationY>278</locationY>
+        <locationX>798</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Screen_Review_Dati_0</targetReference>
         </defaultConnector>
@@ -104,7 +254,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Inserire_altri_documenti_0</targetReference>
+                <targetReference>Documenti_Selezionati</targetReference>
             </connector>
             <label>Bozza</label>
         </rules>
@@ -113,7 +263,7 @@
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
         <locationX>182</locationX>
-        <locationY>2006</locationY>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0</targetReference>
         </defaultConnector>
@@ -138,7 +288,7 @@
         <name>Doppi_Pagamenti_o_Comunicazione_Pagamento</name>
         <label>Doppi Pagamenti o Comunicazione Pagamento?</label>
         <locationX>512</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Bozza</targetReference>
         </defaultConnector>
@@ -160,10 +310,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>IsLastItem</name>
+        <label>IsLastItem?</label>
+        <locationX>820</locationX>
+        <locationY>2030</locationY>
+        <defaultConnector>
+            <targetReference>Inserimento_dati_nel_documento</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Ultimo</defaultConnectorLabel>
+        <rules>
+            <name>Ultimo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>currentItem</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>CollectionSize</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignNextLabel</targetReference>
+            </connector>
+            <label>Ultimo</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>204</locationX>
-        <locationY>398</locationY>
+        <locationX>226</locationX>
+        <locationY>518</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -214,20 +389,20 @@
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>512</locationX>
-        <locationY>1886</locationY>
+        <locationY>2918</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -242,14 +417,14 @@
             <name>Annulla_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -261,22 +436,21 @@
             <label>Annulla</label>
         </rules>
     </decisions>
-    <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;
---&gt; Inserito screen documentale</description>
+    <description>SubFlow per la gestione del processo &quot;Comunicazione Pagamento&quot;</description>
     <interviewLabel>HDT_FL_GestionePagamenti_ComunicazionePagamento {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Comunicazione Pagamento</label>
     <loops>
         <name>Loop_DocumentSelected</name>
         <label>Loop DocumentSelected</label>
         <locationX>512</locationX>
-        <locationY>1430</locationY>
-        <collectionReference>Documenti_Selezionati</collectionReference>
+        <locationY>1790</locationY>
+        <collectionReference>RealCollection</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Inserimento_dati_nel_documento</targetReference>
+            <targetReference>increaseItemNumber</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Screen_Review_Dati</targetReference>
+            <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -302,7 +476,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>2126</locationY>
+        <locationY>3158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili</targetReference>
@@ -344,10 +518,10 @@
         <name>Documenti_Selezionati</name>
         <label>Documenti Selezionati</label>
         <locationX>512</locationX>
-        <locationY>1310</locationY>
+        <locationY>1430</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Loop_DocumentSelected</targetReference>
+            <targetReference>AssignGetCollectionToVariableCollection</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -364,8 +538,8 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>952</locationX>
-        <locationY>518</locationY>
+        <locationX>886</locationX>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaVariabili_0_0</targetReference>
@@ -386,7 +560,7 @@
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
         <locationX>314</locationX>
-        <locationY>2246</locationY>
+        <locationY>3278</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -413,7 +587,7 @@
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2366</locationY>
+        <locationY>3398</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -422,8 +596,8 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza_0</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>952</locationX>
-        <locationY>758</locationY>
+        <locationX>886</locationX>
+        <locationY>878</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -432,13 +606,13 @@
     <screens>
         <name>Inserimento_dati_nel_documento</name>
         <label>Inserimento dati nel documento</label>
-        <locationX>600</locationX>
-        <locationY>1550</locationY>
+        <locationX>820</locationX>
+        <locationY>2366</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Loop_DocumentSelected</targetReference>
+            <targetReference>Avanzamento</targetReference>
         </connector>
         <fields>
             <name>DocumentName</name>
@@ -470,7 +644,7 @@
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -506,7 +680,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <elementReference>nextLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -533,6 +707,18 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -541,23 +727,23 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Inserire_altri_documenti_0</name>
+        <name>Inserire_altri_documenti_0_0</name>
         <label>Inserire altri documenti?</label>
-        <locationX>688</locationX>
-        <locationY>398</locationY>
+        <locationX>512</locationX>
+        <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Documenti_Selezionati</targetReference>
+            <targetReference>Doppi_Pagamenti_o_Comunicazione_Pagamento</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader_2_0</name>
+            <name>DisplayHeader_2_0_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>DocumentSelector_0</name>
+            <name>DocumentSelector_0_0</name>
             <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -631,7 +817,7 @@
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>2486</locationY>
+        <locationY>3518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -661,8 +847,8 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>952</locationX>
-        <locationY>878</locationY>
+        <locationX>886</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -692,8 +878,8 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>204</locationX>
-        <locationY>278</locationY>
+        <locationX>226</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -783,115 +969,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Screen_Review_Dati</name>
-        <label>Screen Review Dati</label>
-        <locationX>512</locationX>
-        <locationY>1766</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Salva_In_Bozza_o_Conferma_0</targetReference>
-        </connector>
-        <fields>
-            <name>DisplayHeader_3</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>hdtRecordEditForm_0_0</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>density</name>
-                <value>
-                    <stringValue>Comfy</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <stringValue>NEXT</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>objectName</name>
-                <value>
-                    <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>processType</name>
-                <value>
-                    <elementReference>CaseInput.Type</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>CaseInput.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelPreviousButton</name>
-                <value>
-                    <stringValue>Indietro</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>Screen_Review_Dati_0</name>
         <label>Screen Review Dati</label>
-        <locationX>952</locationX>
-        <locationY>398</locationY>
+        <locationX>886</locationX>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -996,15 +1077,15 @@
         <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Doppi_Pagamenti_o_Comunicazione_Pagamento</targetReference>
+            <targetReference>Inserire_altri_documenti_0_0</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
-        <locationX>160</locationX>
-        <locationY>518</locationY>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1029,7 +1110,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>578</locationX>
-        <locationY>2006</locationY>
+        <locationY>3038</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1064,5 +1145,50 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>CollectionSize</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+    </variables>
+    <variables>
+        <name>currentItem</name>
+        <dataType>Number</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <scale>2</scale>
+        <value>
+            <numberValue>0.0</numberValue>
+        </value>
+    </variables>
+    <variables>
+        <name>FakeCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>DocumentSelected__c</objectType>
+    </variables>
+    <variables>
+        <name>nextLabel</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Avanti</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>RealCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>DocumentSelected__c</objectType>
     </variables>
 </Flow>

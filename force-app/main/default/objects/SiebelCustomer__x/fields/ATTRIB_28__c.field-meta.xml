@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ATTRIB_28__c</fullName>
+    <description>ATTRIB_28</description>
+    <externalDeveloperName>ATTRIB_28</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data fine (Progetto Cy)</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>
