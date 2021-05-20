@@ -223,7 +223,12 @@ export default class HdtSelfReading extends LightningElement {
                     registers[i] = {};
                 }
 
-                registers[i].register = index;
+                if (this.commodity === 'Energia Elettrica') {
+                    registers[i].register = index;
+                } else {
+                    const gasIndex = index === '1' ? 'Misuratore' : 'Correttore';
+                    registers[i].register = gasIndex;
+                }
 
                 console.log('index: ' + i);
                 if (key.startsWith('herTipologiaMisuratore')) {
