@@ -91,7 +91,7 @@
         <label>Modifica/Azzeramento Consumo Annuo</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Error__c</field>
             </layoutItems>
             <layoutItems>
@@ -114,13 +114,21 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PowerContractualFormula__c</field>
+                <field>VATPercentage__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Taxes__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CalculationBlock__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PowerContractualFormula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -196,12 +204,8 @@
         <label>Condizioni Contrattuali Errate</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ErrorType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ConcessionType__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
