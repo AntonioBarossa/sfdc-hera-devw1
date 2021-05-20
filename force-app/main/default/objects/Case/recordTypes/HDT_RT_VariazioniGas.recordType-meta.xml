@@ -9921,7 +9921,7 @@
     </picklistValues>
     <picklistValues>
         <picklist>Taxes__c</picklist>
-        <values>
+        <!-- <values>
             <fullName>E_I_USIDOM-Domestici</fullName>
             <default>false</default>
         </values>
@@ -9944,7 +9944,7 @@
         <values>
             <fullName>Esente Telecom</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>G_I09-Imp%2E Autotrazione</fullName>
             <default>false</default>
@@ -9969,7 +9969,7 @@
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Imp Altri Usi - E_IE_M04</fullName>
             <default>false</default>
         </values>
@@ -10004,24 +10004,24 @@
         <values>
             <fullName>Imp Grossisti EE DOM - E_IE_L2</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Imp Grossisti GAS - G_I20</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Imp Grossiti EE - E_IE_L98</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Imp Grossiti GAS - G_I20</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Imp Grossiti GAS DiES - G_I201</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Imp Illum Pubbl - E_IE_L01</fullName>
             <default>false</default>
         </values>
@@ -10072,7 +10072,7 @@
         <values>
             <fullName>Imp Usi Mineral%2E - E_IE_11A</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Non Ridotta Condomini-G_ICD</fullName>
             <default>false</default>
