@@ -1768,13 +1768,6 @@
                     <stringValue>Dettaglio Bolletta</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>GetInputCase.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>BP/CA - errata categoria</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Seleziona_Documenti_Screen</targetReference>
             </connector>
@@ -1811,17 +1804,11 @@
         <name>ActivityTemplateName</name>
         <dataType>String</dataType>
         <expression>IF({!GetCaseAggiornatoMancataLettura.CommodityFormula__c}= &quot;Gas&quot;,
-     &quot;Gestione M02&quot;,
-      IF(
-             AND(
-                    {!GetCaseAggiornatoMancataLettura.CommodityFormula__c} = &quot;Energia Elettrica&quot;,
-                    {!GetCaseAggiornatoMancataLettura.ReadingDate__c} &lt; DATE(2019 ,1,1),
-                    NOT(CONTAINS({!GetCaseAggiornatoMancataLettura.DistributorName__c},&quot;E-Distribuzione&quot;))
-              ),
-              &quot;Gestione M02&quot;,
-              &quot;Gestione M03&quot;
-           )
-)</expression>
+                &quot;Gestione M02&quot;,
+      IF({!GetCaseAggiornatoMancataLettura.CommodityFormula__c} = &quot;Energia Elettrica&quot;,
+            IF(AND({!GetCaseAggiornatoMancataLettura.ReadingDate__c} &gt; DATE(2019 ,1,1),
+                 CONTAINS({!GetCaseAggiornatoMancataLettura.DistributorName__c},&quot;E-Distribuzione&quot;)) ,
+                   &quot;Gestione M03&quot;,&quot;Gestione M02&quot;),&quot;Gestione M02&quot;))</expression>
     </formulas>
     <formulas>
         <name>billingProblemsFormula</name>
@@ -1834,20 +1821,6 @@
         <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; {!GetCaseAggiornato.Reading__c} &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
     </formulas>
     <formulas>
-        <name>nextLabel</name>
-        <dataType>String</dataType>
-        <expression>IF( 
-        OR(
-              TEXT({!GetInputCase.Type}) = &quot;Condizioni Contrattuali Errate&quot;,
-              TEXT({!GetInputCase.Type}) = &quot;Dettaglio Bolletta&quot;,
-              TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
-              TEXT({!GetInputCase.Type}) = &quot;Account/Billing Profile - errata categoria&quot;
-         ),
-         &quot;Avanti&quot;,
-         &quot;Conferma Pratica&quot;
-)</expression>
-    </formulas>
-    <formulas>
         <name>VariazioneFiscalePhase</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!GetInputCase.Type}, &quot;Fiscale&quot;), &quot;In attesa validazione&quot;, &quot;Elaborazione Manuale&quot;)</expression>
@@ -1855,7 +1828,13 @@
     <formulas>
         <name>VariazioneFiscaleProcess</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!GetInputCase.Type},&quot;Fiscale&quot;),&quot;Fiscale &quot; &amp; {!GetInputCaseFiscale.CommodityFormula__c},TEXT({!GetInputCase.Type}))</expression>
+        <expression>IF(
+        ISPICKVAL({!GetInputCase.Type},&quot;Fiscale&quot;),
+        IF(CONTAINS(TEXT({!GetInputCaseFiscale.Subprocess__c}), &quot;IVA&quot;),
+            &quot;Fiscale&quot; &amp; &quot; &quot; &amp; {!GetInputCaseFiscale.CommodityFormula__c} &amp; &quot; &quot; &amp;  &quot;IVA&quot;,
+            &quot;Fiscale&quot; &amp; &quot; &quot; &amp; {!GetInputCaseFiscale.CommodityFormula__c} &amp; &quot; &quot; &amp;  &quot;Accise&quot;
+            ),
+        TEXT({!GetInputCase.Type}))</expression>
     </formulas>
     <interviewLabel>Gestione Variazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Variazioni</label>
@@ -3635,7 +3614,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3684,12 +3663,6 @@
                 <name>recordType</name>
                 <value>
                     <elementReference>GetInputCase.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextStep</name>
-                <value>
-                    <elementReference>nextLabel</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -4226,7 +4199,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4279,7 +4252,7 @@
             <targetReference>GetInputCase</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
