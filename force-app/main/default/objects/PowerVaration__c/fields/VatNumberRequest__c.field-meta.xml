@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Causale__c</fullName>
-    <description>Causale presente sul Case/Order</description>
+    <fullName>VatNumberRequest__c</fullName>
+    <description>Partita IVA della Richiesta</description>
     <externalId>false</externalId>
-    <label>Causale</label>
+    <label>PIVA Richiesta</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
