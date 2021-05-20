@@ -27,36 +27,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>BillTransfer__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CompanyOwner__c</picklist>
-        <values>
-            <fullName>AAA-EBT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HERA COMM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reseller</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ContactReason__c</picklist>
         <values>
             <fullName>Assistenza</fullName>
@@ -179,82 +149,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PraxidiaPostWorkAction__c</picklist>
-        <values>
-            <fullName>Contattare tramite email</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Ricontattare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nuovo reclamo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiamare</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PraxidiaPostWorkCause__c</picklist>
-        <values>
-            <fullName>Risposta OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta incompleta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta non corretta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risposta poco chiara</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PraxidiaPostWorkOutcome__c</picklist>
-        <values>
-            <fullName>Non risponde</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non soddisfatto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Soddisfatto</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Priority__c</picklist>
-        <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Dimostrata Estraneità</fullName>
@@ -295,6 +189,10 @@
         <picklist>Type__c</picklist>
         <values>
             <fullName>Approvazione Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
             <default>false</default>
         </values>
     </picklistValues>
