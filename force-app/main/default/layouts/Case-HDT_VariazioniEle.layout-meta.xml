@@ -41,10 +41,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PODPDRFormula__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>Contract__c</field>
             </layoutItems>
             <layoutItems>
