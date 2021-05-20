@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_DATAINIZIO_PIVA_GRUPPO__c</fullName>
+    <description>X_DATAINIZIO_PIVA_GRUPPO</description>
+    <externalDeveloperName>X_DATAINIZIO_PIVA_GRUPPO</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data Inizio Piva di Gruppo</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>
