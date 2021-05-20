@@ -14,11 +14,6 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Contratto Siebel</fullName>
-                <default>false</default>
-                <label>Contratto Siebel</label>
-            </value>
-            <value>
                 <fullName>Contratto SAP</fullName>
                 <default>false</default>
                 <label>Contratto SAP</label>
@@ -208,6 +203,12 @@
                 <default>false</default>
                 <label>Costing e Forecasting</label>
             </value>
+            <value>
+                <fullName>Contratto Siebel</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Contratto Siebel</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Supporto Fiscale</controllingFieldValue>
@@ -252,10 +253,6 @@
         <valueSettings>
             <controllingFieldValue>Verifica Gestione Front</controllingFieldValue>
             <valueName>Gestione Sportello</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Anomalia contratto</controllingFieldValue>
-            <valueName>Contratto Siebel</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>

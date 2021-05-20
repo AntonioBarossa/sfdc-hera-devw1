@@ -9,7 +9,23 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_CommunicationLog</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CommunicationLog</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_OrderProcess</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_IndemnityConfirmation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PostSalesManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -18,14 +34,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_PostSalesCriteriaManager</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_SRV_Payments</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_WS_Payments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -645,6 +653,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_EditAlert</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_EmailMessage</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -705,6 +717,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_Payments</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_PianoRateizzazione</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -762,6 +778,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_ServicePoint</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_AlertAccountConfiguration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1166,6 +1186,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WS_PaymentCommunication</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_Payments</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

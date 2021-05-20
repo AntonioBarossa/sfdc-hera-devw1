@@ -19,6 +19,7 @@
             <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
             <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
             <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
+            <property name="billingProblems" type="String" label="Problemi di Fatturazione (Variazioni)" description="Variabile per i processi di Variazione" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
