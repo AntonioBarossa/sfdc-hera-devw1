@@ -9910,50 +9910,50 @@
             <fullName>E_I_USIDOM-Domestici</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Esente Erariale</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Esente Fabbricante</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Esente Lav%2E Elettrolitiche</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Esente Scambio</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>Esente Telecom</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>G_I09-Imp%2E Autotrazione</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>G_I15-Imp%2E Autopr-Prod EE Ind%2E</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>G_I22-Imp%2E Processi Metallurg%2E</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>G_I23-Imp%2E Processi Mineralog%2E</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>G_I24-Imp%2E Forze Armate Nazion</fullName>
             <default>false</default>
-        </values>
-        <values>
+        </values> -->
+        <!-- <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
             <default>false</default>
-        </values>
+        </values> -->
         <values>
             <fullName>Imp Altri Usi - E_IE_M04</fullName>
             <default>false</default>
@@ -10058,22 +10058,10 @@
             <fullName>Imp Usi Mineral%2E - E_IE_11A</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- <values>
             <fullName>Non Ridotta Condomini-G_ICD</fullName>
             <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Ridotta IVA 10%25-G_ICC10</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Ridotta IVA 20%25-G_ICC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta-G_I04</fullName>
-            <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>TechnicalDataRequestType__c</picklist>
