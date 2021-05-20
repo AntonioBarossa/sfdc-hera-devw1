@@ -27,6 +27,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BillTransfer__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CompanyOwner__c</picklist>
         <values>
             <fullName>AAA-EBT</fullName>

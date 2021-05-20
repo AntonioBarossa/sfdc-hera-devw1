@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SupplyStreetToponym__c</fullName>
+    <fullName>BillingPlace__c</fullName>
     <externalId>false</externalId>
-    <label>Toponimo  [Fornitura]</label>
-    <length>30</length>
+    <label>Località [Fatturazione]</label>
+    <length>50</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

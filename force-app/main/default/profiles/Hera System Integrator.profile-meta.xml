@@ -362,6 +362,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.BillingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.BillingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -838,6 +843,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Account.ShippingAddress</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ShippingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account.ShippingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2613,6 +2628,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>BillingProfile__c.InvoicingIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BillingProfile__c.InvoicingPlaceCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4912,6 +4932,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.IsSameReasonComplaint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.IsVATGroupJoined__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5672,6 +5697,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SupplyPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SupplyPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -6373,6 +6403,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.MailingIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.MailingPlaceCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9692,6 +9727,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Lead.PlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Lead.Place__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10257,6 +10297,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ActivationPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ActivationPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10413,6 +10458,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.BillingIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BillingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BillingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11362,6 +11417,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ResidentialPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ResidentialPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11587,6 +11647,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ShippingPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ShippingPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11698,6 +11763,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SupplyIsAddressVerified__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SupplyPlaceCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12863,6 +12933,66 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>PartyConsent.EffectiveTo</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.CustomerCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.FiscalCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.NetDebit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.Price0__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.Price1__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.Price2__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.PriceM__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.ServicePointCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.ServicePoint__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.VariationDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.VatNumberPayment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>PowerVaration__c.VatNumberRequest__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22027,6 +22157,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SupplyPlaceCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SupplyPlace__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -23183,6 +23318,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>User.Job__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.LoginADN__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25673,6 +25813,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.AtecoCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.BillTransfer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
