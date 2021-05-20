@@ -355,6 +355,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 }
             }
         }
+    
 
         if(!mapBooleanObject.isEmpty())
         {
