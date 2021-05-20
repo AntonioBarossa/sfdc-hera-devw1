@@ -202,15 +202,6 @@
     </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Partner Community</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
         <content>Case_Record_Page2</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Case</pageOrSobjectType>
@@ -493,15 +484,6 @@
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>HDT_Order_Volture_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>Hera Partner Community</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
         <formFactor>Small</formFactor>
         <pageOrSobjectType>Order</pageOrSobjectType>
         <recordType>Order.HDT_RT_Voltura</recordType>
@@ -534,24 +516,6 @@
         <recordType>Order.HDT_RT_Voltura</recordType>
         <type>Flexipage</type>
         <profile>Hera M2M Integration User</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
-        <formFactor>Small</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>HDT_TelesellingCommunity</profile>
-    </profileActionOverrides>
-    <profileActionOverrides>
-        <actionName>View</actionName>
-        <content>HDT_Order_Volture_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>Order</pageOrSobjectType>
-        <recordType>Order.HDT_RT_Voltura</recordType>
-        <type>Flexipage</type>
-        <profile>HDT_TelesellingCommunity</profile>
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Lead</tabs>
