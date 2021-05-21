@@ -1894,35 +1894,31 @@
             <default>true</default>
         </values>
         <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In registrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico Firmato da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico inviato da firmare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico validato Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Registrazione  da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
             <default>false</default>
         </values>
     </picklistValues>

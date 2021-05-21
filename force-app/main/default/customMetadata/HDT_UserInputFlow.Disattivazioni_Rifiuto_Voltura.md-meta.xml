@@ -115,7 +115,7 @@
 ]</value>
     </values>
     <values>
-        <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
-    </values>
+      <field>ValidateClass__c</field>
+      <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
+  </values>
 </CustomMetadata>
