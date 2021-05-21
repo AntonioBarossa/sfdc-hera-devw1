@@ -2,7 +2,7 @@
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
         <fullName>+39</fullName>
-        <default>false</default>
+        <default>true</default>
         <label>+39</label>
     </customValue>
     <description>gli &quot; l ho aggiunti solo per non far scomparire il + davanti al numero</description>
