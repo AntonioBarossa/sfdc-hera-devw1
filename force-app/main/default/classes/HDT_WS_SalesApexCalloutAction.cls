@@ -95,7 +95,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             }
                         }
                         else{
-                            // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
                             ord.Phase__c = 'Comunicazione verso Heroku KO';
                         }
                         HDT_SRV_Order ordSrv = new HDT_SRV_Order();
