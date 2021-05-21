@@ -34,10 +34,15 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         return [
             SELECT
                 Id,
-                Queue__c,
-                RulePriority__c,
-                RuleStartDate__c,
-                RuleEndDate__c,
+                HighPriorityQueue__c,
+                HighPriorityQueue__r.DailyCapacity__c,
+                HighPriorityQueue__r.QueueId__c,
+                MediumPriorityQueue__c,
+                MediumPriorityQueue__r.DailyCapacity__c,
+                MediumPriorityQueue__r.QueueId__c,
+                LowPriorityQueue__c,
+                LowPriorityQueue__r.DailyCapacity__c,
+                LowPriorityQueue__r.QueueId__c,
                 Type__c,
                 Priority__c,
                 CompanyOwner__c,
@@ -62,30 +67,36 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     public void execute(Database.BatchableContext BC, List<sObject> scope) {
-        List<Queue__c> queues = [
-            SELECT
-                Id,
-                Name,
-                QueueId__c,
-                Agency__c,
-                DailyCapacity__c,
-                Group__c,
-                Priority__c,
-                Type__c
-            FROM Queue__c
-        ];
-
         List<AssignmentRule__c> rules = (List<AssignmentRule__c>) scope;
         List<wrts_prcgvr__Activity__c> processedActivities = new List<wrts_prcgvr__Activity__c>();
         String query;
-
+        wrts_prcgvr__Activity__c tmp;
+        
         for(AssignmentRule__c rule : rules) {
             for(wrts_prcgvr__Activity__c activity : Database.query(query)) {
-                activity.Queued__c = true;
-                processedActivities.add(activity);
+                tmp = new wrts_prcgvr__Activity__c(
+                    Id = activity.Id,
+                    Queued__c = true
+                );
+
+                switch on String.valueOf(activity.wrts_prcgvr__Priority__c) {
+                    when '1' {
+                        tmp.OwnerId = rule.HighPriorityQueue__r.QueueId__c;
+                    }
+                    when '2' {
+                        tmp.OwnerId = rule.MediumPriorityQueue__r.QueueId__c;
+                    }
+                    when '3' {
+                        tmp.OwnerId = rule.LowPriorityQueue__r.QueueId__c;
+                    }
+                }
+                processedActivities.add(tmp);
             }
         }
-        Database.update(processedActivities, false);
+
+        if(processedActivities.size() > 0) {
+            Database.update(processedActivities, false);
+        }
     }
 
     public void finish(Database.BatchableContext BC) {
@@ -93,27 +104,22 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     public String getQuery(AssignmentRule__c rule) {
-        Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap().clone();
-        // REMOVING NON-MAPPED FIELDS
-        ruleMap.remove('Id');
-        ruleMap.remove('Name');
-        ruleMap.remove('RulePriority__c');
-        ruleMap.remove('RuleStartDate__c');
-        ruleMap.remove('RuleEndDate__c');
-        ruleMap.remove('Queue__c');
+        Map<String,Object> ruleMap = rule.getPopulatedFieldsAsMap();
         // INITIALIZING QUERY'S STATIC PART
-        List<String> query = new List<String> {'SELECT Id FROM wrts_prcgvr__Activity__c WHERE Queued__c = false'};
+        List<String> query = new List<String> {'SELECT Id, wrts_prcgvr__Priority__c FROM wrts_prcgvr__Activity__c WHERE Queued__c = false'};
         String mapping;
         String value;
         String condition;
         // ADD EACH INDIVIDUAL WHERE CONDITION TO THE QUERY LIST
         for(String key : ruleMap.keySet()) {
             mapping = MAPPINGS.get(key);
-            value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
-            condition = mapping.replace(PLACEHOLDER, value);
-            query.add(condition);
+            if(mapping != null) {
+                value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
+                condition = mapping.replace(PLACEHOLDER, value);
+                query.add(condition);
+            }
         }
         // RETURN THE UNIFIED VALUES
-        return String.join(query, ' AND ');
+        return String.join(query, ' AND ') + ' LIMIT 10000';
     }
 }
