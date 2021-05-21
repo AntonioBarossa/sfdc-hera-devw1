@@ -315,12 +315,12 @@
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <fields>Phase__c</fields>
         <fields>CASES.STATUS</fields>
         <fields>CASES.TYPE</fields>
         <fields>Subprocess__c</fields>
         <fields>Cluster__c</fields>
+        <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
