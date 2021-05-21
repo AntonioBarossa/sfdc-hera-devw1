@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_EXPIRY_DATE__c</fullName>
+    <description>X_EXPIRY_DATE</description>
+    <externalDeveloperName>X_EXPIRY_DATE</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data scadenza</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>
