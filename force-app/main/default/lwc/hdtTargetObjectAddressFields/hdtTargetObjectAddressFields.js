@@ -1185,7 +1185,7 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Civico']= data['prestazione'][0].houseNum1;
                     this.theRecord['Comune']= data['prestazione'][0].city1;
                     this.theRecord['Provincia']= data['prestazione'][0].region;
-                    this.theRecord['CAP']= data['prestazione'][0].houseNum1;
+                    this.theRecord['CAP']= data['prestazione'][0].postCode1;
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;
