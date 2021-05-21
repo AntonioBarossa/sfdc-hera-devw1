@@ -76,7 +76,8 @@ export default class HdtLeadAddress extends LightningElement {
         if(this.leadAddress!= undefined){
 
             if(this.leadAddress['Via'] != null){
-                this.fieldsToUpdate['Street'] = this.leadAddress['Via'];
+                this.fieldsToUpdate['Street'] = this.leadAddress['Via'] + ' ' + this.leadAddress['Civico'];
+                this.fieldsToUpdate['StreetName__c'] = this.leadAddress['Via'];
             }
             if(this.leadAddress['Comune'] != null){
                 this.fieldsToUpdate['City'] = this.leadAddress['Comune'];
