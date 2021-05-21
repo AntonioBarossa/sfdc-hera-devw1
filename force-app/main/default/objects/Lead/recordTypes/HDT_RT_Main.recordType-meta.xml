@@ -161,7 +161,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-   <picklistValues>
+    <picklistValues>
         <picklist>ContactReason__c</picklist>
         <values>
             <fullName>Gestione contratti</fullName>
@@ -451,6 +451,10 @@
         </values>
         <values>
             <fullName>Nome Social network</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOL</fullName>
             <default>false</default>
         </values>
         <values>
