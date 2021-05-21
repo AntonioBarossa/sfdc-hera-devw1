@@ -2,6 +2,9 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>SBQQ__Amend_Assets</customButtons>
     <customButtons>SBQQ__Renew_Assets</customButtons>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
     <excludeButtons>SendEmail</excludeButtons>
     <excludeButtons>XClean</excludeButtons>
@@ -352,7 +355,6 @@
         <fields>SAPImplantCode__c</fields>
         <fields>SupplyAddress__c</fields>
         <fields>MeterSN__c</fields>
-        <fields>ServicePointCode__c</fields>
         <fields>CommoditySector__c</fields>
         <fields>Distributor__c</fields>
         <relatedList>ServicePoint__c.Account__c</relatedList>
