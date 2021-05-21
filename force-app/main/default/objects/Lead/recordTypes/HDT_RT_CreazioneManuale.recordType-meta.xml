@@ -454,6 +454,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>SOL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Webform callback</fullName>
             <default>false</default>
         </values>

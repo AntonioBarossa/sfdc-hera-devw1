@@ -182,8 +182,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         System.debug('Innesco Allineamento Anagrafica alla chiusura del Case Fiscale: ' + inputCase.Id);
-        List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
-        System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+
+        try {
+            List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
+            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        } catch (Exception ex) {
+            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+        }
     }
 
     public void evaluateEffectiveDate(SObject inputOrder){

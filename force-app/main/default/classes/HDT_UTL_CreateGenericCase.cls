@@ -1,10 +1,10 @@
 public inherited sharing class HDT_UTL_CreateGenericCase {
 
-    HDT_QR_CreateGenericCase cgcQr = new HDT_QR_CreateGenericCase();
+    //HDT_QR_CreateGenericCase cgcQr = new HDT_QR_CreateGenericCase();
 
     public List<Case> createCaseFromCase(Map<String, Object> inputs){
 
-        String recordTypeId = cgcQr.getRecordTypeByDevName((String) inputs.get('recordType'))[0].Id;
+        String recordTypeId = (String) inputs.get('recordTypeId');
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
         Case parentCase = (Case) inputs.get('inputSObj');

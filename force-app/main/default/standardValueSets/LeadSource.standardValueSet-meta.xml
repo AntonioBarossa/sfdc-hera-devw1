@@ -81,4 +81,9 @@
         <default>false</default>
         <label>Lead freddo</label>
     </standardValue>
+    <standardValue>
+        <fullName>SOL</fullName>
+        <default>false</default>
+        <label>SOL</label>
+    </standardValue>
 </StandardValueSet>
