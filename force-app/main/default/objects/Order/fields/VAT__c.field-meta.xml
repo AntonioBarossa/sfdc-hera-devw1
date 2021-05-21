@@ -3,9 +3,11 @@
     <fullName>VAT__c</fullName>
     <externalId>false</externalId>
     <label>IVA</label>
-    <precision>18</precision>
     <required>false</required>
-    <scale>0</scale>
     <trackHistory>false</trackHistory>
-    <type>Percent</type>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_TaxRate</valueSetName>
+    </valueSet>
 </CustomField>
