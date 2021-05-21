@@ -357,6 +357,10 @@
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>wrts_prcgvr__Priority__c</picklist>

@@ -294,6 +294,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sportello</fullName>
             <default>false</default>
         </values>

@@ -1906,15 +1906,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Comunicazione verso Heroku KO</fullName>
+            <fullName>Da Inviare</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Da Inviare</fullName>
+            <fullName>Dati discordanti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1926,19 +1934,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL KO</fullName>
+            <fullName>In attesa di quality call</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito KO da SII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esito OK da SII</fullName>
+            <fullName>Inviato Precheck al SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1966,7 +1966,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Quality Call KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura c%2Fo VT</fullName>
             <default>false</default>
         </values>
     </picklistValues>
