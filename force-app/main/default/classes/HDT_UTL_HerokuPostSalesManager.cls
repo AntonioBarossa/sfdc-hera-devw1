@@ -378,7 +378,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectq);
             Contract contracRecord = (Contract) recordList[0];
             contracRecord.Status = contractStatus;
-            //contracRecord.EndDate = contractEndDate;
+            contracRecord.EndDate = contractEndDate;
             Boolean result = HDT_UTL_DatabaseService.updateSObject(contracRecord);
         }catch(Exception ex){
             System.debug(LoggingLevel.WARN, ex.getMessage() + ' at line ' + ex.getLineNumber() + ' of HDT_UTL_HerokuPostSalesManager.handleContractUpdate method');

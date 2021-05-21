@@ -20,7 +20,13 @@
         <inputParameters>
             <name>city</name>
             <value>
-                <elementReference>Get_Case.AddressFormula__c</elementReference>
+                <elementReference>Get_Case.SupplyCity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>Get_Case.CommodityFormula__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -36,9 +42,21 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>manufactureYear</name>
+            <value>
+                <elementReference>Get_Case.YearManufactureMeter__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>market</name>
             <value>
                 <elementReference>Get_Case.Market__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>processType</name>
+            <value>
+                <elementReference>Get_Case.Type</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>

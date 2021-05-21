@@ -698,6 +698,11 @@
                 <label>Errore tecnico invio a SAP</label>
             </value>
             <value>
+                <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <label>Annullamento - Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
                 <fullName>Elaborazione Risposta</fullName>
                 <default>false</default>
                 <label>Elaborazione Risposta</label>

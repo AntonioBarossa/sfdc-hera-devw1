@@ -396,6 +396,46 @@
                 <label>Annullamento dal SII</label>
             </value>
             <value>
+                <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+                <default>false</default>
+                <label>Annullamento - Comunicazione verso Heroku KO</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Ammissibilità KO</fullName>
+                <default>false</default>
+                <label>Annullamento - Ammissibilità KO</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Ammissibilità OK</fullName>
+                <default>false</default>
+                <label>Annullamento - Ammissibilità OK</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Da inviare</fullName>
+                <default>false</default>
+                <label>Annullamento - Da inviare</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito KO da DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Inviato al DL/SII</fullName>
+                <default>false</default>
+                <label>Annullamento - Inviato al DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Revocato</fullName>
+                <default>false</default>
+                <label>Annullamento - Revocato</label>
+            </value>
+            <value>
                 <fullName>BL010</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
