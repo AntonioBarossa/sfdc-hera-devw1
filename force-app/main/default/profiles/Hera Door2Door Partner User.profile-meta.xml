@@ -10426,6 +10426,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.CustomerCompanyName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.CustomerFiscalCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10487,6 +10492,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DisconnectibilityType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DistributorCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10567,6 +10577,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.FriendCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.GeneralContractConditions__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20356,6 +20371,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.MeterStatus__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.MeterType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20377,6 +20397,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.PowerContractual__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.PowerRequested__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20487,6 +20512,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.SupplyStreetCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SupplyStreetName__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

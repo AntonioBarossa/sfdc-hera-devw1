@@ -131,6 +131,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
         orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
+        orderToUpdate.Contact__c = sale.SalesContact__c;
+        orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
     }
 
     private static void alignPrimaryProduct(Order orderToUpdate, String quoteId) {
@@ -141,6 +143,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if (!quoteLineList.isEmpty()) {
             orderToUpdate.CommercialProductCode__c = quoteLineList[0].SBQQ__Product__r.ProductCode;
             orderToUpdate.CommercialProductVersion__c = quoteLineList[0].SBQQ__Product__r.Version__c;
+            orderToUpdate.CommercialProduct__c = quoteLineList[0].SBQQ__Product__r.Name;
         }
 
     }
@@ -151,7 +154,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         switch on implantType {
             when '13A0-Usi di Abitazione BT' {
-                result = '13FM-Non domestici AT';
+                result = 'Domestici-TD';
             }
             when '13BB-Illuminazione pubblica BT' {
                 result = 'AEEG Opzione BTIP-E_BTIP';

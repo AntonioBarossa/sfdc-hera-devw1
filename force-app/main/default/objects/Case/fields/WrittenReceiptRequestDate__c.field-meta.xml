@@ -3,7 +3,7 @@
     <fullName>WrittenReceiptRequestDate__c</fullName>
     <description>Data ricezione richiesta</description>
     <externalId>false</externalId>
-    <label>Data ricezione richiesta</label>
+    <label>Data Ricezione Richiesta</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
