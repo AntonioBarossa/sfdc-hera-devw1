@@ -26,7 +26,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
         Boolean isRetroactive,
-        Boolean isReading){
+        Boolean isReading,
+        Date readingDate){
         //FINE SVILUPPI EVERIS
 
         System.debug('updateProcessStep: ' + order);
@@ -35,17 +36,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
         if(isVolture != null && isVolture == true){
             //Commentato finche non viene creato campo a DM
-            /*if(order.NonRegMeter__c != null && order.NonRegMeter__c == true){
+            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true){
                 if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 
                 }
-            } else*/ if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
+            } else if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
 
                 if(orderQr.getRoleNameByRoleId() != 'CEO'){
 
                     throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-
 
                 } else{
 
@@ -58,7 +58,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
                 order.Subprocess__c = 'Con Autolettura';
 
-            } 
+            }
+
+            if(readingDate != null && (isReading != null && isReading == true)){
+
+                order.ReadingCustomerDate__c = readingDate;
+
+            }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
 

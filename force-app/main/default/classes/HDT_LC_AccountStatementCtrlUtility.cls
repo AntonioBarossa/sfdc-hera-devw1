@@ -189,10 +189,12 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         List<HDT_TabConfiguration__mdt> endPointMdt;
         endPointMdt = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMdt, tabCode);
 
-        if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
+        //if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
+        if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c)){
+            //httpObj.endPoint = endPointMdt[0].EndpointService__c;
+            //httpObj.headersMap.put('Authorization', endPointMdt[0].Authorization__c);
 
             httpObj.endPoint = endPointMdt[0].EndpointService__c;
-            httpObj.headersMap.put('Authorization', endPointMdt[0].Authorization__c);
 
             if(endPointMdt[0].UseMockService__c){
                 httpObj.endPoint = Label.MockEndPointAccountStatement;

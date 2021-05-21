@@ -1828,7 +1828,13 @@
     <formulas>
         <name>VariazioneFiscaleProcess</name>
         <dataType>String</dataType>
-        <expression>IF(ISPICKVAL({!GetInputCase.Type},&quot;Fiscale&quot;),&quot;Fiscale &quot; &amp; {!GetInputCaseFiscale.CommodityFormula__c},TEXT({!GetInputCase.Type}))</expression>
+        <expression>IF(
+        ISPICKVAL({!GetInputCase.Type},&quot;Fiscale&quot;),
+        IF(CONTAINS(TEXT({!GetInputCaseFiscale.Subprocess__c}), &quot;IVA&quot;),
+            &quot;Fiscale&quot; &amp; &quot; &quot; &amp; {!GetInputCaseFiscale.CommodityFormula__c} &amp; &quot; &quot; &amp;  &quot;IVA&quot;,
+            &quot;Fiscale&quot; &amp; &quot; &quot; &amp; {!GetInputCaseFiscale.CommodityFormula__c} &amp; &quot; &quot; &amp;  &quot;Accise&quot;
+            ),
+        TEXT({!GetInputCase.Type}))</expression>
     </formulas>
     <interviewLabel>Gestione Variazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Variazioni</label>

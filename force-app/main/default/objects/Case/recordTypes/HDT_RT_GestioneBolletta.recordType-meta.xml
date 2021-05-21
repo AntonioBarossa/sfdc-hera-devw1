@@ -2238,11 +2238,7 @@
     <picklistValues>
         <picklist>EndCustomerRequestType__c</picklist>
         <values>
-            <fullName>Reclamo scritto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta info</fullName>
+            <fullName>Richiesta Info Scritta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7413,6 +7409,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IsSameReasonComplaint__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>LitigationType__c</picklist>
         <values>
             <fullName>Area</fullName>
@@ -7746,6 +7753,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Elaborazione Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore invio a DL%2FSII</fullName>
             <default>false</default>
         </values>
@@ -7771,6 +7782,10 @@
         </values>
         <values>
             <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Parere Ricevuta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7912,11 +7927,183 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Bolletta Periodica</fullName>
+            <fullName>Assistenza Sociale</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Prima Bolletta</fullName>
+            <fullName>CLIENTE NON TROVATO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calamità Naturali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Conto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio da Click%26Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio modalità di pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusura Conto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente paga un acconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DISATTIVATO%2FDISDETTO %28SERVIZIO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagio Economico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disagio Economico %28Bonus Sociale%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disguido Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disoccupato%2FCassintegrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doc%2E ricevuto dopo scadenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domiciliazione non attiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edif%2E Attesa affitto%2Fvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio in ristrutturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio non abitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errata Domiciliazione%2Fnon richiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Evasione%2FElusione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura SD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_EE %28noD1%29_GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_EE SME ML</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FatturaPlurim_Gas%3E5000</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione bloccata plurim</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>INSTALLAZIONE FALLITA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incongruenza sui sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazione su doppio pagamento%2Fincasso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malfunzione Gruppo di misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rate errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano d%27autorità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Rate non ricevute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RESO %28PRODOTTO%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIFIUTATO preventivamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rinuncia piano rate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Seconda casa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazione doppio pagamento non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima errata disguido Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stima errata per tipo utilizzo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TEL - CLT NON TROVATO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8122,10 +8309,6 @@
         </values>
         <values>
             <fullName>Contratto SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratto Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10257,6 +10440,10 @@
         </values>
         <values>
             <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
         <values>

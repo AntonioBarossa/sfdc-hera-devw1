@@ -71,6 +71,10 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.writeCollectiveBillType(position.valore, currentCase));
                             }
+                            when 'getOpzione'{
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                    depsSrv.getOpzione(position.valore));
+                            }
                         }
                     } else {
                         transcodeMap.put(transcodeConfig.SfdcField__c, position.valore);

@@ -898,9 +898,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
      * Get form title
      */
     get formTitle(){
-        console.log('formTitle START');
-        console.log('selectedServicePoint formtitle'+ JSON.stringify(this.selectedservicepoint.servicePointCode__c));
-        
+        console.log('formTitle START');        
         let title = 'Service Point: ';
 
         if(this.selectedservicepoint != undefined){
