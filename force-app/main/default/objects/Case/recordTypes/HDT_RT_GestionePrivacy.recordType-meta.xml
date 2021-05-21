@@ -9834,6 +9834,122 @@
     <picklistValues>
         <picklist>Taxes__c</picklist>
         <values>
+            <fullname>Imposta Autotrazione (Cod. G_I09)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imosta Autopr-Prod EE Industr (Cod. G_I15)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Processi Metallurgici (Cod. G_I22)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Processi Mineralogici (Cod. G_I23)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Forze Armate Nazionali (Cod. G_I24)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Usi Domestici (Cod. G_ICD)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta usi non domestici iva 10% (Cod. G_ICC10)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta usi non domestici iva 22% (Cod. G_ICC)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta usi industriali (Cod. G_I04)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Altro</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Processi Elettrolitici (Cod. G_I21)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Forze Armate NATO (Cod. G_I25)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta usi domestici</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta ordinaria Altri Usi (Cod. E_IE_M04)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta C En&gt;50% unità prod (Cod. E_IE_14A)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta FFSS (Cod. E_IE_L03)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Grossiti EE Non Domest (Cod. E_IE_L98)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Illum Pubbl (Cod. E_IE_L01)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Opifici (Cod. E_IE_L13)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta esente Prod.EE (Cod. E_IE_L06)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Sedi Diplomatiche (Cod.E_IE_L02)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Trasp Urb. (Cod. E_IE_L04)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)</fullname>
+            <default>false</default>
+        </values>
+        <values>
+            <fullname>Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)</fullname>
+            <default>false</default>
+        </values>
+        <!-- <values>
             <fullName>E_I_USIDOM-Domestici</fullName>
             <default>false</default>
         </values>
@@ -10000,7 +10116,7 @@
         <values>
             <fullName>Ridotta-G_I04</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>TechnicalDataRequestType__c</picklist>
