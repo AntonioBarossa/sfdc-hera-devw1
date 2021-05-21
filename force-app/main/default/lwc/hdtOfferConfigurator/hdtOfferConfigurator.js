@@ -106,7 +106,18 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         //used with input checkbox
         var rowValue = event.currentTarget.dataset.id
         let foundRow = this.dataRows.find(ele  => ele.id === rowValue);
-        foundRow.g = event.target.checked;
+        
+        if(event.target.name == 'g'){
+            foundRow.g = event.target.checked;
+        } else {
+            if(event.target.checked){
+                foundRow.flag.value = '1';
+            } else {
+                foundRow.flag.value = '0';
+            }
+            
+        }
+        
     }
 
     setParam(event){
@@ -128,6 +139,12 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
 
         element[fieldName].value = value;
 
+    }
+
+    setFlag(event){
+        let element = this.dataRows.find(ele  => ele.id === event.detail.rowId);
+        element.flag.value = event.detail.flag;
+        console.log('>>> flag: ' + element.flag.value);
     }
 
     handleSetvaluetoparent(event){

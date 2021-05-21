@@ -218,7 +218,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         setSingleRow.infoGroup.label = tempItem.InfoGroup__c;
         setSingleRow.infoGroup.value = tempItem.InfoGroupValue__c;
         setSingleRow.numValue.value = tempItem.NumericValue__c;
-        //singleRow.flag.value = (String)tempItem.get('Flag__c');
+        setSingleRow.flag.value = (tempItem.Flag__c) ? 'true' : 'false';
         setSingleRow.priceCode.label = tempItem.PriceCode__c;
         setSingleRow.priceCode.value = tempItem.PriceCodeValue__c;
         setSingleRow.discountCode.label = tempItem.DiscountCode__c;
@@ -236,7 +236,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         //'[rateType = ' + offerLine.rateType.value + '] - ' +
         //'[infoGroup = ' + offerLine.infoGroup.value + '] - ' +
         //'[numValue = ' + offerLine.numValue.value + '] - ' +
-        //'[flag = ' + offerLine.flag.value + '] - ' +
+        //'[flag = ' + offerLine.flag.value + '] - ')
         //'[priceCode = ' + offerLine.priceCode.value + '] - ' +
         //'[stringValue = ' + offerLine.stringValue.value + ']' + 
         //'[tecName = ' + offerLine.tecName + ']'
@@ -262,16 +262,24 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         }
 
         tecOffItem.Operand__c = offerLine.tecName;
-        tecOffItem.FareType__c = offerLine.rateType.label;//label
-        tecOffItem.FareTypeValue__c = offerLine.rateType.value;//value
-        tecOffItem.InfoGroup__c = offerLine.infoGroup.label;//label
-        tecOffItem.InfoGroupValue__c = offerLine.infoGroup.value;//value
+        tecOffItem.FareType__c = offerLine.rateType.label;
+        tecOffItem.FareTypeValue__c = offerLine.rateType.value;
+        tecOffItem.InfoGroup__c = offerLine.infoGroup.label;
+        tecOffItem.InfoGroupValue__c = offerLine.infoGroup.value;
         tecOffItem.NumericValue__c = offerLine.numValue.value;
-        tecOffItem.Flag__c = true;//offerLine.flag.value;
-        tecOffItem.PriceCode__c = offerLine.priceCode.label;//label
-        tecOffItem.PriceCodeValue__c = offerLine.infoGroup.value;//value
-        tecOffItem.DiscountCode__c = offerLine.discountCode.label;//label
-        tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;//value
+
+        if(String.isEmpty(offerLine.flag.value)){
+            tecOffItem.Flag__c = false;
+        } else if(offerLine.flag.value.equalsIgnoreCase('true')){
+            tecOffItem.Flag__c = true;
+        } else if(offerLine.flag.value.equalsIgnoreCase('false')){
+            tecOffItem.Flag__c = false;
+        }
+
+        tecOffItem.PriceCode__c = offerLine.priceCode.label;
+        tecOffItem.PriceCodeValue__c = offerLine.infoGroup.value;
+        tecOffItem.DiscountCode__c = offerLine.discountCode.label;
+        tecOffItem.DiscountCodeValue__c = offerLine.discountCode.value;
         tecOffItem.StringValue__c = offerLine.stringValue.value;
         return tecOffItem;
     }

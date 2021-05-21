@@ -177,8 +177,8 @@
                                         <div class="slds-form-element">
                                             <div class="slds-form-element__control">
                                                 <span class="slds-checkbox slds-checkbox_standalone">
-                                                    <input if:true={d.g} type="checkbox" data-id={d.id} checked name="label" value={d.id} onclick={checkboxHandler} />
-                                                    <input if:false={d.g} type="checkbox" data-id={d.id} name="label" value={d.id} onclick={checkboxHandler} />
+                                                    <input if:true={d.g} type="checkbox" data-id={d.id} checked name="g" value={d.id} onclick={checkboxHandler} />
+                                                    <input if:false={d.g} type="checkbox" data-id={d.id} name="g" value={d.id} onclick={checkboxHandler} />
                                                     <span class="slds-checkbox_faux"></span>
                                                 </span>
                                             </div>
@@ -274,7 +274,12 @@
                                     <td data-label="Flag">
                                         <div if:true={d.flag.enabled} title="flag" class="slds-truncate slds-form-element__control slds-grow slds-align_absolute-center">
                                             <!--<input type="checkbox" class="slds-input" value="" style="width: 12px;"/>-->
-                                            <lightning-input
+                                            <c-hdt-input-checkbox
+                                                input={d.flag.value}
+                                                row-id={d.id}
+                                                onsetflag={setFlag}
+                                            ></c-hdt-input-checkbox>                                        
+                                            <!--<lightning-input
                                                     data-row-id={d.id}
                                                     type="checkbox"
                                                     label=" "
@@ -282,7 +287,7 @@
                                                     data-id={d.id}
                                                     variant="label-hidden"
                                                     onclick={setParam}
-                                            ></lightning-input>
+                                            ></lightning-input>-->
                                         </div>
                                         <template if:false={d.flag.enabled} >
                                             <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
