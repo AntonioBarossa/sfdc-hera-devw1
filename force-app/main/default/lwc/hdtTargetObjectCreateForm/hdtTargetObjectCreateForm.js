@@ -304,7 +304,20 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('event detail callservicesap *************' + JSON.stringify(selectedservicepoint));
         let servicePointCode;
 
-        servicePointCode =JSON.stringify(this.selectedservicepoint).split(',')[1].split(':')[1];
+        let spCode =JSON.stringify(this.selectedservicepoint).split(',');
+       
+        spCode.forEach(element => {
+        console.log('selectedservicepoint handleCallServiceSap ' + element);
+        if(element.split(':')[0].includes('Codice Punto')){
+            servicePointCode = element.split(':')[1];
+        }
+        if(element.split(':')[0].includes('ServicePointCode__c')){
+            servicePointCode = element.split(':')[1];
+        }
+
+        });
+
+        //servicePointCode =JSON.stringify(this.selectedservicepoint).split(',')[1].split(':')[1];
         
         let lenght = servicePointCode.length;
         let input = '';
@@ -900,6 +913,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     get formTitle(){
         console.log('formTitle START');        
         let title = 'Service Point: ';
+        console.log('sp ******* formtitle' + JSON.stringify(this.selectedservicepoint));
 
         if(this.selectedservicepoint != undefined){
             console.log('entra in selectedServicePoint != undefined ');
@@ -909,16 +923,23 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 
                 title += this.selectedservicepoint['Codice Punto'];
             }
-            if(JSON.stringify(this.selectedservicepoint).split(',')[1].split(':')[0].includes('ServicePointCode__c')){
-                let titleContinue = '';
-                let titleContinueFinal='';
-                let lenght = JSON.stringify(this.selectedservicepoint).split(',')[1].split(':')[1].length ;
+            else if(this.selectedservicepoint['Codice Punto'] == undefined){
 
-                console.log('entra in selectedservicepoint ServicePointCode__c');
+
+                let sp =JSON.stringify(this.selectedservicepoint).split(',');
+                
+                sp.forEach(element => {
+                console.log('selectedservicepoint formtitle ' + element);
+                if(element.split(':')[0].includes('ServicePointCode__c')){
+                    title += element.split(':')[1];
+                }
+                if(element.split(':')[0].includes('Codice Punto')){
+                    title += element.split(':')[1];
+                }
+        
+                });
                 this.isSap=true;
-                titleContinue = JSON.stringify(this.selectedservicepoint).split(',')[1].split(':')[1];
-                titleContinueFinal = titleContinue.substring(1,lenght-1);
-                title += titleContinueFinal;
+
             }
         } 
         else 
@@ -1015,7 +1036,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.isSap= false;
             this.dispatchEvent(new CustomEvent('newservicepoint', {detail: this.newServicePoint}));
             this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: this.newServicePoint}));
-            
             
         }).catch(error => {
             this.loading = false;
