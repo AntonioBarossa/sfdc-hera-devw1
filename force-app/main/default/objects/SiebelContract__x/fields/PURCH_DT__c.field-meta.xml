@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PURCH_DT__c</fullName>
+    <description>PURCH_DT</description>
+    <externalDeveloperName>PURCH_DT</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data stipula</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

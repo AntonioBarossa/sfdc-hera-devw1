@@ -1925,7 +1925,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa di quality call</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1938,6 +1950,10 @@
         </values>
         <values>
             <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1954,6 +1970,14 @@
         </values>
         <values>
             <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
         <values>

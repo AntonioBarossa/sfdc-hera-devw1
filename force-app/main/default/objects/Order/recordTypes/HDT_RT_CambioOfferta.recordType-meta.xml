@@ -1969,11 +1969,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL KO</fullName>
+            <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL OK</fullName>
+            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1997,6 +1997,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa esecuzione appuntamento</fullName>
             <default>false</default>
         </values>
@@ -2009,15 +2013,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In registrazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In sequenzializzazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Inviato a DL</fullName>
+            <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2029,22 +2029,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Plico Firmato da validare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico da inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico inviato da firmare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico validato Firmato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
         </values>
@@ -2053,11 +2037,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Registrazione  da validare</fullName>
+            <fullName>Quality Call KO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Registrazione validata  Firmato%2FInviato</fullName>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
         <values>

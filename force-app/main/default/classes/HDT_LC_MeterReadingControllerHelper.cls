@@ -148,13 +148,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         if(enrichmentbMetadataList.size()>0 && !String.isEmpty(enrichmentbMetadataList[0].Credential__c)){
 
             httpObj.endPoint = enrichmentbMetadataList[0].Credential__c;
-            httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
-
-/*             if(enrichmentbMetadataList[0].UseMock__c){
-                httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/meterreading';
-                httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
-            } */
-
+            //httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');
 
