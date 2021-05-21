@@ -1183,12 +1183,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1278,12 +1272,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1367,12 +1355,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1447,12 +1429,6 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1533,12 +1509,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1616,12 +1586,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1687,12 +1651,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1755,12 +1713,6 @@
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1847,12 +1799,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1906,12 +1852,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -1950,12 +1890,6 @@
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2009,12 +1943,6 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2086,12 +2014,6 @@
             <field>Note__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2178,12 +2100,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -2252,12 +2168,6 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2341,12 +2251,6 @@
             <field>DistributorNote__c</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.MobilePhone</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Origin</field>
-            <value>
-                <stringValue>Phone</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
