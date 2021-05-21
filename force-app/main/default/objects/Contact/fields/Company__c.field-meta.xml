@@ -3,7 +3,7 @@
     <fullName>Company__c</fullName>
     <externalId>false</externalId>
     <label>Company</label>
-    <required>false</required>
+    <required>true</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
