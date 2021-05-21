@@ -13,7 +13,7 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Non Verificato</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Non Verificato</label>
             </value>
             <value>

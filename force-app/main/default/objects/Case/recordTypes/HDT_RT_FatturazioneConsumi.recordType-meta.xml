@@ -7789,6 +7789,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO</fullName>
             <default>false</default>
         </values>

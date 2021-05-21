@@ -25,7 +25,7 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+&quot;FieldName&quot; : &quot;ServicePoint__c&quot;,
 &quot;Column&quot; : 1
 },
 {

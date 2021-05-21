@@ -1,108 +1,255 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>PowerVaration__c</members>
+        <members>BillingProfile__c</members>
+        <members>Case</members>
+        <members>Contract</members>
+        <members>ServicePoint__c</members>
+        <members>SiebelContact__x</members>
+        <members>SiebelCustomer__x</members>
         <name>CustomObject</name>
     </types>
     <types>
-        <members>Asset.HDT_RT_CompositionVASproductsnotbillable</members>
-        <members>Asset.HDT_RT_SectionBonusforEEservice</members>
-        <members>Asset.HDT_RT_SectionBonusforGasservice</members>
-        <members>Asset.HDT_RT_SectionContributesforEEservice</members>
-        <members>Asset.HDT_RT_SectionContributesforGasservice</members>
-        <members>Asset.HDT_RT_VASConsumptionanalysis</members>
-        <members>Asset.HDT_RT_VASPoductsnotbillable</members>
-        <members>Asset.HDT_RT_VASServicesnotbillable</members>
+        <members>Case.HDT_RT_FatturazioneConsumi</members>
         <members>Case.HDT_RT_VariazioniEle</members>
         <members>Case.HDT_RT_VariazioniGas</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Call</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Default</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorAppointment</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_DistributorCommunication</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_GestioneIvaAccise</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_Sportello</members>
-        <members>wrts_prcgvr__Activity__c.HDT_RT_ValidazioneDocumentale</members>
+        <members>ServicePoint__c.HDT_RT_Ele</members>
+        <members>ServicePoint__c.HDT_RT_Gas</members>
         <name>RecordType</name>
     </types>
     <types>
+        <members>Case-HDT_Disattivazioni</members>
         <members>Case-HDT_VariazioniEle</members>
         <members>Case-HDT_VariazioniGas</members>
-        <members>SolTracking__c-Notifica SOL Layout</members>
+        <members>Case-HDT_VerificheEle</members>
+        <members>Case-HDT_VerificheGas</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_LC_ApplyBillingProfileModal</members>
-        <members>HDT_QR_QuoteLine</members>
-        <members>HDT_SRV_PrescrizioneFattura</members>
-        <members>HDT_TRH_SolTracking</members>
-        <members>HDT_TRH_Task</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_ServicePoint</members>
+        <members>BillingProfile__c.BP_Compact</members>
+        <members>Contract.Contract_Compact</members>
+        <members>ServicePoint__c.SP_Compact</members>
+        <name>CompactLayout</name>
+    </types>
+    <types>
+        <members>HDT_LC_AccountStatementCtrlUtility</members>
+        <members>HDT_LC_ChildOrderProcessDetails</members>
+        <members>HDT_QR_AmountQuote</members>
+        <members>HDT_QR_Order</members>
+        <members>HDT_UTL_AmountQuote</members>
+        <members>HDT_UTL_HerokuPostSalesManager</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_WS_MulesoftCaller</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>AdminPriceQuote__c.Commodity__c</members>
-        <members>AdminPriceQuote__c.MeterManufactureYear__c</members>
-        <members>AdminPriceQuote__c.ProcessCode__c</members>
-        <members>Asset.CompanyOwner__c</members>
-        <members>Case.ClientCategory__c</members>
-        <members>CommunicationLog__c.Causale__c</members>
-        <members>PowerVaration__c.CustomerCode__c</members>
-        <members>PowerVaration__c.FiscalCode__c</members>
-        <members>PowerVaration__c.NetDebit__c</members>
-        <members>PowerVaration__c.Price0__c</members>
-        <members>PowerVaration__c.Price1__c</members>
-        <members>PowerVaration__c.Price2__c</members>
-        <members>PowerVaration__c.PriceM__c</members>
-        <members>PowerVaration__c.ServicePointCode__c</members>
-        <members>PowerVaration__c.ServicePoint__c</members>
-        <members>PowerVaration__c.VariationDate__c</members>
-        <members>PowerVaration__c.VatNumberPayment__c</members>
-        <members>PowerVaration__c.VatNumberRequest__c</members>
-        <members>SBQQ__Quote__c.CompanyOwner__c</members>
-        <members>User.LoginADN__c</members>
-        <members>wrts_prcgvr__Activity__c.BillTransfer__c</members>
+        <members>HDT_ChoiseSource</members>
+        <name>GlobalValueSet</name>
+    </types>
+    <types>
+        <members>Account.BillingAddressFormula__c</members>
+        <members>ContactPointEmail.Status__c</members>
+        <members>ContactPointPhone.Status__c</members>
+        <members>SiebelContact__x.ADDR_NUM__c</members>
+        <members>SiebelContact__x.ADDR__c</members>
+        <members>SiebelContact__x.AZ_ImportDatetime__c</members>
+        <members>SiebelContact__x.CELL_PH_NUM__c</members>
+        <members>SiebelContact__x.CITY__c</members>
+        <members>SiebelContact__x.COMMENTS__c</members>
+        <members>SiebelContact__x.COUNTRY__c</members>
+        <members>SiebelContact__x.CREATED__c</members>
+        <members>SiebelContact__x.DFLT_ORDER_PROC_CD__c</members>
+        <members>SiebelContact__x.DISTRICT__c</members>
+        <members>SiebelContact__x.EMAIL_ADDR__c</members>
+        <members>SiebelContact__x.FAX_PH_NUM__c</members>
+        <members>SiebelContact__x.FST_NAME__c</members>
+        <members>SiebelContact__x.HOME_PH_NUM__c</members>
+        <members>SiebelContact__x.INTEGRATION_ID__c</members>
+        <members>SiebelContact__x.LAST_NAME__c</members>
+        <members>SiebelContact__x.PARTY_ID__c</members>
+        <members>SiebelContact__x.PERSON_ID__c</members>
+        <members>SiebelContact__x.PERSON_UID__c</members>
+        <members>SiebelContact__x.PREMISE_FLG__c</members>
+        <members>SiebelContact__x.PROVINCE__c</members>
+        <members>SiebelContact__x.PR_RELATION_ID__c</members>
+        <members>SiebelContact__x.REFERENCE_FLG__c</members>
+        <members>SiebelContact__x.REFERENCE_TYPE_CD__c</members>
+        <members>SiebelContact__x.REL_SUB_TYPE_CD__c</members>
+        <members>SiebelContact__x.REL_TYPE_CD__c</members>
+        <members>SiebelContact__x.RESPONSIBILITY__c</members>
+        <members>SiebelContact__x.ROW_ID__c</members>
+        <members>SiebelContact__x.SOC_SECURITY_NUM__c</members>
+        <members>SiebelContact__x.TITLE__c</members>
+        <members>SiebelContact__x.X_ADDR_NUM_SUFF__c</members>
+        <members>SiebelContact__x.X_ADDR_TYPE__c</members>
+        <members>SiebelContact__x.X_BUILDING_CODE__c</members>
+        <members>SiebelContact__x.X_COMP_ADDR__c</members>
+        <members>SiebelContact__x.X_CONS_PROFILAZIONE_NO__c</members>
+        <members>SiebelContact__x.X_CONS_PROFILAZIONE_SI__c</members>
+        <members>SiebelContact__x.X_DATA_CONS_PROFILAZIONE__c</members>
+        <members>SiebelContact__x.X_DATA_LAST_UPD_PRIVACY__c</members>
+        <members>SiebelContact__x.X_EVENTO__c</members>
+        <members>SiebelContact__x.X_FLG_INCLUDI__c</members>
+        <members>SiebelContact__x.X_FONTE_CONS_PROFILAZIONE__c</members>
+        <members>SiebelContact__x.X_FONTE_PRIVACY__c</members>
+        <members>SiebelContact__x.X_ISTAT_LOC__c</members>
+        <members>SiebelContact__x.X_ISTAT_VIA__c</members>
+        <members>SiebelContact__x.X_PART_IVA__c</members>
+        <members>SiebelContact__x.X_PRIVACY_TUTTO_NO__c</members>
+        <members>SiebelContact__x.X_PRIVACY_TUTTO_SI__c</members>
+        <members>SiebelContact__x.X_RAG_SOCIALE__c</members>
+        <members>SiebelContact__x.X_STRUCT_REG_FLG__c</members>
+        <members>SiebelContact__x.ZIPCODE__c</members>
+        <members>SiebelCustomer__x.ADDR_NUM__c</members>
+        <members>SiebelCustomer__x.ADDR__c</members>
+        <members>SiebelCustomer__x.ALIAS_NAME__c</members>
+        <members>SiebelCustomer__x.ASGN_PH_AC__c</members>
+        <members>SiebelCustomer__x.ATTRIB_11__c</members>
+        <members>SiebelCustomer__x.ATTRIB_26__c</members>
+        <members>SiebelCustomer__x.ATTRIB_28__c</members>
+        <members>SiebelCustomer__x.ATTRIB_34__c</members>
+        <members>SiebelCustomer__x.AZ_ImportDatetime__c</members>
+        <members>SiebelCustomer__x.CITY__c</members>
+        <members>SiebelCustomer__x.COUNTRY__c</members>
+        <members>SiebelCustomer__x.CREATED__c</members>
+        <members>SiebelCustomer__x.DESC_TEXT__c</members>
+        <members>SiebelCustomer__x.DISTRICT__c</members>
+        <members>SiebelCustomer__x.INTEGRATION_ID__c</members>
+        <members>SiebelCustomer__x.LOGIN__c</members>
+        <members>SiebelCustomer__x.MAIN_EMAIL_ADDR__c</members>
+        <members>SiebelCustomer__x.MAIN_FAX_PH_NUM__c</members>
+        <members>SiebelCustomer__x.MAIN_PH_NUM__c</members>
+        <members>SiebelCustomer__x.NAME_1__c</members>
+        <members>SiebelCustomer__x.OU_NUM__c</members>
+        <members>SiebelCustomer__x.OU_TYPE_CD__c</members>
+        <members>SiebelCustomer__x.PAR_OU_ID__c</members>
+        <members>SiebelCustomer__x.PREMISE_FLG__c</members>
+        <members>SiebelCustomer__x.PROVINCE__c</members>
+        <members>SiebelCustomer__x.ROW_ID__c</members>
+        <members>SiebelCustomer__x.TAX_IDEN_NUM__c</members>
+        <members>SiebelCustomer__x.VAT_REGN_NUM__c</members>
+        <members>SiebelCustomer__x.X_ACCT_PH_TYPE__c</members>
+        <members>SiebelCustomer__x.X_ADDR_NUM_SUFF__c</members>
+        <members>SiebelCustomer__x.X_ADDR_TYPE__c</members>
+        <members>SiebelCustomer__x.X_BONUS_SOCIALE_FLG__c</members>
+        <members>SiebelCustomer__x.X_BUILDING_CODE__c</members>
+        <members>SiebelCustomer__x.X_CAP__c</members>
+        <members>SiebelCustomer__x.X_CELL_PH_NUM_2__c</members>
+        <members>SiebelCustomer__x.X_CELL_PH_NUM__c</members>
+        <members>SiebelCustomer__x.X_COGNOME_SLOVENO__c</members>
+        <members>SiebelCustomer__x.X_COMP_ADDR__c</members>
+        <members>SiebelCustomer__x.X_COMUNE__c</members>
+        <members>SiebelCustomer__x.X_CONSENSO_FIRMA_FLG__c</members>
+        <members>SiebelCustomer__x.X_CONS_PROFILAZIONE_NO__c</members>
+        <members>SiebelCustomer__x.X_CONS_PROFILAZIONE_SI__c</members>
+        <members>SiebelCustomer__x.X_CUST_MODEL__c</members>
+        <members>SiebelCustomer__x.X_DATAFINE_PIVA_GRUPPO__c</members>
+        <members>SiebelCustomer__x.X_DATAINIZIO_PIVA_GRUPPO__c</members>
+        <members>SiebelCustomer__x.X_DATA_CONS_PROFILAZIONE__c</members>
+        <members>SiebelCustomer__x.X_DATA_LAST_UPD_PRIVACY__c</members>
+        <members>SiebelCustomer__x.X_DOCUMENTO_ACQUISITO_FLG__c</members>
+        <members>SiebelCustomer__x.X_FLG_PIVA_GRUPPO__c</members>
+        <members>SiebelCustomer__x.X_FLOOR__c</members>
+        <members>SiebelCustomer__x.X_FONTE_CONS_PROFILAZIONE__c</members>
+        <members>SiebelCustomer__x.X_FONTE_PRIVACY__c</members>
+        <members>SiebelCustomer__x.X_INDIRIZZO__c</members>
+        <members>SiebelCustomer__x.X_ISTAT_LOC__c</members>
+        <members>SiebelCustomer__x.X_ISTAT_VIA__c</members>
+        <members>SiebelCustomer__x.X_LIMITAZIONE_DATI__c</members>
+        <members>SiebelCustomer__x.X_LOCALITA__c</members>
+        <members>SiebelCustomer__x.X_MAIN_PH_NUM_2__c</members>
+        <members>SiebelCustomer__x.X_MARCATURA_CLIENTE__c</members>
+        <members>SiebelCustomer__x.X_NOME_SLOVENO__c</members>
+        <members>SiebelCustomer__x.X_NUM_CIVICO__c</members>
+        <members>SiebelCustomer__x.X_PIVA_GRUPPO__c</members>
+        <members>SiebelCustomer__x.X_PRIVACY_TUTTO_NO__c</members>
+        <members>SiebelCustomer__x.X_PRIVACY_TUTTO_SI__c</members>
+        <members>SiebelCustomer__x.X_PROV__c</members>
+        <members>SiebelCustomer__x.X_REFERENTE_1__c</members>
+        <members>SiebelCustomer__x.X_REFERENTE_2__c</members>
+        <members>SiebelCustomer__x.X_SEGMENT__c</members>
+        <members>SiebelCustomer__x.X_STAIR__c</members>
+        <members>SiebelCustomer__x.X_STATO_IND_LEG__c</members>
+        <members>SiebelCustomer__x.X_STRUCT_REG_FLG__c</members>
+        <members>SiebelCustomer__x.X_SUFF_CIVICO__c</members>
+        <members>SiebelCustomer__x.X_TIPO_OPERAZIONE__c</members>
+        <members>SiebelCustomer__x.X_VIRTUAL_ACCOUNT__c</members>
+        <members>SiebelCustomer__x.ZIPCODE__c</members>
+        <members>wrts_prcgvr__Activity__c.Status__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtApplyBillingProfileModal</members>
+        <members>HDT_LCP_AcctStmtOpenLwc</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>hdtChildOrderProcessActions</members>
+        <members>hdtConfirmationDialogDropdownManual</members>
+        <members>hdtRecordEditFormFlow</members>
         <members>hdtSelfReading</members>
-        <members>hdtSelfReadingRegister</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
-        <members>HDT_SolTracking</members>
-        <name>ApexTrigger</name>
-    </types>
-    <types>
-        <members>Admin</members>
         <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
         <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
         <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>Hera_Service_Console</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>HDT_DataEnrichmentTransocode.CATEGORIATARIFFA</members>
-        <members>HDT_UserInputFlow.Prescrizione_Fatture</members>
+        <members>HDT_ButtonDetails.EC1_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC4_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC4_1_RunFlowFromAuraReplace</members>
+        <members>HDT_ButtonDetails.EC5_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC6_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC7_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC8_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.EC9_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.NVI_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.paperless_1_RunFlowFromAura</members>
+        <members>HDT_ButtonDetails.paperless_1_RunFlowFromAuraGenerate</members>
+        <members>HDT_TabConfiguration.EC</members>
+        <members>HDT_TabConfiguration.EC1</members>
+        <members>HDT_TabConfiguration.EC4</members>
+        <members>HDT_TabConfiguration.EC5</members>
+        <members>HDT_TabConfiguration.EC6</members>
+        <members>HDT_TabConfiguration.EC7</members>
+        <members>HDT_TabConfiguration.EC8</members>
+        <members>HDT_TabConfiguration.EC9</members>
+        <members>HDT_TabConfiguration.NVI</members>
+        <members>HDT_TabConfiguration.paperless</members>
+        <members>HDT_UserInputFlow.Disattivazioni_Altri_Motivi_Richiesta</members>
+        <members>HDT_UserInputFlow.Disattivazioni_Chiusura_Contatore</members>
+        <members>HDT_UserInputFlow.Disattivazioni_Rifiuto_Voltura</members>
+        <members>HDT_UserInputFlow.Variazioni_BP_CA_Errata_Categoria</members>
+        <members>HDT_UserInputFlow.Variazioni_BP_CA_Errata_Categoria_New</members>
+        <members>HDT_UserInputFlow.Variazioni_Cambio_Contatore_No_Reg</members>
+        <members>HDT_UserInputFlow.Variazioni_Condizioni_Contrattuali_Err</members>
+        <members>HDT_UserInputFlow.Variazioni_Dettaglio_Bolletta</members>
+        <members>HDT_UserInputFlow.Variazioni_Dichiarazione_di_Intento</members>
         <members>HDT_UserInputFlow.Variazioni_Fiscale_Ele_Accise</members>
         <members>HDT_UserInputFlow.Variazioni_Fiscale_Ele_IVA</members>
         <members>HDT_UserInputFlow.Variazioni_Fiscale_Gas_Accise</members>
         <members>HDT_UserInputFlow.Variazioni_Fiscale_Gas_IVA</members>
+        <members>HDT_UserInputFlow.Variazioni_Gestione_Calamit</members>
+        <members>HDT_UserInputFlow.Variazioni_Mancata_Telelettura_Lettura</members>
+        <members>HDT_UserInputFlow.Variazioni_Marcatura_uso_PdR</members>
+        <members>HDT_UserInputFlow.Variazioni_Modifica_Consumo_Annuo</members>
+        <members>HDT_UserInputFlow.Variazioni_Modifica_Layout_Dettaglio</members>
+        <members>HDT_UserInputFlow.Variazioni_Modifica_Portale_SOL_Gestio</members>
+        <members>HDT_UserInputFlow.Variazioni_Modifica_Tariffa</members>
+        <members>HDT_UserInputFlow.Variazioni_Sottoprocesso</members>
+        <members>HDT_UserInputFlow.Variazioni_Split_Payment</members>
+        <members>HDT_UserInputFlow.Variazioni_Variazione_Indirizzo_Forn</members>
+        <members>HDT_UserInputFlow.Verifiche_Energia_Elettrica</members>
+        <members>HDT_UserInputFlow.Verifiche_Energia_Elettrica_Modifica</members>
+        <members>HDT_UserInputFlow.Verifiche_Gas</members>
+        <members>HDT_UserInputFlow.Verifiche_Gas_Modifica</members>
         <name>CustomMetadata</name>
     </types>
     <types>
-        <members>HDT_FL_GestioneVariazioni</members>
+        <members>HDT_FL_GestioneFatturazione</members>
+        <members>HDT_FL_GestionePagamenti_ComunicazionePagamento</members>
+        <members>HDT_FL_GestioneVerifiche</members>
         <name>Flow</name>
     </types>
     <version>49</version>

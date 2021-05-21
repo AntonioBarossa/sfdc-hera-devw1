@@ -18,8 +18,17 @@ public inherited sharing class HDT_UTL_AmountQuote {
 
     String mark = inputs[0].market;
 
+    String commodity = inputs[0].commodity;
+
+    String processType = inputs[0].processType;
+
+    Date manufactureDate = inputs[0].manufactureYear;
+    String year = '';
+    if(inputs[0].manufactureYear != null)
+      year = String.valueOf(manufactureDate.year());
+
     //Call to the relative query class 
-    return HDT_QR_AmountQuote.queryAmount(distributor, city, cal, existCorrector, mark);
+    return HDT_QR_AmountQuote.queryAmount(distributor, city, cal, existCorrector, mark,commodity,processType,year);
     
 
   }
@@ -42,6 +51,15 @@ public inherited sharing class HDT_UTL_AmountQuote {
 
           @InvocableVariable
           public String market;
+
+          @InvocableVariable
+          public Date manufactureYear;
+
+          @InvocableVariable
+          public String commodity;
+          
+          @InvocableVariable
+          public String processType;
 
     }
 }
