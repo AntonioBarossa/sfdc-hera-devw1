@@ -7,7 +7,7 @@ public with sharing class HDT_UTL_Lead {
         Lead lead= leadqr.getRecordById(Id);
         System.debug('HOLAHOLA:' + lead);
         
-        HDT_WRP_AddressObject a= new HDT_WRP_AddressObject(lead.Country,lead.State , lead.City, lead.PostalCode, lead.Street, lead.StreetNumber__c, lead.CityCode__c, lead.StreetNumberExtension__c, lead.StreetCode__c,false,false);
+        HDT_WRP_AddressObject a= new HDT_WRP_AddressObject(lead.Country,lead.State , lead.City, lead.PostalCode, lead.StreetName__c, lead.StreetNumber__c, lead.CityCode__c, lead.StreetNumberExtension__c, lead.StreetCode__c,false,false);
         
         return a;
     }

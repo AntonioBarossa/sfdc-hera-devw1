@@ -101,7 +101,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         else{
                             //INIZIO SVILUPPI EVERIS
                             System.debug('Ricevuto KO Start');
-                            // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
                             ord.Phase__c = 'Comunicazione verso Heroku KO';
                             ord.description = fieldValueResponse.get('errorMessage');
                             System.debug('Ricevuto KO End');
