@@ -100,8 +100,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
             customerName = account.Name;
+            orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
         } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
             customerName = account.FirstName__c;
+            orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
         }
 
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
@@ -121,6 +123,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.ResidentialCountry__c = account.BillingCountry;
         orderToUpdate.ResidentialCityCode__c = account.BillingCityCode__c;
         orderToUpdate.ResidentialPlace__c = account.BillingPlace__c;
+        orderToUpdate.CustomerCategory__c = account.Category__c;
     }
 
     private static void alignSaleFields(Order orderToUpdate, String saleId){
