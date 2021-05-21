@@ -229,10 +229,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         if(event.target.name === 'draft'){
 
             this.saveInDraft = true;
+            this.cancelCase  = false;
 
         } else if(event.target.name === 'cancel'){
 
             this.cancelCase = true;
+            this.saveInDraft = false;
 
         }
 

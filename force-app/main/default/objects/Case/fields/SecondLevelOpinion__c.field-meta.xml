@@ -204,6 +204,11 @@
                 <label>Costing e Forecasting</label>
             </value>
             <value>
+                <fullName>Contratto Salesforce</fullName>
+                <default>false</default>
+                <label>Contratto Salesforce</label>
+            </value>
+            <value>
                 <fullName>Contratto Siebel</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -257,6 +262,10 @@
         <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>
             <valueName>Contratto SAP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia contratto</controllingFieldValue>
+            <valueName>Contratto Salesforce</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
