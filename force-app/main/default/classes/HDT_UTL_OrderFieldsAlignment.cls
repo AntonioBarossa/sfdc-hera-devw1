@@ -57,6 +57,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.Market__c = servicePoint.MarketOrigin__c;
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;

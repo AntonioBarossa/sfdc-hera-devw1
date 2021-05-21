@@ -85,10 +85,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
             when 'HDT_RT_Attivazione' {
-                if (deliberate == 'In Delibera') {
-                    processType = '	Prima Attivazione In delibera';
-                } else if(deliberate == 'Fuori delibera') {
-                    processType = 'Prima Attivazione Fuori delibera';
+
+                if(extraParams.get('servicePointType') == 'HDT_RT_Ele') {
+                    processType = 'Prima Attivazione Ele';
+                } else {
+                    if (deliberate == 'In Delibera') {
+                        processType = 'Prima Attivazione In delibera';
+                    } else if(deliberate == 'Fuori delibera') {
+                        processType = 'Prima Attivazione Fuori delibera';
+                    }
                 }
             }
             when 'HDT_RT_AttivazioneConModifica' {
