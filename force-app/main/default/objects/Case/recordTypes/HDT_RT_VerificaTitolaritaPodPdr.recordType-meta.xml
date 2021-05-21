@@ -9734,119 +9734,119 @@
     <picklistValues>
         <picklist>Taxes__c</picklist>
         <values>
-            <fullname>Imposta Autotrazione (Cod. G_I09)</fullname>
+            <fullName>Imposta Autotrazione (Cod. G_I09)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imosta Autopr-Prod EE Industr (Cod. G_I15)</fullname>
+            <fullName>Imosta Autopr-Prod EE Industr (Cod. G_I15)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Processi Metallurgici (Cod. G_I22)</fullname>
+            <fullName>Imposta Processi Metallurgici (Cod. G_I22)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Processi Mineralogici (Cod. G_I23)</fullname>
+            <fullName>Imposta Processi Mineralogici (Cod. G_I23)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Forze Armate Nazionali (Cod. G_I24)</fullname>
+            <fullName>Imposta Forze Armate Nazionali (Cod. G_I24)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Usi Domestici (Cod. G_ICD)</fullname>
+            <fullName>Imposta Usi Domestici (Cod. G_ICD)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta usi non domestici iva 10% (Cod. G_ICC10)</fullname>
+            <fullName>Imposta usi non domestici iva 10% (Cod. G_ICC10)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta usi non domestici iva 22% (Cod. G_ICC)</fullname>
+            <fullName>Imposta usi non domestici iva 22% (Cod. G_ICC)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta usi industriali (Cod. G_I04)</fullname>
+            <fullName>Imposta usi industriali (Cod. G_I04)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Altro</fullname>
+            <fullName>Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Processi Elettrolitici (Cod. G_I21)</fullname>
+            <fullName>Imposta Processi Elettrolitici (Cod. G_I21)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Forze Armate NATO (Cod. G_I25)</fullname>
+            <fullName>Imposta Forze Armate NATO (Cod. G_I25)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)</fullname>
+            <fullName>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta usi domestici</fullname>
+            <fullName>Imposta usi domestici</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta ordinaria Altri Usi (Cod. E_IE_M04)</fullname>
+            <fullName>Imposta ordinaria Altri Usi (Cod. E_IE_M04)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta C En&gt;50% unità prod (Cod. E_IE_14A)</fullname>
+            <fullName>Imposta C En&gt;50% unità prod (Cod. E_IE_14A)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)</fullname>
+            <fullName>Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)</fullname>
+            <fullName>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta FFSS (Cod. E_IE_L03)</fullname>
+            <fullName>Imposta FFSS (Cod. E_IE_L03)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Grossiti EE Non Domest (Cod. E_IE_L98)</fullname>
+            <fullName>Imposta Grossiti EE Non Domest (Cod. E_IE_L98)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Illum Pubbl (Cod. E_IE_L01)</fullname>
+            <fullName>Imposta Illum Pubbl (Cod. E_IE_L01)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)</fullname>
+            <fullName>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Opifici (Cod. E_IE_L13)</fullname>
+            <fullName>Imposta Opifici (Cod. E_IE_L13)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta esente Prod.EE (Cod. E_IE_L06)</fullname>
+            <fullName>Imposta esente Prod.EE (Cod. E_IE_L06)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Sedi Diplomatiche (Cod.E_IE_L02)</fullname>
+            <fullName>Imposta Sedi Diplomatiche (Cod.E_IE_L02)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Trasp Urb. (Cod. E_IE_L04)</fullname>
+            <fullName>Imposta Trasp Urb. (Cod. E_IE_L04)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)</fullname>
+            <fullName>Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)</fullname>
+            <fullName>Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullname>Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)</fullname>
+            <fullName>Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)</fullName>
             <default>false</default>
         </values>
         <!-- <values>
