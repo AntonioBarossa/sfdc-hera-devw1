@@ -153,9 +153,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             birthPlace: this.birthPlace
                             };
            calculateFiscalCode({infoData: information}).then((response) => {
-
+            if(response == null){
+                this.showError(errorMsg);
+                const event = new ShowToastEvent({
+                message: 'Comune inserito NON presente a sistema',
+                variant: 'error',
+                mode: 'dismissable'
+                });
+                this.dispatchEvent(event);
+                this.spinner=false;
+            }else{
                 this.personFiscalCode.value= response;
                 this.spinner=false;
+            }
             }).catch((errorMsg) => {
                 this.showError(errorMsg);
                 const event = new ShowToastEvent({
@@ -181,6 +191,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
             if(this.accountAddress['Via'] != null){
                 this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
+                this.fieldsToUpdate['BillingStreetName__c'] = this.accountAddress['Via'];
             }
             if(this.accountAddress['Comune'] != null){
                 this.fieldsToUpdate['BillingCity'] = this.accountAddress['Comune'];
