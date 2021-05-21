@@ -6,15 +6,22 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
     
     @AuraEnabled
     public static String calculateFiscalCode(Map<String,String> infoData){
+
+        String checkCitta = HDT_QR_City.getCityCode(infoData.get('birthPlace').toUpperCase());
         String fiscalCode='';
-        fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase());
-        fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase());
-        fiscalCode += getYear(infoData.get('birthDate'));
-        fiscalCode += getMonthLetter(infoData.get('birthDate'));
-        fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));
-        fiscalCode += HDT_QR_City.getCityCode(infoData.get('birthPlace').toUpperCase());
-        System.debug(HDT_QR_City.getCityCode(infoData.get('birthPlace').toUpperCase()));
-        fiscalCode += getControlLetter(fiscalCode);
+        if(''.equals(checkCitta)){
+            fiscalCode = null ;
+        }else{
+            
+            fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase());
+            fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase());
+            fiscalCode += getYear(infoData.get('birthDate'));
+            fiscalCode += getMonthLetter(infoData.get('birthDate'));
+            fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));
+            fiscalCode += checkCitta;
+            System.debug(checkCitta);
+            fiscalCode += getControlLetter(fiscalCode);
+        }
         return fiscalCode;
     }
     private static Boolean isVowel(String test, String letter){

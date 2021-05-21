@@ -1962,11 +1962,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL KO</fullName>
+            <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito DL OK</fullName>
+            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1994,7 +1994,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Inviato a DL</fullName>
+            <fullName>Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>

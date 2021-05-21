@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_DELTA_CUMULATO__c</fullName>
+    <description>X_DELTA_CUMULATO</description>
+    <externalDeveloperName>X_DELTA_CUMULATO</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Delta cumulato</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>7</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

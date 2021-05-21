@@ -1490,7 +1490,7 @@
             <inputParameters>
                 <name>defaultValue</name>
                 <value>
-                    <elementReference>GetRecord.CancellationReason__c</elementReference>
+                    <elementReference>GetCase.CancellationReason__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
