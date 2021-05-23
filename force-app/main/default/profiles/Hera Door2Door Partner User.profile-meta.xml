@@ -1036,6 +1036,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountStatementFilter__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountStatementFilter__c.Context__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13766,6 +13771,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>PushTracking__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>PushTracking__c.AndroidMediaUrl__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20141,6 +20151,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SMSTracking__c.Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SMSTracking__c.CampaignIDCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22627,6 +22642,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>et4ae5__Email_Linkage__c.et4ae5__emailName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>et4ae5__IndividualEmailResult__c.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
