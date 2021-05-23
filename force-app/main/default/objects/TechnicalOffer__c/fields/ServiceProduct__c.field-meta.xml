@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ServiceProduct__c</fullName>
+    <description>Campo di configurazione che indica il prodotto di servizio.</description>
+    <externalId>false</externalId>
+    <label>Prodotto di servizio</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>GAS_SB_A_SCONTI</fullName>
+                <default>false</default>
+                <label>GAS_SB_A_SCONTI</label>
+            </value>
+            <value>
+                <fullName>ELE_PREZZO</fullName>
+                <default>false</default>
+                <label>ELE_PREZZO</label>
+            </value>
+            <value>
+                <fullName>GAS_BUSINESS</fullName>
+                <default>false</default>
+                <label>GAS_BUSINESS</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
