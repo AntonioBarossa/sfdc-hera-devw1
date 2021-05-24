@@ -3,6 +3,9 @@ import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinish
 import getAsyncJobByJobItem from '@salesforce/apex/HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+//Time out for callout in seconds
+const timeOut = 30;
+
 export default class HdtFlowNavigationButton extends LightningElement {
 
 
@@ -22,7 +25,10 @@ export default class HdtFlowNavigationButton extends LightningElement {
 
     connectedCallback(){
 
-        if(this.loadingSpinner){
+        if(this.loadingSpinner){    
+
+            var startTime = this.getTime();
+            var timeoutTime = startTime > 30 ? startTime + timeOut - 60 : startTime + timeOut;
 
             var interval = setInterval(() => {
 
@@ -35,7 +41,7 @@ export default class HdtFlowNavigationButton extends LightningElement {
                         clearInterval(interval);
                         this.loadingSpinner = false;
                         this.handleGoNext();
-                    } else if(result === 'Error'){
+                    } else if(result === 'Error' || this.getTime() >= timeoutTime){
                         clearInterval(interval);
                         this.loadingSpinner = false;
                         this.showCustomToast();
@@ -58,6 +64,19 @@ export default class HdtFlowNavigationButton extends LightningElement {
             }, 30000);*/
 
         }
+
+    }
+
+    getTime(){
+
+        console.log('###### Inside getTime ######');
+
+        const d = new Date();
+        const seconds = d.getSeconds();
+
+        console.log('#StartSeconds -> '+seconds);  
+        
+        return seconds;
 
     }
 
