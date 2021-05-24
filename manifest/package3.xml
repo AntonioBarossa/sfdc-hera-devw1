@@ -1,172 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Product2.SBQQ__SearchFilters</members>
-        <members>Product2.SBQQ__SearchResults</members>
-        <name>FieldSet</name>
+        <members>Account_Service_Console</members>
+        <name>FlexiPage</name>
     </types>
     <types>
-        <members>HDT_FiltriProcessiSelFornitura__mdt</members>
-        <members>SiebelContractAttribute__x</members>
-        <members>SiebelContract__x</members>
-        <members>wrts_prcgvr__ActivityTemplate__c</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>Order.HDT_RT_Attivazione</members>
-        <members>Order.HDT_RT_AttivazioneConModifica</members>
-        <members>Order.HDT_RT_CambioOfferta</members>
-        <members>Order.HDT_RT_CambioUso</members>
-        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_OrderDossier</members>
-        <members>Order.HDT_RT_Proroga</members>
-        <members>Order.HDT_RT_ScontiBonus</members>
-        <members>Order.HDT_RT_Subentro</members>
-        <members>Order.HDT_RT_SwitchIn</members>
-        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
-        <members>Order.HDT_RT_VAS</members>
+        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
+        <members>Case.HDT_RT_ComunicazionePagamento</members>
+        <members>Case.HDT_RT_Domiciliazione</members>
+        <members>Case.HDT_RT_PianoRateizzazione</members>
+        <members>Case.HDT_RT_Rimborso</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_LC_FormAccountBusiness</members>
-        <members>HDT_LC_FormAccountResidenziale</members>
-        <members>HDT_QR_Lead</members>
-        <members>HDT_QR_QuoteLine</members>
-        <members>HDT_UTL_CalculateFiscalCode</members>
-        <members>HDT_UTL_CaseProcess</members>
-        <members>HDT_UTL_Lead</members>
-        <members>HDT_UTL_ServicePoint</members>
+        <members>Account-CPQ Account Layout Service Console</members>
+        <members>Case-HDT_Disattivazioni</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_ChildOrderProcessPrecheck</members>
+        <members>HDT_LC_OrderDossierWizardActions</members>
+        <members>HDT_LC_ProcessesContainer</members>
+        <members>HDT_QR_UserQueries</members>
+        <members>HDT_TRH_Case</members>
+        <members>HDT_UTL_OrderFieldsAlignment</members>
+        <members>HDT_UTL_OrderProcess</members>
         <members>HDT_WS_SalesApexCalloutAction</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>Contact.Company__c</members>
-        <members>Order.DistributorPracticeCode__c</members>
-        <members>Order.Phase__c</members>
-        <members>Order.VASType__c</members>
-        <members>SiebelContractAttribute__x.ASSET_ID__c</members>
-        <members>SiebelContractAttribute__x.ATTR_NAME__c</members>
-        <members>SiebelContractAttribute__x.AZ_ImportDatetime__c</members>
-        <members>SiebelContractAttribute__x.CHAR_VAL__c</members>
-        <members>SiebelContractAttribute__x.DATA_TYPE_CD__c</members>
-        <members>SiebelContractAttribute__x.DATE_VAL__c</members>
-        <members>SiebelContractAttribute__x.DESC_TEXT__c</members>
-        <members>SiebelContractAttribute__x.NUM_VAL__c</members>
-        <members>SiebelContractAttribute__x.ROW_ID__c</members>
-        <members>SiebelContractAttribute__x.X_ACTIVE_FLG__c</members>
-        <members>SiebelContractAttribute__x.X_EXPIRY_DATE__c</members>
-        <members>SiebelContract__x.ASSET_NUM__c</members>
-        <members>SiebelContract__x.AZ_ImportDatetime__c</members>
-        <members>SiebelContract__x.DESC_TEXT__c</members>
-        <members>SiebelContract__x.END_DT__c</members>
-        <members>SiebelContract__x.IMPIANTO_ADDR_NUM__c</members>
-        <members>SiebelContract__x.IMPIANTO_ADDR__c</members>
-        <members>SiebelContract__x.IMPIANTO_ASSET_NUM__c</members>
-        <members>SiebelContract__x.IMPIANTO_ATTRIB_34__c</members>
-        <members>SiebelContract__x.IMPIANTO_ATTRIB_36__c</members>
-        <members>SiebelContract__x.IMPIANTO_ATTRIB_37__c</members>
-        <members>SiebelContract__x.IMPIANTO_ATTRIB_40__c</members>
-        <members>SiebelContract__x.IMPIANTO_ATTRIB_41__c</members>
-        <members>SiebelContract__x.IMPIANTO_CITY__c</members>
-        <members>SiebelContract__x.IMPIANTO_COUNTRY__c</members>
-        <members>SiebelContract__x.IMPIANTO_DISTRICT__c</members>
-        <members>SiebelContract__x.IMPIANTO_INSTALL_DT__c</members>
-        <members>SiebelContract__x.IMPIANTO_OU_NUM__c</members>
-        <members>SiebelContract__x.IMPIANTO_PROD_CATG_CD__c</members>
-        <members>SiebelContract__x.IMPIANTO_PROVINCE__c</members>
-        <members>SiebelContract__x.IMPIANTO_ROW_ID__c</members>
-        <members>SiebelContract__x.IMPIANTO_STATUS_CD__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_ADDR_NUM_SUFF__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_BRAND_SOC__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_BUILDING_CODE__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_COMP_ADDR__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_DISTRIB_CD__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_ISTAT_VIA__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_LINE_CD__c</members>
-        <members>SiebelContract__x.IMPIANTO_X_NON_DISALIMENTABILE__c</members>
-        <members>SiebelContract__x.IMPIANTO_ZIPCODE__c</members>
-        <members>SiebelContract__x.NAME__c</members>
-        <members>SiebelContract__x.OU_NUM__c</members>
-        <members>SiebelContract__x.PROD_CATG_CD__c</members>
-        <members>SiebelContract__x.PROD_ID__c</members>
-        <members>SiebelContract__x.PURCH_DT__c</members>
-        <members>SiebelContract__x.ROW_ID__c</members>
-        <members>SiebelContract__x.SERV_ACCT_ID__c</members>
-        <members>SiebelContract__x.SERV_ACCT_SALESFORCE__c</members>
-        <members>SiebelContract__x.START_DT__c</members>
-        <members>SiebelContract__x.STATUS_CD__c</members>
-        <members>SiebelContract__x.STATUS_CHG_DT__c</members>
-        <members>SiebelContract__x.X_BILL_DESC__c</members>
-        <members>SiebelContract__x.X_BILL_PERIOD__c</members>
-        <members>SiebelContract__x.X_CAUSA_BLOCCO_DESC__c</members>
-        <members>SiebelContract__x.X_CAUSA_BLOCCO__c</members>
-        <members>SiebelContract__x.X_CA_INACTIVE__c</members>
-        <members>SiebelContract__x.X_CF_SOTTOSCRITTORE__c</members>
-        <members>SiebelContract__x.X_CODICE_REMI__c</members>
-        <members>SiebelContract__x.X_COD_DEST_DIV__c</members>
-        <members>SiebelContract__x.X_COD_OFF__c</members>
-        <members>SiebelContract__x.X_COD_UFFICIO__c</members>
-        <members>SiebelContract__x.X_COGNOME_DEST_DIV__c</members>
-        <members>SiebelContract__x.X_CONTRATTO_OLD__c</members>
-        <members>SiebelContract__x.X_CONT_CD__c</members>
-        <members>SiebelContract__x.X_CONT_CLASS__c</members>
-        <members>SiebelContract__x.X_DELTA_CUMULATO__c</members>
-        <members>SiebelContract__x.X_DEPOSITO_OBIET__c</members>
-        <members>SiebelContract__x.X_DEPOSIT_REQ__c</members>
-        <members>SiebelContract__x.X_DETERM_CONTI_DESC__c</members>
-        <members>SiebelContract__x.X_DETERM_CONTI__c</members>
-        <members>SiebelContract__x.X_DOMIC_DESCR__c</members>
-        <members>SiebelContract__x.X_DT_FINE_ESENZIONE__c</members>
-        <members>SiebelContract__x.X_DT_INIZIO_ESENZIONE__c</members>
-        <members>SiebelContract__x.X_EMAIL_BOLL__c</members>
-        <members>SiebelContract__x.X_END_CONTRACT__c</members>
-        <members>SiebelContract__x.X_FATTURA_COLL_DESC__c</members>
-        <members>SiebelContract__x.X_FATTURA_COLL__c</members>
-        <members>SiebelContract__x.X_HER_DATA_CONSENSO_PEC__c</members>
-        <members>SiebelContract__x.X_HER_PEC_INVIO_BOLLETTA__c</members>
-        <members>SiebelContract__x.X_IBAN__c</members>
-        <members>SiebelContract__x.X_INVIO_BOLLETTA__c</members>
-        <members>SiebelContract__x.X_LOCALITA__c</members>
-        <members>SiebelContract__x.X_MAIL_PEC_FE__c</members>
-        <members>SiebelContract__x.X_MOD_FATTURA__c</members>
-        <members>SiebelContract__x.X_MOD_PAGAMENTO__c</members>
-        <members>SiebelContract__x.X_NOME_DEST_DIV__c</members>
-        <members>SiebelContract__x.X_NOM_COGN_PAGAT__c</members>
-        <members>SiebelContract__x.X_NUM_EXTENSION__c</members>
-        <members>SiebelContract__x.X_NUM_RECESS__c</members>
-        <members>SiebelContract__x.X_NUM_REMOVAL__c</members>
-        <members>SiebelContract__x.X_OFFER_ID__c</members>
-        <members>SiebelContract__x.X_OLD_CONTRACT_CD__c</members>
-        <members>SiebelContract__x.X_PAG_RAPP__c</members>
-        <members>SiebelContract__x.X_PLAFOND__c</members>
-        <members>SiebelContract__x.X_PROFILE__c</members>
-        <members>SiebelContract__x.X_RENEW__c</members>
-        <members>SiebelContract__x.X_SD_DOC_NUM__c</members>
-        <members>SiebelContract__x.X_SHIP_ADDR__c</members>
-        <members>SiebelContract__x.X_SOTTOSCRITTORE__c</members>
-        <members>SiebelContract__x.X_STAMPA_SIN_ANA__c</members>
-        <members>SiebelContract__x.X_TOT_FATT_NO_IVA_SD__c</members>
-        <members>SiebelContract__x.X_TYPE_CONTRACT__c</members>
-        <members>SiebelContract__x.X_TYPE_EXTENSION__c</members>
-        <members>SiebelContract__x.X_TYPE_RECESS__c</members>
-        <members>SiebelContract__x.X_TYPE_REMOVAL__c</members>
-        <members>SiebelContract__x.X_USG_SOC__c</members>
-        <members>SiebelContract__x.X_USG_UNIT__c</members>
-        <members>wrts_prcgvr__ActivityTemplate__c.wrts_prcgvr__ObjectType__c</members>
+        <members>PushTracking__c.Account__c</members>
+        <members>SBQQ__ProductOption__c.DelayDayGas__c</members>
+        <members>SMSTracking__c.Account__c</members>
+        <members>TechnicalOfferItem__c.DiscountCodeValue__c</members>
+        <members>TechnicalOfferItem__c.DiscountCode__c</members>
+        <members>TechnicalOfferItem__c.G__c</members>
+        <members>TechnicalOfferItem__c.S__c</members>
+        <members>TechnicalOffer__c.CancellationAllowed__c</members>
+        <members>TechnicalOffer__c.ContractId__c</members>
+        <members>TechnicalOffer__c.Market__c</members>
+        <members>TechnicalOffer__c.PlacetOffer__c</members>
+        <members>TechnicalOffer__c.ProcessType__c</members>
+        <members>TechnicalOffer__c.RecessAdmitted__c</members>
+        <members>TechnicalOffer__c.ServiceProduct__c</members>
+        <members>TechnicalOffer__c.Status__c</members>
+        <members>TechnicalOffer__c.StepAllowed__c</members>
+        <members>TechnicalOffer__c.UnitOfTimeMeasurement__c</members>
+        <members>TechnicalOffer__c.UnitTerminationTime__c</members>
+        <members>TechnicalOffer__c.UnitTimeExtension__c</members>
+        <members>et4ae5__IndividualEmailResult__c.Account__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>HDT_SmileyGreen</members>
-        <members>HDT_SmileyRed</members>
-        <members>HDT_SmileyWhite</members>
-        <members>HDT_SmileyYellow</members>
-        <name>StaticResource</name>
-    </types>
-    <types>
-        <members>hdtFormAccountBusiness</members>
-        <members>hdtFormAccountResidenziale</members>
-        <members>hdtLeadAddress</members>
-        <members>hdtTargetObjectCreateForm</members>
+        <members>hdtContactSelection</members>
+        <members>hdtLastBill</members>
+        <members>hdtTargetObjectAddressFields</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
@@ -180,24 +68,16 @@
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_FiltriProcessiSelFornitura.Chiusura_Contatore</members>
-        <members>HDT_FiltriProcessiSelFornitura.Consegna_copia_chiave_GdM</members>
-        <members>HDT_FiltriProcessiSelFornitura.Recesso_per_Altri_Motivi</members>
-        <members>HDT_FiltriProcessiSelFornitura.Recesso_per_Rifiuto_Voltura</members>
-        <members>HDT_FiltriProcessiSelFornitura.Recesso_su_Richiesta_Cliente</members>
-        <members>HDT_FiltriProcessiSelFornitura.Richiesta_lettura_cliente</members>
-        <members>HDT_FiltriProcessiSelFornitura.Sost_contatore_cliente</members>
-        <members>HDT_FiltriProcessiSelFornitura.Verifica_GDM</members>
-        <members>HDT_FiltriProcessiSelFornitura.Verifica_Tensione_Pressione</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Altri_Motivi_Richiesta</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Chiusura_Contatore</members>
-        <members>HDT_UserInputFlow.Disattivazioni_Rifiuto_Voltura</members>
+        <members>HDT_DataEnrichmentTransocode.ALIQUOTAIVA</members>
+        <members>HDT_UserInputFlow.Variazioni_Marcatura_uso_PdR</members>
         <name>CustomMetadata</name>
     </types>
     <types>
-        <members>Case.Da_Eseguire_Non_Prima_Del</members>
-        <members>Case.Data_Ricezione_Richiesta</members>
-        <name>ValidationRule</name>
+        <members>HDT_FL_GestioneAnnullamento</members>
+        <members>HDT_FL_GestioneFatturazione</members>
+        <members>HDT_FL_GestionePagamenti_ComunicazionePagamento</members>
+        <members>HDT_FL_PostSalesMasterDispatch</members>
+        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

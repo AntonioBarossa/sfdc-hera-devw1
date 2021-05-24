@@ -1080,7 +1080,7 @@
             <targetReference>Inserire_altri_documenti_0_0</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
