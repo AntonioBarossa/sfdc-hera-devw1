@@ -2730,6 +2730,16 @@
         <field>BillingProfile__c.PaymentMethod__c</field>
         <readable>true</readable>
     </fieldPermissions>
+     <fieldPermissions>
+        <editable>true</editable>
+        <field>BillingProfile__c.ReminderCertifiedEmailAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BillingProfile__c.ReminderFlag__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>BillingProfile__c.RevocationDate__c</field>
@@ -5478,6 +5488,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.ReminderBlock__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ReminderCertifiedEmailAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ReminderFlag__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
