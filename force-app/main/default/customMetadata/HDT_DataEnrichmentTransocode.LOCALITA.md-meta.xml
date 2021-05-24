@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">SupplyPlace__c</value>
+        <value xsi:type="xsd:string">SupplyCity__c</value>
     </values>
 </CustomMetadata>
