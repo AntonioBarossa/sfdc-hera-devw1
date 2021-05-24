@@ -9665,6 +9665,22 @@
     <picklistValues>
         <picklist>SupplyType__c</picklist>
         <values>
+            <fullName>A-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B-Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Aziende di pubblica utilita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Domestico</fullName>
             <default>false</default>
         </values>

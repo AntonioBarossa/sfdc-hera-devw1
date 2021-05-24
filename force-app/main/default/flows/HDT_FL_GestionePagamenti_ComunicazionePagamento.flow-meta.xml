@@ -238,9 +238,9 @@
         <name>Bozza</name>
         <label>Bozza?</label>
         <locationX>798</locationX>
-        <locationY>398</locationY>
+        <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>Screen_Review_Dati_0</targetReference>
+            <targetReference>Inserire_altri_documenti_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Bozza</defaultConnectorLabel>
         <rules>
@@ -288,7 +288,7 @@
         <name>Doppi_Pagamenti_o_Comunicazione_Pagamento</name>
         <label>Doppi Pagamenti o Comunicazione Pagamento?</label>
         <locationX>512</locationX>
-        <locationY>278</locationY>
+        <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Bozza</targetReference>
         </defaultConnector>
@@ -304,7 +304,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Inserimento_Dati</targetReference>
+                <targetReference>Inserire_altri_documenti_0_0_0</targetReference>
             </connector>
             <label>Doppi Pagamenti</label>
         </rules>
@@ -727,23 +727,110 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>Inserire_altri_documenti_0_0</name>
+        <name>Inserire_altri_documenti_0_0_0</name>
         <label>Inserire altri documenti?</label>
-        <locationX>512</locationX>
-        <locationY>158</locationY>
+        <locationX>226</locationX>
+        <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Doppi_Pagamenti_o_Comunicazione_Pagamento</targetReference>
+            <targetReference>Screen_Inserimento_Dati</targetReference>
         </connector>
         <fields>
-            <name>DisplayHeader_2_0_0</name>
+            <name>DisplayHeader_2_0_0_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>DocumentSelector_0_0</name>
+            <name>DocumentSelector_0_0_0</name>
+            <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>billingProfileId</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractAccount</name>
+                <value>
+                    <elementReference>CaseInput.BillingProfile__r.ContractAccountCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>codiceCliente</name>
+                <value>
+                    <elementReference>CaseInput.Account.CustomerCode__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Inserire_altri_documenti_0_0_0_0</name>
+        <label>Inserire altri documenti?</label>
+        <locationX>886</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Screen_Review_Dati_0</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayHeader_2_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DocumentSelector_0_0_0_0</name>
             <extensionName>c:hdtAccountStatementPickerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -1077,10 +1164,10 @@
         <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Inserire_altri_documenti_0_0</targetReference>
+            <targetReference>Doppi_Pagamenti_o_Comunicazione_Pagamento</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>

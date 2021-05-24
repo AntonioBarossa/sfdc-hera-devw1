@@ -128,7 +128,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.ContractReference__c = null
             AND SBQQ__Quote__r.OrderReference__c = null
-            AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto')
+            AND (SBQQ__ProductFamily__c = 'VAS Fatturabili' OR SBQQ__ProductFamily__c = 'VAS Prodotto' OR SBQQ__ProductFamily__c = 'VAS Servizio')
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];

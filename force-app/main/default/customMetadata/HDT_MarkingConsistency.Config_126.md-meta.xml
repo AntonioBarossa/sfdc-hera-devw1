@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Taxes__c</field>
-        <value xsi:type="xsd:string">Non Ridotta IVA 20%-G_ICC</value>
+        <value xsi:type="xsd:string">Imposta usi non domestici iva 22% (Cod. G_ICC)</value>
     </values>
     <values>
         <field>UseCategory__c</field>
