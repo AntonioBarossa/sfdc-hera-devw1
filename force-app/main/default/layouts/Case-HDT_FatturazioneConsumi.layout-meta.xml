@@ -29,7 +29,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DocumentAmount__c</field>
+                <field>Amount__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Taxes__c</field>
-        <value xsi:type="xsd:string">G_I125 - Forze Armate Nato</value>
+        <value xsi:type="xsd:string">Imposta Forze Armate NATO (Cod. G_I25)</value>
     </values>
     <values>
         <field>UseCategory__c</field>
