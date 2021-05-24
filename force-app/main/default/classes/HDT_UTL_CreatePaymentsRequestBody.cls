@@ -118,6 +118,10 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
             }
 
+        } else {
+
+            caseToUpdate.Phase__c = 'Non Inviata a SAP';
+
         }
 
         updateFuture(JSON.serialize(caseToUpdate));
