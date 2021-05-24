@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
+                Phase__c = 'Documentazione da inviare' //Everis: modificato in 'Plico da inviare poiche la fase 'Plico inviato da validare' non presente a DM'
             ));
 
         } else {
@@ -58,7 +58,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             //update parent order
             ordersToUpdate.add(new Order(
                 Id = orderParent.Id,
-                Phase__c = 'Plico Firmato da validare'
+                Phase__c = 'Documentazione da validare'
             ));
 
         }

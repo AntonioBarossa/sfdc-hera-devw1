@@ -86,7 +86,7 @@ public inherited sharing class HDT_LC_ProcessesContainer {
         String accountId = order.AccountId;
         String saleId = order.Sale__c;
 
-        if(status == 'Annullato' || (parentPhase == 'Plico inviato da validare' || parentPhase == 'Plico Firmato da validare')){
+        if(status == 'Annullato' || (parentPhase == 'Documentazione da validare')){
             check = false;
         }
 

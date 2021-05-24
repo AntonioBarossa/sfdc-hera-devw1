@@ -88,7 +88,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> ordersToUpdateContract = new List<Order>();
 
         for (Order order : ordersFullList) {
-            if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Plico validato Firmato') {
+            if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
                 orderIdsToReturn.add(order.Id);
             }
 
@@ -119,7 +119,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<Order> ordersToUpdateContract = new List<Order>();
 
         for (Order order : ordersFullList) {
-            if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Plico validato Firmato') {
+            if (order.RecordType.DeveloperName == 'HDT_RT_OrderDossier' && order.Phase__c == 'Documentazione Gestita') {
                 orderIdsToReturn.add(order.Id);
             }
 
