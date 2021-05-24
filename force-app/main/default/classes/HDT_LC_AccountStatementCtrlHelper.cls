@@ -355,11 +355,21 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                             = IsRaiFee__c
             */
 
-            System.debug('>>> recordsList: ' + String.valueOf(recordsList.size()));
+            System.debug('>>> first level size: ' + String.valueOf(recordsList.size()));
 
-            if(recordsList.size() > 1){
+            Integer firstLevelSize = recordsList.size();
+            Integer secondLevelSize = 0;
+
+            if(serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && recordsList[0].secondoLivelloInformativo != null){
+                secondLevelSize = recordsList[0].secondoLivelloInformativo.size();
+            }
+
+            //if(recordsList.size() > 1){
+            if(firstLevelSize > 1 || secondLevelSize > 1){
+                System.debug('>>> Multiple Records');
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForMultipleRecords(recordsList, serviceCatalog);
             } else {
+                System.debug('>>> Single Records');
                 serviceCatalog = HDT_LC_AccountStatementCtrlUtility.executeControllForSingleRecord(recordsList[0], serviceCatalog);
             }
 
