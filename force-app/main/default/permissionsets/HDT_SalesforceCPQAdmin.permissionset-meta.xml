@@ -25125,6 +25125,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalOffer__c.AdmittingProfileModification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TechnicalOffer__c.CancellationAllowed__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25135,12 +25140,47 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalOffer__c.EndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TechnicalOffer__c.Market__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalOffer__c.Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.NameExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.NumberOfTimeUnits__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.NumberTimeExtension__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.NunmberDaysMonthsYears__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TechnicalOffer__c.OfferCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.OfferToBeModified__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25170,7 +25210,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalOffer__c.SapCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>TechnicalOffer__c.ServiceProduct__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.StartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25184,7 +25234,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>TechnicalOffer__c.Template__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -25204,7 +25254,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>TechnicalOffer__c.Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
