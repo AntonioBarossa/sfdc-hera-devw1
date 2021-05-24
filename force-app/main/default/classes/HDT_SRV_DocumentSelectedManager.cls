@@ -42,7 +42,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.DocumentExpirationDate__c = dataScadenza;
             caseRecord.DocumentPaymentMethod__c = (String) primolivello.get('modalitaPagamento');
             caseRecord.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
-            caseRecord.DocumentAmount__c = Double.valueOf(secondoLivello.get('importo'));
+            caseRecord.DocumentAmount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
             caseRecord.SalesCompany__c = (String) primolivello.get('societa');
