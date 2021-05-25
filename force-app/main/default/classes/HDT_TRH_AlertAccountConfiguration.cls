@@ -14,12 +14,27 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
     private void handleAlerts() {
 
         HDT_QR_RecordType rtQueryHandler = new HDT_QR_RecordType();
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
         HDT_UTL_CreateGenericCase caseUtility = new HDT_UTL_CreateGenericCase();
         Map<String, Object> inputsMap = new Map<String, Object>();
         inputsMap.put('recordTypeId', rtQueryHandler.getRecordTypeIdByName('HDT_RT_AlertDisassociazioneUtenteWeb'));
         inputsMap.put('cluster', 'Modifiche Anagrafiche');
         inputsMap.put('type', 'Modifica Alert');
-        inputsMap.put('origin', 'Sportello'); // FIXME: recuperare il canale corretto.
+
+        Map<String, String> accountContactsMap = new Map<String, String>();
+        Set<Id> accountIds = new Set<Id>();
+        for (AlertAccountConfiguration__c alert : (List<AlertAccountConfiguration__c>) Trigger.new) {
+            if (alert.Account__c != null) {
+                accountIds.add(alert.Account__c);
+            }
+        }
+
+        List<AccountContactRelation> relations = acrQueryHandler.getPrimaryContactRelations(accountIds);
+        for (AccountContactRelation acr : relations) {
+            if (acr.Roles != null && acr.Roles.contains('Titolare')) {
+                accountContactsMap.put(acr.AccountId, acr.ContactId);
+            }
+        }
 
         List<Case> alertCases = new List<Case>();
         for (AlertAccountConfiguration__c alert : (List<AlertAccountConfiguration__c>) Trigger.new) {
@@ -38,6 +53,8 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
             }
 
             inputsMap.put('accountId', alert.Account__c);
+            inputsMap.put('contactId', accountContactsMap.get(alert.Account__c));
+
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
                 alertCase.IsAlertActive__c = alert.IsActive__c;

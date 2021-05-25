@@ -9776,7 +9776,7 @@
         <values>
             <fullName>Variazione Gruppo IVA</fullName>
             <default>false</default>
-        </values>
+        </values>   
     </picklistValues>
     <picklistValues>
         <picklist>SupplyType__c</picklist>
@@ -9796,14 +9796,14 @@
             <fullName>D-Altri usi</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Domestico</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Non Domestico</fullName>
             <default>false</default>
-        </values>
+        </values>-->
     </picklistValues>
     <picklistValues>
         <picklist>SuspensionMotivation__c</picklist>
