@@ -1,14 +1,26 @@
 public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
-        //checkProduct2Duplicate();
+        for(Product2 p : (Product2[])Trigger.New){
+            p.Status__c = 'In Sviluppo';
+        }
     }
 
     public override void beforeUpdate(){
-        //checkProduct2Duplicate();
+        
+       Set<String> allUniqueProductCodeSet;
+       allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
+
+       for(Product2 p : (Product2[])Trigger.New){
+           if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
+               System.debug('>>> ADD ERROR');
+               p.addError(generateErrorMessage((p)));
+           }
+       }
+
     }
 
-    private static void checkProduct2Duplicate(){
+    private static Set<String> checkProduct2Duplicate(Set<String> allUniqueProductCodeSet){
 
         Boolean isUpdate = Trigger.isUpdate;
         List<Product2> productsList = new List<Product2>();
@@ -17,7 +29,7 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
         List<String> descriptionSapList = new List<String>();
         Set<Id> idSet = new Set<Id>();
         Set<String> uniqueProductCodeSet = new Set<String>();
-        Set<String> allUniqueProductCodeSet = new Set<String>();
+        allUniqueProductCodeSet = new Set<String>();
         
 
         for(Product2 p : (Product2[])Trigger.New){
@@ -45,18 +57,10 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
                 } else {
                     allUniqueProductCodeSet.add(generateUniqueCode(prod));
                 }
-                
             }
-
-            for(Product2 p : (Product2[])Trigger.New){
-                if(allUniqueProductCodeSet.contains(generateUniqueCode(p))){
-                    System.debug('>>> ADD ERROR');
-                    p.addError(generateErrorMessage((p)));
-                }
-            }
-
         }
 
+        return allUniqueProductCodeSet;
     }
 
     private static String generateUniqueCode(Product2 product){

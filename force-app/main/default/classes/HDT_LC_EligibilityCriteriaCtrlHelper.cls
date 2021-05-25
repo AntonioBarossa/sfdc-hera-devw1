@@ -194,12 +194,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         return errorData;
     }
 
-    public static void exampleNewMethod(String eligibilityId){
-        List<EligibleMunicipality__c> muniList;
-        muniList = HDT_QR_EligibilityCriteria.getEligibleMunicipalityByCriteriaId(muniList, eligibilityId);
+    public static Map<String, Set<String>> deserializeUntypedMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
         String jsonInput = '{';
 
         for(Integer n=0; n < muniList.size(); n++){
+            existingMuniMap.put(muniList[n].AreaCode__c, new Set<String>());
             jsonInput += '"' + muniList[n].Id + '":';
             jsonInput += muniList[n].JSONCode__c;
             if((n+1) < muniList.size()){
@@ -211,11 +210,37 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         Map<String, Object> m =  (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
 
         for(String k : m.keySet()){
+             
             Map<String, Object> objMap = (Map<String, Object>)m.get(k);
-            List<Object> a = (List<Object>)objMap.get('cityAvailable');
-            System.debug('>>> ' + a.size());
+            List<Object> cityAvailable = (List<Object>)objMap.get('cityAvailable');
+            String areaCode = String.valueOf(objMap.get('value'));
+
+            Set<String> tempSet = existingMuniMap.get(areaCode);
+            for(Object city : cityAvailable){
+                Map<String, Object> cityMap = (Map<String, Object>)city;
+                tempSet.add(String.valueOf(cityMap.get('value')));
+            }
+            existingMuniMap.put(areaCode, tempSet);
+
         }
 
+        return existingMuniMap;
+
+    }
+
+    public static Map<String, Set<String>> deserializeMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
+            HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
+            for(EligibleMunicipality__c muni : muniList){
+                singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
+                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
+
+                Set<String> tempSet = new Set<String>();
+                for(HDT_WRP_EligibilityCriteria.HDT_WRP_City city : singleProv.cityAvailable){
+                    tempSet.add(city.value);
+                }
+                existingMuniMap.put(muni.AreaCode__c, tempSet);
+            }
+            return existingMuniMap;
     }
 
     public static HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode getExistingEligibleMunicipalities2(String eligibilityId, HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj){
@@ -232,45 +257,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
         criteria = HDT_QR_EligibilityCriteria.getEligibilityCriteriaSingleRecord(criteria, eligibilityId);
 
         try{            
-            HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
-            for(EligibleMunicipality__c muni : muniList){
-                singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
-                singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
 
-                Set<String> tempSet = new Set<String>();
-                for(HDT_WRP_EligibilityCriteria.HDT_WRP_City city : singleProv.cityAvailable){
-                    tempSet.add(city.value);
-                }
-                existingMuniMap.put(muni.AreaCode__c, tempSet);
-            }
 
-            /*String jsonInput = '{';
+            //+++++++++++++++++++++++++++++
+            existingMuniMap = deserializeUntypedMethod(existingMuniMap, muniList);
 
-            for(Integer n=0; n < muniList.size(); n++){
-                existingMuniMap.put(muniList[n].AreaCode__c, new Set<String>());
-                jsonInput += '"' + muniList[n].Id + '":';
-                jsonInput += muniList[n].JSONCode__c;
-                if((n+1) < muniList.size()){
-                    jsonInput += ',';
-                }
-            }
-            jsonInput += '}';
-            
-            Map<String, Object> m =  (Map<String, Object>)JSON.deserializeUntyped(jsonInput);
-
-            for(String k : m.keySet()){
-                 
-                Map<String, Object> objMap = (Map<String, Object>)m.get(k);
-                List<Object> cityAvailable = (List<Object>)objMap.get('cityAvailable');
-                String areaCode = String.valueOf(objMap.get('value'));
-
-                Set<String> tempSet = new Set<String>();
-                for(Object city : cityAvailable){
-                    tempSet.add(city.value);
-                }
-                existingMuniMap.get(areaCode).put(tempSet);
-
-            }*/
+            //+++++++++++++++++++++++++++++
+            //existingMuniMap = deserializeMethod(existingMuniMap, muniList);
 
             cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
             cityZipCodeObj.regionList[0].eligibleForAllCities = criteria[0].EligibleForAllCities__c;
