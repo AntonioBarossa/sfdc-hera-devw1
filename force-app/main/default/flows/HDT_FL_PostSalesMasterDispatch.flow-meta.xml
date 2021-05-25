@@ -248,7 +248,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati_0_0</targetReference>
+            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -549,6 +549,38 @@
                 </rightValue>
             </conditions>
             <label>Annullare</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Check_Arricchimento_Dati_Fatturazione</name>
+        <label>Arricchimento Dati Fatturazione?</label>
+        <locationX>2096</locationX>
+        <locationY>1574</locationY>
+        <defaultConnector>
+            <targetReference>Arricchimento_Dati_Fatturazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Con Arricchimento</defaultConnectorLabel>
+        <rules>
+            <name>Senza_Arricchimento</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prescrizione Fatture</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Fatturazione_Subflow</targetReference>
+            </connector>
+            <label>Senza Arricchimento</label>
         </rules>
     </decisions>
     <decisions>
@@ -2886,7 +2918,7 @@
         <locationX>1964</locationX>
         <locationY>1358</locationY>
         <connector>
-            <targetReference>Arricchimento_Dati_0_0</targetReference>
+            <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
         <inputReference>CaseFatturazione_0</inputReference>
     </recordUpdates>
@@ -3005,35 +3037,6 @@
     </subflows>
     <subflows>
         <description>Arricchimento Dati</description>
-        <name>Arricchimento_Dati_0_0</name>
-        <label>Arricchimento Dati</label>
-        <locationX>2096</locationX>
-        <locationY>1574</locationY>
-        <connector>
-            <targetReference>Gestione_Fatturazione_Subflow</targetReference>
-        </connector>
-        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
-        <inputAssignments>
-            <name>ContractId</name>
-            <value>
-                <elementReference>Contract</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>CaseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ServicePointId</name>
-            <value>
-                <elementReference>ServicePointId</elementReference>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0</name>
         <label>Arricchimento Dati</label>
         <locationX>4912</locationX>
@@ -3069,6 +3072,35 @@
         <locationY>1334</locationY>
         <connector>
             <targetReference>Gestione_Verifiche_Subflow</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <description>Arricchimento Dati</description>
+        <name>Arricchimento_Dati_Fatturazione</name>
+        <label>Arricchimento Dati</label>
+        <locationX>2184</locationX>
+        <locationY>1694</locationY>
+        <connector>
+            <targetReference>Gestione_Fatturazione_Subflow</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
         <inputAssignments>
@@ -3196,7 +3228,7 @@
         <name>Gestione_Fatturazione_Subflow</name>
         <label>Gestione Fatturazione Subflow</label>
         <locationX>2096</locationX>
-        <locationY>1694</locationY>
+        <locationY>1910</locationY>
         <flowName>HDT_FL_GestioneFatturazione</flowName>
         <inputAssignments>
             <name>InputCase</name>

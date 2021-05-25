@@ -37,7 +37,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             String numeroDocumento = (String) primolivello.get('numeroDocumento');
             String numeroFattura = (String) primolivello.get('numeroFattura');
             String contractCode = (String) secondoLivello.get('contratto') != null? (String) secondoLivello.get('contratto'):(String) primolivello.get('contratto');
-            String tipoDocumento = (String) secondoLivello.get('tipoDocumento');
+            String tipoDocumento = (String) primolivello.get('tipoDocumento');
             caseRecord.ContractAccountCode__c = (String) primolivello.get('contoContrattuale');
             caseRecord.DocumentExpirationDate__c = dataScadenza;
             caseRecord.DocumentPaymentMethod__c = (String) primolivello.get('modalitaPagamento');
