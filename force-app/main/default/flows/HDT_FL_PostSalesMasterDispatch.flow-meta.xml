@@ -1165,6 +1165,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
@@ -1245,6 +1251,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Preventivi</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1337,6 +1349,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
@@ -1420,6 +1438,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
@@ -1497,6 +1521,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.ContactId</elementReference>
@@ -1565,6 +1595,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Annullamento</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1639,6 +1675,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
@@ -1695,6 +1737,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Canone Rai</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1787,6 +1835,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
@@ -1846,6 +1900,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
@@ -1884,6 +1944,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Informative</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1931,6 +1997,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Modifiche Anagrafiche</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1996,6 +2068,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Morosità</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2082,6 +2160,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>Cerca_Contatto_Primario.Contact.Id</elementReference>
@@ -2150,6 +2234,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2233,6 +2323,12 @@
             <field>Cluster__c</field>
             <value>
                 <stringValue>Variazioni</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CompanyOwner__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Account.CompanyOwner__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
