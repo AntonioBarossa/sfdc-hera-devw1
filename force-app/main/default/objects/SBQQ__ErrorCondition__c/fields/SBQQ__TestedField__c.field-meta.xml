@@ -323,6 +323,11 @@
                 <default>false</default>
                 <label>SuperUser__c</label>
             </value>
+            <value>
+                <fullName>DescriptionSAPBonusContributo__c</fullName>
+                <default>false</default>
+                <label>DescriptionSAPBonusContributo__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
