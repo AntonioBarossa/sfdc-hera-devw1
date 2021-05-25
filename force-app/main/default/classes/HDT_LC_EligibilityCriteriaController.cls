@@ -29,8 +29,9 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj;
 
-        municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj(municipalityTreeObj, recordId);
-        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObjEmprovedMethod(municipalityTreeObj, recordId);
+        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj(municipalityTreeObj, recordId);
+        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeCompleteObj(municipalityTreeObj, recordId);
+        municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityNotAvailableObj(municipalityTreeObj, recordId);
 
         return municipalityTreeObj;
     }
