@@ -5,6 +5,8 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
 
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
+        HDT_QR_Recordtype recQR = new HDT_QR_Recordtype();
+        String recordtypeid = recQR.getRecordTypeIdByName('HDT_RT_VisitaD2D');
         HDT_QR_Contact contactQr = new HDT_QR_Contact();
         HDT_SRV_Account accountSrv = new HDT_SRV_Account();
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
@@ -14,12 +16,13 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
         List<Lead> listLead = new List<Lead>();
         List<String> listContactId = new List<String>();
         List<Account> listAccount = new List<Account>();
-
-        List<wrts_prcgvr__Activity__c> listActD2DBef = filterByD2D(triggerold);
+		System.debug('DENTRO HANDLER HANDLER: ' + triggernew);
+        List<wrts_prcgvr__Activity__c> listActD2DBef = filterByD2D(triggerold,recordtypeid);
         for(wrts_prcgvr__Activity__c art : listActD2DBef){
+            System.debug('DENTRO HANDLER HANDLER2:' + art);
             mapIdOwnerIdBef.put(art.id,art.ownerId);
         } 
-        List<wrts_prcgvr__Activity__c> listActD2DAfter = filterByD2D(triggernew);
+        List<wrts_prcgvr__Activity__c> listActD2DAfter = filterByD2D(triggernew,recordtypeid);
        /* for(wrts_prcgvr__Activity__c art : listActD2DBef){
             mapIdOwnerIdAfter.put(art.id,art.ownerId);
         }*/
@@ -47,10 +50,12 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
             accountSrv.updateRecords(listAccount);
         }
     }
-    private static List<wrts_prcgvr__Activity__c> filterByD2d(List<wrts_prcgvr__Activity__c> li){
+    private static List<wrts_prcgvr__Activity__c> filterByD2d(List<wrts_prcgvr__Activity__c> li,String recordtypeid){
         List<wrts_prcgvr__Activity__c> rep = new List<wrts_prcgvr__Activity__c>();
+        System.debug('DENTRO HANDLER HANDLER4:');
         for(wrts_prcgvr__Activity__c act : li){
-            if('HDT_RT_VisitaD2D'.equalsIgnoreCase(act.recordtype.developername)){
+            if(recordtypeid.equalsIgnoreCase(act.recordtypeid)){
+                System.debug('DENTRO HANDLER HANDLER5:');
                 rep.add(act);
             }
         }
