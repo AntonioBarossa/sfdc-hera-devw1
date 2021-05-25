@@ -76,6 +76,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
      * - cluster
      * - type
      * - accountId
+     * - contactId
      */
     public Case createCase(Map<String, Object> inputs){
 
@@ -83,7 +84,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
         String accountId = (String) inputs.get('accountId');
-        String origin = (String) inputs.get('origin');
+        String contactId = (String) inputs.get('contactId');
 
         if (String.isBlank(recordTypeId) || String.isBlank(accountId) || String.isBlank(caseCluster) || String.isBlank(caseType)) {
             System.debug('HDT_UTL_CreateGenericCase::createCase - invalid inputs: ' + inputs);
@@ -93,14 +94,11 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         Case newCase = new Case();
 
         newCase.AccountId = accountId;
+        newCase.ContactId = contactId;
         newCase.RecordTypeId = recordTypeId;
         newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
-        newCase.Origin = origin;
         newCase.WrittenReceiptRequestDate__c = Date.today();
-
-        //newCase.ContactId = currentCase.ContactId;
-        //newCase.PhoneNumber__c = currentCase.PhoneNumber__c;
 
         newCase.Phase__c = 'Bozza';
 
