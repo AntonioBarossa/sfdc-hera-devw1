@@ -53,6 +53,8 @@ export default class HdtSelfReading extends LightningElement {
 
     @api selectedReadingValue;
 
+    @api selectedReadingsList;
+
     @api isRettificaConsumi;
 
 
@@ -80,6 +82,7 @@ export default class HdtSelfReading extends LightningElement {
 
     connectedCallback(){
 
+        this.selectedReadingsList = JSON.parse(this.selectedReadingsList);
         this.oldTotalReadingValue = 0;
         this.newTotalReadingValue = 0;
         this.readingCustomerDate = this.sysdate();
@@ -312,28 +315,27 @@ export default class HdtSelfReading extends LightningElement {
             throw BreakException;
         } else {
 
-            try{this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+            try{
+                const registers = this.template.querySelectorAll('c-hdt-self-reading-register');
+                console.log('#registri: ' + registers.length);
 
-                var result = element.handleSave();
+                for (let i = 0; i < registers.length; i++) {
+                let register = registers[i];
+
+                let result = register.handleSave();
 
                 if(String(result).includes("Impossibile")){
-
                     this.errorAdvanceMessage = result;
-
                     console.log('Error '+this.errorAdvanceMessage);
-
                     this.outputObj = {};
-
                     this.showToastMessage(this.errorAdvanceMessage);
-
                     throw BreakException;
-
                 }
 
                 console.log(result);
 
-                this.oldTotalReadingValue += element.oldReadingValue();
-                this.newTotalReadingValue += element.newReadingValue();
+                this.oldTotalReadingValue += register.oldReadingValue();
+                this.newTotalReadingValue += register.newReadingValue();
                 console.log('lettura precedente a sistema: ' + this.oldTotalReadingValue)
                 console.log('lettura comunicata dal cliente: ' + this.newTotalReadingValue)
                 console.log('lettura selezionata da cruscotto letture: ' + this.selectedReadingValue);
@@ -358,7 +360,7 @@ export default class HdtSelfReading extends LightningElement {
 
                 console.log('OutputObj '+this.outputObj);
 
-            });
+            }
 
         } catch (e) { 
 
