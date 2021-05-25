@@ -1197,7 +1197,10 @@ disabledverifyFieldsAddressDisabled(){
     
     
         }); 
-
+        if(this.theRecord['Stato']=='Italy'||this.theRecord['Stato']=='Italia'){
+            this.theRecord['Stato']=='ITALIA';
+            this.stato='ITALIA';
+        }
 
 
       //  this.hasAddressBeenVerified = true;
