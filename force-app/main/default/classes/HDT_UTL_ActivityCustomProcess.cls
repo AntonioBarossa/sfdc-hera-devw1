@@ -5,7 +5,7 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
     HDT_SRV_Lead leadSrv = new HDT_SRV_Lead();
 
 
-    public void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
+    public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
         Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
         Map<id,String> mapContactIdOwner = new Map<Id,String>();
@@ -26,7 +26,7 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
                 if(art.lead__c != null){
                     listLead.add(new Lead(id=art.lead__c,ownerId=art.ownerId));
                 }
-                else if(art.Contact__c){
+                else if(art.Contact__c != null){
                     listContactId.add(art.Contact__c);
                     mapContactIdOwner.put(art.contact__c,art.OwnerId);
                 }
@@ -39,13 +39,13 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
             }
         }
         if(listLead != null && !listLead.isEmpty()){
-            leadSrv.updateRecord(listLead);
+            HDT_SRV_Lead.updateRecord(listLead);
         }
         if(listAccount != null && !listAccount.isEmpty()){
             accountSrv.updateRecords(listAccount);
         }
     }
-    private static List<wrts_prcgvr__Activity__c> filterByD2D(List<wrts_prcgvr__Activity__c> li){
+    private static List<wrts_prcgvr__Activity__c> filterByD2d(List<wrts_prcgvr__Activity__c> li){
         List<wrts_prcgvr__Activity__c> rep = new List<wrts_prcgvr__Activity__c>();
         for(wrts_prcgvr__Activity__c act : li){
             if('HDT_RT_VisitaD2D'.equalsIgnoreCase(act.recordtype.developername)){
