@@ -334,4 +334,22 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         return '';
     }
 
+    public Date getDateFromString(String stringDate){
+
+        //String Date is yyyymmdd
+        
+        Integer year = Integer.valueOf(stringDate.substring(0,4));
+        Integer month = Integer.valueOf(stringDate.substring(4,6));
+        Integer day = Integer.valueOf(stringDate.substring(6,8));
+
+        if(year > 4000){
+
+            year = 4000;
+
+        }
+
+        return Date.newInstance(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
+        
+    }
+
 }
