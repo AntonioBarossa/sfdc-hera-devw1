@@ -1,4 +1,4 @@
-public with sharing class HDT_UTL_ActivityCustomProcess {
+public without sharing class HDT_UTL_ActivityCustomProcess {
 
 
     //HDT_SRV_Lead leadSrv = new HDT_SRV_Lead();
