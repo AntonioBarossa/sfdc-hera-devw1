@@ -1,7 +1,7 @@
     public with sharing class HDT_LC_OmniChannelReplacerController {
     @AuraEnabled
     public static String getSigmaLogin() {
-        return [SELECT FederationIdentifier FROM User WHERE Id =: UserInfo.getUserID() WITH SECURITY_ENFORCED].FederationIdentifier;
+        return [SELECT LoginADN__c FROM User WHERE Id =: UserInfo.getUserID() WITH SECURITY_ENFORCED].LoginADN__c;
     }
 
     @AuraEnabled
