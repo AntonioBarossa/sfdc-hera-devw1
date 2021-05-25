@@ -1,11 +1,12 @@
 public with sharing class HDT_UTL_ActivityCustomProcess {
 
-    HDT_QR_Contact contactQr = new HDT_QR_Contact();
-    HDT_SRV_Account accountSrv = new HDT_SRV_Account();
-    HDT_SRV_Lead leadSrv = new HDT_SRV_Lead();
+
+    //HDT_SRV_Lead leadSrv = new HDT_SRV_Lead();
 
 
     public static void changeAssignRelatedRecord(List<wrts_prcgvr__Activity__c> triggernew , List<wrts_prcgvr__Activity__c> triggerold){
+        HDT_QR_Contact contactQr = new HDT_QR_Contact();
+        HDT_SRV_Account accountSrv = new HDT_SRV_Account();
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
         Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
         Map<id,String> mapContactIdOwner = new Map<Id,String>();
