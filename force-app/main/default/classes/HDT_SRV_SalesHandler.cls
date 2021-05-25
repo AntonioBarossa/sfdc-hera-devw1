@@ -44,6 +44,25 @@ public with sharing class HDT_SRV_SalesHandler {
                         
                         Order ord = quoteQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         ord.Phase__c = mapRequestFields.get('FASE');
+
+                        if (mapRequestFields.get('FASE') != null) {
+                            switch on mapRequestFields.get('FASE') {
+                                when 'Ammissibilità KO' {
+                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                    ord.CausalCode__c = mapRequestFields.get('CODERR');
+                                }
+                                when 'Esito KO da DL' {
+                                    ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
+                                }
+                                when 'Esito KO da SII' {
+                                    ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
+                                }
+                                when 'Errore lavorazione SAP' {
+                                    ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
+                                }
+                            }
+                        }
+
                         quoteSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
