@@ -57,8 +57,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         ServicePoint__c servicePoint = servicePointList[0];
 
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
+        orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
@@ -92,6 +92,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
         orderToUpdate.SupplyType__c = servicePoint.SupplyType__c;
+        orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
@@ -115,7 +116,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CustomerLastName__c = account.LastName__c;
         orderToUpdate.Email__c = account.PrimaryEmail__c;
         orderToUpdate.PhoneNumber__c = account.Phone;
-        orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
         orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
         orderToUpdate.ResidentialStreetName__c = account.BillingStreetName__c;
         orderToUpdate.ResidentialStreetNumber__c = account.BillingStreetNumber__c;
@@ -138,6 +138,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
         orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
         orderToUpdate.Contact__c = sale.SalesContact__c;
+        orderToUpdate.SalesContact__c = sale.SalesContact__c;
         orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
     }
 
