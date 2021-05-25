@@ -70,6 +70,52 @@ public inherited sharing class HDT_QR_AccountContactRelation {
         ];
 
     }
+
+    public List<AccountContactRelation> getPrimaryContactRelations(Set<Id> ids) {
+    
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId IN :ids
+            AND Roles  = 'Titolare'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public List<AccountContactRelation> getAdministratorRelations() {
+    
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE Roles INCLUDES ('Amministratore condominio')
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public List<AccountContactRelation> getSolContactRelations(String accountId) {
+    
+        return [
+            SELECT
+            Id,
+            AccountId,
+            ContactId,
+            Roles
+            FROM AccountContactRelation
+            WHERE
+            AccountId = :accountId
+            AND IsManagerSOL__c = True
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     // FINE SVILUPPI EVERIS
 
 }

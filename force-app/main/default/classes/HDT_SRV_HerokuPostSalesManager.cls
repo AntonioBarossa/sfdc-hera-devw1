@@ -79,14 +79,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
          System.debug(res.getStatusCode());
          System.debug(res.getStatus());*/
 
-
-       
-
     }catch(Exception ex){
-
+        //Error Handling
         System.debug(ex.getMessage());
-        return ex.getMessage();
-
     }
 
     System.debug('ResponseMrr --> '+responseMrr);
@@ -118,22 +113,64 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     }
 
 
-    public String handleInboundRequest(HDT_WRP_MrrRequest.HDT_WRP_Request request){
-
+    public HDT_WRP_MrrResponse.HDT_WRP_Object handleInboundRequest(HDT_WRP_MrrRequest.HDT_WRP_Request request){
+        HDT_WRP_MrrResponse.HDT_WRP_Object responseObject = new HDT_WRP_MrrResponse.HDT_WRP_Object();
+        HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
         List<Case> caseUpdate = new List<Case>();
+        Case caseInsert = new Case();
+        try {
+            HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
+            switch on request.header.requestType{
+                when 'NOTIF_ES'{
+                    caseUpdate = hpsmUtl.handleRequest(reqWrp);
+                    if(caseUpdate.size() > 0){
+                        HDT_UTL_DatabaseService.updateSObject(caseUpdate);
+                    }
+                }
+                when 'RICH_PASS'{
+                    caseInsert = hpsmUtl.handleRequestRichPass(reqWrp);
+                    responseObject.fields.addAll(handleRichPassResponseField(caseInsert));
+                    //gestione response field
+                }
+            }
+            responseField.fieldType = 'TEXT';
+            responseField.name = 'ESITO';
+            responseField.value = 'OK';
+            responseObject.fields.add(responseField);
+            RestContext.response.statusCode = 200;
+        } catch (Exception ex) {
+            responseField.fieldType = 'TEXT';
+            responseField.name = 'ESITO';
+            responseField.value = 'KO';
 
-        HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
-        
-        caseUpdate = hpsmUtl.handleRequest(reqWrp);
+            responseFieldError.fieldType = 'TEXT';
+            responseFieldError.name = 'ERROR_MESSAGE';
+            responseFieldError.value = 'Errore: ' + ex.getMessage();
 
-        if(caseUpdate.size() > 0){
-            
-            HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-
+            responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError};
+            RestContext.response.statusCode = 400;
         }
-
-        return null;
-
+        return responseObject;
     }
 
+    private List<HDT_WRP_MrrResponse.HDT_WRP_Field> handleRichPassResponseField(Case caseInsert){
+        List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+        HDT_WRP_MrrResponse.HDT_WRP_Field rifRich = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field recordId = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field rds = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field rdo = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        rifRich.fieldType = 'TEXT';
+        rifRich.name = 'RIF_RICH';
+        rifRich.value =caseInsert.CaseNumber;
+        recordId.fieldType = 'TEXT';
+        recordId.name = 'RECORD_ID';
+        recordId.value =caseInsert.Id;
+        rds.fieldType = 'TEXT';
+        rds.name = 'RDS';
+        rds.value =caseInsert.CaseNumber;
+        responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{rifRich, recordId,rds};
+        return responseFieldList;
+    }
  }

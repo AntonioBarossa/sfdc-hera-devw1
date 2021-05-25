@@ -4,13 +4,13 @@
         <name>Chiamata_SAP_Lettura_Stimata</name>
         <label>Chiamata SAP Lettura Stimata</label>
         <locationX>676</locationX>
-        <locationY>1168</locationY>
+        <locationY>1275</locationY>
         <actionName>HDT_SRV_AccountStatementReadingCheck</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Check_Lettura_Stimata</targetReference>
         </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
             <name>contractCode</name>
             <value>
@@ -43,7 +43,7 @@
         <name>Errore_Fatturazione_Senza_Obbligatoriet</name>
         <label>Errore Fatturazione Senza Obbligatorietà</label>
         <locationX>801</locationX>
-        <locationY>241</locationY>
+        <locationY>348</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -59,7 +59,7 @@
         <name>Predefault_Telefono</name>
         <label>Predefault Telefono</label>
         <locationX>808</locationX>
-        <locationY>623</locationY>
+        <locationY>730</locationY>
         <assignmentItems>
             <assignToReference>Query_Case.PhoneNumber__c</assignToReference>
             <operator>Assign</operator>
@@ -75,7 +75,7 @@
         <name>Set_Case_Rettifica</name>
         <label>Set Case Rettifica</label>
         <locationX>998</locationX>
-        <locationY>1174</locationY>
+        <locationY>1280</locationY>
         <assignmentItems>
             <assignToReference>Query_Case.ReadType__c</assignToReference>
             <operator>Assign</operator>
@@ -97,15 +97,66 @@
                 <elementReference>SottoprocessoRettificaConsumi</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Query_Case.EffectiveDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EffectiveDateTemp</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Query_Case.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CodiceCausaleTemp</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Query_Case.ReadingDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DataLetturaContestataTemp</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Case_Rettifica</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Dati_Errore_Stima_Consumi</name>
+        <label>Set Dati Errore Stima Consumi</label>
+        <locationX>1273</locationX>
+        <locationY>1378</locationY>
+        <assignmentItems>
+            <assignToReference>SottoprocessoRettificaConsumi</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Errore Stima Consumi</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>EffectiveDateTemp</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Query_Case.CreatedDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>CodiceCausaleTemp</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Set_Case_Rettifica</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Set_Sottoprocesso_Errore_di_Lettura</name>
         <label>Set Sottoprocesso Errore di Lettura</label>
         <locationX>999</locationX>
-        <locationY>1342</locationY>
+        <locationY>1449</locationY>
         <assignmentItems>
             <assignToReference>SottoprocessoRettificaConsumi</assignToReference>
             <operator>Assign</operator>
@@ -118,26 +169,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Set_Sottoprocesso_Errore_Stima_Consumi</name>
-        <label>Set Sottoprocesso Errore Stima Consumi</label>
-        <locationX>1273</locationX>
-        <locationY>1271</locationY>
-        <assignmentItems>
-            <assignToReference>SottoprocessoRettificaConsumi</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Errore Stima Consumi</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Set_Case_Rettifica</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
         <locationX>497</locationX>
-        <locationY>419</locationY>
+        <locationY>526</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
             <operator>Assign</operator>
@@ -169,7 +204,7 @@
         <name>Case_da_annullare</name>
         <label>Case da annullare?</label>
         <locationX>1124</locationX>
-        <locationY>1952</locationY>
+        <locationY>2059</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Letture_Cliente</targetReference>
         </defaultConnector>
@@ -194,7 +229,7 @@
         <name>Case_da_annullare_2</name>
         <label>Case da annullare?</label>
         <locationX>1396</locationX>
-        <locationY>1641</locationY>
+        <locationY>1748</locationY>
         <defaultConnector>
             <targetReference>Sottoprocesso</targetReference>
         </defaultConnector>
@@ -219,7 +254,7 @@
         <name>Check_Input_Case</name>
         <label>Got Input Case?</label>
         <locationX>51</locationX>
-        <locationY>418</locationY>
+        <locationY>525</locationY>
         <defaultConnector>
             <targetReference>Query_Case</targetReference>
         </defaultConnector>
@@ -244,7 +279,7 @@
         <name>Check_Inserire_Letture</name>
         <label>Inserire Letture?</label>
         <locationX>1241</locationX>
-        <locationY>843</locationY>
+        <locationY>950</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
         </defaultConnector>
@@ -269,7 +304,7 @@
         <name>Check_Lettura_Stimata</name>
         <label>Lettura Stimata?</label>
         <locationX>668</locationX>
-        <locationY>1648</locationY>
+        <locationY>1755</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Letture_Cliente</targetReference>
         </defaultConnector>
@@ -294,7 +329,7 @@
         <name>Check_Motivo_Richiesta</name>
         <label>Check Motivo Richiesta</label>
         <locationX>1233</locationX>
-        <locationY>179</locationY>
+        <locationY>286</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
         </defaultConnector>
@@ -317,7 +352,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Campi_Comunicazione_Cessazione</targetReference>
+                <targetReference>Predefault_Data_Termine_Agevolazione</targetReference>
             </connector>
             <label>Comunicazione Cessazione</label>
         </rules>
@@ -341,7 +376,7 @@
         <name>Check_Partite_non_fatturate</name>
         <label>Partite non fatturate?</label>
         <locationX>924</locationX>
-        <locationY>15</locationY>
+        <locationY>122</locationY>
         <defaultConnector>
             <targetReference>InputFieldsFatturazione</targetReference>
         </defaultConnector>
@@ -366,7 +401,7 @@
         <name>Check_Processo</name>
         <label>Quale Processo?</label>
         <locationX>1237</locationX>
-        <locationY>485</locationY>
+        <locationY>592</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
         </defaultConnector>
@@ -406,7 +441,7 @@
         <name>Check_Record_Type</name>
         <label>Quale Processo?</label>
         <locationX>683</locationX>
-        <locationY>421</locationY>
+        <locationY>528</locationY>
         <defaultConnector>
             <targetReference>InputFieldsFatturazione</targetReference>
         </defaultConnector>
@@ -476,7 +511,7 @@
         <name>Choose_Next_Phase</name>
         <label>Next Phase?</label>
         <locationX>1906</locationX>
-        <locationY>477</locationY>
+        <locationY>584</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -552,7 +587,7 @@
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>1616</locationX>
-        <locationY>474</locationY>
+        <locationY>581</locationY>
         <defaultConnector>
             <targetReference>Choose_Next_Phase</targetReference>
         </defaultConnector>
@@ -589,7 +624,7 @@
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
         <locationX>2471</locationX>
-        <locationY>254</locationY>
+        <locationY>361</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Avvisare_Cliente</name>
@@ -625,7 +660,7 @@
         <name>Sottoprocesso</name>
         <label>Sottoprocesso?</label>
         <locationX>1137</locationX>
-        <locationY>1493</locationY>
+        <locationY>1600</locationY>
         <defaultConnector>
             <targetReference>Set_Sottoprocesso_Errore_di_Lettura</targetReference>
         </defaultConnector>
@@ -648,7 +683,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Sottoprocesso_Errore_Stima_Consumi</targetReference>
+                <targetReference>Calcolo_Codice_Causale</targetReference>
             </connector>
             <label>Errore stima consumi</label>
         </rules>
@@ -700,10 +735,38 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>Calcolo_Codice_Causale</name>
+        <label>Calcolo Codice Causale</label>
+        <locationX>1491</locationX>
+        <locationY>1512</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Set_Dati_Errore_Stima_Consumi</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Fatturazione</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Errore Stima Consumi</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Query_Case</name>
         <label>Query Case</label>
         <locationX>340</locationX>
-        <locationY>419</locationY>
+        <locationY>526</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Tipo_Processo</targetReference>
@@ -724,7 +787,7 @@
         <name>UpdatedCase</name>
         <label>Refresh Case</label>
         <locationX>1120</locationX>
-        <locationY>483</locationY>
+        <locationY>590</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo</targetReference>
@@ -742,10 +805,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>Predefault_Data_Termine_Agevolazione</name>
+        <label>Predefault Data Termine Agevolazione</label>
+        <locationX>1348</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Campi_Comunicazione_Cessazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>SocialBonusEndDate__c</field>
+            <value>
+                <elementReference>Query_Case.CreatedDate</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Set_Phase_Comunicazioni_con_il_DL</name>
         <label>Set Phase Comunicazioni con il DL</label>
         <locationX>1917</locationX>
-        <locationY>950</locationY>
+        <locationY>1057</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -766,7 +853,7 @@
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
         <locationX>2191</locationX>
-        <locationY>569</locationY>
+        <locationY>676</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -790,7 +877,7 @@
         <name>Set_Phase_Elaborazione_Manuale</name>
         <label>Set Phase Elaborazione Manuale</label>
         <locationX>2189</locationX>
-        <locationY>379</locationY>
+        <locationY>486</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -811,7 +898,7 @@
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
         <locationX>1924</locationX>
-        <locationY>252</locationY>
+        <locationY>359</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -835,7 +922,7 @@
         <name>Update_Case_Inversione</name>
         <label>Update Case Inversione</label>
         <locationX>816</locationX>
-        <locationY>952</locationY>
+        <locationY>1059</locationY>
         <connector>
             <targetReference>InputFieldsFatturazione</targetReference>
         </connector>
@@ -845,7 +932,7 @@
         <name>Update_Case_Rettifica</name>
         <label>Update Case Rettifica</label>
         <locationX>997</locationX>
-        <locationY>837</locationY>
+        <locationY>944</locationY>
         <connector>
             <targetReference>InputFieldsFatturazione</targetReference>
         </connector>
@@ -855,7 +942,7 @@
         <name>Campi_Comunicazione_Cessazione</name>
         <label>Campi Comunicazione Cessazione</label>
         <locationX>1635</locationX>
-        <locationY>47</locationY>
+        <locationY>154</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -952,7 +1039,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -972,8 +1059,8 @@
     <screens>
         <name>Campi_Richiesta_Documentazione</name>
         <label>Campi Richiesta Documentazione</label>
-        <locationX>1540</locationX>
-        <locationY>173</locationY>
+        <locationX>1522</locationX>
+        <locationY>231</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1076,7 +1163,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1097,7 +1184,7 @@
         <name>InputFieldsFatturazione</name>
         <label>Input Campi Fatturazione</label>
         <locationX>989</locationX>
-        <locationY>483</locationY>
+        <locationY>590</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1111,7 +1198,7 @@
         </fields>
         <fields>
             <name>DTInversioneContatore</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere nel campo Note per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1224,7 +1311,7 @@
         <name>Inserimento_Letture_Cliente</name>
         <label>Inserimento Letture Cliente</label>
         <locationX>1131</locationX>
-        <locationY>1646</locationY>
+        <locationY>1753</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1338,6 +1425,10 @@
                 <assignToReference>ValoreLetturaCliente</assignToReference>
                 <name>newTotalReadingValue</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>DataLetturaContestataTemp</assignToReference>
+                <name>readingCustomerDate</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1346,7 +1437,7 @@
         <name>Inserire_letture</name>
         <label>Inserire letture?</label>
         <locationX>1249</locationX>
-        <locationY>670</locationY>
+        <locationY>777</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1375,7 +1466,7 @@
         <name>Screen_Letture</name>
         <label>Screen Letture</label>
         <locationX>1471</locationX>
-        <locationY>1077</locationY>
+        <locationY>1184</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1475,7 +1566,7 @@
         <name>Selezione_Letture</name>
         <label>Selezione Letture</label>
         <locationX>679</locationX>
-        <locationY>1948</locationY>
+        <locationY>2055</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1527,7 +1618,7 @@
         <name>Show_Error_No_Case</name>
         <label>Show Error No Case</label>
         <locationX>59</locationX>
-        <locationY>635</locationY>
+        <locationY>742</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1543,7 +1634,7 @@
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
         <locationX>2788</locationX>
-        <locationY>255</locationY>
+        <locationY>362</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1564,7 +1655,7 @@
         <name>Spinner</name>
         <label>Spinner</label>
         <locationX>2441</locationX>
-        <locationY>569</locationY>
+        <locationY>676</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1587,7 +1678,7 @@
     </screens>
     <start>
         <locationX>146</locationX>
-        <locationY>134</locationY>
+        <locationY>241</locationY>
         <connector>
             <targetReference>Check_Input_Case</targetReference>
         </connector>
@@ -1597,7 +1688,7 @@
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>1854</locationX>
-        <locationY>1656</locationY>
+        <locationY>1763</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1628,7 +1719,7 @@
         <name>Gestione_Unificazione_Separazione_BP_CA_Bolletta</name>
         <label>Gestione Unificazione/Separazione BP-CA-Bolletta</label>
         <locationX>530</locationX>
-        <locationY>712</locationY>
+        <locationY>819</locationY>
         <flowName>HDT_FL_GestioneFatturazione_UnificazioneSeparazione</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1641,7 +1732,7 @@
         <name>Set_Argomento</name>
         <label>Set Argomento</label>
         <locationX>694</locationX>
-        <locationY>13</locationY>
+        <locationY>120</locationY>
         <connector>
             <targetReference>Check_Partite_non_fatturate</targetReference>
         </connector>
@@ -1667,8 +1758,29 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>CodiceCausaleTemp</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>CustomMetadataProcessType</name>
         <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>DataLetturaContestataTemp</name>
+        <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>EffectiveDateTemp</name>
+        <dataType>Date</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>

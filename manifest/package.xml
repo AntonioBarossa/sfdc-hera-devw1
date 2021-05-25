@@ -5,6 +5,7 @@
   <name>ApexClass</name>
 </types>
  <types>
+  <members>AccountContactMultiRoles</members>
   <members>AccountType</members>
   <members>OrderStatus</members>
   <members>CaseOrigin</members>
@@ -13,6 +14,7 @@
   <members>CaseStatus</members>
   <members>CaseType</members>
   <members>KnowledgeValidationStatus</members>
+  <members>LeadSource</members>
   <name>StandardValueSet</name>
 </types>
   <types>
@@ -171,7 +173,7 @@
   <name>Role</name>
 </types>
 <types>
-  <members>*</members>
+  <members>LeadConfig</members>
   <name>Settings</name>
 </types>
 <types>

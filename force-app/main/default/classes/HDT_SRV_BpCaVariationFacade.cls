@@ -4,7 +4,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         Map<String,Object> arg = new Map<String,Object>();
-        List<Case> caseToUpdate = new List<Case>();
+        //List<Case> caseToUpdate = new List<Case>();
         Case currentCase = new Case();
         String recordId;
         Map<String,Object> argsMap = (Map<String,Object>) args;
@@ -43,6 +43,27 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         }catch(Exception ex){
             System.debug(ex.getMessage());
         }
+
+        Case caseToUpdate = new Case();
+        caseToUpdate.Id = recordId;
+        caseToUpdate.SendDate__c = Date.today();
+
+        if (response.success) {
+            caseToUpdate.Phase__c = 'Inviata a SAP';
+        } else {
+            caseToUpdate.Phase__c = 'Non Inviata a SAP';
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+
+        // SAP a differenza di Heroku non manda esiti inbound, quindi forziamo noi l'avanzamento di fase.
+        if (response.success) {
+            caseToUpdate.Phase__c = 'Esito OK da SAP';
+        } else {
+            caseToUpdate.Phase__c = 'Errore Lavorazione SAP';
+        }
+
+        HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
 
         return response;
     }

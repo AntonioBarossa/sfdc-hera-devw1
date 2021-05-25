@@ -19,9 +19,19 @@
                 <label>Group Line Items</label>
             </value>
             <value>
-                <fullName>Unit Price</fullName>
+                <fullName>PaymentMode__c</fullName>
                 <default>false</default>
-                <label>Unit Price</label>
+                <label>PaymentMode__c</label>
+            </value>
+            <value>
+                <fullName>BillingMode__c</fullName>
+                <default>false</default>
+                <label>BillingMode__c</label>
+            </value>
+            <value>
+                <fullName>GreenEnergyOption__c</fullName>
+                <default>false</default>
+                <label>GreenEnergyOption__c</label>
             </value>
             <value>
                 <fullName>Agency__c</fullName>
@@ -29,19 +39,14 @@
                 <label>Agency__c</label>
             </value>
             <value>
-                <fullName>CampaignName__c</fullName>
+                <fullName>Campaign__c</fullName>
                 <default>false</default>
-                <label>CampaignName__c</label>
+                <label>Campaign__c</label>
             </value>
             <value>
                 <fullName>Channel__c</fullName>
                 <default>false</default>
                 <label>Channel__c</label>
-            </value>
-            <value>
-                <fullName>SupplyZipCode__c</fullName>
-                <default>false</default>
-                <label>SupplyZipCode__c</label>
             </value>
             <value>
                 <fullName>CategoryFamily__c</fullName>
@@ -64,11 +69,6 @@
                 <label>CompanyOwner__c</label>
             </value>
             <value>
-                <fullName>ComponentPCV__c</fullName>
-                <default>false</default>
-                <label>ComponentPCV__c</label>
-            </value>
-            <value>
                 <fullName>SupplyCity__c</fullName>
                 <default>false</default>
                 <label>SupplyCity__c</label>
@@ -79,29 +79,14 @@
                 <label>ConsumptionAnnual__c</label>
             </value>
             <value>
-                <fullName>ContinuityChangeOffer__c</fullName>
-                <default>false</default>
-                <label>ContinuityChangeOffer__c</label>
-            </value>
-            <value>
                 <fullName>Convention__c</fullName>
                 <default>false</default>
                 <label>Convention__c</label>
             </value>
             <value>
-                <fullName>CorrHCNonSchedule__c</fullName>
-                <default>false</default>
-                <label>CorrHCNonSchedule__c</label>
-            </value>
-            <value>
                 <fullName>CorrHCSchedule__c</fullName>
                 <default>false</default>
                 <label>CorrHCSchedule__c</label>
-            </value>
-            <value>
-                <fullName>SignDate__c</fullName>
-                <default>false</default>
-                <label>SignDate__c</label>
             </value>
             <value>
                 <fullName>DelayEffectiveDate__c</fullName>
@@ -174,19 +159,14 @@
                 <label>KeepConsumptionsAnalysis__c</label>
             </value>
             <value>
+                <fullName>CustomerMarking__c</fullName>
+                <default>false</default>
+                <label>CustomerMarking__c</label>
+            </value>
+            <value>
                 <fullName>RegistrationNumber__c</fullName>
                 <default>false</default>
                 <label>RegistrationNumber__c</label>
-            </value>
-            <value>
-                <fullName>BillingMode__c</fullName>
-                <default>false</default>
-                <label>BillingMode__c</label>
-            </value>
-            <value>
-                <fullName>PaymentMode__c</fullName>
-                <default>false</default>
-                <label>PaymentMode__c</label>
             </value>
             <value>
                 <fullName>SendingBillMode__c</fullName>
@@ -229,74 +209,14 @@
                 <label>NewClient__c</label>
             </value>
             <value>
-                <fullName>GreenEnergyOption__c</fullName>
-                <default>false</default>
-                <label>GreenEnergyOption__c</label>
-            </value>
-            <value>
                 <fullName>PowerFlow__c</fullName>
                 <default>false</default>
                 <label>PowerFlow__c</label>
             </value>
             <value>
-                <fullName>PriceGas__c</fullName>
-                <default>false</default>
-                <label>PriceGas__c</label>
-            </value>
-            <value>
-                <fullName>Price__c</fullName>
-                <default>false</default>
-                <label>Price__c</label>
-            </value>
-            <value>
                 <fullName>PriceFromThirds__c</fullName>
                 <default>false</default>
                 <label>PriceFromThirds__c</label>
-            </value>
-            <value>
-                <fullName>Percentuale F0</fullName>
-                <default>false</default>
-                <label>Percentuale F0</label>
-            </value>
-            <value>
-                <fullName>Percentuale F1</fullName>
-                <default>false</default>
-                <label>Percentuale F1</label>
-            </value>
-            <value>
-                <fullName>Percentuale F2</fullName>
-                <default>false</default>
-                <label>Percentuale F2</label>
-            </value>
-            <value>
-                <fullName>Percentuale F3</fullName>
-                <default>false</default>
-                <label>Percentuale F3</label>
-            </value>
-            <value>
-                <fullName>Percentuale FP</fullName>
-                <default>false</default>
-                <label>Percentuale FP</label>
-            </value>
-            <value>
-                <fullName>Percentuale FV</fullName>
-                <default>false</default>
-                <label>Percentuale FV</label>
-            </value>
-            <value>
-                <fullName>PriceNet__c</fullName>
-                <default>false</default>
-                <label>PriceNet__c</label>
-            </value>
-            <value>
-                <fullName>PriceNetDiscounted__c</fullName>
-                <default>false</default>
-                <label>PriceNetDiscounted__c</label>
-            </value>
-            <value>
-                <fullName>PriceGreenOption__c</fullName>
-                <default>false</default>
-                <label>PriceGreenOption__c</label>
             </value>
             <value>
                 <fullName>OwnerAC__c</fullName>
@@ -319,19 +239,9 @@
                 <label>ResidentDeliveryAddress__c</label>
             </value>
             <value>
-                <fullName>Role__c</fullName>
+                <fullName>RoleProfile__c</fullName>
                 <default>false</default>
-                <label>Role__c</label>
-            </value>
-            <value>
-                <fullName>PODCode__c</fullName>
-                <default>false</default>
-                <label>PODCode__c</label>
-            </value>
-            <value>
-                <fullName>PDRCode__c</fullName>
-                <default>false</default>
-                <label>PDRCode__c</label>
+                <label>RoleProfile__c</label>
             </value>
             <value>
                 <fullName>DiscountEurMWh__c</fullName>
@@ -379,44 +289,9 @@
                 <label>VasActivationDate__c</label>
             </value>
             <value>
-                <fullName>DurationVAS__c</fullName>
+                <fullName>SBQQ__Existing__c</fullName>
                 <default>false</default>
-                <label>DurationVAS__c</label>
-            </value>
-            <value>
-                <fullName>Opportunity__c</fullName>
-                <default>false</default>
-                <label>Opportunity__c</label>
-            </value>
-            <value>
-                <fullName>Login2__c</fullName>
-                <default>false</default>
-                <label>Login2__c</label>
-            </value>
-            <value>
-                <fullName>WaitingPeriod__c</fullName>
-                <default>false</default>
-                <label>WaitingPeriod__c</label>
-            </value>
-            <value>
-                <fullName>Profile__c</fullName>
-                <default>false</default>
-                <label>Profile__c</label>
-            </value>
-            <value>
-                <fullName>CustomerMarking__c</fullName>
-                <default>false</default>
-                <label>CustomerMarking__c</label>
-            </value>
-            <value>
-                <fullName>MeterType__c</fullName>
-                <default>false</default>
-                <label>MeterType__c</label>
-            </value>
-            <value>
-                <fullName>ServicePoint__c</fullName>
-                <default>false</default>
-                <label>ServicePoint__c</label>
+                <label>SBQQ__Existing__c</label>
             </value>
             <value>
                 <fullName>SBQQ__Type__c</fullName>
@@ -443,15 +318,185 @@
                 <default>false</default>
                 <label>SBQQ__ProductFamily__c</label>
             </value>
+            <value>
+                <fullName>SuperUser__c</fullName>
+                <default>false</default>
+                <label>SuperUser__c</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Quote</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
             <valueName>Group Line Items</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote</controllingFieldValue>
+            <valueName>SBQQ__Type__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SupplyCity__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>OccupantsNumber__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>OwnerAC__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Service__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Surface__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>DwellingType__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__Existing__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <controllingFieldValue>Product Option</controllingFieldValue>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SBQQ__Quantity__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Quote Line</controllingFieldValue>
+            <valueName>SBQQ__PriorQuantity__c</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Product Option</controllingFieldValue>
             <controllingFieldValue>Configuration Attributes</controllingFieldValue>
-            <valueName>Unit Price</valueName>
+            <valueName>SBQQ__ProductFamily__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>PaymentMode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>BillingMode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>GreenEnergyOption__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Agency__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Campaign__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Channel__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CategoryFamily__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>UseCategory__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>GreenCertificateIncluded__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CompanyOwner__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ConsumptionAnnual__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>EmailRecipientVAS__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ClientAge__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>GreenGasOption__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Login__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>LoginGroup__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SendingBillMode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>VASBillingMode__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>NewClient__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>PowerFlow__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Origin__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SupplyProvince__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ResidentDeliveryAddress__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>RoleProfile__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>CategoryTypeClient__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Typology__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>ContributionsType__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>Nome_Bundle__c</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Configuration Attributes</controllingFieldValue>
+            <valueName>SuperUser__c</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

@@ -28,9 +28,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         System.debug('********tem:' + idTemplate);
         
         System.debug('********sender:' + obj);
+        //INIZIO SVILUPPI EVERIS
+        System.debug('********method:' +method);
+        //FINE SVILUPPI EVERIS
         // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
         
-        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method)) {
+        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
             //////////// Recupero endpoint in base a contesto di oggetto
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
             String endpoint = endpointUtils.getEndpoint(obj);
@@ -80,29 +83,32 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 } else {
 
                     wrts_prcgvr.MRR_1_0.WObject objResponse = responseService.responses[0].objects[0];
-                    system.debug('log 1');
                     for(wrts_prcgvr.MRR_1_0.field field : objResponse.fields){
                         
                         fieldValueResponse.put(field.name,field.value);
-                        system.debug('log 2');
                     }
                     if(fieldValueResponse.get('result') != null){
-                        system.debug('log 3');
                         
-                        system.debug('log 5');
                         if('OK'.equalsIgnoreCase(fieldValueResponse.get('result'))){
                             System.debug('********INSIDE RESULT OK');
                             if(fieldValueResponse.get('FASE') != null){
                                 System.debug('********INSIDE FASE NOT NULL');
                                 ord.Phase__c = fieldValueResponse.get('FASE');
+                                ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
                                 System.debug('********AFTER UPDATE');
                             }
                         }
                         else{
-                            // ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
+                            //INIZIO SVILUPPI EVERIS
+                            System.debug('Ricevuto KO Start');
+                            ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
                             ord.Phase__c = 'Comunicazione verso Heroku KO';
+                            ord.description = fieldValueResponse.get('errorMessage');
+                            System.debug('Ricevuto KO End');
+                            //FINE SVILUPPI EVERIS
                         }
                         HDT_SRV_Order ordSrv = new HDT_SRV_Order();
+                        System.debug('Phase aggiorntata--> '+ord);
                         ordSrv.updateRecord(ord);
                     }
                 }

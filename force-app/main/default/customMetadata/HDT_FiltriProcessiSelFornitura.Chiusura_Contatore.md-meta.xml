@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Chiusura Contatore</label>
+    <protected>false</protected>
+    <values>
+        <field>ContrattiCliente__c</field>
+        <value xsi:type="xsd:string">NO</value>
+    </values>
+    <values>
+        <field>Disalimentabile__c</field>
+        <value xsi:type="xsd:string">SI</value>
+    </values>
+    <values>
+        <field>FornitureCliente__c</field>
+        <value xsi:type="xsd:string">SI</value>
+    </values>
+    <values>
+        <field>StatoContratto__c</field>
+        <value xsi:type="xsd:string">Attivo</value>
+    </values>
+    <values>
+        <field>StatoFornitura__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>TipoProcesso__c</field>
+        <value xsi:type="xsd:string">Chiusura Contatore</value>
+    </values>
+    <values>
+        <field>TipoServizio__c</field>
+        <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
+    </values>
+</CustomMetadata>

@@ -111,6 +111,11 @@
                 <default>false</default>
                 <label>Chiamata outbound</label>
             </value>
+            <value>
+                <fullName>Lavorazione Reclamo Post Survey</fullName>
+                <default>false</default>
+                <label>Lavorazione Reclamo Post Survey</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

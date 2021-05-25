@@ -123,7 +123,7 @@ public inherited sharing class HDT_QR_Order {
             ParentOrder__r.SignedDate__c,
             OrderNumber,
             Phase__c, 
-            // RequestOption__c,
+            RequestOption__c,
             WaiverRightAfterthought__c,
             MaxAfterthoughtDate__c,
             PreviousTrader__c,
@@ -148,7 +148,9 @@ public inherited sharing class HDT_QR_Order {
             ActivationCountry__c,
             ActivationProvince__c,
             ActivationStreetNumberExtension__c,
-            ActivationStreetNumber__c
+            ActivationStreetNumber__c,
+            ImplantType__c,
+            PowerCommitted__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

@@ -28,7 +28,7 @@
                                     class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
                                     <template if:true={customerMarkingOptions.data}>
                                         <lightning-combobox data-id="customerMarking" name="customerMarking"
-                                            label="Marcatura Cliente" placeholder="Seleziona Marcatura"
+                                            label="Marcatura" placeholder="Seleziona Marcatura"
                                             value={markingValue} options={customerMarkingOptions.data.values}
                                             onchange={handleChange} required>
                                         </lightning-combobox>
@@ -88,7 +88,7 @@
                                     class="slds-form-element slds-col slds-m-top_medium slds-p-left_small slds-p-right_x-large">
                                     <template if:true={companyOwnerOptions.data}>
                                         <lightning-combobox data-id="companyOwner" name="companyOwner"
-                                            label="Società Gruppo Hera" placeholder="Seleziona Società"
+                                            label="Silos" placeholder="Seleziona Società"
                                             options={companyOwnerOptions.data.values} required>
                                         </lightning-combobox>
                                     </template>
@@ -96,10 +96,17 @@
                             </div>
                         </div>
                         <div class="slds-m-top_x-large">
+                            <h3 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
+                                Indirizzi </h3>
+                        </div>
+                        <div class="slds-p-left_x-large slds-p-right_x-large">
+                            <c-hdt-target-object-address-fields objectapiname={currentObjectApiName}></c-hdt-target-object-address-fields>
+                        </div>
+                        <div class="slds-m-top_x-large">
                             <h3
                                 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
                                 Sede Legale e Contatti </h3>
-                        </div>
+                        </div> 
                         <div class="slds-grid slds-grid_vertical">
                             <div class="slds-col slds-grid">
                                 <!-- <div
@@ -107,10 +114,36 @@
                                     <lightning-input type="text" data-id="region" label="Regione">
                                     </lightning-input>
                                 </div> -->
-
+                                <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-combobox data-id="phonePrefix2" name="phonePrefix2" label="Prefisso telefono cliente"
+                                            placeholder="Seleziona prefisso" value={phonePrefixValue2} default="+39" options={phonePrefixOptions}
+                                            required>
+                                        </lightning-combobox>
+                                    </div>
                                 <div
                                     class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Cliente" required
+                                    <lightning-input type="tel" data-id="phoneNumber" label="Telefono Cliente" 
+                                    maxlength="11">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-grid">
+                                <!-- <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="text" data-id="region" label="Regione">
+                                    </lightning-input>
+                                </div> -->
+                                <div
+                                        class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                        <lightning-combobox data-id="mobilephonePrefix2" name="mobilephonePrefix2" label="Prefisso telefono cellulare cliente"
+                                            placeholder="Seleziona prefisso" value={mobilephonePrefix2} default="+39" options={phonePrefixOptions}
+                                            required>
+                                        </lightning-combobox>
+                                    </div>
+                                <div
+                                    class="slds-form-element__control slds-size_1-of-2 slds-m-top_medium slds-p-left_x-large slds-p-right_small">
+                                    <lightning-input type="tel" data-id="mobilePhoneNumber" label="Telefono Cellulare Cliente" 
                                     maxlength="11">
                                     </lightning-input>
                                 </div>
@@ -259,13 +292,12 @@
                                                 placeholder="Seleziona Ruolo" options={ruoloOptions} required>
                                             </lightning-combobox>
                                         </div>
-                                        <!-- <div
+                                         <div
                                             class="slds-form-element__control slds-size_1-of-2 slds-m-top_x-large slds-p-left_small slds-p-right_x-large">
-                                            <c-hdt-calcola-codice-fiscale></c-hdt-calcola-codice-fiscale>
                                             <lightning-button class="slds-form-element" name="calculateFiscalCode"
                                                 type="submit" label="Calcola Codice Fiscale"
-                                                onclick={handleCalculation}></lightning-button>
-                                        </div> -->
+                                                onclick={handleCalculation}></lightning-button> 
+                                        </div> 
 
                                     </div>
                                 </div>

@@ -85,10 +85,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
             when 'HDT_RT_Attivazione' {
-                if (deliberate == 'In Delibera') {
-                    processType = '	Prima Attivazione In delibera';
-                } else if(deliberate == 'Fuori delibera') {
-                    processType = 'Prima Attivazione Fuori delibera';
+
+                if(extraParams.get('servicePointType') == 'HDT_RT_Ele') {
+                    processType = 'Prima Attivazione Ele';
+                } else {
+                    if (deliberate == 'In Delibera') {
+                        processType = 'Prima Attivazione In delibera';
+                    } else if(deliberate == 'Fuori delibera') {
+                        processType = 'Prima Attivazione Fuori delibera';
+                    }
                 }
             }
             when 'HDT_RT_AttivazioneConModifica' {
@@ -96,19 +101,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             }
             //INIZIO SVILUPPI EVERIS
             when 'HDT_RT_Voltura'{
-
-                newOrder.ProcessType__c = 'Voltura';
-                newOrder.Id = orderId;
-                newOrder.Step__c = 2;
-                newOrder.RecordTypeId = recordTypeId;
-                newOrder.Deliberation__c = deliberate;
-                newOrder.Phase__c = 'Bozza';
-                newOrder.AccountId = order.AccountId;
-                newOrder.ServicePoint__c = order.ServicePoint__c;
-                newOrder.ContractId = order.ContractId;
+                processType = 'Voltura';
                 newOrder.Subprocess__c = 'Standard';
-                newOrder = orderUtl.enrichOrder(newOrder);
-                orderSrv.updateRecord(newOrder);
+                newOrder.CausalCode__c = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VTE' : 'VTG';
+                newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                //newOrder = orderUtl.enrichOrder(newOrder);
+                //orderSrv.updateRecord(newOrder);
 
 
 
@@ -116,17 +114,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             //FINE SVILUPPI EVERIS
         }
 
+        //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
+        newOrder.Id = orderId;
+        newOrder.RecordTypeId = recordTypeId;
+        newOrder.Step__c = 2;
+        newOrder.Deliberation__c = deliberate;
+        newOrder.ProcessType__c = processType;
+        newOrder.Phase__c = 'Bozza';
 
+        orderSrv.updateRecord(newOrder);
+        //EVERIS 
         
 
-        orderSrv.updateRecord(new Order(
+        /*orderSrv.updateRecord(new Order(
             Id = orderId,
             RecordTypeId = recordTypeId,
             Step__c = 2,
             Deliberation__c = deliberate, 
             ProcessType__c = processType,
             Phase__c = 'Bozza' //Everis: Aggiunto update fase
-        ));
+        ));*/
     }
 
     private static String getServicePointTypeFromOrder(String orderId) {

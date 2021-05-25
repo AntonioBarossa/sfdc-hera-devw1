@@ -8,9 +8,12 @@ package.xml
 **/jsconfig.json
 **/.eslintrc.json
 
+# Manually deployed
+#**namedCredentials
+
 # LWC Jest
 **/__tests__/**
+**settings
 **dashboards/trailheadapp__Trailhead_Dashboards
 **dashboards/Sales_and_Marketing_Dashboards
-**settings
 **profiles/Minimum Access - Salesforce.profile

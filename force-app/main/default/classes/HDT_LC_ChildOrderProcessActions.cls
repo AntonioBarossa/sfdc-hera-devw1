@@ -125,10 +125,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.Instance326__c = 'Richiesto';
                     orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                 }
-
-
+                if(order.RetroactiveDate__c != null){
+                    order.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                }
             }
-
         }
 
         system.debug('HDT_LC_ChildOrderProcessActions - save: ' + orderToUpdate);
@@ -229,7 +229,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     public static void cancel(Order order, String cancellationReason){
         orderSrv.updateRecord(new Order(
             Id = order.Id,
-            Status = 'Annullato',
+            Status = 'Annullato', //Chiuso
             Phase__c = 'Annullato',
             CancellationReason__c = cancellationReason
         ));

@@ -1,4 +1,4 @@
-import { LightningElement, api, wire } from 'lwc';
+import { LightningElement, api, wire, track } from 'lwc';
 import buildResponse from '@salesforce/apex/HDT_LC_ComposeBodyResponse.buildResponse';
 import updateResponse from '@salesforce/apex/HDT_LC_ComposeBodyResponse.updateResponse';
 import { FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
@@ -27,6 +27,7 @@ const columns =[
 export default class HdtProva extends LightningElement {
 
     @api recordId;
+    @api nextLabel;
 
     @api availableActions = [];
     
@@ -65,11 +66,15 @@ export default class HdtProva extends LightningElement {
 
     delay = 500;
 
+    headerString = 'Classificazione 4° Livello: ';
+
     @wire(getRecord, { recordId: '$recordId', fields: fields })
     wiredCase({error, data}){
         if(data){
 
             this.quartoLivello = getFieldValue(data, QUARTO_LIVELLO);
+
+            this.headerString += this.quartoLivello;
 
             console.log(this.quartoLivello);
 

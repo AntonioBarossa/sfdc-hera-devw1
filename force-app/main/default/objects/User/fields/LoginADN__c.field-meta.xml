@@ -3,6 +3,7 @@
     <fullName>LoginADN__c</fullName>
     <externalId>false</externalId>
     <formula>UPPER(FirstName+&apos;.&apos;+LastName)</formula>
+    <description>Campo chiesto da Everis per l&apos;integrazione con SIGMA, corrisponde alla concatenazione del FirstName e del LastName separati da un punto.</description>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Login ADN</label>
     <required>false</required>

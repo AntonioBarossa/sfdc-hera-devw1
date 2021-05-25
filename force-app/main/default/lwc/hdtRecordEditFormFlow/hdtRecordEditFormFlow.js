@@ -84,12 +84,15 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }
                     });
                 }
-                this.variablesLoaded = true;
+                
                 if(this.recordId != null){
                     updateRecord({fields: { Id: this.recordId }}).then(() => {
                        console.log('Record Refreshato');
+                       console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                       this.variablesLoaded = true;
                     }).catch(error => {
                         console.log('Error Refreshing record');
+                        this.error = true;
                     });
                 }
             } else if (error) {
@@ -226,10 +229,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         if(event.target.name === 'draft'){
 
             this.saveInDraft = true;
+            this.cancelCase  = false;
 
         } else if(event.target.name === 'cancel'){
 
             this.cancelCase = true;
+            this.saveInDraft = false;
 
         }
 

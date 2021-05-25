@@ -164,7 +164,23 @@
     <picklistValues>
         <picklist>ContactReason__c</picklist>
         <values>
-            <fullName>TBD</fullName>
+            <fullName>Gestione contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info commerciali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolletta e pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altro</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -422,43 +438,31 @@
     <picklistValues>
         <picklist>LeadSource</picklist>
         <values>
-            <fullName>Advertisement</fullName>
+            <fullName>Creazione manuale</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>DBU</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Customer Event</fullName>
+            <fullName>Lead freddo</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Employee Referral</fullName>
+            <fullName>Nome Social network</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Google AdWords</fullName>
+            <fullName>SOL</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Other</fullName>
+            <fullName>Webform callback</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Purchased List</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Trade Show</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Webinar</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Website</fullName>
+            <fullName>Webform winback</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -12,6 +12,7 @@ public inherited sharing class HDT_LC_SaleVas {
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 
@@ -91,6 +92,30 @@ public inherited sharing class HDT_LC_SaleVas {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check for duplicated contract/order reference in current sale
+     * @param String saleId
+     * @param String objectId (OrderReference__c/ContractReference__c)
+     * @param String type (contract or order)
+     */
+    private static Boolean isDuplicated(String saleId, String objectId, String type) {
+        Boolean result = false;
+
+        List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
+
+        switch on type {
+            when 'contract' {
+                resultsList = quoteQr.getQuotesBySaleAndContractReference(saleId, objectId);
+            }
+            when 'order' {
+                resultsList = quoteQr.getQuotesBySaleAndOrderReference(saleId, objectId);
+            }
+        }
+
+        return !resultsList.isEmpty();
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
      * @param Order order
      * @param String supplyCity
@@ -99,6 +124,10 @@ public inherited sharing class HDT_LC_SaleVas {
         
         if (order.Id == null) {
             throw new AuraHandledException('Devi scegliere un ordine!');
+        }
+
+        if (isDuplicated(sale.Id, order.Id, 'order')) {
+            throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -143,6 +172,10 @@ public inherited sharing class HDT_LC_SaleVas {
         
         if (contract.Id == null) {
             throw new AuraHandledException('Devi scegliere un contrato!');
+        }
+
+        if (isDuplicated(sale.Id, contract.Id, 'contract')) {
+            throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -226,9 +259,11 @@ public inherited sharing class HDT_LC_SaleVas {
 
         if(!pricebook.isEmpty()) {
             result = pricebook[0].Id;
+        } else {
+            result = null;
         }
 
-        return null;
+        return result;
     }
 
     private static String checkCommodityContract(String contractId) {

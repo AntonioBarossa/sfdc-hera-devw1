@@ -70,6 +70,12 @@ export default class hdtTargetObjectAddressFields extends LightningElement {
     visibleCopiaResidenza=false;
     visibleSelezioneIndirizzi=false;
     disableFlagVerificato=false;
+    boolProvincia=false;
+    boolCap = false;
+    boolComune = false;
+    boolVia = false;
+    boolCivico = false;
+    statusCodeComune='';
     
     
 
@@ -227,21 +233,22 @@ handleAddressValuesIfSap(servicePointRetrievedData){
 
     handleConfirm(){
         console.log('entra in handleconfirm');
+        console.log(' rowToSend**************'+JSON.stringify(this.rowToSend));
         this.preloading = true;
         this.closeModal();
 		let data = [];
-        console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo']));
-        if(this.rowToSend['Indirizzo']!=undefined){
-            data = this.rowToSend['Indirizzo'].split(",");
+        console.log(' rowToSend indirizzo**************'+JSON.stringify(this.rowToSend['Indirizzo']));
+        if(this.rowToSend['']!=undefined){
+            data = this.rowToSend[''].split(",");
             console.log('data after rowToSend**************'+JSON.stringify(data));
         }
-        else if(this.rowToSend['Indirizzo Fornitura']!=undefined)
+       /* else if(this.rowToSend['Indirizzo Fornitura']!=undefined)
         {
             console.log(' rowToSend**************'+JSON.stringify(this.rowToSend['Indirizzo Fornitura']));
-            data = this.rowToSend['Indirizzo Fornitura'].split(",");
+            data = this.rowToSend[''].split(",");
             console.log('data after rowToSend**************'+JSON.stringify(data));
 
-        }
+        }*/
 
         if(data!= undefined){
 
@@ -287,6 +294,7 @@ handleAddressValuesIfSap(servicePointRetrievedData){
             }
         
         this.preloading = false;
+        console.log(' THERECORD**************'+JSON.stringify(this.theRecord));
         console.log('esce da handleconfirm');
 
     }
@@ -441,6 +449,7 @@ handleAddressValuesIfSap(servicePointRetrievedData){
      * Create Data-Table
      */
     createTable(data) {
+        console.log('data table ' + JSON.stringify(data));
         let i, j, temporary, chunk = 5;
         this.pages = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
@@ -452,6 +461,8 @@ handleAddressValuesIfSap(servicePointRetrievedData){
     }
 
     createTableFornitura(data) {
+        console.log('data table fornitura ' + JSON.stringify(data));
+
         let i, j, temporary, chunk = 5;
         this.pagesFornitura = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
@@ -528,34 +539,43 @@ handleAddressValues(servicePointRetrievedData){
         switch(key){
             case 'Stato':
                 this.stato = servicePointRetrievedData[key] ;
+                this.theRecord['Stato'] = servicePointRetrievedData[key] ;
             break;
             case 'Provincia':
                 this.provincia= servicePointRetrievedData[key] ;
+                this.theRecord['Provincia'] = servicePointRetrievedData[key] ;
             break;
             case 'Comune':
                 this.comune= servicePointRetrievedData[key] ;
+                this.theRecord['Comune'] = servicePointRetrievedData[key] ;
             break;
             case 'CAP':
                 this.cap = servicePointRetrievedData[key] ;
+                this.theRecord['CAP'] = servicePointRetrievedData[key] ;
             break;
             case 'Via':
                 this.via = servicePointRetrievedData[key] ;
+                this.theRecord['Via'] = servicePointRetrievedData[key] ;
             break;
             case 'Civico':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.civico = servicePointRetrievedData[key] ;
+                this.theRecord['Civico'] = servicePointRetrievedData[key] ;
             break;
             case 'EstensCivico':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.estensCivico = servicePointRetrievedData[key] ;
+                this.theRecord['Estens.Civico'] = servicePointRetrievedData[key] ;
             break;
             case 'CodiceComuneSAP':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.codComuneSAP = servicePointRetrievedData[key] ;
+                this.theRecord['Codice Comune SAP'] = servicePointRetrievedData[key] ;
             break;
             case 'CodiceViaStradarioSAP':
                 console.log('servicePointRetrievedData[key] *************************************'+JSON.stringify(servicePointRetrievedData[key]));
                 this.codStradarioSAP = servicePointRetrievedData[key] ;
+                this.theRecord['Codice Via Stradario SAP'] = servicePointRetrievedData[key] ;
             break;
             case 'IndirizzoEstero':
                 this.IndEstero = servicePointRetrievedData[key] ;
@@ -629,6 +649,13 @@ disableFieldByIndEstero(){
         this.disableCap=true;
         this.disableCodComuneSap=true;
         this.disableCodViaSap=true;
+       
+        this.boolProvincia=false;
+        this.boolCap = false;
+        this.boolComune = false;
+        this.boolVia = false;
+        this.boolCivico = false;
+
     }
     if(this.IndEstero === true)
     {
@@ -638,6 +665,12 @@ disableFieldByIndEstero(){
         this.disableCap=false;
         this.disableCodComuneSap=false;
         this.disableCodViaSap=false;
+
+        this.boolProvincia=true;
+        this.boolCap = true;
+        this.boolComune = true;
+        this.boolVia = true;
+        this.boolCivico = true;
     }
     console.log('disableFieldByIndEstero END');
 
@@ -649,6 +682,7 @@ handleChangeComune(event){
     console.log('event value : ******++'+ JSON.stringify(event.target.value));
     console.log('event detail : ******++'+ JSON.stringify(event.target.detail));
     console.log('entra qui+++++++++++++++++++++++++++');
+    
     if(this.IndEstero==true){
 
     }else{
@@ -660,6 +694,7 @@ handleChangeComune(event){
                 
                 console.log("******HOLAHOLA:" + JSON.stringify(data));
                 if(data['statusCode'] == 200 && data['prestazione'].length > 0){
+                    this.statusCodeComune = data['statusCode'];
                     console.log("Sucessoooooooooooo:" + JSON.stringify(data));
                     this.herokuAddressServiceData = data['prestazione'];
                     this.headertoshow = 'Comune';
@@ -673,9 +708,10 @@ handleChangeComune(event){
 
                         this.template.querySelector('c-hdt-selection-address-response').openedForm();
                         this.template.querySelector('c-hdt-selection-address-response').valorizeTable(data['prestazione'],'Citta');
+                        this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
+
                     }
                     
-
                 }
                 else{
                     let event2;
@@ -701,6 +737,12 @@ handleChangeComune(event){
     
         });
     }
+
+        if(this.statusCodeComune==200){
+            console.log('entra in if statusCodeComune == 200');
+            this.template.querySelector('c-hdt-selection-address-response').handleFilterDataTable(event);
+
+        }
     }
     
 
@@ -1143,7 +1185,7 @@ disabledverifyFieldsAddressDisabled(){
                     this.theRecord['Civico']= data['prestazione'][0].houseNum1;
                     this.theRecord['Comune']= data['prestazione'][0].city1;
                     this.theRecord['Provincia']= data['prestazione'][0].region;
-                    this.theRecord['CAP']= data['prestazione'][0].houseNum1;
+                    this.theRecord['CAP']= data['prestazione'][0].postCode1;
                     this.theRecord['Codice Comune SAP']= data['prestazione'][0].cityCode;
                     this.theRecord['Codice Via Stradario SAP']= data['prestazione'][0].streetCode;
                     this.theRecord['Flag Verificato'] = true;

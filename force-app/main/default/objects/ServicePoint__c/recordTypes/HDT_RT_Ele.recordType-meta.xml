@@ -28,6 +28,49 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Company__c</picklist>
+        <values>
+            <fullName>AAA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC%2BHCM%2BEENE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCNE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HSPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Disconnectable__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -493,19 +536,23 @@
             <fullName>G650 Turbina</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>G6500</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
-        <picklist>MeterType__c</picklist>
+        <picklist>MeterStatus__c</picklist>
         <values>
-            <fullName>Monorario</fullName>
+            <fullName>Attivo</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Multiorario</fullName>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inattivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

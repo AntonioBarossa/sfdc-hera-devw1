@@ -11,6 +11,7 @@ public inherited sharing class HDT_QR_Contact {
             Email,
             Fax,
             CertifiedEmail__c,
+            IndividualId,
             FiscalCode__c
             FROM Contact
             WHERE Id = :id
@@ -27,7 +28,7 @@ public inherited sharing class HDT_QR_Contact {
     }
  public List<Contact> getRecordsById(List<String> ids) {
 
-        String query = 'SELECT  Firstname,LastName, IndividualId  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+        String query = 'SELECT  Firstname,LastName, IndividualId,Company__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
         List<Contact> contacts = Database.query(query);
         return contacts;
     }
@@ -95,6 +96,7 @@ public inherited sharing class HDT_QR_Contact {
             MobilePhone,
             Fax,
             CertifiedEmail__c,
+            MailingAddressFormula__c,
             CompanyOwner__c
             FROM Contact 
             WHERE Id IN :ids
@@ -113,5 +115,32 @@ public inherited sharing class HDT_QR_Contact {
             return null;
 
         }
+    }
+
+    public List<Contact> getContactsByOwnerId(String ownerId, String ownerName) {
+        return [
+            SELECT Id,
+            Name,
+            MailingLatitude,
+            MailingLongitude
+            FROM Contact
+            WHERE OwnerId = :ownerId
+            AND Name = :ownerName
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public Contact getContactCoordinates(String contactId) {
+        return [
+            SELECT Id,
+            Name,
+            MailingLatitude,
+            MailingLongitude,
+            LastGeolocationLatitude__c,
+            LastGeolocationLongitude__c
+            FROM Contact
+            WHERE Id = :contactId
+            WITH SECURITY_ENFORCED
+        ];
     }
 }

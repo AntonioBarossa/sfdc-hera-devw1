@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Da_Eseguire_Non_Prima_Del</fullName>
-    <active>true</active>
+    <active>false</active>
     <errorConditionFormula>NotPerformedBefore__c &lt; TODAY()</errorConditionFormula>
     <errorDisplayField>WrittenReceiptRequestDate__c</errorDisplayField>
     <errorMessage>Non è possibile inserire una data nel passato</errorMessage>

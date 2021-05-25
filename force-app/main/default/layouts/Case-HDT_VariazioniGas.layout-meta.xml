@@ -29,6 +29,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>ServicePoint__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>CommodityFormula__c</field>
             </layoutItems>
             <layoutItems>
@@ -38,14 +42,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Market__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ServicePoint__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>PODPDRFormula__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -92,14 +88,18 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>PowerContractualFormula__c</field>
+                <field>VATPercentage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>ConcessionType__c</field>
+                <field>Taxes__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>PowerContractualFormula__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CalculationBlock__c</field>
@@ -117,11 +117,15 @@
                 <behavior>Readonly</behavior>
                 <field>StartDate__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>EndDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>EndDate__c</field>
+                <field>Note__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -242,10 +246,6 @@
                 <behavior>Readonly</behavior>
                 <field>ServicePointType__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Taxes__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -361,6 +361,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CancellationNote__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RevokedCancellation__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

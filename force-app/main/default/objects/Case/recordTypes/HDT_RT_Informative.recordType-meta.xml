@@ -874,6 +874,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CompetentOffice__c</picklist>
         <values>
             <fullName>Aziende outMercato</fullName>
@@ -976,215 +995,215 @@
     <picklistValues>
         <picklist>ConcessionType__c</picklist>
         <values>
-            <fullName>Altro%C2%A0</fullName>
+            <fullName>Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imosta%C2%A0Autopr-Prod%C2%A0EE%C2%A0Industr%C2%A0%28Cod%2E G_I15%29%C2%A0</fullName>
+            <fullName>Imosta%C2%A0Autopr-Prod%C2%A0EE%C2%A0Industr%C2%A0%28Cod%2E G_I15%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta %25 Usi%C2%A0Chim%C2%A0Metall%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0%C2%A0 %28Cod%2E E_IE_11D%29%C2%A0</fullName>
+            <fullName>Imposta %25 Usi%C2%A0Chim%C2%A0Metall%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0%C2%A0 %28Cod%2E E_IE_11D%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta %25 Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11C%29%C2%A0</fullName>
+            <fullName>Imposta %25 Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11C%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Autotrazione %28Cod%2E G_I09%29%C2%A0</fullName>
+            <fullName>Imposta Autotrazione %28Cod%2E G_I09%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta C En%3E50%25 unità%C2%A0prod%C2%A0%28Cod%2E E_IE_14A%29%C2%A0</fullName>
+            <fullName>Imposta C En%3E50%25 unità%C2%A0prod%C2%A0%28Cod%2E E_IE_14A%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Esente Forze Armate NATO %28Cod%2E E_IE_L10%29%C2%A0%C2%A0</fullName>
+            <fullName>Imposta Esente Forze Armate NATO %28Cod%2E E_IE_L10%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta FFSS %28Cod%2E E_IE_L03%29%C2%A0</fullName>
+            <fullName>Imposta FFSS %28Cod%2E E_IE_L03%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Forze Armate NATO %28Cod%2E G_I25%29%C2%A0</fullName>
+            <fullName>Imposta Forze Armate NATO %28Cod%2E G_I25%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Forze Armate Nazionali %28Cod%2E G_I24%29%C2%A0%C2%A0</fullName>
+            <fullName>Imposta Forze Armate Nazionali %28Cod%2E G_I24%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Opifici %28Cod%2E E_IE_L13%29%C2%A0</fullName>
+            <fullName>Imposta Opifici %28Cod%2E E_IE_L13%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Processi Elettrolitici %28Cod%2E G_I21%29%C2%A0</fullName>
+            <fullName>Imposta Processi Elettrolitici %28Cod%2E G_I21%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Processi Metallurgici %28Cod%2E G_I22%29%C2%A0</fullName>
+            <fullName>Imposta Processi Metallurgici %28Cod%2E G_I22%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Processi Mineralogici %28Cod%2E G_I23%29%C2%A0</fullName>
+            <fullName>Imposta Processi Mineralogici %28Cod%2E G_I23%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Sedi Diplomatiche %28Cod%2EE_IE_L02%29%C2%A0</fullName>
+            <fullName>Imposta Sedi Diplomatiche %28Cod%2EE_IE_L02%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Sedi Diplomatiche - Art%2E22 %28Cod%2E G_I26%29%C2%A0</fullName>
+            <fullName>Imposta Sedi Diplomatiche - Art%2E22 %28Cod%2E G_I26%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Usi Domestici %28Cod%2E G_ICD%29%C2%A0</fullName>
+            <fullName>Imposta Usi Domestici %28Cod%2E G_ICD%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Usi%C2%A0Chim%C2%A0Elettrol%C2%A0Metal No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_L11%29%C2%A0</fullName>
+            <fullName>Imposta Usi%C2%A0Chim%C2%A0Elettrol%C2%A0Metal No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_L11%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11A%29%C2%A0</fullName>
+            <fullName>Imposta Usi%C2%A0Mineral%C2%A0No%C2%A0Sog%2E Obbl%2E%C2%A0 %28Cod%2E E_IE_11A%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta esente Prod%2EEE %28Cod%2E E_IE_L06%29%C2%A0%C2%A0</fullName>
+            <fullName>Imposta esente Prod%2EEE %28Cod%2E E_IE_L06%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta ordinaria Altri Usi %28Cod%2E E_IE_M04%29%C2%A0</fullName>
+            <fullName>Imposta ordinaria Altri Usi %28Cod%2E E_IE_M04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi domestici%C2%A0</fullName>
+            <fullName>Imposta usi domestici</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi industriali %28Cod%2E G_I04%29%C2%A0</fullName>
+            <fullName>Imposta usi industriali %28Cod%2E G_I04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi non domestici iva 10%25 %28Cod%2E G_ICC10%29%C2%A0</fullName>
+            <fullName>Imposta usi non domestici iva 10%25 %28Cod%2E G_ICC10%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29%C2%A0</fullName>
+            <fullName>Imposta usi non domestici iva 22%25 %28Cod%2E G_ICC%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta%C2%A0Grossiti%C2%A0EE Non%C2%A0Domest%C2%A0%28Cod%2E E_IE_L98%29%C2%A0</fullName>
+            <fullName>Imposta%C2%A0Grossiti%C2%A0EE Non%C2%A0Domest%C2%A0%28Cod%2E E_IE_L98%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta%C2%A0Illum%C2%A0Pubbl%C2%A0%28Cod%2E E_IE_L01%29%C2%A0</fullName>
+            <fullName>Imposta%C2%A0Illum%C2%A0Pubbl%C2%A0%28Cod%2E E_IE_L01%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Imposta%C2%A0Trasp%C2%A0Urb%2E %28Cod%2E E_IE_L04%29%C2%A0</fullName>
+            <fullName>Imposta%C2%A0Trasp%C2%A0Urb%2E %28Cod%2E E_IE_L04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25 %28Cod%2E 01%29%C2%A0</fullName>
+            <fullName>Iva 10%25 %28Cod%2E 01%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25 Consociate %28Cod%2E 27%29%C2%A0</fullName>
+            <fullName>Iva 10%25 Consociate %28Cod%2E 27%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Collegate %28Cod%2E 05%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Collegate %28Cod%2E 05%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Controllanti %28Cod%2E 07%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Controllanti %28Cod%2E 07%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Controllate %28Cod%2E 03%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Controllate %28Cod%2E 03%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E Partecipate %28Cod%2E 14%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E Partecipate %28Cod%2E 14%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E 09%29%C2%A0</fullName>
+            <fullName>Iva 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E 09%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25 %28Cod%2E 02%29%C2%A0</fullName>
+            <fullName>Iva 22%25 %28Cod%2E 02%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25 Consociate %28Cod%2E 28%29%C2%A0</fullName>
+            <fullName>Iva 22%25 Consociate %28Cod%2E 28%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Collegate %28Cod%2E 06%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Collegate %28Cod%2E 06%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Controllanti %28Cod%2E 08%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Controllanti %28Cod%2E 08%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Controllate %28Cod%2E 04%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Controllate %28Cod%2E 04%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E Partecipate %28Cod%2E 15%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E Partecipate %28Cod%2E 15%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E 10%29%C2%A0</fullName>
+            <fullName>Iva 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E 10%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Fuori Campo Livigno %28Cod%2E 19%29%C2%A0</fullName>
+            <fullName>Iva Fuori Campo Livigno %28Cod%2E 19%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Fuori Campo%C2%A0Autofatt%2E Art 2 %28Cod%2E 13%29%C2%A0</fullName>
+            <fullName>Iva Fuori Campo%C2%A0Autofatt%2E Art 2 %28Cod%2E 13%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Reverse%C2%A0Charge%C2%A0%28Cod%2E 25%29%C2%A0</fullName>
+            <fullName>Iva Reverse%C2%A0Charge%C2%A0%28Cod%2E 25%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 10%25 %28Cod%2E S1%29%C2%A0</fullName>
+            <fullName>Iva Split payment 10%25 %28Cod%2E S1%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E S3%29%C2%A0</fullName>
+            <fullName>Iva Split payment 10%25%C2%A0Soc%2E del Gruppo %28Cod%2E S3%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 22%25 %28Cod%2E S2%29%C2%A0</fullName>
+            <fullName>Iva Split payment 22%25 %28Cod%2E S2%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva Split payment 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E S4%29%C2%A0</fullName>
+            <fullName>Iva Split payment 22%25%C2%A0Soc%2E del Gruppo %28Cod%2E S4%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva esente-non%C2%A0imp%C2%A0Art 72 %28Cod%2E 12%29%C2%A0</fullName>
+            <fullName>Iva esente-non%C2%A0imp%C2%A0Art 72 %28Cod%2E 12%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva esente-non%C2%A0imp%C2%A0art 8 S%2E Marino %28Cod%2E 17%29%C2%A0</fullName>
+            <fullName>Iva esente-non%C2%A0imp%C2%A0art 8 S%2E Marino %28Cod%2E 17%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Iva%C2%A0Reseller esente %28Cod%2E 26%29%C2%A0</fullName>
+            <fullName>Iva%C2%A0Reseller esente %28Cod%2E 26%29</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>No sottoposto 100%25 Off%2E%C2%A0Acquisto_Min%2EChim%2EMetall%2E %28Cod%2E E_IE_06C%29%C2%A0</fullName>
+            <fullName>No sottoposto 100%25 Off%2E%C2%A0Acquisto_Min%2EChim%2EMetall%2E %28Cod%2E E_IE_06C%29</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2194,11 +2213,7 @@
     <picklistValues>
         <picklist>EndCustomerRequestType__c</picklist>
         <values>
-            <fullName>Reclamo scritto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta info</fullName>
+            <fullName>Richiesta Info Scritta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -6925,6 +6940,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Autolettura</fullName>
             <default>false</default>
         </values>
@@ -6938,6 +6957,14 @@
         </values>
         <values>
             <fullName>Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -6965,6 +6992,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>PostSales VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preventivi</fullName>
             <default>false</default>
         </values>
@@ -6987,6 +7018,18 @@
     </picklistValues>
     <picklistValues>
         <picklist>InformativeType__c</picklist>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
@@ -7028,6 +7071,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cambio Offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio contatore non registrato</fullName>
             <default>false</default>
         </values>
@@ -7053,6 +7104,10 @@
         </values>
         <values>
             <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connessione con Attivazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7196,6 +7251,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prima Attivazione Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione In delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recesso per Altri Motivi</fullName>
             <default>false</default>
         </values>
@@ -7225,6 +7296,10 @@
         </values>
         <values>
             <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7300,7 +7375,43 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Switch Out SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Fittizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Reseller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Winback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in con voltura tecnica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7340,6 +7451,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Variazione su Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Verifica Dati al DL</fullName>
             <default>false</default>
         </values>
@@ -7360,11 +7475,30 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Switch</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Votive Modena Contestazione Fattura</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Votive Modena Pagamenti Morosità</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IsSameReasonComplaint__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7560,13 +7694,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Nome_cimitero__c</picklist>
-        <values>
-            <fullName>null</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NotJustMotivation__c</picklist>
         <values>
             <fullName>Analisi incompleta</fullName>
@@ -7709,7 +7836,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensamento - Revocato</fullName>
+            <fullName>Elaborazione Risposta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7722,6 +7849,14 @@
         </values>
         <values>
             <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Parere Ricevuta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7867,19 +8002,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Agevolazioni non Energy indirette</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Assistenza Sociale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bolletta Fuga H2O</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bonus integrativo solo per non Energy</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7947,10 +8070,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Delibera 655 2016</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Disagio Economico</fullName>
             <default>false</default>
         </values>
@@ -7975,6 +8094,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Edif%2E Attesa affitto%2Fvendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio in ristrutturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Edificio non abitato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errata Domiciliazione%2FNon richiesta%3BDomiciliazione non attiva</fullName>
             <default>false</default>
         </values>
@@ -7988,10 +8119,6 @@
         </values>
         <values>
             <fullName>Evasione%2FElusione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fattura Plurim_TLR_Tur %2B 3%2E5%25</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8083,6 +8210,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Seconda casa</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Segnalazione doppio pagamento non registrato</fullName>
             <default>false</default>
         </values>
@@ -8091,11 +8222,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>TARI</fullName>
+            <fullName>Stima errata disguido Hera</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>TCP Comune no Int</fullName>
+            <fullName>Stima errata per tipo utilizzo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8305,10 +8436,6 @@
         </values>
         <values>
             <fullName>Contratto SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratto Siebel</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9734,6 +9861,122 @@
     <picklistValues>
         <picklist>Taxes__c</picklist>
         <values>
+            <fullName>Imposta Autotrazione (Cod. G_I09)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imosta Autopr-Prod EE Industr (Cod. G_I15)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Processi Metallurgici (Cod. G_I22)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Processi Mineralogici (Cod. G_I23)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Forze Armate Nazionali (Cod. G_I24)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Usi Domestici (Cod. G_ICD)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi non domestici iva 10% (Cod. G_ICC10)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi non domestici iva 22% (Cod. G_ICC)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi industriali (Cod. G_I04)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Processi Elettrolitici (Cod. G_I21)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Forze Armate NATO (Cod. G_I25)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Sedi Diplomatiche - Art.22 (Cod. G_I26)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta usi domestici</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta ordinaria Altri Usi (Cod. E_IE_M04)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta C En&gt;50% unità prod (Cod. E_IE_14A)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Usi Chim Elettrol Metal No Sog. Obbl. (Cod. E_IE_L11)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Esente Forze Armate NATO (Cod. E_IE_L10)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta FFSS (Cod. E_IE_L03)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Grossiti EE Non Domest (Cod. E_IE_L98)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Illum Pubbl (Cod. E_IE_L01)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>No sottoposto 100% Off. Acquisto_Min.Chim.Metall. (Cod. E_IE_06C)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Opifici (Cod. E_IE_L13)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta esente Prod.EE (Cod. E_IE_L06)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Sedi Diplomatiche (Cod.E_IE_L02)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Trasp Urb. (Cod. E_IE_L04)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta % Usi Chim Metall No Sog. Obbl. (Cod. E_IE_11D)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta % Usi Mineral No Sog. Obbl. (Cod. E_IE_11C)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imposta Usi Mineral No Sog. Obbl. (Cod. E_IE_11A)</fullName>
+            <default>false</default>
+        </values>
+        <!-- <values>
             <fullName>E_I_USIDOM-Domestici</fullName>
             <default>false</default>
         </values>
@@ -9900,7 +10143,7 @@
         <values>
             <fullName>Ridotta-G_I04</fullName>
             <default>false</default>
-        </values>
+        </values> -->
     </picklistValues>
     <picklistValues>
         <picklist>TechnicalDataRequestType__c</picklist>
@@ -10047,6 +10290,10 @@
     <picklistValues>
         <picklist>Type</picklist>
         <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Allineamento Anagrafica</fullName>
             <default>false</default>
         </values>
@@ -10147,6 +10394,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Emissione Impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Errore di Fatturazione</fullName>
             <default>false</default>
         </values>
@@ -10211,6 +10462,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica Layout di dettaglio</fullName>
             <default>false</default>
         </values>
@@ -10228,6 +10483,10 @@
         </values>
         <values>
             <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10296,6 +10555,10 @@
         </values>
         <values>
             <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10400,6 +10663,10 @@
         </values>
         <values>
             <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Portata</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10518,6 +10785,17 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseChangeCharge__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10647,7 +10925,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GENERICI 20%25-02</fullName>
+            <fullName>GENERICI 22%25-02</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10675,7 +10953,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E COLLEGATE 20%25-06</fullName>
+            <fullName>SOC%2E COLLEGATE 22%25-06</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10683,7 +10961,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E CONTROLLANTI 20%25-08</fullName>
+            <fullName>SOC%2E CONTROLLANTI 22%25-08</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10695,11 +10973,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2E PARTECIPATE 20%25-16</fullName>
+            <fullName>SOC%2E PARTECIPATE 22%25-16</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SOC%2ECONTROLLATE 20%25-04</fullName>
+            <fullName>SOC%2ECONTROLLATE 22%25-04</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10707,7 +10985,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOCIETA%27 DEL GRUPPO 20%25-10</fullName>
+            <fullName>SOCIETA%27 DEL GRUPPO 22%25-10</fullName>
             <default>false</default>
         </values>
         <values>

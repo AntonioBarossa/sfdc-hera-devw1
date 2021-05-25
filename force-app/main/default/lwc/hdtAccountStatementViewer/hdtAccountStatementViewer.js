@@ -659,17 +659,17 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 console.log('>>> success: ' + result.success);
 
                 if(result.success){
-                    var obj = JSON.parse(result.data);
+                   var obj = JSON.parse(result.data);
 
-                    console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
+                   console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
 
-                    if(this.techObj.requestType==='viewResult'){
-                        // viewResult logic goes here
-                        this.viewResultMulesoftResponse(obj);
-                    } else {
-                        // other requestType logic goes here
-                        this.handleMulesoftResponse(obj);
-                    }
+                   if(this.techObj.requestType==='viewResult'){
+                       // viewResult logic goes here
+                       this.viewResultMulesoftResponse(obj);
+                   } else {
+                       // other requestType logic goes here
+                       this.handleMulesoftResponse(obj);
+                   }
 
                 } else {
                     this.showError = true;
@@ -1088,18 +1088,39 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             var currentObj = this.columns.filter(c => { return c.fieldName == sortField });
 
-            if(currentObj[0].detail.type == 'number'){
-                if(asc){
-                    this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
-                } else {
-                    this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
-                }     
-            } else {
-                if(asc){
-                    this[listToConsider].sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
-                } else {
-                    this[listToConsider].sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
-                }     
+            switch (currentObj[0].detail.type) {
+                case 'text':
+                    if(asc){
+                        this[listToConsider].sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
+                    } else {
+                        this[listToConsider].sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
+                    }
+                    break;
+                case 'date':
+
+                    this[listToConsider].sort(function(a, b) {
+
+                        var dateSplitted = b[sortField].split('/');
+                        var data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+                        
+                        var dateSplitted2 = a[sortField].split('/');
+                        var data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
+
+                        if(asc){
+                            return (new Date(data) < new Date(data2)) ? 1 : -1;
+                        } else {
+                            return (new Date(data) > new Date(data2)) ? 1 : -1;
+                        }
+
+                    });
+
+                    break;
+                case 'number':
+                    if(asc){
+                        this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
             }
 
             this.onFirst();

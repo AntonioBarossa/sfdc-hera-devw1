@@ -37,7 +37,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>3446</locationY>
+        <locationY>3566</locationY>
         <assignmentItems>
             <assignToReference>GetCaseFinale.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -50,6 +50,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseFinale.CausalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcoloCodiceCausale.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseFinale.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>CalcoloCodiceCausale.OperationCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -457,9 +471,21 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Cluster__c</field>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>ContactId</field>
             <value>
                 <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Contract__c</field>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -504,6 +530,12 @@
                 <elementReference>GetParentCase.ServicePoint__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Type</field>
+            <value>
+                <stringValue>Verifica Dati al DL</stringValue>
+            </value>
+        </inputAssignments>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
@@ -539,6 +571,48 @@
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordLookups>
+        <name>CalcoloCodiceCausale</name>
+        <label>CalcoloCodiceCausale</label>
+        <locationX>842</locationX>
+        <locationY>3446</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssegnaValori</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseFinale.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseFinale.Type</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseFinale.Subprocess__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseFinale.CommodityFormula__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Case_Creato</name>
         <label>Get Case Creato</label>
@@ -679,7 +753,7 @@
         <locationY>3326</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValori</targetReference>
+            <targetReference>CalcoloCodiceCausale</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -748,7 +822,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>3566</locationY>
+        <locationY>3686</locationY>
         <inputReference>GetCaseFinale</inputReference>
     </recordUpdates>
     <screens>
