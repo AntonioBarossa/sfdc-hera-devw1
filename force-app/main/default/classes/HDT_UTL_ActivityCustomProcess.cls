@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
         Map<id,String> mapIdOwnerIdBef = new Map<Id,String>();
         Map<id,String> mapIdOwnerIdAfter = new Map<Id,String>();
         Map<id,String> mapContactIdOwner = new Map<Id,String>();
+        String userId = userinfo.getuserid();
         List<Lead> listLead = new List<Lead>();
         List<String> listContactId = new List<String>();
         List<Account> listAccount = new List<Account>();
@@ -23,7 +24,7 @@ public with sharing class HDT_UTL_ActivityCustomProcess {
             mapIdOwnerIdAfter.put(art.id,art.ownerId);
         }*/
         for(wrts_prcgvr__Activity__c art : listActD2DAfter){
-            if(mapIdOwnerIdBef.get(art.id)!= null && mapIdOwnerIdBef.get(art.id) != art.ownerId){
+            if(mapIdOwnerIdBef.get(art.id)!= null && art.ownerId == userId && mapIdOwnerIdBef.get(art.id) != art.ownerId){
                 if(art.lead__c != null){
                     listLead.add(new Lead(id=art.lead__c,ownerId=art.ownerId));
                 }
