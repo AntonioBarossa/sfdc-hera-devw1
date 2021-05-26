@@ -1,22 +1,34 @@
 public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
-        for(Product2 p : (Product2[])Trigger.New){
-            p.Status__c = 'In Sviluppo';
-        }
+        //for(Product2 p : (Product2[])Trigger.New){
+        //    p.Status__c = 'In Sviluppo';
+        //}
     }
 
     public override void beforeUpdate(){
         
-       Set<String> allUniqueProductCodeSet;
-       allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
+        Set<String> allUniqueProductCodeSet;
+        allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
-       for(Product2 p : (Product2[])Trigger.New){
-           if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
-               System.debug('>>> ADD ERROR');
-               p.addError(generateErrorMessage((p)));
-           }
-       }
+        HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse;
+        for(Product2 p : (Product2[])Trigger.New){
+
+            if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
+                System.debug('>>> ADD ERROR');
+                //p.addError(generateErrorMessage((p)));
+            }
+
+            Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
+            System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
+            statusResponse = HDT_UTL_Product2Process.changeStatusHandler(statusResponse, p.Id, oldProduct, p);
+            System.debug('>>> statusResponse: ' + statusResponse.success + ' - ' + statusResponse.message);
+
+            if(!statusResponse.success){
+                p.addError(statusResponse.message);
+            }
+
+        }
 
     }
 

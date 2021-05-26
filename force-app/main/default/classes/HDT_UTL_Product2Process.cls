@@ -1,7 +1,9 @@
 public inherited sharing class HDT_UTL_Product2Process {
 
-    public static HDT_WRP_Product2Process.HDT_WRP_StatusResponse changeStatusHandler(HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse, String productId, String oldStatus, String newStatus){
+    public static HDT_WRP_Product2Process.HDT_WRP_StatusResponse changeStatusHandler(HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse, String productId, Product2 oldProduct, Product2 newProduct){
 
+        String oldStatus = oldProduct.Status__c;
+        String newStatus = newProduct.Status__c;
         String inDevelopment = 'In sviluppo';
         String confirmed = 'Confermata';
         String sold = 'Vendibile';
@@ -146,14 +148,42 @@ public inherited sharing class HDT_UTL_Product2Process {
             }
 
             if(newStatus.equalsIgnoreCase(expired)){
+
+                String fieldChanged = checkIfRecordIsChanged(oldProduct, newProduct);
                 statusResponse.success = true;
                 statusResponse.message = '';
+
+                if(!String.isEmpty(fieldChanged) && !fieldChanged.equalsIgnoreCase('EndDate__c') && !fieldChanged.equalsIgnoreCase('StartDate__c')){
+                    System.debug('>>>> RECORD CHANGE -> FIELD: ' + fieldChanged);
+                    statusResponse.success = false;
+                    statusResponse.message = 'Puoi modificare solo le date';
+                } 
+
                 return statusResponse;
             }
             
         }
         return statusResponse;
         
+    }
+
+    public static String checkIfRecordIsChanged(Product2 oldProduct, Product2 newProduct){
+
+        Product2 prodObject = new Product2();
+        Schema.SObjectType objType = prodObject.getSObjectType();
+        Map<String, Schema.SObjectField> objMap = Schema.SObjectType.Product2.fields.getMap();
+
+        for (String currentField : objMap.keyset()) {
+           try {
+               if(newProduct.get(currentField) != oldProduct.get(currentField)){
+                   return currentField;
+               }
+           } catch (Exception e) {
+               return '';
+           }
+        }
+        return '';
+
     }
 
 }

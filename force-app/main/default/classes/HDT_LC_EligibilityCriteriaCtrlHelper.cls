@@ -260,10 +260,10 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
 
 
             //+++++++++++++++++++++++++++++
-            existingMuniMap = deserializeUntypedMethod(existingMuniMap, muniList);
+            //existingMuniMap = deserializeUntypedMethod(existingMuniMap, muniList);
 
             //+++++++++++++++++++++++++++++
-            //existingMuniMap = deserializeMethod(existingMuniMap, muniList);
+            existingMuniMap = deserializeMethod(existingMuniMap, muniList);
 
             cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
             cityZipCodeObj.regionList[0].eligibleForAllCities = criteria[0].EligibleForAllCities__c;
