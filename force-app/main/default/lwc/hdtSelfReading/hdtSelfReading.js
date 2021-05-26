@@ -83,8 +83,11 @@ export default class HdtSelfReading extends LightningElement {
 
     connectedCallback(){
 
-        console.log('selectedReadingsList: ' + this.selectedReadingsList);
-        this.selectedReadingsList = JSON.parse(this.selectedReadingsList);
+        if (this.selectedReadingsList != undefined) {
+            console.log('selectedReadingsList: ' + this.selectedReadingsList);
+            this.selectedReadingsList = JSON.parse(this.selectedReadingsList);
+        }
+
         this.oldTotalReadingValue = 0;
         this.newTotalReadingValue = 0;
         this.readingCustomerDate = this.sysdate();
