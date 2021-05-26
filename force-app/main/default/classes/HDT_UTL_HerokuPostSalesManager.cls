@@ -140,8 +140,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
             caseNew.Id = currentCase.Id;
             caseNew.Phase__c = phase;
-            caseNew.HerokuPracticeCode__c = herokuCode;
             caseNew.Description = errorMessage;
+            if(herokuCode != null && herokuCode != ''){
+                caseNew.HerokuPracticeCode__c = herokuCode;
+            }
             if(dlCode != null && dlCode != ''){
                 caseNew.DistributorPracticeCode__c = dlCode;
             }
