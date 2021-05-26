@@ -203,5 +203,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void sbloccoVoltura(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+
+        if(currentCase.VulturePracticeReference__c != null){
+
+            wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate('Sblocco Voltura');
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Order__c = currentCase.VulturePracticeReference__c;
+            activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        
+        }
+
+    }
+
 
 }
