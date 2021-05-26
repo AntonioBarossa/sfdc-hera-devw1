@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_a_CaseFlow</name>
         <label>Assegna a CaseFlow</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
@@ -14,13 +14,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AssegnaValori_1</targetReference>
+            <targetReference>Processo_Parent_Case_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_a_CaseFlow_0</name>
         <label>Assegna a CaseFlow</label>
-        <locationX>996</locationX>
+        <locationX>1062</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>FlowCase</assignToReference>
@@ -30,14 +30,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AssegnaValori_1</targetReference>
+            <targetReference>Processo_Parent_Case_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>3566</locationY>
+        <locationY>3782</locationY>
         <assignmentItems>
             <assignToReference>GetCaseFinale.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -74,7 +74,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>842</locationX>
-        <locationY>2486</locationY>
+        <locationY>2702</locationY>
         <assignmentItems>
             <assignToReference>Get_Flow_Case_Aggiornato.Subprocess__c</assignToReference>
             <operator>Assign</operator>
@@ -87,10 +87,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValori_1</name>
+        <name>AssegnaValori_1_0</name>
         <label>AssegnaValori</label>
-        <locationX>842</locationX>
-        <locationY>1550</locationY>
+        <locationX>710</locationX>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>FlowCase.EndCustomerRequestType__c</assignToReference>
             <operator>Assign</operator>
@@ -105,7 +105,7 @@
     <assignments>
         <name>AssegnaValoriParent</name>
         <label>AssegnaValoriParent</label>
-        <locationX>556</locationX>
+        <locationX>358</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetParentCase.Phase__c</assignToReference>
@@ -119,10 +119,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValoriParent_0</name>
+        <label>AssegnaValoriParent</label>
+        <locationX>622</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Istruttoria Creata</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Fase_Case_Parent</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Nuovo_Tentativo_SI</name>
         <label>Nuovo Tentativo SI</label>
         <locationX>710</locationX>
-        <locationY>1910</locationY>
+        <locationY>2126</locationY>
         <assignmentItems>
             <assignToReference>FlowCase.NewAttempt__c</assignToReference>
             <operator>Assign</operator>
@@ -138,7 +154,7 @@
         <name>Avanzamento</name>
         <label>Avanzamento</label>
         <locationX>842</locationX>
-        <locationY>2726</locationY>
+        <locationY>2942</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -245,7 +261,7 @@
         <name>Check_Nuovo_tentativo</name>
         <label>Check Nuovo tentativo</label>
         <locationX>842</locationX>
-        <locationY>1790</locationY>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case</targetReference>
         </defaultConnector>
@@ -270,7 +286,7 @@
         <name>Dati_Tecnici_M03_0</name>
         <label>Dati Tecnici M03?</label>
         <locationX>710</locationX>
-        <locationY>3206</locationY>
+        <locationY>3422</locationY>
         <defaultConnector>
             <targetReference>GetCaseFinale</targetReference>
         </defaultConnector>
@@ -292,7 +308,7 @@
         <name>Dati_Tecnici_M03_0_0</name>
         <label>Dati Tecnici M03?</label>
         <locationX>677</locationX>
-        <locationY>2846</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <targetReference>Case_Layout</targetReference>
         </defaultConnector>
@@ -316,7 +332,7 @@
     <decisions>
         <name>Processo_Parent_Case</name>
         <label>Processo Parent Case?</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Get_Record_Type_Verifica_Dati_al_DL</targetReference>
@@ -334,6 +350,46 @@
             </conditions>
             <connector>
                 <targetReference>AssegnaValoriParent</targetReference>
+            </connector>
+            <label>Reclamo Scritto/Rich. Info</label>
+        </rules>
+        <rules>
+            <name>Prescrizione_Fattura</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prescrizione Fatture</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriParent_0</targetReference>
+            </connector>
+            <label>Prescrizione Fattura</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Processo_Parent_Case_0</name>
+        <label>Processo Parent Case?</label>
+        <locationX>842</locationX>
+        <locationY>1550</locationY>
+        <defaultConnector>
+            <targetReference>Get_Case_Tentativo_Esistente</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Reclamo_Scritto_Rich_Info_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori_1_0</targetReference>
             </connector>
             <label>Reclamo Scritto/Rich. Info</label>
         </rules>
@@ -367,7 +423,7 @@
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>1040</locationX>
-        <locationY>3086</locationY>
+        <locationY>3302</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -459,7 +515,7 @@
     <recordCreates>
         <name>Crea_Case_di_Verifica_Dati_al_DL</name>
         <label>Crea Case di Verifica Dati al DL</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>974</locationY>
         <connector>
             <targetReference>Arricchimento_Dati</targetReference>
@@ -543,7 +599,7 @@
         <name>CreateActivity</name>
         <label>CreateActivity</label>
         <locationX>314</locationX>
-        <locationY>3086</locationY>
+        <locationY>3302</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -575,7 +631,7 @@
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
         <locationX>842</locationX>
-        <locationY>3446</locationY>
+        <locationY>3662</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori</targetReference>
@@ -616,7 +672,7 @@
     <recordLookups>
         <name>Get_Case_Creato</name>
         <label>Get Case Creato</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -638,7 +694,7 @@
         <name>Get_Case_Tentativo_Esistente</name>
         <label>Get Case Tentativo Esistente</label>
         <locationX>842</locationX>
-        <locationY>1670</locationY>
+        <locationY>1886</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Nuovo_tentativo</targetReference>
@@ -687,7 +743,7 @@
         <name>Get_Flow_Case_Aggiornato</name>
         <label>Get Flow Case Aggiornato</label>
         <locationX>842</locationX>
-        <locationY>2366</locationY>
+        <locationY>2582</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori_0</targetReference>
@@ -707,7 +763,7 @@
     <recordLookups>
         <name>Get_Record_Type_Verifica_Dati_al_DL</name>
         <label>Get Record Type Verifica Dati al DL</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -729,7 +785,7 @@
         <name>GetActivityTemplate</name>
         <label>GetActivityTemplate</label>
         <locationX>314</locationX>
-        <locationY>2966</locationY>
+        <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreateActivity</targetReference>
@@ -750,7 +806,7 @@
         <name>GetCaseFinale</name>
         <label>GetCaseFinale</label>
         <locationX>842</locationX>
-        <locationY>3326</locationY>
+        <locationY>3542</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CalcoloCodiceCausale</targetReference>
@@ -770,7 +826,7 @@
     <recordLookups>
         <name>GetParentCase</name>
         <label>GetParentCase</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -792,16 +848,26 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>842</locationX>
-        <locationY>2126</locationY>
+        <locationY>2342</locationY>
         <connector>
             <targetReference>DisplayHeader_0</targetReference>
         </connector>
         <inputReference>FlowCase</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Aggiorna_Fase_Case_Parent</name>
+        <label>Aggiorna Fase Parent Case</label>
+        <locationX>622</locationX>
+        <locationY>638</locationY>
+        <connector>
+            <targetReference>Get_Record_Type_Verifica_Dati_al_DL</targetReference>
+        </connector>
+        <inputReference>GetParentCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>Aggiorna_Fase_Case_Reclamo_0</name>
         <label>Aggiorna Fase Case Reclamo</label>
-        <locationX>556</locationX>
+        <locationX>358</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Get_Record_Type_Verifica_Dati_al_DL</targetReference>
@@ -812,7 +878,7 @@
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>842</locationX>
-        <locationY>2606</locationY>
+        <locationY>2822</locationY>
         <connector>
             <targetReference>Avanzamento</targetReference>
         </connector>
@@ -822,14 +888,14 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a Da Inviare</label>
         <locationX>842</locationX>
-        <locationY>3686</locationY>
+        <locationY>3902</locationY>
         <inputReference>GetCaseFinale</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
         <label>Inserimento letture</label>
         <locationX>1040</locationX>
-        <locationY>2966</locationY>
+        <locationY>3182</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -928,7 +994,7 @@
         <name>DisplayHeader_0</name>
         <label>Inserimento Dati Tecnici</label>
         <locationX>842</locationX>
-        <locationY>2246</locationY>
+        <locationY>2462</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1287,7 +1353,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>50</locationX>
-        <locationY>2846</locationY>
+        <locationY>3062</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1312,7 +1378,7 @@
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>3206</locationY>
+        <locationY>3422</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1336,7 +1402,7 @@
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>688</locationX>
+        <locationX>622</locationX>
         <locationY>1094</locationY>
         <connector>
             <targetReference>Get_Case_Creato</targetReference>

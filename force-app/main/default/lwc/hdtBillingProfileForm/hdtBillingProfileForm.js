@@ -345,7 +345,7 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     validFields() {
 
-        let isValid = true;
+        this.saveErrorMessage = [];
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
 
@@ -511,15 +511,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         //validate billing profile fields
         console.log('concatBillingErrorFields: ', concatBillingErrorFields);
         if (concatBillingErrorFields !== '') {
-            
-            isValid = false;
+
             this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di billing profile: ' + concatBillingErrorFields.slice(0, -2));
         }
     
         //Validate address
         if(!this.isForeignAddress){
             if (!this.isVerifiedAddress) {
-                isValid = false;
                 this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
             }
         } else {
@@ -545,12 +543,11 @@ export default class hdtBillingProfileForm extends LightningElement {
             }
 
             if (concatAddressErrorFields !== '') {
-                isValid = false;
                 this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
             }
         }
 
-        return isValid;
+        return this.saveErrorMessage.length === 0;
 
     }
 
@@ -656,6 +653,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         this.handleWrapAddressObject();
 
         if(this.validFields()){
+            this.saveErrorMessage = [];
 
             this.dataToSubmit['Account__c'] = this.accountId;
             this.dataToSubmit['IbanCountry__c'] = 'IT';
