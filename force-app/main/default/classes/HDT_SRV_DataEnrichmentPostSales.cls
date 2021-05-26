@@ -352,4 +352,10 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         
     }
 
+    public Boolean variationsBlock(String sapValue){
+
+        return sapValue.equalsIgnoreCase('T1');
+
+    }
+
 }

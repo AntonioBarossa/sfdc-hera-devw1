@@ -23,8 +23,8 @@ public with sharing class HDT_SRV_SalesHandler {
         HDT_WRP_MrrResponse.HDT_WRP_Field responseField = new HDT_WRP_MrrResponse.HDT_WRP_Field();
         HDT_WRP_MrrResponse.HDT_WRP_Field responseFieldError = new HDT_WRP_MrrResponse.HDT_WRP_Field();
 
-        HDT_QR_Order quoteQr = new HDT_QR_Order();
-        HDT_SRV_Order quoteSrv = new HDT_SRV_Order();
+        HDT_QR_Order orderQr = new HDT_QR_Order();
+        HDT_SRV_Order orderSrv = new HDT_SRV_Order();
         HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
 		Map<String,String> mapRequestFields = new Map<String,String>();
 
@@ -42,28 +42,26 @@ public with sharing class HDT_SRV_SalesHandler {
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         
-                        Order ord = quoteQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        Order ord = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         ord.Phase__c = mapRequestFields.get('FASE');
 
-                        if (mapRequestFields.get('FASE') != null) {
-                            switch on mapRequestFields.get('FASE') {
-                                when 'Ammissibilità KO' {
-                                    ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
-                                    ord.CausalCode__c = mapRequestFields.get('CODERR');
-                                }
-                                when 'Esito KO da DL' {
-                                    ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
-                                }
-                                when 'Esito KO da SII' {
-                                    ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
-                                }
-                                when 'Errore lavorazione SAP' {
-                                    ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
-                                }
+                        switch on mapRequestFields.get('FASE') {
+                            when 'Ammissibilità KO' {
+                                ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
+                                ord.CausalCode__c = mapRequestFields.get('CODERR');
+                            }
+                            when 'Esito KO da DL' {
+                                ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
+                            }
+                            when 'Esito KO da SII' {
+                                ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
+                            }
+                            when 'Errore lavorazione SAP' {
+                                ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
                             }
                         }
 
-                        quoteSrv.updateRecord(ord);
+                        orderSrv.updateRecord(ord);
                     	responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';    

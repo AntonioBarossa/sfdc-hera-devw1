@@ -26639,6 +26639,10 @@
         <layout>wrts_prcgvr__Activity__c-HDT_Sportello</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-Visita_D2D</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
