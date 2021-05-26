@@ -334,6 +334,21 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         return '';
     }
 
+    /**
+       Poichè il codice blocco serve solo sul processo 'Sollecito Emissione Bolletta',
+       scriviamo il codice sul campo Note__c del Case. Siccome questo campo
+       è usato anche da altri processo per altri scopi, limitiamo la scrittura del campo solo al processo dedicato.
+     */
+    public String writeBlockCode(String sapValue, Case currentCase) {
+
+        System.debug('writeBlockCode: ' + sapValue + ' ' + currentCase);
+        if (currentCase.Type.equals('Sollecito Emissione Bolletta')) {
+            return 'Codice Blocco: ' + sapValue;
+        }
+
+        return '';
+    }
+
     public Date getDateFromString(String stringDate){
 
         //String Date is yyyymmdd
@@ -350,6 +365,12 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         return Date.newInstance(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
         
+    }
+
+    public Boolean variationsBlock(String sapValue){
+
+        return sapValue.equalsIgnoreCase('T1');
+
     }
 
 }

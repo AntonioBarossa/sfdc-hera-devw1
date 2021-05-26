@@ -80,6 +80,10 @@
                 <behavior>Readonly</behavior>
                 <field>Subprocess__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MultiContractBill__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Origin__c</fullName>
-    <description>la provenienza legata al dato record di product option</description>
+    <fullName>NumberDaysMonthsYears__c</fullName>
+    <description>Campo di configurazione che indica il numero di Giorni/Mesi/Anni</description>
     <externalId>false</externalId>
-    <label>Provenienza</label>
-    <length>100</length>
+    <label>N º Giorni/Mesi/Anni</label>
+    <length>3</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
