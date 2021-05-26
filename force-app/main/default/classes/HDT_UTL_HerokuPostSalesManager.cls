@@ -161,9 +161,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         List<Case> caseUpdate = new List<Case>();
         Case currentCase = new Case();
         String recordId = reqWrp.requestMap.get('RECORD_ID');
-        if(String.isBlank(recordId)) return caseUpdate;
-        currentCase.Id = reqWrp.requestMap.get('RECORD_ID');
-        Case recordCase = hpsmQr.getCaseRecord(reqWrp.requestMap.get('RECORD_ID'));
+        String caseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
+        if(String.isBlank(recordId) && String.isBlank(caseNumber)) return caseUpdate;
+
+        String caseParam = recordId != null? recordId:caseNumber;
+        Case recordCase = hpsmQr.getCaseRecord(caseParam);
+        currentCase.Id = recordCase.Id;
         Datetime nowDate = Datetime.now();
         String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
         switch on reqWrp.requestMap.get('METHOD'){
@@ -206,6 +209,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
                 if(String.isNotBlank(newDescription)){
                     currentCase.Description = newDescription + '\n' + currentDescription;
+                }
+            }when 'addAttivita'{
+                if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
+                    currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
+                }
+                if(reqWrp.requestMap.get('MESSAGGIO') != null && reqWrp.requestMap.get('MESSAGGIO') != ''){
+                    String description = recordCase.Description != null?recordCase.Description:'';
+                    currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('MESSAGGIO') + '\n' + description;
                 }
             }
         }
