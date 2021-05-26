@@ -8,7 +8,7 @@
                         <div class="slds-grid slds-wrap slds-m-top_small">
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Channel__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3" field-name="CreatedBy__c" value={currentUserName} variant="label-stacked"></lightning-input-field>
-                            <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field>
+                            <lightning-input-field required disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" data-id="SalesContact__c" field-name="SalesContact__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled class="slds-size_1-of-3" field-name="SalesContactRole__c" data-name="SalesContactRole__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="Agency__c" variant="label-stacked"></lightning-input-field>
                             <lightning-input-field disabled={disabledInput} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SaleBy__c" variant="label-stacked"></lightning-input-field>
