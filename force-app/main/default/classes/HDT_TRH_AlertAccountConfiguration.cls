@@ -54,7 +54,7 @@ public with sharing class HDT_TRH_AlertAccountConfiguration extends HDT_TRH_Trig
 
             inputsMap.put('accountId', alert.Account__c);
             inputsMap.put('contactId', accountContactsMap.get(alert.Account__c));
-
+            System.debug('Creazione Case Modifica Alert: parametri di input: ' + inputsMap);
             Case alertCase = caseUtility.createCase(inputsMap);
             if (alertCase != null) {
                 alertCase.IsAlertActive__c = alert.IsActive__c;

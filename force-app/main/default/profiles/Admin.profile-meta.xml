@@ -12329,6 +12329,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.DescriptionSAPBonusContributo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.DiscountEurMWh__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17294,6 +17299,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.DescriptionSAPBonusContributo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductOption__c.DiscountEurMWh__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18340,6 +18350,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.DelayEffectiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.DescriptionSAPBonusContributo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20730,6 +20745,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.DelayEffectiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.DescriptionSAPBonusContributo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25669,7 +25689,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>TechnicalOffer__c.NunmberDaysMonthsYears__c</field>
+        <field>TechnicalOffer__c.NumberDaysMonthsYears__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29830,6 +29850,14 @@
         <layout>QuoteManagement__c-Quote Management Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaEle</layout>
+        <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaGas</layout>
+        <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>SaleServiceItem__c-Sale Service Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -30700,6 +30728,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>PartyConsent</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>PowerVaration__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -32812,6 +32849,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_VisitaD2D</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

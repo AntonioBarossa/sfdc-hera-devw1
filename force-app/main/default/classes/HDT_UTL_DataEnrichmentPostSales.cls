@@ -75,6 +75,18 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                     depsSrv.getOpzione(position.valore));
                             }
+                            when 'getDateFromString'{
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                    depsSrv.getDateFromString(position.valore));
+                            }
+                            when 'variationsBlock'{
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                    depsSrv.variationsBlock(position.valore));
+                            }
+                            when 'writeBlockCode' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.writeBlockCode(position.valore, currentCase));
+                            }
                         }
                     } else {
                         transcodeMap.put(transcodeConfig.SfdcField__c, position.valore);

@@ -4,7 +4,7 @@
         <name>Submit_Request</name>
         <label>Submit Request</label>
         <locationX>182</locationX>
-        <locationY>2270</locationY>
+        <locationY>2606</locationY>
         <actionName>HDT_SRV_BpCaVariationFacade</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -216,6 +216,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_FT_0</name>
+        <label>Assegna FT</label>
+        <locationX>204</locationX>
+        <locationY>2270</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>FT</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>inviaMA3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Output</name>
         <label>Assegna Output</label>
         <locationX>336</locationX>
@@ -235,7 +251,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>inviaMA3</targetReference>
+            <targetReference>FT_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -258,7 +274,7 @@
         <name>Assegna_Phase_KO_SAP</name>
         <label>Assegna Phase KO SAP</label>
         <locationX>50</locationX>
-        <locationY>2510</locationY>
+        <locationY>2846</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -375,7 +391,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>204</locationX>
-        <locationY>3182</locationY>
+        <locationY>3518</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -398,7 +414,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>468</locationX>
-        <locationY>3182</locationY>
+        <locationY>3518</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -467,7 +483,7 @@
         <name>Esito_Callout</name>
         <label>Esito Callout</label>
         <locationX>182</locationX>
-        <locationY>2390</locationY>
+        <locationY>2726</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -514,6 +530,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>FT_0_0_0</name>
+        <label>FT?</label>
+        <locationX>336</locationX>
+        <locationY>2150</locationY>
+        <defaultConnector>
+            <targetReference>inviaMA3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>FT_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.EndDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <dateValue>4000-12-31</dateValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_FT_0</targetReference>
+            </connector>
+            <label>FT</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Il_Case_in_Bozza_0</name>
         <label>Il Case è in Bozza?</label>
         <locationX>1106</locationX>
@@ -542,7 +583,7 @@
         <name>inviaMA3</name>
         <label>inviaMA3?</label>
         <locationX>336</locationX>
-        <locationY>2150</locationY>
+        <locationY>2486</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -786,7 +827,7 @@
         <name>Votive</name>
         <label>Votive?</label>
         <locationX>336</locationX>
-        <locationY>3062</locationY>
+        <locationY>3398</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0</targetReference>
         </defaultConnector>
@@ -807,7 +848,6 @@
             <label>Votive</label>
         </rules>
     </decisions>
-    <description>--&gt; Upgrade Ramo Votive Modena</description>
     <dynamicChoiceSets>
         <name>SendingMethodPicklist</name>
         <dataType>Picklist</dataType>
@@ -909,7 +949,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>204</locationX>
-        <locationY>3302</locationY>
+        <locationY>3638</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -936,7 +976,7 @@
         <name>Update_Status_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>468</locationX>
-        <locationY>3302</locationY>
+        <locationY>3638</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen</targetReference>
         </connector>
@@ -956,7 +996,7 @@
         <name>Update_Status_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>2630</locationY>
+        <locationY>2966</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1354,7 +1394,7 @@
         <name>Loading_Spinner_screen</name>
         <label>Loading Spinner screen</label>
         <locationX>468</locationX>
-        <locationY>3422</locationY>
+        <locationY>3758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
