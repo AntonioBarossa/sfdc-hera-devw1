@@ -27739,7 +27739,7 @@
         <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Reading__c-Reading__c-HDT_LetturaGas</layout>
+        <layout>Reading__c-HDT_LetturaGas</layout>
         <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
