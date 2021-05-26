@@ -332,6 +332,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
                 serviceCatalog.Context__c = 'InstallmentsView';
             }
             
+            if(tabValue.equalsIgnoreCase('EC7')){
+                serviceCatalog.Context__c = 'EC7';
+            }
+
             /*
                 1° livello
                     - Single Record:
