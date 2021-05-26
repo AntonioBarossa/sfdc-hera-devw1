@@ -29830,6 +29830,14 @@
         <layout>QuoteManagement__c-Quote Management Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaEle</layout>
+        <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-Reading__c-HDT_LetturaGas</layout>
+        <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>SaleServiceItem__c-Sale Service Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
