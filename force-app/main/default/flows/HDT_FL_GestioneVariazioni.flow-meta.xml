@@ -669,6 +669,13 @@
                 <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ResidenceChangeDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_00_0_0</targetReference>
         </connector>
