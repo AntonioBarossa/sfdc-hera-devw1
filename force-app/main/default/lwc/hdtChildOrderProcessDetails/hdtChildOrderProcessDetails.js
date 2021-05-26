@@ -353,7 +353,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.RecordType.DeveloperName !== undefined ){
             switch (this.order.RecordType.DeveloperName) {
                 case 'HDT_RT_Subentro':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     else if (fieldName === 'OutgoingCreditCheckResult__c') {
@@ -361,27 +361,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     }
                     break;
                 case 'HDT_RT_Attivazione':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_AttivazioneConModifica':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_SwitchIn':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_VAS':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
                 case 'HDT_RT_Voltura':
-                    if (fieldName === 'IncomingCreditCheck__c') {
+                    if (fieldName === 'IncomingCreditCheckResult__c') {
                         return 'OK';
                     }
                     break;
@@ -556,6 +556,20 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         //this.applyDateOrdineLogic();
         
         if(currentSectionName === 'dettaglioImpianto'){
+
+            if(this.template.querySelector("[data-id='WaiverRightAfterthought__c']") !== null 
+                && (this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === ''
+                    || this.template.querySelector("[data-id='WaiverRightAfterthought__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Rinuncia Diritto di Ripensamento',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
 
             if(this.template.querySelector("[data-id='ConnectionMandate__c']") !== null 
                 && (this.template.querySelector("[data-id='ConnectionMandate__c']").value === ''
@@ -1393,11 +1407,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 data: [
                     {
                         'label': 'Esito credit Check Entrante',
-                        'apiname': 'IncomingCreditCheck__c',
+                        'apiname': 'IncomingCreditCheckResult__c',
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
-                        'value': this.applyCreditCheckLogic('IncomingCreditCheck__c'),
+                        'value': this.applyCreditCheckLogic('IncomingCreditCheckResult__c'),
                         'processVisibility': ''
                     },
                     {
@@ -1716,7 +1730,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     'label': 'Rinuncia Diritto di Ripensamento',
                     'apiname': 'WaiverRightAfterthought__c',
                     'typeVisibility': this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale',
-                    'required': false,
+                    'required': true,
                     'disabled': false,
                     'value': '',
                     'processVisibility': ''
@@ -1751,7 +1765,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 {
                     'label': 'Fase richiesta',
                     'apiname': 'RequestPhase__c',
-                    'typeVisibility': this.typeVisibility('ele'),
+                    'typeVisibility': this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn',
                     'required': true,
                     'disabled': false,
                     'value': '',

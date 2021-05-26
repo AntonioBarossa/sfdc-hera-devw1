@@ -15,7 +15,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
     private static void alignBillingProfileFields(Order orderToUpdate, String billingProfileId){
 
-        billingProfileSrv.checkReadAccess('CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
+        billingProfileSrv.checkReadAccess('IbanCountry__c,CreateContractAccount__c,SendCertifiedEmailConsentDate__c,SubjectCode__c,InvoiceCertifiedEmailAddress__c,ElectronicInvoicingMethod__c,XMLType__c,CIG__c,CUP__c,IbanIsForeign__c,IbanCIN_IBAN__c,IbanABI__c,IbanCAB__c,IbanCodeNumber__c,BankAccountSignatoryFiscalCode__c,BankAccountSignatoryFirstName__c,BankAccountSignatoryLastName__c,BillSendingMethod__c,PaymentMethod__c,InvoicingCity__c,InvoicingCountry__c,InvoicingProvince__c,InvoicingStreetName__c,InvoicingStreetNumber__c,InvoicingPostalCode__c,InvoicingCityCode__c,InvoiceEmailAddress__c');
         BillingProfile__c billingProfile = billingProfileQr.getRecordById(billingProfileId);
 
         orderToUpdate.SubjectCode__c = billingProfile.SubjectCode__c;
@@ -46,18 +46,19 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SignatoryType__c = billingProfile.SignatoryType__c;
         orderToUpdate.SendCertifiedEmailConsentDate__c = billingProfile.SendCertifiedEmailConsentDate__c;
         orderToUpdate.CreateContractAccount__c = billingProfile.CreateContractAccount__c;
+        orderToUpdate.IbanCountry__c = billingProfile.IbanCountry__c;
     }
 
     private static void alignServicePointFields(Order orderToUpdate, String servicePointId) {
         
-        servicePointSrv.checkReadAccess('MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
-        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        servicePointSrv.checkReadAccess('Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
+        List<ServicePoint__c> servicePointList = servicePointQr.getRecordById(servicePointId, 'Distributor__r.Code__c,SupplyType__c,MeterClass__c,RecordType.DeveloperName,DisconnectibilityType__c,Disconnectable__c,ImplantType__c,SupplySAPCityCode__c,AnnualConsumption__c,MarketOrigin__c,PowerAvailable__c,VoltageLevel__c,DisconnectibilityPhone__c,MaxRequiredPotential__c,UseTypeEnergy__c,UseCategory__c,WithdrawalClass__c,MeterSN__c,Resident__c,RemiCode__c,SupplyCity__c,SupplyStreet__c,SupplyStreetNumber__c,SupplyPlace__c,SupplyProvince__c,SupplyPostalCode__c,SupplyCountry__c,PowerContractual__c,ServicePointCode__c,SAPImplantCode__c');
 
         ServicePoint__c servicePoint = servicePointList[0];
 
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
+        orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
@@ -90,6 +91,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantType__c, servicePoint.PowerContractual__c);
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001-7 giorni') : null;
+        orderToUpdate.SupplyType__c = servicePoint.SupplyType__c;
+        orderToUpdate.EffectiveDate__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_SwitchIn' ? Date.newInstance(2021, 06, 01) : Date.today(); //to do: with switch in calculation logic
+        orderToUpdate.DistributorCode__c = servicePoint.Distributor__r.Code__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId){
@@ -113,7 +117,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CustomerLastName__c = account.LastName__c;
         orderToUpdate.Email__c = account.PrimaryEmail__c;
         orderToUpdate.PhoneNumber__c = account.Phone;
-        orderToUpdate.EffectiveDate__c = Date.newInstance(2021, 06, 01);
         orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
         orderToUpdate.ResidentialStreetName__c = account.BillingStreetName__c;
         orderToUpdate.ResidentialStreetNumber__c = account.BillingStreetNumber__c;
@@ -136,6 +139,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CommissioningCampaign__c = sale.Campaign__c;
         orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
         orderToUpdate.Contact__c = sale.SalesContact__c;
+        orderToUpdate.SalesContact__c = sale.SalesContact__c;
         orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? sale.SalesContact__r.Phone : null;
     }
 
