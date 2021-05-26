@@ -12337,6 +12337,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>OrderItem.DescriptionSAPBonusContributo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>OrderItem.DiscountEurMWh__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17302,6 +17307,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__ProductOption__c.DescriptionSAPBonusContributo__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__ProductOption__c.DiscountEurMWh__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18348,6 +18358,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__QuoteLine__c.DelayEffectiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__QuoteLine__c.DescriptionSAPBonusContributo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20738,6 +20753,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Subscription__c.DelayEffectiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Subscription__c.DescriptionSAPBonusContributo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25677,7 +25697,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>TechnicalOffer__c.NunmberDaysMonthsYears__c</field>
+        <field>TechnicalOffer__c.NumberDaysMonthsYears__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
