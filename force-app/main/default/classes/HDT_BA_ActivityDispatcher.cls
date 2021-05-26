@@ -34,31 +34,25 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         return [
             SELECT
                 Id,
-                HighPriorityQueue__c,
-                HighPriorityQueue__r.DailyCapacity__c,
-                HighPriorityQueue__r.QueueId__c,
-                MediumPriorityQueue__c,
-                MediumPriorityQueue__r.DailyCapacity__c,
-                MediumPriorityQueue__r.QueueId__c,
-                LowPriorityQueue__c,
-                LowPriorityQueue__r.DailyCapacity__c,
-                LowPriorityQueue__r.QueueId__c,
-                Type__c,
-                Priority__c,
-                CompanyOwner__c,
+                ArrearsOffice__c,
                 ClientCategory__c,
                 ClientMarking__c,
-                Market__c,
-                Vendor__c,
-                MacroProcess__c,
-                Process__c,
-                SubProcess__c,
                 Commodity__c,
+                CompanyOwner__c,
                 ComplaintSeverity__c,
+                Distributor__c,
+                HighPriorityQueue__c,
+                LowPriorityQueue__c,
+                MacroProcess__c,
+                Market__c,
+                MediumPriorityQueue__c,
+                Priority__c,
+                Process__c,
                 QuoteType__c,
-                ArrearsOffice__c,
                 SalesChannel__c,
-                Distributor__c
+                SubProcess__c,
+                Type__c,
+                Vendor__c
             FROM AssignmentRule__c
             WHERE
                 RuleStartDate__c < TOMORROW AND RuleEndDate__c > TODAY
@@ -67,30 +61,40 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     public void execute(Database.BatchableContext BC, List<sObject> scope) {
+        Map<String,Map<String,Object>> queuesMap = getQueuesMap();
         List<AssignmentRule__c> rules = (List<AssignmentRule__c>) scope;
         List<wrts_prcgvr__Activity__c> processedActivities = new List<wrts_prcgvr__Activity__c>();
-        String query;
+        Map<String,Object> queue;
         wrts_prcgvr__Activity__c tmp;
         
         for(AssignmentRule__c rule : rules) {
-            for(wrts_prcgvr__Activity__c activity : Database.query(query)) {
-                tmp = new wrts_prcgvr__Activity__c(
-                    Id = activity.Id,
-                    Queued__c = true
-                );
-
+            for(wrts_prcgvr__Activity__c activity : Database.query(getQuery(rule))) {
+                String assignataryQueue;
                 switch on String.valueOf(activity.wrts_prcgvr__Priority__c) {
                     when '1' {
-                        tmp.OwnerId = rule.HighPriorityQueue__r.QueueId__c;
+                        assignataryQueue = 'HighPriorityQueue__c';
                     }
                     when '2' {
-                        tmp.OwnerId = rule.MediumPriorityQueue__r.QueueId__c;
+                        assignataryQueue = 'MediumPriorityQueue__c';
                     }
                     when '3' {
-                        tmp.OwnerId = rule.LowPriorityQueue__r.QueueId__c;
+                        assignataryQueue = 'LowPriorityQueue__c';
                     }
                 }
-                processedActivities.add(tmp);
+
+                queue = queuesMap.get((String) rule.get(assignataryQueue));
+                if((Integer) queue.get('DailyCapacity__c') > (Integer) queue.get('current_usage')) {
+                    tmp = new wrts_prcgvr__Activity__c(
+                        Id = activity.Id,
+                        Queued__c = true,
+                        AssignmentRule__c = rule.Id,
+                        OwnerId = (String) queue.get('QueueId__c')
+                    );
+                    queue.put('current_usage', ((Integer) queue.get('current_usage')) + 1);
+                    processedActivities.add(tmp);
+                    if(processedActivities.size() == 10000) break;
+                }
+                if(processedActivities.size() == 10000) break;
             }
         }
 
@@ -101,6 +105,20 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
 
     public void finish(Database.BatchableContext BC) {
         //RESCHEDULE
+    }
+
+    private Map<String,Map<String,Object>> getQueuesMap() {
+        Map<String,Object> queueAsMap;
+        Map<String,Map<String,Object>> queuesMap = new Map<String,Map<String,Object>>();
+        for(Queue__c q : [SELECT Id, DailyCapacity__c, QueueId__c FROM Queue__c]) {
+            queueAsMap = q.getPopulatedFieldsAsMap().clone();
+            queueAsMap.put('current_usage', 0);
+            queuesMap.put(q.Id, queueAsMap);
+        }
+        for(AggregateResult count : [SELECT COUNT(Id), OwnerId FROM wrts_prcgvr__Activity__c WHERE Owner.Type = 'Queue' GROUP BY OwnerId]) {
+            queuesMap.get((String) count.get('OwnerId')).put('current_usage', count.get('expr0'));
+        }
+        return queuesMap;
     }
 
     public String getQuery(AssignmentRule__c rule) {
