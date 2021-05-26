@@ -26553,6 +26553,14 @@
         <layout>RateTemplate__c-Rate Template Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaEle</layout>
+        <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaGas</layout>
+        <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>RentProcessRule__c-Layout Regola rateizzazione</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -27582,9 +27590,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Reading__c</object>
