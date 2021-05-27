@@ -775,14 +775,6 @@
     <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
-            <fullName>Dati corretti forniti dal DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dati corretti forniti dal cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Dimostrata Estraneità</fullName>
             <default>false</default>
         </values>
@@ -849,10 +841,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>KO Forzato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>KO Risolto</fullName>
             <default>false</default>
         </values>
@@ -876,83 +864,7 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
-            <fullName>Annullamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Anticipo Appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Approvazione Quote</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata Callback</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata inbound</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiamata outbound</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione da DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contratti%2FBonus Commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Documentale%2FCopia Contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Iva e Accise</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione Switch in Ripristinatorio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione dati discordanti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifica Contratti PreAttivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Presa Appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riapertura urgenti Errori DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta informazioni appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sollecito Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sportello</fullName>
             <default>false</default>
         </values>
     </picklistValues>
