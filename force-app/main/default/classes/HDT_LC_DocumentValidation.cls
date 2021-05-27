@@ -33,7 +33,13 @@ public inherited sharing class HDT_LC_DocumentValidation {
             
         }
         if(check){
-            ord.Phase__c = 'Documentazione Validata';
+
+            Order orderRetrive = orderQr.getRecordById(ord.Id);
+            if('Documentazione Gestita'.EqualsIgnoreCase(orderRetrive.ParentOrder__r.Phase__c)){
+                ord.Phase__c = 'Comunicazione verso Heroku';
+            } else {
+                ord.Phase__c = 'Documentazione Validata';
+            }
         }
         System.debug('************:'+ord);
         orderSrv.updateRecord(ord);
