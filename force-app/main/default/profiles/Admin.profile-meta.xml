@@ -959,6 +959,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Interaction__c.SubjectEmail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Interaction__c.BodyEmail__c</field>
         <readable>true</readable>
     </fieldPermissions>
