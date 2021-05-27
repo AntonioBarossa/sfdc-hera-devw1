@@ -378,6 +378,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo CIN deve avere 1 carattere');
         }
 
+        if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCIN__c']").value !== null
+            && !/^[a-zA-Z]+$/.test(this.template.querySelector("[data-id='IbanCIN__c']").value)) {
+            this.saveErrorMessage.push('Il campo CIN può contenere solo lettere');
+        }
+
         if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
              && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value !== null
              && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value.length !== 2) {

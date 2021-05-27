@@ -583,7 +583,7 @@
                     <stringValue>Reference</stringValue>
                 </value>
             </processMetadataValues>
-            <field>EffectiveDateInput__c</field>
+            <field>EffectiveDate__c</field>
             <value>
                 <elementReference>myVariable_current.NotPerformedBefore__c</elementReference>
             </value>
