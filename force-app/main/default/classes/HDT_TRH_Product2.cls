@@ -1,15 +1,21 @@
 public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
-        //for(Product2 p : (Product2[])Trigger.New){
-        //    p.Status__c = 'In Sviluppo';
-        //}
+        for(Product2 p : (Product2[])Trigger.New){
+            p.Status__c = 'In Sviluppo';
+        }
     }
 
     public override void beforeUpdate(){
         
         Set<String> allUniqueProductCodeSet;
+        Map<Id, Integer> productOptionMap;
+        Map<Id, Integer> technicalOfferMap;
         allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
+
+        Set<Id> productIds = Trigger.NewMap.keySet();
+        productOptionMap = HDT_UTL_Product2Process.generateProductOptionMap(productOptionMap, productIds);
+        technicalOfferMap = HDT_UTL_Product2Process.generateTechnicalOfferMap(technicalOfferMap, productIds);
 
         HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse;
         for(Product2 p : (Product2[])Trigger.New){
@@ -21,7 +27,7 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
             Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
             System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
-            statusResponse = HDT_UTL_Product2Process.changeStatusHandler(statusResponse, p.Id, oldProduct, p);
+            statusResponse = HDT_UTL_Product2Process.changeStatusHandler(statusResponse, p.Id, oldProduct, p, productOptionMap.get(p.Id), technicalOfferMap.get(p.Id));
             System.debug('>>> statusResponse: ' + statusResponse.success + ' - ' + statusResponse.message);
 
             if(!statusResponse.success){
