@@ -51,8 +51,9 @@ public with sharing class HDT_UTL_CaseProcess {
                    if(mapAccount.get(newCase.AccountId) != null){
                        a = mapAccount.get(newCase.AccountId);
                    }
-                   System.debug('**************Eccolo:' + c);
-                   commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
+                   if(a != null && c != null){
+                    commList.add(commUTL.instanceCommunicationLog(newCase.cluster__c,newCase.type,newCase.Phase__c,newCase.status,newCase.CancellationReasonDescription__c,'',newCase.id,newCase.ContactId,newCase.AccountId,c != null ? c.company__c : 'ND',a != null ? a.CompanyOwner__c : ''));
+                   }  
                }
            }
         }
