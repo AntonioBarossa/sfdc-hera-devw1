@@ -294,9 +294,9 @@
                 <label>Reclamo Scritto/Rich. Info</label>
             </value>
             <value>
-                <fullName>Rettifica Consumi - Errore di Lettura</fullName>
+                <fullName>Rettifica Consumi</fullName>
                 <default>false</default>
-                <label>Rettifica Consumi - Errore di Lettura</label>
+                <label>Rettifica Consumi</label>
             </value>
             <value>
                 <fullName>Rettifica Consumi - Errore Stima Consumi</fullName>
