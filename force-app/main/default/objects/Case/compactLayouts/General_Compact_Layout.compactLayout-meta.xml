@@ -4,9 +4,9 @@
     <fields>CaseNumber</fields>
     <fields>Cluster__c</fields>
     <fields>Type</fields>
+    <fields>Subprocess__c</fields>
     <fields>Origin</fields>
     <fields>Status</fields>
-    <fields>Phase__c</fields>
     <fields>CreatedById</fields>
     <label>General Compact Layout</label>
 </CompactLayout>
