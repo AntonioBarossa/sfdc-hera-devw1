@@ -322,11 +322,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Interaction__c.Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Interaction__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26702,7 +26697,7 @@
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Interaction__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
