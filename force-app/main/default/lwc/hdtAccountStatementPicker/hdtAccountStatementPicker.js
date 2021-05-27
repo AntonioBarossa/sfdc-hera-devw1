@@ -395,11 +395,12 @@ export default class HdtAccountStatementPicker extends LightningElement {
 
         if(this.billingProblems && (this.documents === null || this.documents === undefined)){
 
-            new ShowToastEvent({
+            this.dispatchEvent(new ShowToastEvent({
                 title: 'Errore',
-                messagge: 'Necessario selezionare almeno una fattura',
+                message: 'Necessario selezionare almeno una fattura',
                 variant: 'error'
-            });
+                })
+            );
 
             return true;
 
