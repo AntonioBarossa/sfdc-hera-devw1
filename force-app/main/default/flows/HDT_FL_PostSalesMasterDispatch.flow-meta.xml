@@ -817,21 +817,21 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Dettaglio Bolletta</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Split Payment</stringValue>
                 </rightValue>
@@ -856,21 +856,21 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Dettaglio Bolletta</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Split Payment</stringValue>
                 </rightValue>
@@ -1662,6 +1662,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
