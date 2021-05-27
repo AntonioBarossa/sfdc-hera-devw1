@@ -157,7 +157,7 @@
     <gender>Feminine</gender>
     <label>Interazione</label>
     <nameField>
-        <displayFormat>SIGLA-{00000}</displayFormat>
+        <displayFormat>INT-{00000000}</displayFormat>
         <label>Interazione Name</label>
         <type>AutoNumber</type>
     </nameField>
