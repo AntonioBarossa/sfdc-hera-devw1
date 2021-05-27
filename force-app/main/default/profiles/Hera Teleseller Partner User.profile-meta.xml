@@ -4536,6 +4536,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.ExternalTrader__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.ExtremeLastDomiciliation__c</field>
         <readable>true</readable>
     </fieldPermissions>
