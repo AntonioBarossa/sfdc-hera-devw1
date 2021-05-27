@@ -48,6 +48,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
                 psmUtl.evaluateEffectiveDate(sender);
 
             }
+
+            when 'sbloccoVoltura'{
+
+                psmUtl.sbloccoVoltura(sender);
+
+            }
         }
 
         return null;

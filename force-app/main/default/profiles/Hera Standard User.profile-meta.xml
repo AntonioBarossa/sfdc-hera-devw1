@@ -20372,6 +20372,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SMSTracking__c.Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SMSTracking__c.CampaignIDCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -20398,6 +20403,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SMSTracking__c.ConversationID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SMSTracking__c.DateTimeRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22977,6 +22987,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>et4ae5__IndividualEmailResult__c.Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>et4ae5__IndividualEmailResult__c.BounceSubCategory__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22993,6 +23008,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>et4ae5__IndividualEmailResult__c.CaseID__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>et4ae5__IndividualEmailResult__c.DateTimeRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24822,6 +24842,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DateTimeRef__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.DistributorFirstDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26553,6 +26578,14 @@
         <layout>RateTemplate__c-Rate Template Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaEle</layout>
+        <recordType>Reading__c.HDT_RT_LetturaEle</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Reading__c-HDT_LetturaGas</layout>
+        <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>RentProcessRule__c-Layout Regola rateizzazione</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -27582,9 +27615,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Reading__c</object>

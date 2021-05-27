@@ -102,19 +102,21 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         Account account = accountQr.getRecordById(accountId, 'Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
 
         String customerName = null;
+        String customerLastName = null;
 
         if (account.RecordType.DeveloperName == 'HDT_RT_Business') {
-            customerName = account.Name;
+            orderToUpdate.CustomerCompanyName__c = account.LastName__c;
+
             orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
         } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-            customerName = account.FirstName__c;
+            orderToUpdate.CustomerName__c = account.FirstName__c;
+            orderToUpdate.CustomerLastName__c = account.LastName__c;
+
             orderToUpdate.VAT__c = 'Iva 22% (Cod. 02)';
         }
 
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
         orderToUpdate.CustomerVATNumber__c = account.VATNumber__c;
-        orderToUpdate.CustomerName__c = customerName;
-        orderToUpdate.CustomerLastName__c = account.LastName__c;
         orderToUpdate.Email__c = account.PrimaryEmail__c;
         orderToUpdate.PhoneNumber__c = account.Phone;
         orderToUpdate.BPSAPModel__c = account.BPSAPModel__c;
