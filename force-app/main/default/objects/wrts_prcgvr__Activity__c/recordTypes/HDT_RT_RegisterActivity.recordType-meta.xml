@@ -394,10 +394,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recesso per altri motivi%C2%A0%C2%A0</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Recesso per rifiuto voltura</fullName>
             <default>false</default>
         </values>
