@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>FieldName__c</field>
-        <value xsi:type="xsd:string">documento</value>
+        <value xsi:type="xsd:string">N Doc</value>
     </values>
     <values>
         <field>InitialWidth__c</field>
