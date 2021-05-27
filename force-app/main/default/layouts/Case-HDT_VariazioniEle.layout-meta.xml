@@ -51,10 +51,6 @@
                 <behavior>Readonly</behavior>
                 <field>AddressFormula__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ProvaActivity__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
