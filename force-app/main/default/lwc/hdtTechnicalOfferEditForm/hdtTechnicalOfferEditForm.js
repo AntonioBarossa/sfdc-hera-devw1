@@ -16,7 +16,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         'NumberTimeExtension__c',
         'UnitTimeExtension__c',
         'CancellationAllowed__c',
-        'NunmberDaysMonthsYears__c',
+        'NumberDaysMonthsYears__c',
         'UnitTerminationTime__c',
         'RecessAdmitted__c',
         'NumberOfTimeUnits__c',

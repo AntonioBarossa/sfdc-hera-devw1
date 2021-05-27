@@ -304,6 +304,7 @@ public inherited sharing class HDT_UTL_Product2Process {
             WHERE Product__c IN :product2IdList
             AND SapCode__c != null AND SapCode__c != ''
             AND Status__c = 'Status OK'
+            WITH SECURITY_ENFORCED
         ];
         return technicalOfferList;
     }
@@ -335,6 +336,7 @@ public inherited sharing class HDT_UTL_Product2Process {
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :product2IdList
             AND SBQQ__OptionalSKU__r.Status__c != :status
+            WITH SECURITY_ENFORCED
         ];
         return productOptionList;
     }

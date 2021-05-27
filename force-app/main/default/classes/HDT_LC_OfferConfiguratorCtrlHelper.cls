@@ -503,7 +503,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.verlaEng = techOff.NumberTimeExtension__c;
             obj.header.verper = techOff.UnitTimeExtension__c;
             obj.header.disdettaSn = techOff.CancellationAllowed__c;
-            obj.header.kfrist = techOff.NunmberDaysMonthsYears__c;
+            obj.header.kfrist = techOff.NumberDaysMonthsYears__c;
             obj.header.kuenper = techOff.UnitTerminationTime__c;
             obj.header.recessoSn = techOff.RecessAdmitted__c;
             obj.header.trece = techOff.NumberOfTimeUnits__c;
