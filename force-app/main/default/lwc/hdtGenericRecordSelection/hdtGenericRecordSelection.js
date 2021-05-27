@@ -18,8 +18,10 @@ export default class HdtGenericRecordSelection extends LightningElement {
     @track showNoRecordMessage = false;
 
     handleKeyUp(event){
+        console.log('# Event_keyCode -> '+event.keyCode);
         try{
         if (event.keyCode === 13) {
+            console.log('######Inside HandleKeyUp event######');
             var inp=this.template.querySelector("lightning-input");
             var temp = Object.assign({}, JSON.parse(this.queryParams));
             if(inp.value != null && inp.value != ""){
