@@ -13,10 +13,11 @@ public with sharing class HDT_LC_FormAccountBusiness {
         Account account= new Account(RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         if(dataAccount.get('businessName')!= null){
             name =dataAccount.get('businessName');
+            account.put('LastName__c', dataAccount.get('businessName'));
         }
         if(dataAccount.get('firstIndividualName') != null){
             account.put('FirstName__c', dataAccount.get('firstIndividualName'));
-            name= name + ' '+ dataAccount.get('firstIndividualName');
+            name= dataAccount.get('firstIndividualName');
         }
         if(dataAccount.get('lastIndividualName') != null){
             account.put('LastName__c', dataAccount.get('lastIndividualName'));

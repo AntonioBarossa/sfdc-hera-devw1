@@ -352,7 +352,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": lastName.value+' '+firstName.value,
+                            "name": firstName.value+' '+lastName.value,
                             "email": email.value,
                             "birthplace": this.birthPlace,
                             "recordTypeId" : this.RecordTypeId,
