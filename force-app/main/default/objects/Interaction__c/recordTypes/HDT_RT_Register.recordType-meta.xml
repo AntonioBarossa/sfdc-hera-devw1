@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_Register</fullName>
+    <active>true</active>
+    <description>Interazioni del cliente</description>
+    <label>Interazione</label>
+    <picklistValues>
+        <picklist>Reason__c</picklist>
+        <values>
+            <fullName>Non lavorabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo Gestito</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scartata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Cartacea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Digital</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>
