@@ -829,6 +829,13 @@
                     <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Split Payment</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>CommodityDecision_0_0</targetReference>
             </connector>
@@ -859,6 +866,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>BP/CA - errata categoria</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Split Payment</stringValue>
                 </rightValue>
             </conditions>
             <connector>

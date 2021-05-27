@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Context__c</fullName>
-    <description>Chiave di upsert</description>
+    <fullName>SBQQ__Status__c</fullName>
+    <deprecated>false</deprecated>
+    <description>Status indicating where quote is in its lifecycle.</description>
     <externalId>false</externalId>
-    <label>Contesto</label>
+    <inlineHelpText>Status indicating where quote is in its lifecycle.</inlineHelpText>
+    <label>Status</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
-        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>EC1L</fullName>
+                <fullName>In Review</fullName>
                 <default>false</default>
-                <label>EC1L</label>
+                <label>In Lavorazione</label>
             </value>
             <value>
-                <fullName>EC2L</fullName>
+                <fullName>Rejected</fullName>
                 <default>false</default>
-                <label>EC2L</label>
+                <label>Rifiutata</label>
             </value>
             <value>
-                <fullName>InstallmentsView</fullName>
+                <fullName>Cancelled</fullName>
                 <default>false</default>
-                <label>InstallmentsView</label>
+                <label>Annullata</label>
             </value>
             <value>
-                <fullName>EC7</fullName>
+                <fullName>Accepted</fullName>
                 <default>false</default>
-                <label>EC7</label>
+                <label>Accettata</label>
             </value>
         </valueSetDefinition>
     </valueSet>

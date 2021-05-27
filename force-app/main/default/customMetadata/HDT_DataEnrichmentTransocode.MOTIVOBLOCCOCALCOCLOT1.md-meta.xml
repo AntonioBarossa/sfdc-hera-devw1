@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>MOTIVOBLOCCOCALCOCLOT1</label>
+    <label>MOTIVOBLOCCOCALCOLOT1</label>
     <protected>false</protected>
     <values>
         <field>IsNumber__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>SapField__c</field>
-        <value xsi:type="xsd:string">MOTIVOBLOCCOCALCOCLO</value>
+        <value xsi:type="xsd:string">MOTIVOBLOCCOCALCOLO</value>
     </values>
     <values>
         <field>SfdcField__c</field>
