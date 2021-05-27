@@ -13,10 +13,11 @@ public with sharing class HDT_LC_FormAccountBusiness {
         Account account= new Account(RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         if(dataAccount.get('businessName')!= null){
             name =dataAccount.get('businessName');
+            account.put('LastName__c', dataAccount.get('businessName'));
         }
         if(dataAccount.get('firstIndividualName') != null){
             account.put('FirstName__c', dataAccount.get('firstIndividualName'));
-            name= name + ' '+ dataAccount.get('firstIndividualName');
+            name= dataAccount.get('firstIndividualName');
         }
         if(dataAccount.get('lastIndividualName') != null){
             account.put('LastName__c', dataAccount.get('lastIndividualName'));
@@ -31,7 +32,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         Account acct= accountSrv.createRecord(account);
         
         String lastName = (acct.LastName__c != null && acct.LastName__c != '' ? acct.LastName__c : acct.Name);
-        Contact contact= new Contact(AccountId= acct.Id, LastName= lastName, FiscalCode__c= acct.FiscalCode__c, VATNumber__c= acct.VATNumber__c,mobilephone=dataAccount.get('mobilephoneNumber') , MobilePhonePrefix__c=dataAccount.get('prefixMobilePhoneNumber'), phonePrefix__c = dataAccount.get('prefixPhoneNumber'),Phone= dataAccount.get('phoneNumber'), Email= acct.PrimaryEmail__c, Fax= acct.FAX__c, CertifiedEmail__c= dataAccount.get('electronicMail'), MailingCity= acct.BillingCity, MailingCityCode__c= acct.BillingCityCode__c, MailingCountry= acct.BillingCountry, MailingPlace__c= acct.BillingPlace__c, MailingPostalCode= acct.BillingPostalCode, MailingState= acct.BillingState, MailingStreet= acct.BillingStreet, MailingStreetCode__c= acct.BillingStreetCode__c, MailingStreetNumber__c= acct.BillingStreetNumber__c, MailingStreetNumberExtension__c= acct.BillingStreetNumberExtension__c, MailingStreetToponym__c= acct.BillingStreetToponym__c, MailingRegion__c= acct.BillingRegion__c);
+        Contact contact= new Contact(AccountId= acct.Id, LastName= lastName, FiscalCode__c= acct.FiscalCode__c, VATNumber__c= acct.VATNumber__c,mobilephone=dataAccount.get('mobilephoneNumber') , MobilePhonePrefix__c=dataAccount.get('prefixMobilePhoneNumber'), phonePrefix__c = dataAccount.get('prefixPhoneNumber'),Phone= dataAccount.get('phoneNumber'), Email= acct.PrimaryEmail__c, Fax= acct.FAX__c, CertifiedEmail__c= dataAccount.get('electronicMail'), MailingCity= acct.BillingCity, MailingCityCode__c= acct.BillingCityCode__c, MailingCountry= acct.BillingCountry, MailingPlace__c= acct.BillingPlace__c, MailingPostalCode= acct.BillingPostalCode, MailingState= acct.BillingState, MailingStreet= acct.BillingStreet,MailingStreetName__c= acct.BillingStreetName__c, MailingStreetCode__c= acct.BillingStreetCode__c, MailingStreetNumber__c= acct.BillingStreetNumber__c, MailingStreetNumberExtension__c= acct.BillingStreetNumberExtension__c, MailingStreetToponym__c= acct.BillingStreetToponym__c, MailingRegion__c= acct.BillingRegion__c);
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
 

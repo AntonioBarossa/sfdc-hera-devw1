@@ -26,6 +26,11 @@
                 <default>false</default>
                 <label>InstallmentsView</label>
             </value>
+            <value>
+                <fullName>EC7</fullName>
+                <default>false</default>
+                <label>EC7</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

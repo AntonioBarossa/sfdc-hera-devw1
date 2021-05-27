@@ -871,6 +871,10 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.theRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log('this.theRecord'+JSON.stringify(this.theRecord));
 
+        if(this.theRecord['Stato']=='Italy'||this.theRecord['Stato']=='Italia'){
+            this.theRecord['Stato']=='ITALIA';
+        }
+
         this.validFields();
         if(this.isValidFields == true){
 

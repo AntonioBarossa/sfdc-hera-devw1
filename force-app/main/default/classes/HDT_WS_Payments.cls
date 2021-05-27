@@ -42,9 +42,9 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
 
         }
 
-        if(response != null){
-            paymentsUtl.handleResponse(recordId, process, response);
-        }
+        
+        paymentsUtl.handleResponse(recordId, process, response);
+        
 
         return responseReturn;
 

@@ -49,7 +49,7 @@
         <connector>
             <targetReference>Set_Activity</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND (4 OR 5)</filterLogic>
         <filters>
             <field>wrts_prcgvr__Status__c</field>
             <operator>NotEqualTo</operator>
@@ -76,6 +76,13 @@
             <operator>Contains</operator>
             <value>
                 <stringValue>Chiamata</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Sportello</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

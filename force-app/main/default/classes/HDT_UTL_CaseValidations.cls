@@ -45,7 +45,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Modifica/Azzeramento Consumo Annuo'
         || caseType == 'Modifica Tariffa Residente/Non Residente'
         || caseType == 'Mancata Telelettura/lettura'
-        || caseType == 'Cambio contatore non registrato	'){
+        || caseType == 'Cambio contatore non registrato'
+        || caseType == 'Fiscale'){
 
             System.debug('Inside Variazioni Validations');
 
@@ -106,25 +107,34 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
             }
 
-            Boolean deposit = Boolean.valueOf(getFieldValue(fields, 'Deposit__c'));
+            Boolean deposit = getFieldValue(fields, 'Deposit__c') != null 
+                ? Boolean.valueOf(getFieldValue(fields, 'Deposit__c'))
+                : null;
             String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
-            Decimal depositAmount = Decimal.valueOf(getFieldValue(fields, 'DepositAmount__c'));
-            
-            Boolean applicationInterests = Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'));
-            Integer requestedInstall = Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'));
+            Decimal depositAmount = getFieldValue(fields, 'DepositAmount__c') != null 
+                ? Decimal.valueOf(getFieldValue(fields, 'DepositAmount__c'))
+                : null;
+            Boolean applicationInterests = getFieldValue(fields, 'ApplicationInterests__c') != null
+                ? Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'))
+                : null;
+            Integer requestedInstall = getFieldValue(fields, 'InstallmentNumberRequired__c')!= null
+                ? Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'))
+                : null;
             String clientCategory = getFieldValue(fields, 'ClientCategory__c');
             String reason = getFieldValue(fields, 'Reason__c');
-            Double amountInstall = Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'));
+            Double amountInstall = getFieldValue(fields, 'AmountToPayInInstallments__c') != null 
+                ? Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'))
+                : null;
             Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
-            ? System.today() + 365
-            : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
+                ? System.today() + 365
+                : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
             String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
 
             if(deposit && (depositPaymentMode == null || depositPaymentMode == '' || depositAmount == null)){
 
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita Pagamento Acconto e Importo Acconto'));
 
-            }else if(clientCategory.contains('SME')){
+            }else if(clientCategory != null && clientCategory.contains('SME')){
 
                 if(applicationInterests == false && requestedInstall > 6){
 

@@ -104,12 +104,15 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     handleChange(event){
         this.markingValue= event.detail.value;
         if(this.markingValue=='Ditta individuale'){
+            this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
+            this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-show');
             this.makerequired= true;
         }else{
+            this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-show');
@@ -153,9 +156,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             birthPlace: this.birthPlace
                             };
            calculateFiscalCode({infoData: information}).then((response) => {
-
+            if(response == null){
+              //  this.showError(errorMsg);
+                const event = new ShowToastEvent({
+                message: 'Comune inserito NON presente a sistema',
+                variant: 'error',
+                mode: 'dismissable'
+                });
+                this.dispatchEvent(event);
+                this.spinner=false;
+            }else{
                 this.personFiscalCode.value= response;
                 this.spinner=false;
+            }
             }).catch((errorMsg) => {
                 this.showError(errorMsg);
                 const event = new ShowToastEvent({
@@ -181,6 +194,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
             if(this.accountAddress['Via'] != null){
                 this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
+                this.fieldsToUpdate['BillingStreetName__c'] = this.accountAddress['Via'];
             }
             if(this.accountAddress['Comune'] != null){
                 this.fieldsToUpdate['BillingCity'] = this.accountAddress['Comune'];
@@ -257,7 +271,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let messageError= "Completare tutti i campi obbligatori !";
         var mailFormat = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
         let dataAccount;
-        if(this.markingValue === undefined || !this.markingValue=='AAS Ditta individuale'){
+        if(this.markingValue === undefined || !this.markingValue=='Ditta individuale'){
             if(!businessName.reportValidity()){
                 isValidated=false;
             } 
@@ -320,7 +334,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!customerMarking.reportValidity()){
             isValidated=false;
         }
-        if(this.markingValue=='AAS Ditta individuale'){
+        if(this.markingValue=='Ditta individuale'){
             if(!lastIndividualName.reportValidity()){
                 isValidated=false;
             }
@@ -367,9 +381,17 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 messageError=" Formato pec errato !";
             }
         }
-        if((mobilePhone.value=== undefined || mobilePhone.value.trim()==='') && (contactEmail.value=== undefined || contactEmail.value.trim()==='')
+       if((mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')&&(email.value=== undefined || email.value.trim()==='')
+        && (phoneNumber.value=== undefined || phoneNumber.value.trim()==='') && (electronicMail.value=== undefined || electronicMail.value.trim()==='') 
+        && (numberFax.value=== undefined || numberFax.value.trim()=== '') ){
+            if(isValidated){
+                messageError=" Almeno un dato di contatto è obbligatorio!";
+            }
+            isValidated=false;
+        } 
+        if((mobilePhone.value=== undefined || mobilePhone.value.trim()==='')&&(contactEmail.value=== undefined || contactEmail.value.trim()==='')
         && (contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='') && (contactElectronicMail.value=== undefined || contactElectronicMail.value.trim()==='') 
-        && (contactFax.value=== undefined || contactFax.value.trim()=== '') ){
+        && (contactFax.value=== undefined || contactFax.value.trim()=== '')){
             if(isValidated){
                 messageError=" Almeno un dato di contatto è obbligatorio!";
             }

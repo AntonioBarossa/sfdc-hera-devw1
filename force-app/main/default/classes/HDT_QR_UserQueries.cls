@@ -15,4 +15,28 @@ public inherited sharing class HDT_QR_UserQueries {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    // INIZIO SVILUPPI EVERIS
+
+    public static User getCurrentUser(String userId) {
+        List<User> users = [
+            SELECT 
+            Id,
+            LoginChannel__c,
+            CreatorGroup__c,
+            Station__c
+            FROM User
+            WHERE Id = :userId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (users.size() > 0) {
+            return users[0];
+        }
+
+        return null;
+    }
+
+    // FINE SVILUPPI EVERIS
+
 }

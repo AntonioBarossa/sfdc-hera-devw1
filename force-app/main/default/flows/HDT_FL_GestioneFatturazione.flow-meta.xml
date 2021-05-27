@@ -118,6 +118,13 @@
                 <elementReference>DataLetturaContestataTemp</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Query_Case.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteLettureStimate</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Case_Rettifica</targetReference>
         </connector>
@@ -146,6 +153,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcolo_Codice_Causale.CausalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>NoteLettureStimate</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>NoteLettureStimateFormula</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -669,17 +683,10 @@
             <name>Errore_stima_consumi</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IsLetturaStimata</leftValueReference>
+                <leftValueReference>TipizzazioneRettificaConsumi</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>ValoreLetturaCliente</leftValueReference>
-                <operator>GreaterThan</operator>
-                <rightValue>
-                    <elementReference>ValoreUltimaLettura</elementReference>
+                    <stringValue>Errore Stima Consumi</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -702,6 +709,11 @@
         <name>NextButtonLabel</name>
         <dataType>String</dataType>
         <expression>IF(OR(TEXT({!Query_Case.Type})=&apos;Sollecito Emissione Bolletta&apos;, TEXT({!Query_Case.Type})=&apos;Gestione Bonus Sociale&apos;), &apos;Avanti&apos;, &apos;Conferma Pratica&apos;)</expression>
+    </formulas>
+    <formulas>
+        <name>NoteLettureStimateFormula</name>
+        <dataType>String</dataType>
+        <expression>&apos;Letture Stimate sulla fattura: &apos; &amp; {!ConcatenazioneLettureSelezionate}</expression>
     </formulas>
     <formulas>
         <name>PrimaBollettaNonAncoraEmessa</name>
@@ -1198,7 +1210,7 @@
         </fields>
         <fields>
             <name>DTInversioneContatore</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere nel campo Note per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1322,6 +1334,31 @@
             <name>DTLetture2</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire le letture del cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsLetturaStimata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DTLetture3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Letture stimate sulla fattura:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!ConcatenazioneLettureSelezionate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire le letture comunicate dal cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsLetturaStimata</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>hdtSelfReading2</name>
@@ -1411,6 +1448,12 @@
                     <elementReference>Query_Case.ServicePoint__c</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>selectedReadingsList</name>
+                <value>
+                    <elementReference>ElencoLettureSelezionate</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -1428,6 +1471,10 @@
             <outputParameters>
                 <assignToReference>DataLetturaContestataTemp</assignToReference>
                 <name>readingCustomerDate</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>TipizzazioneRettificaConsumi</assignToReference>
+                <name>tipizzazioneRettificaConsumi</name>
             </outputParameters>
         </fields>
         <showFooter>false</showFooter>
@@ -1610,6 +1657,14 @@
                 <assignToReference>LetturaDaEstrattoLetture</assignToReference>
                 <name>totalReadingValue</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>ElencoLettureSelezionate</assignToReference>
+                <name>selectedReadingValues</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>ConcatenazioneLettureSelezionate</assignToReference>
+                <name>selectedReadingsConcatenated</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -1765,6 +1820,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>ConcatenazioneLettureSelezionate</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>CustomMetadataProcessType</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1781,6 +1843,13 @@
     <variables>
         <name>EffectiveDateTemp</name>
         <dataType>Date</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ElencoLettureSelezionate</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
@@ -1825,6 +1894,13 @@
         <scale>2</scale>
     </variables>
     <variables>
+        <name>NoteLettureStimate</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>SaveInDraft</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -1833,6 +1909,13 @@
     </variables>
     <variables>
         <name>SottoprocessoRettificaConsumi</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>TipizzazioneRettificaConsumi</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

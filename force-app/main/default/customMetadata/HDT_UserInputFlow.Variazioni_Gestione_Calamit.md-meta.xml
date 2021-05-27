@@ -6,9 +6,9 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;DisasterType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;EffectiveDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-[{&quot;FieldName&quot;:&quot;Concession__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-[{&quot;FieldName&quot;:&quot;Exemption__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2}]</value>
+{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{&quot;FieldName&quot;:&quot;Concession__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;Exemption__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>

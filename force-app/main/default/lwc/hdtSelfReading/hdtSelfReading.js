@@ -53,8 +53,11 @@ export default class HdtSelfReading extends LightningElement {
 
     @api selectedReadingValue;
 
+    @api selectedReadingsList;
+
     @api isRettificaConsumi;
 
+    @api tipizzazioneRettificaConsumi;
 
     recordKey;
 
@@ -79,6 +82,11 @@ export default class HdtSelfReading extends LightningElement {
     lastReadingsChecked = false;
 
     connectedCallback(){
+
+        if (this.selectedReadingsList != undefined) {
+            console.log('selectedReadingsList: ' + this.selectedReadingsList);
+            this.selectedReadingsList = JSON.parse(this.selectedReadingsList);
+        }
 
         this.oldTotalReadingValue = 0;
         this.newTotalReadingValue = 0;
@@ -312,64 +320,92 @@ export default class HdtSelfReading extends LightningElement {
             throw BreakException;
         } else {
 
-            try{this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
+            try{
+                const registers = this.template.querySelectorAll('c-hdt-self-reading-register');
+                console.log('#registri: ' + registers.length);
 
-                var result = element.handleSave();
 
-                if(String(result).includes("Impossibile")){
+                let numeroRegistriStimati = 0; // contatore per tipizzare come Errore Stima Consumi
+                let numeroRegistriErrati= 0;   // contatore per tipizzare come Errore di Lettura
+                let numeroRegistriAlert = 0;   // contatore per alert bloccante.
 
-                    this.errorAdvanceMessage = result;
+                for (let i = 0; i < registers.length; i++) {
+                    let register = registers[i];
 
-                    console.log('Error '+this.errorAdvanceMessage);
+                    let result = register.handleSave();
 
-                    this.outputObj = {};
+                    if(String(result).includes("Impossibile")){
+                        this.errorAdvanceMessage = result;
+                        console.log('Error '+this.errorAdvanceMessage);
+                        this.outputObj = {};
+                        this.showToastMessage(this.errorAdvanceMessage);
+                        throw BreakException;
+                    }
 
-                    this.showToastMessage(this.errorAdvanceMessage);
+                    console.log('registro # ' + i + ': ' + result);
 
-                    throw BreakException;
+                    const oldReadingValue = register.oldReadingValue();
+                    const newReadingValue = register.newReadingValue();
+                    const selectedReadingValue = this.findSelectedReading(i);
+
+                    console.log('lettura precedente a sistema: ' + oldReadingValue)
+                    console.log('lettura comunicata dal cliente: ' + newReadingValue)
+                    console.log('lettura selezionata da cruscotto letture: ' + selectedReadingValue);
+
+                    if (this.isRettificaConsumi === true && newReadingValue > 0 && oldReadingValue > 0) {  // newReadingValue > 0 && oldReadingValue > 0 per skippare i registri nascosti
+                        if (selectedReadingValue > 0) {
+                            if (newReadingValue > oldReadingValue && newReadingValue > selectedReadingValue) {
+                                numeroRegistriAlert++;
+                            } else if (newReadingValue > oldReadingValue && newReadingValue < selectedReadingValue) {
+                                numeroRegistriStimati++;
+                            } 
+                        } else {
+                            if (newReadingValue < oldReadingValue) {
+                                numeroRegistriErrati++;
+                            } else if (newReadingValue > oldReadingValue) {
+                                numeroRegistriAlert++;
+                            }
+                        } 
+                    }
+
+                    for(const [key,value] of Object.entries(result)){
+
+                        this.outputObj[`${key}`] = value;
+
+                    }
+
+                    console.log('OutputObj '+this.outputObj);
 
                 }
 
-                console.log(result);
-
-                this.oldTotalReadingValue += element.oldReadingValue();
-                this.newTotalReadingValue += element.newReadingValue();
-                console.log('lettura precedente a sistema: ' + this.oldTotalReadingValue)
-                console.log('lettura comunicata dal cliente: ' + this.newTotalReadingValue)
-                console.log('lettura selezionata da cruscotto letture: ' + this.selectedReadingValue);
-
                 if (this.isRettificaConsumi === true) {
-                    if ((this.selectedReadingValue === undefined && this.newTotalReadingValue > this.oldTotalReadingValue) ||
-                        (this.selectedReadingValue > 0 && this.newTotalReadingValue > this.oldTotalReadingValue && 
-                         this.newTotalReadingValue > this.selectedReadingValue)) {
-
+                    console.log('numeroRegistriErrati: ' + numeroRegistriErrati);
+                    console.log('numeroRegistriStimati: ' + numeroRegistriStimati);
+                    console.log('numeroRegistriAlert: ' + numeroRegistriAlert);
+                    if (numeroRegistriAlert > 0 && numeroRegistriErrati === 0 && numeroRegistriStimati === 0) {
                         console.log('Alert per verificare necessità di autolettura.');
                         this.errorAdvanceMessage = 'Verificare la lettura inserita. Se la lettura risulta corretta, è necessario annullare questo Case e proseguire con una Autolettura.';
                         this.showToastMessage(this.errorAdvanceMessage);
                         throw BreakException;
+                    } else if (numeroRegistriStimati > 0 && numeroRegistriErrati === 0 && numeroRegistriAlert === 0) {
+                        this.tipizzazioneRettificaConsumi = 'Errore Stima Consumi';
+                    } else {
+                        this.tipizzazioneRettificaConsumi = 'Errore di Lettura';
                     }
                 }
 
-                for(const [key,value] of Object.entries(result)){
+                console.log('tipizzazioneRettificaConsumi: ' + this.tipizzazioneRettificaConsumi);
 
-                    this.outputObj[`${key}`] = value;
+            } catch (e) { 
 
-                }
+                if (e !== BreakException){
 
-                console.log('OutputObj '+this.outputObj);
+                    console.log('exception: ' + e);
+                    this.outputObj = {};
 
-            });
+                    throw e;
 
-        } catch (e) { 
-
-            if (e !== BreakException){
-
-                console.log('exception: ' + e);
-                this.outputObj = {};
-
-                throw e;
-
-            } ;
+                } ;
 
             }
         }
@@ -438,6 +474,29 @@ export default class HdtSelfReading extends LightningElement {
             }
 
         }
+    }
+
+    findSelectedReading(index) {
+        if (this.selectedReadingsList === undefined) {
+            return 0;
+        }
+        let fascia = '';
+        if (this.commodity === 'Energia Elettrica') {
+            fascia = 'Fascia ' + (index + 1);
+        } else {
+            fascia = 'Monofascia'; // TODO: verificare se per il Correttore c'è altro.
+        }
+
+        for (let i = 0; i < this.selectedReadingsList.length; i++) {
+            let selectedReading = this.selectedReadingsList[i];
+            console.log('fascia: ' + fascia + ' selectedReading: ' + JSON.stringify( selectedReading));
+            if (selectedReading['tipoNumeratore'] === fascia) {
+                let parsedValue = parseInt(selectedReading['posizioniPrecedentiLaVirgola']);
+                return isNaN(parsedValue) ? 0 : parsedValue;
+            }
+        }
+
+        return 0;
     }
 
     handleNavigation(event){

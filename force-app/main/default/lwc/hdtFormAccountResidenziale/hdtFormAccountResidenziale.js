@@ -133,8 +133,17 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                                 birthPlace: this.birthPlace
                             };
             calculateFiscalCode({infoData: information}).then((response) => {
-
-                this.fiscalCode.value= response;
+                if(response == null){
+                    //this.showError(errorMsg);
+                    const event = new ShowToastEvent({
+                    message: 'Comune inserito NON presente a sistema',
+                    variant: 'error',
+                    mode: 'dismissable'
+                    });
+                    this.dispatchEvent(event);
+                }else{
+                    this.fiscalCode.value= response;
+                }
             }).catch((errorMsg) => { 
                 this.showError(errorMsg);
                 const event = new ShowToastEvent({
@@ -159,6 +168,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
             if(this.accountAddress['Via'] != null){
                 this.fieldsToUpdate['BillingStreet'] = this.accountAddress['Via'];
+                this.fieldsToUpdate['BillingStreetName__c'] = this.accountAddress['Via'];
             }
             if(this.accountAddress['Comune'] != null){
                 this.fieldsToUpdate['BillingCity'] = this.accountAddress['Comune'];
@@ -342,7 +352,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": lastName.value+' '+firstName.value,
+                            "name": firstName.value+' '+lastName.value,
                             "email": email.value,
                             "birthplace": this.birthPlace,
                             "recordTypeId" : this.RecordTypeId,
