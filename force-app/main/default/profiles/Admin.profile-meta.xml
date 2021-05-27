@@ -5584,6 +5584,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.SaleBlock__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.SalesCompanyCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
