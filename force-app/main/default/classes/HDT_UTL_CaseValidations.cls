@@ -45,7 +45,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         || caseType == 'Modifica/Azzeramento Consumo Annuo'
         || caseType == 'Modifica Tariffa Residente/Non Residente'
         || caseType == 'Mancata Telelettura/lettura'
-        || caseType == 'Cambio contatore non registrato	'){
+        || caseType == 'Cambio contatore non registrato'
+        || caseType == 'Fiscale'){
 
             System.debug('Inside Variazioni Validations');
 
