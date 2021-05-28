@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CategoryCode__c</fullName>
     <externalId>false</externalId>
-    <formula>CASE(AccountClass__c,
+    <formula>CASE(Category__c,
 &quot;Famiglie&quot;, &quot;Z001&quot;,
 &quot;Aziende Soho&quot;, &quot;Z002&quot;,
 &quot;Aziende SME&quot;, &quot;Z003&quot;,
@@ -18,8 +18,8 @@
 &quot;Comuni Territorio&quot;,&quot;Z016&quot;,
 &quot;FUI domestico&quot;,&quot;Z019&quot;,
 &quot;FUI non domestico&quot;,&quot;Z020&quot;,
-&quot;FUI non domestico&quot;,&quot;Z030&quot;,
-&quot;FUI non domestico&quot;,&quot;Z031&quot;,
+&quot;Reseller - Gruppo&quot;,&quot;Z030&quot;,
+&quot;Reseller - Extra Gruppo&quot;,&quot;Z031&quot;,
 null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Codice Categoria</label>
