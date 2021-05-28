@@ -345,6 +345,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
             var fields = {
+                'Name' : row.xblnr,
                 'DocumentNumber__c' : row.xblnr, 
                 'Bill__c' : row.boll, 
                 'Type__c' : row.tipoDocDesc,
@@ -395,11 +396,12 @@ export default class HdtAccountStatementPicker extends LightningElement {
 
         if(this.billingProblems && (this.documents === null || this.documents === undefined)){
 
-            new ShowToastEvent({
+            this.dispatchEvent(new ShowToastEvent({
                 title: 'Errore',
-                messagge: 'Necessario selezionare almeno una fattura',
+                message: 'Necessario selezionare almeno una fattura',
                 variant: 'error'
-            });
+                })
+            );
 
             return true;
 

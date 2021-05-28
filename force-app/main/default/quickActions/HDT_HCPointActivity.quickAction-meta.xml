@@ -2,7 +2,7 @@
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
     <fieldOverrides>
         <field>QAdLogin__c</field>
-        <formula>$User.FederationIdentifier</formula>
+        <formula>UPPER($User.FirstName+&apos;.&apos;+$User.LastName)</formula>
     </fieldOverrides>
     <fieldOverrides>
         <field>Type__c</field>

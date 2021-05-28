@@ -134,7 +134,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             };
             calculateFiscalCode({infoData: information}).then((response) => {
                 if(response == null){
-                    this.showError(errorMsg);
+                    //this.showError(errorMsg);
                     const event = new ShowToastEvent({
                     message: 'Comune inserito NON presente a sistema',
                     variant: 'error',
@@ -352,7 +352,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": lastName.value+' '+firstName.value,
+                            "name": firstName.value+' '+lastName.value,
                             "email": email.value,
                             "birthplace": this.birthPlace,
                             "recordTypeId" : this.RecordTypeId,

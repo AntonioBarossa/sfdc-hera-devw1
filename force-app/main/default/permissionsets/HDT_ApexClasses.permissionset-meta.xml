@@ -21,6 +21,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_ActivityCustomProcess</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_ActivityCustom</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_IndemnityConfirmation</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -34,6 +42,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_PostSalesCriteriaManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_Morosita</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -830,6 +842,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_TRH_Task</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_Account</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_SolTracking</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

@@ -23,6 +23,10 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     @api recordId;
     @api type;
 
+    get showSocialBonusButton(){
+        return this.type === 'socialBonus';
+    }
+
     connectedCallback(){
         console.log('# type: ' + this.type);
         this.getConfiguration();
@@ -104,6 +108,10 @@ export default class HdtAccountDataEnrichment extends LightningElement {
             this.showSpinner = false;
         });
     
+    }
+
+    openKnowledgeArticle(){
+        console.log('apertura articolo knowledge con importi bonus sociale');
     }
 
 }

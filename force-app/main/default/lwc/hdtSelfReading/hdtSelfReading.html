@@ -22,12 +22,7 @@
 
         </div>
         
-
-
     </div>
-
-    <!--<lightning-input type="date" label="Data Lettura Cliente"></lightning-input>-->
-    <!--<lightning-button class="slds-float_right" label="Verifica Ultima Lettura"></lightning-button>-->
 
     <table class="slds-table slds-size_3-of-4">
 
@@ -35,7 +30,6 @@
 
             <template for:each={rowObj} for:item="row">
                 
-
                 <td key={row.id} data-label="Column 1" scope="row">
 
                     <c-hdt-self-reading-register row-obj={row} commodity={commodity} is-visible="false" is-retroactive={isRetroactive} is-volture={isVolture} allow-smaller-reading={allowSmallerReading}>
@@ -48,6 +42,11 @@
         </tbody>
 
     </table>
+
+    <div if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+    </div>
+
 
     <div class="slds-card__footer  actionButtonBar slds-grid slds-grid_align-spread">
         <div class="actionsLeft">
@@ -66,6 +65,5 @@
 
         </div>
     </div>
-
 
 </template>

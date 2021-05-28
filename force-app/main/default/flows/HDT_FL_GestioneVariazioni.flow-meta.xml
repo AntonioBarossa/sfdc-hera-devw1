@@ -619,26 +619,8 @@
     <assignments>
         <name>Assegna_Valori_00_0</name>
         <label>Assegna Valori</label>
-        <locationX>5285</locationX>
-        <locationY>1280</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.CategoryCode__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.Category__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetInputCase.Account.Category__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.AccountClass__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetInputCase.BillingProfile__r.AccountClass__c</elementReference>
-            </value>
-        </assignmentItems>
+        <locationX>5307</locationX>
+        <locationY>1153</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -654,7 +636,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_Valori_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -667,6 +649,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.ResidenceChangeDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -738,22 +727,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Valori_0_0_0_0_0_0_0_0</name>
-        <label>Assegna Valori</label>
-        <locationX>5285</locationX>
-        <locationY>1400</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCase.SupplyType__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetInputCase.ServicePoint__r.SupplyType__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssegnaFoundOtherCase</name>
         <label>Assegna FoundOtherCase</label>
         <locationX>534</locationX>
@@ -788,8 +761,8 @@
     <assignments>
         <name>AssegnaModalit_Invio</name>
         <label>AssegnaModalitàInvio</label>
-        <locationX>5222</locationX>
-        <locationY>1063</locationY>
+        <locationX>5180</locationX>
+        <locationY>1154</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.BillSendingMethod__c</assignToReference>
             <operator>Assign</operator>
@@ -804,8 +777,15 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EmailDettaglio.value</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
-            <targetReference>Assegna_Valori_00_0</targetReference>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -988,10 +968,10 @@
     <decisions>
         <name>Dettaglio_Bolletta</name>
         <label>Dettaglio Bolletta?</label>
-        <locationX>5288</locationX>
-        <locationY>703</locationY>
+        <locationX>5285</locationX>
+        <locationY>700</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Valori_00_0</targetReference>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
         <rules>
@@ -1008,6 +988,21 @@
                 <targetReference>Screen_Selezione_Indirizzo_0</targetReference>
             </connector>
             <label>Dettaglio Bolletta</label>
+        </rules>
+        <rules>
+            <name>BP_CA_errata_categoria</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BP/CA - errata categoria</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Valori_00_0</targetReference>
+            </connector>
+            <label>BP/CA - errata categoria</label>
         </rules>
     </decisions>
     <decisions>
@@ -1076,7 +1071,7 @@
                 <leftValueReference>GetInputCase.DistributorName__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>InRete</stringValue>
+                    <stringValue>INRETE</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1739,7 +1734,7 @@
         <name>Seleziona_Documenti</name>
         <label>Seleziona Documenti?</label>
         <locationX>5283</locationX>
-        <locationY>1862</locationY>
+        <locationY>1863</locationY>
         <defaultConnector>
             <targetReference>OutcomeForm_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1766,6 +1761,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Dettaglio Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1807,7 +1809,7 @@
                 &quot;Gestione M02&quot;,
       IF({!GetCaseAggiornatoMancataLettura.CommodityFormula__c} = &quot;Energia Elettrica&quot;,
             IF(AND({!GetCaseAggiornatoMancataLettura.ReadingDate__c} &gt; DATE(2019 ,1,1),
-                 CONTAINS({!GetCaseAggiornatoMancataLettura.DistributorName__c},&quot;E-Distribuzione&quot;)) ,
+                 CONTAINS({!GetCaseAggiornatoMancataLettura.DistributorName__c},&quot;E-DISTRIBUZIONE&quot;)) ,
                    &quot;Gestione M03&quot;,&quot;Gestione M02&quot;),&quot;Gestione M02&quot;))</expression>
     </formulas>
     <formulas>
@@ -1819,6 +1821,19 @@
         <name>DistributorNoteFormula</name>
         <dataType>String</dataType>
         <expression>TEXT({!GetCaseAggiornato.ChangeDate__c}) &amp; &quot;;&quot; &amp; {!GetCaseAggiornato.Reading__c} &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.ReadingDate__c}) &amp; &quot;;&quot; &amp; TEXT({!GetCaseAggiornato.NewMeterCode__c})</expression>
+    </formulas>
+    <formulas>
+        <name>NextLabel</name>
+        <dataType>String</dataType>
+        <expression>IF(
+     OR(
+            TEXT({!GetInputCase.Type}) = &quot;Condizioni Contrattuali Errate&quot;,
+            TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
+            TEXT({!GetInputCase.Type}) = &quot;Dettaglio Bolletta&quot;
+          ),
+          &quot;Avanti&quot;,
+          &quot;Conferma Pratica&quot;
+)</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -2476,8 +2491,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_00_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>5285</locationX>
-        <locationY>1520</locationY>
+        <locationX>5261</locationX>
+        <locationY>1368</locationY>
         <connector>
             <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
         </connector>
@@ -2873,6 +2888,20 @@
                 <name>addressLabel</name>
                 <value>
                     <stringValue>Indirizzo di Spedizione</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>EmailDettaglio</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>Inserisci l&apos;indirizzo email</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -3614,7 +3643,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma Pratica</stringValue>
+                    <elementReference>NextLabel</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4199,7 +4228,7 @@
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

@@ -8,14 +8,14 @@
     <lookupFilter>
         <active>true</active>
         <filterItems>
-            <field>Case.Type</field>
-            <operation>equals</operation>
-            <valueField>$Source.Type</valueField>
-        </filterItems>
-        <filterItems>
             <field>Case.Id</field>
             <operation>notEqual</operation>
             <valueField>$Source.Id</valueField>
+        </filterItems>
+        <filterItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <valueField>$Source.RecordTypeId</valueField>
         </filterItems>
         <isOptional>false</isOptional>
     </lookupFilter>
