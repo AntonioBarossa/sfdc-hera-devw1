@@ -51,6 +51,10 @@
                 <behavior>Readonly</behavior>
                 <field>AddressFormula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ProvaActivity__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -178,14 +182,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DeliveryAddress__c</field>
+                <field>BillSendingMethod__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>BillSendingMethod__c</field>
+                <field>DeliveryAddress__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Email__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -211,7 +220,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Account/Billing Profile Categoria Errata</label>
+        <label>BP/CA Categoria Errata</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
