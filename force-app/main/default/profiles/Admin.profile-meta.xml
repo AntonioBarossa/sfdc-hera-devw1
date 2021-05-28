@@ -30026,6 +30026,10 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Protocollo</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_Sportello</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Sportello</recordType>
     </layoutAssignments>
@@ -32918,6 +32922,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
