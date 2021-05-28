@@ -166,7 +166,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Account/Billing Profile Categoria Errata</label>
+        <label>BP/CA Categoria Errata</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
