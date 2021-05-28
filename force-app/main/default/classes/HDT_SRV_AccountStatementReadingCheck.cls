@@ -49,7 +49,7 @@ public with sharing class HDT_SRV_AccountStatementReadingCheck {
                 Map<String, Object> secondoLivelloMap = (Map<String, Object>) secondoLivello;
                 String letturaStimata = (String) secondoLivelloMap.get('letturaStimata');
                 System.debug('lettura stimata?: ' + letturaStimata);
-                if (letturaStimata.equals('X')) {
+                if (letturaStimata != null && letturaStimata.equals('X')) {
                     isLetturaStimata = true;
                     break;
                 }

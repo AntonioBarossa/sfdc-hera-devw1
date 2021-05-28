@@ -3,20 +3,33 @@ global inherited sharing class HDT_UTL_ServiceCatalogProfileCriteria implements 
     global boolean evaluate(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
  		Map<String,HDT_ServiceCatalogProfileFilter__mdt> listMet = HDT_ServiceCatalogProfileFilter__mdt.getAll();
+        String userId = userinfo.getUserId();
+        String us= userinfo.getUserType();
         SObject action = (SObject) argsMap.get('action'); //phase transition detail
         String method = (String) argsMap.get('method');
-		HDT_ServiceCatalogProfileFilter__mdt permissionName = listMet.get(method);
-        String userId = userinfo.getUserId();
-        System.debug('**********Permission:'+permissionName);
         boolean res = false;
-        if(permissionName != null){
-            SetupEntityAccess obj = permQr.getSetupEntityAccess(permissionName.Visibility__c);
-            System.debug('*********:' + obj);
-            if(obj != null){  
-				List<PermissionSetAssignment> perAssign = permQr.getPermissionSetAssignment(obj.ParentId,userId);                
-                if(perAssign != null && perAssign.size()> 0){
-                    res = true;
-                }    
+        if('CommunityUser'.equalsIgnoreCase(method)){
+            if (!'Standard'.Equals(us)){
+                res = true;
+            }
+        }else if ('ServiceUser'.equalsIgnoreCase(method)){
+            if ('Standard'.Equals(us)){
+                res = true;
+            }
+        }
+        else{
+            HDT_ServiceCatalogProfileFilter__mdt permissionName = listMet.get(method);
+            System.debug('**********Permission:'+permissionName);
+            
+            if(permissionName != null){
+                SetupEntityAccess obj = permQr.getSetupEntityAccess(permissionName.Visibility__c);
+                System.debug('*********:' + obj);
+                if(obj != null){  
+                    List<PermissionSetAssignment> perAssign = permQr.getPermissionSetAssignment(obj.ParentId,userId);                
+                    if(perAssign != null && perAssign.size()> 0){
+                        res = true;
+                    }    
+                }
             }
         }
         return res;
