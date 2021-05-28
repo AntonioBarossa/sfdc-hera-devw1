@@ -14,11 +14,6 @@
 &quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;CustomerPresence__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 1
 }
 ]</value>
     </values>
