@@ -72,7 +72,7 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>QAdCallID__c</field>
+            <field>QAdLogin__c</field>
             <operator>IsNull</operator>
             <value>
                 <booleanValue>false</booleanValue>
