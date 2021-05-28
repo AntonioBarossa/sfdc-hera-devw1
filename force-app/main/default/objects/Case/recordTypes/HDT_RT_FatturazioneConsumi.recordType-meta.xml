@@ -7995,11 +7995,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CLIENTE NON TROVATO</fullName>
+            <fullName>Blocco per frode</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CONSEGNA%2FInstallazione RIFIUTATA</fullName>
+            <fullName>Malfunzionamento</fullName>
             <default>false</default>
         </values>
         <values>
