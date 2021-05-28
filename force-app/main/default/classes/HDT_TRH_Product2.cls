@@ -1,17 +1,28 @@
 public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
+
+        if(HDT_UTL_Product2Process.skipTrigger('HDT_Product2')){
+            return;
+        }
+
         for(Product2 p : (Product2[])Trigger.New){
             p.Status__c = 'In Sviluppo';
+            p.StartDate__c = null;
+            p.EndDate__c = null;
         }
     }
 
     public override void beforeUpdate(){
         
-        Set<String> allUniqueProductCodeSet;
+        if(HDT_UTL_Product2Process.skipTrigger('HDT_Product2')){
+            return;
+        }
+
+        //Set<String> allUniqueProductCodeSet;
         Map<Id, Integer> productOptionMap;
         Map<Id, Integer> technicalOfferMap;
-        allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
+        //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
         Set<Id> productIds = Trigger.NewMap.keySet();
         productOptionMap = HDT_UTL_Product2Process.generateProductOptionMap(productOptionMap, productIds);
@@ -20,10 +31,10 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
         HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse;
         for(Product2 p : (Product2[])Trigger.New){
 
-            if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
-                System.debug('>>> ADD ERROR');
-                //p.addError(generateErrorMessage((p)));
-            }
+            //if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
+            //    System.debug('>>> ADD ERROR');
+            //    p.addError(generateErrorMessage((p)));
+            //}
 
             Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
             System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);

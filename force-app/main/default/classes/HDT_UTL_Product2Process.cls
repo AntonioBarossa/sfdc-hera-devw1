@@ -1,5 +1,36 @@
 public inherited sharing class HDT_UTL_Product2Process {
 
+    public static Boolean skipTrigger(String triggerName){
+        
+        SkipTrigger__c skipTrigger;
+        skipTrigger = SkipTrigger__c.getInstance(UserInfo.getUserId());
+
+        if(skipTrigger == null){
+            skipTrigger = SkipTrigger__c.getInstance(UserInfo.getProfileId());
+        }
+
+        if(skipTrigger == null){
+            return false;
+        }
+
+        if(!String.isEmpty(skipTrigger.TriggerName__c) && skipTrigger.TriggerName__c.equalsIgnoreCase(triggerName)){
+            
+            if(skipTrigger.SkipForBatch__c && System.isBatch()){
+                return true;
+            }
+
+            if(skipTrigger.SkipForUi__c){
+                return true;
+            }
+
+            return false;
+                   
+        } else {
+            return false;
+        }
+
+    }
+
     public static HDT_WRP_Product2Process.HDT_WRP_StatusResponse changeStatusHandler(HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse, String productId, Product2 oldProduct, Product2 newProduct, Integer prodOpt, Integer techOff){
 
         String oldStatus = oldProduct.Status__c;
@@ -317,7 +348,7 @@ public inherited sharing class HDT_UTL_Product2Process {
         }
 
         List<SBQQ__ProductOption__c> productOptionList;
-        productOptionList = getProductOption(productOptionList, product2IdList, 'Vendibile');
+        productOptionList = getProductOption(productOptionList, product2IdList, 'Confermata');
 
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(productOptionMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
