@@ -15234,6 +15234,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>RentProcessRule__c.Category__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>RentProcessRule__c.CAWithOrWithoutSEPA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32780,6 +32785,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Reading__c.HDT_RT_LetturaGas</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>RentProcessRule__c.HDT_RT_Default</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
