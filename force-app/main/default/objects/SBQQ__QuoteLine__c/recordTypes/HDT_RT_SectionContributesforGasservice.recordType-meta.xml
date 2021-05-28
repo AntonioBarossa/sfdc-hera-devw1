@@ -320,11 +320,23 @@
     <picklistValues>
         <picklist>SendingBillMode__c</picklist>
         <values>
-            <fullName>Email</fullName>
+            <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Posta</fullName>
+            <fullName>Bolletta per e-mail %2B Carta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cartaceo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione PA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio tramite PEC</fullName>
             <default>false</default>
         </values>
     </picklistValues>
