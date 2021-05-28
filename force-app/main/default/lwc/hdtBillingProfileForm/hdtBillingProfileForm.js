@@ -111,7 +111,27 @@ export default class hdtBillingProfileForm extends LightningElement {
             }
 
             if(data.fatturazioneElettronica !== undefined){
-                this.fatturazioneElettronicaFields = data.fatturazioneElettronica;
+
+                this.fatturazioneElettronicaFields = [];
+
+                data.fatturazioneElettronica.forEach(el => {
+
+                    let required = false;
+
+                    switch (el) {
+                        case 'ElectronicInvoicingMethod__c':
+                            required = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    this.fatturazioneElettronicaFields.push({
+                        fieldName: el,
+                        required: required
+                    });
+                });
+
                 this.isfatturazioneElettronicaVisible = true;
             }
 
@@ -345,7 +365,9 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     validFields() {
 
-        let isValid = true;
+        console.log('Validation START');
+
+        this.saveErrorMessage = [];
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
 
@@ -354,6 +376,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             && this.template.querySelector("[data-id='IbanCIN__c']").value !== null
             && this.template.querySelector("[data-id='IbanCIN__c']").value.length !== 1) {
             this.saveErrorMessage.push('Il campo CIN deve avere 1 carattere');
+        }
+
+        if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCIN__c']").value !== null
+            && !/^[a-zA-Z]+$/.test(this.template.querySelector("[data-id='IbanCIN__c']").value)) {
+            this.saveErrorMessage.push('Il campo CIN può contenere solo lettere');
         }
 
         if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
@@ -425,30 +453,37 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         //check req fields fatturazione elettronica start
-        /*if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-            && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
-            concatBillingErrorFields = concatBillingErrorFields.concat('Codice Destinatario, ');
-        }
 
         if (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
             && (this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']").value === '')) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
-        if (this.template.querySelector("[data-id='CIG__c']") !== null 
-            && (this.template.querySelector("[data-id='CIG__c']").value === null || this.template.querySelector("[data-id='CIG__c']").value === '')) {
-            concatBillingErrorFields = concatBillingErrorFields.concat('CIG, ');
+        if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
+            && this.template.querySelector("[data-id='SubjectCode__c']").value !== null && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7) {
+            this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
-        if (this.template.querySelector("[data-id='CUP__c']") !== null 
-            && (this.template.querySelector("[data-id='CUP__c']").value === null || this.template.querySelector("[data-id='CUP__c']").value === '')) {
-            concatBillingErrorFields = concatBillingErrorFields.concat('CUP, ');
+        if ((this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']") !== null && this.template.querySelector("[data-id='SubjectCode__c']") !== null)
+            && (this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === null || this.template.querySelector("[data-id='ElectronicInvoiceCertifiedEmailAddress__c']").value === '')
+            && (this.template.querySelector("[data-id='SubjectCode__c']").value === null || this.template.querySelector("[data-id='SubjectCode__c']").value === '')) {
+            this.saveErrorMessage.push('Devi valorizzare almeno uno dei campi Codice Destinatario o PEC Fatturazione Elettronica');
         }
 
-        if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null 
-            && (this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null || this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === '' )) {
-            concatBillingErrorFields = concatBillingErrorFields.concat('Data inizio Validità Codice Destinatario, ');
-        }*/
+        // if (this.template.querySelector("[data-id='CIG__c']") !== null 
+        //     && (this.template.querySelector("[data-id='CIG__c']").value === null || this.template.querySelector("[data-id='CIG__c']").value === '')) {
+        //     concatBillingErrorFields = concatBillingErrorFields.concat('CIG, ');
+        // }
+
+        // if (this.template.querySelector("[data-id='CUP__c']") !== null 
+        //     && (this.template.querySelector("[data-id='CUP__c']").value === null || this.template.querySelector("[data-id='CUP__c']").value === '')) {
+        //     concatBillingErrorFields = concatBillingErrorFields.concat('CUP, ');
+        // }
+
+        // if (this.template.querySelector("[data-id='SubjectCodeStartDate__c']") !== null 
+        //     && (this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === null || this.template.querySelector("[data-id='SubjectCodeStartDate__c']").value === '' )) {
+        //     concatBillingErrorFields = concatBillingErrorFields.concat('Data inizio Validità Codice Destinatario, ');
+        // }
         //check req fields fatturazione elettronica end
 
         if (this.template.querySelector("[data-id='PaymentMethod__c']").value === 'RID' 
@@ -511,15 +546,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         //validate billing profile fields
         console.log('concatBillingErrorFields: ', concatBillingErrorFields);
         if (concatBillingErrorFields !== '') {
-            
-            isValid = false;
+
             this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di billing profile: ' + concatBillingErrorFields.slice(0, -2));
         }
     
         //Validate address
         if(!this.isForeignAddress){
             if (!this.isVerifiedAddress) {
-                isValid = false;
                 this.saveErrorMessage.push('E\' necessario verificare l\'indirizzo per poter procedere al salvataggio');
             }
         } else {
@@ -545,12 +578,13 @@ export default class hdtBillingProfileForm extends LightningElement {
             }
 
             if (concatAddressErrorFields !== '') {
-                isValid = false;
                 this.saveErrorMessage.push('Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2));
             }
         }
 
-        return isValid;
+        console.log('Validation END: ', this.saveErrorMessage.length === 0);
+
+        return this.saveErrorMessage.length === 0;
 
     }
 
@@ -656,6 +690,7 @@ export default class hdtBillingProfileForm extends LightningElement {
         this.handleWrapAddressObject();
 
         if(this.validFields()){
+            this.saveErrorMessage = [];
 
             this.dataToSubmit['Account__c'] = this.accountId;
             this.dataToSubmit['IbanCountry__c'] = 'IT';

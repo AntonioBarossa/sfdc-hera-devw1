@@ -55,10 +55,21 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            console.log('Error: ', JSON.stringify(error.body.pageErrors[0].message));
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });

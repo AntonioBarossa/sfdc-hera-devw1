@@ -12,7 +12,8 @@ public inherited sharing class HDT_QR_Contact {
             Fax,
             CertifiedEmail__c,
             IndividualId,
-            FiscalCode__c
+            FiscalCode__c,
+            AccountId
             FROM Contact
             WHERE Id = :id
             WITH SECURITY_ENFORCED
@@ -26,14 +27,13 @@ public inherited sharing class HDT_QR_Contact {
 
         return contact;
     }
- public List<Contact> getRecordsById(List<String> ids) {
 
-        String query = 'SELECT  Firstname,LastName, IndividualId,Company__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
+    public List<Contact> getRecordsById(List<String> ids) {
+
+        String query = 'SELECT Firstname, accountId, LastName, IndividualId,Company__c  FROM Contact WHERE Id IN :ids WITH SECURITY_ENFORCED';
         List<Contact> contacts = Database.query(query);
         return contacts;
     }
-
-
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 14/01/2021
@@ -140,6 +140,17 @@ public inherited sharing class HDT_QR_Contact {
             LastGeolocationLongitude__c
             FROM Contact
             WHERE Id = :contactId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public List<Contact> getContactByEmailAddress(String fromEmail){
+        return [
+            SELECT Id,
+                   Name,
+                   AccountId
+              FROM Contact 
+            WHERE Email = :fromEmail
             WITH SECURITY_ENFORCED
         ];
     }

@@ -31,7 +31,12 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     public Case getCaseRecord(String recordId){
         Case recordCase = new Case();
         try {
-            recordCase = [SELECT Id, Description, Phase__c,CaseNumber FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+            if(recordId instanceOf Id){
+                recordCase = [SELECT Id, Description, Phase__c,CaseNumber FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+            }else {
+                recordCase = [SELECT Id, Description, Phase__c,CaseNumber FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+            }
+            
         } catch (DmlException ex) {
             throw ex;
         }

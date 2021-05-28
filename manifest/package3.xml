@@ -1,83 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>Account_Service_Console</members>
-        <name>FlexiPage</name>
+        <members>HDT_ProtocolSpecificEmail__mdt</members>
+        <name>CustomObject</name>
     </types>
     <types>
-        <members>Case.HDT_RT_AltriProcessiPagamenti</members>
-        <members>Case.HDT_RT_ComunicazionePagamento</members>
-        <members>Case.HDT_RT_Domiciliazione</members>
-        <members>Case.HDT_RT_PianoRateizzazione</members>
-        <members>Case.HDT_RT_Rimborso</members>
-        <name>RecordType</name>
+        <members>Interaction__c.Interazioni_Personali</members>
+        <name>ListView</name>
     </types>
     <types>
-        <members>Account-CPQ Account Layout Service Console</members>
-        <members>Case-HDT_Disattivazioni</members>
+        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
         <name>Layout</name>
     </types>
     <types>
-        <members>HDT_LC_ChildOrderProcessPrecheck</members>
-        <members>HDT_LC_OrderDossierWizardActions</members>
-        <members>HDT_LC_ProcessesContainer</members>
-        <members>HDT_QR_UserQueries</members>
-        <members>HDT_TRH_Case</members>
-        <members>HDT_UTL_OrderFieldsAlignment</members>
-        <members>HDT_UTL_OrderProcess</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>HDT_QR_Contact</members>
+        <members>HDT_SRV_ActivityCustom</members>
+        <members>HDT_SRV_Interaction</members>
+        <members>HDT_UTL_EmailProtocolReceiver</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>PushTracking__c.Account__c</members>
-        <members>SBQQ__ProductOption__c.DelayDayGas__c</members>
-        <members>SMSTracking__c.Account__c</members>
-        <members>TechnicalOfferItem__c.DiscountCodeValue__c</members>
-        <members>TechnicalOfferItem__c.DiscountCode__c</members>
-        <members>TechnicalOfferItem__c.G__c</members>
-        <members>TechnicalOfferItem__c.S__c</members>
-        <members>TechnicalOffer__c.CancellationAllowed__c</members>
-        <members>TechnicalOffer__c.ContractId__c</members>
-        <members>TechnicalOffer__c.Market__c</members>
-        <members>TechnicalOffer__c.PlacetOffer__c</members>
-        <members>TechnicalOffer__c.ProcessType__c</members>
-        <members>TechnicalOffer__c.RecessAdmitted__c</members>
-        <members>TechnicalOffer__c.ServiceProduct__c</members>
-        <members>TechnicalOffer__c.Status__c</members>
-        <members>TechnicalOffer__c.StepAllowed__c</members>
-        <members>TechnicalOffer__c.UnitOfTimeMeasurement__c</members>
-        <members>TechnicalOffer__c.UnitTerminationTime__c</members>
-        <members>TechnicalOffer__c.UnitTimeExtension__c</members>
-        <members>et4ae5__IndividualEmailResult__c.Account__c</members>
+        <members>HDT_ProtocolSpecificEmail__mdt.Cluster__c</members>
+        <members>HDT_ProtocolSpecificEmail__mdt.Email__c</members>
+        <members>HDT_ProtocolSpecificEmail__mdt.Process__c</members>
         <name>CustomField</name>
     </types>
     <types>
-        <members>hdtContactSelection</members>
-        <members>hdtLastBill</members>
-        <members>hdtTargetObjectAddressFields</members>
+        <members>hdtAccountStatementPicker</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
         <members>Hera Standard User</members>
         <members>Hera System Administrator</members>
         <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
         <name>Profile</name>
     </types>
     <types>
-        <members>HDT_DataEnrichmentTransocode.ALIQUOTAIVA</members>
-        <members>HDT_UserInputFlow.Variazioni_Marcatura_uso_PdR</members>
+        <members>HDT_ProtocolSpecificEmail.HeraCanaleContattoSpecifico</members>
         <name>CustomMetadata</name>
     </types>
-    <types>
-        <members>HDT_FL_GestioneAnnullamento</members>
-        <members>HDT_FL_GestioneFatturazione</members>
-        <members>HDT_FL_GestionePagamenti_ComunicazionePagamento</members>
-        <members>HDT_FL_PostSalesMasterDispatch</members>
-        <name>Flow</name>
-    </types>
-    <version>49</version>
+    <version>50</version>
 </Package>

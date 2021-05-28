@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Taxes__c</field>
-        <value xsi:type="xsd:string">G_ICD-Imposta Usi Domestici</value>
+        <value xsi:type="xsd:string">Imposta Usi Domestici (Cod. G_ICD)</value>
     </values>
     <values>
         <field>UseCategory__c</field>

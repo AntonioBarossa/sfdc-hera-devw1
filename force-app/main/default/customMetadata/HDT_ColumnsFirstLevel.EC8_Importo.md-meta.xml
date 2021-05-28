@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>IsAmountField__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>IsFilter__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>ShowTotAmountHere__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Tab__c</field>

@@ -205,6 +205,12 @@
                         <valueListItems>
                             <value>CustomButton.Order.HDT_InfoTracking</value>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Order.Validazione_Documenti</value>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Order.HDT_RiprendiProcesso</value>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -222,10 +228,6 @@
                 <componentInstanceProperties>
                     <name>hideChatterActions</name>
                     <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>numVisibleActions</name>
-                    <value>1</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
             </componentInstance>

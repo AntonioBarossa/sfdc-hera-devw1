@@ -3,6 +3,7 @@
     <fullName>HDT_RT_InversioneContatore</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <description>Inversione Contatore</description>
     <label>Inversione Contatore</label>
     <picklistValues>
@@ -2020,7 +2021,7 @@
     <picklistValues>
         <picklist>ChannelOfPayment__c</picklist>
         <values>
-            <fullName>Bollettino</fullName>
+            <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
         <values>

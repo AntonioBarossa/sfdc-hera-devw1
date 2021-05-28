@@ -56,6 +56,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         List<String> fatturazioneElettronica = new List<String>{
             'ElectronicInvoicingMethod__c',
+            'ElectronicInvoiceCertifiedEmailAddress__c',
             'SubjectCode__c',
             'SubjectCodeStartDate__c',
             'SubjectCodeEndDate__c',
