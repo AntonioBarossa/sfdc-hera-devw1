@@ -2001,6 +2001,7 @@
             <fullName>Invio allegato a DL</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
         <values>
