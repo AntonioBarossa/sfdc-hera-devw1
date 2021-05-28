@@ -10321,12 +10321,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ActivatedById</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ActivatedDate</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10567,6 +10567,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.BPSAPModel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.CIAccoutn__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10578,6 +10583,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.CILegalRepresentative__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.ClientAge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10661,12 +10671,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ClientAge__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ClientCategoryFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10716,7 +10726,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.CommodityFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10731,7 +10741,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10761,12 +10771,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ContractEndDate</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ContractName</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10836,7 +10846,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.CustomerMarking__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11036,7 +11046,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ImplantTypeFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11156,17 +11166,17 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.NotRegisteredMeterCase__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.NotRethinkable__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.NotRegisteredMeterCase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Order.OneshotCustomer__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11566,7 +11576,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.SBQQ__OrderBookings__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11601,7 +11611,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.SBQQ__TaxAmount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11642,6 +11652,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SAPImplantCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SecurityDepositExcluded__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11661,7 +11676,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.ServicePointCodeFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11811,7 +11826,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.SupplyAddressFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11906,7 +11921,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Order.TotalAmount</field>
         <readable>true</readable>
     </fieldPermissions>
