@@ -1953,24 +1953,18 @@
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
+    <picklistValues>
+        <picklist>PressureLevel__c</picklist>
         <values>
-            <fullName>In attesa appuntamento DL</fullName>
+            <fullName>AP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa esecuzione appuntamento</fullName>
+            <fullName>BP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa validazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In sequenzializzazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviato al DL</fullName>
+            <fullName>MP</fullName>
             <default>false</default>
         </values>
     </picklistValues>

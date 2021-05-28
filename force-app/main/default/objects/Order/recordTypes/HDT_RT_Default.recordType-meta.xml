@@ -1886,12 +1886,19 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
-            <fullName>Annullato</fullName>
+    <picklistValues>
+        <picklist>PressureLevel__c</picklist>
+        <values>
+            <fullName>AP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Bozza</fullName>
-            <default>true</default>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>

@@ -1980,12 +1980,18 @@
             <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
+    <picklistValues>
+        <picklist>PressureLevel__c</picklist>
         <values>
-            <fullName>Richiesta preventivo</fullName>
+            <fullName>AP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripensato</fullName>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -2042,6 +2042,20 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PressureLevel__c</picklist>
+        <values>
+            <fullName>AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
         <picklist>ProcessType__c</picklist>
         <values>
             <fullName>Connessione con Attivazione</fullName>

@@ -557,13 +557,17 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PlugPresence__c</picklist>
+        <picklist>PressureLevel__c</picklist>
         <values>
-            <fullName>No</fullName>
+            <fullName>AP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si</fullName>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
             <default>false</default>
         </values>
     </picklistValues>
