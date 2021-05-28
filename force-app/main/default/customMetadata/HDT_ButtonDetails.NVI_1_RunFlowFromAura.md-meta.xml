@@ -34,6 +34,6 @@
     </values>
     <values>
         <field>Tab__c</field>
-        <value xsi:type="xsd:string">EC3</value>
+        <value xsi:type="xsd:string">NVI</value>
     </values>
 </CustomMetadata>
