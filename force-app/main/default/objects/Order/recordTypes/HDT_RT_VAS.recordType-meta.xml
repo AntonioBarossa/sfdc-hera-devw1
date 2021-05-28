@@ -1980,6 +1980,7 @@
             <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
         <values>
