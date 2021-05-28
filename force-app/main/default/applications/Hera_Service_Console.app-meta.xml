@@ -524,6 +524,7 @@
     <tabs>standard-Contract</tabs>
     <tabs>ServicePoint__c</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>wrts_prcgvr__Activity__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Hera_Service_Console_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -549,6 +550,9 @@
         </mappings>
         <mappings>
             <tab>standard-home</tab>
+        </mappings>
+        <mappings>
+            <tab>wrts_prcgvr__Activity__c</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

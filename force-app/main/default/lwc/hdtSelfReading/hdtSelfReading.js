@@ -59,6 +59,8 @@ export default class HdtSelfReading extends LightningElement {
 
     @api tipizzazioneRettificaConsumi;
 
+    @track isLoading = false;
+
     recordKey;
 
     selfReadingObj = [];
@@ -123,12 +125,14 @@ export default class HdtSelfReading extends LightningElement {
         .then(result =>{
 
             this.recordTypeId = result;
+            this.callLastReadings();
 
         }).catch(errror =>{
 
             console.log(error);
 
         });
+
 
     }
 
@@ -164,11 +168,12 @@ export default class HdtSelfReading extends LightningElement {
         console.log('Check Error status '+this.advanceError);
 
     }
-    
-    @api
-    handleClick(){
 
+    callLastReadings(){
+
+        console.log('Chiamata a WS Verifica Ultima Lettura');
         this.buttonDisabled = true;
+        this.isLoading = true;
         this.lastReadingsChecked = true;
 
         checkLastReadings({servicePointId:this.servicePointId})
@@ -186,8 +191,11 @@ export default class HdtSelfReading extends LightningElement {
                 this.showToastMessage(this.errorAdvanceMessage);
                 return;
             }
+            this.isLoading = false;
             const lastReadings = this.fillLastReadingsArray(parsedResult);
+            console.log('isLoading?: ' + this.isLoading);
             console.log('filled obj: ' + JSON.stringify( lastReadings));
+            console.log('querySelectorAll #: ' + this.template.querySelectorAll('c-hdt-self-reading-register').length);
 
             if(this.commodity == 'Energia Elettrica'){
                 this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
@@ -202,8 +210,17 @@ export default class HdtSelfReading extends LightningElement {
             }
 
         }).catch(error =>{
+            this.isLoading = false;
+            this.buttonDisabled = false;
             console.log('checkLastReadings failed: ' + error);
         });
+    }
+    
+    @api
+    handleClick(){
+
+        this.callLastReadings();
+
     }
 
     fillLastReadingsArray(lastReadingsResponse){

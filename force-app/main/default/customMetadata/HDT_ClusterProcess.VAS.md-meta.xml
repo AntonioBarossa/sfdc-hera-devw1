@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">VAS</value>
+        <value xsi:type="xsd:string">PostSales VAS</value>
     </values>
     <values>
         <field>ProcessType__c</field>
