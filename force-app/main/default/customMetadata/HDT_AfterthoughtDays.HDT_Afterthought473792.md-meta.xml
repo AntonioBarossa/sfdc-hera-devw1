@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>SignatureMode__c</field>
-        <value xsi:type="xsd:string">Posta Cartacea</value>
+        <value xsi:type="xsd:string">Cartacea</value>
     </values>
 </CustomMetadata>
