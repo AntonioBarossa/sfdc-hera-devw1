@@ -257,6 +257,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ex-Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
@@ -353,6 +357,26 @@
         </values>
         <values>
             <fullName>Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D2 - Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D3 - Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D5 - Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D6 - Associazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D7 - BP Doppio</fullName>
             <default>false</default>
         </values>
         <values>
