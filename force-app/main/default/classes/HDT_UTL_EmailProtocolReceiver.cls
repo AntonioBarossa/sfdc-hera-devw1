@@ -19,7 +19,7 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
         if(contacts.size()==1){
             newInter.Account__c = contacts[0].AccountId;
             newInter.Contact__c = contacts[0].Id;
-        
+        }
         Interaction__c res = intSrv.createRecord(newInter);
         if(email.textAttachments != null)
         {
@@ -41,7 +41,8 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
         Subject = email.subject,
         TextBody = email.plainTextBody,
         HtmlBody = email.htmlBody,
-        ParentId = res.Id 
+        ParentId = res.Id ,
+        status = 0
         );
         HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
         wrts_prcgvr__Activity__c activityCustom = new wrts_prcgvr__Activity__c();
