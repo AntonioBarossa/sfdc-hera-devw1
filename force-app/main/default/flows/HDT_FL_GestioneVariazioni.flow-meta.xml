@@ -909,6 +909,13 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EmailDettaglio.value</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>ScreenInputFiscale_0_0_0_0</targetReference>
         </connector>
@@ -3230,6 +3237,20 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>value</name>
                 <value>
                     <elementReference>GetBillingProfile.InvoiceEmailAddress__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>EmailDettaglio</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>Inserisci l&apos;indirizzo email</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
