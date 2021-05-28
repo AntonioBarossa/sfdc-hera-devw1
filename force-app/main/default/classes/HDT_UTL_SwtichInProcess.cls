@@ -4,6 +4,7 @@
  * @description  Classe per la gestione delle date nel processo switch in 
 */
 public with sharing class HDT_UTL_SwtichInProcess {
+    
 
     // Calcolo Data Max Ripensamento(MaxAfterthoughtDate__c)  // Solo per clienti residenziali
     public static Date getMaxAfterthoughtDate(Order order) {
@@ -58,11 +59,12 @@ public with sharing class HDT_UTL_SwtichInProcess {
                 dateSentToSii= order.WizardCompletedDate__c;            
             }
 
-            if(DateSentToSII.day() < 10){
-                dateSentToSii= DateSentToSII.addMonths(1).toStartofMonth();  
-            }else{
-                dateSentToSii= DateSentToSII.addMonths(2).toStartofMonth();  
-            }
+
+            // if(DateSentToSII.day() < 10){
+            //     dateSentToSii= DateSentToSII.addMonths(1).toStartofMonth();  
+            // }else{
+            //     dateSentToSii= DateSentToSII.addMonths(2).toStartofMonth();  
+            // }
             
             // if (order.WaiverRightAfterthought__c == 'Si') { 
             //     dateSentToSii= order.WizardCompletedDate__c;
