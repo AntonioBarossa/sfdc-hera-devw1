@@ -5,6 +5,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_UserQueriesWithoutSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_IndemnityConfirmation</apexClass>
         <enabled>true</enabled>
     </classAccesses>

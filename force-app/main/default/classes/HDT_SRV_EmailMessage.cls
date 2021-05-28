@@ -2,6 +2,9 @@ public with sharing class HDT_SRV_EmailMessage {
     public HDT_SRV_EmailMessage() {
 
     }
+    public static void insertEmailMessage(EmailMessage m){
+        HDT_UTL_DatabaseService.insertSObject(m);
+    }
     public static void checkIncomingEmails(List<EmailMessage> emailList){
         Map<SObject,Id> mapEmailCase = new Map<SObject,Id>();
         Id parentId;
