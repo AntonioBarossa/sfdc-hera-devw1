@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>SecondLevelAPI_Name__c</field>
-        <value xsi:type="xsd:string">secondoLivelloInformativo</value>
+        <value xsi:type="xsd:string">secondoLivelloInformativoF2</value>
     </values>
     <values>
         <field>ShowTab__c</field>

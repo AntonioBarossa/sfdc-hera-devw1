@@ -14,7 +14,7 @@
     &quot;iconName&quot;: &quot;standard:customer_lifecycle_analytics&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Descrizione Tipo Compensazione&quot;,
+        &quot;label&quot;: &quot;Descrizione Compensazione&quot;,
         &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
       },
       {
