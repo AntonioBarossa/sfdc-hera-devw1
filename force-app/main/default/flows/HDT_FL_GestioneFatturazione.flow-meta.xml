@@ -1224,6 +1224,48 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>hdtGenericAddressChooserFlow</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di spedizione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Verifica Titolarità POD/PDR</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>recordEditFormFatturazione</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>

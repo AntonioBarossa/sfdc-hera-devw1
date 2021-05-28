@@ -345,6 +345,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
             var fields = {
+                'Name' : row.xblnr,
                 'DocumentNumber__c' : row.xblnr, 
                 'Bill__c' : row.boll, 
                 'Type__c' : row.tipoDocDesc,

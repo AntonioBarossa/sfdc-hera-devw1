@@ -70,6 +70,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.RemiCode__c = servicePoint.RemiCode__c;
         orderToUpdate.SupplyCity__c = servicePoint.SupplyCity__c;
         orderToUpdate.SupplyStreet__c = servicePoint.SupplyStreet__c;
+        orderToUpdate.SupplyStreetName__c = servicePoint.SupplyStreet__c;
         orderToUpdate.SupplyStreetNumber__c = servicePoint.SupplyStreetNumber__c;
         orderToUpdate.SupplyPlace__c = servicePoint.SupplyPlace__c;
         orderToUpdate.SupplyPostalCode__c = servicePoint.SupplyPostalCode__c;

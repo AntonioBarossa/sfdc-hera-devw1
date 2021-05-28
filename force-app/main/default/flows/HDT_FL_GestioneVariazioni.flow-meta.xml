@@ -622,24 +622,6 @@
         <locationX>5307</locationX>
         <locationY>1153</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.CategoryCode__c</assignToReference>
-            <operator>Assign</operator>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.Category__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetInputCase.Account.Category__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.AccountClass__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>GetInputCase.BillingProfile__r.AccountClass__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -793,6 +775,13 @@
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>EmailDettaglio.value</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2899,6 +2888,20 @@
                 <name>addressLabel</name>
                 <value>
                     <stringValue>Indirizzo di Spedizione</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>EmailDettaglio</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>placeholder</name>
+                <value>
+                    <stringValue>Inserisci l&apos;indirizzo email</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
