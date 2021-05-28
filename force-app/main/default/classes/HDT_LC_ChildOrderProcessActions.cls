@@ -54,7 +54,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             orderToUpdate.Phase__c = 'In attesa validazione' ;                        
                         }
             
-                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSII(order);
+                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
                         // END Calcolo data Invio richiesta al SII (Data di adempimento)
 
                         // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
@@ -79,7 +79,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
 
                         // START Calcolo data invio richiesta (Data adempimento).
-                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSII(order);                                        
+                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);                                        
                         // END Calcolo data invio richiesta (Data adempimento).
 
                         // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
