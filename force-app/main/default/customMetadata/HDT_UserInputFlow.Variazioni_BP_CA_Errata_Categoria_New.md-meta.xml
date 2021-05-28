@@ -9,9 +9,9 @@
 {&quot;FieldName&quot;:&quot;Category__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;CategoryCode__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;AccountClass__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;AccountClassCode__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;BillingProblem__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;CustomerPaymentAgreements__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;SaleBlock__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
 ]</value>
     </values>
@@ -23,7 +23,7 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;FiscalCode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;VatNumber__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}}]</value>
+{&quot;FieldName&quot;:&quot;VatNumber__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>

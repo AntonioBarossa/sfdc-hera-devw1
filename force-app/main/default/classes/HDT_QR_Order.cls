@@ -150,7 +150,19 @@ public inherited sharing class HDT_QR_Order {
             ActivationStreetNumberExtension__c,
             ActivationStreetNumber__c,
             ImplantType__c,
-            PowerCommitted__c
+            PowerCommitted__c,
+            ServicePoint__r.MarketOrigin__c, // @Picchiri Calcolo della date Switch in 21/05/21
+            WizardCompletedDate__c,          // @Picchiri Calcolo della date Switch in 21/05/21
+            ActivatedDate,                   // @Picchiri Calcolo della date Switch in 21/05/21
+            ServicePoint__r.VoltageLevel__c, // @Picchiri Calcolo della date Switch in 21/05/21
+            ServicePoint__r.SupplyType__c,   // @Picchiri Calcolo della date Switch in 21/05/21
+            RecessNotice__c,                 // @Picchiri Calcolo della date Switch in 21/05/21
+            CustomerCategory__c,             // @Picchiri Calcolo della date Switch in 26/05/21
+            Channel__c,                      // @Picchiri Calcolo della date Switch in 27/05/21
+            Market__c,                       // @Picchiri Calcolo della date Switch in 26/05/21
+            MarketOrigin__c,                 // @Picchiri Calcolo della date Switch in 27/05/21
+            VoltageLevel__c,                 // @Picchiri Calcolo della date Switch in 27/05/21 
+            SupplyType__c                    // @Picchiri Calcolo della date Switch in 27/05/21 
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
