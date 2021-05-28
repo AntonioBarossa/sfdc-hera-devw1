@@ -61,15 +61,23 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
     }
 
     public void execute(Database.BatchableContext BC, List<sObject> scope) {
-        Map<String,Map<String,Object>> queuesMap = getQueuesMap();
         List<AssignmentRule__c> rules = (List<AssignmentRule__c>) scope;
-        List<wrts_prcgvr__Activity__c> processedActivities = new List<wrts_prcgvr__Activity__c>();
-        Map<String,Object> queue;
-        wrts_prcgvr__Activity__c tmp;
-        
+
+        Map<String,Queue__c> queuesMap = getQueuesMap();
+        Map<String,Decimal> queueUsageMap = getQueueUsageMap();
+
+        Queue__c queue;
+        wrts_prcgvr__Activity__c processedActivity;
+        Decimal queueUsage;
+        Map<Id, wrts_prcgvr__Activity__c> processedActivitiesMap = new Map<Id, wrts_prcgvr__Activity__c>();
+        String assignataryQueue;
+
         for(AssignmentRule__c rule : rules) {
             for(wrts_prcgvr__Activity__c activity : Database.query(getQuery(rule))) {
-                String assignataryQueue;
+                if(activity.wrts_prcgvr__Priority__c == null) continue; // DO NOT PROCESS DEFECTIVE ACTIVITIES
+                if(processedActivitiesMap.containsKey(activity.Id)) continue; // IF ACTIVITY ALREADY ASSIGNED BY ANOTHER, HIGHER PRIORITY RULE IN THE SAME BATCH DO NOT RE-PROCESS
+
+                assignataryQueue = null;
                 switch on String.valueOf(activity.wrts_prcgvr__Priority__c) {
                     when '1' {
                         assignataryQueue = 'HighPriorityQueue__c';
@@ -83,23 +91,25 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 }
 
                 queue = queuesMap.get((String) rule.get(assignataryQueue));
-                if((Integer) queue.get('DailyCapacity__c') > (Integer) queue.get('current_usage')) {
-                    tmp = new wrts_prcgvr__Activity__c(
+                queueUsage = queueUsageMap.get(queue.QueueId__c);
+
+                if(queue.DailyCapacity__c == null || queue.DailyCapacity__c > queueUsage) {
+                    processedActivity = new wrts_prcgvr__Activity__c(
                         Id = activity.Id,
                         Queued__c = true,
                         AssignmentRule__c = rule.Id,
-                        OwnerId = (String) queue.get('QueueId__c')
+                        OwnerId = (String) queue.QueueId__c
                     );
-                    queue.put('current_usage', ((Integer) queue.get('current_usage')) + 1);
-                    processedActivities.add(tmp);
-                    if(processedActivities.size() == 10000) break;
+                    queueUsageMap.put(queue.QueueId__c, ++queueUsage);
+                    processedActivitiesMap.put(processedActivity.Id, processedActivity);
+                    if(processedActivitiesMap.size() == 10000) break; // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
                 }
-                if(processedActivities.size() == 10000) break;
+                if(processedActivitiesMap.size() == 10000) break; // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
             }
         }
 
-        if(processedActivities.size() > 0) {
-            Database.update(processedActivities, false);
+        if(!processedActivitiesMap.isEmpty()) {
+            Database.update(processedActivitiesMap.values(), false);
         }
     }
 
@@ -107,18 +117,16 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         //RESCHEDULE
     }
 
-    private Map<String,Map<String,Object>> getQueuesMap() {
-        Map<String,Object> queueAsMap;
-        Map<String,Map<String,Object>> queuesMap = new Map<String,Map<String,Object>>();
-        for(Queue__c q : [SELECT Id, DailyCapacity__c, QueueId__c FROM Queue__c]) {
-            queueAsMap = q.getPopulatedFieldsAsMap().clone();
-            queueAsMap.put('current_usage', 0);
-            queuesMap.put(q.Id, queueAsMap);
-        }
+    private Map<String,Queue__c> getQueuesMap() {
+        return new Map<String,Queue__c>([SELECT Id, DailyCapacity__c, QueueId__c FROM Queue__c]);
+    }
+    
+    private Map<String,Decimal> getQueueUsageMap() {
+        Map<String,Decimal> queueUsageMap = new Map<String,Decimal>();
         for(AggregateResult count : [SELECT COUNT(Id), OwnerId FROM wrts_prcgvr__Activity__c WHERE Owner.Type = 'Queue' GROUP BY OwnerId]) {
-            queuesMap.get((String) count.get('OwnerId')).put('current_usage', count.get('expr0'));
+            queueUsageMap.put((String) count.get('OwnerId'), (Decimal) count.get('expr0'));
         }
-        return queuesMap;
+        return queueUsageMap;
     }
 
     public String getQuery(AssignmentRule__c rule) {
