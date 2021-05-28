@@ -42,7 +42,7 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
         TextBody = email.plainTextBody,
         HtmlBody = email.htmlBody,
         ParentId = res.Id ,
-        status = 0
+        status = '0'
         );
         HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
         wrts_prcgvr__Activity__c activityCustom = new wrts_prcgvr__Activity__c();
