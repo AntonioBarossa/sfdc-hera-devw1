@@ -580,6 +580,7 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
     <picklistValues>
         <picklist>PressureLevel__c</picklist>
         <values>
