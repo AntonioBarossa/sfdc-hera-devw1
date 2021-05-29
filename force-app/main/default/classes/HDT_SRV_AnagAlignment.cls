@@ -172,29 +172,24 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     }
 
     /**
-     * Valorizza in base al contesto i dati specifici presi dal Case di Variazioni.
-     * Invece di richiamare l'arricchimento dati sul Case di Allineamento Anagrafica,
-     * ribaltiamo i dati dal Case sorgente di Variazioni.
+     * Aggiorna il Case di Variazioni con i dati di anagrafica del cliente e poi lo invia ad Heroku.
      */
     private static Boolean updateAnagAlignmentCaseVariazioni(Case anagAlignCase, Case triggerCase, HDT_ENU_AnagAlignmentContext context) {
 
         updateAnagAlignmentCaseCustomerData(anagAlignCase);
 
-        // TODO: ribaltamento campi di arricchimento dati da Case sorgente triggerCase
-
-
         switch on context {
             when VARIAZIONI_FISCALE {
-                // TODO: ribaltare dati specifici Case sorgente triggerCase
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Fiscali
             }
             when VARIAZIONI_MARCATURA_USO_PDR {
-                // TODO: ribaltare dati specifici Case sorgente triggerCase
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/MarcaturaUsoPDR
             }
             when VARIAZIONI_INDIRIZZO_FORNITURA {
-                // TODO: ribaltare dati specifici Case sorgente triggerCase
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/Mod.Indirizzo di fornitura
             }
             when VARIAZIONI_TARIFFA_RES_NONRES {
-                // TODO: ribaltare dati specifici Case sorgente triggerCase
+                // TODO: aggiungere qui eventuali logiche specifiche per Variazioni/TariffaRes/NonRes
             }
         }
 
