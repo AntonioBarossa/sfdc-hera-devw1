@@ -180,6 +180,8 @@ export default class HdtSelfReading extends LightningElement {
         .then(result =>{
             console.log('checkLastReadings results: ' + result);
             if (result == null) {
+                this.isLoading = false;
+                this.buttonDisabled = false;
                 this.errorAdvanceMessage = 'Errore di sistema, impossibile recuperare le ultime letture. Contattare un amministratore di sistema.';
                 this.showToastMessage(this.errorAdvanceMessage);
                 return;
@@ -187,6 +189,8 @@ export default class HdtSelfReading extends LightningElement {
             const parsedResult = JSON.parse(result);
             // Verifichiamo se la response contiene un errore da SAP.
             if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
+                this.isLoading = false;
+                this.buttonDisabled = false;
                 this.errorAdvanceMessage = 'Errore da SAP: ' + parsedResult.errorDetails[0].message;
                 this.showToastMessage(this.errorAdvanceMessage);
                 return;
