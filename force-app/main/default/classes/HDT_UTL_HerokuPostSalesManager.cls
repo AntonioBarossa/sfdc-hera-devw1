@@ -174,7 +174,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
         String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
-        String codPraticaDL = reqWrp.requestMap.get('COD_PRAT_DISTR');
+        String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
         //CHECK CROSS MINIMUM FIELD
         if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
         
@@ -243,7 +243,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }else if(method.equalsIgnoreCase('aggiornaRCU')){
             if(String.isBlank(codServizio) && String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
-            if(String.isBlank(codPresa) && String.isBlank(codPraticaDL)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
+            if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
             //richiamare method di creazione RCU
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
