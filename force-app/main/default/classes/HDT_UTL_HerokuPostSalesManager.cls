@@ -61,9 +61,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String contractCode;
         String contractStatus;
         String dlCode;
-
         System.debug('UTL_CLASS_Request--> '+request);
-        return new HDT_WRP_HerokuPostSalesManager(request.objects[0].fields); 
+        HDT_WRP_HerokuPostSalesManager toReturn = new HDT_WRP_HerokuPostSalesManager(request.objects[0].fields);
+        toReturn.requestMap.put('requestId', request.header.requestId);
+        return toReturn; 
     }
 
 
@@ -187,7 +188,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentPhase = recordCase.Phase__c;
             nextPhase = reqWrp.requestMap.get('FASE');
         }
-        if(method.equalsIgnoreCase('esito_intermedio')){
+        if(method.equalsIgnoreCase('aggiornaRCU')){
+            if(String.isBlank(codServizio) || String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
+            if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
+            currentCase = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(reqWrp);
+            caseUpdate.add(currentCase);
+            return caseUpdate;
+        }else if(method.equalsIgnoreCase('esito_intermedio')){
             if(nextPhase != null && nextPhase != ''){
                 //Gestione ad hoc per E150 Annullamento - Esito OK/KO da DL/SII
                 if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) &&
@@ -241,17 +248,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String description = recordCase.Description != null?recordCase.Description:'';
                 currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('MESSAGGIO') + '\n' + description;
             }
-        }else if(method.equalsIgnoreCase('aggiornaRCU')){
-            if(String.isBlank(codServizio) && String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
-            if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
-            //richiamare method di creazione RCU
-            return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
 
         caseUpdate.add(currentCase);
-
+        HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         return caseUpdate;
     }
 
