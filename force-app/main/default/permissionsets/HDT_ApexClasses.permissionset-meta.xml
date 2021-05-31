@@ -369,6 +369,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_AnagAlignment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_BillingProfile</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -465,6 +469,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_Group</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_HerokuPostSalesManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -526,6 +534,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_PermissionSet</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QR_PostSalesManager</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -609,6 +621,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_UserQueriesWithoutSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_Variations</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -633,11 +649,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_ActivityCustom</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_AnagAlignment</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_QR_AnagAlignment</apexClass>
+        <apexClass>HDT_SRV_Attachment</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -662,6 +682,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_Case</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_CommunicationLog</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -726,6 +750,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_InstallmentPlans</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_Interaction</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -825,6 +853,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_Account</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_TRH_ActivityCustom</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_AlertAccountConfiguration</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -873,19 +909,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_TRH_Task</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_TRH_Account</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_TRH_SolTracking</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_TRH_Task</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_TRH_TriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ActivityCustomProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -910,6 +946,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_CaseCancellation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_CaseProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -949,6 +989,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_CommunicationLog</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_Complaints</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -985,6 +1029,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_EmailProtocolReceiver</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_GestionePrivacy</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1010,6 +1058,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_Lead</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_Morosita</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1082,6 +1134,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_SobjectUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_SwtichInProcess</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
