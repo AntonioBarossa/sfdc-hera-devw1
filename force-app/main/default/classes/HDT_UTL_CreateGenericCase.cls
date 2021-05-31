@@ -117,7 +117,9 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String caseCluster = (String) inputs.get('cluster');
         String accountId = (String) inputs.get('accountId');
         String contactId = (String) inputs.get('contactId');
+        String servicePointId = (String) inputs.get('servicePointId');
         String herokuCode = (String) inputs.get('HerokuPracticeCode__c');
+
         if (String.isBlank(recordTypeId) || String.isBlank(accountId) || String.isBlank(caseCluster) || String.isBlank(caseType)) {
             System.debug('HDT_UTL_CreateGenericCase::createCase - invalid inputs: ' + inputs);
             return null;
@@ -128,6 +130,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.AccountId = accountId;
         newCase.ContactId = contactId;
         newCase.RecordTypeId = recordTypeId;
+        newCase.ServicePoint__c = servicePointId;
         newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
         newCase.WrittenReceiptRequestDate__c = Date.today();
