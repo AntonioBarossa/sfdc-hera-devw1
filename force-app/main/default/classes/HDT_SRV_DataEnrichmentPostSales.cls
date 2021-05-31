@@ -8,7 +8,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
         if(fieldName == 'PhaseTypeAvailable__c'){
 
-            Try{   
+            try{   
                 Decimal phaseCondition = Decimal.valueOf(condition);
                 if(phaseCondition <= 1.0 ){
 
@@ -23,6 +23,16 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
                 System.debug(e.getMessage());
                 return null;
+
+            }
+
+        }
+
+        if(fieldName == 'Taxes__c'){
+
+            if(condition == 'E_IMPOST'){
+
+                condition = 'Imposta usi domestici';
 
             }
 

@@ -2,16 +2,25 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
     global Messaging.InboundEmailResult handleInboundEmail(Messaging.InboundEmail email, Messaging.InboundEnvelope envelope) {
        Messaging.InboundEmailResult result = new Messaging.InboundEmailresult();
        Date d = Date.today();
+       boolean b = false;
        HDT_QR_Contact contactQr = new HDT_QR_Contact();
        HDT_SRV_Interaction intSrv = new HDT_SRV_Interaction();
        HDT_SRV_ActivityCustom actSrv = new HDT_SRV_ActivityCustom();
        HDT_QR_RecordType recordTypeQr = new HDT_QR_RecordType();
        HDT_QR_Group groupQR = new HDT_QR_Group();
        Interaction__c newInter = new Interaction__c();
+       String mess = '';
+       if(email.plainTextBody != null && email.plainTextBody.length() >= 32000){
+            mess = email.plainTextBody.substring(0,31999);
+            b = true;
+            System.debug('******EntroQui');
+       }else{
+            mess = email.plainTextBody;
+       }
        newInter.Status__c = 'Bozza';
        newInter.Type__c = 'Digital';
        newInter.ReceptionDate__c = d;
-       newInter.BodyEmail__c = email.plainTextBody;
+       newInter.BodyEmail__c = mess;
        newInter.SubjectEmail__c = email.subject;
        Group g = groupQR.getQueueByDevelopername('HDT_QUE_ActivityProtocollo');
       list<Attachment> listAttach = new List<Attachment>();
@@ -21,6 +30,10 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
           newInter.Contact__c = contacts[0].Id;
       }
       Interaction__c res = intSrv.createRecord(newInter);
+      if(b){
+        System.debug('HideAndSeek');
+        HDT_UTL_Note.createNoteAndAssign(newInter.id, 'Testo Troncato per Superamento Limite Caratteri', '');
+      }
       if(email.textAttachments != null)
       {
           for (Messaging.Inboundemail.TextAttachment tAttachment : email.textAttachments) {
@@ -49,8 +62,8 @@ global class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
       FromName = email.fromName,
       ToAddress = email.toAddresses[0],
       Subject = email.subject,
-      TextBody = email.plainTextBody,
-      HtmlBody = email.htmlBody,
+      TextBody = mess,
+      //HtmlBody = email.htmlBody,
       relatedToId  = res.Id ,
       status = '0'
       );
