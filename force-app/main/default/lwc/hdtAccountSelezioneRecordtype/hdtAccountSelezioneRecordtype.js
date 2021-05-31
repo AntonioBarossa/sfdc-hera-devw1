@@ -21,10 +21,15 @@ export default class HdtAccountSelezioneRecordtype extends LightningElement {
         
         getRecordTypesForAccount().then(data =>{
             console.log('hdtTargetObjectRecordTypeSelection - getRecordTypesForServicePoint: ', JSON.stringify(data));
-            this.recordTypeOptions = data.filter(function(el){
+            var list = data.filter(function(el){
                 return (el.DeveloperName === 'HDT_RT_Business' || el.DeveloperName ==='HDT_RT_Residenziale');
             });
-            console.log(JSON.stringify(this.recordTypeOptions));
+            for(var i = 0; i < list.length; i++){
+                this.recordTypeOptions.unshift(list[i]);
+            }
+           // this.recordTypeOptions = list.sort(this.sortBy('DeveloperName', reverse));
+           // this.recordTypeOptions = 
+            console.log('*********' + JSON.stringify(this.recordTypeOptions));
         }).catch(error => {
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
