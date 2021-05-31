@@ -617,6 +617,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_AnagAlignment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_BillingProfile</apexClass>
         <enabled>true</enabled>
     </classAccesses>

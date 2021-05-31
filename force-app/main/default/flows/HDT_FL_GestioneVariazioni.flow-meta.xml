@@ -1,124 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Crea_Case</name>
-        <label>Crea Case</label>
+        <name>Crea_Allineamento_Anagrafica</name>
+        <label>Crea Allineamento Anagrafica</label>
         <locationX>1691</locationX>
-        <locationY>1338</locationY>
-        <actionName>HDT_SRV_CreateGenericCase</actionName>
+        <locationY>1361</locationY>
+        <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU</targetReference>
         </connector>
         <dataTypeMappings>
-            <typeName>T__inputSobj</typeName>
+            <typeName>T__inputCase</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>caseCluster</name>
+            <name>context</name>
             <value>
-                <stringValue>Modifiche Anagrafiche</stringValue>
+                <stringValue>VARIAZIONI_MARCATURA_USO_PDR</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>caseType</name>
-            <value>
-                <stringValue>Allineamento Anagrafica</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>inputSobj</name>
+            <name>inputCase</name>
             <value>
                 <elementReference>GetCaseAggiornato_0_0_0</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recordTypeDevName</name>
-            <value>
-                <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Crea_Case_Allineamento_Anagrafica</name>
-        <label>Crea Case Allineamento Anagrafica</label>
-        <locationX>2384</locationX>
-        <locationY>1784</locationY>
-        <actionName>HDT_SRV_CreateGenericCase</actionName>
+        <name>Crea_Allineamento_Anagrafica_0</name>
+        <label>Crea Allineamento Anagrafica</label>
+        <locationX>2391</locationX>
+        <locationY>1783</locationY>
+        <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0</targetReference>
         </connector>
         <dataTypeMappings>
-            <typeName>T__inputSobj</typeName>
+            <typeName>T__inputCase</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>caseCluster</name>
+            <name>context</name>
             <value>
-                <stringValue>Modifiche Anagrafiche</stringValue>
+                <stringValue>VARIAZIONI_TARIFFA_RES_NONRES</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>caseType</name>
-            <value>
-                <stringValue>Allineamento Anagrafica</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>inputSobj</name>
+            <name>inputCase</name>
             <value>
                 <elementReference>GetInputCaseAggiornato</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recordTypeDevName</name>
-            <value>
-                <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Crea_Case_Allineamento_Anagrafica_0</name>
-        <label>Crea Case Allineamento Anagrafica</label>
+        <name>Crea_Allineamento_Anagrafica_0_0</name>
+        <label>Crea Allineamento Anagrafica</label>
         <locationX>2601</locationX>
-        <locationY>1443</locationY>
-        <actionName>HDT_SRV_CreateGenericCase</actionName>
+        <locationY>1466</locationY>
+        <actionName>HDT_SRV_AnagAlignment</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</targetReference>
         </connector>
         <dataTypeMappings>
-            <typeName>T__inputSobj</typeName>
+            <typeName>T__inputCase</typeName>
             <typeValue>Case</typeValue>
         </dataTypeMappings>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>caseCluster</name>
+            <name>context</name>
             <value>
-                <stringValue>Modifiche Anagrafiche</stringValue>
+                <stringValue>VARIAZIONI_INDIRIZZO_FORNITURA</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>caseType</name>
-            <value>
-                <stringValue>Allineamento Anagrafica</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>inputSobj</name>
+            <name>inputCase</name>
             <value>
                 <elementReference>GetCaseAggiornato_0_0_0_0</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>recordTypeDevName</name>
-            <value>
-                <stringValue>HDT_RT_AllineamentoAnagrafica</stringValue>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -143,8 +107,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>1691</locationX>
-        <locationY>1458</locationY>
+        <locationX>1690</locationX>
+        <locationY>1518</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -189,8 +153,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Attesa_Allineamento_RCU_0_0</name>
         <label>Aggiorna Fase in Attesa Allineamento RCU</label>
-        <locationX>2601</locationX>
-        <locationY>1563</locationY>
+        <locationX>2600</locationX>
+        <locationY>1634</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1085,7 +1049,7 @@
         <locationX>2251</locationX>
         <locationY>1664</locationY>
         <defaultConnector>
-            <targetReference>Crea_Case_Allineamento_Anagrafica</targetReference>
+            <targetReference>Crea_Allineamento_Anagrafica_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Presente</defaultConnectorLabel>
         <rules>
@@ -2348,7 +2312,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1218</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case</targetReference>
+            <targetReference>Crea_Allineamento_Anagrafica</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2369,7 +2333,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>1323</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Crea_Case_Allineamento_Anagrafica_0</targetReference>
+            <targetReference>Crea_Allineamento_Anagrafica_0_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2693,8 +2657,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>1691</locationX>
-        <locationY>1578</locationY>
+        <locationX>1690</locationX>
+        <locationY>1681</locationY>
         <inputReference>GetCaseAggiornato_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2742,7 +2706,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>2601</locationX>
-        <locationY>1683</locationY>
+        <locationY>1773</locationY>
         <inputReference>GetCaseAggiornato_0_0_0_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -4639,7 +4603,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4658,7 +4622,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4677,7 +4641,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4696,7 +4660,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4715,7 +4679,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4734,7 +4698,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4753,7 +4717,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4761,7 +4725,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>4237</locationX>
-        <locationY>1228</locationY>
+        <locationY>1227</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4772,7 +4736,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
@@ -4791,7 +4755,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
     </subflows>
