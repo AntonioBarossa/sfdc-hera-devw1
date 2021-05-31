@@ -68,13 +68,13 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return anagAlignCase;
         }
 
-        String codiceFlusso = herokuWrapper.responseMap.get('COD_FLUSSO');
+        String codiceFlusso = herokuWrapper.requestMap.get('COD_FLUSSO');
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
-        String codiceServizio = herokuWrapper.responseMap.get('COD_SERVIZIO');
-        String codicePrestazione = herokuWrapper.responseMap.get('COD_PRESTAZIONE');
+        String codiceServizio = herokuWrapper.requestMap.get('COD_SERVIZIO');
+        String codicePrestazione = herokuWrapper.requestMap.get('COD_PRESTAZIONE');
         // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
-        String codicePresa = herokuWrapper.responseMap.get('COD_PRESA');
-        String codicePraticaDistributore = herokuWrapper.responseMap.get('COD_PRAT_DISTR');
+        String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
+        String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
 
         if (codicePrestazione == null) {
             System.debug('codicePrestazione non valorizzato');
@@ -98,7 +98,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creaiamo solo il Case di Allineamento Anagrafica.
-
+                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa);
             }
             when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
                 
