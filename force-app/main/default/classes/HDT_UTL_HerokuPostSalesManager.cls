@@ -171,10 +171,17 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         currentCase.Id = recordCase.Id;
         Datetime nowDate = Datetime.now();
         String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+        String currentPhase = recordCase.Phase__c;
+        String nextPhase = reqWrp.requestMap.get('FASE');
         switch on reqWrp.requestMap.get('METHOD'){
             when 'esito_intermedio'{
-                if(reqWrp.requestMap.get('FASE') != null && reqWrp.requestMap.get('FASE') != ''){
-                    currentCase.Phase__c = reqWrp.requestMap.get('FASE');
+                if(nextPhase != null && nextPhase != ''){
+                    //Gestione ad hoc per E150 Annullamento - Esito OK/KO da DL/SII
+                    if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) &&
+                        currentPhase.indexOf('Annullamento') > -1){
+                            nextPhase = 'Annullamento - ' + nextPhase;
+                        }
+                    currentCase.Phase__c = nextPhase;
                 }
                 if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
                     currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
@@ -190,8 +197,6 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 }
             }
             when 'esito_finale'{
-                String currentPhase = recordCase.Phase__c;
-                String nextPhase = reqWrp.requestMap.get('FASE');
                 String noteSap = reqWrp.requestMap.get('NOTA_HK');
                 String odv = reqWrp.requestMap.get('VBELN');
                 String currentDescription = recordCase.Description != null?recordCase.Description:'';
