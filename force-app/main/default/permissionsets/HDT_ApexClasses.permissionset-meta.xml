@@ -17,6 +17,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_Group</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_Note</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -402,6 +406,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QR_Contact</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_Interaction</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_ActivityCustom</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
