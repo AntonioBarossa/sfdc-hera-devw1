@@ -5,7 +5,7 @@
 * @history Keltin Mesonjesi – 25/02/2021 – Created class
 */
 public inherited sharing class HDT_QR_AccountContactRelation {
-    
+     
     public List<AccountContactRelation> getAccountContactRelation(Id accountId, Id contactId, String fields){
         String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId = :accountId And ContactId = :contactId';
         List<AccountContactRelation> listAccCon= Database.query(query);
