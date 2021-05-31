@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Interazioni_Digital</fullName>
+    <columns>NAME</columns>
+    <columns>Account__c</columns>
+    <columns>Contact__c</columns>
+    <columns>Reason__c</columns>
+    <columns>Status__c</columns>
+    <columns>ProtocolDate__c</columns>
+    <columns>SubjectEmail__c</columns>
+    <columns>BodyEmail__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Type__c</field>
+        <operation>equals</operation>
+        <value>Digital</value>
+    </filters>
+    <label>Interazioni Digital</label>
+</ListView>
