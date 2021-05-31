@@ -259,123 +259,75 @@
     <custom>true</custom>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_ApproveRejectCase</name>
+        <name>CS_SelezioneFornitura__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_CadutaLinea</name>
+        <name>HDT_WebServiceConfiguration__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_CambioOfferta</name>
+        <name>HDT_WebServiceCredential__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_CambioUsoFittizio</name>
+        <name>SBQQ__FieldMetadata__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_CancelResolution</name>
+        <name>et4ae5__ET4AEConfig__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_CGCmanagement</name>
+        <name>et4ae5__ET4AE_Config__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_ChiamataMuta</name>
+        <name>wrts_prcgvr__ActivitySetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_ComunicazioneDiFallimento</name>
+        <name>wrts_prcgvr__ActivityStatusSetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_ContenzionsoInCorso</name>
+        <name>wrts_prcgvr__DependencySetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_ContrattoNonRichiesto</name>
+        <name>wrts_prcgvr__EnvironmentSetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_EnableCreditCheck</name>
+        <name>wrts_prcgvr__IntegrationSetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_EnableMUC</name>
+        <name>wrts_prcgvr__LogSetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_Errore</name>
+        <name>wrts_prcgvr__OverrideSetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_GestioneLavorazioniFUB</name>
+        <name>wrts_prcgvr__PhaseManagerSObjectSetting__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_ModificaPrivacyAnagrafica</name>
+        <name>wrts_prcgvr__PhaseManagerSettings__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_PostsalesProcess</name>
+        <name>wrts_prcgvr__ServiceCatalogReportSetting__c</name>
+    </customSettingAccesses>
+	<customSettingAccesses>
+        <enabled>true</enabled>
+        <name>Connector_Settings__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>HDT_CP_PraticheM01M02</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_PrescrizioneFatture</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_RicostruzioneConsumi</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_SalesProcess</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_ScontiBonusVas</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_SubentroSuGDMchiuso</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_SuperUserCPQ</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_SupplySelectionSearch</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_SW</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_TypeInstallmentPlan</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_VAS</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_VolturaRetroattiva</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HDT_CP_VolturaTecnica</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
-        <name>HideGlobalHeader</name>
+        <name>HDT_FulfillmentDateMatrix__c</name>
     </customSettingAccesses>
     <fieldPermissions>
         <editable>true</editable>
