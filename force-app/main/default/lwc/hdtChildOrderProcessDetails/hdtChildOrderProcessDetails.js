@@ -627,9 +627,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 return;
             }
 
-            if(this.template.querySelector("[data-id='Pressure__c']") !== null 
-                && (this.template.querySelector("[data-id='Pressure__c']").value === ''
-                    || this.template.querySelector("[data-id='Pressure__c']").value === null)) {
+            if(this.template.querySelector("[data-id='PressureLevel__c']") !== null 
+                && (this.template.querySelector("[data-id='PressureLevel__c']").value === ''
+                    || this.template.querySelector("[data-id='PressureLevel__c']").value === null)) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -1845,7 +1845,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 },
                 {
                     'label': 'Pressione fornitura',
-                    'apiname': 'Pressure__c',
+                    'apiname': 'PressureLevel__c',
                     'typeVisibility': this.typeVisibility('gas'),
                     'required': true,
                     'disabled': false,
