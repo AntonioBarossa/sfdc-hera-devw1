@@ -192,6 +192,50 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     }
 
     /**
+     * Crea il Case di allineamento anagrafica a partire da un POD/PDR senza processo collegato.
+     */
+    private static Case createAnagAlignmentCaseFromServicePoint(String servicePointCode) {
+        if (servicePointCode == null) {
+            return null;
+        }
+
+        Map<String, Object> inputMap = new Map<String, Object>();
+        HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        HDT_QR_AnagAlignment queryHandler = new HDT_QR_AnagAlignment();
+        HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
+        ServicePoint__c servicePoint = queryHandler.findServicePointByCode(servicePointCode);
+        if (servicePoint == null) {
+            System.debug('Service Point non trovato a sistema: ' + servicePointCode);
+            return null;
+        }
+
+        String accountId = servicePoint.Account__c;
+        AccountContactRelation acr = acrQueryHandler.getPrimaryContactRelation(accountId);
+        if (acr == null) {
+            System.debug('Nessun contact Titolare trovato a sistema per l\'account: ' + accountId);
+            return null;
+        }
+
+        String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+        inputMap.put('recordTypeId', recordTypeId);
+        inputMap.put('cluster', 'Modifiche Anagrafiche');
+        inputMap.put('type', 'Allineamento Anagrafica');
+        inputMap.put('accountId', accountId);
+        inputMap.put('contactId', acr.ContactId);
+
+        HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+        Case anagAlignCase = createCaseUtility.createCase(inputMap);
+
+        if (anagAlignCase != null) {
+            HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
+            return anagAlignCase;
+        }
+
+        return null;
+
+    }
+
+    /**
      * Crea il Case di allineamento anagrafica a partire da un altro processo.
      * triggerObj = Case o Order da cui è scaturito l'allineamento anagrafico.
      * return = il Case creato oppure null.
