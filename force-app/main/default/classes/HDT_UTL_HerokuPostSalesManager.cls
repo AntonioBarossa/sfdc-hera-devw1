@@ -245,6 +245,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(String.isBlank(codServizio) && String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
             if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
             //richiamare method di creazione RCU
+            return caseUpdate;
         }else{
             throw new HDT_UTL_RichPassException('Method non definito');
         }
