@@ -259,10 +259,6 @@
     <custom>true</custom>
     <customSettingAccesses>
         <enabled>true</enabled>
-        <name>CPQStandardPerm</name>
-    </customSettingAccesses>
-    <customSettingAccesses>
-        <enabled>true</enabled>
         <name>HDT_CP_ApproveRejectCase</name>
     </customSettingAccesses>
     <customSettingAccesses>
