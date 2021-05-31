@@ -120,7 +120,15 @@
     <picklistValues>
         <picklist>Category__c</picklist>
         <values>
+            <fullName>Aziende Soho</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piccoli Condomini</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -173,12 +181,28 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ex-Customer</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Prospect</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>CustomerMarking__c</picklist>
+        <values>
+            <fullName>D1 - Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D4 - Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D8 - Marcatura nulla</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Parti comuni</fullName>
             <default>false</default>

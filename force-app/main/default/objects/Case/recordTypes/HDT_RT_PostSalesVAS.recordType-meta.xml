@@ -9,147 +9,11 @@
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
-            <fullName>Accedi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Agenzia di confisca</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Applicazione della legge</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assicuratore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza a lungo termine</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza gestita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Associazione grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attività bancaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Auto%2FCasalinghi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda wireline</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Azienda%2FDi passaggio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende SME</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende Soho</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aziende TOP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>BSU ESP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Banca centrale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Broker</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Casa progettazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Casalinghi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro convegni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro di assistenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro di formazione aziendale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centro formaz altri produttori</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chain Drug</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chain Food</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Clinica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante all%27ingrosso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commerciante non in negozio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Commercio di massa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Company</fullName>
+            <fullName>CONSIP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -157,11 +21,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consulente</fullName>
+            <fullName>Condomini</fullName>
             <default>false</default>
         </values>
         <values>
@@ -169,39 +29,59 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Dettagliante diretto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dettagliante indiretto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ditta individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Drogheria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Elettrodomestici</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Enti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Enti Consip</fullName>
+            <fullName>Enti Salvaguardia</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esperto finanziario</fullName>
+            <fullName>EstEn - Aziende SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Aziende Soho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Aziende TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Comuni Territorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Intercompany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Piccoli Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Societa Vendita Terze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Tutela Simile Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Tutela Simile Famiglie</fullName>
             <default>false</default>
         </values>
         <values>
@@ -213,151 +93,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Grandi Clienti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Farmacia</fullName>
+            <fullName>Mercato Tutelato Azienda</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Federale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Filiale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fornitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Funzionario produttore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Governo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Grandi Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Grossista di prod%2E farmac%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gruppo di programmazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gruppo reparto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HQ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Hotel</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In sede</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Industriale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intercompany</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Investitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Località</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Luogo di vacanza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Magazzino a prezzi scontati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Meeting%2FCongressi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NRI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Negozio prod%2E farmac%2E%2Fpropr%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Definito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non a scopo di lucro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Normale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ODM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OEM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OEM del concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Offerta di investimento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Officina</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ospedale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Paramedici</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partner</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Partnership</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Personale</fullName>
+            <fullName>Mercato Tutelato Famiglia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -365,15 +109,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Polizia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Produttore su contratto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reparto</fullName>
+            <fullName>Privati</fullName>
             <default>false</default>
         </values>
         <values>
@@ -385,31 +121,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Residenziale</fullName>
+            <fullName>Salvaguardia HC</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rivenditore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rivenditore del concorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>S-Corp</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Salvaguardia Aziende</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Salvaguardia Enti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Servizio affari Internet</fullName>
+            <fullName>Small Business</fullName>
             <default>false</default>
         </values>
         <values>
@@ -417,79 +133,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Società</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società a resp%2E limitata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società d%27assicurazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società fiduciaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società immobiliare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Società in accomandita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Soggiorno esteso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spedizioniere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subcontraente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Suite</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supermarket</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supermercato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ufficio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ulteriori informazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Università</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VIP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venditore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Venditore di varie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vigili del Fuoco</fullName>
+            <fullName>Società del Gruppo</fullName>
             <default>false</default>
         </values>
     </picklistValues>

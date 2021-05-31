@@ -7,7 +7,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
             rule = [SELECT 	Id,MaxInstallmentsNumber__c,AttachmentManagement__c,ApprovalProcess__c,ClientCategory__c
             FROM RentProcessRule__c
-            WHERE ClientCategory__c = :c.ClientCategory__c
+            WHERE Category__c = :c.ClientCategory__c
             AND TypeInstallmentPlan__c = :c.TypeInstallmentPlan__c
             AND ApplicationInterests__c = :c.ApplicationInterests__c
             AND InstallmentPlanReason__c = :c.Reason__c

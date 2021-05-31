@@ -93,12 +93,9 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__RequiredBy__r.BillingProfile__r.Name
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
-            // AND SBQQ__Quote__r.ContractReference__c = null
-            // AND SBQQ__Quote__r.OrderReference__c = null
-            // AND (SBQQ__Product__r.Name IN ('POD', 'PDR') OR ((SBQQ__ProductFamily__c = 'VAS Opzione prodotto' OR SBQQ__ProductFamily__c	= 'VAS prodotto') AND SBQQ__Number__c = 2))
             AND SBQQ__Product__r.Name IN ('POD', 'PDR')
             AND SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod
-            // AND SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode //commented because SBQQ__QuoteLine__c.SendingBillMode__c != BillingProfile__c.BillSendingMethod__c
+            AND SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];

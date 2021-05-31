@@ -129,6 +129,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     handleSelection(event){
         console.log('# from lookup: ' + event.detail.selectedId + ' - ' + event.detail.name + ' - ' + event.detail.code);
         this.contractAccount = event.detail.name
+        this.billingProfileId = event.detail.selectedId;
     }
     handleSubmit(){
         this.startDate = this.template.querySelector("lightning-input[data-id=fromDate]").value;
@@ -345,6 +346,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
             var fields = {
+                'Name' : row.xblnr,
                 'DocumentNumber__c' : row.xblnr, 
                 'Bill__c' : row.boll, 
                 'Type__c' : row.tipoDocDesc,
@@ -409,7 +411,11 @@ export default class HdtAccountStatementPicker extends LightningElement {
             return false;
 
         }
+    }
 
+    @api
+    getBillingProfileId(){
+        return this.billingProfileId;
     }
 
 }

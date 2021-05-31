@@ -164,63 +164,89 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         Case currentCase = new Case();
         String recordId = reqWrp.requestMap.get('RECORD_ID');
         String caseNumber = reqWrp.requestMap.get('SALESFORCE_KEY');
-        if(String.isBlank(recordId) && String.isBlank(caseNumber)) return caseUpdate;
-
-        String caseParam = recordId != null? recordId:caseNumber;
-        Case recordCase = hpsmQr.getCaseRecord(caseParam);
-        currentCase.Id = recordCase.Id;
+        String method = reqWrp.requestMap.get('METHOD');
+        String caseParam = '';
+        Case recordCase;
         Datetime nowDate = Datetime.now();
         String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
-        switch on reqWrp.requestMap.get('METHOD'){
-            when 'esito_intermedio'{
-                if(reqWrp.requestMap.get('FASE') != null && reqWrp.requestMap.get('FASE') != ''){
-                    currentCase.Phase__c = reqWrp.requestMap.get('FASE');
-                }
-                if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
-                    currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
-                }
-                if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
-                    currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
-                }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
-                    currentCase.Amount__c = Decimal.valueOf(reqWrp.requestMap.get('IMP_PREV_DIST'));
-                }
-                if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
-                    String description = recordCase.Description != null?recordCase.Description:'';
-                    currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
-                }
+        String currentPhase = '';
+        String nextPhase = '';
+        String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
+        String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
+        String codPresa = reqWrp.requestMap.get('COD_PRESA');
+        String codPraticaDl = reqWrp.requestMap.get('COD_PRAT_DISTR');
+        //CHECK CROSS MINIMUM FIELD
+        if(String.isBlank('method')) throw new HDT_UTL_RichPassException('Required Field Missing: Method');
+        
+        //INIT VARIABLE FOR NOTIFICATION ON CASE
+        if(method.equalsIgnoreCase('esito_intermedio') || method.equalsIgnoreCase('esito_finale') || method.equalsIgnoreCase('AddAttivita')){
+            if(String.isBlank(recordId) && String.isBlank(caseNumber)) throw new HDT_UTL_RichPassException('Required Field Missing: RecordId OR CaseNumber');
+            caseParam = recordId != null? recordId:caseNumber;
+            recordCase = hpsmQr.getCaseRecord(caseParam);
+            currentCase.Id = recordCase.Id;
+            currentPhase = recordCase.Phase__c;
+            nextPhase = reqWrp.requestMap.get('FASE');
+        }
+        if(method.equalsIgnoreCase('esito_intermedio')){
+            if(nextPhase != null && nextPhase != ''){
+                //Gestione ad hoc per E150 Annullamento - Esito OK/KO da DL/SII
+                if((nextPhase.equalsIgnoreCase('Esito OK da DL/SII') || nextPhase.equalsIgnoreCase('Esito KO da DL/SII')) &&
+                    currentPhase.indexOf('Annullamento') > -1){
+                        nextPhase = 'Annullamento - ' + nextPhase;
+                    }
+                currentCase.Phase__c = nextPhase;
             }
-            when 'esito_finale'{
-                String currentPhase = recordCase.Phase__c;
-                String nextPhase = reqWrp.requestMap.get('FASE');
-                String noteSap = reqWrp.requestMap.get('NOTA_HK');
-                String odv = reqWrp.requestMap.get('VBELN');
-                String currentDescription = recordCase.Description != null?recordCase.Description:'';
-                String newDescription = '';
-                if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
-                    //no action needed
-                }else{
-                    currentCase.Phase__c = nextPhase;
-                    handleEntityUpdate(reqWrp);
+            if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
+                currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
+            }
+            if(reqWrp.requestMap.get('DT_INVIO_DL') != null && reqWrp.requestMap.get('DT_INVIO_DL') != ''){
+                currentCase.SendToDistributorDate__c = Date.valueOf(reqWrp.requestMap.get('DT_INVIO_DL'));
+            }if(reqWrp.requestMap.get('IMP_PREV_DIST') != null && reqWrp.requestMap.get('IMP_PREV_DIST') != ''){
+                String importo = reqWrp.requestMap.get('IMP_PREV_DIST');
+                if(importo.indexOf(',')>-1){
+                    importo = importo.replace(',', '.');
                 }
+                currentCase.Amount__c = Decimal.valueOf(importo);
+            }
+            if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
+            }
+        }else if(method.equalsIgnoreCase('esito_finale')){
+            String noteSap = reqWrp.requestMap.get('NOTA_HK');
+            String odv = reqWrp.requestMap.get('VBELN');
+            String currentDescription = recordCase.Description != null?recordCase.Description:'';
+            String newDescription = '';
+            if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
+                //no action needed
+            }else{
+                currentCase.Phase__c = nextPhase;
+                handleEntityUpdate(reqWrp);
+            }
 
-                if(noteSap != null && noteSap != ''){
-                    newDescription = nowDateFormat + ': ' + noteSap + '\n';
-                }
-                if(odv != null && odv != ''){
-                    newDescription =  nowDateFormat + ': ' + odv + '\n' + newDescription;
-                }
-                if(String.isNotBlank(newDescription)){
-                    currentCase.Description = newDescription + '\n' + currentDescription;
-                }
-            }when 'addAttivita'{
-                if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
-                    currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
-                }
-                if(reqWrp.requestMap.get('MESSAGGIO') != null && reqWrp.requestMap.get('MESSAGGIO') != ''){
-                    String description = recordCase.Description != null?recordCase.Description:'';
-                    currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('MESSAGGIO') + '\n' + description;
-                }
+            if(noteSap != null && noteSap != ''){
+                newDescription = nowDateFormat + ': ' + noteSap + '\n';
             }
+            if(odv != null && odv != ''){
+                newDescription =  nowDateFormat + ': ' + odv + '\n' + newDescription;
+            }
+            if(String.isNotBlank(newDescription)){
+                currentCase.Description = newDescription + '\n' + currentDescription;
+            }
+        }else if(method.equalsIgnoreCase('AddAttivita')){
+            if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
+                currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
+            }
+            if(reqWrp.requestMap.get('MESSAGGIO') != null && reqWrp.requestMap.get('MESSAGGIO') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('MESSAGGIO') + '\n' + description;
+            }
+        }else if(method.equalsIgnoreCase('aggiornaRCU')){
+            if(String.isBlank(codServizio) && String.isBlank(codPrestazione)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Servizio or Codice Prestazione');
+            if(String.isBlank(codPresa) && String.isBlank(codPraticaDl)) throw new HDT_UTL_RichPassException('Required Field Missing: Codice Presa or Codice Pratica DL');
+            //richiamare method di creazione RCU
+        }else{
+            throw new HDT_UTL_RichPassException('Method non definito');
         }
 
         caseUpdate.add(currentCase);
