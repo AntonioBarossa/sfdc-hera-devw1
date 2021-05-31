@@ -223,7 +223,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 inputMap.put('inputSObj', triggerObj);
 
                 HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
-                newCaseList = createCaseUtility.createCaseFromOrder(inputMap);
+                newCaseList.add(createCaseUtility.createCaseFromOrder(inputMap));
             }
             when else {
             }
