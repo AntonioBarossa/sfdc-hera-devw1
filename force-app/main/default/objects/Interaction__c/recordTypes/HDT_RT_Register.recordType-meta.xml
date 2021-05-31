@@ -34,7 +34,7 @@
         <picklist>Type__c</picklist>
         <values>
             <fullName>Cartacea</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>Digital</fullName>
