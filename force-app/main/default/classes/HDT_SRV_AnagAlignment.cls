@@ -75,7 +75,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
         String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
         String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
-
+        String herokuCode = herokuWrapper.requestMap.get('requestId');
         if (codicePrestazione == null) {
             System.debug('codicePrestazione non valorizzato');
             return anagAlignCase;
@@ -98,7 +98,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creaiamo solo il Case di Allineamento Anagrafica.
-                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa);
+                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
             }
             when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
                 
@@ -194,13 +194,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
     /**
      * Crea il Case di allineamento anagrafica a partire da un POD/PDR senza processo collegato.
      */
-    private static Case createAnagAlignmentCaseFromServicePoint(String servicePointCode) {
+    private static Case createAnagAlignmentCaseFromServicePoint(String servicePointCode,String herokuCode) {
         if (servicePointCode == null) {
             return null;
         }
 
         Map<String, Object> inputMap = new Map<String, Object>();
         HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+        HDT_QR_Case caseQuery = new HDT_QR_Case();
         HDT_QR_AnagAlignment queryHandler = new HDT_QR_AnagAlignment();
         HDT_QR_AccountContactRelation acrQueryHandler = new HDT_QR_AccountContactRelation();
         ServicePoint__c servicePoint = queryHandler.findServicePointByCode(servicePointCode);
@@ -222,13 +223,14 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputMap.put('type', 'Allineamento Anagrafica');
         inputMap.put('accountId', accountId);
         inputMap.put('contactId', acr.ContactId);
+        inputMap.put('HerokuPracticeCode__c', herokuCode);
 
         HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
         Case anagAlignCase = createCaseUtility.createCase(inputMap);
 
         if (anagAlignCase != null) {
             HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
-            return anagAlignCase;
+            return caseQuery.getRecordById(anagAlignCase.Id);
         }
 
         return null;

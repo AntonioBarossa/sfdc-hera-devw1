@@ -1,7 +1,7 @@
 public with sharing class HDT_QR_AnagAlignment {
 
     public ServicePoint__c findServicePointByCode(String servicePointCode) {
-
+ 
         List<ServicePoint__c> servicePoints = [
             SELECT
             Id,
