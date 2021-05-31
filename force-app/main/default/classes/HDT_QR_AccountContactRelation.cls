@@ -86,6 +86,26 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
     }
 
+    public AccountContactRelation getPrimaryContactRelation(Id accountId) {
+    
+        List<AccountContactRelation> relations = [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId = :accountId
+            AND Roles  = 'Titolare'
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (relations.size() > 0) {
+            return relations[0];
+        }
+
+        return null;
+    }
+
     public List<AccountContactRelation> getAdministratorRelations() {
     
         return [

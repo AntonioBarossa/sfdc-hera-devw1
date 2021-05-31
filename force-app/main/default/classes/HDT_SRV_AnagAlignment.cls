@@ -230,7 +230,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         if (anagAlignCase != null) {
             HDT_UTL_DatabaseService.insertSObject(anagAlignCase);
-            
             return caseQuery.getRecordById(anagAlignCase.Id);
         }
 
