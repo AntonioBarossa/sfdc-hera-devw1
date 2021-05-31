@@ -1,4 +1,23 @@
 public with sharing class HDT_QR_AnagAlignment {
+
+    public ServicePoint__c findServicePointByCode(String servicePointCode) {
+
+        List<ServicePoint__c> servicePoints = [
+            SELECT
+            Id,
+            Account__c
+            FROM ServicePoint__c
+            WHERE
+            ServicePointCode__c = :servicePointCode
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (servicePoints.size() > 0) {
+            return servicePoints[0];
+        }
+
+        return null;
+    }
     
     public Order findOrderByDistributorPracticeCode(String distributorPracticeCode) {
         
@@ -52,8 +71,8 @@ public with sharing class HDT_QR_AnagAlignment {
             ActivationCountry__c,
             ActivationProvince__c,
             ActivationStreetNumberExtension__c,
-            ActivationStreetNumber__c,
-            ImplantType__c
+            ActivationStreetNumber__c
+            //ImplantType__c
             FROM Order 
             WHERE DistributorPracticeCode__c = :distributorPracticeCode
             WITH SECURITY_ENFORCED
@@ -119,8 +138,8 @@ public with sharing class HDT_QR_AnagAlignment {
             ActivationCountry__c,
             ActivationProvince__c,
             ActivationStreetNumberExtension__c,
-            ActivationStreetNumber__c,
-            ImplantType__c
+            ActivationStreetNumber__c
+            //ImplantType__c
             FROM Order 
             WHERE ProcessType__c = :processType
             AND ServicePointCodeFormula__c = :servicePointCode
