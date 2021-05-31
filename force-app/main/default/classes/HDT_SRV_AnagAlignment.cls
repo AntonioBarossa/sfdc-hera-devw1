@@ -11,6 +11,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         VARIAZIONI_INDIRIZZO_FORNITURA,     // Innesco automatico alla chiusura del wizard del processo di Variazioni - Indirizzo Fornitura
         VARIAZIONI_TARIFFA_RES_NONRES,      // Innesco automatico alla chiusura del wizard del processo di Variazioni - Modifica Tariffa Residente/Non res.
         VARIAZIONE_ANAGRAFICA_CLIENTE,      // Innesco automatico alla chiusura del wizard del processo di Modifica Anagrafica - Variazione Anagrafica Cliente
+        // TODO: verificare se necessari o se basta la request di heroku.
         VARIAZIONE_STATO_POD,               // Innesco automatico all'arrivo del flusso VS2.0200 dal SII
         VARIAZIONE_STATO_PDR                // Innesco automatico all'arrivo del flusso VSG2.0200 dal SII
     }
@@ -83,10 +84,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             when 'A01', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
                 Order triggerOrder = null;
                 if (!String.isBlank(codicePraticaDistributore)) {
-                    triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(distributorPracticeCode);
+                    triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(codicePraticaDistributore);
                 } else {
                     String processType = getProcessTypeFromCodPrestazione(codicePrestazione);
-                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processType, servicePointCode);
+                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processType, codicePresa);
                 }
 
                 if (triggerOrder != null) {
@@ -355,6 +356,21 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         System.enqueueJob(new HDT_QBL_AnagAlignment(anagAlignCases));
 
         return anagAlignCases;
+    }
+
+    private static String getProcessTypeFromCodPrestazione(String codicePrestazione) {
+        String processType = '';
+
+        switch on codicePrestazione {
+            when 'A01' {
+                processType = 'Prima Attivazione Ele'; // TODO adeguare
+            }
+            when else {
+                // TODO
+            }
+        }
+
+        return processType;
     }
 
     /**
