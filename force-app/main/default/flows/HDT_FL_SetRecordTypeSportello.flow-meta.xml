@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>set_rt_sportello</name>
         <label>Imposta RT Sportello</label>
@@ -43,6 +44,7 @@
         <connector>
             <targetReference>set_rt_sportello</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>SobjectType</field>
             <operator>EqualTo</operator>
@@ -68,11 +70,12 @@
         <connector>
             <targetReference>get_recordtype</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
-            <field>RecordTypeId</field>
+            <field>QAdLogin__c</field>
             <operator>IsNull</operator>
             <value>
-                <booleanValue>true</booleanValue>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
