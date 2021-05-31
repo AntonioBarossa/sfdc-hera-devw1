@@ -53,6 +53,58 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return resultList;
     }
 
+    public static void handleAnagAlignmentHeroku(HDT_WRP_HerokuPostSalesManager herokuWrapper) {
+
+        if (herokuWrapper == null) {
+            System.debug('HDT_WRP_HerokuPostSalesManager null in input.');
+            return;
+        }
+
+        if (herokuWrapper.responseMap == null) {
+            System.debug('HDT_WRP_HerokuPostSalesManager null responseMap.');
+            return;
+        }
+
+        String codiceFlusso = herokuWrapper.responseMap.get('COD_FLUSSO');
+        // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
+        String codiceServizio = herokuWrapper.responseMap.get('COD_SERVIZIO');
+        String codicePrestazione = herokuWrapper.responseMap.get('COD_PRESTAZIONE');
+        // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
+        String codicePresa = herokuWrapper.responseMap.get('COD_PRESA');
+        String codicePraticaDistributore = herokuWrapper.responseMap.get('COD_PRAT_DISTR');
+
+        if (codicePrestazione == null) {
+            System.debug('codicePrestazione non valorizzato');
+            return;
+        }
+
+        HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
+        switch on codicePrestazione {
+            when 'A01', 'A03', 'S01', 'S02' { // Casistica 1: link a pratica di origine + creazione Case Allineamento Anagrafica
+                Order triggerOrder = null;
+                if (!String.isBlank(codicePraticaDistributore)) {
+                    triggerOrder = queryHandlerOrder.findOrderByDistributorPracticeCode(distributorPracticeCode);
+                } else {
+                    String processType = getProcessTypeFromCodPrestazione(codicePrestazione);
+                    triggerOrder = queryHandlerOrder.findOrderByTypeAndServicePointCode(processType, servicePointCode);
+                }
+
+                if (triggerOrder != null) {
+                    createAnagAlignmentCase(order);
+                }
+
+            }
+            when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creaiamo solo il Case di Allineamento Anagrafica.
+
+            }
+            when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
+                
+            }
+        }
+
+    }
+
+
     /**
      * Dispatcher per la gestione delle varie casistiche di Allineamento Anagrafica.
      * Restituisce la lista di Case di Allineamento Anagrafica che sono stati creati o modificati.
@@ -142,6 +194,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
      */
     private static Case createAnagAlignmentCase(SObject triggerObj) {
 
+        if (triggerObj == null) {
+            return null;
+        }
+
         List<Case> newCaseList = new List<Case>();
 
         switch on triggerObj {
@@ -157,7 +213,16 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 newCaseList = createCaseUtility.createCaseFromCase(inputMap);
             }
             when Order triggerOrder {
-                // TODO
+                Map<String, Object> inputMap = new Map<String, Object>();
+                HDT_QR_CreateGenericCase rtQueryHandler = new HDT_QR_CreateGenericCase();
+                String recordTypeId = rtQueryHandler.getRecordTypeByDevName('HDT_RT_AllineamentoAnagrafica')[0].Id;
+                inputMap.put('recordTypeId', recordTypeId);
+                inputMap.put('cluster', 'Modifiche Anagrafiche');
+                inputMap.put('type', 'Allineamento Anagrafica');
+                inputMap.put('inputSObj', triggerObj);
+
+                HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
+                newCaseList = createCaseUtility.createCaseFromOrder(inputMap);
             }
             when else {
             }
