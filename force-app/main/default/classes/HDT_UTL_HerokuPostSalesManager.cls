@@ -221,7 +221,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 if(String.isNotBlank(newDescription)){
                     currentCase.Description = newDescription + '\n' + currentDescription;
                 }
-            }when 'addAttivita'{
+            }when 'addAttivita','AddAttivita'{
                 if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
                     currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
                 }
