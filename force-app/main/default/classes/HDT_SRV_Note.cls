@@ -6,6 +6,7 @@ public with sharing class HDT_SRV_Note {
     }
     public static contentDocumentLink createRecordAssign(contentDocumentLink co){
         HDT_UTL_DatabaseService.insertSObject(co);
+        System.debug('Check');
         return co;
     }
 }
