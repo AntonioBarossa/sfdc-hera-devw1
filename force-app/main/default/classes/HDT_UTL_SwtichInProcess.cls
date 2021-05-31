@@ -56,7 +56,12 @@ public with sharing class HDT_UTL_SwtichInProcess {
                     dateSentToSii= getMaxAfterthoughtDate(order).addDays(1);
                 }
             }else{ 
-                dateSentToSii= order.WizardCompletedDate__c;            
+                if(order.WizardCompletedDate__c != null){
+                    dateSentToSii= order.WizardCompletedDate__c; 
+                }else{
+                    dateSentToSii= date.today(); 
+                }
+                
             }
 
 

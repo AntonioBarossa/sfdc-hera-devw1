@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CheckBusinessFieldsWithoutAddress</fullName>
-    <active>false</active>
+    <fullName>CheckBusinessFields</fullName>
+    <active>true</active>
     <errorConditionFormula>IF(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,  OR(ISBLANK(VATNumber__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;)),false)</errorConditionFormula>
     <errorMessage>I Seguenti campi devono essere popolati :  Marcatura , Categoria , Partita IVA , Società Gruppo Hera</errorMessage>
 </ValidationRule>
