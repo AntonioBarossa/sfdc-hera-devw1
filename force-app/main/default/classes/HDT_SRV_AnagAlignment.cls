@@ -54,7 +54,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return resultList;
     }
 
-    public static void handleAnagAlignmentHeroku(HDT_WRP_HerokuPostSalesManager herokuWrapper) {
+    public static Case handleAnagAlignmentHeroku(HDT_WRP_HerokuPostSalesManager herokuWrapper) {
 
         if (herokuWrapper == null) {
             System.debug('HDT_WRP_HerokuPostSalesManager null in input.');
@@ -66,6 +66,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return;
         }
 
+        Case anagAlignCase = new Case();
         String codiceFlusso = herokuWrapper.responseMap.get('COD_FLUSSO');
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
         String codiceServizio = herokuWrapper.responseMap.get('COD_SERVIZIO');
@@ -91,7 +92,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 }
 
                 if (triggerOrder != null) {
-                    createAnagAlignmentCase(order);
+                    anagAlignCase = createAnagAlignmentCase(triggerOrder);
                 }
 
             }
@@ -103,6 +104,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             }
         }
 
+        return anagAlignCase;
     }
 
 
