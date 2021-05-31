@@ -56,17 +56,18 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
     public static Case handleAnagAlignmentHeroku(HDT_WRP_HerokuPostSalesManager herokuWrapper) {
 
+        Case anagAlignCase = new Case();
+
         if (herokuWrapper == null) {
             System.debug('HDT_WRP_HerokuPostSalesManager null in input.');
-            return;
+            return anagAlignCase;
         }
 
         if (herokuWrapper.responseMap == null) {
             System.debug('HDT_WRP_HerokuPostSalesManager null responseMap.');
-            return;
+            return anagAlignCase;
         }
 
-        Case anagAlignCase = new Case();
         String codiceFlusso = herokuWrapper.responseMap.get('COD_FLUSSO');
         // COD_SERVIZIO e COD_PRESTAZIONE sono obbligatori insieme
         String codiceServizio = herokuWrapper.responseMap.get('COD_SERVIZIO');
@@ -77,7 +78,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
         if (codicePrestazione == null) {
             System.debug('codicePrestazione non valorizzato');
-            return;
+            return anagAlignCase;
         }
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
