@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_FormatTextScript {
     public static List<String> formatText(List<ConfigurazioneScript__c> scriptsRecord){
         //This Function get a Script record, get his text and binds the dynamic data from DB to it
 
-        String scriptTxt = scriptsRecord[0].TextScript__c;
+        String scriptTxt = ' '+scriptsRecord[0].TextScript__c+' ';
         List<String> fieldsToMatch = getDataBinded(scriptTxt);
         if(!fieldsToMatch.isEmpty()){
             String query = makeSelectStatement(fieldsToMatch);
@@ -19,7 +19,7 @@ public with sharing class HDT_UTL_FormatTextScript {
             return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, scriptRecordFull)};
         }
 
-        return new List<String>{scriptTxt};
+        return new List<String>{scriptTxt.trim()};
         
     }
 
@@ -41,11 +41,30 @@ public with sharing class HDT_UTL_FormatTextScript {
         List<String> relationshipNames = fieldPath.split('\\.');
         SObject relation=scriptRecordFull;
         String fieldValue;
+        if(relationshipNames[0]=='global'){
+            //not field but function like "today"
+        }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
             if(indexParentField!=relationshipNames.size()-1){
                 relation=relation.getSobject(relationshipNames[indexParentField]);
             }else{
-                fieldValue= (String) relation.get(relationshipNames[indexParentField]);
+                String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
+                                            .get(relationshipNames[indexParentField])
+                                            .getDescribe()
+                                            .getType().name();
+                system.debug(dataFieldType);
+                switch on dataFieldType{
+                    when 'STRING'{
+                        fieldValue= (String) relation.get(relationshipNames[indexParentField]);
+                    }
+                    when 'DATETIME'{
+                        fieldValue= ((DATETIME) relation.get(relationshipNames[indexParentField])).format('dd.MM.yyyy');
+                    }
+                    when else {
+                        fieldValue= STRING.valueOf(relation.get(relationshipNames[indexParentField]));
+                    }
+                }
+                
             }
         }
         return fieldValue;
@@ -60,7 +79,7 @@ public with sharing class HDT_UTL_FormatTextScript {
         while(matcher.find()){
             String preFormatData = matcher.group(0);
             preFormatData= preFormatData.removeEnd('}>>').removeStart('<<{');
-            bindedFields.add(preFormatData.trim());
+            bindedFields.add(preFormatData.trim().toLowerCase());
         }
         system.debug(bindedFields);
         return bindedFields;
