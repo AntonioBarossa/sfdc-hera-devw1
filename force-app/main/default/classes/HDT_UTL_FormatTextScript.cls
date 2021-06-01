@@ -33,7 +33,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                             +query + ' # MESSAGE: '+e.getMessage());
             }
             
-            return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData)};
+            return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData).trim()};
         }
 
         return new List<String>{scriptTxt.trim()};
@@ -47,7 +47,7 @@ public with sharing class HDT_UTL_FormatTextScript {
         String finalText = splittedScript[0];
         for(Integer matchingIndex = 0;matchingIndex < fieldsToMatch.size(); matchingIndex++){
             String textBlock = splittedScript[matchingIndex+1];//Index of corresponding block to corresponding field is shifted by 1
-            finalText+=  getFieldValue(fieldsToMatch[matchingIndex], objectToQueryData)+' '+textBlock;
+            finalText+=  getFieldValue(fieldsToMatch[matchingIndex], objectToQueryData)+''+textBlock;
         }
         return finalText;
     }
