@@ -112,9 +112,7 @@ public with sharing class HDT_UTL_FormatTextScript {
 
         String querySelectStatement='';
         Set<String> fieldsToSelect = new Set<String>();
-        for(String field : listFields){
-            fieldsToSelect.add(field);
-        }
+        fieldsToSelect.addAll(listFields);
         for(String field : fieldsToSelect){
             querySelectStatement=querySelectStatement+', '+field;
         }
