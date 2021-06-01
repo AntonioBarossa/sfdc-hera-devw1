@@ -38,7 +38,7 @@
     </values>
     <values>
         <field>Where_Conditions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">PaymentMethod__c &lt;&gt; &apos;RID&apos;</value>
     </values>
     <values>
         <field>sObject__c</field>

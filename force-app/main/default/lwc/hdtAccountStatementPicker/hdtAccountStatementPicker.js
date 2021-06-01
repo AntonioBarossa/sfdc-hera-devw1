@@ -17,7 +17,7 @@ const columns = [
     },
     { label: 'Conto Contrattuale', fieldName: 'contoContrattuale'},
     { label: 'Numero Documento', fieldName: 'xblnr'},
-    { label: 'Numero Bollettino', fieldName: 'boll'},
+    { label: 'Numero Bollettino', fieldName: 'bollo'},
     { label: 'Totale Copertina', fieldName: 'totPagare' },
     { label: 'Tipo', fieldName: 'tipoDocDesc' },
     { label: 'Totale Documento', fieldName: 'totFattura'},

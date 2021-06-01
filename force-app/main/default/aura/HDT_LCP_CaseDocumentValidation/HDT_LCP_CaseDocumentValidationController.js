@@ -45,6 +45,8 @@
         });
         action.setCallback(this,function(response){
 
+            console.log('#status -> '+response.getState());
+
             var state = response.getState();
             if(state === "SUCCESS"){
 

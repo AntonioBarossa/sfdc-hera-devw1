@@ -436,8 +436,7 @@
             <label>Annulla</label>
         </rules>
     </decisions>
-    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti
---&gt; Inserito screen documentale</description>
+    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti</description>
     <formulas>
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
@@ -574,12 +573,6 @@
             <field>AttachmentManagement__c</field>
             <value>
                 <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>FirstExpirationDate__c</field>
-            <value>
-                <elementReference>DataPrimaScadenza</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
