@@ -2,18 +2,27 @@ public with sharing class HDT_UTL_FormatTextScript {
     
     private static String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
 
+    public class HDT_WRP_FlowInput{
+        @InvocableVariable(label='Testo Script' description='Testo Script Da formattare')
+        public String textScript;
+        @InvocableVariable(label='ID Record Riferimento' description='ID Record oggetto di partenza')
+        public String recordId;
+    }
+
     @InvocableMethod
-    public static List<String> formatText(List<ConfigurazioneScript__c> scriptsRecord){
+    public static List<String> formatText(List<HDT_WRP_FlowInput> inputs){
         //This Function get a Script record, get his text and binds the dynamic data from DB to it
 
-        String scriptTxt = ' '+scriptsRecord[0].TextScript__c+' ';
+        String scriptTxt = ' '+inputs[0].textScript+' ';
         List<String> fieldsToMatch = getDataBinded(scriptTxt);
+
+        String objectName = ((Id) inputs[0].recordId).getSobjectType().getDescribe().getName();
         if(!fieldsToMatch.isEmpty()){
             String query = makeSelectStatement(fieldsToMatch);
             query+=
                 //'FROM wrts_prcgvr__Activity__c where Id = \''+
-                ' FROM ConfigurazioneScript__c where Id = \''+
-                scriptsRecord[0].id+'\' LIMIT 1';
+                ' FROM '+objectName+' where Id = \''+
+                inputs[0].recordId+'\' LIMIT 1';
             system.debug(query);
             SOBject objectToQueryData;
             try{
