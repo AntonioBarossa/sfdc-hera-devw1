@@ -459,8 +459,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
+        console.log('Keltin: ', this.template.querySelector("[data-id='SubjectCode__c']").value);
+
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-            && this.template.querySelector("[data-id='SubjectCode__c']").value !== null && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7) {
+        && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
+        && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7
+        && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
