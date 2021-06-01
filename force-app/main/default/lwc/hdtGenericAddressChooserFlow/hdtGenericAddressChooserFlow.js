@@ -1,9 +1,8 @@
 import { LightningElement,track,api,wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
-import { updateRecord } from 'lightning/uiRecordApi';
+import { updateRecord,getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
 import ID_FIELD from '@salesforce/schema/Case.Id';
 // INDIRIZZO DI SPEDIZIONE
 import InvoicingPostalCode from '@salesforce/schema/Case.InvoicingPostalCode__c';
@@ -133,6 +132,10 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
     @api
     getAddressValue(){
         return this.address;
+    }
+
+    connectedCallback(){
+        //getRecordNotifyChange([{recordId: this.recordId}]);
     }
     
     handleChangeAddress(event){

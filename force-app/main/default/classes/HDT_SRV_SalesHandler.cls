@@ -42,22 +42,54 @@ public with sharing class HDT_SRV_SalesHandler {
                     
                     if(mapRequestFields.get('RECORD_ID')!= null && mapRequestFields.get('FASE')!= null){
                         
-                        Order ord = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+                        Order ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
+
+                        Order ord = new Order();
+                        ord.Id = ordRetrieved.Id;
                         ord.Phase__c = mapRequestFields.get('FASE');
 
                         switch on mapRequestFields.get('FASE') {
                             when 'Ammissibilità KO' {
                                 ord.DiscardReason__c = mapRequestFields.get('DES_ERR_AEEG');
                                 ord.CausalCode__c = mapRequestFields.get('CODERR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                            }
+                            when 'Ammissibilità OK' {
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Esito KO da DL' {
                                 ord.ReasonDL__c = mapRequestFields.get('TESTO_ERRR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                            }
+                            when 'Esito OK da DL' {
+                                ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
+                                ord.SapContractActivationDate__c = Date.parse(mapRequestFields.get('DT_INIZIO_VERT'));
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Esito KO da SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
                             }
                             when 'Errore lavorazione SAP' {
                                 ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                            }
+                            when 'Completata' {
+                                ord.Description = mapRequestFields.get('NOTA_HK');
+                                ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                ord.OrderODV__c = mapRequestFields.get('VBELN');
+                                ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
+                                ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
+                                
+                                if(mapRequestFields.get('VKONT') != null) {
+                                    ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
+
+                                    BillingProfile__c billingProfile = new BillingProfile__c();
+                                    billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                    billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                    
+                                    HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                    billingProfileSrv.updateRecord(billingProfile);
+                                }
                             }
                         }
 

@@ -20,6 +20,7 @@
             <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
             <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
             <property name="billingProblems" type="String" label="Problemi di Fatturazione (Variazioni)" description="Variabile per i processi di Variazione" role="inputOnly"/>
+            <property name="returnBillingProfileId" type="String" label="Id del billing profile" description="Variabile che contiene l'ultimo billing profile selezionato" role="outputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
