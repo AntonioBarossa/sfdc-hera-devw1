@@ -74,7 +74,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             'totale' => currentCase.AmountToPayInInstallments__c,
             'numeroRata' => currentCase.InstallmentPlanNumber__c,
             'dataInizio' => currentCase.FirstExpirationDate__c,
-            'acconto' => currentCase.Deposit__c,
+            'acconto' => currentCase.DepositAmount__c,
             'contestazioneCliente' => currentCase.ApplicationInterests__c,
             'modalitaPagamentoAcconto' => currentCase.DepositPaymentMode__c
         };

@@ -112,7 +112,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     || process == 'Paperless'){
                         caseToUpdate.Phase__c = 'Non Inviata a SAP';
                     }
-                    caseToUpdate.Description = errorResponse.errorDetails[0].message;
+                    if(caseToUpdate != null){
+                        caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    }else{
+                        caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    }
 
                 }
 

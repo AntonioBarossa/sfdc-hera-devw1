@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DetailTwo__c</fullName>
+    <externalId>false</externalId>
+    <label>Dettaglio 2</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>DisasterType__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>M - Dettaglio 2</fullName>
+                <default>false</default>
+                <label>M - Dettaglio 2</label>
+            </value>
+            <value>
+                <fullName>S - Dettaglio 2</fullName>
+                <default>false</default>
+                <label>S - Dettaglio 2</label>
+            </value>
+            <value>
+                <fullName>E - Dettaglio 2</fullName>
+                <default>false</default>
+                <label>E - Dettaglio 2</label>
+            </value>
+            <value>
+                <fullName>ES - Dettaglio 2</fullName>
+                <default>false</default>
+                <label>ES - Dettaglio 2</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Maltempo</controllingFieldValue>
+            <valueName>M - Dettaglio 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sisma</controllingFieldValue>
+            <valueName>S - Dettaglio 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emergenza</controllingFieldValue>
+            <valueName>E - Dettaglio 2</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Emergenza Sanitaria</controllingFieldValue>
+            <valueName>ES - Dettaglio 2</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>
