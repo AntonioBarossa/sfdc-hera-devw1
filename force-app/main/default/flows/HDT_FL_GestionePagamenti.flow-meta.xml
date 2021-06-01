@@ -2193,7 +2193,7 @@
             <field>SAPContractCode__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ManageDocuments_5.contractCode</elementReference>
+                <elementReference>ManageDocuments_6.contractCode</elementReference>
             </value>
         </filters>
         <object>Contract</object>
@@ -3518,7 +3518,7 @@
             <targetReference>Get_Input_Case</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
