@@ -17,6 +17,9 @@ public class HDT_UTL_FormatTextScriptTest {
 		inp.textScript='<<{ LastModifiedDate }>> <<{ StartRecording__c }>>';
         formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];        
     	system.assertEquals((DateTime.now().format('dd.MM.yyyy')+' '+configChild.StartRecording__c).replaceAll('\\p{C}', '?'), formattedText.replaceAll('\\p{C}', '?'));
+        inp.textScript='<<{owner.Name}>>';
+        formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];        
+        system.assertEquals(formattedText,'*valore mancante*');
     }
 
     @isTest public static void testScriptWithoutDataBinding(){

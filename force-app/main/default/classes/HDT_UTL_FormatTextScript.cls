@@ -67,6 +67,10 @@ public with sharing class HDT_UTL_FormatTextScript {
             if(indexParentField!=relationshipNames.size()-1){
                 relation=relation.getSobject(fieldOrRelation);
             }else{
+                if(relation==null){
+                    fieldValue='*valore mancante*';
+                    return fieldValue ;
+                }
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
                                             .get(fieldOrRelation)
                                             .getDescribe()
