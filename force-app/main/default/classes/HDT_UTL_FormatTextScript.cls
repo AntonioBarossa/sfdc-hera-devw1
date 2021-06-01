@@ -15,8 +15,16 @@ public with sharing class HDT_UTL_FormatTextScript {
                 ' FROM ConfigurazioneScript__c where Id = \''+
                 scriptsRecord[0].id+'\' LIMIT 1';
             system.debug(query);
-            ConfigurazioneScript__c scriptRecordFull = Database.query(query);
-            return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, scriptRecordFull)};
+            SOBject objectToQueryData;
+            try{
+                objectToQueryData = (SObject) Database.query(query);
+            }catch(Exception e){
+                throw new HDT_UTL_FormatTextScriptException(
+                        'ERRORE DATABASE QUERY, SOQL: # '
+                            +query + ' # MESSAGE: '+e.getMessage());
+            }
+            
+            return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData)};
         }
 
         return new List<String>{scriptTxt.trim()};
@@ -24,47 +32,49 @@ public with sharing class HDT_UTL_FormatTextScript {
     }
 
 
-    private static String finalTextScript(String scriptTxt, List<String> fieldsToMatch, ConfigurazioneScript__c scriptRecordFull){
+    private static String finalTextScript(String scriptTxt, List<String> fieldsToMatch, SObject objectToQueryData){
         //This Method put in the text all the data got from DB at the correct spot
         List<String> splittedScript = scriptTxt.split(regEx);
         String finalText = splittedScript[0];
         for(Integer matchingIndex = 0;matchingIndex < fieldsToMatch.size(); matchingIndex++){
             String textBlock = splittedScript[matchingIndex+1];//Index of corresponding block to corresponding field is shifted by 1
-            finalText+=  getFieldValue(fieldsToMatch[matchingIndex], scriptRecordFull)+' '+textBlock;
+            finalText+=  getFieldValue(fieldsToMatch[matchingIndex], objectToQueryData)+' '+textBlock;
         }
         return finalText;
     }
 
 
-    private static String getFieldValue(String fieldPath, ConfigurazioneScript__c scriptRecordFull){
+    private static String getFieldValue(String fieldPath, SObject relation){
         //this method get dinamically field Value from generic sogbject, even from a related parent object
         List<String> relationshipNames = fieldPath.split('\\.');
-        SObject relation=scriptRecordFull;
+        //SObject relation=scriptRecordFull;
         String fieldValue;
         if(relationshipNames[0]=='global'){
-            //not field but function like "today"
+            //not field but functions like "today" or other data, global.something bind "Global Tags"
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
+            String fieldOrRelation = relationshipNames[indexParentField];
+
             if(indexParentField!=relationshipNames.size()-1){
-                relation=relation.getSobject(relationshipNames[indexParentField]);
+                relation=relation.getSobject(fieldOrRelation);
             }else{
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
-                                            .get(relationshipNames[indexParentField])
+                                            .get(fieldOrRelation)
                                             .getDescribe()
                                             .getType().name();
                 system.debug(dataFieldType);
                 switch on dataFieldType{
                     when 'STRING'{
-                        fieldValue= (String) relation.get(relationshipNames[indexParentField]);
+                        fieldValue= (String) relation.get(fieldOrRelation);
                     }
                     when 'DATETIME'{
-                        fieldValue= ((DATETIME) relation.get(relationshipNames[indexParentField])).format('dd.MM.yyyy');
+                        fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd.MM.yyyy');
                     }
                     when 'DATE'{
-                        fieldValue= ((DATE) relation.get(relationshipNames[indexParentField])).format();
+                        fieldValue= ((DATE) relation.get(fieldOrRelation)).format();
                     }
                     when else {
-                        fieldValue= STRING.valueOf(relation.get(relationshipNames[indexParentField]));
+                        fieldValue= STRING.valueOf(relation.get(fieldOrRelation));
                     }
                 }
                 
@@ -101,4 +111,6 @@ public with sharing class HDT_UTL_FormatTextScript {
         }
         return 'SELECT ' + (querySelectStatement.removeStart(','));
     }
+
+    private class HDT_UTL_FormatTextScriptException extends Exception {}
 }
