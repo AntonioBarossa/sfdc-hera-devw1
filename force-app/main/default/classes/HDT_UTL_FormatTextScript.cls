@@ -1,3 +1,16 @@
+/*
+ * File: HDT_UTL_FormatTextScript.cls
+ * Project: HERA
+ * File Created: Monday, 31st May 2021 2:02:00 pm
+ * Author: fdefelice
+ * -----
+ * Last Modified: Tuesday, 1st June 2021 7:15:54 pm
+ * Modified By: fdefelice
+ * -----
+ */
+
+
+
 public with sharing class HDT_UTL_FormatTextScript {
     
     private static String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
@@ -60,6 +73,7 @@ public with sharing class HDT_UTL_FormatTextScript {
         String fieldValue;
         if(relationshipNames[0]=='global'){
             //not field but functions like "today" or other data, global.something bind "Global Tags"
+            //return *valore globale da tornare, l'identificativo è relationshipNames[1]*
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
             String fieldOrRelation = relationshipNames[indexParentField];
