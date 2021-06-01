@@ -90,7 +90,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>OperatorChange__c</field>
+                <field>Place__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IwsDemand__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -109,6 +113,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>WaitingTime__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OperatorChange__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
