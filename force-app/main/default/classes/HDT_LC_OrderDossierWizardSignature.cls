@@ -62,13 +62,17 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             ordersToUpdate.add(childOrderToUpdate);
         }
 
-        if(orderUpdates.ContractSigned__c != null && orderUpdates.ContractSigned__c){
-            orderUpdates.SignatureMethod__c = 'Cartacea';
-            orderUpdates.DocSendingMethod__c = 'Stampa Cartacea';
-        }
+        orderUpdates.Step__c = 2; //update order parent step
+        ordersToUpdate.add(orderUpdates); //add order parent to list
 
-        orderUpdates.Step__c = 2;
-        ordersToUpdate.add(orderUpdates);
+        if(orderUpdates.ContractSigned__c != null && orderUpdates.ContractSigned__c){
+
+            for (Order o : ordersToUpdate) {
+                o.SignatureMethod__c = 'Cartacea'; //updates parent and child
+                o.DocSendingMethod__c = 'Stampa Cartacea'; //updates parent and child
+            }
+
+        }
 
         system.debug('childOrdersToUpdate before update: ' + ordersToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
