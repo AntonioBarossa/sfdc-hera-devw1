@@ -40,7 +40,17 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;Amount__c&quot;,
+        &quot;FieldName&quot; : &quot;Market__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;ContactMobile&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
@@ -56,6 +66,11 @@
     },
     {
         &quot;FieldName&quot; : &quot;DocumentExpirationDate__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Amount__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     },

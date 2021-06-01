@@ -30,13 +30,12 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
+        &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-
     {
-        &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
+        &quot;FieldName&quot; : &quot;PODPDRFormula__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
@@ -46,19 +45,14 @@
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;DistributorName__c&quot;,
+        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
     {
-        &quot;FieldName&quot; : &quot;ContactPhone&quot;,
-        &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 2
-    },
-    {
         &quot;FieldName&quot; : &quot;ContactMobile&quot;,
         &quot;Required&quot;   : true,
-        &quot;Column&quot;   : 2
+        &quot;Column&quot;   : 1
     },
     {
         &quot;FieldName&quot; : &quot;BillingProfile__c&quot;,
@@ -66,7 +60,22 @@
         &quot;Column&quot;   : 2
     },
     {
-        &quot;FieldName&quot; : &quot;Type&quot;,
+        &quot;FieldName&quot; : &quot;BillNumber__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;DocumentExpirationDate__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;Amount__c&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
+    },
+    {
+        &quot;FieldName&quot; : &quot;DocumentResidue__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 2
     }
