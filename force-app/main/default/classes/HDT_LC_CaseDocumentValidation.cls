@@ -15,7 +15,7 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
         Case currentCase = new Case();
         String phase;
 
-        currentCase = caseQr.getRecordById(caseId);
+        currentCase.Id = caseId;
 
         if(allValidated){
             if(currentCase.Subprocess__c == 'Accise - Energia Elettrica'){
@@ -31,7 +31,7 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
 
         }
 
-        caseSrv.updateRecord(currentCase);
+        HDT_UTL_DatabaseService.updateSObject(currentCase);
 
     }
 }

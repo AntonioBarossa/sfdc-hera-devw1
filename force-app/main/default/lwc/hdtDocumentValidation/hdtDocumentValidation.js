@@ -96,7 +96,7 @@ export default class HdtDocumentValidation extends LightningElement {
 
             });
 
-            if(count == size){
+            if(count === size){
 
                 this.isValidated = true;
 

@@ -5,6 +5,39 @@
     <description>Activity per tracciare le richieste ricevute da protocollo</description>
     <label>Protocollo</label>
     <picklistValues>
+        <picklist>AppointmentCompetence__c</picklist>
+        <values>
+            <fullName>Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Approved__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>BillTransfer__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
             <fullName>Annullamento</fullName>
@@ -107,6 +140,128 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ContactReason__c</picklist>
+        <values>
+            <fullName>Assistenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Info Commerciali</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IwsDemand__c</picklist>
+        <values>
+            <fullName>HCMARCHE_AUTOLETTURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_BOLLETTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_BOLLETTE_DUPL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_COMMMARCHE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_CONTRATTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_GENERICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCMARCHE_MERCATOLIBERO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AUTOLETT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AUTOLETT_BLANK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_AZIENDE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_BOLLETTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_CONTRATTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_GENERICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_MAGGIORTUTELA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_MERCATOLIBERO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEAZI_TUTELASIMILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_AUTOLETTURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_BOLLETTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_BOLLETTE_DUPL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_CONTRATTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_FAMIGLIE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_GENERICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_MAGGIORTUTELA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_RAI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MEFAM_TUTELASIMILE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PraxidiaPostWorkAction__c</picklist>
         <values>
             <fullName>Contattare tramite email</fullName>
@@ -160,9 +315,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Process__c</picklist>
         <values>
             <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Bonus o VAS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -194,6 +376,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bonus commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CMOR - Processi Venditore Entrante</fullName>
             <default>false</default>
         </values>
@@ -207,6 +393,14 @@
         </values>
         <values>
             <fullName>Cambio contatore non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio uso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -234,6 +428,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Connessione con attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consegna copia chiave GDM</fullName>
             <default>false</default>
         </values>
@@ -243,6 +441,10 @@
         </values>
         <values>
             <fullName>Copia Bolletta%2FBollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copia contratto firmato o non ricevuto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -342,6 +544,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica contratto in pre-attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
             <default>false</default>
         </values>
@@ -382,6 +588,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prima Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Processi attivi venditore entrante</fullName>
             <default>false</default>
         </values>
@@ -391,6 +605,10 @@
         </values>
         <values>
             <fullName>Processi generici - Dettaglio bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Connessione temporanea</fullName>
             <default>false</default>
         </values>
         <values>
@@ -415,6 +633,10 @@
         </values>
         <values>
             <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazioni non morose</fullName>
             <default>false</default>
         </values>
         <values>
@@ -506,7 +728,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Subentro su GdM chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch In</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch In ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Switch-out dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova attivazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -523,6 +761,18 @@
         </values>
         <values>
             <fullName>Unificazione%2FSeparazione CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FIntervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FNuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FSubentro</fullName>
             <default>false</default>
         </values>
         <values>
@@ -586,7 +836,222 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Voltura con Switch</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Votive Modena%2FCessazione</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Reason__c</picklist>
+        <values>
+            <fullName>Dati corretti forniti dal DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati corretti forniti dal cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dimostrata Estraneità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Saldo pagato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Service__c</picklist>
+        <values>
+            <fullName>HERACOMM_MARCHE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MERCATO_AZIENDE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MERCATO_FAMIGLIE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento confermato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento di competenza Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento eseguito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Appuntamento non eseguito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Creata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio app%2Eto SELF cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Forzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Risolto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica appuntamento in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica confermata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Null</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presa appuntamento in corso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Annullamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Anticipo Appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Quote</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Callback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale%2FCopia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Iva e Accise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presa Appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riapertura urgenti Errori DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta informazioni appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>wrts_prcgvr__Priority__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
             <default>false</default>
         </values>
     </picklistValues>
