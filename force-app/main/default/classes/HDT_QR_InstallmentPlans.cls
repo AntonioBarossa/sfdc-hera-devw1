@@ -5,7 +5,7 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         try{
 
-            rule = [SELECT 	Id,MaxInstallmentsNumber__c,AttachmentManagement__c,ApprovalProcess__c,ClientCategory__c
+            rule = [SELECT 	Id,MaxInstallmentsNumber__c,AttachmentManagement__c,ApprovalProcess__c,Category__c
             FROM RentProcessRule__c
             WHERE Category__c = :c.ClientCategory__c
             AND TypeInstallmentPlan__c = :c.TypeInstallmentPlan__c
