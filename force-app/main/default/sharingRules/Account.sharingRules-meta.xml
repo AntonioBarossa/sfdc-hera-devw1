@@ -19,6 +19,29 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>HDT_SR_AccountDistributore</fullName>
+        <accessLevel>Read</accessLevel>
+        <accountSettings>
+            <caseAccessLevel>None</caseAccessLevel>
+            <contactAccessLevel>Read</contactAccessLevel>
+            <opportunityAccessLevel>None</opportunityAccessLevel>
+        </accountSettings>
+        <label>HDT_SR_AccountDistributore</label>
+        <sharedTo>
+            <roleAndSubordinates>HDT_FrontOffice_HERA_COMM</roleAndSubordinates>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Distributore</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CompanyOwner__c</field>
+            <operation>equals</operation>
+            <value>HERA COMM</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>HDT_SR_AccountHERACOMM</fullName>
         <accessLevel>Edit</accessLevel>
         <accountSettings>

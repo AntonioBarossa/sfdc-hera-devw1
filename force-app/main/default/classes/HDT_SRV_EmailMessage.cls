@@ -5,6 +5,19 @@ public with sharing class HDT_SRV_EmailMessage {
     public static void insertEmailMessage(EmailMessage m){
         HDT_UTL_DatabaseService.insertSObject(m);
     }
+
+
+    public static void checkEmailSender(List<EmailMessage> emailList){
+        String userEmail = UserInfo.getUserEmail();
+        for(EmailMessage email : emailList){
+            String fromAddress = email.FromAddress;
+            if (fromAddress != null && fromAddress.equals(userEmail)) {
+                email.addError('Non è possibile inviare la comunicazione utilizzando la propria Email personale come mittente. Selezionare un mittente alternativo.');
+            }
+        }
+    }
+
+
     public static void checkIncomingEmails(List<EmailMessage> emailList){
         Map<SObject,Id> mapEmailCase = new Map<SObject,Id>();
         Id parentId;
