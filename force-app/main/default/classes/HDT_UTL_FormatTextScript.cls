@@ -60,6 +60,9 @@ public with sharing class HDT_UTL_FormatTextScript {
                     when 'DATETIME'{
                         fieldValue= ((DATETIME) relation.get(relationshipNames[indexParentField])).format('dd.MM.yyyy');
                     }
+                    when 'DATE'{
+                        fieldValue= ((DATE) relation.get(relationshipNames[indexParentField])).format();
+                    }
                     when else {
                         fieldValue= STRING.valueOf(relation.get(relationshipNames[indexParentField]));
                     }
