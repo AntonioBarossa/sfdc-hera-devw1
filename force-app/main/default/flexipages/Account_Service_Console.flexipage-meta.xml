@@ -667,6 +667,11 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentName>hdtAccountTabManagement</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
                 <componentName>hdtLastBill</componentName>
             </componentInstance>
         </itemInstances>

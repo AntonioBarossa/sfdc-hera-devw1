@@ -70,7 +70,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         return childCases;
     }
 
-        /**
+    /**
      * Crea un Case da un Order. Input obbligatori:
      * - recordTypeId
      * - cluster

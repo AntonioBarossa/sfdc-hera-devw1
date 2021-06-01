@@ -141,8 +141,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
             }
             //Note Var. IVA
-            when 'NVI' {
+            when 'EC3' {
                 dbr.aggregazione = '03';
+                //for bug fix
+                dbr.tipoEstrattoConto = 'NVI';
             }
             //Pagamenti e compensazioni
             when 'EC5' {
