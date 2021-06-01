@@ -12,7 +12,7 @@
         <controllingField>Cluster__c</controllingField>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
@@ -553,6 +553,101 @@
                 <default>false</default>
                 <label>Votive Modena/Cessazione</label>
             </value>
+            <value>
+                <fullName>Subentro su GdM chiuso</fullName>
+                <default>false</default>
+                <label>Subentro su GdM chiuso</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione</fullName>
+                <default>false</default>
+                <label>Prima Attivazione</label>
+            </value>
+            <value>
+                <fullName>Prima attivazione con modifica</fullName>
+                <default>false</default>
+                <label>Prima attivazione con modifica</label>
+            </value>
+            <value>
+                <fullName>Switch In</fullName>
+                <default>false</default>
+                <label>Switch In</label>
+            </value>
+            <value>
+                <fullName>Voltura con Switch</fullName>
+                <default>false</default>
+                <label>Voltura con Switch</label>
+            </value>
+            <value>
+                <fullName>Connessione con attivazione</fullName>
+                <default>false</default>
+                <label>Connessione con attivazione</label>
+            </value>
+            <value>
+                <fullName>Temporanea - Nuova attivazione</fullName>
+                <default>false</default>
+                <label>Temporanea - Nuova attivazione</label>
+            </value>
+            <value>
+                <fullName>Cambio offerta</fullName>
+                <default>false</default>
+                <label>Cambio offerta</label>
+            </value>
+            <value>
+                <fullName>Cambio uso</fullName>
+                <default>false</default>
+                <label>Cambio uso</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Bonus o VAS</fullName>
+                <default>false</default>
+                <label>Aggiunta Bonus o VAS</label>
+            </value>
+            <value>
+                <fullName>Switch In ripristinatorio</fullName>
+                <default>false</default>
+                <label>Switch In ripristinatorio</label>
+            </value>
+            <value>
+                <fullName>Riattivazioni non morose</fullName>
+                <default>false</default>
+                <label>Riattivazioni non morose</label>
+            </value>
+            <value>
+                <fullName>Proroga Connessione temporanea</fullName>
+                <default>false</default>
+                <label>Proroga Connessione temporanea</label>
+            </value>
+            <value>
+                <fullName>Modifica contratto in pre-attivazione</fullName>
+                <default>false</default>
+                <label>Modifica contratto in pre-attivazione</label>
+            </value>
+            <value>
+                <fullName>Copia contratto firmato o non ricevuto</fullName>
+                <default>false</default>
+                <label>Copia contratto firmato o non ricevuto</label>
+            </value>
+            <value>
+                <fullName>Bonus commerciale</fullName>
+                <default>false</default>
+                <label>Bonus commerciale</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Intervento Riattivazione luce</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Intervento Riattivazione luce</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Nuovo contratto</label>
+            </value>
+            <value>
+                <fullName>VOTIVE Modena/Subentro</fullName>
+                <default>false</default>
+                <label>VOTIVE Modena/Subentro</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
@@ -802,6 +897,82 @@
         <valueSettings>
             <controllingFieldValue>Annullamento</controllingFieldValue>
             <valueName>Annullamento Contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro su GdM chiuso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima attivazione con modifica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch In</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Voltura con Switch</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Connessione con attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Temporanea - Nuova attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio offerta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Cambio uso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Aggiunta Bonus o VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Switch In ripristinatorio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Riattivazioni non morose</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Proroga Connessione temporanea</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Modifica contratto in pre-attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Copia contratto firmato o non ricevuto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Bonus commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>VOTIVE Modena/Intervento Riattivazione luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>VOTIVE Modena/Nuovo contratto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>VOTIVE Modena/Subentro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Autolettura</controllingFieldValue>
