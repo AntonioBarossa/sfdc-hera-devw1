@@ -30,11 +30,10 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
     {
-        &quot;FieldName&quot; : &quot;AccountId&quot;,
+        &quot;FieldName&quot; : &quot;Reason__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
     },
-
     {
         &quot;FieldName&quot; : &quot;SalesCompany__c&quot;,
         &quot;Required&quot;   : true,
@@ -49,6 +48,11 @@
         &quot;FieldName&quot; : &quot;ContractCode__c&quot;,
         &quot;Required&quot;   : true,
         &quot;Column&quot;   : 1
+    },
+    {
+        &quot;FieldName&quot; : &quot;AccountId&quot;,
+        &quot;Required&quot;   : true,
+        &quot;Column&quot;   : 2
     },
     {
         &quot;FieldName&quot; : &quot;ContactPhone&quot;,
