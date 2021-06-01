@@ -22,6 +22,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
 
         System.debug('saleId: ' + saleId);
         System.debug('paymentMethod: ' + paymentMethod);
+        System.debug('sendingBillMode: ' + sendingBillMode);
 
         quoteLineSrv.checkReadAccess('SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SBQQ__RequiredBy__r.SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name');
         

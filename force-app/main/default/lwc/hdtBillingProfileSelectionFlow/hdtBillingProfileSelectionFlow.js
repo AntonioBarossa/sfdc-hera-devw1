@@ -10,6 +10,7 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     @api results;
     @api accountId;
     @api selectionType;
+    @api cancelCase = false;
     
     @track queryParams;
     @track maxRow;
@@ -66,6 +67,10 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     }
     handleCancell(event){
         
+        this.cancelCase = true;
+        const navigateNextEvent = new FlowNavigationNextEvent();
+        this.dispatchEvent(navigateNextEvent);
+
     }
     showMessage(title,message,variant){
         this.dispatchEvent(

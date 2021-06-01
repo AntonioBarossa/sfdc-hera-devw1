@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Regola_Trovata</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>caseId</name>
             <value>
@@ -28,6 +29,7 @@
         <connector>
             <targetReference>Screen_Case_Layout</targetReference>
         </connector>
+        <flowTransactionModel>NewTransaction</flowTransactionModel>
         <inputParameters>
             <name>accountId</name>
             <value>
@@ -60,6 +62,7 @@
         <locationY>2318</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>cases</name>
             <value>
@@ -240,10 +243,10 @@
             <name>Conferma</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>InterrogaRegoleRateizzazione.ClientCategory__c</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>InterrogaRegoleRateizzazione.Category__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>SME</stringValue>
+                    <stringValue>Aziende SME</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -433,8 +436,7 @@
             <label>Annulla</label>
         </rules>
     </decisions>
-    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti
---&gt; Inserito screen documentale</description>
+    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti</description>
     <formulas>
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
@@ -574,12 +576,6 @@
             </value>
         </inputAssignments>
         <inputAssignments>
-            <field>FirstExpirationDate__c</field>
-            <value>
-                <elementReference>DataPrimaScadenza</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
             <field>MaxInstallmentsNumber__c</field>
             <value>
                 <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
@@ -603,7 +599,13 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Chiuso</stringValue>
+                <stringValue>Completata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -662,19 +664,13 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Sospesa</stringValue>
+                <stringValue>Elaborazione Manuale</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>Status</field>
             <value>
                 <stringValue>In Lavorazione</stringValue>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SuspensionDate__c</field>
-            <value>
-                <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -811,6 +807,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -891,6 +888,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -921,6 +919,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1013,6 +1012,7 @@
                     <stringValue>Salva In Bozza</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1040,10 +1040,10 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-            <name>nextVariant</name>
-            <value>
-                <stringValue>brand</stringValue>
-            </value>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
             </inputParameters>
             <inputParameters>
                 <name>processType</name>
@@ -1051,6 +1051,7 @@
                     <elementReference>CaseInput.Type</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1131,6 +1132,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1193,6 +1195,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
