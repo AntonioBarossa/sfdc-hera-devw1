@@ -1,26 +1,12 @@
 public inherited sharing class HDT_LC_OfferConfiguratorController {
 
-    @AuraEnabled(cacheable=true)
-    public static List<sObject> getTableData(String objectApiName, String rate){
-        //String result = '';
+    @AuraEnabled
+    public static List<sObject> getTableData(String objectApiName, String rate, String searchByField, String searchValue){
         try{
-            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate);
-
-            //if(searchTerm != 'RateTemplate__c'){
-            //    StaticResource sr = HDT_QR_TechnicalOffer.getStaticResourceByName('DataHelper');
-            //    result = sr.Body.toString();
-            //} else {
-            //    //List<RateTemplate__c> rtList = new List<RateTemplate__c>();
-            //    //rtList = [
-            //    //    SELECT Id, Name
-            //    //    FROM RateTemplate__c
-            //    //];
-            //    //result = JSON;
-            //}
+            return HDT_LC_OfferConfiguratorCtrlHelper.getTableDataHelper(objectApiName, rate, searchByField, searchValue);
         } catch (Exception e){
             throw new AuraHandledException(e.getMessage());
         } 
-
     }
 
     @AuraEnabled(cacheable=true)
@@ -87,6 +73,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
                 
             List<OperandTemplate__c> operands;
             operands = HDT_QR_TechnicalOffer.getOperandTemplate(operands, template);
+            matrixTable.isEditable = true;
 
             HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow singleRow;
 
@@ -138,6 +125,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
 
                 TechnicalOffer__c techOff;
                 techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
+
+                techOff = HDT_QR_TechnicalOffer.queryTechnicalOfferRecordWithChild(techOff, technicalOfferId);
+                
+                if(String.isEmpty(techOff.Product__r.Status__c) || techOff.Product__r.Status__c.equalsIgnoreCase('Vendibile')){
+                    matrixTable.isEditable = false;
+                }
 
                 Map<String, TechnicalOfferItem__c> itemsMap = new Map<String, TechnicalOfferItem__c>();
                 for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){

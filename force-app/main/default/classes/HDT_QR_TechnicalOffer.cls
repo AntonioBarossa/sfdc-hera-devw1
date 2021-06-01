@@ -57,7 +57,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static TechnicalOffer__c queryTechnicalOfferRecordWithChild(TechnicalOffer__c techOff, Id recId){
         techOff = [
-            SELECT Id, Name, RateCategory__r.Name, (
+            SELECT Id, Name, RateCategory__r.Name, Product__r.Status__c, (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c, TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c
                     FROM RigheOffertaTecnica__r ORDER BY RowId__c
@@ -166,11 +166,17 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         return prodList;
     }
 
-    public static List<sObject> getRecordsList(List<sObject> allValues, String objectApiName, String fieldsApiName){
+    public static List<sObject> getRecordsList(List<sObject> allValues, String objectApiName, String fieldsApiName, String whereCond){
         allValues = new List<sObject>();
         String myQuery = 'SELECT Id,';
         myQuery += fieldsApiName;
-        myQuery += ' FROM ' + objectApiName + ' LIMIT 20';
+        myQuery += ' FROM ' + objectApiName;
+        
+        if(!String.isEmpty(whereCond)){
+            myQuery += whereCond;
+        }
+
+        myQuery += ' LIMIT 100';
         allValues = database.query(myQuery);
         return allValues;
     }
@@ -186,15 +192,30 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         return info1GroupList;
     }
 
-    public static List<Info2GroupList__c> getInfo2GroupList(List<Info2GroupList__c> info2GroupList, List<String> tariffList){
-        info2GroupList = new List<Info2GroupList__c>();
-        info2GroupList = [
-            SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c
-            FROM Info2GroupList__c
-            WHERE DetRate__c IN :tariffList
-            WITH SECURITY_ENFORCED
-        ];
+    public static List<sObject> getInfo2GroupList(List<sObject> info2GroupList, String whereCond){
+        info2GroupList = new List<sObject>();
+        String myQuery = 'SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c ';
+        myQuery += 'FROM Info2GroupList__c ';
+
+        if(!String.isEmpty(whereCond)){
+            myQuery += whereCond;
+        }
+
+        myQuery += ' LIMIT 100';
+        info2GroupList = database.query(myQuery);
+        
         return info2GroupList;
     }
+
+    //public static List<Info2GroupList__c> getInfo2GroupList(List<Info2GroupList__c> info2GroupList, List<String> tariffList){
+    //    info2GroupList = new List<Info2GroupList__c>();
+    //    info2GroupList = [
+    //        SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c
+    //        FROM Info2GroupList__c
+    //        WHERE DetRate__c IN :tariffList
+    //        WITH SECURITY_ENFORCED
+    //    ];
+    //    return info2GroupList;
+    //}
 
 }

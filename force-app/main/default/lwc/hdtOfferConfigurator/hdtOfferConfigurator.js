@@ -40,11 +40,14 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
         productCode: ''
     };
 
-    helpTxt1 = 'This field1 indicate that...';
-    helpTxt2 = 'This field2 indicate that...';
-    helpTxt3 = 'This field3 indicate that...';
+    helpTxtProductCode = 'Codice Prodotto dell\' offerta';
+    helpTxtVersion = 'Versione dell\' offerta';
+    helpTxtRateCategory = 'Rate category';
+    helpTxtTemplate = 'Valore del template';
     error;
     showAlert = false;
+
+    editable = true;
 
     //@track options = [
     //    {label: 'M', value: 'm', checked: '0'},
@@ -253,7 +256,9 @@ export default class HdtOfferConfigurator extends NavigationMixin(LightningEleme
                 toastObj.title = 'Successo';
                 toastObj.message = result.message;
                 toastObj.variant = 'success';
-                this.dataRows = result.rowList;                
+                console.log('>>> isEditable: ' + result.isEditable);
+                this.editable = result.isEditable;
+                this.dataRows = result.rowList;
             } else {
                 toastObj.title = 'Attenzione';
                 toastObj.message = result.message;

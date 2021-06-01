@@ -15,7 +15,7 @@
             <lightning-spinner class={spinnerObj.spincss} alternative-text="Loading" size="large"></lightning-spinner>
         </div>
 
-        <div slot="actions">
+        <div if:true={editable} slot="actions">
             <lightning-button-group>
                 <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} variant="neutral" icon-name="utility:save"></lightning-button>
                 <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="neutral" icon-name="utility:close"></lightning-button>
@@ -23,6 +23,10 @@
             </lightning-button-group>
         </div>
         
+        <div if:false={editable} slot="actions">
+            <lightning-button label="Chiudi" name="goBackToRecord" onclick={goBackToRecord} variant="neutral" icon-name="utility:close"></lightning-button>
+        </div>
+
         <div class="slds-card__body slds-card__body_inner">
 
             <!-- CREATE 2 COLUMNS -->

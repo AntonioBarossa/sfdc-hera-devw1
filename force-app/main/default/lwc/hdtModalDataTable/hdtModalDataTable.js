@@ -84,6 +84,16 @@ export default class HdtModalDataTable extends LightningElement {
     @track spinner = true;
     modalHeader;
     iconHeader;
+    searchByField = 'Description__c';
+    searchValue = '';
+
+    get options() {
+        return [
+            { label: 'Descrizione', value: 'Description__c' },
+            { label: 'Nome', value: 'Name' },
+            { label: 'Stato', value: 'Status__c' },
+        ];
+    }
 
     connectedCallback() {
         this.spinner = true;
@@ -118,6 +128,7 @@ export default class HdtModalDataTable extends LightningElement {
             case 'infoGroup':
                 this.modalHeader = 'Seleziona la GR INFO';
                 this.columns = firstRow.concat(grInfoColumns);
+                this.searchByField = 'ValueDescription__c';
                 break;
             case 'priceCode':
                 this.modalHeader = 'Seleziona il prezzo';
@@ -136,7 +147,7 @@ export default class HdtModalDataTable extends LightningElement {
     backendCall(){
         console.log('# getTableData #');
 
-        getTableData({objectApiName: this.relatedToTable, rate: this.rate})
+        getTableData({objectApiName: this.relatedToTable, rate: this.rate, searchByField: this.searchByField, searchValue: this.searchValue})
             .then(result => {
                 console.log('# call result #');
 
@@ -224,6 +235,29 @@ export default class HdtModalDataTable extends LightningElement {
         // Dispatches the event.
         this.dispatchEvent(selectedEvent);
 
+    }
+
+    handleFieldChange(event){
+
+    }
+
+    setFieldValue(event){
+        //var fieldName = event.currentTarget.name;
+        //var rowId =  event.currentTarget.dataset.rowId;
+        this.searchValue = event.target.value;
+        //var type = event.currentTarget.type;
+
+    }
+
+    search(){
+        console.log('>>> searchByField: ' + this.searchByField + ', field: ' + this.searchValue);
+        console.log('>>> relatedToTable > ' + this.relatedToTable + ' - rate: ' + this.rate);
+        this.backendCall();
+    }
+
+    refresh(){
+        this.searchValue = '';
+        this.backendCall();
     }
 
 }

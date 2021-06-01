@@ -1,7 +1,13 @@
 public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
     
-    public static List<sObject> getTableDataHelper(String objectApiName, String rate){
+    public static List<sObject> getTableDataHelper(String objectApiName, String rate, String searchByField, String searchValue){
         List<sObject> allValues;
+
+        String whereCond = '';
+
+        if(!String.isEmpty(searchByField) && !String.isEmpty(searchValue)){
+            whereCond = ' WHERE ' + searchByField + ' LIKE \'%' + searchValue +'%\'';
+        }
 
         String fieldsApiName = '';
         switch on objectApiName {
@@ -29,16 +35,26 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 
                 List<String> tariffList = new List<String>();
                 for(Info1GroupList__c infoGroup : info1GroupList){
-                    tariffList.add(infoGroup.DetTariffa__c);
+                    tariffList.add('\'' + infoGroup.DetTariffa__c + '\'');
                 }
 
-                List<Info2GroupList__c> info2GroupList;
-                info2GroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(info2GroupList, tariffList);
-                return info2GroupList;
+                if(!String.isEmpty(whereCond)){
+                    whereCond += ' AND ';
+                } else {
+                    whereCond = ' WHERE ';
+                }
+
+                whereCond += 'DetRate__c IN ' + tariffList;
+
+                //List<Info2GroupList__c> info2GroupList;
+                //info2GroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(info2GroupList, tariffList);
+                //return info2GroupList;
+                allValues = HDT_QR_TechnicalOffer.getInfo2GroupList(allValues, whereCond);
+                return allValues;
             }
         }
 
-        allValues = HDT_QR_TechnicalOffer.getRecordsList(allValues, objectApiName, fieldsApiName);
+        allValues = HDT_QR_TechnicalOffer.getRecordsList(allValues, objectApiName, fieldsApiName, whereCond);
         return allValues;
     }
 

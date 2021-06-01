@@ -44,13 +44,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode cityZipCodeObj;
 
         try{
-
+            
             if(String.isEmpty(eligibilityId)){
                 // eligibilityId IS NULL, so get all Municipalities code
                 //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
                 //cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
                 cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
-    
+                cityZipCodeObj.isEditable = true;
                 cityZipCodeObj.success = true;
                 cityZipCodeObj.message = '';
             } else {
@@ -72,6 +72,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                     }
 
                 }
+
+                if(String.isEmpty(criteria[0].Product__r.Status__c) || criteria[0].Product__r.Status__c.equalsIgnoreCase('Vendibile')){
+                    cityZipCodeObj.isEditable = false;
+                } else {
+                    cityZipCodeObj.isEditable = true;
+                }
+
                 cityZipCodeObj.success = true;
                 cityZipCodeObj.message = '';
             }

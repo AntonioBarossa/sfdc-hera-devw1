@@ -126,9 +126,9 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
         this.handleClone(this.item.selectedId);
         
-        setTimeout(() => {
+        // setTimeout(() => { //
 
-        }, 2000);
+        // }, 2000);
         
     }
 
@@ -142,7 +142,8 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'EligibilityCriteria__c');
+                    //this.goToRecord(result, 'EligibilityCriteria__c');
+                    this.goToRecord(this.productid, 'Product2');
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';

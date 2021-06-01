@@ -28,7 +28,8 @@
         </template>
 
         <template if:false={errorObj.showError} >
-            <p slot="actions" >
+
+            <p if:true={editable} slot="actions" >
                 <lightning-button-group>
                     <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} variant="neutral" icon-name="utility:save" ></lightning-button>
                     <lightning-button label="Salva ed invia" name="saveAndSend" onclick={openConfirmation} variant="neutral" icon-name="utility:send" ></lightning-button>
@@ -36,6 +37,11 @@
                     <lightning-button if:true={showDelete} label="Elimina" name="delete" onclick={openConfirmation} variant="neutral" icon-name="utility:delete" ></lightning-button>
                 </lightning-button-group>
             </p>
+
+            <p if:false={editable} slot="actions" >
+                <lightning-button label="Chiudi" name="goBackToRecord" onclick={goBackToRecord} variant="neutral" icon-name="utility:close" ></lightning-button>
+            </p>
+
             <div class="slds-card__body slds-card__body_inner">
                 <div class="slds-grid slds-gutters">
                     <div class="slds-col">
@@ -43,7 +49,7 @@
                         <div class="slds-form slds-m-top_x-large " >
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <lightning-helptext content={helpTxtProductCode} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
@@ -54,7 +60,7 @@
                             </div>
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt2}></lightning-helptext>
+                                <lightning-helptext content={helpTxtVersion}></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.version} type="text" label=" "></lightning-input>-->
@@ -70,7 +76,7 @@
                     <div class="slds-col">
                         <div class="slds-form slds-m-top_x-large " >
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <lightning-helptext content={helpTxtRateCategory} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Category</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>-->
@@ -81,7 +87,7 @@
                             </div>
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                                <lightning-helptext content={helpTxtTemplate} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
