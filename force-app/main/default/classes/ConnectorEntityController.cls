@@ -19,6 +19,8 @@ global with sharing class ConnectorEntityController {
 			activity.CallStartTime__c = DateTime.now();
 			activity.ConnectionID__c = (String) message.get('ConnectionID');
 			activity.BPCode__c = (String) attachdata.get('ivr_CODICE_CLIENTE');
+			activity.IwsDemand__c = (String) attachdata.get('esigenza_iws');
+			activity.Place__c = (String) attachdata.get('place');
 
 			handleCrmChangeFlag(message, activity);
 
