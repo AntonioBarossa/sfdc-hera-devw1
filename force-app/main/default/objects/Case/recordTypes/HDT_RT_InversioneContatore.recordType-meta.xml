@@ -3117,6 +3117,44 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DetailOne__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DetailTwo__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>DisasterType__c</picklist>
         <values>
             <fullName>Emergenza</fullName>
