@@ -1864,6 +1864,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OfferType__c</picklist>
+        <values>
+            <fullName>Progetto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scaffale</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PaymentMode__c</picklist>
         <values>
             <fullName>Bollettino postale</fullName>
