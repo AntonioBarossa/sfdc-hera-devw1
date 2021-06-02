@@ -106,7 +106,7 @@ export default class HdtDocumentValidation extends LightningElement {
 
             }
 
-            const validated = this.isValidated;
+            const validated = {isValidated: this.isValidated, subprocess: this.subprocess};
 
             this.dispatchEvent(new CustomEvent('complete', {detail: { validated }}));
 
