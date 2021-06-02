@@ -2441,11 +2441,6 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
-        <field>AssignmentRule__c.UID__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
         <field>AssignmentRule__c.UserCreatorChannel__c</field>
         <readable>true</readable>
     </fieldPermissions>
