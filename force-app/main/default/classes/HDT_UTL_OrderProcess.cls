@@ -2,6 +2,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_Contact contactQr = new HDT_QR_Contact();
+    private static HDT_UTL_CommunicationLog commUtl = new HDT_UTL_CommunicationLog();
+    private static HDT_SRV_CommunicationLog commSrv = new HDT_SRV_CommunicationLog();
     
     public static void salesProcessManagementBefore(list<Order> newOrderList,List<Order> oldOrderList){
         
@@ -13,20 +16,59 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void orderPhaseManagementAfterUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
 
         Map<String,Order> orderMapNewToOld = new Map<String,Order>();
-        for (Order newOrder : newOrdersList) {
+        Map<String,Order> orderMapOld = new Map<String,Order>();
+        Map<String,Order> orderMapNew = new Map<String,Order>();
+        
+   /*     for (Order newOrder : newOrdersList) {
             for (Order oldOrder : oldOrdersList) {
                 if (newOrder.Id == oldOrder.Id) {
                     orderMapNewToOld.put(newOrder.Id, oldOrder);
                 }
+            }
+        }*/
+        
+        for (Order oldOrder : oldOrdersList) {
+            orderMapOld.put(oldOrder.id,oldOrder);
+        }
+        for (Order newOrder : newOrdersList) {
+           	orderMapNew.put(newOrder.id,newOrder);
+            if(orderMapOld.get(newOrder.id)!= null){
+                orderMapNewToOld.put(newOrder.id,orderMapOld.get(newOrder.id));
             }
         }
 
         List<String> orderList = getParentOrders(newOrdersList, oldOrdersList, orderMapNewToOld);
         //List<id> docVali = filterByRecordTypeAndPhase(orderList,)
         updateChildOrdersPhase(orderList, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS');
-
+		insertLogForOrderChangedPhase(orderMapOld,orderMapNew);
     }
-
+	
+    private static void insertLogForOrderChangedPhase(Map<String,Order> orderMapOld, Map<String,Order> orderMapNew){
+        List<CommunicationLog__c> commList = new List<CommunicationLog__c>();
+        Map<String,String> mapOrdToContact = new map<String,String>();
+        for (Order o : orderMapNew.values()){
+            mapOrdToContact.put(o.id,o.contact__c);
+        }
+        Map<String,Contact> mapContact = new Map<String,Contact>(contactQr.getRecordsById(mapOrdToContact.values()));
+        for(String ord : orderMapOld.keyset()){
+           order oldOrd =  orderMapOld.get(ord);
+           if(orderMapNew.get(ord) != null){
+               order newOrd = orderMapNew.get(ord);
+               if(oldOrd.phase__c != newOrd.Phase__c){
+                   Contact c = null;
+                   if(mapContact.get(newOrd.Contact__c) != null){
+                       c = mapContact.get(newOrd.Contact__c);
+                   }
+                   System.debug('**************Eccolo:' + c);
+                   commList.add(commUTL.instanceCommunicationLog('Attivazioni',newOrd.ProcessType__c,newOrd.Phase__c,newOrd.status,newOrd.CancellationReason__c,newOrd.Id,'',newOrd.Contact__c,newOrd.AccountId,c != null ? c.company__c : 'ND',newOrd.CompanyOwner__c));
+               }
+           }
+        }
+        if(commList != null && !commList.isEmpty()){
+            commSRV.createRecords(commList);
+        }
+    }
+    
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     public static void orderCalulateDateUpdate(List<Order> newOrdersList, List<Order> oldOrdersList) {
         system.debug('orderCalulateDateUpdate trigger --> newOrdersList : ' + JSON.serializePretty(newOrdersList));

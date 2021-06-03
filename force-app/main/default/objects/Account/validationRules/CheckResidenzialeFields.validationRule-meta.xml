@@ -2,6 +2,6 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CheckResidenzialeFields</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,  OR( ISBLANK(FiscalCode__c),ISPICKVAL(Category__c, &quot;&quot;),ISPICKVAL(CustomerMarking__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;)) , false)</errorConditionFormula>
-    <errorMessage>I Seguenti campi devono essere popolati : Marcatura, Categoria, Codice fiscale , Società Gruppo Hera</errorMessage>
+    <errorConditionFormula>IF(RecordType.DeveloperName = &quot;HDT_RT_Residenziale&quot;,  OR( ISBLANK(FiscalCode__c),ISBLANK(BillingStreetName__c),ISBLANK(BillingCityCode__c),ISBLANK(BillingStreetNumber__c),ISPICKVAL(Category__c, &quot;&quot;),ISPICKVAL(CustomerMarking__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;)) , false)</errorConditionFormula>
+    <errorMessage>I Seguenti campi devono essere popolati : Marcatura, Categoria, Codice fiscale , Indirizzo, Società Gruppo Hera</errorMessage>
 </ValidationRule>

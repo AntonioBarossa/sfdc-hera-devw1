@@ -173,7 +173,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params.xblnr = numeroDocumento;
             }
             if(numeroBollettino){
-                params.bollo = numeroBollettino;
+                params.bollo = '*' + numeroBollettino;
             }
             console.log(JSON.stringify(params));
             getStatements
