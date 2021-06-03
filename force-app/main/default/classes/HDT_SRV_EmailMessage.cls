@@ -84,11 +84,14 @@ public with sharing class HDT_SRV_EmailMessage {
                 Case caseRecord = mapIdCase.get(email.ParentId);
                 if(caseRecord.Type == 'Comunicazione di Fallimento'
                 || caseRecord.Type == 'Dichiarazione di intento'){
-                    if(caseRecord.Phase__c == 'In attesa risposta Mail'){
                         caseRecord.Phase__c = 'Risposta Ricevuta';
-                    }else{
+                }
+                caseToUpdate.add(caseRecord);
+            }else{
+                Case caseRecord = mapIdCase.get(email.ParentId);
+                if(caseRecord.Type == 'Comunicazione di Fallimento'
+                || caseRecord.Type == 'Dichiarazione di intento'){
                         caseRecord.Phase__c = 'In attesa risposta Mail';
-                    }
                 }
                 caseToUpdate.add(caseRecord);
             }
