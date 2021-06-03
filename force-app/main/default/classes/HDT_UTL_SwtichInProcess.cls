@@ -80,7 +80,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             }
         
         }else{
-            dateSentToSii = order.WizardCompletedDate__c;    
+            dateSentToSii = date.today();    
             /*
             La data invio richiesta al SII deve essere ricalcolata nel caso in cui il sistema riceva degli esiti di rilavorazione.  
             Alla rilavorazione, la data di invio richiesta deve assumere la data di rilavorazione della richiesta (la data di ultimo aggiornamento fase).  
@@ -133,6 +133,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
         }
         else{
             if(order.RecessNotice__c != null){
+                system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - RecessNotice__c: ');
                 List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [
                 SELECT ActivationDate__c 
                 FROM HDT_FulfillmentDateMatrix__c 
