@@ -13,18 +13,45 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Bollettino postale</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Bollettino postale</label>
+            </value>
+            <value>
+                <fullName>Bonifico</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Bonifico</label>
+            </value>
+            <value>
+                <fullName>POS Sportello</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>POS Sportello</label>
+            </value>
+            <value>
+                <fullName>Paperless</fullName>
+                <default>false</default>
+                <isActive>true</isActive>
+                <label>Paperless</label>
+            </value>
+            <value>
                 <fullName>In Compartecipazione</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>In Compartecipazione</label>
             </value>
             <value>
                 <fullName>Totalmente da Istituzioni pubbliche</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Totalmente da Istituzioni pubbliche</label>
             </value>
             <value>
                 <fullName>Totalmente Dal Cliente</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Totalmente Dal Cliente</label>
             </value>
         </valueSetDefinition>
