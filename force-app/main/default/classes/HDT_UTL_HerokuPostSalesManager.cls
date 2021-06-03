@@ -254,6 +254,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
+        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){
+            currentCase.Phase__c = 'Annullato';
+            updateFuture(JSON.serialize(currentCase));
+        }
         return caseUpdate;
     }
 
@@ -396,6 +400,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }
 
         return result;
+
+    }
+
+    @Future
+    private static void updateFuture(String inputString){
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
 
     }
 
