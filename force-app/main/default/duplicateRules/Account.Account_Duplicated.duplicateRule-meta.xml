@@ -14,5 +14,5 @@
     <masterLabel>Account Duplicated</masterLabel>
     <operationsOnUpdate>Alert</operationsOnUpdate>
     <securityOption>BypassSharingRules</securityOption>
-    <sortOrder>1</sortOrder>
+    <sortOrder>2</sortOrder>
 </DuplicateRule>
