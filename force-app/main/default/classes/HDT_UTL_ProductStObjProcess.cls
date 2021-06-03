@@ -45,6 +45,12 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
         statusResponse.success = false;
         statusResponse.message = 'Cambio stato non consentito';
 
+        if(oldProduct.Status__c == null || newProduct.Status__c == null){
+            statusResponse.success = false;
+            statusResponse.message = 'Non puoi inserire questo valore come stato';
+            return statusResponse;
+        }
+
         if(oldStatus.equalsIgnoreCase(inDevelopment)){
             if(newStatus.equalsIgnoreCase(inDevelopment)){
                 statusResponse.success = true;
