@@ -459,7 +459,7 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
-        console.log('Keltin: ', this.template.querySelector("[data-id='SubjectCode__c']").value);
+        console.log('hdtBillingProfileForm_js - validFields');
 
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
         && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
