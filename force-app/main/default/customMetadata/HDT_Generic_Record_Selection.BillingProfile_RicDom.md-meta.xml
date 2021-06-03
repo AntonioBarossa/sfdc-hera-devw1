@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Modifica Anagrafica Dati di Recapito</label>
+    <label>BillingProfile</label>
     <protected>false</protected>
     <values>
         <field>Columns__c</field>
         <value xsi:type="xsd:string">[
-    { &quot;label&quot;: &quot;Codice&quot;, &quot;fieldName&quot;: &quot;ContractAccountCode__c&quot; },
-    { &quot;label&quot;: &quot;Modalità invio bolletta&quot;, &quot;fieldName&quot;: &quot;BillSendingMethod__c&quot; },
-	{ &quot;label&quot;: &quot;Email Invio Bolletta&quot;, &quot;fieldName&quot;: &quot;InvoiceEmailAddress__c&quot; },
-	{ &quot;label&quot;: &quot;Indirizzo di spedizione&quot;, &quot;fieldName&quot;: &quot;InvoicingAddressFormula__c&quot; }
-	
+    { &quot;label&quot;: &quot;Conto Contrattuale&quot;, &quot;fieldName&quot;: &quot;ContractAccountCode__c&quot; },
+	{ &quot;label&quot;: &quot;Data Attivazione&quot;, &quot;fieldName&quot;: &quot;ActivationDate__c&quot;, &quot;type&quot;: &quot;date&quot; },
+	{ &quot;label&quot;: &quot;Modalità Pagamento&quot;, &quot;fieldName&quot;: &quot;PaymentMethod__c&quot; },
+{&quot;label&quot;:&quot;Indirizzo Spedizione&quot;, &quot;fieldName&quot;:&quot;InvoicingAddressFormula__c&quot;},
+{&quot;label&quot;:&quot;Modalita Invio Bolletta&quot;, &quot;fieldName&quot;:&quot;BillSendingMethod__c&quot;}
 ]</value>
     </values>
     <values>
@@ -22,7 +22,7 @@
     </values>
     <values>
         <field>Fields__c</field>
-        <value xsi:type="xsd:string">BillSendingMethod__c,ContractAccountCode__c,InvoicingAddressFormula__c,InvoiceEmailAddress__c</value>
+        <value xsi:type="xsd:string">Status__c,ContractAccountCode__c,ActivationDate__c,PaymentMethod__c,InvoicingAddressFormula__c,BillSendingMethod__c</value>
     </values>
     <values>
         <field>Max_Rows__c</field>
@@ -38,7 +38,7 @@
     </values>
     <values>
         <field>Where_Conditions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">PaymentMethod__c &lt;&gt; &apos;RID&apos;</value>
     </values>
     <values>
         <field>sObject__c</field>

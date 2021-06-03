@@ -4,8 +4,10 @@
     <description>Numero centralino coinvolto nell&apos;interazione</description>
     <externalId>false</externalId>
     <label>Numero Verde</label>
+    <length>40</length>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
-    <type>Phone</type>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>
