@@ -232,29 +232,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Priority__c</picklist>
-        <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Reason__c</picklist>
         <values>
             <fullName>Dati corretti forniti dal DL</fullName>

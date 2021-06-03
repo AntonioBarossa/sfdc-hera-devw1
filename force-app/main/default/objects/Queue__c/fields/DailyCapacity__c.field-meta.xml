@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CriticalAttribute__c</fullName>
+    <fullName>DailyCapacity__c</fullName>
+    <description>Numero massimo di attività lavorabili dalla coda al giorno</description>
     <externalId>false</externalId>
-    <label>Attributo Criticità</label>
+    <label>Capacità Massima Giornaliera</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
