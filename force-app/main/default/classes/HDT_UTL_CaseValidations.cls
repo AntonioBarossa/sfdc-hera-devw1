@@ -324,7 +324,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
         String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
 
-        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
+        if (String.isBlank(newLastName)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Cognome/Ragione sociale non può essere vuoto.'));
+        } else if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
             && newVatNumber.equals(currentVatNumber) && newMarking.equals(currentMarking)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
         }
