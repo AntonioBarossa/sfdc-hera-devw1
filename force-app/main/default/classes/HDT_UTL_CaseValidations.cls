@@ -35,6 +35,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             }
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
+        } else if (caseType == 'Gestione Bonus Sociale') {
+            result = validateGestioneBonusSociale(currentCase, fields);
         } else if(caseType == 'Gestione Disalimentabilità' || caseType == 'Riattivazione Fornitura'){
 
             result = validateMorosita(fields, recordId, caseType);
@@ -740,6 +742,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if(attachedDocument.size() == 0){
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+        }
+            
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+
+    private String validateGestioneBonusSociale(Case currentCase, String fields) {
+
+        List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+        String reason = getFieldValue(fields, 'Reason__c');
+
+        if(reason != null && reason.equals('Permanenza condizioni di disagio') && attachedDocument.size() == 0){
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario allegare autocertificazione del cliente.'));
         }
             
         return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
