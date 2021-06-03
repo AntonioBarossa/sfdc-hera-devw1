@@ -620,11 +620,11 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.dataToSubmit['InvoicingStreetNumber__c'] = this.wrapAddressObject['Civico'];
         }
 
-        if(this.dataToSubmit['InvoicingCityCode__c'] != this.wrapAddressObject['CodiceComuneSAP']){
-            this.dataToSubmit['InvoicingCityCode__c'] = this.wrapAddressObject['CodiceComuneSAP'];
+        if(this.dataToSubmit['InvoicingCityCode__c'] != this.wrapAddressObject['Codice Comune SAP']){
+            this.dataToSubmit['InvoicingCityCode__c'] = this.wrapAddressObject['Codice Comune SAP'];
         }
-        if(this.dataToSubmit['InvoicingStreetCode__c'] != this.wrapAddressObject['CodiceViaStradarioSAP']){
-            this.dataToSubmit['InvoicingStreetCode__c'] = this.wrapAddressObject['CodiceViaStradarioSAP'];
+        if(this.dataToSubmit['InvoicingStreetCode__c'] != this.wrapAddressObject['Codice Via Stradario SAP']){
+            this.dataToSubmit['InvoicingStreetCode__c'] = this.wrapAddressObject['Codice Via Stradario SAP'];
         }
         
         this.isVerifiedAddress = this.wrapAddressObject['Flag Verificato'];
@@ -657,10 +657,10 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if(this.cloneObject['InvoicingCityCode__c'] != undefined){
-             this.wrapAddressObject['CodiceComuneSAP'] = this.cloneObject['InvoicingCityCode__c'];
+             this.wrapAddressObject['Codice Comune SAP'] = this.cloneObject['InvoicingCityCode__c'];
         }
         if(this.cloneObject['InvoicingStreetCode__c'] != undefined){
-             this.wrapAddressObject['CodiceViaStradarioSAP'] = this.cloneObject['InvoicingStreetCode__c'];
+             this.wrapAddressObject['Codice Via Stradario SAP'] = this.cloneObject['InvoicingStreetCode__c'];
         }
 
         this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObject);
