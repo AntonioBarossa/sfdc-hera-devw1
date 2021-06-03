@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Order__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Lookup all&apos;Order</description>
+    <externalId>false</externalId>
+    <label>Ordine</label>
+    <referenceTo>Order</referenceTo>
+    <relationshipLabel>Dati Catastali</relationshipLabel>
+    <relationshipName>Dati_Catastali</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>
