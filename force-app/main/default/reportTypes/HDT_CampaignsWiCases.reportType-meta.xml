@@ -1350,7 +1350,7 @@
         </columns>
         <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Nome_cimitero__c</field>
+            <field>CemeteryName__c</field>
             <table>Campaign.Cases__r</table>
         </columns> -->
         <columns>

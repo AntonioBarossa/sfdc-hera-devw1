@@ -1490,7 +1490,7 @@
         </columns>
         <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Nome_cimitero__c</field>
+            <field>CemeteryName__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns> -->
         <columns>

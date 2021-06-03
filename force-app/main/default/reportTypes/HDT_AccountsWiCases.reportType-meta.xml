@@ -1465,7 +1465,7 @@
         </columns>
         <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Nome_cimitero__c</field>
+            <field>CemeteryName__c</field>
             <table>Account.Cases</table>
         </columns> -->
         <columns>
