@@ -117,7 +117,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                             phase = 'Annullamento - Comunicazione verso Heroku OK';
                         } 
                         when else{
-                            //FASE NON PRESENTE
+                            phase = 'Annullamento - Comunicazione verso Heroku KO';
                         }
                     }
                 } 

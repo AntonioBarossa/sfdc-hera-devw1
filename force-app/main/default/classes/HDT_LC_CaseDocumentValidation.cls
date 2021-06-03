@@ -11,14 +11,14 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
     }
     
     @AuraEnabled
-    public static void saveValidation(String caseId, Boolean allValidated){
+    public static void saveValidation(String caseId, String subprocess, Boolean allValidated){
         Case currentCase = new Case();
         String phase;
 
         currentCase.Id = caseId;
 
         if(allValidated){
-            if(currentCase.Subprocess__c == 'Accise - Energia Elettrica'){
+            if(subprocess == 'Accise - Energia Elettrica'){
                 phase = 'Elaborazione Manuale';
             } else {
                 phase = 'Da Inviare';
