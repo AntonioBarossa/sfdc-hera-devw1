@@ -75,7 +75,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 }
 
                 List<String> resp;
-                resp = HDT_UTL_Product2Process.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -196,7 +196,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                 statusResponse.message = '';
 
                 List<String> resp;
-                resp = HDT_UTL_Product2Process.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                 System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                 if(resp[0]=='KO'){
                     statusResponse.success = false;
@@ -234,7 +234,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
                     }
 
                     List<String> resp;
-                    resp = HDT_UTL_Product2Process.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
+                    resp = HDT_UTL_ProductStObjProcess.checkOnDate(resp, newProduct.StartDate__c, newProduct.EndDate__c);
                     System.debug('>>> checkOnDate: ' + resp[0] + ' - ' + resp[1]);
                     if(resp[0]=='KO'){
                         statusResponse.success = false;
