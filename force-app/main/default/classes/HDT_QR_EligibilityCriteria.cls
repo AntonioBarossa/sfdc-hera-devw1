@@ -3,7 +3,7 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
     public static List<EligibilityCriteria__c> getEligibilityCriteriaSingleRecord(List<EligibilityCriteria__c> criteria, String eligibilityId){
         criteria = new List<EligibilityCriteria__c>();
         criteria = [
-            SELECT EligibleForAllCities__c
+            SELECT EligibleForAllCities__c, Product__r.Status__c
             FROM EligibilityCriteria__c
             WHERE Id = :eligibilityId
             WITH SECURITY_ENFORCED
