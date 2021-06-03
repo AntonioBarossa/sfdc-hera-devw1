@@ -35,15 +35,21 @@
 
         console.log('AURA_EVENT--> '+event.getParam('validated'));
 
-        var isValidated = event.getParam('validated');
+        var validated = event.getParam('validated');
+        var isValidated = validated.isValidated;
+        var subprocess = validated.subprocess;
 
         console.log('AURA: Event Detail--> '+isValidated);
+        console.log('AURA: Event Datail--> '+subprocess);
 
         action.setParams({
             caseId: component.get("v.recordId"),
+            subprocess: subprocess,
             allValidated: isValidated
         });
         action.setCallback(this,function(response){
+
+            console.log('#status -> '+response.getState());
 
             var state = response.getState();
             if(state === "SUCCESS"){
@@ -63,7 +69,7 @@
             }
 
         });
-        $A.enqueueAction(action); 
+        $A.enqueueAction(action);
 
     },
 

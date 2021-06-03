@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UserCreatorChannel__c</fullName>
+    <externalId>false</externalId>
+    <label>Canale Creatore Utenza</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Email</fullName>
+                <default>false</default>
+                <label>Email</label>
+            </value>
+            <value>
+                <fullName>Phone</fullName>
+                <default>false</default>
+                <label>Phone</label>
+            </value>
+            <value>
+                <fullName>Web</fullName>
+                <default>false</default>
+                <label>Web</label>
+            </value>
+            <value>
+                <fullName>APP</fullName>
+                <default>false</default>
+                <label>APP</label>
+            </value>
+            <value>
+                <fullName>Assistente web</fullName>
+                <default>false</default>
+                <label>Assistente web</label>
+            </value>
+            <value>
+                <fullName>Back office</fullName>
+                <default>false</default>
+                <label>Back office</label>
+            </value>
+            <value>
+                <fullName>Back office Teleselling</fullName>
+                <default>false</default>
+                <label>Back office Teleselling</label>
+            </value>
+            <value>
+                <fullName>Back office Vendita</fullName>
+                <default>false</default>
+                <label>Back office Vendita</label>
+            </value>
+            <value>
+                <fullName>Callback</fullName>
+                <default>false</default>
+                <label>Callback</label>
+            </value>
+            <value>
+                <fullName>Camper</fullName>
+                <default>false</default>
+                <label>Camper</label>
+            </value>
+            <value>
+                <fullName>Chat</fullName>
+                <default>false</default>
+                <label>Chat</label>
+            </value>
+            <value>
+                <fullName>Consip</fullName>
+                <default>false</default>
+                <label>Consip</label>
+            </value>
+            <value>
+                <fullName>Da PGM</fullName>
+                <default>false</default>
+                <label>Da PGM</label>
+            </value>
+            <value>
+                <fullName>HC_WEB</fullName>
+                <default>false</default>
+                <label>HC_WEB</label>
+            </value>
+            <value>
+                <fullName>Helpdesk</fullName>
+                <default>false</default>
+                <label>Helpdesk</label>
+            </value>
+            <value>
+                <fullName>IVR</fullName>
+                <default>false</default>
+                <label>IVR</label>
+            </value>
+            <value>
+                <fullName>PA</fullName>
+                <default>false</default>
+                <label>PA</label>
+            </value>
+            <value>
+                <fullName>Protocollo</fullName>
+                <default>false</default>
+                <label>Protocollo</label>
+            </value>
+            <value>
+                <fullName>ServiziSociali</fullName>
+                <default>false</default>
+                <label>ServiziSociali</label>
+            </value>
+            <value>
+                <fullName>SMS</fullName>
+                <default>false</default>
+                <label>SMS</label>
+            </value>
+            <value>
+                <fullName>SOL</fullName>
+                <default>false</default>
+                <label>SOL</label>
+            </value>
+            <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
+                <fullName>Staff</fullName>
+                <default>false</default>
+                <label>Staff</label>
+            </value>
+            <value>
+                <fullName>Supporto agenzie</fullName>
+                <default>false</default>
+                <label>Supporto agenzie</label>
+            </value>
+            <value>
+                <fullName>Supporto GDA</fullName>
+                <default>false</default>
+                <label>Supporto GDA</label>
+            </value>
+            <value>
+                <fullName>Telefono Inbound</fullName>
+                <default>false</default>
+                <label>Telefono Inbound</label>
+            </value>
+            <value>
+                <fullName>Telefono Outbound</fullName>
+                <default>false</default>
+                <label>Telefono Outbound</label>
+            </value>
+            <value>
+                <fullName>Teleselling</fullName>
+                <default>false</default>
+                <label>Teleselling</label>
+            </value>
+            <value>
+                <fullName>Vendita Business</fullName>
+                <default>false</default>
+                <label>Vendita Business</label>
+            </value>
+            <value>
+                <fullName>Vendita Condomini</fullName>
+                <default>false</default>
+                <label>Vendita Condomini</label>
+            </value>
+            <value>
+                <fullName>Vendita MM</fullName>
+                <default>false</default>
+                <label>Vendita MM</label>
+            </value>
+            <value>
+                <fullName>Vendita TopBusiness</fullName>
+                <default>false</default>
+                <label>Vendita TopBusiness</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

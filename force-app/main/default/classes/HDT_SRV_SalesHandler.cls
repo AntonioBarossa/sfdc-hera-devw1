@@ -63,11 +63,16 @@ public with sharing class HDT_SRV_SalesHandler {
                             }
                             when 'Esito OK da DL' {
                                 ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
-                                ord.SapContractActivationDate__c = Date.parse(mapRequestFields.get('DT_INIZIO_VERT'));
+                                ord.SapContractActivationDate__c = mapRequestFields.get('DT_INIZIO_VERT') != null ? Date.parse(mapRequestFields.get('DT_INIZIO_VERT')) : null;
                                 ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                             }
                             when 'Esito KO da SII' {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
+                            }
+                            when 'Esito OK da SII' {
+                                if (ordRetrieved.PrecheckResultSII__c != null || ordRetrieved.PrecheckResultSII__c == '') {
+                                    ord.PrecheckResultSII__c = 'OK';
+                                }
                             }
                             when 'Errore lavorazione SAP' {
                                 ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR');

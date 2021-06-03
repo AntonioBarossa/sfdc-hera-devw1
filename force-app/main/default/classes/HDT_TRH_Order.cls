@@ -7,7 +7,11 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
     	
     public override void beforeUpdate(){
         //Checks Phase Transition
-        
+
+
+        HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
+
+
         ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                 .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
         
@@ -37,6 +41,10 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         
         //Handle 'Plico validato Firmato' case for Order Dossier
         HDT_UTL_OrderProcess.orderPhaseManagementAfterUpdate(trigger.new,trigger.old);
+
+        // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
+        HDT_UTL_OrderProcess.orderCalulateDateUpdate(trigger.new,trigger.old);
+        // END @Picchiri HRADTR-77 Calcolo Date 01.06.21
 
     }
 

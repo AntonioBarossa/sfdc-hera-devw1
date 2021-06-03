@@ -88,7 +88,7 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
             switch on response.getStatusCode(){
 
-                when 200{
+                when 200, 201{
 
                     HDT_WRP_SuccessResponse successResponse = 
                         (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
@@ -112,7 +112,11 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
                     || process == 'Paperless'){
                         caseToUpdate.Phase__c = 'Non Inviata a SAP';
                     }
-                    caseToUpdate.Description = errorResponse.errorDetails[0].message;
+                    if(caseToUpdate != null){
+                        caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    }else{
+                        caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    }
 
                 }
 

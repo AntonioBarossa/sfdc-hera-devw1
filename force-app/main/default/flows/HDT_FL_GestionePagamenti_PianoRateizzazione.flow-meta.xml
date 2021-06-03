@@ -59,7 +59,7 @@
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
         <locationX>578</locationX>
-        <locationY>2318</locationY>
+        <locationY>2438</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -75,7 +75,7 @@
         <name>Assegna_Fase</name>
         <label>Assegna Fase</label>
         <locationX>842</locationX>
-        <locationY>2078</locationY>
+        <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -98,7 +98,7 @@
         <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
         <locationX>578</locationX>
-        <locationY>2078</locationY>
+        <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -144,7 +144,7 @@
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
         <locationX>710</locationX>
-        <locationY>1838</locationY>
+        <locationY>1958</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -161,6 +161,36 @@
         </assignmentItems>
         <connector>
             <targetReference>Processo_Approvativo</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
+        <locationX>545</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.MaxInstallmentsNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InterrogaRegoleRateizzazione.ApprovalProcess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_campi_Regole</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -234,7 +264,7 @@
         <name>Piano_Rate_Concedibile_SME</name>
         <label>Piano Rate Concedibile? (SME)</label>
         <locationX>545</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Allegato_Obbligatorio</targetReference>
         </defaultConnector>
@@ -281,7 +311,7 @@
         <name>Processo_Approvativo</name>
         <label>Processo Approvativo?</label>
         <locationX>710</locationX>
-        <locationY>1958</locationY>
+        <locationY>2078</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase</targetReference>
         </defaultConnector>
@@ -329,7 +359,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_campi_Regole</targetReference>
+                <targetReference>AssegnaValori</targetReference>
             </connector>
             <label>Trovata</label>
         </rules>
@@ -389,7 +419,7 @@
         <name>Salva_o_Conferma_0</name>
         <label>Salva o Conferma?</label>
         <locationX>1040</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -436,8 +466,7 @@
             <label>Annulla</label>
         </rules>
     </decisions>
-    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti
---&gt; Inserito screen documentale</description>
+    <description>Flow per la Gestione del processo Piano Rateizzazione del Cluster Pagamenti</description>
     <formulas>
         <name>DataPrimaScadenza</name>
         <dataType>Date</dataType>
@@ -510,7 +539,7 @@
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
         <locationX>710</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaCodiceCausale</targetReference>
@@ -552,49 +581,17 @@
         <name>Aggiorna_campi_Regole</name>
         <label>Aggiorna campi Regole</label>
         <locationX>545</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <connector>
             <targetReference>Piano_Rate_Concedibile_SME</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Get_Case.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>ApprovalProcess__c</field>
-            <value>
-                <elementReference>InterrogaRegoleRateizzazione.ApprovalProcess__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>AttachmentManagement__c</field>
-            <value>
-                <elementReference>InterrogaRegoleRateizzazione.AttachmentManagement__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>FirstExpirationDate__c</field>
-            <value>
-                <elementReference>DataPrimaScadenza</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>MaxInstallmentsNumber__c</field>
-            <value>
-                <elementReference>InterrogaRegoleRateizzazione.MaxInstallmentsNumber__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
+        <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Passa_a_Chiuso</name>
         <label>Passa a &quot;Chiuso&quot;</label>
         <locationX>50</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -642,7 +639,7 @@
         <name>Passa_a_Da_Inviare</name>
         <label>Passa a &quot;Da Inviare&quot;</label>
         <locationX>842</locationX>
-        <locationY>2198</locationY>
+        <locationY>2318</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -659,7 +656,7 @@
         <name>Passa_a_Sospeso</name>
         <label>Passa a Sospeso</label>
         <locationX>314</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -686,7 +683,7 @@
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>578</locationX>
-        <locationY>2198</locationY>
+        <locationY>2318</locationY>
         <connector>
             <targetReference>Sottometti_ad_Approvazione</targetReference>
         </connector>
@@ -696,7 +693,7 @@
         <name>Inserimento_Allegato_Obbligatorio</name>
         <label>Inserimento Allegato Obbligatorio</label>
         <locationX>1040</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1030,7 +1027,7 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>710</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1159,7 +1156,7 @@
         </connector>
         <fields>
             <name>RuleNotFoundMessage</name>
-            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Regola non Trovata.&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; premere Avanti se si desidera chiudere il case in KO&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Piano Rata non Concedibile&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Premere il tasto Indietro per modificare i dati; premere Avanti se si desidera chiudere il case in KO&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1216,7 +1213,7 @@
             <targetReference>Il_Case_in_Bozza</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
@@ -1246,7 +1243,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>1106</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
