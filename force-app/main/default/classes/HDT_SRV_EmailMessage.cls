@@ -8,12 +8,35 @@ public with sharing class HDT_SRV_EmailMessage {
 
 
     public static void checkEmailSender(List<EmailMessage> emailList){
+        Map<SObject,Id> mapEmailCase = new Map<SObject,Id>();
         String userEmail = UserInfo.getUserEmail();
+        Id parentId;
+        String objectName = '';
         for(EmailMessage email : emailList){
             String fromAddress = email.FromAddress;
             if (fromAddress != null && fromAddress.equals(userEmail)) {
                 email.addError('Non è possibile inviare la comunicazione utilizzando la propria Email personale come mittente. Selezionare un mittente alternativo.');
             }
+            parentId = email.parentId;
+            if(parentId != null){
+                objectName = parentId.getSobjectType().getDescribe().getName();
+            }else {
+                objectName = '';
+            }
+            if(String.isNotBlank(objectName)){
+                switch on objectName{
+
+                    when 'Case'{
+                        mapEmailCase.put(email, parentId);
+                    }
+                    when else{
+                        //no other cases yet
+                    }
+                }
+            }    
+        }
+        if(mapEmailCase.size()>0){
+            manageEmailCase(mapEmailCase);
         }
     }
 
@@ -61,7 +84,11 @@ public with sharing class HDT_SRV_EmailMessage {
                 Case caseRecord = mapIdCase.get(email.ParentId);
                 if(caseRecord.Type == 'Comunicazione di Fallimento'
                 || caseRecord.Type == 'Dichiarazione di intento'){
-                    caseRecord.Phase__c = 'Risposta Ricevuta';
+                    if(caseRecord.Phase__c == 'In attesa risposta Mail'){
+                        caseRecord.Phase__c = 'Risposta Ricevuta';
+                    }else{
+                        caseRecord.Phase__c = 'In attesa risposta Mail';
+                    }
                 }
                 caseToUpdate.add(caseRecord);
             }
