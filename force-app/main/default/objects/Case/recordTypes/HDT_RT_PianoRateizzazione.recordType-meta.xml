@@ -2168,15 +2168,19 @@
     <picklistValues>
         <picklist>DepositPaymentMode__c</picklist>
         <values>
-            <fullName>In Compartecipazione</fullName>
+            <fullName>Bollettino postale</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Totalmente Dal Cliente</fullName>
+            <fullName>Bonifico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Totalmente da Istituzioni pubbliche</fullName>
+            <fullName>POS Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless</fullName>
             <default>false</default>
         </values>
     </picklistValues>

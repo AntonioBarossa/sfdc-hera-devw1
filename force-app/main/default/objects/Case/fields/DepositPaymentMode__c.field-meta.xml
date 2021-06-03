@@ -39,19 +39,19 @@
             <value>
                 <fullName>In Compartecipazione</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>In Compartecipazione</label>
             </value>
             <value>
                 <fullName>Totalmente da Istituzioni pubbliche</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Totalmente da Istituzioni pubbliche</label>
             </value>
             <value>
                 <fullName>Totalmente Dal Cliente</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
+                <isActive>true</isActive>
                 <label>Totalmente Dal Cliente</label>
             </value>
         </valueSetDefinition>
