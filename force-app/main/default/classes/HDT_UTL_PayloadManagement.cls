@@ -1,5 +1,6 @@
 public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_DocumentalManagementInterface{
-   public String execute(String method,Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+    public HDT_QR_PayloadManagement queryClass = new HDT_QR_PayloadManagement();
+    public String execute(String method,Map<String,List<sObject>> inputs, Map<String,Object> formParams){
         String result = '';
         switch on method {
             when 'calculateCompanyCode' {
@@ -16,15 +17,26 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         //TODO: Gestione Account e Estratto Conto
         String context = (String) formParams.get('Contesto');
         String companyDesc = '';
+        String city = '';
         switch on context {
             when 'Order' {
+                companyDesc = 'Hera Comm S.p.A.';
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
+                city = HDT_UTL_DocumentalManagement.getValue('Order', 'SupplyCity__c', 0, inputs, formParams);
+                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city);
+                if (cityExceptionList != null && cityExceptionList.size()>0) {
+                    companyDesc = 'Hera Comm S.p.A.';
+                }
             }
             when 'Case'{
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Case', 'SalesCompany__c', 0, inputs, formParams);
             }
             when 'Account'{
+                //gestire in base al compani owner
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Account', 'CompanyOwner__c', 0, inputs, formParams);
+                if(companyDesc.equalsIgnoreCase('HERA COMM')){
+                    companyDesc = 'Hera Comm S.p.A.';
+                }
             }
             when else {
                 companyDesc = '';
