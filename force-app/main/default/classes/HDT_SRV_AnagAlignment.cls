@@ -256,7 +256,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputMap.put('type', 'Allineamento Anagrafica');
         inputMap.put('accountId', accountId);
         inputMap.put('contactId', acr.ContactId);
-        inputMap.put('servicePointId', servicePoint);
+        inputMap.put('servicePointId', servicePoint.Id);
         inputMap.put('HerokuPracticeCode__c', herokuCode);
 
         HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
