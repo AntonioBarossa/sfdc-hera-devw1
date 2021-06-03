@@ -4,7 +4,7 @@
     <assignments>
         <name>Assegna_Fase_completata_0</name>
         <label>Assegna Fase completata</label>
-        <locationX>330</locationX>
+        <locationX>578</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
@@ -27,8 +27,8 @@
     <assignments>
         <name>Assegna_Fase_completata_0_0</name>
         <label>Assegna Fase completata</label>
-        <locationX>66</locationX>
-        <locationY>518</locationY>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -50,7 +50,7 @@
     <decisions>
         <name>Annulla_o_Conferma</name>
         <label>Annulla o Conferma?</label>
-        <locationX>462</locationX>
+        <locationX>710</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Subflow_Annullamento</targetReference>
@@ -73,9 +73,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Annulla_o_Conferma_0</name>
+        <label>Annulla o Conferma?</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Subflow_Annullamento_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Annulla</defaultConnectorLabel>
+        <rules>
+            <name>Conferma_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ScreenAltreInformative.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Fase_completata_0_0</targetReference>
+            </connector>
+            <label>Conferma</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Tipologia_Informative</name>
         <label>Tipologia Informative?</label>
-        <locationX>176</locationX>
+        <locationX>292</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>hdtInformativeScreenComponent_0</targetReference>
@@ -137,7 +162,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>176</locationX>
+        <locationX>292</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -158,14 +183,14 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>176</locationX>
+        <locationX>292</locationX>
         <locationY>1070</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <screens>
         <name>hdtInformativeScreenComponent_0</name>
         <label>hdtInformativeScreenComponent</label>
-        <locationX>462</locationX>
+        <locationX>710</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -264,13 +289,13 @@
     <screens>
         <name>ScreenAltreInformative_0</name>
         <label>ScreenAltreInformative</label>
-        <locationX>66</locationX>
+        <locationX>182</locationX>
         <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Fase_completata_0_0</targetReference>
+            <targetReference>Annulla_o_Conferma_0</targetReference>
         </connector>
         <fields>
             <name>DisplayText</name>
@@ -329,6 +354,12 @@
                     <stringValue>FINISH</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -337,7 +368,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>166</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -347,7 +378,32 @@
     <subflows>
         <name>Subflow_Annullamento</name>
         <label>Subflow Annullamento</label>
-        <locationX>594</locationX>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
+        <name>Subflow_Annullamento_0</name>
+        <label>Subflow Annullamento</label>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
