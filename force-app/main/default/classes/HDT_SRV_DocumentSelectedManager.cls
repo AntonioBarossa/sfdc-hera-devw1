@@ -80,7 +80,13 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
-                    singleDocument.Name = numeroFattura != null? numeroFattura:numeroDocumento;
+                    if(String.isNotBlank(numeroFattura)){
+                        singleDocument.Name = numeroFattura;
+                    }else if(String.isNotBlank(numeroDocumento)) {
+                        singleDocument.Name = numeroDocumento;
+                    }else {
+                        singleDocument.Name = getRiferimentoFattura(secondoLivelloList);
+                    }
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
@@ -119,6 +125,24 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                 }
             }
             return raiFee;
+        } catch (Exception ex) {
+            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            return null;
+        }
+    }
+
+    private static String getRiferimentoFattura(List<Object> secondoLivelloList){
+        if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
+        try {
+            String riferimentoFattura = '';
+            for(Object singleRecord : secondoLivelloList){
+                Map<String, Object> secondolivello = (Map<String, Object>) singleRecord;
+                riferimentoFattura = (String) secondolivello.get('riferimentoFattura');
+                if (String.isNotBlank(riferimentoFattura)) {
+                    return riferimentoFattura;
+                }
+            }
+            return riferimentoFattura;
         } catch (Exception ex) {
             System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
             return null;
