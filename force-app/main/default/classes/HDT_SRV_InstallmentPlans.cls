@@ -72,7 +72,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
-            'tipoPiano' => currentCase.TypeInstallmentPlan__c,
+            'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
             'totale' => currentCase.AmountToPayInInstallments__c,
             'dataInizio' => currentCase.FirstExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
@@ -92,8 +92,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             documentsListMap.add(
                 new Map<String, Object>{
                     'numeroBollettino' => document.Bill__c,
-                    'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
-                    'numeroFatturaRata' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
+                    'numeroDocumento' => document.DocumentNumber__c,
+                    // 'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
+                    // 'numeroFatturaRata' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
                     'scadenzaRata' => document.ExpirationDate__c,
                     'tipoDocumento' => document.Type__c
                 }
@@ -113,6 +114,42 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans -->' +pretty);
 
         return pretty;
+    }
+
+    /**
+     * Transcodifica il tipo di piano rata inserito su SFDC nel codice attesa da SAP.
+     * Input richiesti: tipo piano rata e applicazione interessi.
+     */
+    private String transcodeInstallmentPlan(String typeInstallmentPlan, Boolean applyInterests) {
+        if (typeInstallmentPlan == null) {
+            return '';
+        }
+        
+        String sapCode = '';
+
+        if (typeInstallmentPlan.equals('Autorita')){
+            sapCode = 'Z001';
+        } else if (typeInstallmentPlan.equals('Piano Bonus')) { // Piano Bonus deprecato o non in ambito Wave 1
+            if (applyInterests) {
+                sapCode = 'Z010'; 
+            } else {
+                sapCode = 'Z011'; 
+            }
+        } else if (typeInstallmentPlan.equals('Autorita idrico')) { // Autorita idrico non in ambito Wave 1
+            if (applyInterests) {
+                sapCode = 'Z012'; 
+            } else {
+                sapCode = 'Z013'; 
+            }
+        } else {
+            if (applyInterests) {
+                sapCode = 'Z002'; 
+            } else {
+                sapCode = 'Z003'; 
+            }
+        }
+        
+        return sapCode;
     }
 
 
