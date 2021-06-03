@@ -13,11 +13,11 @@
 @isTest 
 public class HDT_UTL_FormatTextScriptTest {
 
-
+ 
     @isTest public static void testScriptWithDataBinding(){
-        ConfigurazioneScript__c config = new ConfigurazioneScript__c(Name='my Script');
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script');
         insert config;
-        ConfigurazioneScript__c configChild = new ConfigurazioneScript__c(Name='my ChildScript', ParentSection__c=config.id);
+        ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript', ParentSection__c=config.id);
         insert configChild;
         HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput();
         inp.textScript='<<{ name }>> <<{ParentSection__r.Name}>>';
@@ -35,9 +35,9 @@ public class HDT_UTL_FormatTextScriptTest {
     }
 
     @isTest public static void testScriptWithoutDataBinding(){
-        ConfigurazioneScript__c config = new ConfigurazioneScript__c(Name='my Script');
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script');
         insert config;
-        ConfigurazioneScript__c configChild = new ConfigurazioneScript__c(Name='my ChildScript', ParentSection__c=config.id);
+        ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript', ParentSection__c=config.id);
         insert configChild;
         HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput();
         inp.recordId=configChild.id;
@@ -47,9 +47,9 @@ public class HDT_UTL_FormatTextScriptTest {
     }
 
     @isTest public static void testScriptExceptionHandler(){
-        ConfigurazioneScript__c config = new ConfigurazioneScript__c(Name='my Script');
+        ScriptConfig__c config = new ScriptConfig__c(Name='my Script');
         insert config;
-        ConfigurazioneScript__c configChild = new ConfigurazioneScript__c(Name='my ChildScript');
+        ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript');
         insert configChild;
         HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput();
         inp.recordId=configChild.id;
@@ -59,7 +59,7 @@ public class HDT_UTL_FormatTextScriptTest {
         }catch(Exception e){
             system.debug(e.getTypeName());
         }
-    }
+    } 
 
     
 }

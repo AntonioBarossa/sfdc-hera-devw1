@@ -71,9 +71,10 @@ public with sharing class HDT_UTL_FormatTextScript {
         List<String> relationshipNames = fieldPath.split('\\.');
         //SObject relation=scriptRecordFull;
         String fieldValue;
-        if(relationshipNames[0]=='global'){
+        if(relationshipNames[0]=='globaltag'){
             //not field but functions like "today" or other data, global.something bind "Global Tags"
             //return *valore globale da tornare, l'identificativo è relationshipNames[1]*
+            //return getGlobalTagValues(relationshipNames[1]);
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
             String fieldOrRelation = relationshipNames[indexParentField];
@@ -135,6 +136,20 @@ public with sharing class HDT_UTL_FormatTextScript {
             querySelectStatement=querySelectStatement+', '+field;
         }
         return 'SELECT ' + (querySelectStatement.removeStart(','));
+    }
+
+    @TestVisible
+    private static String getGlobalTagValues(String tagName){
+        String tagValue='';
+        switch on tagName{
+            when 'today'{
+                tagValue=Date.Today().format();
+            }
+            when else{
+                tagValue='*valore mancante*';
+            }
+        }
+        return tagValue;
     }
 
     private class HDT_UTL_FormatTextScriptException extends Exception {}
