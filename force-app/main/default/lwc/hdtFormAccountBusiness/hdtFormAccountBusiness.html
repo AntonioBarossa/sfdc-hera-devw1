@@ -59,19 +59,6 @@
                                     <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required={makerequired}>
                                     </lightning-input>
                                 </div>
-                                <div
-                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <template if:true={legalFormOptions.data}>
-                                        <lightning-combobox data-id="legalForm" name="tipoformagiuridica"
-                                            label="Tipo Forma Giuridica" placeholder="Seleziona il tipo Forma Giuridica"
-                                            options={legalFormOptions.data.values} required>
-                                        </lightning-combobox>
-<!--                                         <lightning-combobox data-id="legalForm" name="tipoformagiuridica"
-                                        label="Tipo Forma Giuridica" placeholder="Seleziona il tipo Forma Giuridica"
-                                        options={legalFormOptions.data.values} required>
-                                    </lightning-combobox> -->
-                                    </template>
-                                </div>
                             </div>
                             <div class="slds-col slds-size_1-of-2">
                                 <div

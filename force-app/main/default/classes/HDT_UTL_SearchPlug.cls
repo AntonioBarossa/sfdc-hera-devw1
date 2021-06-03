@@ -177,6 +177,18 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         Set<Id> idToFilterByMunicipalities = new Set<Id>();
         List<String> familyList = getFamilyList();
 
+        
+        if(checkIfIamAsuperUser(quote.SuperUser__c)){
+            List<String> statusList = new List<String>{'Vendibile', 'Scaduta'};
+            List<Product2> allAvailableProducts;
+            allAvailableProducts = HDT_QR_SearchPlug.getAllAvailableProducts(allAvailableProducts, familyList, statusList);
+
+            for(Product2 p : allAvailableProducts){
+                idList.add(p.Id);
+            }
+            return idList;
+        }
+
         //>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...
         System.debug('>>> FILTER - STEP 1 > FILTER ONLY Eligible Criteria...');
         //  Here we filter these fields:
@@ -238,7 +250,7 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
         System.debug('>>> FILTER - STEP 3 > FILTER ONLY prodUCT Without Criteria...');
         List<Product2> prodWithoutCriteria;
         prodWithoutCriteria = HDT_QR_SearchPlug.getEligibilitiesCriteriaFromProduct(prodWithoutCriteria, familyList, 'Vendibile');
-        
+
         if(!String.isEmpty(quote.SupplyCity__c)){
             for(Product2 p : prodWithoutCriteria){
                 if(p.EligibilitiesCriteria__r.size() == 0){
@@ -255,6 +267,16 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
 
         return idList;
 
+    }
+
+    public static Boolean checkIfIamAsuperUser(String superUser){
+        if(!String.isEmpty(superUser) && superUser.equalsIgnoreCase('Y')){
+            System.debug('>>> I AM A SUPER USER');
+            return true;
+        } else {
+            System.debug('>>> I AM NOT A SUPER USER');
+            return false;
+        }
     }
 
     public static Boolean checkDecimalCriteria(Decimal min, Decimal max, Decimal value){

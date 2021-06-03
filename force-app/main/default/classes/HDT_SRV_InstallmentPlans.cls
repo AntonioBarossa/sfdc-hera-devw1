@@ -68,15 +68,16 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans Case--> '+currentCase);
         System.debug('SRV_InstallmentPlans Documetns--> '+documents);
 
+        String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
             'tipoPiano' => currentCase.TypeInstallmentPlan__c,
             'totale' => currentCase.AmountToPayInInstallments__c,
-            'numeroRata' => currentCase.InstallmentPlanNumber__c,
             'dataInizio' => currentCase.FirstExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
-            'contestazioneCliente' => currentCase.ApplicationInterests__c,
-            'modalitaPagamentoAcconto' => currentCase.DepositPaymentMode__c
+            'contestazioneCliente' => currentCase.Reason__c,
+            'modalitaPagamentoAcconto' => depositPaymentMode
         };
 
         caseListMap.add(caseMap);
