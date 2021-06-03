@@ -10,23 +10,6 @@
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Segnalato a/da Vertici Aziendali e/o Enti</fullName>
-                <default>false</default>
-                <label>Segnalato a/da Vertici Aziendali e/o Enti</label>
-            </value>
-            <value>
-                <fullName>Minaccia visibilità media/Disdetta</fullName>
-                <default>false</default>
-                <label>Minaccia visibilità media/Disdetta</label>
-            </value>
-            <value>
-                <fullName>Cliente Aggressivo</fullName>
-                <default>false</default>
-                <label>Cliente Aggressivo</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_SeverityAttribute</valueSetName>
     </valueSet>
 </CustomField>
