@@ -18,8 +18,8 @@
         <dataType>DateTime</dataType>
         <expression>DATETIMEVALUE(TODAY())</expression>
     </formulas>
-    <interviewLabel>Activity Tracker - Quote {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Activity Tracker - Quote</label>
+    <interviewLabel>Account Tracker - Individual {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Activity Tracker - Individual</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -117,7 +117,7 @@
                 <booleanValue>true</booleanValue>
             </value>
         </filters>
-        <object>SBQQ__Quote__c</object>
+        <object>Individual</object>
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordBeforeSave</triggerType>
     </start>

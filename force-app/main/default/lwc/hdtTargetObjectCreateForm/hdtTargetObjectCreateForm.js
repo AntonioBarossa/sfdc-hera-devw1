@@ -16,7 +16,8 @@ import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT
 
 
 export default class HdtTargetObjectCreateForm extends LightningElement {
-    @api spNew
+    @api herokuAddressResponse;
+    @api spNew;
     @api recordtype;
     @api accountid;
     @api selectedservicepoint;
@@ -782,6 +783,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         updateServicePoint(){
         console.log('update START');
         console.log('servicePointRetrievedData : ' + JSON.stringify(this.servicePointRetrievedData));
+        console.log('theRecord : ' + JSON.stringify(this.theRecord));
+
         if(this.servicePointRetrievedData!= undefined){
 
             if(this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']){
@@ -814,6 +817,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if(this.servicePointRetrievedData['SupplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']){
                 this.servicePointRetrievedData['SupplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
             }
+            if(this.servicePointRetrievedData['SupplyPlaceCode__c'] != this.theRecord['Codice Localita']){
+                this.servicePointRetrievedData['SupplyPlaceCode__c'] = this.theRecord['Codice Localita'];
+            }
+            if(this.servicePointRetrievedData['SupplyPlace__c'] != this.theRecord['Localita']){
+                this.servicePointRetrievedData['SupplyPlace__c'] = this.theRecord['Localita'];
+            }
             
         }
 
@@ -821,8 +830,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     updateSubmitedField(){
-        console.log(' create START');
-        console.log(' create START' + JSON.stringify(this.allSubmitedFields));
+        console.log(' updateSubmitedField START');
+        console.log(' updateSubmitedField allSubmitedFields' + JSON.stringify(this.allSubmitedFields));
+        console.log(' updateSubmitedField theRecord' + JSON.stringify(this.theRecord));
         if(this.allSubmitedFields!= undefined){
 
             if(this.allSubmitedFields['SupplyStreet__c'] != this.theRecord['Via']){
@@ -854,6 +864,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             }
             if(this.allSubmitedFields['SupplyIsAddressVerified__c'] != this.theRecord['Flag Verificato']){
                 this.allSubmitedFields['SupplyIsAddressVerified__c'] = this.theRecord['Flag Verificato'];
+            }
+            if(this.allSubmitedFields['SupplyPlaceCode__c'] != this.theRecord['Codice Localita']){
+                this.allSubmitedFields['SupplyPlaceCode__c'] = this.theRecord['Codice Localita'];
+            }
+            if(this.allSubmitedFields['SupplyPlace__c'] != this.theRecord['Localita']){
+                this.allSubmitedFields['SupplyPlace__c'] = this.theRecord['Localita'];
             }
         }
 
@@ -1109,5 +1125,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
         });
 									 
+    }
+
+
+    handleResponseHeroku(event){
+        console.log('handleResponseHeroku event detail : ' + JSON.stringify(event.detail));
+        this.herokuAddressResponse=event.detail;
     }
 }

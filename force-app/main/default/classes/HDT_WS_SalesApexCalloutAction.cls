@@ -77,7 +77,9 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
 
                 if (responseService.responses[0].objects == null) {
                     // ord.DiscardReason__c = responseService.responses[0].description;
-                    ord.Phase__c = 'Comunicazione verso Heroku KO';
+                    //ord.Phase__c = 'Comunicazione verso Heroku KO';
+
+                    ord.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
                     HDT_SRV_Order ordSrv = new HDT_SRV_Order();
                     ordSrv.updateRecord(ord);
                 } else {
@@ -93,7 +95,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             System.debug('********INSIDE RESULT OK');
                             if(fieldValueResponse.get('FASE') != null){
                                 System.debug('********INSIDE FASE NOT NULL');
-                                ord.Phase__c = fieldValueResponse.get('FASE');
+                                //ord.Phase__c = fieldValueResponse.get('FASE');
+                                ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
                                 ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
                                 System.debug('********AFTER UPDATE');
                             }
@@ -102,7 +105,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             //INIZIO SVILUPPI EVERIS
                             System.debug('Ricevuto KO Start');
                             ord.DiscardReason__c = fieldValueResponse.get('errorMessage');
-                            ord.Phase__c = 'Comunicazione verso Heroku KO';
+                            //ord.Phase__c = 'Comunicazione verso Heroku KO';
+                            ord.TecnicalPhase__c = 'Comunicazione verso Heroku KO';
                             ord.description = fieldValueResponse.get('errorMessage');
                             System.debug('Ricevuto KO End');
                             //FINE SVILUPPI EVERIS
