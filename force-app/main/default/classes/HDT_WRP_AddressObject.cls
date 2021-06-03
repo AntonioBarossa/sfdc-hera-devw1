@@ -11,6 +11,9 @@ public with sharing class HDT_WRP_AddressObject {
     @AuraEnabled Public String CodiceViaStradarioSAP { get; set; }
     @AuraEnabled Public Boolean FlagForzato { get; set; }
     @AuraEnabled Public Boolean FlagVerificato { get; set; }
+    @AuraEnabled Public String Localita { get; set; }
+    @AuraEnabled Public String CodiceLocalita { get; set; }
+
     
     
     
@@ -20,7 +23,7 @@ public with sharing class HDT_WRP_AddressObject {
     
     public HDT_WRP_AddressObject(String Stato, string Provincia, string Comune, 
                                     string CAP, string Via, string Civico, 
-                                    string CodiceComuneSAP, string EstensCivico, string CodiceViaStradarioSAP,Boolean FlagForzato,Boolean FlagVerificato) 
+                                    string CodiceComuneSAP, string EstensCivico, string CodiceViaStradarioSAP,Boolean FlagForzato,Boolean FlagVerificato,String Localita,String CodiceLocalita) 
     {
 
         this.Stato = Stato;
@@ -34,7 +37,8 @@ public with sharing class HDT_WRP_AddressObject {
         this.CodiceViaStradarioSAP = CodiceViaStradarioSAP;
         this.FlagForzato = FlagForzato;
         this.FlagVerificato = FlagVerificato;
-        
+        this.Localita= Localita;
+        this.CodiceLocalita = CodiceLocalita;
     }
 
     @AuraEnabled(cacheable=true)
