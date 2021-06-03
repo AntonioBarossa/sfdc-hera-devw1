@@ -188,7 +188,7 @@
         <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedLists>
-        <<fields>NAME</fields>
+        <fields>NAME</fields>
         <fields>Amount__c</fields>
         <fields>DocumentResidue__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
