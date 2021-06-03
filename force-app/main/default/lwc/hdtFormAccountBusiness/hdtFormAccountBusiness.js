@@ -85,11 +85,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             { label: 'Titolare', value: 'Titolare' },
             { label: 'Legale rappresentante', value: 'Legale rappresentante' },
             { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' },
-            { label: 'Contatto secondario', value: 'Contatto secondario' },
-            { label: 'Delegato', value: 'Delegato' },
-            { label: 'Azienda', value: 'Azienda' }
-            
+            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }
         ];
     }
     closeModal() {
@@ -428,7 +424,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         fiscalCodes : prova
                     }).then((response) => {
                         console.log("LOG12");
-                        let fiscData= response.Account;
+                        let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
                             this.gender= fiscData.gender;
                         }
@@ -438,7 +434,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
                             this.birthPlace= fiscData.birthPlace;
                         }
-                        console.log("LOG13");
+                        console.log("LOG13:");
+                        console.log("LOG13:" + businessName.value);
                         dataAccount={
                             "businessName" : businessName.value,
                             "vatNumber" : vatNumber.value,
@@ -508,7 +505,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     }).catch((errorMsg) => {
                         console.log("LOG12Error");
                         const event = new ShowToastEvent({
-                            message: 'Entra un valido codice fiscale!',
+                            message: 'Inserire un codice fiscale valido',
                             variant: 'error',
                             mode: 'dismissable'
                         });
