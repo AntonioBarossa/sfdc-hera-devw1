@@ -250,8 +250,8 @@
     <recordUpdates>
         <name>Set_Sottoprocesso</name>
         <label>Set Sottoprocesso</label>
-        <locationX>1451</locationX>
-        <locationY>154</locationY>
+        <locationX>1406</locationX>
+        <locationY>158</locationY>
         <connector>
             <targetReference>Selezione_Amministratore</targetReference>
         </connector>
@@ -382,7 +382,7 @@
     <screens>
         <name>Inserimento_Indirizzo</name>
         <label>Inserimento Indirizzo</label>
-        <locationX>2114</locationX>
+        <locationX>2009</locationX>
         <locationY>494</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -496,14 +496,19 @@
     <screens>
         <name>Selezione_Amministratore</name>
         <label>Selezione Amministratore</label>
-        <locationX>1717</locationX>
-        <locationY>154</locationY>
+        <locationX>1997</locationX>
+        <locationY>158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>Check_Next_Step2</targetReference>
         </connector>
+        <fields>
+            <name>DT3</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Selezionare il nuovo Amministratore:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>hdtContactSelectionFlow</name>
             <extensionName>c:hdtContactSelectionFlow</extensionName>
@@ -541,7 +546,7 @@
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
-                    <stringValue>Avanti</stringValue>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
