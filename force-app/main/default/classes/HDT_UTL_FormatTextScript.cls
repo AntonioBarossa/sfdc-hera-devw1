@@ -30,6 +30,7 @@ public with sharing class HDT_UTL_FormatTextScript {
     @InvocableMethod
     public static List<String> formatText(List<HDT_WRP_FlowInput> inputs){
         //This Function get a Script record, get his text and binds the dynamic data from DB to it
+        String finalOutput ='';
 
         String scriptTxt = ' '+inputs[0].textScript+' ';
         List<String> fieldsToMatch = getDataBinded(scriptTxt);
@@ -52,10 +53,10 @@ public with sharing class HDT_UTL_FormatTextScript {
                                 +query + ' # MESSAGE: '+e.getMessage());
                 }
             }
-            return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData).trim()};
+            finalOutput = finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData);
+            return new List<String>{finalOutput};
         }
-
-        return new List<String>{scriptTxt.trim()};
+        return new List<String>{scriptTxt.trim().replaceAll('\n', '<br/>')};
         
     }
 
@@ -80,7 +81,7 @@ public with sharing class HDT_UTL_FormatTextScript {
         if(relationshipNames[0]=='globaltag'){
             //not field but functions like "today" or other data, global.something bind "Global Tags"
             //return *valore globale da tornare, l'identificativo è relationshipNames[1]*
-            return getGlobalTagValues(relationshipNames[1]);
+            return getGlobalTagValues(relationshipNames);
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
             String fieldOrRelation = relationshipNames[indexParentField];
@@ -150,11 +151,16 @@ public with sharing class HDT_UTL_FormatTextScript {
     }
 
     @TestVisible
-    private static String getGlobalTagValues(String tagName){
+    private static String getGlobalTagValues(List<String> relationshipNames){
+        String tagName=relationshipNames[1];
+
         String tagValue='';
         switch on tagName{
             when 'today'{
                 tagValue=Date.Today().format();
+            }
+            when 'section__d'{
+                tagValue='\n'+relationshipNames[2].replace('_', ' ')+'\n';
             }
             when else{
                 tagValue='*valore mancante*';

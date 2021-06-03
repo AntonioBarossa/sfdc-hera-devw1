@@ -13,32 +13,34 @@ Modified By: fdefelice
     <template if:true={buttonLabel}>
         <lightning-button label={buttonLabel} onclick={showModal}> </lightning-button>
     </template>
-	<template if:true={openModal}>
-		<div class="slds-modal slds-fade-in-open slds-backdrop">
-			<div class="slds-modal__container">
-				<!------HEADER Section-->
-				<div class="slds-modal__header">
-					<!-- <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+    <template if:true={openModal}>
+        <div class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                <!------HEADER Section-->
+                <div class="slds-modal__header">
+                    <!-- <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
 						variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
 					</lightning-button-icon> -->
-					<h2>SCRIPT {buttonLabel}</h2>
-				</div>
-				<!------Body Section-->
-				<div class="slds-modal__content slds-p-around_medium">
-						<P>Hello guys, welcome to salesforcepoint.com. <br>
-                            This is the basic lightning web component Modal popup.
-						</P>
-                <lightning-input type="url" label="Link" name="disabledLinkReitek" disabled value={linkReitek} ></lightning-input>
+                    <h2>SCRIPT {buttonLabel}</h2>
+                </div>
+                <!------Body Section-->
+                <div class="slds-modal__content slds-p-around_medium">
+                    <P>Hello guys, welcome to salesforcepoint.com. <br>
+                        This is the basic lightning web component Modal popup.
+                    </P>
+                    <lightning-input type="url" label="Link" name="disabledLinkReitek" disabled value={linkReitek}>
+                    </lightning-input>
 
-				</div>
-				<!------Footer Section-->
-				<div class="slds-modal__footer">
-					<lightning-button icon-name="utility:close" label="indietro" onclick={closeModal}>
-					</lightning-button>
-                    <lightning-button icon-name="utility:check" label="conferma" disabled variant="brand" onclick={saveRecLink} data-id="scriptModalBt">
-					</lightning-button>
-				</div>
-			</div>
-		</div>
-	</template>
+                </div>
+                <!------Footer Section-->
+                <div class="slds-modal__footer">
+                    <lightning-button icon-name="utility:close" label="indietro" onclick={closeModal}>
+                    </lightning-button>
+                    <lightning-button icon-name="utility:check" label="conferma" disabled variant="brand"
+                        onclick={saveRecLink} data-id="scriptModalBt">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </template>
 </template>
