@@ -459,8 +459,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
+        console.log('Keltin: ', this.template.querySelector("[data-id='SubjectCode__c']").value);
+
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-            && this.template.querySelector("[data-id='SubjectCode__c']").value !== null && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7) {
+        && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
+        && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7
+        && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
@@ -615,6 +619,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.dataToSubmit['InvoicingStreetNumber__c'] != this.wrapAddressObject['Civico']){
             this.dataToSubmit['InvoicingStreetNumber__c'] = this.wrapAddressObject['Civico'];
         }
+
+        if(this.dataToSubmit['InvoicingCityCode__c'] != this.wrapAddressObject['CodiceComuneSAP']){
+            this.dataToSubmit['InvoicingCityCode__c'] = this.wrapAddressObject['CodiceComuneSAP'];
+        }
+        if(this.dataToSubmit['InvoicingStreetCode__c'] != this.wrapAddressObject['CodiceViaStradarioSAP']){
+            this.dataToSubmit['InvoicingStreetCode__c'] = this.wrapAddressObject['CodiceViaStradarioSAP'];
+        }
         
         this.isVerifiedAddress = this.wrapAddressObject['Flag Verificato'];
         this.isForeignAddress = this.wrapAddressObject['Indirizzo Estero'];
@@ -643,6 +654,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
         if(this.cloneObject['InvoicingStreetNumber__c'] != undefined){
             this.wrapAddressObject['Civico'] = this.cloneObject['InvoicingStreetNumber__c'];
+        }
+
+        if(this.cloneObject['InvoicingCityCode__c'] != undefined){
+             this.wrapAddressObject['CodiceComuneSAP'] = this.cloneObject['InvoicingCityCode__c'];
+        }
+        if(this.cloneObject['InvoicingStreetCode__c'] != undefined){
+             this.wrapAddressObject['CodiceViaStradarioSAP'] = this.cloneObject['InvoicingStreetCode__c'];
         }
 
         this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObject);
