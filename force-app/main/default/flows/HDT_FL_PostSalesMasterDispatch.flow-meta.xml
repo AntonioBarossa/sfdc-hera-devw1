@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>contesto</name>
+            <value>
+                <elementReference>Context</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>createDocuments</name>
             <value>
                 <elementReference>createDocuments</elementReference>
@@ -26,7 +32,7 @@
         <inputParameters>
             <name>method</name>
             <value>
-                <stringValue>manageDocuments</stringValue>
+                <stringValue>manageDocumentsInformative</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -2653,6 +2659,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Titolare</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
