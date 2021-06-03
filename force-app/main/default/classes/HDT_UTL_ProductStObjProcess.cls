@@ -1,4 +1,4 @@
-public inherited sharing class HDT_UTL_Product2Process {
+public inherited sharing class HDT_UTL_ProductStObjProcess {
 
     public static Boolean skipTrigger(String triggerName){
         
@@ -31,7 +31,7 @@ public inherited sharing class HDT_UTL_Product2Process {
 
     }
 
-    public static HDT_WRP_Product2Process.HDT_WRP_StatusResponse changeStatusHandler(HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse, String productId, Product2 oldProduct, Product2 newProduct, Integer prodOpt, Integer techOff){
+    public static HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse changeStatusHandler(HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse statusResponse, String productId, Product2 oldProduct, Product2 newProduct, Integer prodOpt, Integer techOff){
 
         String oldStatus = oldProduct.Status__c;
         String newStatus = newProduct.Status__c;
@@ -41,7 +41,7 @@ public inherited sharing class HDT_UTL_Product2Process {
         String canceled = 'Annullata';
         String expired = 'Scaduta';
 
-        statusResponse = new HDT_WRP_Product2Process.HDT_WRP_StatusResponse();
+        statusResponse = new HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse();
         statusResponse.success = false;
         statusResponse.message = 'Cambio stato non consentito';
 

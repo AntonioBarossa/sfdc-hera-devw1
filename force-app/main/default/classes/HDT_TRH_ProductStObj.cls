@@ -1,8 +1,8 @@
-public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
+public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
 
-        if(HDT_UTL_Product2Process.skipTrigger('HDT_Product2')){
+        if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_Product2')){
             return;
         }
 
@@ -15,7 +15,7 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
     public override void beforeUpdate(){
         
-        if(HDT_UTL_Product2Process.skipTrigger('HDT_Product2')){
+        if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_Product2')){
             return;
         }
 
@@ -25,10 +25,10 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
         //allUniqueProductCodeSet = checkProduct2Duplicate(allUniqueProductCodeSet);
 
         Set<Id> productIds = Trigger.NewMap.keySet();
-        productOptionMap = HDT_UTL_Product2Process.generateProductOptionMap(productOptionMap, productIds);
-        technicalOfferMap = HDT_UTL_Product2Process.generateTechnicalOfferMap(technicalOfferMap, productIds);
+        productOptionMap = HDT_UTL_ProductStObjProcess.generateProductOptionMap(productOptionMap, productIds);
+        technicalOfferMap = HDT_UTL_ProductStObjProcess.generateTechnicalOfferMap(technicalOfferMap, productIds);
 
-        HDT_WRP_Product2Process.HDT_WRP_StatusResponse statusResponse;
+        HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse statusResponse;
         for(Product2 p : (Product2[])Trigger.New){
 
             //if(allUniqueProductCodeSet.size() > 0 && allUniqueProductCodeSet.contains(generateUniqueCode(p))){
@@ -38,7 +38,7 @@ public inherited sharing class HDT_TRH_Product2 extends HDT_TRH_TriggerHandler {
 
             Product2 oldProduct = (Product2)Trigger.OldMap.get(p.Id);
             System.debug('>>> oldStatus: ' + oldProduct.Status__c + ' - NewStatus: ' + p.Status__c);
-            statusResponse = HDT_UTL_Product2Process.changeStatusHandler(statusResponse, p.Id, oldProduct, p, productOptionMap.get(p.Id), technicalOfferMap.get(p.Id));
+            statusResponse = HDT_UTL_ProductStObjProcess.changeStatusHandler(statusResponse, p.Id, oldProduct, p, productOptionMap.get(p.Id), technicalOfferMap.get(p.Id));
             System.debug('>>> statusResponse: ' + statusResponse.success + ' - ' + statusResponse.message);
 
             if(!statusResponse.success){
