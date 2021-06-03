@@ -100,7 +100,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                         AssignmentRule__c = rule.Id,
                         OwnerId = (String) queue.QueueId__c
                     );
-                    queueUsageMap.put(queue.QueueId__c, ++queueUsage);
+                    if(queue.DailyCapacity__c != null) queueUsageMap.put(queue.QueueId__c, ++queueUsage);
                     processedActivitiesMap.put(processedActivity.Id, processedActivity);
                     if(processedActivitiesMap.size() == 10000) break; // IF MAXIMUM SIZE FOR DML ACTION REACHED STOP PROCESSING
                 }
