@@ -369,6 +369,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_QR_SolManager</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_QR_AnagAlignment</apexClass>
         <enabled>true</enabled>
     </classAccesses>
