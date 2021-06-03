@@ -972,6 +972,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CemeteryName__c</field>
+            <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>LastModifiedDate</field>
             <table>Case</table>
         </columns>
@@ -1103,16 +1108,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>NameBankOrPostOffice__c</field>
-            <table>Case</table>
-        </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>Case</table>
-        </columns> -->
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1700,11 +1695,6 @@
             <field>ReadType__c</field>
             <table>Case</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>OLDUseTypeEnergy__c</field>
-            <table>Case</table>
-        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>
@@ -2893,16 +2883,6 @@
             <field>NameBankOrPostOffice__c</field>
             <table>Case.Cases__r</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>Case.Cases__r</table>
-        </columns> -->
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>Case.Cases__r</table>
-        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DeceasedName__c</field>
@@ -3002,6 +2982,11 @@
             <checkedByDefault>false</checkedByDefault>
             <field>ExistingInstallmentsPlanNumber__c</field>
             <table>Case.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CemeteryName__c</field>
+            <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
@@ -3488,11 +3473,6 @@
             <field>ReadType__c</field>
             <table>Case.Cases__r</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>OLDUseTypeEnergy__c</field>
-            <table>Case.Cases__r</table>
-        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>

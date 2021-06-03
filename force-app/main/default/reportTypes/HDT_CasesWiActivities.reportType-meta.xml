@@ -1105,11 +1105,6 @@
             <field>NameBankOrPostOffice__c</field>
             <table>Case</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>Case</table>
-        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CemeteryName__c</field>
@@ -1700,11 +1695,6 @@
             <field>ReadType__c</field>
             <table>Case</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>OLDUseTypeEnergy__c</field>
-            <table>Case</table>
-        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>
@@ -1943,11 +1933,11 @@
             <field>wrts_prcgvr__DueDate__c</field>
             <table>Case.Activities__r</table>
         </columns>
-        <!-- <columns>
+        <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ActivityDuration__c</field>
             <table>Case.Activities__r</table>
-        </columns> -->
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CallDuration__c</field>

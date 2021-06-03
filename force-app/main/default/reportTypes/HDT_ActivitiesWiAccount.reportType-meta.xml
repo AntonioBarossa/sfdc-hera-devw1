@@ -160,11 +160,11 @@
             <field>wrts_prcgvr__DueDate__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
-        <!-- <columns>
+        <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ActivityDuration__c</field>
             <table>wrts_prcgvr__Activity__c</table>
-        </columns> -->
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CallDuration__c</field>

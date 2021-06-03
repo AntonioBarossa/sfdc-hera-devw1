@@ -710,6 +710,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>CemeteryName__c</field>
+            <table>Account.Cases</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>ComplexCategory__c</field>
             <table>Account.Cases</table>
         </columns>
@@ -1463,16 +1468,6 @@
             <field>NameBankOrPostOffice__c</field>
             <table>Account.Cases</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>Account.Cases</table>
-        </columns> -->
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>Account.Cases</table>
-        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DeceasedName__c</field>
@@ -1978,11 +1973,6 @@
             <field>ReadType__c</field>
             <table>Account.Cases</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>OLDUseTypeEnergy__c</field>
-            <table>Account.Cases</table>
-        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>

@@ -160,11 +160,11 @@
             <field>wrts_prcgvr__DueDate__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
-        <!-- <columns>
+        <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>ActivityDuration__c</field>
             <table>wrts_prcgvr__Activity__c</table>
-        </columns> -->
+        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>CallDuration__c</field>
@@ -1488,16 +1488,6 @@
             <field>NameBankOrPostOffice__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns> -->
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CemeteryName__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>DeceasedName__c</field>
@@ -1556,6 +1546,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>PraxidiaNPS__c</field>
+            <table>wrts_prcgvr__Activity__c.Cases__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CemeteryName__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
         <columns>
@@ -2083,11 +2078,6 @@
             <field>ReadType__c</field>
             <table>wrts_prcgvr__Activity__c.Cases__r</table>
         </columns>
-        <!-- <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>OLDUseTypeEnergy__c</field>
-            <table>wrts_prcgvr__Activity__c.Cases__r</table>
-        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UseTypeEnergy__c</field>
