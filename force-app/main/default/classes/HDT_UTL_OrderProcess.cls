@@ -167,5 +167,23 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         orderSrv.updateRecords(childOrdersToUpdate);
     }
+    public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
+        Map<String,Order> orderMapOld = new Map<String,Order>();
+        List<Order> ordersToUpdate = new List<Order>();        
+        for (Order oldOrder : oldOrdersList) {
+            orderMapOld.put(oldOrder.id,oldOrder);
+        }
+        for (Order newOrder : newOrdersList) {
+            if(orderMapOld.get(newOrder.id)!= null){
+                Order old= orderMapOld.get(newOrder.id);
+                if(newOrder.TecnicalPhase__c != null && newOrder.TecnicalPhase__c == old.TecnicalPhase__c && newOrder.Phase__c=='Comunicazione verso Heroku'){
+                    newOrder.Phase__c = newOrder.TecnicalPhase__c;
+                    newOrder.TecnicalPhase__c = null;
+                }
+            }
+        }
+        return newOrdersList;
+    }
+
 
 }
