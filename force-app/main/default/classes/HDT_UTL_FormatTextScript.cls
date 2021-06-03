@@ -16,6 +16,11 @@ public with sharing class HDT_UTL_FormatTextScript {
     private static String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
 
     public class HDT_WRP_FlowInput{
+        public HDT_WRP_FlowInput(){}
+        public HDT_WRP_FlowInput(String text, String recordId){
+            this.textScript=text;
+            this.recordId=recordId;
+        }
         @InvocableVariable(label='Testo Script' description='Testo Script Da formattare')
         public String textScript;
         @InvocableVariable(label='ID Record Riferimento' description='ID Record oggetto di partenza')
@@ -28,24 +33,25 @@ public with sharing class HDT_UTL_FormatTextScript {
 
         String scriptTxt = ' '+inputs[0].textScript+' ';
         List<String> fieldsToMatch = getDataBinded(scriptTxt);
+        SOBject objectToQueryData;
 
         String objectName = ((Id) inputs[0].recordId).getSobjectType().getDescribe().getName();
         if(!fieldsToMatch.isEmpty()){
             String query = makeSelectStatement(fieldsToMatch);
-            query+=
-                //'FROM wrts_prcgvr__Activity__c where Id = \''+
-                ' FROM '+objectName+' where Id = \''+
-                inputs[0].recordId+'\' LIMIT 1';
-            system.debug(query);
-            SOBject objectToQueryData;
-            try{
-                objectToQueryData = (SObject) Database.query(query);
-            }catch(Exception e){
-                throw new HDT_UTL_FormatTextScriptException(
-                        'ERRORE DATABASE QUERY, SOQL: # '
-                            +query + ' # MESSAGE: '+e.getMessage());
+            if(STRING.isNotBlank(query)){
+                query+=
+                    //'FROM wrts_prcgvr__Activity__c where Id = \''+
+                    ' FROM '+objectName+' where Id = \''+
+                    inputs[0].recordId+'\' LIMIT 1';
+                system.debug(query);
+                try{
+                    objectToQueryData = (SObject) Database.query(query);
+                }catch(Exception e){
+                    throw new HDT_UTL_FormatTextScriptException(
+                            'ERRORE DATABASE QUERY, SOQL: # '
+                                +query + ' # MESSAGE: '+e.getMessage());
+                }
             }
-            
             return new List<String>{finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData).trim()};
         }
 
@@ -74,7 +80,7 @@ public with sharing class HDT_UTL_FormatTextScript {
         if(relationshipNames[0]=='globaltag'){
             //not field but functions like "today" or other data, global.something bind "Global Tags"
             //return *valore globale da tornare, l'identificativo è relationshipNames[1]*
-            //return getGlobalTagValues(relationshipNames[1]);
+            return getGlobalTagValues(relationshipNames[1]);
         }
         for(Integer indexParentField = 0; indexParentField<relationshipNames.size(); indexParentField++){
             String fieldOrRelation = relationshipNames[indexParentField];
@@ -96,7 +102,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                         fieldValue= (String) relation.get(fieldOrRelation);
                     }
                     when 'DATETIME'{
-                        fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd.MM.yyyy');
+                        fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
                     }
                     when 'DATE'{
                         fieldValue= ((DATE) relation.get(fieldOrRelation)).format();
@@ -133,7 +139,12 @@ public with sharing class HDT_UTL_FormatTextScript {
         Set<String> fieldsToSelect = new Set<String>();
         fieldsToSelect.addAll(listFields);
         for(String field : fieldsToSelect){
-            querySelectStatement=querySelectStatement+', '+field;
+            if(!field.startsWith('globaltag')){//exclude global tags from query
+                querySelectStatement=querySelectStatement+', '+field;
+            }
+        }
+        if(String.isBlank(querySelectStatement)){
+            return '';
         }
         return 'SELECT ' + (querySelectStatement.removeStart(','));
     }
