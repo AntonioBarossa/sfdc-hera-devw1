@@ -262,7 +262,9 @@ public with sharing class HDT_UTL_ServicePoint {
         'SupplySAPStreetCode__c' => 'CodiceViaStradarioSAP',
         'SupplyIsAddressVerified__c' => 'IndirizzoVerificato',
         'SupplyProvince__c' => 'Provincia',
-        'SupplyIsAddressVerified__c' => 'FlagVerificato'
+        'SupplyIsAddressVerified__c' => 'FlagVerificato',
+        'SupplyPlace__c' => 'Localita',
+        'SupplyPlaceCode__c' => 'CodiceLocalita'
         };
 
    
@@ -297,7 +299,7 @@ public with sharing class HDT_UTL_ServicePoint {
 
     }else{     
     
-        result = new HDT_WRP_AddressObject('','','','','','','','','',false,false);
+        result = new HDT_WRP_AddressObject('','','','','','','','','',false,false,'','');
         System.debug('result:' +  result);
     }
 
@@ -352,6 +354,18 @@ public with sharing class HDT_UTL_ServicePoint {
                 if(mapApiName.containsKey(s) && s == 'SupplySAPStreetCode__c'){
                     System.debug('CodiceViaStradarioSAP :' + mapObject.get(s));
                     h.CodiceViaStradarioSAP= mapObject.get(s);
+                }
+                if(mapApiName.containsKey(s) && s == 'SupplySAPStreetCode__c'){
+                    System.debug('CodiceViaStradarioSAP :' + mapObject.get(s));
+                    h.CodiceViaStradarioSAP= mapObject.get(s);
+                }
+                if(mapApiName.containsKey(s) && s == 'SupplyPlace__c'){
+                    System.debug('Localita :' + mapObject.get(s));
+                    h.Localita= mapObject.get(s);
+                }
+                if(mapApiName.containsKey(s) && s == 'SupplyPlaceCode__c'){
+                    System.debug('Codice Localita :' + mapObject.get(s));
+                    h.CodiceLocalita= mapObject.get(s);
                 }
             }
         }
