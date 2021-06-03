@@ -3,11 +3,12 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     public static List<HDT_WRP_DocumentSelectedResponse> execute(List<HDT_WRP_DocumentSelectedRequest> inputs){
         if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)) return null;
         String method = inputs[0].method;
+        String context = '';
+        String queryString = 'SELECT Id,Context__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+        List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
         switch on method{
             when 'manageDocuments' {
-                String queryString = 'SELECT Id,Context__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
-                List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
-                String context = (String) recordList[0].get('Context__c');
+                context = (String) recordList[0].get('Context__c');
                 switch on context {
                     when 'EC1L', 'EC2L' {
                         return manageDocuments(inputs);
@@ -17,6 +18,16 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     }
                     when else {
                         return null;
+                    }
+                }
+            }when 'manageDocumentsInformative'{
+                context = inputs[0].contesto;
+                switch on context {
+                    when 'EC1Level','NoteVarIva' {
+                        return manageDocuments(inputs);
+                    }
+                    when else {
+                        return manageDocumentsCreditViews(inputs);
                     }
                 }
             }
@@ -100,7 +111,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     }else if(String.isNotBlank(numeroDocumento)) {
                         singleDocument.Name = numeroDocumento;
                     }else {
-                        singleDocument.Name = getRiferimentoFattura(secondoLivelloList);
+                        singleDocument.Name = '';//getRiferimentoFattura(secondoLivelloList);
                     }
                     documentList.add(singleDocument);
                 }
@@ -166,6 +177,7 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     primolivello = (Map<String, Object>) singleRecord;
                     secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativoF2');
                     numeroDocumento = (String) primolivello.get('documento');
+                    numeroFattura = (String) primolivello.get('docOriginario');
                     dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
                     dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
                     Double importo = Double.valueOf(primolivello.get('importo'));
@@ -180,7 +192,14 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = importo;
                     singleDocument.Case__c = inputs[0].caseId;
-                    singleDocument.Name = numeroDocumento;
+                    
+                    if(String.isNotBlank(numeroFattura)){
+                        singleDocument.Name = numeroFattura;
+                    }else if(String.isNotBlank(numeroDocumento)) {
+                        singleDocument.Name = numeroDocumento;
+                    }else {
+                        singleDocument.Name = getRiferimentoFattura(secondoLivelloList);
+                    }
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
@@ -284,6 +303,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
         @InvocableVariable
         public String contractCode;
+
+        @InvocableVariable
+        public String contesto;
     }
     
 }
