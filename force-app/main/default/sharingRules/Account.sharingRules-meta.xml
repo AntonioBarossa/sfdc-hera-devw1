@@ -28,17 +28,12 @@
         </accountSettings>
         <label>HDT_SR_AccountDistributore</label>
         <sharedTo>
-            <roleAndSubordinates>HDT_FrontOffice_HERA_COMM</roleAndSubordinates>
+            <roleAndSubordinates>HDT_BackOffice</roleAndSubordinates>
         </sharedTo>
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
             <value>Distributore</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>CompanyOwner__c</field>
-            <operation>equals</operation>
-            <value>HERA COMM</value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
