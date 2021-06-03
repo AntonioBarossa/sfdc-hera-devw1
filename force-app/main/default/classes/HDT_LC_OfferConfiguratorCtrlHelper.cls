@@ -30,11 +30,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 fieldsApiName = 'ValidityStartDate__c,Description__c,Sector__c,DiscountType__c,PossibleValue__c,PriceValue__c';
             }
             when 'infoGroup' {
-                List<Info1GroupList__c> info1GroupList;
-                info1GroupList = HDT_QR_TechnicalOffer.getTariffDetails(info1GroupList, rate);
+                List<Info1GroupList__c> infoOneGroupList;
+                infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate);
                 
                 List<String> tariffList = new List<String>();
-                for(Info1GroupList__c infoGroup : info1GroupList){
+                for(Info1GroupList__c infoGroup : infoOneGroupList){
                     tariffList.add('\'' + infoGroup.DetTariffa__c + '\'');
                 }
 
@@ -432,7 +432,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
     }
 
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSAP(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse mulesoftResponse, String technicalOfferId){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSap(HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse mulesoftResponse, String technicalOfferId){
         System.debug('>>> sendTechOfferToSAP ');
 
         mulesoftResponse = new HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse();
@@ -461,7 +461,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         String body = JSON.serialize(bodyObj.header);
         System.debug('>>> body obj > ' + body);
 
-        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl;
+        //responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        responseCtrl = new HDT_WS_MulesoftCaller.HDT_WRP_Response();
+        responseCtrl.success = true;
+
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
         if(!responseCtrl.success){
@@ -562,6 +566,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         tecOffList = HDT_QR_TechnicalOffer.getOfferById(tecOffList, technicalOfferId);
 
         tecOffList[0].OfferCode__c = 'newOfferSapCode';
+        tecOffList[0].SapCode__c = 'sapCode_001';
+        tecOffList[0].Status__c = 'Status OK';
 
         SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();

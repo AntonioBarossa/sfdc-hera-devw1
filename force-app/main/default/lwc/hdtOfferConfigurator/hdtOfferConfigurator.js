@@ -2,7 +2,7 @@ import { LightningElement, track, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 import { NavigationMixin } from 'lightning/navigation';
 import saveNewOfferConfigured from '@salesforce/apex/HDT_LC_OfferConfiguratorController.saveNewOfferConfigured';
-import sendTechOfferToSAP from '@salesforce/apex/HDT_LC_OfferConfiguratorController.sendTechOfferToSAP';
+import sendTechOfferToSAP from '@salesforce/apex/HDT_LC_OfferConfiguratorController.sendTechOfferToSap';
 import getOfferMatrix from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.getOfferMatrix';
 import deleteTechnicalOffer from  '@salesforce/apex/HDT_LC_OfferConfiguratorController.deleteTechnicalOffer';
 import { getRecord } from 'lightning/uiRecordApi';

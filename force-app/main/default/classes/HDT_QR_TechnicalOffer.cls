@@ -177,23 +177,30 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         }
 
         myQuery += ' LIMIT 100';
-        allValues = database.query(myQuery);
+
+        SObjectType objtype = Schema.getGlobalDescribe().get(objectApiName);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
+            allValues = database.query(myQuery);
+        }
+
         return allValues;
     }
 
-    public static List<Info1GroupList__c> getTariffDetails(List<Info1GroupList__c> info1GroupList, String rate){
-        info1GroupList = new List<Info1GroupList__c>();
-        info1GroupList = [
+    public static List<Info1GroupList__c> getTariffDetails(List<Info1GroupList__c> infoOneGroupList, String rate){
+        infoOneGroupList = new List<Info1GroupList__c>();
+        infoOneGroupList = [
             SELECT Id, DetTariffa__c, FilterTypeCategory__c
             FROM Info1GroupList__c
             WHERE FilterTypeCategory__c = :rate
             WITH SECURITY_ENFORCED
         ];
-        return info1GroupList;
+        return infoOneGroupList;
     }
 
-    public static List<sObject> getInfo2GroupList(List<sObject> info2GroupList, String whereCond){
-        info2GroupList = new List<sObject>();
+    public static List<sObject> getInfo2GroupList(List<sObject> infoTwoGroupList, String whereCond){
+        infoTwoGroupList = new List<sObject>();
         String myQuery = 'SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c ';
         myQuery += 'FROM Info2GroupList__c ';
 
@@ -202,20 +209,26 @@ public inherited sharing class HDT_QR_TechnicalOffer {
         }
 
         myQuery += ' LIMIT 100';
-        info2GroupList = database.query(myQuery);
-        
-        return info2GroupList;
+
+        SObjectType objtype = Schema.getGlobalDescribe().get('Info2GroupList__c');
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
+            infoTwoGroupList = database.query(myQuery);
+        }
+
+        return infoTwoGroupList;
     }
 
-    //public static List<Info2GroupList__c> getInfo2GroupList(List<Info2GroupList__c> info2GroupList, List<String> tariffList){
-    //    info2GroupList = new List<Info2GroupList__c>();
-    //    info2GroupList = [
+    //public static List<Info2GroupList__c> getInfo2GroupList(List<Info2GroupList__c> infoTwoGroupList, List<String> tariffList){
+    //    infoTwoGroupList = new List<Info2GroupList__c>();
+    //    infoTwoGroupList = [
     //        SELECT Id, ValueDescription__c, DetRate__c, PossibleValue__c
     //        FROM Info2GroupList__c
     //        WHERE DetRate__c IN :tariffList
     //        WITH SECURITY_ENFORCED
     //    ];
-    //    return info2GroupList;
+    //    return infoTwoGroupList;
     //}
 
 }

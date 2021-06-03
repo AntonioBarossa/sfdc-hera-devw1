@@ -193,12 +193,12 @@ public inherited sharing class HDT_LC_OfferConfiguratorController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSAP(String technicalofferid){
+    public static HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse sendTechOfferToSap(String technicalofferid){
         System.debug('# sendTechOfferToSAP #');
         HDT_WRP_TechnicalOffer.HDT_WRP_SaveResponse saveResponse;
 
         try{
-            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSAP(saveResponse, technicalofferid);
+            saveResponse = HDT_LC_OfferConfiguratorCtrlHelper.sendTechOfferToSap(saveResponse, technicalofferid);
         } catch (Exception ex){
             throw new AuraHandledException(ex.getMessage() + ' at line [' + String.valueOf(ex.getLineNumber()) + ']');
         }
