@@ -132,7 +132,7 @@ public with sharing class HDT_UTL_SwtichInProcess {
             effectiveDateTmp = afterthoughtDays[0].ActivationDate__c;
         }
         else{
-            if(order.RecessNotice__c != null){
+            if(order.RecessNotice__c == null){
                 system.debug('HDT_UTL_SwtichInProcess - getEffectiveDate - RecessNotice__c: ');
                 List<HDT_FulfillmentDateMatrix__c> afterthoughtDays2 = [
                 SELECT ActivationDate__c 

@@ -94,6 +94,7 @@ public inherited sharing class HDT_QR_Contact {
             Email,
             Phone,
             MobilePhone,
+            IndividualId,
             Fax,
             CertifiedEmail__c,
             MailingAddressFormula__c,

@@ -36,6 +36,8 @@
 
         <property name="showAdministrators" type="Boolean" label="Show Administrators Only" description="Per mostrare solo contatti con ruolo Amministratore" role="inputOnly" default="false"/>
 
+        <property name="showSolContacts" type="Boolean" label="Show SOL Logins Only" description="Per mostrare solo i contatti SOL" role="inputOnly" default="false"/>
+
         <property name="saveDraft" type="Boolean" label="Save In Draft" description="If true save in Draft" role="outputOnly"/>
 
         <property name="cancelCase" type="Boolean" label="Cancel Case?" description="If true call the cancellation flow" role="outputOnly"/>
