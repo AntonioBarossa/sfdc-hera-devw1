@@ -56,10 +56,21 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
                 if (responseOutcome != 'KO') {
                     Case caseToUpdate = new Case();
                     caseToUpdate.Id = sapIntegration.recordId;
-                    caseToUpdate.Phase__c = 'Inviata a SAP';
-                    HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+                    caseToUpdate.Phase__c = 'Esito OK da SAP';
+                    caseToUpdate.SendDate__c = Date.today();
+                    String serializedCase = JSON.serialize(caseToUpdate);
+                    updateFuture(serializedCase);
                 }
             }
         }
+    }
+
+    @Future
+    private static void updateFuture(String inputString) {
+
+        Case c = (Case) JSON.deserialize(inputString, Case.class);
+
+        HDT_UTL_DatabaseService.updateSObject(c);
+
     }
 }

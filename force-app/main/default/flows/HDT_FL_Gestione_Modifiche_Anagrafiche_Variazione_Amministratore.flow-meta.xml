@@ -18,6 +18,31 @@
         </value>
     </choices>
     <decisions>
+        <name>Amministratore_Trovato</name>
+        <label>Amministratore Trovato?</label>
+        <locationX>1660</locationX>
+        <locationY>495</locationY>
+        <defaultConnector>
+            <targetReference>Selezione_Amministratore_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Amministratore.Id</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Update_Case</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Next_Step</name>
         <label>Next Step?</label>
         <locationX>998</locationX>
@@ -132,11 +157,11 @@
     <recordLookups>
         <name>Get_Amministratore</name>
         <label>Get Amministratore</label>
-        <locationX>1609</locationX>
-        <locationY>494</locationY>
+        <locationX>1519</locationX>
+        <locationY>493</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Update_Case</targetReference>
+            <targetReference>Amministratore_Trovato</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -574,6 +599,63 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Selezione_Amministratore_0</name>
+        <label>Selezione Amministratore</label>
+        <locationX>1668</locationX>
+        <locationY>737</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Gestione_Annullamento</targetReference>
+        </connector>
+        <fields>
+            <name>DT3_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Nessun Amministratore di condominio associato al cliente.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtFlowNavigationButton2</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Annulla</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Selezione_Sottoprocesso</name>
         <label>Selezione Sottoprocesso</label>
         <locationX>777</locationX>
@@ -612,8 +694,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>2353</locationX>
-        <locationY>36</locationY>
+        <locationX>2355</locationX>
+        <locationY>739</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

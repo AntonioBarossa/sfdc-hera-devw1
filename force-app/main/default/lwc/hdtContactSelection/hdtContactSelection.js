@@ -157,9 +157,9 @@ export default class HdtContactSelection extends LightningElement {
         ];
 
         this.solColumns = [
+            { label: 'Login SOL', fieldName: 'SolLogin', type: 'email' },
             { label: 'Nome Contatto', fieldName: 'Name', type: 'text' },
-            { label: 'Ruolo', fieldName: 'Roles', type: 'text' },
-            //{ label: 'Email', fieldName: 'Email', type: 'email' },
+            { label: 'Ruolo', fieldName: 'Roles', type: 'text' }
             //{ label: 'PEC', fieldName: 'CertifiedEmail__c', type: 'email' },
             //{ label: 'Fax', fieldName: 'Fax', type: 'phone' }
         ];
