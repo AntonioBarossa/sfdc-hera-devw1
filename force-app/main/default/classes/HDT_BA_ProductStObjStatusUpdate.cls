@@ -6,10 +6,12 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
     //} 
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
+
         String queryString = '';
         queryString += 'SELECT Id, StartDate__c, EndDate__c, Status__c ';
         queryString += 'FROM Product2 ';
-        queryString += 'WHERE  (Status__c = \'Confermata\' AND StartDate__c = today) OR (Status__c = \'Vendibile\' AND EndDate__c = today)';
+        queryString += 'WHERE  (Status__c = \'' + Label.HDT_Confirmed + '\' AND StartDate__c = today) ';
+        queryString += 'OR (Status__c = \'' + Label.HDT_Sold + '\' AND EndDate__c = today)';
         return Database.getQueryLocator(queryString);
     }
 
@@ -22,20 +24,16 @@ public inherited sharing class HDT_BA_ProductStObjStatusUpdate implements Databa
         for(Product2 product : chunkList){
             if(!String.isEmpty(product.Status__c) && product.StartDate__c != null && product.EndDate__c != null){
 
-                switch on product.Status__c{
-                    when 'Confermata' {
-                        if(product.StartDate__c >= todayDate){
-                            product.Status__c = 'Vendibile';
-                        }
+                if(product.Status__c.equalsIgnoreCase(Label.HDT_Confirmed)){
+                    if(product.StartDate__c >= todayDate){
+                        product.Status__c = Label.HDT_Sold;
                     }
-
-                    when 'Vendibile' {
-                        if(product.EndDate__c >= todayDate){
-                            product.Status__c = 'Scaduta';
-                        }
+                } else if(product.Status__c.equalsIgnoreCase(Label.HDT_Sold)){
+                    if(product.EndDate__c >= todayDate){
+                        product.Status__c = Label.HDT_Expired;
                     }
-
                 }
+
             }
 
         }
