@@ -11,69 +11,73 @@
 
 
 
-public with sharing class HDT_UTL_FormatTextScript {
+public with sharing virtual class HDT_UTL_FormatTextScript {
     
-    private static String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
+    protected String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
 
-    public class HDT_WRP_FlowInput{
-        public HDT_WRP_FlowInput(){}
-        public HDT_WRP_FlowInput(String text, String recordId){
-            this.textScript=text;
-            this.recordId=recordId;
-        }
-        @InvocableVariable(label='Testo Script' description='Testo Script Da formattare')
-        public String textScript;
-        @InvocableVariable(label='ID Record Riferimento' description='ID Record oggetto di partenza')
-        public String recordId;
+
+    public String formatText(String textScript, String recordId){
+        return formatText( textScript,  recordId,  null);
     }
 
-    @InvocableMethod
-    public static List<String> formatText(List<HDT_WRP_FlowInput> inputs){
+
+    public String formatText(String textScript, String recordId, SOBject objectToQueryData){
         //This Function get a Script record, get his text and binds the dynamic data from DB to it
         String finalOutput ='';
 
-        String scriptTxt = ' '+inputs[0].textScript+' ';
+        String scriptTxt = ' '+textScript+' ';
         List<String> fieldsToMatch = getDataBinded(scriptTxt);
-        SOBject objectToQueryData;
 
-        String objectName = ((Id) inputs[0].recordId).getSobjectType().getDescribe().getName();
         if(!fieldsToMatch.isEmpty()){
-            String query = makeSelectStatement(fieldsToMatch);
-            if(STRING.isNotBlank(query)){
-                query+=
-                    //'FROM wrts_prcgvr__Activity__c where Id = \''+
-                    ' FROM '+objectName+' where Id = \''+
-                    inputs[0].recordId+'\' LIMIT 1';
-                system.debug(query);
-                try{
-                    objectToQueryData = (SObject) Database.query(query);
-                }catch(Exception e){
-                    throw new HDT_UTL_FormatTextScriptException(
-                            'ERRORE DATABASE QUERY, SOQL: # '
-                                +query + ' # MESSAGE: '+e.getMessage());
-                }
+            if(objectToQueryData==null){
+                objectToQueryData=getSobject(recordId, fieldsToMatch);
             }
             finalOutput = finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData);
-            return new List<String>{finalOutput.trim().replaceAll('\n', '<br/>')};
+            return finalOutput.trim().replaceAll('\n', '<br/>');
         }
-        return new List<String>{scriptTxt.trim().replaceAll('\n', '<br/>')};
-        
+        return scriptTxt.trim().replaceAll('\n', '<br/>');
     }
 
 
-    private static String finalTextScript(String scriptTxt, List<String> fieldsToMatch, SObject objectToQueryData){
+    protected Sobject getSobject(String recordId, List<String> fieldsToQuery){
+        String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
+        String query = makeSelectStatement(fieldsToQuery);
+        Sobject genericSObject;
+        if(STRING.isNotBlank(query)){
+            query+=
+                //'FROM wrts_prcgvr__Activity__c where Id = \''+
+                ' FROM '+objectName+' where Id = \''+
+                recordId+'\' LIMIT 1';
+            system.debug(query);
+            try{
+                genericSObject = (SObject) Database.query(query);
+            }catch(Exception e){
+                throw new HDT_UTL_FormatTextScriptException(
+                        'ERRORE DATABASE QUERY, SOQL: # '
+                            +query + ' # MESSAGE: '+e.getMessage());
+            }
+        }
+        return genericSObject;
+    }
+
+
+    protected String finalTextScript(String scriptTxt, List<String> fieldsToMatch, SObject objectToQueryData){
         //This Method put in the text all the data got from DB at the correct spot
         List<String> splittedScript = scriptTxt.split(regEx);
         String finalText = splittedScript[0];
         for(Integer matchingIndex = 0;matchingIndex < fieldsToMatch.size(); matchingIndex++){
             String textBlock = splittedScript[matchingIndex+1];//Index of corresponding block to corresponding field is shifted by 1
-            finalText+=  getFieldValue(fieldsToMatch[matchingIndex], objectToQueryData)+''+textBlock;
+            finalText+=  getBoldFieldValue(fieldsToMatch[matchingIndex], objectToQueryData)+''+textBlock;
         }
         return finalText;
     }
 
+    protected String getBoldFieldValue(String fieldPath, SObject relation){
+        return '<b>'+getFieldValue( fieldPath,  relation)+'</b>';
+    }
 
-    private static String getFieldValue(String fieldPath, SObject relation){
+
+    protected String getFieldValue(String fieldPath, SObject relation){
         //this method get dinamically field Value from generic sogbject, even from a related parent object
         List<String> relationshipNames = fieldPath.split('\\.');
         //SObject relation=scriptRecordFull;
@@ -90,7 +94,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                 relation=relation.getSobject(fieldOrRelation);
             }else{
                 if(relation==null){
-                    fieldValue='<b>*valore mancante*</b>';
+                    fieldValue='*valore mancante*';
                     return fieldValue ;
                 }
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
@@ -115,11 +119,11 @@ public with sharing class HDT_UTL_FormatTextScript {
                 
             }
         }
-        return '<b>'+fieldValue+'</b>';
+        return fieldValue;
     }
 
 
-    private static List<String> getDataBinded(String Text){
+    protected List<String> getDataBinded(String Text){
         //this method catches all dynamic fields in the text
         List<String> bindedFields = new List<String>();
         Matcher matcher=Pattern.compile(regEx).matcher(Text);
@@ -133,7 +137,7 @@ public with sharing class HDT_UTL_FormatTextScript {
         return bindedFields;
     }
 
-    private static String makeSelectStatement(List<String> listFields){
+    protected String makeSelectStatement(List<String> listFields){
         //this method remove duplicate values and format the dynamic soql
 
         String querySelectStatement='';
@@ -160,13 +164,13 @@ public with sharing class HDT_UTL_FormatTextScript {
                 tagValue=Date.Today().format();
             }
             when 'section__d'{
-                return '\n\n<b>'+relationshipNames[2].replace('_', ' ')+'</b>\n';
+                return '\n\n'+relationshipNames[2].replace('_', ' ')+'\n';
             }
             when else{
                 tagValue='*valore mancante*';
             }
         }
-        return '<b>'+tagValue+'<\b>';
+        return ''+tagValue+'';
     }
 
     private class HDT_UTL_FormatTextScriptException extends Exception {}
