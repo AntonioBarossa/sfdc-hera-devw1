@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>FinalReason__c</fullName>
+    <fullName>Title__c</fullName>
+    <description>Qualifica Titolare</description>
     <externalId>false</externalId>
-    <formula>Order__r.CreditCheckDescription__c</formula>
-    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Causale Finale</label>
+    <label>Qualifica Titolare</label>
+    <length>30</length>
     <required>false</required>
-    <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Text</type>
     <unique>false</unique>

@@ -18,19 +18,22 @@ global with sharing class ConnectorEntityController {
 			activity.wrts_prcgvr__Status__c = 'In Progress';
 			activity.CallStartTime__c = DateTime.now();
 			activity.ConnectionID__c = (String) message.get('ConnectionID');
+			activity.Place__c = (String) message.get('Place');
 			activity.BPCode__c = (String) attachdata.get('ivr_CODICE_CLIENTE');
+			activity.IwsDemand__c = (String) attachdata.get('ESIGENZA_IWS');
+			activity.CallCenterNumber__c = (String) attachdata.get('NUMERO_VERDE');
 
 			handleCrmChangeFlag(message, activity);
 
 			switch on (String) message.get('CallType') {
 				when 'Outbound' {
 					activity.Type__c = 'Chiamata Outbound';
-					activity.CallCenterNumber__c = (String) message.get('ANI');
+					// activity.CallCenterNumber__c = (String) message.get('ANI');
 					activity.ClientNumber__c = message.get('DNIS') != null ? ((String) message.get('DNIS')).removeStart('0') : null;
 				}
 				when 'Inbound' {
 					activity.Type__c = 'Chiamata Inbound';
-					activity.CallCenterNumber__c = (String) message.get('DNIS');
+					// activity.CallCenterNumber__c = (String) message.get('DNIS');
 					activity.ClientNumber__c = message.get('ANI') != null ? ((String) message.get('ANI')).removeStart('0') : null;
 				}
 			}

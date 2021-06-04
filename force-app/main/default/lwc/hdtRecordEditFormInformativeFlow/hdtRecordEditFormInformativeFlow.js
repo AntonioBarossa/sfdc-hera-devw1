@@ -155,8 +155,13 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                                 {
                                                     label:'Gas',
                                                     value:'Gas'
+                                                },                                                
+                                                {
+                                                    label:'Multi',
+                                                    value:'Multi'
                                                 }
                                             ];
+                                            console.log('#Servizio -> ' + JSON.stringify(result));
                                             this.commodity = JSON.stringify(result);
                                         }
                                         if(payload.CommodityFormula__c != null 
@@ -336,8 +341,13 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 {
                     label:'Gas',
                     value:'Gas'
+                },
+                {
+                    label:'Multi',
+                    value:'Multi'
                 }
             ];
+            console.log('#Servizio -> '+JSON.stringify(result));
             this.commodity = JSON.stringify(result);
             this.selectedCommodity = null;
             this.dettaglioInfo = null;
