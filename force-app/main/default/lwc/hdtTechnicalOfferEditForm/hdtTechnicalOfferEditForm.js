@@ -71,7 +71,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
     saveAction(){
         console.log('>>>> saveAction ');
         var techOffObj = {};
-        const fields = this.template.querySelectorAll('lightning-input-field');
+        //const fields = this.template.querySelectorAll('lightning-input-field');
         //this.template.querySelector('lightning-record-edit-form').submit(fields);
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
             techOffObj[field.fieldName] = field.value;
