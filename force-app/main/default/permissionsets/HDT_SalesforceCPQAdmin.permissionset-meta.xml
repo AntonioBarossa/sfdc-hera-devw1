@@ -16945,7 +16945,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>SBQQ__ProductOption__c.CompanyOwner__c</field>
+        <field>SBQQ__ProductOption__c.CompanyOwner__c</field> 
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
