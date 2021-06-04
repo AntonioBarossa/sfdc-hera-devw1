@@ -73,6 +73,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
             'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
+            'numeroRata' => currentCase.InstallmentNumberRequired__c,
             'totale' => currentCase.AmountToPayInInstallments__c,
             'dataInizio' => currentCase.FirstExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
