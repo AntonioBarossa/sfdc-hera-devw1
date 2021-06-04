@@ -5,6 +5,8 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_QR_BillingProfile billingProfileQr = new HDT_QR_BillingProfile();
     private static HDT_QR_AccountContactRelation accountContactRelQr = new HDT_QR_AccountContactRelation();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+    private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
+    private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
 
     public Order enrichOrder(Order newOrder){
 
@@ -48,6 +50,55 @@ public inherited sharing class HDT_UTL_Order {
 
     }
 
+    public Boolean isCambioOfferta(Order ord){
 
+        system.debug('HDT_UTL_Order.isCambioOfferta START');
+
+        List<OrderItem> offertaCommerciale = orderItemQr.getRecordsByOrderIdFilteredPdrPod(ord.Id);
+
+        system.debug('HDT_UTL_Order.isCambioOfferta offertaCommerciale: ' + offertaCommerciale);
+        system.debug('HDT_UTL_Order.isCambioOfferta ContractReference__c: ' + ord.SBQQ__Quote__r.ContractReference__c);
+
+        Boolean result = !offertaCommerciale.isEmpty() && !ord.SBQQ__Quote__r.AllowChangeUse__c && ord.SBQQ__Quote__r.ContractReference__c != null && !ord.SBQQ__Quote__r.AmendmentAllowed__c;
+
+        system.debug('HDT_UTL_Order.isCambioOfferta RESULT: ' + result);
+        
+        system.debug('HDT_UTL_Order.isCambioOfferta END');
+
+        return result;
+    }
+
+    public void switchInRipristinatorioAction(Order ord) {
+
+        system.debug('HDT_UTL_Order.switchInRipristinatorioAction START');
+
+        List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
+        
+        if (ord.ServicePoint__c != null) {
+            activityList = HDT_QR_ActivityCustom.getRecordByTypeAndStatusAndAccountAndServicePoint('Gestione Switch in Ripristinatorio', 'Creata', ord.AccountId, ord.ServicePoint__r.ServicePointCode__c);
+        }
+
+        system.debug('HDT_UTL_Order.switchInRipristinatorioAction activityList: ' + activityList);
+        system.debug('HDT_UTL_Order.switchInRipristinatorioAction AmendmentAllowed__c: ' + ord.SBQQ__Quote__r.AmendmentAllowed__c);
+        system.debug('HDT_UTL_Order.switchInRipristinatorioAction AllowChangeUse__c: ' + ord.SBQQ__Quote__r.AllowChangeUse__c);
+
+        if (!activityList.isEmpty() 
+            && !ord.SBQQ__Quote__r.AmendmentAllowed__c 
+            && !ord.SBQQ__Quote__r.AllowChangeUse__c 
+            && !isCambioOfferta(ord)) {
+            
+            orderSrv.updateRecord(new Order(
+                Id = ord.Id,
+                ProcessType__c = 'Switch in Ripristinatorio'
+            ));
+
+            activityCustomSrv.updateRecord(new wrts_prcgvr__Activity__c(
+                Id = activityList[0].Id,
+                Order__c = ord.Id
+            ));
+        }
+
+        system.debug('HDT_UTL_Order.switchInRipristinatorioAction END');
+    }
 
 }
