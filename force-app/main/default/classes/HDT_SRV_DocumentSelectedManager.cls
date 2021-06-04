@@ -3,9 +3,33 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
     public static List<HDT_WRP_DocumentSelectedResponse> execute(List<HDT_WRP_DocumentSelectedRequest> inputs){
         if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId) || String.isBlank(inputs[0].method)) return null;
         String method = inputs[0].method;
+        String context = '';
+        String queryString = 'SELECT Id,Context__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+        List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
         switch on method{
             when 'manageDocuments' {
-                return manageDocuments(inputs);
+                context = (String) recordList[0].get('Context__c');
+                switch on context {
+                    when 'EC1L', 'EC2L' {
+                        return manageDocuments(inputs);
+                    }
+                    when 'InstallmentsView', 'EC7' {
+                        return manageDocumentsCreditViews(inputs);
+                    }
+                    when else {
+                        return null;
+                    }
+                }
+            }when 'manageDocumentsInformative'{
+                context = inputs[0].contesto;
+                switch on context {
+                    when 'EC1Level','NoteVarIva' {
+                        return manageDocuments(inputs);
+                    }
+                    when else {
+                        return manageDocumentsCreditViews(inputs);
+                    }
+                }
             }
             when else {
                 return null;
@@ -18,17 +42,19 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
         List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
         try {
-            String queryString = 'SELECT Id, DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+            String queryString = 'SELECT Id,Context__c,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
             String queryObject = 'AccountStatementFilter__c';
             List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, queryObject);
             String documentJson = (String) recordList[0].get('DocumentSelected__c');
+            String context = (String) recordList[0].get('Context__c');
             List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
             Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
             List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativo');
             Map<String, Object> secondoLivello = new Map<String, Object>();
             if(secondoLivelloList != null){
                 secondoLivello = (Map<String, Object>) secondoLivelloList[0];
-            }            
+            }
+
             Case caseRecord = new Case();
             
             Date dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
@@ -80,7 +106,100 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
                     singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
                     singleDocument.TotalCommunicationPayment__c = totaleCopertina != null? totaleCopertina:importo;
                     singleDocument.Case__c = inputs[0].caseId;
-                    singleDocument.Name = numeroFattura != null? numeroFattura:numeroDocumento;
+                    if(String.isNotBlank(numeroFattura)){
+                        singleDocument.Name = numeroFattura;
+                    }else if(String.isNotBlank(numeroDocumento)) {
+                        singleDocument.Name = numeroDocumento;
+                    }else {
+                        singleDocument.Name = '';//getRiferimentoFattura(secondoLivelloList);
+                    }
+                    documentList.add(singleDocument);
+                }
+                if(documentList.size()>0){
+                    Boolean insertDoc = HDT_UTL_DatabaseService.insertSObject(documentList);
+                }
+            }
+            Boolean updateCase = HDT_UTL_DatabaseService.updateSObject(caseRecord);
+        } catch (Exception ex) {
+            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
+            return null;
+        }
+        responseList.add(response);
+        return responseList;
+    }
+
+    private static List<HDT_WRP_DocumentSelectedResponse> manageDocumentsCreditViews(List<HDT_WRP_DocumentSelectedRequest> inputs){
+        if(inputs==null || inputs.size()<=0 || String.isBlank(inputs[0].recordId)) return null;
+        HDT_WRP_DocumentSelectedResponse response = new HDT_WRP_DocumentSelectedResponse();
+        List<HDT_WRP_DocumentSelectedResponse> responseList = new List<HDT_WRP_DocumentSelectedResponse>();
+        try {
+            String queryString = 'SELECT Id,Context__c,DocumentSelected__c FROM AccountStatementFilter__c WHERE Id=\''+inputs[0].recordId+'\'';
+            List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'AccountStatementFilter__c');
+            String documentJson = (String) recordList[0].get('DocumentSelected__c');
+            String context = (String) recordList[0].get('Context__c');
+            List<Object> primoLivelloList = (List<Object>)JSON.deserializeUntyped(documentJson);
+            Map<String,Object> primolivello = (Map<String, Object>)primoLivelloList[0];
+            List<Object> secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativoF2');
+            Map<String, Object> secondoLivello = new Map<String, Object>();
+            if(secondoLivelloList != null){
+                secondoLivello = (Map<String, Object>) secondoLivelloList[0];
+            }
+
+            queryString = 'SELECT Id,Type FROM Case WHERE Id=\''+inputs[0].caseId+'\'';
+            List<SObject> cases = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
+            String processType = (String) cases[0].get('Type') != null ? (String) cases[0].get('Type') : '';
+
+            Case caseRecord = new Case();
+            
+            Date dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
+            Date dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
+            
+            String numeroDocumento = (String) primolivello.get('documento');
+            String numeroFattura = (String) primolivello.get('docOriginario'); // // Valorizzato solo su Partite non Fatturate.
+            String contractCode = (String) primolivello.get('contratto'); // Valorizzato solo su Partite non Fatturate.
+            caseRecord.ContractAccountCode__c = (String) primolivello.get('contoContrattuale');
+            caseRecord.DocumentExpirationDate__c = dataScadenza;
+            caseRecord.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
+            caseRecord.DocumentAmount__c = Double.valueOf(primolivello.get('importo'));
+            caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
+            //caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
+            caseRecord.BillNumber__c = numeroDocumento; // Eventualmente per Errore di Fatturazione possiamo mettere il docOriginario
+            caseRecord.Id = inputs[0].caseId;
+            
+            response.caseRecord = caseRecord;
+            response.contractCode = contractCode;
+            response.hasPartiteNonFatturate = (context != null && context.equals('EC7'));
+
+            if(inputs[0].createDocuments){
+                List<DocumentSelected__c> documentList = new List<DocumentSelected__c>();
+                for(Object singleRecord : primoLivelloList){
+                    DocumentSelected__c singleDocument = new DocumentSelected__c();
+                    primolivello = (Map<String, Object>) singleRecord;
+                    secondoLivelloList = (List<Object>)primolivello.get('secondoLivelloInformativoF2');
+                    numeroDocumento = (String) primolivello.get('documento');
+                    numeroFattura = (String) primolivello.get('docOriginario');
+                    dataEmissione = formatDate((String) primolivello.get('dataEmissione'));
+                    dataScadenza = formatDate((String) primolivello.get('dataScadenza'));
+                    Double importo = Double.valueOf(primolivello.get('importo'));
+                    singleDocument.DocumentNumber__c = numeroDocumento;
+                    singleDocument.Bill__c = (String) primolivello.get('numeroBollettino');
+                    // Per le Comunicazioni di Pagamento innescate da vista Rate bisogna mandare a SAP il valore fisso "RATEIZZAZIONI"
+                    singleDocument.Type__c = processType.equals('Comunicazione Pagamento') ? 'RATEIZZAZIONI' : '';
+                    singleDocument.IssueDate__c = dataEmissione;
+                    singleDocument.ExpirationDate__c = dataScadenza;
+                    singleDocument.Amount__c = importo;
+                    singleDocument.DocumentResidue__c = Double.valueOf(primolivello.get('residuo'));
+                    singleDocument.ContractualAccount__c = (String) primolivello.get('contoContrattuale');
+                    singleDocument.TotalCommunicationPayment__c = importo;
+                    singleDocument.Case__c = inputs[0].caseId;
+                    
+                    if(String.isNotBlank(numeroFattura)){
+                        singleDocument.Name = numeroFattura;
+                    }else if(String.isNotBlank(numeroDocumento)) {
+                        singleDocument.Name = numeroDocumento;
+                    }else {
+                        singleDocument.Name = getRiferimentoFattura(secondoLivelloList);
+                    }
                     documentList.add(singleDocument);
                 }
                 if(documentList.size()>0){
@@ -125,6 +244,24 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
         }
     }
 
+    private static String getRiferimentoFattura(List<Object> secondoLivelloList){
+        if(secondoLivelloList==null || secondoLivelloList.size()<=0) return null;
+        try {
+            String riferimentoFattura = '';
+            for(Object singleRecord : secondoLivelloList){
+                Map<String, Object> secondolivello = (Map<String, Object>) singleRecord;
+                riferimentoFattura = (String) secondolivello.get('riferimentoFattura');
+                if (String.isNotBlank(riferimentoFattura)) {
+                    return riferimentoFattura;
+                }
+            }
+            return riferimentoFattura;
+        } catch (Exception ex) {
+            System.debug('Error in HDT_SRV_DocumentSelectedManager: ' + ex.getMessage());
+            return null;
+        }
+    }
+
     public static List<SObject> getDocumentsSelected(Id caseId){
         String queryString = 'SELECT Id,TotalCommunicationPayment__c,DocumentNumber__c, Bill__c, Type__c, IssueDate__c,ExpirationDate__c,Amount__c,Residue__c,PaymentMode__c,IssuingCompany__c,ContractualAccount__c FROM DocumentSelected__c WHERE Case__c = \''+caseId+'\'';
         String objectName = 'DocumentSelected__c';
@@ -145,6 +282,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
         @InvocableVariable
         public String tipoDocumento;
+
+        @InvocableVariable
+        public Boolean hasPartiteNonFatturate;
         
     }
 
@@ -163,6 +303,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
         @InvocableVariable
         public String contractCode;
+
+        @InvocableVariable
+        public String contesto;
     }
     
 }

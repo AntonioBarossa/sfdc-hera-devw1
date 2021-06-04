@@ -59,15 +59,6 @@
                                     <lightning-input type="text" data-id="fiscalCode" label="Codice Fiscale" required={makerequired}>
                                     </lightning-input>
                                 </div>
-                                <div
-                                    class="slds-form-element__control slds-col slds-m-top_medium slds-p-left_x-large slds-p-right_small">
-                                    <template if:true={legalFormOptions.data}>
-                                        <lightning-combobox data-id="legalForm" name="tipoformagiuridica"
-                                            label="Tipo Forma Giuridica" placeholder="Seleziona il tipo Forma Giuridica"
-                                            options={legalFormOptions.data.values} required>
-                                        </lightning-combobox>
-                                    </template>
-                                </div>
                             </div>
                             <div class="slds-col slds-size_1-of-2">
                                 <div
@@ -106,6 +97,7 @@
                             <h3
                                 class="slds-section__title slds-theme--shade primaryPaletteBorder test-id__section-header-container">
                                 Sede Legale e Contatti </h3>
+                                <h4>Almeno un dato di contatto è obbligatorio</h4>
                         </div> 
                         <div class="slds-grid slds-grid_vertical">
                             <div class="slds-col slds-grid">
@@ -321,7 +313,7 @@
                                 </div>
                                 <div
                                     class="slds-form-element slds-size_1-of-2 slds-m-top_medium slds-p-left_small slds-p-right_x-large">
-                                    <lightning-input type="tel" data-id="mobilePhone" label="Cellulare"  minlength="10" message-when-too-short="Il numero di cellulare non può essere meno di 10 cifre!">
+                                    <lightning-input type="tel" data-id="mobilePhone" label="Cellulare" >
                                     </lightning-input>
                                 </div>
 

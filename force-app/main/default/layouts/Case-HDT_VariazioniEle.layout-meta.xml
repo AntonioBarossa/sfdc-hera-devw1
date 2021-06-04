@@ -13,6 +13,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CreatorGroup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Station__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>AccountId</field>
             </layoutItems>
             <layoutItems>
@@ -25,7 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CommodityFormula__c</field>
+                <field>Contract__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -33,15 +41,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CommodityFormula__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Market__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ServicePoint__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Contract__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -51,8 +61,6 @@
                 <behavior>Readonly</behavior>
                 <field>AddressFormula__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Subprocess__c</field>
@@ -110,7 +118,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>VATPercentage__c</field>
+                <field>TaxRate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -178,14 +186,19 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>DeliveryAddress__c</field>
+                <field>BillSendingMethod__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>BillSendingMethod__c</field>
+                <field>DeliveryAddress__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Email__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -211,7 +224,7 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Account/Billing Profile Categoria Errata</label>
+        <label>BP/CA Categoria Errata</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -448,6 +461,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.HDT_SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.HDT_SendThirdPartyEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -461,11 +479,6 @@
             <actionName>HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.HDT_SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -535,6 +548,9 @@
         <relatedList>Case.RelatedCase__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>DocumentNumber__c</fields>
         <fields>Amount__c</fields>
@@ -561,7 +577,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001Z0ZU</masterLabel>
+        <masterLabel>00h1X0000025kaj</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -71,6 +71,38 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
     }
 
     /**
+     * Crea un Case da un Order. Input obbligatori:
+     * - recordTypeId
+     * - cluster
+     * - type
+     * - inputSObj
+     */
+    public Case createCaseFromOrder(Map<String, Object> inputs){
+
+        String recordTypeId = (String) inputs.get('recordTypeId');
+        String caseType = (String) inputs.get('type');
+        String caseCluster = (String) inputs.get('cluster');
+        Order parentOrder = (Order) inputs.get('inputSObj');
+
+        if (String.isBlank(recordTypeId) || String.isBlank(caseCluster) || String.isBlank(caseType) || parentOrder == null) {
+            System.debug('HDT_UTL_CreateGenericCase::createCaseFromOrder - invalid inputs: ' + inputs);
+            return null;
+        }
+
+        Case newCase = new Case();
+
+        newCase.AccountId = parentOrder.AccountId;
+        newCase.ContactId = parentOrder.Contact__c;
+        newCase.RecordTypeId = recordTypeId;
+        newCase.Type = caseType;
+        newCase.Cluster__c = caseCluster;
+
+        newCase.Phase__c = 'Bozza';
+
+        return newCase;
+    }
+
+    /**
      * Crea un Case da zero. Input obbligatori:
      * - recordTypeId
      * - cluster
@@ -85,6 +117,8 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String caseCluster = (String) inputs.get('cluster');
         String accountId = (String) inputs.get('accountId');
         String contactId = (String) inputs.get('contactId');
+        String servicePointId = (String) inputs.get('servicePointId');
+        String herokuCode = (String) inputs.get('HerokuPracticeCode__c');
 
         if (String.isBlank(recordTypeId) || String.isBlank(accountId) || String.isBlank(caseCluster) || String.isBlank(caseType)) {
             System.debug('HDT_UTL_CreateGenericCase::createCase - invalid inputs: ' + inputs);
@@ -96,9 +130,11 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.AccountId = accountId;
         newCase.ContactId = contactId;
         newCase.RecordTypeId = recordTypeId;
+        newCase.ServicePoint__c = servicePointId;
         newCase.Type = caseType;
         newCase.Cluster__c = caseCluster;
         newCase.WrittenReceiptRequestDate__c = Date.today();
+        newCase.HerokuPracticeCode__c = herokuCode;
 
         newCase.Phase__c = 'Bozza';
 

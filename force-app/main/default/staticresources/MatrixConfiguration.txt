@@ -39,6 +39,11 @@
           "relatedTo": ""
         },
         {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
           "fieldName": "stringValue",
           "enabled": false,
           "relatedTo": ""
@@ -61,12 +66,12 @@
         {
           "fieldName": "rateType",
           "enabled": true,
-          "relatedTo": "tipiTariffa"
+          "relatedTo": "FareTypeList__c"
         },
         {
           "fieldName": "infoGroup",
           "enabled": true,
-          "relatedTo": "gruppiInfo"
+          "relatedTo": "infoGroup"
         },
         {
           "fieldName": "numValue",
@@ -80,6 +85,11 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": false,
           "relatedTo": ""
         },
@@ -129,6 +139,11 @@
           "relatedTo": ""
         },
         {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
           "fieldName": "stringValue",
           "enabled": false,
           "relatedTo": ""
@@ -170,6 +185,11 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": false,
           "relatedTo": ""
         },
@@ -219,6 +239,11 @@
           "relatedTo": ""
         },
         {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
           "fieldName": "stringValue",
           "enabled": false,
           "relatedTo": ""
@@ -261,7 +286,12 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "priceQ"
+          "relatedTo": "PriceListQ__c"
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
         },
         {
           "fieldName": "stringValue",
@@ -306,7 +336,12 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "priceT"
+          "relatedTo": "PriceListT__c"
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
         },
         {
           "fieldName": "stringValue",
@@ -350,6 +385,11 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": false,
           "relatedTo": ""
         },
@@ -399,6 +439,11 @@
           "relatedTo": ""
         },
         {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
           "fieldName": "stringValue",
           "enabled": false,
           "relatedTo": ""
@@ -440,8 +485,13 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": true,
-          "relatedTo": "discountA"
+          "relatedTo": "DiscountListaA__c"
         },
         {
           "fieldName": "stringValue",
@@ -485,8 +535,13 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": true,
-          "relatedTo": "discountA"
+          "relatedTo": "DiscountListaA__c"
         },
         {
           "fieldName": "stringValue",
@@ -530,8 +585,13 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": true,
-          "relatedTo": "discountP"
+          "relatedTo": "DiscountListP__c"
         },
         {
           "fieldName": "stringValue",
@@ -576,7 +636,12 @@
         {
           "fieldName": "priceCode",
           "enabled": true,
-          "relatedTo": "priceL"
+          "relatedTo": "PriceListL__c"
+        },
+        {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
         },
         {
           "fieldName": "stringValue",
@@ -624,6 +689,11 @@
           "relatedTo": ""
         },
         {
+          "fieldName": "discountCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
           "fieldName": "stringValue",
           "enabled": true,
           "relatedTo": ""
@@ -665,6 +735,11 @@
         },
         {
           "fieldName": "priceCode",
+          "enabled": false,
+          "relatedTo": ""
+        },
+        {
+          "fieldName": "discountCode",
           "enabled": false,
           "relatedTo": ""
         },

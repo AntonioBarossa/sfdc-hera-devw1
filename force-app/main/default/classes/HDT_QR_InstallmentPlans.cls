@@ -5,9 +5,9 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         try{
 
-            rule = [SELECT 	Id,MaxInstallmentsNumber__c,AttachmentManagement__c,ApprovalProcess__c,ClientCategory__c
+            rule = [SELECT 	Id,MaxInstallmentsNumber__c,AttachmentManagement__c,ApprovalProcess__c,Category__c
             FROM RentProcessRule__c
-            WHERE ClientCategory__c = :c.ClientCategory__c
+            WHERE Category__c = :c.ClientCategory__c
             AND TypeInstallmentPlan__c = :c.TypeInstallmentPlan__c
             AND ApplicationInterests__c = :c.ApplicationInterests__c
             AND InstallmentPlanReason__c = :c.Reason__c
@@ -39,6 +39,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         CaseNumber,
         DepositPaymentMode__c,
         InstallmentPlanNumber__c,
+        InstallmentNumberRequired__c,
         ClientCategory__c,
         TypeInstallmentPlan__c,
         Reason__c,
@@ -46,6 +47,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         ExistingInstallmentsPlanNumber__c,
         AmountToPayInInstallments__c,
         Deposit__c,
+        DepositAmount__c,
         Amount__c,
         CutomerAssisted__c,
         RefundableEscape__c,

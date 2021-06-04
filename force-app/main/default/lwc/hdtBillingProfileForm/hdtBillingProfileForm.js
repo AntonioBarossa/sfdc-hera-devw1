@@ -378,6 +378,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             this.saveErrorMessage.push('Il campo CIN deve avere 1 carattere');
         }
 
+        if (this.template.querySelector("[data-id='IbanCIN__c']") !== null 
+            && this.template.querySelector("[data-id='IbanCIN__c']").value !== null
+            && !/^[a-zA-Z]+$/.test(this.template.querySelector("[data-id='IbanCIN__c']").value)) {
+            this.saveErrorMessage.push('Il campo CIN può contenere solo lettere');
+        }
+
         if (this.template.querySelector("[data-id='IbanCIN_IBAN__c']") !== null 
              && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value !== null
              && this.template.querySelector("[data-id='IbanCIN_IBAN__c']").value.length !== 2) {
@@ -453,8 +459,12 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Modalità invio Fatturazione elettronica, ');
         }
 
+        console.log('hdtBillingProfileForm_js - validFields');
+
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-            && this.template.querySelector("[data-id='SubjectCode__c']").value !== null && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7) {
+        && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
+        && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7
+        && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
             this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
         }
 
@@ -609,6 +619,20 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.dataToSubmit['InvoicingStreetNumber__c'] != this.wrapAddressObject['Civico']){
             this.dataToSubmit['InvoicingStreetNumber__c'] = this.wrapAddressObject['Civico'];
         }
+
+        if(this.dataToSubmit['InvoicingCityCode__c'] != this.wrapAddressObject['Codice Comune SAP']){
+            this.dataToSubmit['InvoicingCityCode__c'] = this.wrapAddressObject['Codice Comune SAP'];
+        }
+        if(this.dataToSubmit['InvoicingStreetCode__c'] != this.wrapAddressObject['Codice Via Stradario SAP']){
+            this.dataToSubmit['InvoicingStreetCode__c'] = this.wrapAddressObject['Codice Via Stradario SAP'];
+        }
+
+        if(this.dataToSubmit['InvoicingPlace__c'] != this.wrapAddressObject['Localita']){
+            this.dataToSubmit['InvoicingPlace__c'] = this.wrapAddressObject['Localita'];
+        }
+        if(this.dataToSubmit['InvoicingPlaceCode__c'] != this.wrapAddressObject['Codice Localita']){
+            this.dataToSubmit['InvoicingPlaceCode__c'] = this.wrapAddressObject['Codice Localita'];
+        }
         
         this.isVerifiedAddress = this.wrapAddressObject['Flag Verificato'];
         this.isForeignAddress = this.wrapAddressObject['Indirizzo Estero'];
@@ -637,6 +661,20 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
         if(this.cloneObject['InvoicingStreetNumber__c'] != undefined){
             this.wrapAddressObject['Civico'] = this.cloneObject['InvoicingStreetNumber__c'];
+        }
+
+        if(this.cloneObject['InvoicingCityCode__c'] != undefined){
+             this.wrapAddressObject['Codice Comune SAP'] = this.cloneObject['InvoicingCityCode__c'];
+        }
+        if(this.cloneObject['InvoicingStreetCode__c'] != undefined){
+             this.wrapAddressObject['Codice Via Stradario SAP'] = this.cloneObject['InvoicingStreetCode__c'];
+        }
+
+        if(this.cloneObject['InvoicingPlace__c'] != undefined){
+            this.wrapAddressObject['Localita'] = this.cloneObject['InvoicingPlace__c'];
+        }
+        if(this.dataToSubmit['InvoicingPlaceCode__c'] != undefined){
+            this.wrapAddressObject['Codice Localita'] = this.cloneObject['InvoicingPlaceCode__c'];
         }
 
         this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObject);

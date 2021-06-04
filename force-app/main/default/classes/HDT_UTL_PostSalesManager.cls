@@ -220,5 +220,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void changePaymentMethod(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        BillingProfile__c billingProfile = new BillingProfile__c();
+
+        billingProfile.Id = currentCase.BillingProfile__c;
+        billingProfile.PaymentMethod__c = 'RID';
+
+        HDT_UTL_DatabaseService.updateSObject(billingProfile);
+
+    }
+
 
 }

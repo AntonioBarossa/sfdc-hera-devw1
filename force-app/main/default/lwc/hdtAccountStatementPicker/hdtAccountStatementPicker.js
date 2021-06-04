@@ -17,7 +17,7 @@ const columns = [
     },
     { label: 'Conto Contrattuale', fieldName: 'contoContrattuale'},
     { label: 'Numero Documento', fieldName: 'xblnr'},
-    { label: 'Numero Bollettino', fieldName: 'boll'},
+    { label: 'Numero Bollettino', fieldName: 'bollo'},
     { label: 'Totale Copertina', fieldName: 'totPagare' },
     { label: 'Tipo', fieldName: 'tipoDocDesc' },
     { label: 'Totale Documento', fieldName: 'totFattura'},
@@ -129,6 +129,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     handleSelection(event){
         console.log('# from lookup: ' + event.detail.selectedId + ' - ' + event.detail.name + ' - ' + event.detail.code);
         this.contractAccount = event.detail.name
+        this.billingProfileId = event.detail.selectedId;
     }
     handleSubmit(){
         this.startDate = this.template.querySelector("lightning-input[data-id=fromDate]").value;
@@ -172,7 +173,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params.xblnr = numeroDocumento;
             }
             if(numeroBollettino){
-                params.bollo = numeroBollettino;
+                params.bollo = '*' + numeroBollettino;
             }
             console.log(JSON.stringify(params));
             getStatements
@@ -180,12 +181,14 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params:JSON.stringify(params)
             }).then(data => {
                 console.log(JSON.parse(data));
-                console.log(data.length);
-                if(data && data.length>0){
+                //console.log(data.length);
+                if(data != null && data.length>0){
                     this.data = JSON.parse(data);
                     this.showTable = true;
+                    this.showSpinner=false;
                 }else{
                     this.showTable = false;
+                    this.showSpinner=false;
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Attenzione',
@@ -197,13 +200,15 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 
             }).catch(err => {
                 this.showTable = false;
+                this.showSpinner=false;
                 console.log(err);
             });
             
         }catch(error){
             console.error(error);
+            this.showSpinner=false;
         }
-        this.showSpinner=false;
+        
     }
 
     formatDate(date) {
@@ -345,6 +350,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
             }
             console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
             var fields = {
+                'Name' : row.xblnr,
                 'DocumentNumber__c' : row.xblnr, 
                 'Bill__c' : row.boll, 
                 'Type__c' : row.tipoDocDesc,
@@ -395,11 +401,12 @@ export default class HdtAccountStatementPicker extends LightningElement {
 
         if(this.billingProblems && (this.documents === null || this.documents === undefined)){
 
-            new ShowToastEvent({
+            this.dispatchEvent(new ShowToastEvent({
                 title: 'Errore',
-                messagge: 'Necessario selezionare almeno una fattura',
+                message: 'Necessario selezionare almeno una fattura',
                 variant: 'error'
-            });
+                })
+            );
 
             return true;
 
@@ -408,7 +415,11 @@ export default class HdtAccountStatementPicker extends LightningElement {
             return false;
 
         }
+    }
 
+    @api
+    getBillingProfileId(){
+        return this.billingProfileId;
     }
 
 }

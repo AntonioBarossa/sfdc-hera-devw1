@@ -82,12 +82,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
-        { label: 'Legale rappresentante', value: 'Legale rappresentante' },
-        { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-        { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' },
-        { label: 'Contatto secondario', value: 'Contatto secondario' },
-        { label: 'Delegato', value: 'Delegato' },
-        { label: 'Azienda', value: 'Azienda' }
+        { label: 'Familiare', value: 'Familiare' }
     ];
 
     closeModal() {
@@ -297,6 +292,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
             isValidated=false;
         }
+        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            }
+        }
+        if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
+            if(this.fiscalCode.value.length == 16){
+                isValidated=false;
+                messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
+            }
+        }
 
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
@@ -352,7 +359,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                             "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                             "phoneNumber": phoneNumber.value,
                             "mobilePhone" : mobilePhone.value,
-                            "name": lastName.value+' '+firstName.value,
+                            "name": firstName.value+' '+lastName.value,
                             "email": email.value,
                             "birthplace": this.birthPlace,
                             "recordTypeId" : this.RecordTypeId,

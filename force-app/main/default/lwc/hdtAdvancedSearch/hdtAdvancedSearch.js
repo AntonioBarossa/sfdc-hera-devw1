@@ -39,7 +39,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     @api targetobject;
     @api outputContract=[];
     @api showbuttoncontract ;
-    @api showbuttonforniture ;
+    @api showbuttonforniture=false;
     notFoundMsg={
         'pod':'Codice POD/PDR non trovato su SFDC, Eseguire una nuova ricerca o verifica esistenza su SAP',
         'contract':'Codice Contratto non trovato su SFDC, Eseguire una nuova riceerca o verifica esistenza su SAP',
@@ -50,6 +50,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     connectedCallback() {
         if(this.processtype === undefined || this.processtype === ''){
             console.log('processType non popolato');
+            this.showbuttonforniture=true;
         }
         else
         {

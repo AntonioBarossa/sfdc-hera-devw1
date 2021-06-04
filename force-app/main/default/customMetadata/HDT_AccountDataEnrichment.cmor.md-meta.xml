@@ -14,19 +14,29 @@
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
       {
+        &quot;label&quot;: &quot;Stato Cmor&quot;,
+        &quot;fieldName&quot;: &quot;stato&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Descrizione Stato CMOR&quot;,
+        &quot;fieldName&quot;: &quot;statoDescr&quot;,
+        &quot;initialWidth&quot;: 220
+      },
+      {
         &quot;label&quot;: &quot;Importo Cmor&quot;,
         &quot;fieldName&quot;: &quot;cmor&quot;,
         &quot;initialWidth&quot;: 140,
         &quot;type&quot;: &quot;currency&quot;
       },
       {
-        &quot;label&quot;: &quot;Importo Cmor stornato&quot;,
+        &quot;label&quot;: &quot;Importo stornato&quot;,
         &quot;fieldName&quot;: &quot;cmorStornato&quot;,
         &quot;initialWidth&quot;: 220,
         &quot;type&quot;: &quot;currency&quot;
       },
       {
-        &quot;label&quot;: &quot;Importo Cmor rettificato&quot;,
+        &quot;label&quot;: &quot;Importo rettificato&quot;,
         &quot;fieldName&quot;: &quot;cmorRett&quot;,
         &quot;initialWidth&quot;: 220,
         &quot;type&quot;: &quot;currency&quot;
@@ -75,16 +85,6 @@
         &quot;label&quot;: &quot;Data comunicazione pratica distributore&quot;,
         &quot;fieldName&quot;: &quot;dataCom&quot;,
         &quot;initialWidth&quot;: 240
-      },
-      {
-        &quot;label&quot;: &quot;Stato Cmor&quot;,
-        &quot;fieldName&quot;: &quot;stato&quot;,
-        &quot;initialWidth&quot;: 140
-      },
-      {
-        &quot;label&quot;: &quot;Descrizione Stato CMOR&quot;,
-        &quot;fieldName&quot;: &quot;statoDescr&quot;,
-        &quot;initialWidth&quot;: 220
       },
       {
         &quot;label&quot;: &quot;Codice Cliente&quot;,

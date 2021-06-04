@@ -37,27 +37,84 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
             }
-            when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn
-                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
+            // Calculate Date @Picchiri 20/05/21
+            when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
+                system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
+                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
+
+                    // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
+                        
+                        // START 1 Calcolo Data Max Ripensamento       
+                        try {                             
+                            orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
+                        }                                                                 
+                        // END Calcolo Data Max Ripensamento               
+
+                        // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
+                        if(order.SignedDate__c == null){
+                            orderToUpdate.Status = 'In lavorazione';
+                            orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                        }
+            
+                        try {                             
+                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                        }  
+                        
+                        // END Calcolo data Invio richiesta al SII (Data di adempimento)
+
+                        // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
+                        //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
+                        // END Calcolo data inizio (Data attivazione contratto)
+
+                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
+                        try {                             
+                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                        }                     
+                        
+                        // END Calcolo Data Decorrenza (EffectiveDate__c) 
+
+                    // END Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
+
                     // Carta d’identità;
                     // orderToUpdate.CIAccoutn__c = 'Richiesto';
 
                     if (order.VolturaThirdTrader__c) {
                         orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                     }
+                    
+                } else { // @Picchiri Only for not residential customer
+ 
+                    // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
 
-                    if (order.WaiverRightAfterthought__c == 'Si') {
-                        orderToUpdate.DateSentToSII__c = Date.today();
-                    } else {
-                        Date maxAfterthoughtDate = order.MaxAfterthoughtDate__c;
+                        // START Calcolo data invio richiesta (Data adempimento).
+                        try {                             
+                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                        }                                     
+                        // END Calcolo data invio richiesta (Data adempimento).
 
-                        if(maxAfterthoughtDate != null){
-                            orderToUpdate.DateSentToSII__c = maxAfterthoughtDate.addDays(1);
-                        }
-                    }
+                        // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
+                        //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);                                              
+                        // END Calcolo data inizio (Data attivazione contratto)
+                    
+                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
+                        try {                             
+                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                        }                       
+                        // END Calcolo Data Decorrenza (EffectiveDate__c)   
 
-                } else {
-                    orderToUpdate.DateSentToSII__c = Date.today();
+                    // END Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
+
+                    //orderToUpdate.DateSentToSII__c = Date.today();
 
                     if (order.VolturaThirdTrader__c) {
                         orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';

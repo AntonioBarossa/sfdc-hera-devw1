@@ -156,7 +156,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         requestBody.ordine.contoContrattuale = (String) bp.get('ContractAccountCode__c');
         requestBody.ordine.indirizzo.comune = (String) caseRecord.get('InvoicingCity__c');
-        requestBody.ordine.indirizzo.nazione = (String) caseRecord.get('InvoicingCountry__c');
+        requestBody.ordine.indirizzo.nazione = getFormattedCountry((String) caseRecord.get('InvoicingCountry__c'));
         requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('InvoicingStreetNumberExtension__c') != null? (String) caseRecord.get('InvoicingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('InvoicingPostalCode__c');
@@ -263,7 +263,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
         requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
         requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';
-        requestBody.account.email = (String) caseRecord.get('Email__c') != null ? (String) caseRecord.get('Email__c') : '';
+        requestBody.account.emailCont = (String) caseRecord.get('Email__c') != null ? (String) caseRecord.get('Email__c') : '';
 
         inputParams.requestBody = JSON.serialize(requestBody);
         System.debug('requestBody ' + requestBody);

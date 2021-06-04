@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>contesto</name>
+            <value>
+                <elementReference>Context</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>createDocuments</name>
             <value>
                 <elementReference>createDocuments</elementReference>
@@ -26,7 +32,7 @@
         <inputParameters>
             <name>method</name>
             <value>
-                <stringValue>manageDocuments</stringValue>
+                <stringValue>manageDocumentsInformative</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -817,21 +823,21 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Dettaglio Bolletta</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Split Payment</stringValue>
                 </rightValue>
@@ -856,21 +862,21 @@
             <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Dettaglio Bolletta</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>BP/CA - errata categoria</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Split Payment</stringValue>
                 </rightValue>
@@ -1662,6 +1668,12 @@
             <field>Contract__c</field>
             <value>
                 <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Cerca_Contatto_Primario.Contact.Email</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -2647,6 +2659,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Titolare</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

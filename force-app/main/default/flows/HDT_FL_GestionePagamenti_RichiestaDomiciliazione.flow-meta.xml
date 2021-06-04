@@ -10,6 +10,7 @@
         <connector>
             <targetReference>Validate_Iban_OK</targetReference>
         </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>iban</name>
             <value>
@@ -560,7 +561,7 @@
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditFormFlow_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
@@ -573,6 +574,20 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -975,6 +990,13 @@
             <name>DocumentSignature</name>
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>CaseInput.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1073,6 +1095,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1103,6 +1126,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1133,6 +1157,7 @@
                     <elementReference>CaseInput.Id</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1201,6 +1226,7 @@
                     <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1281,6 +1307,7 @@
                     <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1385,6 +1412,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -1511,6 +1539,7 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1594,6 +1623,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1653,6 +1683,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
@@ -1692,7 +1723,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1717,7 +1748,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1742,7 +1773,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -1767,7 +1798,7 @@
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annulla prestazione</stringValue>
+                <stringValue>Annullamento prestazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>

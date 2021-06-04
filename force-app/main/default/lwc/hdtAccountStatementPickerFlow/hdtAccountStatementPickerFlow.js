@@ -1,5 +1,6 @@
 import { LightningElement,api } from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtAccountStatementPickerFlow extends LightningElement {
     @api contractAccount;
@@ -9,7 +10,7 @@ export default class HdtAccountStatementPickerFlow extends LightningElement {
     @api processType;
     @api accountId;
     @api billingProblems;
-
+    @api returnBillingProfileId;
     @api availableActions = [];
     @api saveButton;
     @api cancelButton;
@@ -26,8 +27,10 @@ export default class HdtAccountStatementPickerFlow extends LightningElement {
     handleNext() {
         console.log('BillingProblems --> ' + this.billingProblems);
         let returnValue = this.template.querySelector('c-hdt-account-statement-picker').checkBillingProblems();
+        let billingProfileId = this.template.querySelector('c-hdt-account-statement-picker').getBillingProfileId();
         console.log('returnValue--> '+returnValue);
-
+        this.returnBillingProfileId = billingProfileId;
+        console.log('returnBillingProfileId--> '+billingProfileId);
         if(returnValue){
 
             return;
