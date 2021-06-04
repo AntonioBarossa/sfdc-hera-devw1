@@ -11,6 +11,7 @@
 
 public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
+    //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled(cacheable=true)
     public static String getScriptSections(String processName, String recordId){
          return new HDT_LC_HdtScriptManagementModal().getScriptText(processName, recordId);
@@ -20,18 +21,18 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
     private String getScriptText(String processName, String recordId){
         ScriptConfig__c process= [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
 
-        
-        List<String> allFieldsToQuery = getAllFieldsToQuery(process);
+        List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
+
         String textToFormat='';
-        SObject record = getSobject(recordId, allFieldsToQuery);
+        SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
 
         for(ScriptConfig__c section : process.ChildSections__r){
-            if(checkVisibility(section.checkVisibility__c, record)){
+            if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
                 String sectionLabel = '<<{ globalTag.section__d.'+section.SectionLabel__c.replace(' ', '_')+ ' }>>';
                 textToFormat +=sectionLabel+section.textScript__c;
             }            
         }
-        String formattedtext= formatText(textToFormat, recordId, record);
+        String formattedtext= formatText(textToFormat, recordId, record);//we call again the method to bind the final script to values
         return formattedtext;   
     }
 
@@ -40,6 +41,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
     } */
 
     private List<String> getAllFieldsToQuery(ScriptConfig__c process){
+        //getting all fields to be queried from starting object, both for data binding and also for removing sections
         String textToFormat='';
         system.debug(process.ChildSections__r.size());
         
@@ -49,16 +51,18 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
                 conditions.add(section.checkVisibility__c);
             }
             String sectionLabel = '<<{ globalTag.section__d.'+section.SectionLabel__c.replace(' ', '_')+ ' }>>';
-            textToFormat +=sectionLabel+section.textScript__c;
+            //globalTag.section__d.label tell CB to bind the label of the section in bold tags
+            textToFormat +=sectionLabel+section.textScript__c;//String with all sections (even those to be eliminated)
         }
 
-        List<String> allFieldsToQuery = getDataBinded(textToFormat);
-        allFieldsToQuery.addAll(getListConditionFields(conditions));
+        List<String> allFieldsToQuery = getDataBinded(textToFormat);//get fields name of binding variables
+        allFieldsToQuery.addAll(getListConditionFields(conditions));//get fields name of variables in condition statements
         return allFieldsToQuery;
     }
 
 
     private Set<String> getListConditionFields(List<String> listConditions){
+        //get fields name of variables in condition statements
         Set<String> returnSetFieldsToQuery = new Set<String>();
         for(String conditions :listConditions){
             List<String> arrayConditions = conditions.split(';');
@@ -76,6 +80,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
 
 
     private boolean checkVisibility(String conditions, SObject record){
+        //this method check if the conditions of a sections are met (both record and condition are defined at run Time)
         if (conditions == null || conditions.trim().equals('')){
             return true;
         }
@@ -90,8 +95,8 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
                 List<String> arraySingleCondition = condition.split(compareOperator);
                 fieldName=arraySingleCondition[0];
                 valueToCheck=arraySingleCondition[1];
-                actualFieldValue=getFieldValue(fieldName, record);
-                visibility=assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);
+                actualFieldValue=getFieldValue(fieldName, record);//method to get field value (String converted) from generic sobject
+                visibility=assertDynamicValues(actualFieldValue, valueToCheck, checkCompare);//this compare those two values
             }
 
         }catch(Exception ex ){
@@ -104,7 +109,8 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
 
 
     private static Boolean assertDynamicValues(String actualFieldValue, String valueToCheck, Boolean checkEquals){
-        //checkEquals true means that you must check if the two strings matches, if it false you check if the strings differ
+        //This method dinamically compares two string, it can be used to check if they match or they differ
+        //checkEquals set true means that you must check if the two strings matches, if it false you check if the strings differ
         if ('null'.equalsIgnoreCase(valueToCheck)) {//null means "empty string"
             if (String.isBlank(actualFieldValue) == !checkEquals) {
                 return false;

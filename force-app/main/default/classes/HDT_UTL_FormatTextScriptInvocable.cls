@@ -1,3 +1,14 @@
+/*
+ * File: HDT_UTL_FormatTextScriptInvocable.cls
+ * Project: HERA
+ * File Created: Friday, 4th June 2021 4:15:38 pm
+ * Author: fdefelice
+ * -----
+ * HISTORY:
+ */
+
+
+
 public with sharing class HDT_UTL_FormatTextScriptInvocable {
         
 

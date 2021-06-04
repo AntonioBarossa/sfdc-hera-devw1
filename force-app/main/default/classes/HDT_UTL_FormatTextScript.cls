@@ -16,7 +16,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     protected String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
 
 
-    public String formatText(String textScript, String recordId){
+    public String formatText(String textScript, String recordId){//standard method, call when you haven't already queried the record
         return formatText( textScript,  recordId,  null);
     }
 
@@ -40,6 +40,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
 
 
     protected Sobject getSobject(String recordId, List<String> fieldsToQuery){
+        //this method get an id and a list of fields, it returns a generic sobject
         String objectName = ((Id) recordId).getSobjectType().getDescribe().getName();
         String query = makeSelectStatement(fieldsToQuery);
         Sobject genericSObject;
@@ -125,6 +126,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
 
     protected List<String> getDataBinded(String Text){
         //this method catches all dynamic fields in the text
+        //generally can be used to extract all regex occurence in a string
         List<String> bindedFields = new List<String>();
         Matcher matcher=Pattern.compile(regEx).matcher(Text);
          
@@ -156,6 +158,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
 
     @TestVisible
     private static String getGlobalTagValues(List<String> relationshipNames){
+        //edit this method to add global tags
         String tagName=relationshipNames[1];
 
         String tagValue='';
