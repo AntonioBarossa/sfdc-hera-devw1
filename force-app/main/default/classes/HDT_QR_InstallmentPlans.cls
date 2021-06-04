@@ -104,4 +104,27 @@ public with sharing class HDT_QR_InstallmentPlans {
 
 
     }
+
+    public String getPaymentMethodByCaseId(String recordId){
+
+        String paymentMethod;
+
+        try{
+
+            paymentMethod = [SELECT 
+            BillingProfile__r.PaymentMethod__c 
+            FROM Case 
+            WHERE Id = :recordId 
+            WITH SECURITY_ENFORCED 
+            LIMIT 1].BillingProfile__r.PaymentMethod__c ;
+
+        } catch(Exception e){
+
+            System.debug('QR_InstallmentPlans Exception--> ' + e.getMessage());
+        
+        }
+
+        return paymentMethod;
+
+    }
 }
