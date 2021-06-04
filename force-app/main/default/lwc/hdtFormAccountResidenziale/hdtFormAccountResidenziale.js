@@ -292,6 +292,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
             isValidated=false;
         }
+        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
+            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            }
+        }
+        if(!(fiscalCode.value=== undefined || fiscalCode.value.trim()==='')){
+            if(fiscalCode.value.length == 16){
+                isValidated=false;
+                messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
+            }
+        }
 
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
