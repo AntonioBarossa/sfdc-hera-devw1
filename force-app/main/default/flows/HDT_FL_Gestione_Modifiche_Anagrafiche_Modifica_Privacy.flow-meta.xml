@@ -430,18 +430,18 @@
             <name>hdtDocumentSignatureManagerFlow</name>
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
+<!--             <inputParameters>
                 <name>accountId</name>
                 <value>
                     <elementReference>Get_Case.AccountId</elementReference>
                 </value>
-            </inputParameters>
-            <inputParameters>
+            </inputParameters> -->
+<!--             <inputParameters>
                 <name>recordId</name>
                 <value>
                     <elementReference>Get_Case.Id</elementReference>
                 </value>
-            </inputParameters>
+            </inputParameters> -->
             <inputParameters>
                 <name>nextLabel</name>
                 <value>
