@@ -16,13 +16,17 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     disabledDeliberation = false;
     showEsitoCheck = false;
     vasAmendDisabledInput = false;
+    SwitchInRipristinatorioDisabledInput = false;
     
     get value(){
         let result = '';
         console.log('**************************************** ', this.order.RecordType.DeveloperName);
         //COMMENTATO POICHE GENERAVA ERRORE
         if (this.order.RecordType.DeveloperName !== 'Default') {
-            if(this.order.SBQQ__Quote__r.IsVAS__c){
+            if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+                result = 'HDT_RT_SwitchIn';
+            }
+            else if(this.order.SBQQ__Quote__r.IsVAS__c){
                 result = 'HDT_RT_VAS';
             } else if(this.order.SBQQ__Quote__r.AmendmentAllowed__c) {
                 result = 'HDT_RT_ScontiBonus';
@@ -42,7 +46,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         let records = [];
 
         //COMMENTATO POICHE GENERAVA ERRORE
-        if(this.order.SBQQ__Quote__r.IsVAS__c){
+        if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+            records = [
+                {"label":"SwitchIn","value":"HDT_RT_SwitchIn"}
+            ]
+        }
+        else if(this.order.SBQQ__Quote__r.IsVAS__c){
             records = [
                 {"label":"VAS","value":"HDT_RT_VAS"}
             ]
@@ -90,7 +99,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get disabledInput(){
         let result = true;
         console.log('disabledInput - rcordtype', this.order.RecordType.DeveloperName);
-        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput){
+        if(this.order.RecordType.DeveloperName !== 'HDT_RT_Default' || this.vasAmendDisabledInput || this.SwitchInRipristinatorioDisabledInput){
             result = true;
         } else {
             result = false;
@@ -142,6 +151,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.showDeliberation = false;
 
             this.showEsitoCheck = false;
+
+            if (this.order.ProcessType__c === 'Switch in Ripristinatorio') {
+                this.selectedProcess = 'HDT_RT_SwitchIn';
+            }
         }
         else if(selectedProcess === 'HDT_RT_AttivazioneConModifica')
         {
@@ -221,6 +234,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             extraParams['servicePointType'] = this.order.ServicePoint__r.RecordType.DeveloperName;
         }
 
+        if(this.order.ProcessType__c === 'Switch in Ripristinatorio'){
+            extraParams['switchInRipristinatorio'] = 'true';
+        }
+
         if (this.showDeliberation === true) {
             if (this.deliberation !== '') {
                 this.goToNextStep(extraParams);
@@ -249,6 +266,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.vasAmendDisabledInput = true;
         }
         
+        if (this.order.ProcessType__c === 'Switch in Ripristinatorio') {
+            this.SwitchInRipristinatorioDisabledInput = true;
+        }
+
         console.log('CallBack end');
 
     }
