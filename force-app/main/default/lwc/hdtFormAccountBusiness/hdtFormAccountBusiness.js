@@ -350,10 +350,16 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
         }
+        if(!(mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')){
+            if(mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 12){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            }
+        }
         if(!(contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='')){
             if(contactPhoneNumber[0] != '0' && (contactPhoneNumber.value.length<6 || contactPhoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
         if(!(contactEmail.value=== undefined || contactEmail.value.trim()==='')){
@@ -366,9 +372,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
+        
         // if(!(otherPhone.value=== undefined || otherPhone.value.trim()==='')){
         //     if(otherPhone.value.length<10){
         //         isValidated=false;
