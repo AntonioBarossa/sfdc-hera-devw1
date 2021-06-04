@@ -908,6 +908,10 @@
             <fullName>Teleriscaldamento</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Multi</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CompanyOwner__c</picklist>
