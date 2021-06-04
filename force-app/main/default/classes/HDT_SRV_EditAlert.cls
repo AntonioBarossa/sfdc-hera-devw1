@@ -34,7 +34,6 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
         HDT_WRP_GenericSapIntegration sapIntegration = new HDT_WRP_GenericSapIntegration();
         sapIntegration.recordId = recordId;
         sapIntegration.requestType = 'ModificaAlert';
-        sapIntegration = support.submitRequest(sapIntegration);
 
         try {
             sapIntegration = support.submitRequest(sapIntegration);
