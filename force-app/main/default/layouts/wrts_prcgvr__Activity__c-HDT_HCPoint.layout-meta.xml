@@ -35,10 +35,6 @@
                 <behavior>Edit</behavior>
                 <field>Solicited__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>ActivityDurationFormula__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
