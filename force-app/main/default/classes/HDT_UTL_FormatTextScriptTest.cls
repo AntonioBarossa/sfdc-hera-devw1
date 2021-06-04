@@ -25,13 +25,13 @@ public class HDT_UTL_FormatTextScriptTest {
         string formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];
         system.debug(formattedText);
         system.debug(configChild.name+' '+config.Name);
-        system.assertEquals(formattedText,configChild.name+' '+config.Name);
+        system.assertEquals(formattedText.replaceAll('<[^>]+>',''),configChild.name+' '+config.Name);
 		inp.textScript='<<{ LastModifiedDate }>> <<{ StartRecording__c }>>';
         formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];        
-    	system.assertEquals((DateTime.now().format('dd.MM.yyyy')+' '+configChild.StartRecording__c).replaceAll('\\p{C}', '?'), formattedText.replaceAll('\\p{C}', '?'));
+    	system.assertEquals((DateTime.now().format('dd/MM/yyyy')+' '+configChild.StartRecording__c).replaceAll('\\p{C}', '?'), formattedText.replaceAll('\\p{C}', '?').replaceAll('<[^>]+>',''));
         inp.textScript='<<{owner.Name}>>';
         formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];        
-        system.assertEquals(formattedText,'*valore mancante*');
+        system.assertEquals(formattedText,'<b>*valore mancante*</b>');
     }
 
     @isTest public static void testScriptWithoutDataBinding(){
@@ -44,6 +44,9 @@ public class HDT_UTL_FormatTextScriptTest {
         inp.textScript='test';
         String formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];
         system.assertEquals(formattedText, 'test');
+        inp.textScript='<<{globaltag.today}>>';
+        formattedText =HDT_UTL_FormatTextScript.formatText(new List<HDT_UTL_FormatTextScript.HDT_WRP_FlowInput>{inp})[0];
+		system.assertEquals(formattedText.replaceAll('<[^>]+>',''), DateTime.now().format('dd/MM/yyyy'));
     }
 
     @isTest public static void testScriptExceptionHandler(){
@@ -51,7 +54,7 @@ public class HDT_UTL_FormatTextScriptTest {
         insert config;
         ScriptConfig__c configChild = new ScriptConfig__c(Name='my ChildScript');
         insert configChild;
-        HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput();
+        HDT_UTL_FormatTextScript.HDT_WRP_FlowInput inp = new HDT_UTL_FormatTextScript.HDT_WRP_FlowInput('', '');
         inp.recordId=configChild.id;
         try{
             inp.textScript='<<{ test }>>';

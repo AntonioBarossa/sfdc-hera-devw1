@@ -10,6 +10,7 @@
  */
 
 import getHTMLScript from '@salesforce/apex/HDT_LC_HdtScriptManagementModal.getScriptText';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { LightningElement, api, wire } from 'lwc';
 
 export default class HdtScriptManagementModal extends LightningElement {
@@ -24,10 +25,10 @@ export default class HdtScriptManagementModal extends LightningElement {
     @wire(getHTMLScript, {processName : '$scriptProcessName', recordId : '$recordId'})
     setRichText({error, data}){
         if (data) {
-            console.log(data)
+            console.log("data recived")
             this.htmlScript=data;
         } else if (error) {
-            console.error(error)
+            console.log(error)
             this.showGenericErrorToast()
         }
     } 

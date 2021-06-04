@@ -160,13 +160,13 @@ public with sharing class HDT_UTL_FormatTextScript {
                 tagValue=Date.Today().format();
             }
             when 'section__d'{
-                tagValue='\n\n<b>'+relationshipNames[2].replace('_', ' ')+'</b>\n';
+                return '\n\n<b>'+relationshipNames[2].replace('_', ' ')+'</b>\n';
             }
             when else{
                 tagValue='*valore mancante*';
             }
         }
-        return tagValue;
+        return '<b>'+tagValue+'<\b>';
     }
 
     private class HDT_UTL_FormatTextScriptException extends Exception {}
