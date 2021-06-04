@@ -34,6 +34,11 @@ public with sharing class HDT_LC_AccountSelectorController {
 			if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
 				result.contacts = getContacts(result.preFilter);
 				result.leads = getLeads(result.preFilter);
+				if(result.contacts.size() == 1 && result.leads.isEmpty()) {
+					handleAccount(result.contacts.get(0).Id, activity.Id);
+				} else if(result.contacts.isEmpty() && result.leads.size() == 1) {
+					handleLead(result.leads.get(0).Id, activity.Id);
+				}
 			} else if(String.isBlank(activity.Account__c)) {
 				result.accounts = handleAccount(activity.Contact__c, activity.Id);
 			}
