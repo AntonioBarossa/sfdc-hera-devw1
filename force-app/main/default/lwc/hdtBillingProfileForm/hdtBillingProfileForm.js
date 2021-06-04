@@ -626,6 +626,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         if(this.dataToSubmit['InvoicingStreetCode__c'] != this.wrapAddressObject['Codice Via Stradario SAP']){
             this.dataToSubmit['InvoicingStreetCode__c'] = this.wrapAddressObject['Codice Via Stradario SAP'];
         }
+
+        if(this.dataToSubmit['InvoicingPlace__c'] != this.wrapAddressObject['Localita']){
+            this.dataToSubmit['InvoicingPlace__c'] = this.wrapAddressObject['Localita'];
+        }
+        if(this.dataToSubmit['InvoicingPlaceCode__c'] != this.wrapAddressObject['Codice Localita']){
+            this.dataToSubmit['InvoicingPlaceCode__c'] = this.wrapAddressObject['Codice Localita'];
+        }
         
         this.isVerifiedAddress = this.wrapAddressObject['Flag Verificato'];
         this.isForeignAddress = this.wrapAddressObject['Indirizzo Estero'];
@@ -661,6 +668,13 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
         if(this.cloneObject['InvoicingStreetCode__c'] != undefined){
              this.wrapAddressObject['Codice Via Stradario SAP'] = this.cloneObject['InvoicingStreetCode__c'];
+        }
+
+        if(this.cloneObject['InvoicingPlace__c'] != undefined){
+            this.wrapAddressObject['Localita'] = this.cloneObject['InvoicingPlace__c'];
+        }
+        if(this.dataToSubmit['InvoicingPlaceCode__c'] != undefined){
+            this.wrapAddressObject['Codice Localita'] = this.cloneObject['InvoicingPlaceCode__c'];
         }
 
         this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObject);
