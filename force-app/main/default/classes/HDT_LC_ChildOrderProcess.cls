@@ -38,7 +38,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
             HDT_UTL_OrderFieldsAlignment.alignFields(ord);
-            orderUtl.switchInRipristinatorioAction(ord);
+            // orderUtl.switchInRipristinatorioAction(ord);
             ord = orderQr.getRecordById(orderId);
         }
 
