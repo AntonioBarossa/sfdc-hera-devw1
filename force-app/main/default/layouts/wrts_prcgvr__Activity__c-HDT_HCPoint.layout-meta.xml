@@ -32,10 +32,6 @@
                 <field>Solicited__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SAPStep__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ActivityDurationFormula__c</field>
             </layoutItems>
