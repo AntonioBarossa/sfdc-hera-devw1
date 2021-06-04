@@ -154,9 +154,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             process ==   'Piano Rateizzazione' 
                 ? 'Pratica avviata' //successCondition
             : process == 'Comunicazione Pagamento'
-                ? '' //successCondition
+                ? 'Pratica avviata' //successCondition
             : process == 'Paperless' 
-                ? '' //successCondition
+                ? 'Pratica avviata' //successCondition
             : null);
 
         return phase;
