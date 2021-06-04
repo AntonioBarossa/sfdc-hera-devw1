@@ -1,4 +1,4 @@
-trigger HDT_Contact on Contact (after insert , before update) {
+trigger HDT_Contact on Contact (before insert, after insert , before update) {
     new HDT_TRH_Contact().run();
     
 //     if(Trigger.isInsert && Trigger.isAfter){

@@ -3,7 +3,10 @@ public class HDT_QR_UserQueriesWithoutSharing {
         return [
             SELECT 
             Profile.Name,
-            UserRole.Name
+            UserRole.Name,
+            UserRole.DeveloperName
+
+
             FROM User
             WHERE Id = :userId
             //WITH SECURITY_ENFORCED
