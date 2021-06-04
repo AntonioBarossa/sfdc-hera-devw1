@@ -4,5 +4,5 @@
     <active>true</active>
     <errorConditionFormula>IF(RecordType.DeveloperName = &quot;HDT_RT_Business&quot;,  OR( 
 ISBLANK(BillingStreetName__c),ISBLANK(BillingCityCode__c),ISBLANK(BillingStreetNumber__c),ISBLANK(VATNumber__c), ISPICKVAL(CustomerMarking__c, &quot;&quot;),ISPICKVAL(Category__c, &quot;&quot;), ISPICKVAL(CompanyOwner__c, &quot;&quot;)),false)</errorConditionFormula>
-    <errorMessage>I Seguenti campi devono essere popolati :  Marcatura , Categoria , Partita IVA ,Indirizzo ,Società Gruppo Hera</errorMessage>
+    <errorMessage>I Seguenti campi devono essere popolati :  Marcatura , Categoria , Partita IVA ,Indirizzo ,Silos</errorMessage>
 </ValidationRule>
