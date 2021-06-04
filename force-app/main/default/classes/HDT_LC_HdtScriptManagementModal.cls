@@ -1,6 +1,6 @@
 public without sharing class  HDT_LC_HdtScriptManagementModal {
     
-
+    @AuraEnabled(cacheable=true)
     public static String getScriptText(String processName, String recordId){
         ScriptConfig__c process= [select Name, (Select textScript__c, SectionLabel__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
         String textToFormat='';

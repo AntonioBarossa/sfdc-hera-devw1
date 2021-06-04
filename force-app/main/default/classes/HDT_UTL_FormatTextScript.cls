@@ -54,7 +54,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                 }
             }
             finalOutput = finalTextScript(scriptTxt, fieldsToMatch, objectToQueryData);
-            return new List<String>{finalOutput};
+            return new List<String>{finalOutput.trim().replaceAll('\n', '<br/>')};
         }
         return new List<String>{scriptTxt.trim().replaceAll('\n', '<br/>')};
         
@@ -90,7 +90,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                 relation=relation.getSobject(fieldOrRelation);
             }else{
                 if(relation==null){
-                    fieldValue='*valore mancante*';
+                    fieldValue='<b>*valore mancante*</b>';
                     return fieldValue ;
                 }
                 String dataFieldType = relation.getSobjectType().getDescribe().fields.getMap()
@@ -115,7 +115,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                 
             }
         }
-        return fieldValue;
+        return '<b>'+fieldValue+'</b>';
     }
 
 
@@ -160,7 +160,7 @@ public with sharing class HDT_UTL_FormatTextScript {
                 tagValue=Date.Today().format();
             }
             when 'section__d'{
-                tagValue='\n'+relationshipNames[2].replace('_', ' ')+'\n';
+                tagValue='\n\n<b>'+relationshipNames[2].replace('_', ' ')+'</b>\n';
             }
             when else{
                 tagValue='*valore mancante*';
