@@ -462,9 +462,9 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         System.debug('>>> body obj > ' + body);
 
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl;
-        //responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
-        responseCtrl = new HDT_WS_MulesoftCaller.HDT_WRP_Response();
-        responseCtrl.success = true;
+        responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        //responseCtrl = new HDT_WS_MulesoftCaller.HDT_WRP_Response();
+        //responseCtrl.success = true;
 
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
@@ -489,14 +489,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
-        //if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
-            httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/CreateNewOffer';
-            httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
-            httpObj.httpMethod = 'POST';
-            httpObj.headersMap.put('Content-Type', 'application/json');
-        //} else {
-        //    httpObj = null;
-        //}
+        httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/CreateNewOffer';
+        httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+        httpObj.httpMethod = 'POST';
+        httpObj.headersMap.put('Content-Type', 'application/json');
 
         return httpObj;
     }

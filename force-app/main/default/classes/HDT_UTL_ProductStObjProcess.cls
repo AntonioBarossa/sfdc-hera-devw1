@@ -113,8 +113,13 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
             }
 
             if(newStatus.equalsIgnoreCase(sold)){
-                statusResponse.success = true;
-                statusResponse.message = 'NoCheckingRequired';
+                if(System.isBatch()){
+                    statusResponse.success = true;
+                    statusResponse.message = 'NoCheckingRequired';
+                } else {
+                    statusResponse.success = false;
+                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                }
                 return statusResponse;
             }
 
@@ -152,8 +157,13 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
             }
 
             if(newStatus.equalsIgnoreCase(expired)){
-                statusResponse.success = true;
-                statusResponse.message = 'NoCheckingRequired';
+                if(System.isBatch()){
+                    statusResponse.success = true;
+                    statusResponse.message = 'NoCheckingRequired';
+                } else {
+                    statusResponse.success = false;
+                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                }
                 return statusResponse;
             }
             
