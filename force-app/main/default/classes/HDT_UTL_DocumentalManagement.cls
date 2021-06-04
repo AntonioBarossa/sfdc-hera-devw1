@@ -5,7 +5,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			when 'Context1' {
 				return getRecordObjectsListContext1(recordsList);
 			}
-			when else {
+			when 'Context2'{
+				return getRecordObjectsListContext2(recordsList);
+			}when else {
 				return null;
 			}
 		}
@@ -207,6 +209,51 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		toReturn.add(mapStringObjectRecords);
 		return toReturn;
 
+	}
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
+		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
+		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>();
+		for(Order singleOrder : (List<Order>) recordsList){
+			mapStringObjectRecords = new Map<String,List<sObject>>();
+			
+			List<OrderItem> orderItemList = new List<OrderItem>();
+			//ACCOUNT
+			Account account = (Account) singleOrder.Account;
+			List<Account> accountList = new List<Account>();
+			accountList.add(account);
+			mapStringObjectRecords.put('Account' ,accountList);
+			//CONTACT
+			Contact contact = (Contact) singleOrder.Contact__r;
+			List<Contact> contactList = new List<Contact>();
+			contactList.add(contact);
+			mapStringObjectRecords.put('Contact' ,contactList);
+			//PARENT ORDER
+			Order parentOrder = (Order) singleOrder.ParentOrder__r;
+			List<sObject> parentOrderList = new List<sObject>();
+			parentOrderList.add(parentOrder);
+			mapStringObjectRecords.put('ParentOrder' , parentOrderList);
+			//SINGLE ORDER
+			List<sObject> orderList = new List<sObject>();
+			orderList.add(singleOrder);
+			mapStringObjectRecords.put('Order' , orderList);
+			
+			
+			mapStringObjectRecords.put('Account' ,accountList);
+			for(OrderItem singleOrderItem : (List<OrderItem>)  singleOrder.OrderItems){
+				orderItemList = new List<OrderItem>();
+				String family = '';//singleOrderItem.Family__c;
+				orderItemList.add(singleOrderItem);
+				if(family == 'Offerta commerciale'){
+					mapStringObjectRecords.put('ItemCommercialOffer' ,orderItemList);
+				}else if(family == 'VAS Prodotto' || family == 'VAS Servizio'){
+					mapStringObjectRecords.put('ParentItemVAS' ,orderItemList);
+				}else if(family.equalsIgnoreCase('VAS Opzione servizio') || family.equalsIgnoreCase('VAS Opzione prodotto') || family.equalsIgnoreCase('VAS Fatturabili')){
+					mapStringObjectRecords.put('ItemVAS' ,orderItemList);
+				}
+			}
+			toReturn.add(new Map<String,List<sObject>>(mapStringObjectRecords));
+		}
+		return toReturn;
 	}
 
 	public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure getDocumentalConfiguration(String context){
