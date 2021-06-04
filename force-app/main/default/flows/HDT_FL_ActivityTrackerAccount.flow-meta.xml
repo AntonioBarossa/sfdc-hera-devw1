@@ -3,8 +3,8 @@
     <assignments>
         <name>Set_Activity</name>
         <label>Set Activity</label>
-        <locationX>176</locationX>
-        <locationY>431</locationY>
+        <locationX>308</locationX>
+        <locationY>551</locationY>
         <assignmentItems>
             <assignToReference>$Record.Activity__c</assignToReference>
             <operator>Assign</operator>
@@ -13,6 +13,28 @@
             </value>
         </assignmentItems>
     </assignments>
+    <decisions>
+        <name>activity_found</name>
+        <label>Activity trovata?</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <defaultConnector>
+            <targetReference>Set_Activity</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Si</defaultConnectorLabel>
+        <rules>
+            <name>activity_found_no</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Activity.Id</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>No</label>
+        </rules>
+    </decisions>
     <description>Links account created during active session to the session in question.</description>
     <formulas>
         <name>today</name>
@@ -47,7 +69,7 @@
         <locationY>311</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Activity</targetReference>
+            <targetReference>activity_found</targetReference>
         </connector>
         <filters>
             <field>wrts_prcgvr__Status__c</field>
