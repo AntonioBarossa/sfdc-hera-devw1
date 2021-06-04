@@ -249,6 +249,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					mapStringObjectRecords.put('ParentItemVAS' ,orderItemList);
 				}else if(family.equalsIgnoreCase('VAS Opzione servizio') || family.equalsIgnoreCase('VAS Opzione prodotto') || family.equalsIgnoreCase('VAS Fatturabili')){
 					mapStringObjectRecords.put('ItemVAS' ,orderItemList);
+				}else if(family.indexOf('Bonus') > -1){
+					mapStringObjectRecords.put('ItemBonus' ,orderItemList);
+					 
+				}else if(family.indexOf('Promozione') > -1){
+					mapStringObjectRecords.put('ItemPromotion' ,orderItemList);
+					 
 				}
 			}
 			toReturn.add(new Map<String,List<sObject>>(mapStringObjectRecords));
