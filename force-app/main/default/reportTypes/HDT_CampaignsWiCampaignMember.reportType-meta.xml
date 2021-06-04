@@ -843,11 +843,11 @@
             <field>IBMUnicaOriginMarketGas__c</field>
             <table>Campaign.CampaignMembers</table>
         </columns>
-        <columns>
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>MiddleName</field>
             <table>Campaign.CampaignMembers</table>
-        </columns>
+        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>MobilePhone</field>
@@ -1358,11 +1358,11 @@
             <field>Lead.Longitude</field>
             <table>Campaign.CampaignMembers</table>
         </columns>
-        <columns>
+        <!-- <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Lead.MiddleName</field>
             <table>Campaign.CampaignMembers</table>
-        </columns>
+        </columns> -->
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Lead.IsMigrated__c</field>
