@@ -871,6 +871,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if(this.allSubmitedFields['SupplyPlace__c'] != this.theRecord['Localita']){
                 this.allSubmitedFields['SupplyPlace__c'] = this.theRecord['Localita'];
             }
+            
         }
 
     }
@@ -890,6 +891,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         this.isValidFields = true;
         let concatBillingErrorFields = '';
         let concatAddressErrorFields = '';
+
+
         //Validate address
         if(!this.theRecord['Indirizzo Estero']){
             console.log('entra in if ind estero');
@@ -923,6 +926,9 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
                 concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
             }
+            if (this.theRecord['CAP'] === undefined || this.theRecord['CAP'] === '') {
+                concatAddressErrorFields = concatAddressErrorFields.concat('CAP, ');
+            }
             if (concatAddressErrorFields !== '') {
                 isValid = false;
                 this.isValidFields = false;
@@ -930,6 +936,17 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.alert('Dati tabella','Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2),'error')
             }
         }
+        console.log('allSubmitedFields'+JSON.stringify(this.servicePointRetrievedData));
+
+        if(this.allSubmitedFields['ServicePointCode__c']!= undefined && (JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length < 16 || JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length > 17 )){
+            isValid = false;
+            this.isValidFields = false;
+            console.log('lenght field'+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']).length);
+            console.log('field value : '+JSON.stringify(this.allSubmitedFields['ServicePointCode__c']));
+
+            this.alert('Errore','Codice POD/PDR non valido','error');
+        }
+        
         console.log('validFields END');
 
         return isValid;

@@ -98,13 +98,15 @@
         <lightning-spinner alternative-text="Loading"></lightning-spinner>
     </template>
 
-    <c-hdt-confirmation-dialog title={dialogTitle}
-                           message={dialogMessage}
-                           confirm-label='Si'
-                           cancel-label='No'
-                           visible={isDialogVisible}
-                           name="deleteTileConfimation"
-                           onclick={handleDialogResponse}>
-    </c-hdt-confirmation-dialog>
+    <c-hdt-confirmation-dialog-dropdown
+        object-api-name="SBQQ__Quote__c"
+        picklist-api-name="CancellationReason__c"
+        title={dialogTitle}
+        confirm-label='Si'
+        cancel-label='No'
+        visible={isDialogVisible}
+        name="deleteTileConfimation"
+        onclick={handleDialogResponse}>
+    </c-hdt-confirmation-dialog-dropdown>
 
 </template>
