@@ -342,8 +342,8 @@
     <decisions>
         <name>Check_Motivo_Richiesta</name>
         <label>Check Motivo Richiesta</label>
-        <locationX>1233</locationX>
-        <locationY>286</locationY>
+        <locationX>1234</locationX>
+        <locationY>339</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
         </defaultConnector>
@@ -381,7 +381,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Campi_Richiesta_Documentazione</targetReference>
+                <targetReference>Predefault_Email</targetReference>
             </connector>
             <label>Richiesta Documentazione</label>
         </rules>
@@ -703,7 +703,7 @@
     <formulas>
         <name>NeedsContentDocumentFormula</name>
         <dataType>Boolean</dataType>
-        <expression>{!CustomMetadataProcessType} == &quot;Verifica Titolarità POD/PDR&quot;</expression>
+        <expression>OR({!CustomMetadataProcessType} == &quot;Verifica Titolarità POD/PDR&quot;, {!CustomMetadataProcessType} == &quot;Gestione Bonus Sociale&quot;)</expression>
     </formulas>
     <formulas>
         <name>NextButtonLabel</name>
@@ -841,6 +841,30 @@
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Predefault_Email</name>
+        <label>Predefault Email</label>
+        <locationX>1404</locationX>
+        <locationY>244</locationY>
+        <connector>
+            <targetReference>Campi_Richiesta_Documentazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Email__c</field>
+            <value>
+                <elementReference>Query_Case.Contract__r.BillingProfile__r.InvoiceEmailAddress__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Set_Phase_Comunicazioni_con_il_DL</name>
         <label>Set Phase Comunicazioni con il DL</label>
         <locationX>1917</locationX>
@@ -953,7 +977,7 @@
     <screens>
         <name>Campi_Comunicazione_Cessazione</name>
         <label>Campi Comunicazione Cessazione</label>
-        <locationX>1635</locationX>
+        <locationX>1636</locationX>
         <locationY>154</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1071,8 +1095,8 @@
     <screens>
         <name>Campi_Richiesta_Documentazione</name>
         <label>Campi Richiesta Documentazione</label>
-        <locationX>1522</locationX>
-        <locationY>231</locationY>
+        <locationX>1526</locationX>
+        <locationY>245</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

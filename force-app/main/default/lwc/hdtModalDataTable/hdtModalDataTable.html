@@ -25,6 +25,49 @@
                     </template>
 
                     <template if:false={spinner} >
+
+                        <div class="slds-box slds-box_xx-small slds-m-top_small slds-m-bottom_small">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-6">
+                                    <lightning-combobox
+                                        name="progress"
+                                        label="Filtra per questo campo"
+                                        value={searchByField}
+                                        placeholder="Seleziona..."
+                                        options={options}
+                                        onchange={handleFieldChange}
+                                        variant="label-hidden"
+                                        disabled
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="slds-col slds-size_1-of-6">
+                                    <lightning-input
+                                        type="text"
+                                        label="Cerca questo valore"
+                                        onchange={setFieldValue}
+                                        variant="label-hidden"
+                                    ></lightning-input>
+                                </div>
+                                <div class="slds-col slds-size_1-of-6">
+                                    <lightning-button-icon
+                                        icon-name="utility:search"
+                                        variant="neutral"
+                                        alternative-text="search"
+                                        title="Cerca"
+                                        onclick={search}
+                                    ></lightning-button-icon>
+                                    <lightning-button-icon
+                                        icon-name="utility:refresh"
+                                        variant="neutral"
+                                        alternative-text="refresh"
+                                        title="refresh"
+                                        onclick={refresh}
+                                        class="slds-m-left_xx-small"
+                                    ></lightning-button-icon>
+                                </div>
+                            </div>
+                        </div>
+
                         <div style="height: 300px;">
                             <lightning-datatable
                                     key-field="id"

@@ -55,7 +55,6 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-            console.log('Error: ', JSON.stringify(error.body.pageErrors[0].message));
 
             let errorMessage = '';
 
@@ -67,6 +66,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 errorMessage = error.body.pageErrors[0].message;
             }
 
+            console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: errorMessage,

@@ -54,6 +54,12 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
                 psmUtl.sbloccoVoltura(sender);
 
             }
+
+            when 'changePaymentMethod'{
+
+                psmUtl.changePaymentMethod(sender);
+
+            }
         }
 
         return null;

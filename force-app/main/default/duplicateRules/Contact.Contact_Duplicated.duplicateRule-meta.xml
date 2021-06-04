@@ -12,8 +12,7 @@
     </duplicateRuleMatchRules>
     <isActive>true</isActive>
     <masterLabel>Contact Duplicated</masterLabel>
-    <operationsOnInsert>Report</operationsOnInsert>
     <operationsOnUpdate>Alert</operationsOnUpdate>
-    <securityOption>EnforceSharingRules</securityOption>
+    <securityOption>BypassSharingRules</securityOption>
     <sortOrder>3</sortOrder>
 </DuplicateRule>

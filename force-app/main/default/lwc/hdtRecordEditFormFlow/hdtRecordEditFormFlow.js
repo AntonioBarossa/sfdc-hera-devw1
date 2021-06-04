@@ -211,10 +211,16 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleError(event){
-        console.log('Error Loading');
+        console.log('Error Loading: ' + JSON.stringify(event.detail));
+        let message = '';
         let obj = event.detail.output.fieldErrors;
- 
-        let message = obj[Object.keys(obj)[0]][0].message;
+        if (Object.keys(obj).length > 0) {
+            message = obj[Object.keys(obj)[0]][0].message;
+        } else {
+            // Errore da validation rules con error location "top of the page"
+            message = event.detail.detail;
+        }
+
         console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
@@ -224,6 +230,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }),
         );
     }
+
     handleDraft(event){
         console.log('draft handle');
         if(event.target.name === 'draft'){

@@ -256,7 +256,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputMap.put('type', 'Allineamento Anagrafica');
         inputMap.put('accountId', accountId);
         inputMap.put('contactId', acr.ContactId);
-        inputMap.put('servicePointId', servicePoint);
+        inputMap.put('servicePointId', servicePoint.Id);
         inputMap.put('HerokuPracticeCode__c', herokuCode);
 
         HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
@@ -428,6 +428,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         if (outcome) {
             System.debug('createAnagAlignmentCasesModAnagCliente: # Case creati: ' + anagAlignCases.size());
         }
+
+        // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c usati dall'arricchimento dati.
+        Formula.recalculateFormulas(anagAlignCases);
 
         HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
