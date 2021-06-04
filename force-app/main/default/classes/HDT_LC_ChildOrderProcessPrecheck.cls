@@ -78,10 +78,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
             when 'HDT_RT_SwitchIn' {
-                if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
-                    processType = 'Switch in Ele';
-                } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
-                    processType = 'Switch in Gas';
+                if(extraParams.get('switchInRipristinatorio') == null){
+                    if (extraParams.get('servicePointType') == 'HDT_RT_Ele') {
+                        processType = 'Switch in Ele';
+                    } else if(extraParams.get('servicePointType') == 'HDT_RT_Gas') {
+                        processType = 'Switch in Gas';
+                    }
+                } else {
+                    processType = 'Switch in Ripristinatorio';
                 }
             }
             when 'HDT_RT_Attivazione' {

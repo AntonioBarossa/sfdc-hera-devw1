@@ -22,6 +22,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String accountId = inputs[0].accountId;
         String customerCode = inputs[0].customerCode;
         Decimal totalToPay = inputs[0].totalToPay; 
+        String paymentMethod;
 
         currentCase.Id = recordId;
 
@@ -46,6 +47,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         //Set AmountToPayInstallments to TotalPay
         currentCase.AmountToPayInInstallments__c = totalToPay;
+
+        //check CA with/without SEPA
+        paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
+        currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
@@ -73,6 +78,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
             'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
+            'numeroRata' => currentCase.InstallmentNumberRequired__c,
             'totale' => currentCase.AmountToPayInInstallments__c,
             'dataInizio' => currentCase.FirstExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
