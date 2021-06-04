@@ -32,6 +32,9 @@
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento</targetReference>
+            </connector>
             <label>Annullamento</label>
         </rules>
     </decisions>
@@ -175,7 +178,7 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -190,6 +193,10 @@
                 <assignToReference>SaveInDraft</assignToReference>
                 <name>saveInDraft</name>
             </outputParameters>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
         </fields>
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
@@ -202,6 +209,31 @@
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Gestione_Annullamento</name>
+        <label>Gestione Annullamento</label>
+        <locationX>1412</locationX>
+        <locationY>654</locationY>
+        <flowName>HDT_FL_GestioneAnnullamento</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ProcessType</name>
+            <value>
+                <stringValue>Annullamento prestazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </inputAssignments>
+    </subflows>
     <variables>
         <name>CancelCase</name>
         <dataType>Boolean</dataType>
