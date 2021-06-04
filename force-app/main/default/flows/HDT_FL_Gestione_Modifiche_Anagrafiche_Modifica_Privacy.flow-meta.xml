@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <name>Assign_fase_Attesa_Modulo_Firmato</name>
+        <label>Assign fase Attesa Modulo Firmato</label>
+        <locationX>1922</locationX>
+        <locationY>335</locationY>
+        <assignmentItems>
+            <assignToReference>NextPhase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa Modulo Firmato</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Predefault_Next_Phase</name>
+        <label>Predefault Next Phase</label>
+        <locationX>1115</locationX>
+        <locationY>453</locationY>
+        <assignmentItems>
+            <assignToReference>NextPhase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Next_Step_Processo</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Individual_trovato</name>
         <label>Individual trovato?</label>
         <locationX>975</locationX>
-        <locationY>281</locationY>
+        <locationY>451</locationY>
         <defaultConnector>
             <targetReference>Screen_Errore</targetReference>
         </defaultConnector>
@@ -21,7 +53,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Inserimento_Dati</targetReference>
+                <targetReference>Predefault_Next_Phase</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -29,8 +61,11 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>1214</locationX>
-        <locationY>281</locationY>
+        <locationX>2120</locationX>
+        <locationY>509</locationY>
+        <defaultConnector>
+            <targetReference>Update_Fase</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
             <name>Annullamento</name>
@@ -46,6 +81,70 @@
                 <targetReference>Gestione_Annullamento</targetReference>
             </connector>
             <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Next_Step_0</name>
+        <label>Next Step?</label>
+        <locationX>1577</locationX>
+        <locationY>326</locationY>
+        <defaultConnector>
+            <targetReference>Assign_fase_Attesa_Modulo_Firmato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Gestione_Annullamento</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Next_Step_Processo</name>
+        <label>Next Step Processo</label>
+        <locationX>1254</locationX>
+        <locationY>455</locationY>
+        <defaultConnector>
+            <targetReference>Inserimento_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Stampa</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sportello</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Back office</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IVR</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Documentale</targetReference>
+            </connector>
+            <label>Stampa</label>
         </rules>
     </decisions>
     <interviewLabel>Gestione_Modifiche_Anagrafiche_Modifica_Privacy {!$Flow.CurrentDateTime}</interviewLabel>
@@ -73,7 +172,7 @@
         <name>Get_Case</name>
         <label>Get Case</label>
         <locationX>462</locationX>
-        <locationY>278</locationY>
+        <locationY>448</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contact</targetReference>
@@ -94,7 +193,7 @@
         <name>Get_Contact</name>
         <label>Get Contact</label>
         <locationX>617</locationX>
-        <locationY>279</locationY>
+        <locationY>449</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Individual</targetReference>
@@ -115,7 +214,7 @@
         <name>Get_Individual</name>
         <label>Get Individual</label>
         <locationX>794</locationX>
-        <locationY>279</locationY>
+        <locationY>449</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Individual_trovato</targetReference>
@@ -132,11 +231,32 @@
         <object>Individual</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Update_Fase</name>
+        <label>Update Fase</label>
+        <locationX>2468</locationX>
+        <locationY>508</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <elementReference>NextPhase</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <screens>
         <name>Inserimento_Dati</name>
         <label>Inserimento Dati</label>
-        <locationX>1107</locationX>
-        <locationY>279</locationY>
+        <locationX>1925</locationX>
+        <locationY>507</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -291,10 +411,70 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Screen_Documentale</name>
+        <label>Screen Documentale</label>
+        <locationX>1441</locationX>
+        <locationY>325</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Next_Step_0</targetReference>
+        </connector>
+        <fields>
+            <name>DT4</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Processo di {!Get_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignatureManagerFlow</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+<!--             <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Case.AccountId</elementReference>
+                </value>
+            </inputParameters> -->
+<!--             <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Get_Case.Id</elementReference>
+                </value>
+            </inputParameters> -->
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>Get_Case.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <elementReference>Get_Case.Type</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Errore</name>
         <label>Screen Errore</label>
         <locationX>984</locationX>
-        <locationY>57</locationY>
+        <locationY>227</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -311,7 +491,7 @@
     </screens>
     <start>
         <locationX>50</locationX>
-        <locationY>50</locationY>
+        <locationY>220</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
@@ -320,8 +500,8 @@
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>1225</locationX>
-        <locationY>19</locationY>
+        <locationX>2047</locationX>
+        <locationY>50</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -360,6 +540,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>NextPhase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
