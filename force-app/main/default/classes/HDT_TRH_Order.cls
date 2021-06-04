@@ -7,7 +7,11 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
     	
     public override void beforeUpdate(){
         //Checks Phase Transition
-        
+
+
+        HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
+
+
         ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))
                 .beforeUpdate(new Map<String, Object> { 'oldObjects' => Trigger.old, 'newObjects' => Trigger.new });
         

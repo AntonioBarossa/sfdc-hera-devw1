@@ -6,7 +6,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent'
 
 export default class HdtSearchEligibilityCriteria extends NavigationMixin(LightningElement) {
     data = [];
-    //data2 = [];
+    //treeNotAvailable = [];
     detailFields = ['Version__c', 'ProductCode__c'];
     filter;
     showTable = false;
@@ -91,11 +91,11 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                     if(result.eligibleForAllCities){
                         this.showTree = false;
                     } else {
-                        this.data = result.treeItemList;
-                        //this.data2 = result.treeNotAvailableItemList;
+                        //this.data = result.treeItemList;
+                        this.treeNotAvailable = result.treeNotAvailableItemList;
                         this.showTree = true;
 
-                        if(this.data.length===0){
+                        if(this.treeNotAvailable.length===0){
                             this.showTree = false;
                             this.result.show = true;
                             this.showTable = false;
@@ -126,9 +126,9 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
         this.spinnerObj.spincss = 'savingdata slds-text-heading_small';
         this.handleClone(this.item.selectedId);
         
-        setTimeout(() => {
+        // setTimeout(() => { //
 
-        }, 2000);
+        // }, 2000);
         
     }
 
@@ -142,7 +142,8 @@ export default class HdtSearchEligibilityCriteria extends NavigationMixin(Lightn
                 if(result){
                     console.log('# success #');
                     console.log('# Offer cloned id -> ' + result);
-                    this.goToRecord(result, 'EligibilityCriteria__c');
+                    //this.goToRecord(result, 'EligibilityCriteria__c');
+                    this.goToRecord(this.productid, 'Product2');
                 } else {
                     this.error.show = true;
                     this.error.message = 'An error occurred!';

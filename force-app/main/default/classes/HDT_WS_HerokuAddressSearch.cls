@@ -63,7 +63,10 @@ public class HDT_WS_HerokuAddressSearch {
         @AuraEnabled public String houseNum1 {get;set;}
         @AuraEnabled public String modality {get;set;}
         @AuraEnabled public String cityCode {get;set;}
-        @AuraEnabled public String houseNumCode {get;set;}       
+        @AuraEnabled public String houseNumCode {get;set;}
+        @AuraEnabled public String cityPCode {get;set;}       
+        @AuraEnabled public String cityPName {get;set;}       
+       
     }
     public class HDT_WS_PrestazioneReqObj{
         @AuraEnabled public String city1 {get;set;}

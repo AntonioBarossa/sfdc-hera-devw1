@@ -31,6 +31,7 @@ global inherited sharing class HDT_WS_Payments implements wrts_prcgvr.Interfaces
             request.setEndpoint(endpoint);
             request.setMethod('POST');
             request.setBody(requestBody);
+            request.setTimeout(12000);
             request.setHeader('Accept','application/json');
             request.setHeader('Content-Type','application/json');
 

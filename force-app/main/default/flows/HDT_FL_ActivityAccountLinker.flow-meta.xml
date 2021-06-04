@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>account_counter_increase</name>
         <label>Contatore</label>
@@ -253,7 +252,7 @@
         </rules>
     </decisions>
     <interviewLabel>Identifcazione Cliente Activity {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Identifcazione Cliente Activity</label>
+    <label>Activity - Identifca Cliente</label>
     <loops>
         <name>account_counter_loop</name>
         <label>Conta Account</label>
@@ -324,7 +323,6 @@
         <connector>
             <targetReference>get_contact_by_account</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>CustomerCode__c</field>
             <operator>EqualTo</operator>
@@ -346,7 +344,6 @@
         <connector>
             <targetReference>account_counter_loop</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>ContactId</field>
             <operator>EqualTo</operator>
@@ -376,7 +373,6 @@
         <connector>
             <targetReference>contact_counter_loop</targetReference>
         </connector>
-        <filterLogic>(1 AND 2) OR (3 AND 4) OR (5 AND 6) OR (7 AND 8)</filterLogic>
         <filters>
             <field>FiscalCode__c</field>
             <operator>EqualTo</operator>
@@ -448,7 +444,6 @@
         <connector>
             <targetReference>Set_Account_and_Contact</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>AccountId</field>
             <operator>EqualTo</operator>
@@ -485,7 +480,6 @@
         <connector>
             <targetReference>lead_counter_loop</targetReference>
         </connector>
-        <filterLogic>(1 AND 2) OR (3 AND 4) OR (5 AND 6) OR (7 AND 8)</filterLogic>
         <filters>
             <field>FiscalCode__c</field>
             <operator>EqualTo</operator>
@@ -553,7 +547,6 @@
         <connector>
             <targetReference>Find_Client_By</targetReference>
         </connector>
-        <filterLogic>(1 OR 2 OR 3) AND (4 AND 5 AND 6)</filterLogic>
         <filters>
             <field>Type__c</field>
             <operator>EqualTo</operator>

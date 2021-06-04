@@ -93,87 +93,100 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if(caseType == 'Piano Rateizzazione'){
 
-            if((fields == null || fields == '') && currentCase.AttachmentManagement__c == true){
+            Boolean attachmentManagement = (getFieldValue(fields, 'AttachmentManagement__c') != null && getFieldValue(fields, 'AttachmentManagement__c') != '')
+                ? Boolean.valueOf(getFieldValue(fields, 'AttachmentManagement__c'))
+                : null;
 
-                List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+            if(attachmentManagement != null ){
 
-                if(attachedDocument.size() == 0){
-                
-                       result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+                if(attachmentManagement){
+
+                    List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+
+                    if(attachedDocument.size() == 0){
                     
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato'));
+                        
+                    }else{
+                    
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                        
+                    }
                 }else{
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                 
-                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
-                     
                 }
 
-            }
+            } else {
+            
 
-            Boolean deposit = getFieldValue(fields, 'Deposit__c') != null 
-                ? Boolean.valueOf(getFieldValue(fields, 'Deposit__c'))
-                : null;
-            String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
-            Decimal depositAmount = getFieldValue(fields, 'DepositAmount__c') != null 
-                ? Decimal.valueOf(getFieldValue(fields, 'DepositAmount__c'))
-                : null;
-            Boolean applicationInterests = getFieldValue(fields, 'ApplicationInterests__c') != null
-                ? Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'))
-                : null;
-            Integer requestedInstall = getFieldValue(fields, 'InstallmentNumberRequired__c')!= null
-                ? Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'))
-                : null;
-            String clientCategory = getFieldValue(fields, 'ClientCategory__c');
-            String reason = getFieldValue(fields, 'Reason__c');
-            Double amountInstall = getFieldValue(fields, 'AmountToPayInInstallments__c') != null 
-                ? Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'))
-                : null;
-            Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
-                ? System.today() + 365
-                : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
-            String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
+                Boolean deposit = getFieldValue(fields, 'Deposit__c') != null 
+                    ? Boolean.valueOf(getFieldValue(fields, 'Deposit__c'))
+                    : null;
+                String depositPaymentMode = getFieldValue(fields, 'DepositPaymentMode__c');
+                Decimal depositAmount = getFieldValue(fields, 'DepositAmount__c') != null 
+                    ? Decimal.valueOf(getFieldValue(fields, 'DepositAmount__c'))
+                    : null;
+                Boolean applicationInterests = getFieldValue(fields, 'ApplicationInterests__c') != null
+                    ? Boolean.valueOf(getFieldValue(fields, 'ApplicationInterests__c'))
+                    : null;
+                Integer requestedInstall = getFieldValue(fields, 'InstallmentNumberRequired__c')!= null
+                    ? Integer.valueOf(getFieldValue(fields, 'InstallmentNumberRequired__c'))
+                    : null;
+                String clientCategory = getFieldValue(fields, 'ClientCategory__c');
+                String reason = getFieldValue(fields, 'Reason__c');
+                Double amountInstall = getFieldValue(fields, 'AmountToPayInInstallments__c') != null 
+                    ? Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'))
+                    : null;
+                Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
+                    ? System.today() + 365
+                    : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
+                String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
 
-            if(deposit && (depositPaymentMode == null || depositPaymentMode == '' || depositAmount == null)){
+                if(deposit && (depositPaymentMode == null || depositPaymentMode == '' || depositAmount == null)){
 
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita Pagamento Acconto e Importo Acconto'));
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita Pagamento Acconto e Importo Acconto'));
 
-            }else if(clientCategory != null && clientCategory.contains('SME')){
+                }else if(clientCategory != null && clientCategory.contains('SME')){
 
-                if(applicationInterests == false && requestedInstall > 6){
+                    if(applicationInterests == false && requestedInstall > 6){
 
-                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 6'));
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 6'));
 
-                } else if(applicationInterests == true && requestedInstall > 2){
+                    } else if(applicationInterests == true && requestedInstall > 2){
 
-                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 2'));
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Numero rate richieste non deve essere maggiore di 2'));
+
+                    } else {
+
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                    }
+                
+                }else if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
+
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
+                        'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
+
+                }else if(typeInstallmentPlans == 'Straordinario'){
+
+                    if(caseValidationQr.getUserSessionRole() != 'CEO'){
+
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Permessi insufficienti per selezionare il Tipo Piano Rata'));
+
+                    }else{
+
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+
+                    }
 
                 } else {
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
                 }
-            
-            }else if(reason.contains('Disagio Rconomico') && ( amountInstall < 50 || expDate < (System.today() + 5))){
-
-                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'L\'importo non deve essere inferiore a 50 ' + 
-                    'o la data scadenza acconto non deve essere inferiore ai 5 giorni'));
-
-            }else if(typeInstallmentPlans == 'Straordinario'){
-
-                if(caseValidationQr.getUserSessionRole() != 'CEO'){
-
-                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Permessi insufficienti per selezionare il Tipo Piano Rata'));
-
-                }else{
-
-                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
-                }
-
-            } else {
-
-                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
-            }
+        }
         
         
         } else if(caseType == 'Variazione Domiciliazione'){
@@ -311,7 +324,9 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
         String currentMarking = a.CustomerMarking__c != null ? a.CustomerMarking__c : '';
 
-        if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
+        if (String.isBlank(newLastName)) {
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Cognome/Ragione sociale non può essere vuoto.'));
+        } else if (newFirstName.equals(currentFirstName) && newLastName.equals(currentLastName) && newFiscaleCode.equals(currentFiscaleCode)
             && newVatNumber.equals(currentVatNumber) && newMarking.equals(currentMarking)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario modificare almeno un dato fiscale del cliente.'));
         }

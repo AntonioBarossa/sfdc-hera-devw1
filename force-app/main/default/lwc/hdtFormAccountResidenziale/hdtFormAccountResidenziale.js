@@ -82,12 +82,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
 
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
-        { label: 'Legale rappresentante', value: 'Legale rappresentante' },
-        { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-        { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' },
-        { label: 'Contatto secondario', value: 'Contatto secondario' },
-        { label: 'Delegato', value: 'Delegato' },
-        { label: 'Azienda', value: 'Azienda' }
+        { label: 'Familiare', value: 'Familiare' }
     ];
 
     closeModal() {

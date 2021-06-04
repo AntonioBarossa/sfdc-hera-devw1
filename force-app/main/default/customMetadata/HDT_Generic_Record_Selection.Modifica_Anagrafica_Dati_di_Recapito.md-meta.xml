@@ -14,7 +14,7 @@
     </values>
     <values>
         <field>Default_Search_Key__c</field>
-        <value xsi:type="xsd:string">Attivo</value>
+        <value xsi:type="xsd:string">200*</value>
     </values>
     <values>
         <field>Distinct__c</field>
@@ -38,7 +38,7 @@
     </values>
     <values>
         <field>Where_Conditions__c</field>
-        <value xsi:type="xsd:string">Status__c = &apos;Attivo&apos;</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>sObject__c</field>
