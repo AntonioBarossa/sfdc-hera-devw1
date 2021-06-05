@@ -33,6 +33,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             } else if (currentCase.Subprocess__c == 'Variazione Gruppo IVA') {
                 result = validateVariazioneGruppoIva(fields, currentCase.AccountId);
             }
+        } else if (caseType == 'Esercizio Diritti Privacy') {
+            result = validateEsercizioDirittiPrivacy(fields);
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
         } else if (caseType == 'Gestione Bonus Sociale') {
@@ -379,7 +381,19 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateInversioneContatore(String caseId, String fields, string caseType) {
+    public String validateEsercizioDirittiPrivacy(String fields) {
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
+
+        if(requestDate > Date.today()){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data inserita non può essere nel futuro.'));
+        }
+
+        return result;
+    }
+
+    public String validateInversioneContatore(String caseId, String fields, String caseType) {
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
