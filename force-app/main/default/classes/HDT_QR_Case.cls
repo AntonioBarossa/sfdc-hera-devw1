@@ -18,6 +18,9 @@ public inherited sharing class HDT_QR_Case {
             CaseNumber,
             HerokuPracticeCode__c,
             ContactId,
+            ServicePoint__c,
+            Contract__c,
+            ContractCode__c,
             CommodityFormula__c,
             PODPDRFormula__c
             FROM Case
