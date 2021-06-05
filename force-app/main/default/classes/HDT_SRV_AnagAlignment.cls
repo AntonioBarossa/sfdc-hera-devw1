@@ -80,6 +80,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return anagAlignCase;
         }
 
+        System.debug('Gestione Allineamento Anagrafica da richiesta passiva Heroku');
+
         // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
         String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
         String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
@@ -181,7 +183,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
     // Aggiorna il Case di Allineamento Anagrafica con i dati fiscali e di contatto presenti sull'Account.
     private static void updateAnagAlignmentCaseCustomerData(Case inputCase) {
-
         HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
 
