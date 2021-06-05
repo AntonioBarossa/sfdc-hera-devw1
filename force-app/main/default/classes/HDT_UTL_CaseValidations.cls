@@ -233,7 +233,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     private String validateModificaDatiContatto(String fields, String contactId) {
-        String result;
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         String newEmail = getFieldValue(fields, 'Email__c') != null ? getFieldValue(fields, 'Email__c') : '';
         String newMobile = getFieldValue(fields, 'Mobile__c') != null ? getFieldValue(fields, 'Mobile__c') : '';
@@ -264,11 +265,24 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if (noEmail && noMobile && noPhone) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire almeno un riferimento telefonico o un indirizzo Email.'));
-        } else {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            return result;
         }
 
-        // TODO: integrare i controlli definiti sulla CB Lead
+        if (String.isNotBlank(newMobile)) {
+            String mobileValidationError = HDT_UTL_PhoneNumbers.validateMobileNumber(newMobile);
+            if (String.isNotBlank(mobileValidationError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', mobileValidationError));
+                return result;
+            }
+        }
+
+        if (String.isNotBlank(newPhone)) {
+            String phoneValidationError = HDT_UTL_PhoneNumbers.validatePhoneNumber(newPhone);
+            if (String.isNotBlank(phoneValidationError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', phoneValidationError));
+                return result;
+            }
+        }
 
         return result;
     }
