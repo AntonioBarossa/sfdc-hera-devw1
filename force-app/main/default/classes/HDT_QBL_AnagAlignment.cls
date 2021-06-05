@@ -27,9 +27,12 @@ public inherited sharing class HDT_QBL_AnagAlignment implements Queueable, Datab
         for (Integer i = 1; i < this.anagAlignCases.size(); i++) {
             nextJobCases.add(this.anagAlignCases[i]);
         }
-        // Chain this job to next job by submitting the next job
-        System.debug('HDT_QBL_AnagAlignment: chaining next job...');
-        System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
+
+        if (!nextJobCases.isEmpty()) {
+            // Chain this job to next job by submitting the next job
+            System.debug('HDT_QBL_AnagAlignment: chaining next job...');
+            System.enqueueJob(new HDT_QBL_AnagAlignment(nextJobCases));
+        }
 
         // DML finale, va fatto dopo l'enqueuejob: https://medium.com/@CoachRWZ/salesforce-chaining-queueable-apex-callouts-53615b8dee92
         // Innesco invio ad Heroku.
