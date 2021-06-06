@@ -679,6 +679,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ReminderCertifiedEmailAddress__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.ReminderCertifiedEmailAddress__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ReminderFlag__c</field>
+            <value>
+                <elementReference>Get_Billing_Profile.ReminderFlag__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>SendCertifiedEmailConsentDate__c</field>
             <value>
                 <elementReference>Get_Billing_Profile.SendCertifiedEmailConsentDate__c</elementReference>
