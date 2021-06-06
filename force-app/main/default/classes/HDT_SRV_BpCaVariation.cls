@@ -142,7 +142,7 @@ public with sharing class HDT_SRV_BpCaVariation {
                 when 'Estero'{
                     modello = '04';
                 }
-                when 'XML + carta/emai'{
+                when 'XML + carta/email'{
                     modello = '03';
                 }
                 when else{
