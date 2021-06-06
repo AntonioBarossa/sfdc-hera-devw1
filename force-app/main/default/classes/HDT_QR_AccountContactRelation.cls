@@ -61,6 +61,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
     
         return [
             SELECT 
+            AccountId,
             ContactId, 
             Roles
             FROM AccountContactRelation 
@@ -80,6 +81,21 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             Roles
             FROM AccountContactRelation 
             WHERE AccountId IN :ids
+            AND Roles  = 'Titolare'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public List<AccountContactRelation> getPrimaryRelationsByContacts(Set<Id> contactIds) {
+
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE ContactId IN :contactIds
             AND Roles  = 'Titolare'
             WITH SECURITY_ENFORCED
         ];

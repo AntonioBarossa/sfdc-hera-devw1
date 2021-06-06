@@ -19,6 +19,16 @@ public with sharing class HDT_LC_ContactSelection {
                 rolesMap.put(acr.ContactId, acr.Roles);
             }
 
+            List<AccountContactRelation> primaryRelations = acrQueryHandler.getPrimaryRelationsByContacts(contactIds);
+            for (AccountContactRelation acr : primaryRelations) {
+                // Rimuoviamo i contatti che sono Titolari per altri Account.
+                // Per modificare questi contatti il processo va innescato dall'Account per cui sono titolari.
+                if (acr.AccountId != accountId) {
+                    contactIds.remove(acr.ContactId);
+                    rolesMap.remove(acr.ContactId);
+                }
+            }
+
             HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
             List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
 
