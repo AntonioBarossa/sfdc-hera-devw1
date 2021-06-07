@@ -97,7 +97,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         for(DocumentSelected__c document : documents){
             documentsListMap.add(
                 new Map<String, Object>{
-                    'numeroBollettino' => document.Bill__c,
+                    //'numeroBollettino' => document.Bill__c,
                     'numeroDocumento' => document.DocumentNumber__c,
                     // 'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
                     // 'numeroFatturaRata' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
