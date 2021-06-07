@@ -11,6 +11,42 @@
 
 public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
+
+    //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
+    @AuraEnabled
+    public static List<HDT_WRP_ScriptOutput> getScriptSections2(String processName, String recordId){
+        //test method to show each section in a flow-like modal
+        //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
+        //for vocal order, you start from order father but some sections must be looped for each child order
+        return new HDT_LC_HdtScriptManagementModal().getScriptText2(processName, recordId);
+    }
+
+    public class HDT_WRP_ScriptOutput{
+        @AuraEnabled public string sectionLabel;
+        @AuraEnabled public string sectionText;
+    }
+
+    private List<HDT_WRP_ScriptOutput> getScriptText2(String processName, String recordId){
+        ScriptConfig__c process= [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
+
+        List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
+
+        String textToFormat='';
+        SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
+
+        List<HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_WRP_ScriptOutput>();
+
+        for(ScriptConfig__c section : process.ChildSections__r){
+            if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
+                HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
+                sectionWrapper.sectionLabel=section.SectionLabel__c;
+                sectionWrapper.sectionText=formatText(section.textScript__c, recordId, record);
+                listSectionWrappers.add(sectionWrapper);
+            }            
+        }
+        return listSectionWrappers;
+    }
+
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled(cacheable=true)
     public static String getScriptSections(String processName, String recordId){

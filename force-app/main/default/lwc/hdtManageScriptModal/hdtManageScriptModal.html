@@ -1,0 +1,52 @@
+<!--
+File: hdtManageScriptModal.html
+Project: HERA
+File Created: Monday, 7th June 2021 2:02:59 pm
+Author: fdefelice
+DESCRIPTION: 
+-----
+HISTORY:
+-->
+
+<template>
+    <template if:true={scriptProcessName}>
+        <lightning-button label={scriptProcessName} onclick={showModal}> </lightning-button>
+    </template>
+    <template if:true={openModal}>
+        <div class="slds-modal slds-fade-in-open slds-backdrop">
+            <div class="slds-modal__container">
+                <!------HEADER Section-->
+                <div class="slds-modal__header">
+                    <lightning-button-icon icon-name="utility:close" alternative-text="Close this window" size="large"
+                        variant="bare-inverse" onclick={closeModal} class="slds-modal__close">
+                    </lightning-button-icon>
+                    <h2>{htmlScriptTitle}</h2>
+                </div>
+                <!------Body Section-->
+                <div class="slds-modal__content slds-var-p-around_medium">
+                    <template if:true={htmlScriptText}>
+                        <lightning-formatted-rich-text value={htmlScriptText}></lightning-formatted-rich-text>
+                    </template>
+                    <lightning-input type="url" label="Link" name="disabledLinkReitek" disabled value={linkReitek}>
+                    </lightning-input>
+
+                </div>
+                <!------Footer Section-->
+                <div class="slds-modal__footer">
+                    <template if:true={indexNotZero}>
+                        <lightning-button icon-name="utility:back" label="Pagina Precedente" onclick={prevSection}>
+                        </lightning-button>
+                    </template>
+                    <template if:true={indexNotLast}>
+                        <lightning-button icon-name="utility:forward" label="Pagina Successiva" onclick={nextSection}
+                            variant="success">
+                        </lightning-button>
+                    </template>
+                    <lightning-button icon-name="utility:check" label="Salva E Chiudi" disabled variant="brand"
+                        onclick={saveRecLink} data-id="scriptModalBt">
+                    </lightning-button>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>
