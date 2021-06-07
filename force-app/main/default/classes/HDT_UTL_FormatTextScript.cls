@@ -171,6 +171,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 tagValue=Date.Today().format();
             }
             when 'section__d'{
+                //maybe deprecated, you can safely remove this when output and isFirstSection class variable
                 if(isFirstSection){
                     isFirstSection=false;
                     return relationshipNames[2].replace('_', ' ')+'\n';
