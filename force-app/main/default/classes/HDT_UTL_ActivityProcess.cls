@@ -29,10 +29,8 @@ public with sharing class HDT_UTL_ActivityProcess {
                     activity.RecordTypeId = rtNewCustomer;                     
                     activity.CreditCheckResults__c = order.IncomingCreditCheckResult__c;
                 }
-
-                //activity.Reason__c = CreditCheckDescription__c;  // viene popolato a mano dall'operatore          
         
-                //activity.CreditCheckReason__c = order.CreditCheckDescription__c; // aggiornare data model
+                activity.CreditCheckReason__c = order.CreditCheckDescription__c;
                 activity.Order__c = order.Id;
                 activity.Account__c = order.AccountId;
                 activity.Contact__c = order.Contact__c;
