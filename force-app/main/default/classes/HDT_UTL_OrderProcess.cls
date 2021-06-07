@@ -46,6 +46,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     private static void insertLogForOrderChangedPhase(Map<String,Order> orderMapOld, Map<String,Order> orderMapNew){
         List<CommunicationLog__c> commList = new List<CommunicationLog__c>();
         Map<String,String> mapOrdToContact = new map<String,String>();
+        HDT_QR_RecordType recordtypeQR = new HDT_QR_RecordType();
+        String recordtypeParentId = recordtypeQR.getRecordTypeIdByName('HDT_RT_OrderDossier');
         for (Order o : orderMapNew.values()){
             mapOrdToContact.put(o.id,o.contact__c);
         }
@@ -54,7 +56,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
            order oldOrd =  orderMapOld.get(ord);
            if(orderMapNew.get(ord) != null){
                order newOrd = orderMapNew.get(ord);
-               if(oldOrd.phase__c != newOrd.Phase__c){
+               if(oldOrd.phase__c != newOrd.Phase__c && newOrd.recordtypeid != recordtypeParentId){
                    Contact c = null;
                    if(mapContact.get(newOrd.Contact__c) != null){
                        c = mapContact.get(newOrd.Contact__c);

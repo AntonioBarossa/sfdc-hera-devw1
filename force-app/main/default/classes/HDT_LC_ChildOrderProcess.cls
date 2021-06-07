@@ -10,6 +10,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_OrderItem orderItemQr = new HDT_QR_OrderItem();
     private static HDT_SRV_OrderItem orderItemSrv = new HDT_SRV_OrderItem();
+    private static HDT_UTL_Order orderUtl = new HDT_UTL_Order();
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -22,7 +23,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         Map<String,Object> mapResponse = new Map<String,Object>();
         
-        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status,SBQQ__Quote__r.IsVAS__c,SBQQ__Quote__r.AmendmentAllowed__c');
+        orderSrv.checkReadAccess('AccountId,Account.Name,RecordType.DeveloperName,Status,SBQQ__Quote__r.IsVAS__c,SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__c,SBQQ__Quote__r.AllowChangeUse__c');
         Order ord = orderQr.getRecordById(orderId);
 
         // if (ord.SBQQ__Quote__r.IsVAS__c || ord.SBQQ__Quote__r.AmendmentAllowed__c) {
@@ -37,6 +38,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
 
         if (ord.RecordType.DeveloperName == 'HDT_RT_Default') {
             HDT_UTL_OrderFieldsAlignment.alignFields(ord);
+            // orderUtl.switchInRipristinatorioAction(ord);
             ord = orderQr.getRecordById(orderId);
         }
 

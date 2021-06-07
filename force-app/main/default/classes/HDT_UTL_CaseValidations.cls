@@ -33,6 +33,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             } else if (currentCase.Subprocess__c == 'Variazione Gruppo IVA') {
                 result = validateVariazioneGruppoIva(fields, currentCase.AccountId);
             }
+        } else if (caseType == 'Esercizio Diritti Privacy') {
+            result = validateEsercizioDirittiPrivacy(fields);
         } else if (caseType == 'Inversione del Contatore') {
             result = validateInversioneContatore(recordId, fields, caseType);
         } else if (caseType == 'Gestione Bonus Sociale') {
@@ -231,7 +233,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
     }
 
     private String validateModificaDatiContatto(String fields, String contactId) {
-        String result;
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         String newEmail = getFieldValue(fields, 'Email__c') != null ? getFieldValue(fields, 'Email__c') : '';
         String newMobile = getFieldValue(fields, 'Mobile__c') != null ? getFieldValue(fields, 'Mobile__c') : '';
@@ -262,11 +265,24 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         if (noEmail && noMobile && noPhone) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'È necessario inserire almeno un riferimento telefonico o un indirizzo Email.'));
-        } else {
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            return result;
         }
 
-        // TODO: integrare i controlli definiti sulla CB Lead
+        if (String.isNotBlank(newMobile)) {
+            String mobileValidationError = HDT_UTL_PhoneNumbers.validateMobileNumber(newMobile);
+            if (String.isNotBlank(mobileValidationError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', mobileValidationError));
+                return result;
+            }
+        }
+
+        if (String.isNotBlank(newPhone)) {
+            String phoneValidationError = HDT_UTL_PhoneNumbers.validatePhoneNumber(newPhone);
+            if (String.isNotBlank(phoneValidationError)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', phoneValidationError));
+                return result;
+            }
+        }
 
         return result;
     }
@@ -379,7 +395,19 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         return result;
     }
 
-    public String validateInversioneContatore(String caseId, String fields, string caseType) {
+    public String validateEsercizioDirittiPrivacy(String fields) {
+
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
+
+        if(requestDate > Date.today()){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data inserita non può essere nel futuro.'));
+        }
+
+        return result;
+    }
+
+    public String validateInversioneContatore(String caseId, String fields, String caseType) {
 
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 

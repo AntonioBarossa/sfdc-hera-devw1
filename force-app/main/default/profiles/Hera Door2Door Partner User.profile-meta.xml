@@ -4540,6 +4540,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.DocumentalProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.DocumentationRequired__c</field>
         <readable>true</readable>
@@ -12637,6 +12642,21 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>OrderItem.ProductCode</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductFamily__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductVersion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

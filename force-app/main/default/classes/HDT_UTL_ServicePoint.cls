@@ -182,10 +182,22 @@ public with sharing class HDT_UTL_ServicePoint {
 					spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
 				}
 				if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
-					spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+					//spNew.PowerContractual__c = integer.valueOf(mapRes.get('POTENZACONTRATTUALE').subString(0,mapRes.get('POTENZACONTRATTUALE').indexOf('.')+1));
+                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    System.debug('POTENZACONTRATTUALE****************' + mapRes.get('POTENZACONTRATTUALE'));
+                    spNew.PowerContractual__c = d.setScale(0);
+                    System.debug('POTENZACONTRATTUALE2****************' + spNew.PowerContractual__c );
 				}
 				if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){
-					spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.')+1)) ;
+
+                    System.debug('POTENZATECNICA1****************' + mapRes.get('POTENZATECNICA'));
+                    
+                    Decimal d = integer.valueOf(mapRes.get('POTENZATECNICA'));
+                    //spNew.PowerAvailable__c  =integer.valueOf(mapRes.get('POTENZATECNICA').subString(0,mapRes.get('POTENZATECNICA').indexOf('.'))) ;
+                    spNew.PowerAvailable__c  =d.setScale(1);
+
+                    System.debug('POTENZATECNICA****************' + d.setScale(1));
+
 				}
 				if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){
 		

@@ -4605,6 +4605,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.DocumentalProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.DocumentationRequired__c</field>
         <readable>true</readable>
@@ -6352,6 +6357,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.AccountId</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Activity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12742,6 +12752,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.ProductCode</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductFamily__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>OrderItem.ProductVersion__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

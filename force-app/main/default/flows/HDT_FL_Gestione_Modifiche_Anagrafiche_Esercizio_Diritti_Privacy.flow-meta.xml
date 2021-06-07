@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>51.0</apiVersion>
+    <assignments>
+        <description>Utilizziamo ResumeFromDraft per decidere se classificare la richiesta o chiudere il Case.</description>
+        <name>Rename_ResumeFromDraft_Variable</name>
+        <label>Rename ResumeFromDraft Variable</label>
+        <locationX>633</locationX>
+        <locationY>193</locationY>
+        <assignmentItems>
+            <assignToReference>ChiudiCase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ResumeFromDraft</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Case</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Check_Limitazione_Dati</name>
         <label>Limitazione Dati?</label>
         <locationX>410</locationX>
-        <locationY>1122</locationY>
+        <locationY>1182</locationY>
         <defaultConnector>
             <targetReference>Chiudi_Activity_In_Gestione</targetReference>
         </defaultConnector>
@@ -30,7 +47,7 @@
         <name>Check_Limitazione_Dati2</name>
         <label>Limitazione Dati?</label>
         <locationX>951</locationX>
-        <locationY>599</locationY>
+        <locationY>659</locationY>
         <defaultConnector>
             <targetReference>Set_Completato</targetReference>
         </defaultConnector>
@@ -55,7 +72,7 @@
         <name>Check_Next_Step</name>
         <label>Next Step?</label>
         <locationX>623</locationX>
-        <locationY>432</locationY>
+        <locationY>492</locationY>
         <defaultConnector>
             <targetReference>Check_Limitazione_Dati2</targetReference>
         </defaultConnector>
@@ -64,10 +81,10 @@
             <name>Inserire_Classificazione</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.Phase__c</leftValueReference>
+                <leftValueReference>ChiudiCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>In Classificazione</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -80,7 +97,7 @@
         <name>Check_Next_Step2</name>
         <label>Next Step?</label>
         <locationX>409</locationX>
-        <locationY>784</locationY>
+        <locationY>844</locationY>
         <defaultConnector>
             <targetReference>Refresh_Case</targetReference>
         </defaultConnector>
@@ -126,8 +143,8 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>632</locationX>
-        <locationY>218</locationY>
+        <locationX>631</locationX>
+        <locationY>341</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Next_Step</targetReference>
@@ -148,7 +165,7 @@
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
         <locationX>418</locationX>
-        <locationY>961</locationY>
+        <locationY>1021</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Limitazione_Dati</targetReference>
@@ -169,7 +186,7 @@
         <name>Chiudi_Activity_In_Gestione</name>
         <label>Chiudi Activity In Gestione</label>
         <locationX>418</locationX>
-        <locationY>1301</locationY>
+        <locationY>1361</locationY>
         <connector>
             <targetReference>Set_In_Lavorazione</targetReference>
         </connector>
@@ -199,7 +216,7 @@
         <name>Rimuovi_Flag_Limitazione_Dati</name>
         <label>Rimuovi Flag Limitazione Dati</label>
         <locationX>1183</locationX>
-        <locationY>756</locationY>
+        <locationY>816</locationY>
         <connector>
             <targetReference>Set_Completato</targetReference>
         </connector>
@@ -223,7 +240,7 @@
         <name>Set_Completato</name>
         <label>Set Completato</label>
         <locationX>959</locationX>
-        <locationY>926</locationY>
+        <locationY>986</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -244,7 +261,7 @@
         <name>Set_Flag_Limitazione_Dati</name>
         <label>Set Flag Limitazione Dati</label>
         <locationX>601</locationX>
-        <locationY>1203</locationY>
+        <locationY>1263</locationY>
         <connector>
             <targetReference>Chiudi_Activity_In_Gestione</targetReference>
         </connector>
@@ -268,7 +285,7 @@
         <name>Set_In_Lavorazione</name>
         <label>Set In Lavorazione</label>
         <locationX>418</locationX>
-        <locationY>1491</locationY>
+        <locationY>1551</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -289,7 +306,7 @@
         <name>Inserimento_Classificazione</name>
         <label>Inserimento Classificazione</label>
         <locationX>417</locationX>
-        <locationY>600</locationY>
+        <locationY>660</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -376,10 +393,10 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>505</locationX>
-        <locationY>30</locationY>
+        <locationX>506</locationX>
+        <locationY>50</locationY>
         <connector>
-            <targetReference>Get_Case</targetReference>
+            <targetReference>Rename_ResumeFromDraft_Variable</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -387,7 +404,7 @@
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>3</locationX>
-        <locationY>787</locationY>
+        <locationY>847</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -422,10 +439,27 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>ChiudiCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>
