@@ -369,7 +369,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         return formattedToday;
     }
 
-    // Restituisce Today nel formato richiesto da mulesoft/SAP (es. 20210511)
+    // Restituisce la data nel formato richiesto da mulesoft/SAP (es. 20210511)
     private static String getFormattedDate(Date dateToFormat) {
         Datetime dt = dateToFormat;
         String formattedDate = dt.format('yMMdd');
