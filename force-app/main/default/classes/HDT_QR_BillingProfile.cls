@@ -81,4 +81,25 @@ public inherited sharing class HDT_QR_BillingProfile {
         ];
     }
 
+    // INIZIO SVILUPPI EVERIS
+
+    public BillingProfile__c getRecordByContractAccount(String contractAccount) {
+
+        List<BillingProfile__c> records = [
+            SELECT
+            Id
+            FROM BillingProfile__c
+            WHERE ContractAccountCode__c = :contractAccount
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (records.size() > 0) {
+            return records[0];
+        }
+
+        return null;
+    }
+
+    // FINE SVILUPPI EVERIS
+
 }
