@@ -159,7 +159,7 @@ public inherited sharing class HDT_LC_EditQuote {
     private static void assocBillingProfileContract(String contractId, String quoteId){
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
         List<Contract> contract = contractQr.getRecordById(contractId);
-        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByQuoteFilteredPaymentMethodNotNull(quoteId);
+        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsForContractOrderRefVas(quoteId);
 
         system.debug('HDT_LC_EditQuote - contract: ' + contract);
         system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
@@ -178,7 +178,7 @@ public inherited sharing class HDT_LC_EditQuote {
     private static void assocBillingProfileOrder(String orderId, String quoteId){
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
         Order order = orderQr.getRecordById(orderId);
-        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByQuoteFilteredPaymentMethodNotNull(quoteId);
+        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsForContractOrderRefVas(quoteId);
 
         system.debug('HDT_LC_EditQuote - order: ' + order);
         system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
