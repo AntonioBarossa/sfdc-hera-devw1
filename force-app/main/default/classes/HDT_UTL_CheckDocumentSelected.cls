@@ -16,7 +16,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
         Boolean isForeign = inputs[0].isForeign;
         String beneficiary = inputs[0].beneficiary;
 
-        Decimal residualSum;
+        Decimal residualSum = 0;
         Integer creditDocument = 0;
         Integer debitDocument = 0;
         Boolean creditDebit = false;
