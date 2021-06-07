@@ -52,6 +52,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
         currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
 
+        //SetExpirationDate at CreatedDate+20
+        currentCase.ExpirationDate__c = Date.valueOf(currentCase.CreatedDate) + 20;
+
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
     }
@@ -80,7 +83,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
             'numeroRata' => currentCase.InstallmentNumberRequired__c,
             'totale' => currentCase.AmountToPayInInstallments__c,
-            'dataInizio' => currentCase.FirstExpirationDate__c,
+            'dataInizio' => currentCase.ExpirationDate__c,
             'acconto' => currentCase.DepositAmount__c,
             'contestazioneCliente' => currentCase.Reason__c,
             'modalitaPagamentoAcconto' => depositPaymentMode
