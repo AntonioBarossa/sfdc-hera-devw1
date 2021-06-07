@@ -44,8 +44,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
                     // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
                         
-                        // START 1 Calcolo Data Max Ripensamento                                                
-                        orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                        // START 1 Calcolo Data Max Ripensamento       
+                        try {                             
+                            orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
+                        }                                                                 
                         // END Calcolo Data Max Ripensamento               
 
                         // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
@@ -54,15 +58,25 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             orderToUpdate.Phase__c = 'In attesa validazione' ;                        
                         }
             
-                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSII(order);
+                        try {                             
+                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                        }  
+                        
                         // END Calcolo data Invio richiesta al SII (Data di adempimento)
 
                         // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
                         //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
                         // END Calcolo data inizio (Data attivazione contratto)
 
-                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c)                         
-                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
+                        try {                             
+                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                        }                     
+                        
                         // END Calcolo Data Decorrenza (EffectiveDate__c) 
 
                     // END Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
@@ -79,7 +93,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
 
                         // START Calcolo data invio richiesta (Data adempimento).
-                        orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSII(order);                                        
+                        try {                             
+                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                        }                                     
                         // END Calcolo data invio richiesta (Data adempimento).
 
                         // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
@@ -87,7 +105,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         // END Calcolo data inizio (Data attivazione contratto)
                     
                         // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
-                        orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);                        
+                        try {                             
+                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                        } catch (Exception e) { 
+                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                        }                       
                         // END Calcolo Data Decorrenza (EffectiveDate__c)   
 
                     // END Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT

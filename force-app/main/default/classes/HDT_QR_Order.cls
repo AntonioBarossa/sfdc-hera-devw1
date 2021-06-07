@@ -134,6 +134,8 @@ public inherited sharing class HDT_QR_Order {
             SBQQ__Quote__r.OrderReference__c,
             SBQQ__Quote__r.ContractReference__r.ContractNumber,
             SBQQ__Quote__r.OrderReference__r.OrderNumber,
+            SBQQ__Quote__r.AllowChangeUse__c,
+            ProcessType__c,
             SalesCompany__c,
             Campaign__c,
             Campaign__r.Name,
@@ -407,7 +409,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getRecordByOrderNumber(String orderNumber){
-        return [Select id,phase__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
+        return [Select id,phase__c,PrecheckResultSII__c from Order where ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getRecordsByOrdersIdsBulk(List<String> orderIds){

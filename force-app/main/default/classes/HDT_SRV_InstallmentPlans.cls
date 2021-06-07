@@ -22,6 +22,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         String accountId = inputs[0].accountId;
         String customerCode = inputs[0].customerCode;
         Decimal totalToPay = inputs[0].totalToPay; 
+        String paymentMethod;
 
         currentCase.Id = recordId;
 
@@ -47,6 +48,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         //Set AmountToPayInstallments to TotalPay
         currentCase.AmountToPayInInstallments__c = totalToPay;
 
+        //check CA with/without SEPA
+        paymentMethod = installmentsQr.getPaymentMethodByCaseId(recordId);
+        currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
+
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
     }
@@ -68,15 +73,17 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans Case--> '+currentCase);
         System.debug('SRV_InstallmentPlans Documetns--> '+documents);
 
+        String depositPaymentMode = currentCase.DepositPaymentMode__c == 'Paperless' ? 'P' : '';
+
         Map<String, Object> caseMap = new Map<String, Object>{
             'numeroSR' => currentCase.CaseNumber,
-            'tipoPiano' => currentCase.TypeInstallmentPlan__c,
+            'tipoPiano' => transcodeInstallmentPlan(currentCase.TypeInstallmentPlan__c, currentCase.ApplicationInterests__c),
+            'numeroRata' => currentCase.InstallmentNumberRequired__c,
             'totale' => currentCase.AmountToPayInInstallments__c,
-            'numeroRata' => currentCase.InstallmentPlanNumber__c,
             'dataInizio' => currentCase.FirstExpirationDate__c,
-            'acconto' => currentCase.Deposit__c,
-            'contestazioneCliente' => currentCase.ApplicationInterests__c,
-            'modalitaPagamentoAcconto' => currentCase.DepositPaymentMode__c
+            'acconto' => currentCase.DepositAmount__c,
+            'contestazioneCliente' => currentCase.Reason__c,
+            'modalitaPagamentoAcconto' => depositPaymentMode
         };
 
         caseListMap.add(caseMap);
@@ -90,9 +97,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         for(DocumentSelected__c document : documents){
             documentsListMap.add(
                 new Map<String, Object>{
-                    'numeroBollettino' => document.Bill__c,
-                    'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
-                    'numeroFatturaRata' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
+                    //'numeroBollettino' => document.Bill__c,
+                    'numeroDocumento' => document.DocumentNumber__c,
+                    // 'numeroDocumento' => document.DocumentNumber__c.startsWith('0') ? '' : document.DocumentNumber__c,
+                    // 'numeroFatturaRata' => document.DocumentNumber__c.startsWith('0') ? document.DocumentNumber__c : '',
                     'scadenzaRata' => document.ExpirationDate__c,
                     'tipoDocumento' => document.Type__c
                 }
@@ -112,6 +120,42 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         System.debug('SRV_InstallmentPlans -->' +pretty);
 
         return pretty;
+    }
+
+    /**
+     * Transcodifica il tipo di piano rata inserito su SFDC nel codice attesa da SAP.
+     * Input richiesti: tipo piano rata e applicazione interessi.
+     */
+    private String transcodeInstallmentPlan(String typeInstallmentPlan, Boolean applyInterests) {
+        if (typeInstallmentPlan == null) {
+            return '';
+        }
+        
+        String sapCode = '';
+
+        if (typeInstallmentPlan.equals('Autorita')){
+            sapCode = 'Z001';
+        } else if (typeInstallmentPlan.equals('Piano Bonus')) { // Piano Bonus deprecato o non in ambito Wave 1
+            if (applyInterests) {
+                sapCode = 'Z010'; 
+            } else {
+                sapCode = 'Z011'; 
+            }
+        } else if (typeInstallmentPlan.equals('Autorita idrico')) { // Autorita idrico non in ambito Wave 1
+            if (applyInterests) {
+                sapCode = 'Z012'; 
+            } else {
+                sapCode = 'Z013'; 
+            }
+        } else {
+            if (applyInterests) {
+                sapCode = 'Z002'; 
+            } else {
+                sapCode = 'Z003'; 
+            }
+        }
+        
+        return sapCode;
     }
 
 

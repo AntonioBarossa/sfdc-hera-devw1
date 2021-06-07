@@ -1864,6 +1864,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>OfferType__c</picklist>
+        <values>
+            <fullName>Progetto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scaffale</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PaymentMode__c</picklist>
         <values>
             <fullName>Bollettino postale</fullName>
@@ -1986,6 +1997,21 @@
         </values>
         <values>
             <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PressureLevel__c</picklist>
+        <values>
+            <fullName>AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2231,11 +2257,15 @@
     <picklistValues>
         <picklist>SignatureMethod__c</picklist>
         <values>
-            <fullName>OTP</fullName>
+            <fullName>Cartacea</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Stampa</fullName>
+            <fullName>OTP Coopresenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OTP Remoto</fullName>
             <default>false</default>
         </values>
         <values>

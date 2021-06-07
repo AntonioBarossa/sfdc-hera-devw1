@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>contesto</name>
+            <value>
+                <elementReference>Context</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>createDocuments</name>
             <value>
                 <elementReference>createDocuments</elementReference>
@@ -26,7 +32,7 @@
         <inputParameters>
             <name>method</name>
             <value>
-                <stringValue>manageDocuments</stringValue>
+                <stringValue>manageDocumentsInformative</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -2150,6 +2156,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Phase__c</field>
             <value>
                 <stringValue>Bozza</stringValue>
@@ -2653,6 +2665,13 @@
             <operator>EqualTo</operator>
             <value>
                 <booleanValue>true</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Roles</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Titolare</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -4158,6 +4177,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

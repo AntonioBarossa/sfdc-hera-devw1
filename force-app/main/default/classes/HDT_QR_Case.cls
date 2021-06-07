@@ -14,7 +14,15 @@ public inherited sharing class HDT_QR_Case {
             Status,
             Subject,
             Subprocess__c,
-            AccountId
+            AccountId,
+            CaseNumber,
+            HerokuPracticeCode__c,
+            ContactId,
+            ServicePoint__c,
+            Contract__c,
+            ContractCode__c,
+            CommodityFormula__c,
+            PODPDRFormula__c
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED

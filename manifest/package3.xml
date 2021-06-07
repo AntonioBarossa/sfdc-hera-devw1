@@ -1,44 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>HDT_ProtocolSpecificEmail__mdt</members>
-        <name>CustomObject</name>
-    </types>
-    <types>
-        <members>Interaction__c.Interazioni_Personali</members>
-        <name>ListView</name>
-    </types>
-    <types>
-        <members>wrts_prcgvr__Activity__c-HDT_Protocollo</members>
-        <name>Layout</name>
-    </types>
-    <types>
-        <members>HDT_QR_Contact</members>
-        <members>HDT_SRV_ActivityCustom</members>
-        <members>HDT_SRV_Interaction</members>
-        <members>HDT_UTL_EmailProtocolReceiver</members>
+        <members>HDT_LC_EditQuote</members>
+        <members>HDT_QR_QuoteLine</members>
+        <members>HDT_UTL_ServicePoint</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_ProtocolSpecificEmail__mdt.Cluster__c</members>
-        <members>HDT_ProtocolSpecificEmail__mdt.Email__c</members>
-        <members>HDT_ProtocolSpecificEmail__mdt.Process__c</members>
+        <members>ServicePoint__c.PowerAvailable__c</members>
+        <members>ServicePoint__c.PowerContractual__c</members>
         <name>CustomField</name>
     </types>
-    <types>
-        <members>hdtAccountStatementPicker</members>
-        <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>HDT_ProtocolSpecificEmail.HeraCanaleContattoSpecifico</members>
-        <name>CustomMetadata</name>
-    </types>
-    <version>50</version>
+    <version>49</version>
 </Package>

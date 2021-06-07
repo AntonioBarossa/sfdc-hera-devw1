@@ -479,7 +479,7 @@
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Check_Documenti.phase</elementReference>
+                <elementReference>Check_Documenti_0.phase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -516,7 +516,7 @@
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Check_Documenti.phase</elementReference>
+                <elementReference>Check_Documenti_0.phase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -539,7 +539,7 @@
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Check_Documenti.phase</elementReference>
+                <elementReference>Check_Documenti_1.phase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -576,7 +576,7 @@
             <assignToReference>GetCaseAggiornato2.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Check_Documenti.phase</elementReference>
+                <elementReference>Check_Documenti_1.phase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -928,7 +928,7 @@
             <name>Da_Inviare_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Check_Documenti.phase</leftValueReference>
+                <leftValueReference>Check_Documenti_1.phase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Da Inviare</stringValue>
@@ -1793,6 +1793,16 @@
                     <name>DocumentCheckDisplay</name>
                     <fieldText>&lt;p&gt;Sono passati più di 20 giorni dalla data emissione della bolletta. &lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.documentCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>CheckDocumentPicklist</name>
@@ -1801,6 +1811,16 @@
                     <dataType>String</dataType>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.documentCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1815,8 +1835,18 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>AccountBalanceCheckDisplay</name>
-                    <fieldText>&lt;p&gt;Il cliente ha delle bollette scadute.&lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Il cliente ha delle bollette scadute.&lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.accountBalanceCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>CheckAccountBalancePicklist</name>
@@ -1825,6 +1855,16 @@
                     <dataType>String</dataType>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.accountBalanceCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>

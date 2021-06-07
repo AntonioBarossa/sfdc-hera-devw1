@@ -9,31 +9,19 @@
     <picklistValues>
         <picklist>AccountClass__c</picklist>
         <values>
-            <fullName>Accedi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende SME</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende Soho</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Aziende TOP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Banca centrale</fullName>
+            <fullName>CONSIP</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Comuni Territorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condomini</fullName>
             <default>false</default>
         </values>
         <values>
@@ -45,6 +33,58 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Enti Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Aziende SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Aziende Soho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Aziende TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Comuni Territorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Intercompany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Piccoli Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Societa Vendita Terze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Tutela Simile Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEn - Tutela Simile Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>FUI domestico</fullName>
             <default>false</default>
         </values>
@@ -53,27 +93,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Grandi Clienti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Grandi Condomini</fullName>
+            <fullName>Mercato Tutelato Azienda</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Intercompany</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NRI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Personale</fullName>
+            <fullName>Mercato Tutelato Famiglia</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Piccoli Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Privati</fullName>
             <default>false</default>
         </values>
         <values>
@@ -85,11 +121,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Salvaguardia Aziende</fullName>
+            <fullName>Salvaguardia HC</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Salvaguardia Enti</fullName>
+            <fullName>Small Business</fullName>
             <default>false</default>
         </values>
         <values>
@@ -97,7 +133,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>VIP</fullName>
+            <fullName>Società del Gruppo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2141,6 +2177,44 @@
         </values>
         <values>
             <fullName>Totalmente da Istituzioni pubbliche</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DetailOne__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 1</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DetailTwo__c</picklist>
+        <values>
+            <fullName>E - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ES - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>M - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>S - Dettaglio 2</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7729,11 +7803,51 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7745,11 +7859,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa Modulo Firmato</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Elaborazione Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7761,7 +7915,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7773,7 +7935,47 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RC010</fullName>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavori Sospesi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo Extra Sistema</fullName>
             <default>false</default>
         </values>
         <values>

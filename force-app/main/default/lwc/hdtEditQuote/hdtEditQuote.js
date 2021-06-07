@@ -16,7 +16,7 @@ export default class hdtEditQuote extends LightningElement {
 
         if (this.isCommunity) {
             //'https://devwrvasku-partners.cs89.force.com/D2D/s/sfdcpage/%2Fapex%2FSBQQ__sb%3F%26id%3D' + quoteId + '#quote/le?qId='+ quoteId;
-            link = '/D2D/s/sfdcpage/%2Fapex%2FSBQQ__sb%3F%26id%3D' + quoteId + '#quote/le?qId='+ quoteId;
+            link = '/HC/s/sfdcpage/%2Fapex%2FSBQQ__sb%3F%26id%3D' + quoteId + '#quote/le?qId='+ quoteId;
         } else {
             link = '/apex/sbqq__sb?scontrolCaching=1&amp;id=' + quoteId +'#quote/le?qId='+ quoteId;
         }

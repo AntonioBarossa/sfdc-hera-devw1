@@ -7,27 +7,22 @@
         <value xsi:type="xsd:string">[
 {
 &quot;FieldName&quot; : &quot;MarketingPrivacy__c&quot;,
-&quot;Required&quot; : true,
+&quot;Required&quot; : false,
 &quot;Column&quot; : 1
 },
 {
 &quot;FieldName&quot; : &quot;ProfilingPrivacy__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;ThirdPartyPrivacy__c&quot;,
-&quot;Required&quot; : true,
+&quot;Required&quot; : false,
 &quot;Column&quot; : 1
 },
 {
 &quot;FieldName&quot; : &quot;HasOptedOutSoftSpam__c&quot;,
-&quot;Required&quot; : true,
+&quot;Required&quot; : false,
 &quot;Column&quot; : 2
 },
 {
 &quot;FieldName&quot; : &quot;HasOptedOutOfEmail__c&quot;,
-&quot;Required&quot; : true,
+&quot;Required&quot; : false,
 &quot;Column&quot; : 2
 }
 ]</value>
@@ -45,32 +40,22 @@
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;PrivacyProfilingChoiceDate__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;PrivacyThirdPartyChoiceDate__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
 &quot;FieldName&quot; : &quot;MarketingPrivacyVersion__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
 },
 {
-&quot;FieldName&quot; : &quot;ProfilingPrivacyVersion__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;ThirdPartyPrivacyVersion__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
 &quot;FieldName&quot; : &quot;PrivacyMarketingChoiceSource__c&quot;,
+&quot;Required&quot; : true,
+&quot;Column&quot; : 1
+},
+{
+&quot;FieldName&quot; : &quot;PrivacyProfilingChoiceDate__c&quot;,
+&quot;Required&quot; : true,
+&quot;Column&quot; : 2
+},
+{
+&quot;FieldName&quot; : &quot;ProfilingPrivacyVersion__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 2
 },
@@ -78,16 +63,11 @@
 &quot;FieldName&quot; : &quot;PrivacyProfilingChoiceSource__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;PrivacyThirdPartyChoiceSource__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 2
 }
 ]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">HDT_UTL_CasePrivacyValidations</value>
     </values>
 </CustomMetadata>

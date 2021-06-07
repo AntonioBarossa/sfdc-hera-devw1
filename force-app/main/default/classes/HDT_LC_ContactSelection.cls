@@ -19,6 +19,16 @@ public with sharing class HDT_LC_ContactSelection {
                 rolesMap.put(acr.ContactId, acr.Roles);
             }
 
+            List<AccountContactRelation> primaryRelations = acrQueryHandler.getPrimaryRelationsByContacts(contactIds);
+            for (AccountContactRelation acr : primaryRelations) {
+                // Rimuoviamo i contatti che sono Titolari per altri Account.
+                // Per modificare questi contatti il processo va innescato dall'Account per cui sono titolari.
+                if (acr.AccountId != accountId) {
+                    contactIds.remove(acr.ContactId);
+                    rolesMap.remove(acr.ContactId);
+                }
+            }
+
             HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
             List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
 
@@ -125,6 +135,18 @@ public with sharing class HDT_LC_ContactSelection {
 
             HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
             List<Contact> contacts = contactQueryHandler.getRecordsByIds(contactIds);
+            Set<Id> individualIds = new Set<Id>();
+            for (Contact c : contacts) {
+                individualIds.add(c.IndividualId);
+            }
+
+            HDT_QR_SolManager solManagerQuery = new HDT_QR_SolManager();
+            List<ContactPointEmail> logins = solManagerQuery.getSolLogins(individualIds);
+            System.debug('# LOGIN SOL: ' + logins.size());
+            Map<Id, String> loginsMap = new Map<Id, String>();
+            for (ContactPointEmail login : logins) {
+                loginsMap.put(login.ParentId, login.EmailAddress);
+            }
 
             JSONGenerator gen = JSON.createGenerator(false);
             gen.writeStartArray();
@@ -138,6 +160,7 @@ public with sharing class HDT_LC_ContactSelection {
                 writeIfNotNull(gen, 'Fax', contact.Fax);
                 writeIfNotNull(gen, 'CertifiedEmail__c', contact.CertifiedEmail__c);
                 writeIfNotNull(gen, 'MailingAddressFormula__c', contact.MailingAddressFormula__c);
+                writeIfNotNull(gen, 'SolLogin', loginsMap.get(contact.IndividualId));
                 writeIfNotNull(gen, 'Roles', rolesMap.get(contact.Id));
                 gen.writeEndObject();
             }

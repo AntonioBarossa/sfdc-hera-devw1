@@ -126,7 +126,8 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 when 'NOTIF_ES'{
                     caseUpdate = hpsmUtl.handleRequest(reqWrp);
                     if(caseUpdate.size() > 0){
-                        HDT_UTL_DatabaseService.updateSObject(caseUpdate);
+                        //HDT_UTL_DatabaseService.updateSObject(caseUpdate);
+                        responseObject.fields.addAll(handleNotifEsResponseField(caseUpdate[0]));
                     }
                 }
                 when 'RICH_PASS'{
@@ -171,6 +172,24 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         rds.name = 'RDS';
         rds.value =caseInsert.CaseNumber;
         responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{rifRich, recordId,rds};
+        return responseFieldList;
+    }
+
+    private List<HDT_WRP_MrrResponse.HDT_WRP_Field> handleNotifEsResponseField(Case caseUpdate){
+        List<HDT_WRP_MrrResponse.HDT_WRP_Field> responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>();
+        HDT_WRP_MrrResponse.HDT_WRP_Field rifRich = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field recordId = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        HDT_WRP_MrrResponse.HDT_WRP_Field herokuCode = new HDT_WRP_MrrResponse.HDT_WRP_Field();
+        rifRich.fieldType = 'TEXT';
+        rifRich.name = 'RIF_RICH';
+        rifRich.value =caseUpdate.CaseNumber;
+        recordId.fieldType = 'TEXT';
+        recordId.name = 'RECORD_ID';
+        recordId.value =caseUpdate.Id;
+        herokuCode.fieldType = 'TEXT';
+        herokuCode.name = 'DOCUMENTKEY';
+        herokuCode.value =caseUpdate.HerokuPracticeCode__c;
+        responseFieldList = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{rifRich, recordId,herokuCode};
         return responseFieldList;
     }
  }

@@ -16,14 +16,19 @@
                 <label>Vocal Order</label>
             </value>
             <value>
-                <fullName>OTP</fullName>
+                <fullName>OTP Remoto</fullName>
                 <default>false</default>
-                <label>OTP</label>
+                <label>OTP Remoto</label>
             </value>
             <value>
-                <fullName>Stampa</fullName>
+                <fullName>Cartacea</fullName>
                 <default>false</default>
-                <label>Stampa</label>
+                <label>Cartacea</label>
+            </value>
+            <value>
+                <fullName>OTP Coopresenza</fullName>
+                <default>false</default>
+                <label>OTP Coopresenza</label>
             </value>
         </valueSetDefinition>
     </valueSet>

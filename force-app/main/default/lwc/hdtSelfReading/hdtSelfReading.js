@@ -180,6 +180,8 @@ export default class HdtSelfReading extends LightningElement {
         .then(result =>{
             console.log('checkLastReadings results: ' + result);
             if (result == null) {
+                this.isLoading = false;
+                this.buttonDisabled = false;
                 this.errorAdvanceMessage = 'Errore di sistema, impossibile recuperare le ultime letture. Contattare un amministratore di sistema.';
                 this.showToastMessage(this.errorAdvanceMessage);
                 return;
@@ -187,6 +189,8 @@ export default class HdtSelfReading extends LightningElement {
             const parsedResult = JSON.parse(result);
             // Verifichiamo se la response contiene un errore da SAP.
             if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
+                this.isLoading = false;
+                this.buttonDisabled = false;
                 this.errorAdvanceMessage = 'Errore da SAP: ' + parsedResult.errorDetails[0].message;
                 this.showToastMessage(this.errorAdvanceMessage);
                 return;
@@ -369,13 +373,13 @@ export default class HdtSelfReading extends LightningElement {
                     console.log('lettura comunicata dal cliente: ' + newReadingValue)
                     console.log('lettura selezionata da cruscotto letture: ' + selectedReadingValue);
 
-                    if (this.isRettificaConsumi === true && newReadingValue > 0 && oldReadingValue > 0) {  // newReadingValue > 0 && oldReadingValue > 0 per skippare i registri nascosti
+                    if (this.isRettificaConsumi === true && newReadingValue > 0 && oldReadingValue >= 0) {  // newReadingValue > 0 && oldReadingValue >= 0 per skippare i registri nascosti
                         if (selectedReadingValue > 0) {
                             if (newReadingValue > oldReadingValue && newReadingValue > selectedReadingValue) {
                                 numeroRegistriAlert++;
                             } else if (newReadingValue > oldReadingValue && newReadingValue < selectedReadingValue) {
                                 numeroRegistriStimati++;
-                            } 
+                            }
                         } else {
                             if (newReadingValue < oldReadingValue) {
                                 numeroRegistriErrati++;
