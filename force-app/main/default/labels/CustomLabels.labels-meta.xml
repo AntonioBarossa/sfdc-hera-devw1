@@ -149,4 +149,39 @@
         <shortDescription>Success</shortDescription>
         <value>Success</value>
     </labels>
+    <labels>
+        <fullName>HDT_Canceled</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Canceled</shortDescription>
+        <value>Annullata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Confirmed</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Confirmed</shortDescription>
+        <value>Confermata</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Expired</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Expired</shortDescription>
+        <value>Scaduta</value>
+    </labels>
+    <labels>
+        <fullName>HDT_InDevelopment</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_InDevelopment</shortDescription>
+        <value>In sviluppo</value>
+    </labels>
+    <labels>
+        <fullName>HDT_Sold</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_Sold</shortDescription>
+        <value>Vendibile</value>
+    </labels>
 </CustomLabels>

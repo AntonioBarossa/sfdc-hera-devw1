@@ -108,7 +108,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber, CareOf__c,BillSendingMethod__c,ElectronicInvoicingMethod__c,ElectronicInvoiceCertifiedEmailAddress__c,XMLType__c,OfficeSubjectCode__c,InvoiceEmail__c,InvoiceCertifiedEmailAddress__c,BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber, CareOf__c,BillSendingMethod__c,ElectronicInvoicingMethod__c,ElectronicInvoiceCertifiedEmailAddress__c,ReminderBlock__c,ReminderFlag__c,XMLType__c,OfficeSubjectCode__c,InvoiceEmail__c,InvoiceCertifiedEmailAddress__c,BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -142,7 +142,7 @@ public with sharing class HDT_SRV_BpCaVariation {
                 when 'Estero'{
                     modello = '04';
                 }
-                when 'XML + carta/emai'{
+                when 'XML + carta/email'{
                     modello = '03';
                 }
                 when else{
@@ -171,6 +171,10 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.fattura.mailPec = (String) caseRecord.get('ElectronicInvoiceCertifiedEmailAddress__c');
         requestBody.ordine.fattura.modello = modello;
         requestBody.ordine.fattura.fatturaXml = fatturaXml;
+        // TODO: aggiungere campi PEC/Flag sollecito (da capire mapping lato mulesoft)
+        //requestBody.ordine.??? = (String) caseRecord.get('ReminderBlock__c');
+        //requestBody.ordine.??? = String.valueOf(caseRecord.get('ReminderFlag__c'));
+
         System.debug('requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
@@ -183,7 +187,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String fromq = 'Case';
         String queryString;
         fieldq = 'Id,Account.CustomerCode__c,CaseNumber,Account.VatNumber__c';
-        fieldq += ',IsVATGroupJoined__c,VATGroup__c';
+        fieldq += ',IsVATGroupJoined__c,VATGroupStartDate__c,VATGroupEndDate__c,VATGroup__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -195,8 +199,11 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         requestBody.account.partitaIva = (String) acc.get('VatNumber__c');
-        requestBody.account.gruppoIva.adesione = String.valueOf(caseRecord.get('IsVATGroupJoined__c'));
+        Boolean isJoined = (Boolean) caseRecord.get('IsVATGroupJoined__c');
+        requestBody.account.gruppoIva.adesione = isJoined ? '1' : '';
         requestBody.account.gruppoIva.partitaIva = (String) caseRecord.get('VATGroup__c');
+        requestBody.account.gruppoIva.dataInizio = getFormattedDate((Date) caseRecord.get('VATGroupStartDate__c'));
+        requestBody.account.gruppoIva.dataFine = getFormattedDate((Date) caseRecord.get('VATGroupEndDate__c'));
 
         System.debug('requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
@@ -249,7 +256,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
+        fieldq = 'Id,Account.CustomerCode__c,Account.CustomerMarking__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -260,6 +267,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.codiceCausale = 'MAI';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        // SAP usa la marcatura cliente solo per fare dei controlli di coerenza per la MAI, ma non la modifica.
+        requestBody.account.marcaturaCliente = (String) acc.get('CustomerMarking__c');
         requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
         requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
         requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';
@@ -353,11 +362,18 @@ public with sharing class HDT_SRV_BpCaVariation {
         }
     }
 
-    // Restituisce Today nel formato richiesto da mulesoft (es. 20210511)
+    // Restituisce Today nel formato richiesto da mulesoft/SAP (es. 20210511)
     private static String getFormattedToday() {
         Datetime today = Datetime.now();
         String formattedToday = today.format('yMMdd');
         return formattedToday;
+    }
+
+    // Restituisce la data nel formato richiesto da mulesoft/SAP (es. 20210511)
+    private static String getFormattedDate(Date dateToFormat) {
+        Datetime dt = dateToFormat;
+        String formattedDate = dt.format('yMMdd');
+        return formattedDate;
     }
 
     // Restituisce la nazione nel formato richiesto da SAP (IT)

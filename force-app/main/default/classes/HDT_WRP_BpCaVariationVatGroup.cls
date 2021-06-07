@@ -35,11 +35,7 @@ public with sharing class HDT_WRP_BpCaVariationVatGroup {
 	public class HDT_WRP_BpCaVariationGruppoIva {
 		public String adesione;
 		public String partitaIva;
-		//public String dataInizio;
-		//public String dataFine;
-        //public HDT_WRP_BpCaVariationGruppoIva(){
-        //    this.dataInizio = '';
-        //    this.dataFine = '';
-        //}
+		public String dataInizio;
+		public String dataFine;
 	}
 }
