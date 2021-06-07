@@ -40,87 +40,94 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             // Calculate Date @Picchiri 20/05/21
             when 'HDT_RT_SwitchIn' { // only for HDT_RT_SwitchIn   
                 system.debug('HDT_LC_ChildOrderProcessActions - save - HDT_RT_SwitchIn order : ' + JSON.serializepretty(order));             
-                if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
+                
+                if (order.ProcessType__c == 'Switch in Ripristinatorio') {
+                    orderToUpdate.DateSentToSII__c = Date.today();
+                    orderToUpdate.EffectiveDate__c = Date.today();
+                    orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+                } else {
+                    if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') { // @Picchiri Only for residential customer
 
-                    // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
-                        
-                        // START 1 Calcolo Data Max Ripensamento       
-                        try {                             
-                            orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
-                        } catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
-                        }                                                                 
-                        // END Calcolo Data Max Ripensamento               
-
-                        // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
-                        if(order.SignedDate__c == null){
-                            orderToUpdate.Status = 'In lavorazione';
-                            orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                        // START Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
+                            
+                            // START 1 Calcolo Data Max Ripensamento       
+                            try {                             
+                                orderToUpdate.MaxAfterthoughtDate__c = HDT_UTL_SwtichInProcess.getMaxAfterthoughtDate(order);
+                            } catch (Exception e) { 
+                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data massima di ripensamento.');
+                            }                                                                 
+                            // END Calcolo Data Max Ripensamento               
+    
+                            // START 2 Calcolo data Invio richiesta al SII (Data di adempimento)    
+                            if(order.SignedDate__c == null){
+                                orderToUpdate.Status = 'In lavorazione';
+                                orderToUpdate.Phase__c = 'In attesa validazione' ;                        
+                            }
+                
+                            try {                             
+                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                            } catch (Exception e) { 
+                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                            }  
+                            
+                            // END Calcolo data Invio richiesta al SII (Data di adempimento)
+    
+                            // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
+                            //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
+                            // END Calcolo data inizio (Data attivazione contratto)
+    
+                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
+                            try {                             
+                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                            } catch (Exception e) { 
+                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                            }                     
+                            
+                            // END Calcolo Data Decorrenza (EffectiveDate__c) 
+    
+                        // END Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
+    
+                        // Carta d’identità;
+                        // orderToUpdate.CIAccoutn__c = 'Richiesto';
+    
+                        if (order.VolturaThirdTrader__c) {
+                            orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
                         }
-            
-                        try {                             
-                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
-                        } catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                        }  
                         
-                        // END Calcolo data Invio richiesta al SII (Data di adempimento)
-
-                        // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
-                        //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);
-                        // END Calcolo data inizio (Data attivazione contratto)
-
-                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c)     
-                        try {                             
-                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
-                        } catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                        }                     
+                    } else { // @Picchiri Only for not residential customer
+     
+                        // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
+    
+                            // START Calcolo data invio richiesta (Data adempimento).
+                            try {                             
+                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
+                            } catch (Exception e) { 
+                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
+                            }                                     
+                            // END Calcolo data invio richiesta (Data adempimento).
+    
+                            // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
+                            //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);                                              
+                            // END Calcolo data inizio (Data attivazione contratto)
                         
-                        // END Calcolo Data Decorrenza (EffectiveDate__c) 
-
-                    // END Calculate Date @Picchiri 20/05/21 FOR RESIDENZIALE ACCOUNT
-
-                    // Carta d’identità;
-                    // orderToUpdate.CIAccoutn__c = 'Richiesto';
-
-                    if (order.VolturaThirdTrader__c) {
-                        orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                            // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
+                            try {                             
+                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
+                            } catch (Exception e) { 
+                                throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
+                            }                       
+                            // END Calcolo Data Decorrenza (EffectiveDate__c)   
+    
+                        // END Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
+    
+                        //orderToUpdate.DateSentToSII__c = Date.today();
+    
+                        if (order.VolturaThirdTrader__c) {
+                            orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                        }
+    
+                        // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     }
-                    
-                } else { // @Picchiri Only for not residential customer
- 
-                    // START Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
-
-                        // START Calcolo data invio richiesta (Data adempimento).
-                        try {                             
-                            orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
-                        } catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                        }                                     
-                        // END Calcolo data invio richiesta (Data adempimento).
-
-                        // START Calcolo data inizio (Data attivazione contratto) - indicata solo nel documento di Fabiana
-                        //orderToUpdate.ActivatedDate = HDT_UTL_SwtichInProcess.getActivatedDate(order);                                              
-                        // END Calcolo data inizio (Data attivazione contratto)
-                    
-                        // START 3 Calcolo Data Decorrenza (EffectiveDate__c) 
-                        try {                             
-                            orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
-                        } catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                        }                       
-                        // END Calcolo Data Decorrenza (EffectiveDate__c)   
-
-                    // END Calculate Date @Picchiri 20/05/21 FOR NOT RESIDENZIALE ACCOUNT
-
-                    //orderToUpdate.DateSentToSII__c = Date.today();
-
-                    if (order.VolturaThirdTrader__c) {
-                        orderToUpdate.AutorizationVolturaThirdTrader__c = 'Richiesto';
-                    }
-
-                    // orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                 }
             }
             when 'HDT_RT_Attivazione' {
@@ -193,10 +200,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
         if (order.ParentOrder__r.Status == 'Draft') {
             // order parent status = in lavorazione, phase = in lavorazione
+            String status = 'In lavorazione';
+            String phase = 'In lavorazione';
+
+            if (order.ProcessType__c == 'Switch in Ripristinatorio') {
+                phase = 'Documentazione Gestita';
+            }
+
             Order orderParentToUpdate = new Order(
                 Id = order.ParentOrder__c,
-                Status = 'In lavorazione',
-                Phase__c = 'In lavorazione'
+                Status = status,
+                Phase__c = phase
             );
 
             orderSrv.updateRecord(orderParentToUpdate);
