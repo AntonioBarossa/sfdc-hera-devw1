@@ -7851,6 +7851,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito OK da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK</fullName>
             <default>false</default>
         </values>
