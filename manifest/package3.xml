@@ -1,108 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>CustomLabels</members>
-        <name>CustomLabels</name>
-    </types>
-    <types>
-        <members>Account.HDT_RT_Business</members>
-        <members>Account.HDT_RT_Distributore</members>
-        <members>Account.HDT_RT_Other</members>
-        <members>Account.HDT_RT_Partner</members>
-        <members>Account.HDT_RT_Residenziale</members>
-        <members>Order.HDT_RT_Attivazione</members>
-        <members>Order.HDT_RT_AttivazioneConModifica</members>
-        <members>Order.HDT_RT_CambioOfferta</members>
-        <members>Order.HDT_RT_CambioUso</members>
-        <members>Order.HDT_RT_ConnessioneConAttivazione</members>
-        <members>Order.HDT_RT_Default</members>
-        <members>Order.HDT_RT_OrderDossier</members>
-        <members>Order.HDT_RT_Proroga</members>
-        <members>Order.HDT_RT_RiattivazioniNonMorose</members>
-        <members>Order.HDT_RT_ScontiBonus</members>
-        <members>Order.HDT_RT_Subentro</members>
-        <members>Order.HDT_RT_SwitchIn</members>
-        <members>Order.HDT_RT_SwitchInVolturaTecnica</members>
-        <members>Order.HDT_RT_TemporaneaNuovaAtt</members>
-        <members>Order.HDT_RT_VAS</members>
-        <members>Order.HDT_RT_Voltura</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</members>
+        <members>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</members>
         <name>RecordType</name>
     </types>
     <types>
-        <members>HDT_BA_ProductStObjStatusUpdate</members>
-        <members>HDT_LC_ApplyBillingProfileModal</members>
-        <members>HDT_LC_ChildOrderProcess</members>
-        <members>HDT_LC_ChildOrderProcessActions</members>
-        <members>HDT_LC_OfferConfiguratorController</members>
-        <members>HDT_LC_OfferConfiguratorCtrlHelper</members>
-        <members>HDT_QR_ActivityCustom</members>
-        <members>HDT_QR_Order</members>
-        <members>HDT_QR_Quote</members>
-        <members>HDT_QR_Reimbursement</members>
-        <members>HDT_QR_TechnicalOffer</members>
-        <members>HDT_SCH_ProductStObjStatusUpdate</members>
-        <members>HDT_SRV_SalesHandler</members>
-        <members>HDT_TRH_ProductStObj</members>
-        <members>HDT_UTL_Order</members>
-        <members>HDT_UTL_ProductStObjProcess</members>
-        <members>HDT_UTL_ProductStObjStatusUpdate</members>
-        <members>HDT_WRP_TechnicalOffer</members>
-        <members>HDT_WS_Payments</members>
-        <members>HDT_WS_SalesApexCalloutAction</members>
+        <members>wrts_prcgvr__Activity__c-HDT_CCheckNew</members>
+        <members>wrts_prcgvr__Activity__c-HDT_CCheckOld</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>HDT_LC_AccountSelectorController</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>HDT_CustomerType</members>
-        <name>GlobalValueSet</name>
-    </types>
-    <types>
-        <members>Account.CustomerType__c</members>
-        <members>Order.BrandLogo__c</members>
-        <members>Order.CustomerRequestDate__c</members>
-        <members>Order.CustomerType__c</members>
-        <members>Order.EnergyService__c</members>
-        <members>Order.IsActivationDeferred__c</members>
-        <members>Order.PowerAvailable__c</members>
-        <members>Order.PowerCommitted__c</members>
-        <members>Order.PowerFlow__c</members>
-        <members>Order.PowerRequested__c</members>
-        <members>Order.SupplyTypeTechnical__c</members>
-        <members>ServicePoint__c.PowerAvailable__c</members>
-        <members>ServicePoint__c.PowerContractual__c</members>
-        <members>ServicePoint__c.PowerRequested__c</members>
-        <members>TechnicalOffer__c.ServiceProduct__c</members>
-        <members>wrts_prcgvr__Activity__c.IsServicePointCode__c</members>
-        <members>wrts_prcgvr__Activity__c.ServicePointCode__c</members>
-        <name>CustomField</name>
-    </types>
-    <types>
-        <members>HDT_LCP_RunFlowFromAura</members>
-        <name>AuraDefinitionBundle</name>
-    </types>
-    <types>
-        <members>hdtChildOrderProcessDetails</members>
-        <members>hdtCreateNewTechnicalOffer</members>
-        <members>hdtModalDataTable</members>
-        <members>hdtTechnicalOfferEditForm</members>
-        <members>hdtTechnicalOfferSelection</members>
+        <members>hdtAccountSelector</members>
         <name>LightningComponentBundle</name>
-    </types>
-    <types>
-        <members>Admin</members>
-        <members>Hera Door2Door Partner User</members>
-        <members>Hera M2M Integration User</members>
-        <members>Hera Standard User</members>
-        <members>Hera System Administrator</members>
-        <members>Hera System Integrator</members>
-        <members>Hera Teleseller Partner User</members>
-        <name>Profile</name>
-    </types>
-    <types>
-        <members>HDT_FL_GestioneModificheAnagrafiche</members>
-        <members>HDT_FL_GestionePagamenti</members>
-        <members>HDT_FL_GestionePagamenti_BloccoSollecitoInteressi</members>
-        <members>HDT_FL_GestionePagamenti_Rimborso</members>
-        <name>Flow</name>
     </types>
     <version>49</version>
 </Package>

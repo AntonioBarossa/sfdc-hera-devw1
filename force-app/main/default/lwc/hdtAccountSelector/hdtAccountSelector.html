@@ -29,10 +29,10 @@
 				></lightning-input>
 			</div>
 			<div class="slds-grid slds-grid_vertical slds-size_1-of-1">
-				<template if:false={contactsFound}>
+				<template if:false={searchResults}>
 					<span class="slds-p-horizontal_medium slds-p-top_medium slds-text-align_center">
-						Nessun contatto o lead trovato. <br>
-						E possibile ricercare per nome, email, numero di telefono, codice fiscale e partita IVA.
+						Nessuna corrispondenza. <br>
+						E possibile ricercare per codice cliente, nome, email, numero di telefono, codice fiscale e partita IVA.
 					</span>
 				</template>
 				<template if:true={contactsFound}>
@@ -71,7 +71,7 @@
 						Account correlati:
 					</span>
 					<template for:each={accounts} for:item="account">
-						<div key={account.Id} data-id={account.Id} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
+						<div key={account.Id} data-id={account.Id} data-sobjtype={account.attributes.type} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
 							<lightning-card title={account.Name} icon-name="standard:account">
 								<ul class="slds-m-around_medium">
 									Cod. Fiscale: {account.FiscalCode__c}, Partita IVA: {account.VATNumber__c} <br>
