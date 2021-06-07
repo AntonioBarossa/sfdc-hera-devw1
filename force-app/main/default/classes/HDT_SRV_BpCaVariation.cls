@@ -108,7 +108,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber, CareOf__c,BillSendingMethod__c,ElectronicInvoicingMethod__c,ElectronicInvoiceCertifiedEmailAddress__c,XMLType__c,OfficeSubjectCode__c,InvoiceEmail__c,InvoiceCertifiedEmailAddress__c,BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
+        fieldq = 'Id,Account.CustomerCode__c,CaseNumber, CareOf__c,BillSendingMethod__c,ElectronicInvoicingMethod__c,ElectronicInvoiceCertifiedEmailAddress__c,ReminderBlock__c,ReminderFlag__c,XMLType__c,OfficeSubjectCode__c,InvoiceEmail__c,InvoiceCertifiedEmailAddress__c,BillingProfile__r.ContractAccountCode__c, InvoicingCity__c, InvoicingCityCode__c, InvoicingCountry__c, InvoicingPlace__c, InvoicingPostalCode__c, InvoicingProvince__c, InvoicingStreetCode__c, InvoicingStreetName__c, InvoicingStreetNumber__c, InvoicingStreetNumberExtension__c ,InvoicingStreetToponym__c, IsInvoicingVerified__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -142,7 +142,7 @@ public with sharing class HDT_SRV_BpCaVariation {
                 when 'Estero'{
                     modello = '04';
                 }
-                when 'XML + carta/emai'{
+                when 'XML + carta/email'{
                     modello = '03';
                 }
                 when else{
@@ -171,6 +171,10 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.fattura.mailPec = (String) caseRecord.get('ElectronicInvoiceCertifiedEmailAddress__c');
         requestBody.ordine.fattura.modello = modello;
         requestBody.ordine.fattura.fatturaXml = fatturaXml;
+        // TODO: aggiungere campi PEC/Flag sollecito (da capire mapping lato mulesoft)
+        //requestBody.ordine.??? = (String) caseRecord.get('ReminderBlock__c');
+        //requestBody.ordine.??? = String.valueOf(caseRecord.get('ReminderFlag__c'));
+
         System.debug('requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
         inputParams.namedCredential = 'Callout:BpCaVariation';
@@ -249,7 +253,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
+        fieldq = 'Id,Account.CustomerCode__c,Account.CustomerMarking__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -260,6 +264,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.codiceCausale = 'MAI';
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
+        // SAP usa la marcatura cliente solo per fare dei controlli di coerenza per la MAI, ma non la modifica.
+        requestBody.account.marcaturaCliente = (String) acc.get('CustomerMarking__c');
         requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
         requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
         requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';

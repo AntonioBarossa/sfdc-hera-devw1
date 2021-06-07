@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>ModAnag - Esercizio Diritti Privacy</label>
+    <label>Esercizio Diritti - Risposta Parere</label>
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;WrittenReceiptRequestDate__c&quot;,
+&quot;FieldName&quot; : &quot;OpinionRequestResponse__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
 }
@@ -14,30 +14,20 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Esercizio Diritti Privacy</value>
+        <value xsi:type="xsd:string">Risposta Parere Esercizio Diritti Privacy</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;AccountId&quot;,
-&quot;Required&quot; : true,
+&quot;FieldName&quot; : &quot;OpinionRequest__c&quot;,
+&quot;Required&quot; : false,
 &quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;Origin&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;ContactPhone&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 2
 }
 ]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

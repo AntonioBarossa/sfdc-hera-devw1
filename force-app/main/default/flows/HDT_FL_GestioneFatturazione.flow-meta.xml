@@ -532,7 +532,7 @@
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>1 OR 2 OR 3 OR (4 AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -554,6 +554,20 @@
                     <stringValue>Errore di Lettura</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>UpdatedCase.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore Stima Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>UpdatedCase.MultiContractBill__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_Phase_Elaborazione_Manuale</targetReference>
             </connector>
@@ -561,7 +575,7 @@
         </rules>
         <rules>
             <name>Da_Inviare</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -574,6 +588,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Errore Stima Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>UpdatedCase.MultiContractBill__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1469,7 +1490,7 @@
             <inputParameters>
                 <name>resumedFromDraft</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <elementReference>ResumeFromDraft</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1964,6 +1985,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

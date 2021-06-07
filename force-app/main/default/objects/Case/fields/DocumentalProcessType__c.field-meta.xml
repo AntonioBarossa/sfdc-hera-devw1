@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DocumentalProcessType__c</fullName>
+    <description>Rappresenta il tipo di processo gestito dal provider Documentale</description>
+    <externalId>false</externalId>
+    <formula>IF(AND(ISPICKVAL(Type,&apos;Variazione Potenza&apos;), PowerRequested__c &gt; PowerCommitted__c),&apos;Aumento Potenza&apos;,
+    IF(AND(ISPICKVAL(Type,&apos;Variazione Potenza&apos;), PowerRequested__c &lt; PowerCommitted__c),&apos;Diminuzione Potenza&apos;,
+        IF(AND(ISPICKVAL(Type,&apos;Verifica Tensione - Pressione&apos;), CommodityFormula__c=&apos;Gas&apos;),&apos;Verifica Pressione&apos;,
+            IF(AND(ISPICKVAL(Type,&apos;Verifica Tensione - Pressione&apos;), CommodityFormula__c=&apos;Energia Elettrica&apos;),&apos;Verifica Tensione&apos;,TEXT(Type)))))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Tipo Processo Documentale</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

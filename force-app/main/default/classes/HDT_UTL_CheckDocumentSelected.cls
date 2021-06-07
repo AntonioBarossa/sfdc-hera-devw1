@@ -26,7 +26,7 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
         if(documents.size() == 1){
 
-            if(reimburseMethod == 'Assegno' || (isForeign != null && isForeign == true) || documents[0].Residue__c == 0){
+            if(reimburseMethod == 'Assegno' || (isForeign != null && isForeign == true) || documents[0].DocumentResidue__c == 0){
 
                 phase = 'Elaborazione Manuale';
 
@@ -47,17 +47,17 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
             // Controlli sui documenti
             for(DocumentSelected__c document : documents){
 
-                if(document.Residue__c > 0){
+                if(document.DocumentResidue__c > 0){
 
                     ++debitDocument;
 
-                } else if(document.Residue__c < 0){
+                } else if(document.DocumentResidue__c < 0){
 
                     ++creditDocument;
 
                 }
 
-                residualSum += document.Residue__c;
+                residualSum += document.DocumentResidue__c;
 
             }
 

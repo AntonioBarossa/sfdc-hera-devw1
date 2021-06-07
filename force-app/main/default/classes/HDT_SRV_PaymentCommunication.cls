@@ -22,9 +22,9 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
 
         Map<String, Object> caseMap = new Map<String, Object>{
             'rds' => currentCase.CaseNumber,
-            'totale' => currentCase.TotalPaidCustomer__c,
-            'residuo' => currentCase.TotalResidue__c,
-            'importo' => currentCase.TotalToPay__c
+            'totale' => currentCase.TotalToPay__c,
+            'residuo' => currentCase.TotalToPay__c,
+            'importo' => currentCase.TotalPaidCustomer__c
         };
 
         caseListMap.add(caseMap);
