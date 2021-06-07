@@ -111,7 +111,8 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                         fieldValue= ((DATETIME) relation.get(fieldOrRelation)).format('dd/MM/yyyy');
                     }
                     when 'DATE'{
-                        fieldValue= ((DATE) relation.get(fieldOrRelation)).format();
+                        DateTime tempDate = (DATE) relation.get(fieldOrRelation);
+                        fieldValue= tempDate.day()+'/'+tempDate.month()+'/'+tempDate.year();
                     }
                     when else {
                         fieldValue= STRING.valueOf(relation.get(fieldOrRelation));
