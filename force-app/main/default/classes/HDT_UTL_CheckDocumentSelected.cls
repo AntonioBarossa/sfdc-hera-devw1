@@ -106,6 +106,9 @@ public inherited sharing class HDT_UTL_CheckDocumentSelected {
 
                 phase = 'Elaborazione Manuale';
 
+            } else {
+
+                phase = 'Elaborazione Manuale';
             }
 
         }
