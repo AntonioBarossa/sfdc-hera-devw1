@@ -23,6 +23,10 @@
                     <lightning-messages></lightning-messages>
 
                     <div class="slds-grid slds-wrap slds-m-around_medium">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input type="text" label="Prodotto di servizio" value={rateObj.servProduct} disabled></lightning-input>
+                        </div>
+
                         <template iterator:it={fieldsList}>
                             <div key={it.value} class="slds-col slds-size_1-of-2">
                                 <lightning-input-field key={it.value} field-name={it.value} variant="label-stacked" ></lightning-input-field>
