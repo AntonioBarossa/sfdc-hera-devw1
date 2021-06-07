@@ -1,6 +1,17 @@
 public with sharing class HDT_UTL_DataEnrichmentPostSales {
 
+    /**
+     * Gestisce la response dell'arricchimento dati scrivendo i valori su currentCase.
+     */
     public static Case handleResponse(String serializedResponse, Case currentCase){
+        Set<String> dataEnrichmentFields = new Set<String>();
+        return handleResponse(serializedResponse, currentCase, dataEnrichmentFields);
+    }
+
+    /**
+     * Gestisce la response dell'arricchimento dati scrivendo i valori su currentCase e restituendo la lista dei campi valorizzati in dataEnrichmentFields.
+     */
+    public static Case handleResponse(String serializedResponse, Case currentCase, Set<String> dataEnrichmentFields){
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
@@ -142,6 +153,8 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         salesCompanyCode = (String) transcodeMap.get('SalesCompanyCode__c');
         salesCompany = depsSrv.calculateSalesCompany(salesCompanyCode);
         transcodeMap.put('SalesCompany__c', salesCompany);
+
+        dataEnrichmentFields.addAll(transcodeMap.keySet());
 
         return depsSrv.populateCase(transcodeMap, currentCase);
     }
