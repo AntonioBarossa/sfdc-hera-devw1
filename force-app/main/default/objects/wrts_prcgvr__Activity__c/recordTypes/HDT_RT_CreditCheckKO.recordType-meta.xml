@@ -256,39 +256,7 @@
     <picklistValues>
         <picklist>Status__c</picklist>
         <values>
-            <fullName>Annullata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Appuntamento confermato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Appuntamento di competenza Distributore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Appuntamento eseguito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Appuntamento non eseguito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiusa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazione Inviata</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Creata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invio app%2Eto SELF cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -301,22 +269,6 @@
         </values>
         <values>
             <fullName>KO Risolto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifica appuntamento in corso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifica confermata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Null</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Presa appuntamento in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>
