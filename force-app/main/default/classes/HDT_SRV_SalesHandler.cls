@@ -70,7 +70,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                 ord.PrecheckReasonSII__c = mapRequestFields.get('TESTO_ERRR');
                             }
                             when 'Esito OK da SII' {
-                                if (ordRetrieved.PrecheckResultSII__c != null || ordRetrieved.PrecheckResultSII__c == '') {
+                                if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                     ord.PrecheckResultSII__c = 'OK';
                                 }
                             }

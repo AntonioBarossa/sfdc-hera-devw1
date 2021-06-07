@@ -94,7 +94,7 @@
                                 <ul ><!--class="slds-welcome-mat__tiles slds-size_1-of-2"-->
                                     <template for:each={rateList} for:item="rate">
                                         <li key={rate.Id} class="slds-welcome-mat__tile slds-m-left_medium">
-                                            <a onclick={selectRate} data-id={rate.Id} data-name={rate.Name} data-temp={rate.ContractTemplate__c} href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                                            <a onclick={selectRate} data-id={rate.Id} data-name={rate.Name} data-temp={rate.ContractTemplate__c} data-serv-product={rate.ServiceProduct__c} href="javascript:void(0);" class="slds-box slds-box_link slds-media">
                                                 <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
                                                     <div class="slds-welcome-mat__tile-figure">
                                                         <div class="slds-welcome-mat__tile-icon-container">

@@ -57,16 +57,31 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
-	public static String getLeadsAndContacts(String queryString) {
+	public static String search(String queryString) {
 		try {
-			queryString = '%' + queryString + '%';
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
-			result.leads = getLeads(queryString);
-			result.contacts = getContacts(queryString);
+			if(queryString.startsWith('100') && queryString.isNumeric()) {
+				// return handleBPCodeSearch(queryString);
+				queryString = queryString + '%';
+				result.accounts = getAccountByBPCode(queryString);
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+			} else {
+				queryString = '%' + queryString + '%';
+				result.leads = getLeads(queryString);
+				result.contacts = getContacts(queryString);
+			}
 			return JSON.serialize(result);
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}
+	}
+
+	private static List<Account> getAccountByBpCode(String bpCode) {
+		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
+	}
+
+	private static List<Contact> getContactTitolare(String accountId) {
+		return [SELECT Id, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId AND Roles = 'Titolare' AND isActive = true) WITH SECURITY_ENFORCED];
 	}
 
 	@AuraEnabled
