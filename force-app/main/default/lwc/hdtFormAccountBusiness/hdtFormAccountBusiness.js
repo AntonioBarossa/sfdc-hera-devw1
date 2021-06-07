@@ -277,7 +277,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             isValidated=false;
         }
         if(!(vatNumber.value=== undefined || vatNumber.value.trim()==='')){
-            if(vatNumber.value.length == 11){
+            if(vatNumber.value.length != 11){
                 isValidated=false;
                 messageError=" La Partita Iva deve essere lunga 11 cifre!";
             }
@@ -286,7 +286,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             isValidated=false;
         }
         if(!(this.personFiscalCode.value=== undefined || this.personFiscalCode.value.trim()==='')){
-            if(this.personFiscalCode.value.length == 16){
+            if(this.personFiscalCode.value.length != 16){
                 isValidated=false;
                 messageError=" il Codice Fiscale del Referente deve essere lungo 16 cifre!";
             }
@@ -354,7 +354,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 isValidated=false;
             }
             if(!(fiscalCode.value=== undefined || fiscalCode.value.trim()==='')){
-                if(fiscalCode.value.length == 16){
+                if(fiscalCode.value.length != 16){
                     isValidated=false;
                     messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
                 }
