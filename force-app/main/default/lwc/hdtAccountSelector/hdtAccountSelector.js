@@ -55,6 +55,7 @@ export default class HdtAccountSelector extends LightningElement {
 			if(res.preFilter) {
 				this.template.querySelector(`[data-id="search_bar_anagrafica"]`).value = res.preFilter;
 			}
+			this.refreshPage();
 		})
 		.catch(error => {
 			// WIP

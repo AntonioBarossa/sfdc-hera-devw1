@@ -80,6 +80,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             return anagAlignCase;
         }
 
+        System.debug('Gestione Allineamento Anagrafica da richiesta passiva Heroku');
+
         // COD_PRESA e COD_PRAT_DISTR sono obbligatori insieme
         String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
         String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
@@ -104,39 +106,27 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
-                System.debug('Arricchimento dati su Case: ' + anagAlignCase.Id);
-                try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(anagAlignCase.PODPDRFormula__c, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
-                } catch (Exception ex){
-                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
-                }
+                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                // Queueable per invocare l'arricchimento dati sul Case e per inviarlo ad heroku.
+                /* List<Case> cases = new List<Case>{anagAlignCase};
+                System.enqueueJob(new HDT_QBL_AnagAlignment(cases)); */
+                dataEnrichment(JSON.serialize(anagAlignCase));
+                // TODO: capire perchè non parte il Queueable di PClick quando passiamo in Da Inviare
+                // Non parte ne se usiamo il Queuable, ne se usiamo il future
             }
             when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
                 anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
                 updateAnagAlignmentCaseCustomerData(anagAlignCase);
-                System.debug('Arricchimento dati su Case: ' + anagAlignCase.Id);
-                try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(anagAlignCase.PODPDRFormula__c, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
-                } catch (Exception ex){
-                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
-                }
+                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+
+                dataEnrichment(JSON.serialize(anagAlignCase));
+                // TODO: capire perchè non parte il Queueable di PClick quando passiamo in Da Inviare
+                // Non parte ne se usiamo il Queuable, ne se usiamo il future
+
                 Case ricostruzioneConsumiCase = createCaseRicostruzioneConsumi(codicePresa, herokuCode);
-                System.debug('Arricchimento dati su Case: ' + ricostruzioneConsumiCase.Id);
-                try {
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(ricostruzioneConsumiCase.PODPDRFormula__c, null);
-                    HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, anagAlignCase);
-                } catch (Exception ex){
-                    System.debug('Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
-                }
+                dataEnrichment(JSON.serialize(ricostruzioneConsumiCase));
             }
         }
-
-        anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
-        anagAlignCase.Phase__c = 'Da Inviare';
-        System.debug('Invio Case Allineamento Anagrafica ad Heroku: ' + anagAlignCase.Id);
-        HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
 
         return anagAlignCase;
     }
@@ -181,7 +171,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
 
     // Aggiorna il Case di Allineamento Anagrafica con i dati fiscali e di contatto presenti sull'Account.
     private static void updateAnagAlignmentCaseCustomerData(Case inputCase) {
-
         HDT_QR_Account accountQueryHandler = new HDT_QR_Account();
         HDT_QR_Contact contactQueryHandler = new HDT_QR_Contact();
 
@@ -256,7 +245,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         inputMap.put('type', 'Allineamento Anagrafica');
         inputMap.put('accountId', accountId);
         inputMap.put('contactId', acr.ContactId);
-        inputMap.put('servicePointId', servicePoint);
+        inputMap.put('servicePointId', servicePoint.Id);
         inputMap.put('HerokuPracticeCode__c', herokuCode);
 
         HDT_UTL_CreateGenericCase createCaseUtility = new HDT_UTL_CreateGenericCase();
@@ -312,6 +301,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         if (c != null) {
             c.Reason__c = 'Blocco per frode';
             HDT_UTL_DatabaseService.insertSObject(c);
+            return caseQuery.getRecordById(c.Id);
         }
 
         return c;
@@ -494,6 +484,19 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         }
 
         return processType;
+    }
+
+    @future(callout=true)
+    private static void dataEnrichment(String serializedCase){
+        Case c = (Case) JSON.deserialize(serializedCase, Case.class);
+        System.debug('Arricchimento dati su Case: ' + c.Id);
+        String response = HDT_WS_ArricchimentoDatiTemp.submitRequest(c.PODPDRFormula__c, c.ContractCode__c);
+        Case updateCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(response, c);
+        if (updateCase != null) {
+            HDT_UTL_DatabaseService.updateSObject(updateCase);
+            updateCase.Phase__c = 'Da Inviare';
+            HDT_UTL_DatabaseService.updateSObject(updateCase);
+        }
     }
 
     /**

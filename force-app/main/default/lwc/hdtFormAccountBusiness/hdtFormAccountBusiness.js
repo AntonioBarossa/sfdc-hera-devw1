@@ -11,7 +11,7 @@ import LEGAL_FORM_TYPE from '@salesforce/schema/Account.LegalFormType__c';
 import COMPANY_OWNER from '@salesforce/schema/Account.CompanyOwner__c';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
-import getFromFiscalCode from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCode';
+import getFromFiscalCode2 from '@salesforce/apex/HDT_UTL_CheckFiscalCodeTaxNumber.getDataFromFiscalCodeData';
 import calculateFiscalCode from '@salesforce/apex/HDT_UTL_CalculateFiscalCode.calculateFiscalCode';
 import insertAccount from '@salesforce/apex/HDT_LC_FormAccountBusiness.insertAccount';
 
@@ -85,11 +85,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             { label: 'Titolare', value: 'Titolare' },
             { label: 'Legale rappresentante', value: 'Legale rappresentante' },
             { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' },
-            { label: 'Contatto secondario', value: 'Contatto secondario' },
-            { label: 'Delegato', value: 'Delegato' },
-            { label: 'Azienda', value: 'Azienda' }
-            
+            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }
         ];
     }
     closeModal() {
@@ -104,15 +100,15 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     handleChange(event){
         this.markingValue= event.detail.value;
         if(this.markingValue=='Ditta individuale'){
-            this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
-            this.template.querySelector('[data-id="legalForm"]').readOnly = true;
+        //    this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
+        //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-show');
             this.makerequired= true;
         }else{
-            this.template.querySelector('[data-id="legalForm"]').readOnly = false;
+         //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
             this.template.querySelector('[data-id="hideBusinessName"]').classList.add('slds-show');
@@ -255,7 +251,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let lastName= this.template.querySelector('[data-id="lastName"]');
         let mobilePhone= this.template.querySelector('[data-id="mobilePhone"]');
         let contactEmail= this.template.querySelector('[data-id="contactEmail"]');
-        let legalForm= this.template.querySelector('[data-id="legalForm"]');
+     //   let legalForm= this.template.querySelector('[data-id="legalForm"]');
         let role=this.template.querySelector('[data-id="role"]');
         let contactElectronicMail= this.template.querySelector('[data-id="contactElectronicMail"]');
         let contactFax= this.template.querySelector('[data-id="contactFax"]');
@@ -276,11 +272,24 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 isValidated=false;
             } 
         }
+        console.log("LOG1");
         if(!vatNumber.reportValidity()){
             isValidated=false;
-        } 
+        }
+        if(!(vatNumber.value=== undefined || vatNumber.value.trim()==='')){
+            if(vatNumber.value.length != 11){
+                isValidated=false;
+                messageError=" La Partita Iva deve essere lunga 11 cifre!";
+            }
+        }
         if(!this.personFiscalCode.reportValidity()){
             isValidated=false;
+        }
+        if(!(this.personFiscalCode.value=== undefined || this.personFiscalCode.value.trim()==='')){
+            if(this.personFiscalCode.value.length != 16){
+                isValidated=false;
+                messageError=" il Codice Fiscale del Referente deve essere lungo 16 cifre!";
+            }
         }
         if(!category.reportValidity()){
             isValidated=false;
@@ -291,6 +300,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!mobilePhonePrefix.reportValidity()){
             isValidated=false;
         }
+        console.log("LOG2");
         if(!phonePrefix.reportValidity()){
             isValidated=false;
         }
@@ -322,9 +332,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!lastName.reportValidity()){
             isValidated=false;
         } 
-        if(!legalForm.reportValidity()){
+        console.log("LOG3");
+      /*  if(!legalForm.reportValidity()){
             isValidated=false;
-        }
+        }*/
         if(!phoneNumber.reportValidity() && !mobilephoneNumber.reportValidity() && !email.reportValidity()){
             isValidated=false;
         }
@@ -342,11 +353,23 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             if(!fiscalCode.reportValidity()){
                 isValidated=false;
             }
+            if(!(fiscalCode.value=== undefined || fiscalCode.value.trim()==='')){
+                if(fiscalCode.value.length != 16){
+                    isValidated=false;
+                    messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
+                }
+            }
         }
 
-    
+        console.log("LOG4");
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
             if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                isValidated=false;
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            }
+        }
+        if(!(mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')){
+            if(mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 12){
                 isValidated=false;
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
@@ -354,7 +377,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         if(!(contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='')){
             if(contactPhoneNumber[0] != '0' && (contactPhoneNumber.value.length<6 || contactPhoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
         if(!(contactEmail.value=== undefined || contactEmail.value.trim()==='')){
@@ -363,12 +386,14 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 messageError=" Formato email errato !";
             }
         }
+        console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
             if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
                 isValidated=false;
-                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
+                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
         }
+        
         // if(!(otherPhone.value=== undefined || otherPhone.value.trim()==='')){
         //     if(otherPhone.value.length<10){
         //         isValidated=false;
@@ -388,7 +413,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 messageError=" Almeno un dato di contatto è obbligatorio!";
             }
             isValidated=false;
-        } 
+        }
+        console.log("LOG6");
         if((mobilePhone.value=== undefined || mobilePhone.value.trim()==='')&&(contactEmail.value=== undefined || contactEmail.value.trim()==='')
         && (contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='') && (contactElectronicMail.value=== undefined || contactElectronicMail.value.trim()==='') 
         && (contactFax.value=== undefined || contactFax.value.trim()=== '')){
@@ -397,11 +423,13 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
             isValidated=false;
         }
-
+        console.log("LOG7");
         if(isValidated){
+            console.log("LOG8");
             this.accountAddress =this.template.querySelector("c-hdt-target-object-address-fields").handleAddressFields();
             this.getAccountAdress();
             if(this.isVerified){
+                console.log("LOG9");
                 var isEmpty=false;
                 if(this.gender === undefined || this.gender.trim()===''){
                     isEmpty= true;
@@ -412,12 +440,16 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 if(this.birthPlace === undefined || this.birthPlace.trim()===''){
                     isEmpty= true;
                 }
-                
+                console.log("LOG10");
                 if(isEmpty){
-                    getFromFiscalCode({
-                        fiscalCodes : {'Account' : this.fiscalCode.value.replace(/ /g,"")}
+                    console.log("LOG11:" + this.personFiscalCode.value);
+                    var prova = this.personFiscalCode.value;//.replace(/ /g,"");
+                    console.log("LOG12:" + prova);
+                    getFromFiscalCode2({
+                        fiscalCodes : prova
                     }).then((response) => {
-                        let fiscData= response.Account;
+                        console.log("LOG12");
+                        let fiscData= response;
                         if(this.gender === undefined || this.gender.trim()===''){
                             this.gender= fiscData.gender;
                         }
@@ -427,11 +459,13 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         if(this.birthPlace === undefined || this.birthPlace.trim()===''){
                             this.birthPlace= fiscData.birthPlace;
                         }
+                        console.log("LOG13:");
+                        console.log("LOG13:" + businessName.value);
                         dataAccount={
                             "businessName" : businessName.value,
                             "vatNumber" : vatNumber.value,
                             "fiscalCode" : fiscalCode.value.replace(/ /g,""),
-                            "legalForm" : legalForm.value,
+                          //  "legalForm" : legalForm.value,
                             "customerMarking" : customerMarking.value,
                             "category" : category.value,
                             "firstIndividualName" : firstIndividualName.value,
@@ -462,10 +496,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             "phonePrefix" : phonePrefix.value ,
                             "mobilePhonePrefix" : mobilePhonePrefix.value 
                         };
+                        console.log("LOG14");
                         insertAccount({
                             dataAccount: dataAccount,
                             accountAddress: this.fieldsToUpdate
                         }).then((response) => {
+                            console.log("LOG15");
                             const event = new ShowToastEvent({
                                 message: 'Account '+response.FirstName__c +' '+ response.LastName__c+' has been created!',
                                 variant: 'success',
@@ -492,8 +528,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                             this.dispatchEvent(event);
                         });
                     }).catch((errorMsg) => {
+                        console.log("LOG12Error");
                         const event = new ShowToastEvent({
-                            message: 'Entra un valido codice fiscale!',
+                            message: 'Inserire un codice fiscale valido',
                             variant: 'error',
                             mode: 'dismissable'
                         });
@@ -502,11 +539,12 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     });
                 }else{
                     console.log("*******PRI");
+                    console.log("LOG16");
                     dataAccount={
                         "businessName" : businessName.value,
                         "vatNumber" : vatNumber.value,
                         "fiscalCode" : fiscalCode.value.replace(/ /g,""),
-                        "legalForm" : legalForm.value,
+                      //  "legalForm" : legalForm.value,
                         "customerMarking" : customerMarking.value,
                         "category" : category.value,
                         "firstIndividualName" : firstIndividualName.value,
@@ -538,6 +576,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                         "mobilePhonePrefix" : mobilePhonePrefix.value 
                     };
                     console.log("*******DOP");
+                    console.log("LOG17");
                     insertAccount({
                         dataAccount: dataAccount,
                         accountAddress: this.fieldsToUpdate
@@ -569,6 +608,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                     });
                 }  
             }else{
+                console.log("LOG18");
                 const event = new ShowToastEvent({
                     message: " L\'indirizzo non è stato verificato! ",
                     variant: 'error',

@@ -200,6 +200,21 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    public List<SBQQ__QuoteLine__c> getRecordsForContractOrderRefVas(String quoteId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            BillingProfile__c,
+            SBQQ__Quote__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c not null
@@ -400,5 +415,34 @@ public inherited sharing class HDT_QR_QuoteLine {
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @date 04/06/2021
+    * @description Get linked quotelines
+    * @param String quoteId - SBQQ__Quote__c
+    * @return List<SBQQ__QuoteLine__c>
+    */
+    public List<SBQQ__QuoteLine__c> getLinkedQuoteLines(String quoteId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            SBQQ__Product__r.Name,
+            SBQQ__Product__r.ProductCode,
+            SBQQ__Product__r.Version__c,
+            SBQQ__Quote__r.Name,
+            SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
+            ServicePoint__c,
+            ServicePointLinkItem__r.ServicePoint__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__Product__r.Name IN ('POD','PDR')
+            AND ServicePointLinkItem__c != null
+            WITH SECURITY_ENFORCED
+        ];
+
     }
 }

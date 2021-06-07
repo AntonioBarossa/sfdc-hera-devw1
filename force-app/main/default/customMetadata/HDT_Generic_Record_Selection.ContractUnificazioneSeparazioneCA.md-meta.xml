@@ -36,7 +36,7 @@
     </values>
     <values>
         <field>Where_Conditions__c</field>
-        <value xsi:type="xsd:string">Status = &apos;Activated&apos;</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>sObject__c</field>

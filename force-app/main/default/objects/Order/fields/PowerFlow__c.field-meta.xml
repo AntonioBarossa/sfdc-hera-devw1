@@ -3,9 +3,9 @@
     <fullName>PowerFlow__c</fullName>
     <externalId>false</externalId>
     <label>Potenza/Portata</label>
-    <precision>12</precision>
+    <precision>11</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>1</scale>
     <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>

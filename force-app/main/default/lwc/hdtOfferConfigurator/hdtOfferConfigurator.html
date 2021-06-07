@@ -28,14 +28,20 @@
         </template>
 
         <template if:false={errorObj.showError} >
-            <p slot="actions" >
+
+            <p if:true={editable} slot="actions" >
                 <lightning-button-group>
-                    <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} icon-name="utility:save" ></lightning-button>
-                    <lightning-button label="Salva ed invia" name="saveAndSend" onclick={openConfirmation} variant="success" icon-name="utility:send" ></lightning-button>
-                    <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="destructive" icon-name="utility:close" ></lightning-button>
-                    <lightning-button if:true={showDelete} label="Elimina" name="delete" onclick={openConfirmation} variant="destructive-text" icon-name="utility:delete" ></lightning-button>
+                    <lightning-button label="Salva" name="saveAction" onclick={openConfirmation} variant="neutral" icon-name="utility:save" ></lightning-button>
+                    <lightning-button label="Salva ed invia" name="saveAndSend" onclick={openConfirmation} variant="neutral" icon-name="utility:send" ></lightning-button>
+                    <lightning-button label="Chiudi" name="goBackToRecord" onclick={openConfirmation} variant="neutral" icon-name="utility:close" ></lightning-button>
+                    <lightning-button if:true={showDelete} label="Elimina" name="delete" onclick={openConfirmation} variant="neutral" icon-name="utility:delete" ></lightning-button>
                 </lightning-button-group>
             </p>
+
+            <p if:false={editable} slot="actions" >
+                <lightning-button label="Chiudi" name="goBackToRecord" onclick={goBackToRecord} variant="neutral" icon-name="utility:close" ></lightning-button>
+            </p>
+
             <div class="slds-card__body slds-card__body_inner">
                 <div class="slds-grid slds-gutters">
                     <div class="slds-col">
@@ -43,7 +49,7 @@
                         <div class="slds-form slds-m-top_x-large " >
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <lightning-helptext content={helpTxtProductCode} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Product Code</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.productCode} type="text" label=" "></lightning-input>-->
@@ -54,7 +60,7 @@
                             </div>
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt2}></lightning-helptext>
+                                <lightning-helptext content={helpTxtVersion}></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Versione</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.version} type="text" label=" "></lightning-input>-->
@@ -70,7 +76,7 @@
                     <div class="slds-col">
                         <div class="slds-form slds-m-top_x-large " >
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt3} ></lightning-helptext>
+                                <lightning-helptext content={helpTxtRateCategory} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Rate Category</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.rateCategory} type="text" label=" "></lightning-input>-->
@@ -81,7 +87,7 @@
                             </div>
 
                             <div class="slds-form-element slds-form-element_horizontal">
-                                <lightning-helptext content={helpTxt1} ></lightning-helptext>
+                                <lightning-helptext content={helpTxtTemplate} ></lightning-helptext>
                                 <label class="slds-form-element__label slds-m-left_medium" for="horizontal-input-id-02">Template</label>
                                 <div class="slds-form-element__control">
                                     <!--<lightning-input disabled value={product.template} type="text" label=" "></lightning-input>-->
@@ -100,181 +106,186 @@
                     <!--<table class="slds-table slds-table_cell-buffer slds-table_bordered">-->
                         <thead>
                             <tr class="slds-line-height_reset">
-                            <!-- # COLUMN 1 # -->    
+                                <!-- # COLUMN 1 # -->    
                                 <th class="firstcol" scope="col" >
                                     <div class="slds-truncate" title="Definizione" >Definizione</div>
                                 </th>
-                            <!-- # COLUMN 2 # -->    
+                                 <!-- # COLUMN 2 # -->    
                                 <th class="alertcol" scope="col">
                                     <div class="slds-truncate" title=""></div>
                                 </th>
-                                <!-- # COLUMN X # -->    
-                                <th class="" scope="col">
+                                <!-- # COLUMN 3 # -->    
+                                <th class="checkboxCol" scope="col">
+                                    <div class="slds-truncate" title="G">G</div>
+                                </th>
+                                <!-- # COLUMN 4 # -->    
+                                <th class="checkboxCol" scope="col">
                                     <div class="slds-truncate" title="M-V">M - V</div>
-                                </th>                                
-                            <!-- # COLUMN 3 # /-/->                       
-                                <th class="" scope="col" >
-                                    <div class="slds-truncate" title="Data Inizio" >Data inizio</div>
                                 </th>
-                            <!/-/- # COLUMN 4 # /-/->                                           
+                                <!-- # COLUMN 5 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Data fine">Data fine</div>
-                                </th>-->
-                            <!-- # COLUMN 5 # -->    
-                                <th class="" scope="col">
-                                    <div class="slds-truncate" title="Tipo tariffa">Tipo tariffa</div>
+                                    <div class="slds-truncate" title="S">S</div>
                                 </th>
-                            <!-- # COLUMN 6 # -->    
+                                <!-- # COLUMN 6 # -->    
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Tipo tariffa">Tariffa</div>
+                                </th>
+                                <!-- # COLUMN 7 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Gruppo info">Gruppo info</div>
                                 </th>
-                            <!-- # COLUMN 7 # -->    
+                                <!-- # COLUMN 8 # -->
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Valore numerico">Valore numerico</div>
+                                    <div class="slds-truncate" title="Valore numerico">Valore</div>
                                 </th>
-                            <!-- # COLUMN 8 # -->    
+                                <!-- # COLUMN 9 # -->    
                                 <th class="" scope="col">
                                     <div class="slds-truncate" title="Flag">Flag</div>
                                 </th>
-                            <!-- # COLUMN 9 # -->    
+                                <!-- # COLUMN 10 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Codice prezzo">Codice prezzo</div>
+                                    <div class="slds-truncate" title="Codice prezzo">Prezzo</div>
                                 </th>
-                            <!-- # COLUMN 10 # -->    
+                                <!-- # COLUMN 11 # -->    
                                 <th class="" scope="col">
-                                    <div class="slds-truncate" title="Stringa testuale">Stringa testuale</div>
+                                    <div class="slds-truncate" title="Codice sconto">Sconto</div>
                                 </th>
-                                <!-- # COLUMN 1 # -->    
-                                <th class="firstcol" scope="col" >
+                                <!-- # COLUMN 12 # -->    
+                                <th class="" scope="col">
+                                    <div class="slds-truncate" title="Stringa testuale">Stringa</div>
+                                </th>
+                                <!-- # COLUMN 13 # -->    
+                                <th class="lastCol" scope="col" >
                                     <div class="slds-truncate" title="Operando" >Operando</div>
                                 </th>
-
                             </tr>
                         </thead>
                         <tbody>
                             <template for:each={dataRows} for:item="d">
                                 <tr class="slds-hint-parent" key={d.id} data-id={d.id}>
                                  
-                                <!-- # COLUMN 1 # -->
+                                    <!-- # COLUMN 1 # -->
                                     <td class="firstcol" data-label="Definizione">
                                         <div class="slds-truncate" title="Definizione">{d.definition}</div>
                                     </td>
 
-                                <!-- # COLUMN 2 # -->    
+                                    <!-- # COLUMN 2 # -->    
                                     <td class="alertcol" data-label="triangle">
                                         <div title="trinagle" class="slds-truncate slds-form-element__control">
-                                            <lightning-icon size="xx-small" variant="warning" icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
+                                            <template if:true={showAlert} >
+                                                <lightning-icon size="xx-small" variant="warning" icon-name="utility:warning" alternative-text="Warning!" title="Warning"></lightning-icon>
+                                            </template>
                                         </div>
                                     </td>
 
-                                <!-- # COLUMN X # -->    
-                                <td class="alertcol" data-label="M-V">
-                                    <div title="MV" class="slds-truncate slds-form-element__control">
-                                        <c-hdt-radio-group row-id={d.id} options={options} onradioselect={radioselect} ></c-hdt-radio-group>
-                                    </div>
-                                </td>
+                                    <!-- # COLUMN 3 # -->
+                                    <td class="checkboxCol" data-label="G">
+                                        <div class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox slds-checkbox_standalone">
+                                                    <input if:true={d.g} type="checkbox" data-id={d.id} checked name="g" value={d.id} onclick={checkboxHandler} />
+                                                    <input if:false={d.g} type="checkbox" data-id={d.id} name="g" value={d.id} onclick={checkboxHandler} />
+                                                    <span class="slds-checkbox_faux"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                                <!-- # COLUMN 3 #      
-                                    <td data-label="Data inizio">
-                                        <template if:true={d.startDate.enabled} >
-                                            <lightning-input
-                                                data-row-id={d.id}
-                                                type="date"
-                                                name="startDate"
-                                                label="startDate"
+                                    <!-- # COLUMN 4 #  -->    
+                                    <td class="checkboxCol" data-label="M-V">
+                                        <div title="MV" class="slds-truncate slds-form-element__control">
+                                            <c-hdt-radio-group row-id={d.id} m-value={d.m} onradioselect={radioselect} ></c-hdt-radio-group>
+                                        </div>
+                                    </td>
+
+                                    <!-- # COLUMN 5 #  -->
+                                    <td data-label="S">
+                                        <div title="S" class="slds-truncate slds-form-element__control" style="overflow: initial;" >
+                                            <lightning-combobox
+                                                data-id={d.id}
+                                                name="operandStatus"
+                                                label="operandStatus"
                                                 variant="label-hidden"
-                                                onchange={setParam}
-                                            ></lightning-input>
-                                        </template>
-                                        <template if:false={d.startDate.enabled} >
-                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                        </template>
-                                    </td>-->
+                                                value={d.s}
+                                                options={sOptions}
+                                                onchange={handleComboboxChange}
+                                            ></lightning-combobox>
+                                        </div>
+                                    </td>
 
-                                <!-- # COLUMN 4 #     
-                                    <td data-label="Data fine">
-                                        <template if:true={d.endDate.enabled} >
-                                            <lightning-input
-                                                data-row-id={d.id}
-                                                type="date"
-                                                name="endDate"
-                                                label="endDate"
-                                                variant="label-hidden"
-                                                onchange={setParam}
-                                            ></lightning-input>
-                                        </template>
-                                        <template if:false={d.endDate.enabled} >
-                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                        </template>
-                                    </td>-->
-
-                                <!-- # COLUMN 5 # -->    
+                                    <!-- # COLUMN 6 # -->    
                                     <td data-label="Tipo tariffa">
                                         <!--<div title="Tariffa" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.rateType.enabled} >
-                                                <c-hdt-pill
-                                                    data-id={d.id}
-                                                    row-id={d.id}
-                                                    field-name="rateType"
-                                                    icon="standard:quotes"
-                                                    pill-obj={d.rateType}
-                                                    onsetvaluetoparent={handleSetvaluetoparent}
-                                                ></c-hdt-pill>
-                                            </template>
-                                            <template if:false={d.rateType.enabled} >
-                                                <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                                <!--<input type="text" class="slds-input" value="" disabled />-->
-                                            </template>
+                                        <template if:true={d.rateType.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="rateType"
+                                                icon="standard:quotes"
+                                                pill-obj={d.rateType}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.rateType.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
                                         <!--</div>-->
                                     </td>
 
-                               <!-- # COLUMN 6 # -->    
+                                    <!-- # COLUMN 7 # -->    
                                     <td data-label="Gruppo info">
                                         <!--<div title="GR. Info" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.infoGroup.enabled} >
-                                                <c-hdt-pill
-                                                    data-id={d.id}
-                                                    row-id={d.id}
-                                                    field-name="infoGroup"
-                                                    icon="standard:announcement"
-                                                    pill-obj={d.infoGroup}
-                                                    onsetvaluetoparent={handleSetvaluetoparent}
-                                                ></c-hdt-pill>
-                                            </template>
-                                            <template if:false={d.infoGroup.enabled} >
-                                                <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                                <!--<input type="text" class="slds-input" value="" disabled />-->
-                                            </template>
+                                        <template if:true={d.infoGroup.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="infoGroup"
+                                                icon="standard:announcement"
+                                                pill-obj={d.infoGroup}
+                                                rate={product.rateCategory}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.infoGroup.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
                                         <!--</div>-->
                                     </td>
 
-                                <!-- # COLUMN 7 # -->    
+                                    <!-- # COLUMN 8 # -->    
                                     <td data-label="Valore numerico">
                                         <!--<div title="Valore" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.numValue.enabled} >
-                                                <lightning-input
-                                                    data-row-id={d.id}
-                                                    type="number"
-                                                    name="numValue"
-                                                    label="numValue"
-                                                    variant="label-hidden"
-                                                    step="0.01"
-                                                    value={d.numValue.value}
-                                                    onchange={setParam}
-                                                ></lightning-input>
-                                            </template>
-                                            <template if:false={d.numValue.enabled} >
-                                                <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                                <!--<input type="text" class="slds-input" value="" disabled />-->
-                                            </template>
+                                        <template if:true={d.numValue.enabled} >
+                                            <lightning-input
+                                                data-row-id={d.id}
+                                                type="number"
+                                                name="numValue"
+                                                label="numValue"
+                                                variant="label-hidden"
+                                                step="0.01"
+                                                value={d.numValue.value}
+                                                onchange={setParam}
+                                            ></lightning-input>
+                                        </template>
+                                        <template if:false={d.numValue.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
                                         <!--</div>-->
                                     </td>
 
-                                <!-- # COLUMN 8 # -->    
+                                    <!-- # COLUMN 9 # -->    
                                     <td data-label="Flag">
                                         <div if:true={d.flag.enabled} title="flag" class="slds-truncate slds-form-element__control slds-grow slds-align_absolute-center">
                                             <!--<input type="checkbox" class="slds-input" value="" style="width: 12px;"/>-->
-                                            <lightning-input
+                                            <c-hdt-input-checkbox
+                                                input={d.flag.value}
+                                                row-id={d.id}
+                                                onsetflag={setFlag}
+                                            ></c-hdt-input-checkbox>                                        
+                                            <!--<lightning-input
                                                     data-row-id={d.id}
                                                     type="checkbox"
                                                     label=" "
@@ -282,7 +293,7 @@
                                                     data-id={d.id}
                                                     variant="label-hidden"
                                                     onclick={setParam}
-                                            ></lightning-input>
+                                            ></lightning-input>-->
                                         </div>
                                         <template if:false={d.flag.enabled} >
                                             <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
@@ -290,54 +301,63 @@
                                         </template>
                                     </td>
 
-                                <!-- # COLUMN 9 # -->    
+                                    <!-- # COLUMN 10 # -->    
                                     <td data-label="Codice prezzo">
                                         <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.priceCode.enabled} >
+                                        <template if:true={d.priceCode.enabled} >
+                                            <c-hdt-pill
+                                                data-id={d.id}
+                                                row-id={d.id}
+                                                field-name="priceCode"
+                                                icon="standard:variable"
+                                                pill-obj={d.priceCode}
+                                                onsetvaluetoparent={handleSetvaluetoparent}
+                                            ></c-hdt-pill>
+                                        </template>
+                                        <template if:false={d.priceCode.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
+                                        <!--</div>-->
+                                    </td>
+
+                                    <!-- # COLUMN 11 # -->    
+                                    <td data-label="Codice sconto">
+                                        <!--<div title="Prezzo" class="slds-truncate slds-form-element__control slds-grow">-->
+                                            <template if:true={d.discountCode.enabled} >
                                                 <c-hdt-pill
                                                     data-id={d.id}
                                                     row-id={d.id}
-                                                    field-name="priceCode"
+                                                    field-name="discountCode"
                                                     icon="standard:variable"
-                                                    pill-obj={d.priceCode}
+                                                    pill-obj={d.discountCode}
                                                     onsetvaluetoparent={handleSetvaluetoparent}
                                                 ></c-hdt-pill>
                                             </template>
-                                            <template if:false={d.priceCode.enabled} >
+                                            <template if:false={d.discountCode.enabled} >
                                                 <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
                                                 <!--<input type="text" class="slds-input" value="" disabled />-->
                                             </template>
                                         <!--</div>-->
                                     </td>
 
-                                <!-- # COLUMN 10 # -->    
+                                    <!-- # COLUMN 12 # -->    
                                     <td data-label="stringValue">
                                         <!--<div title="Stringa" class="slds-truncate slds-form-element__control slds-grow">-->
-                                            <template if:true={d.stringValue.enabled} >
-                                                <lightning-input
-                                                    type="text"
-                                                    label="Enter some text"
-                                                    variant="label-hidden"
-                                                ></lightning-input>
-                                            </template>
-                                            <template if:false={d.stringValue.enabled} >
-                                                <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
-                                                <!--<input type="text" class="slds-input" value="" disabled />-->
-                                            </template>
-                                        <!--</div>-->
-                                        <!--<div title="Stringa" class="slds-truncate slds-form-element__control slds-grow">
-                                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right" role="none">
-                                                <input type="text" class="slds-input" value=""  disabled />
-                                                <div>
-                                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right iconheight">
-                                                        <lightning-icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" icon-name="utility:search" size="x-small" alternative-text="icon" ></lightning-icon>
-                                                    </span> 
-                                                </div>
-                                            </div>
-                                        </div>-->
+                                        <template if:true={d.stringValue.enabled} >
+                                            <lightning-input
+                                                type="text"
+                                                label="Enter some text"
+                                                variant="label-hidden"
+                                            ></lightning-input>
+                                        </template>
+                                        <template if:false={d.stringValue.enabled} >
+                                            <div class="slds-box slds-box_small lgc-bg not-allowed"></div>
+                                            <!--<input type="text" class="slds-input" value="" disabled />-->
+                                        </template>
                                     </td>
-                                    <!-- # COLUMN X # -->
-                                    <td class="firstcol" data-label="Operando">
+                                    <!-- # COLUMN 13 # -->
+                                    <td class="lastCol" data-label="Operando">
                                         <div class="slds-truncate" title="Operando">{d.tecName}</div>
                                     </td>
                                 </tr>
@@ -346,12 +366,6 @@
                     </table>
                 </div>
             </div>
-
-            <!--<p slot="footer">
-                <lightning-button-icon icon-name="utility:chevronleft"  alternative-text="Settings" title="Settings"></lightning-button-icon>
-                &nbsp;1/10&nbsp;
-                <lightning-button-icon icon-name="utility:chevronright"  alternative-text="Settings" title="Settings"></lightning-button-icon>       
-            </p>-->
         </template>
     </lightning-card>
 

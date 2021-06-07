@@ -39,6 +39,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         CaseNumber,
         DepositPaymentMode__c,
         InstallmentPlanNumber__c,
+        InstallmentNumberRequired__c,
         ClientCategory__c,
         TypeInstallmentPlan__c,
         Reason__c,
@@ -54,7 +55,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         ApplicationInterests__c,
         SuspensionInThePastTwelveMonths__c,
         CreatedDate,
-        FirstExpirationDate__c
+        ExpirationDate__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
@@ -101,6 +102,29 @@ public with sharing class HDT_QR_InstallmentPlans {
 
         return cases;
 
+
+    }
+
+    public String getPaymentMethodByCaseId(String recordId){
+
+        String paymentMethod;
+
+        try{
+
+            paymentMethod = [SELECT 
+            BillingProfile__r.PaymentMethod__c 
+            FROM Case 
+            WHERE Id = :recordId 
+            WITH SECURITY_ENFORCED 
+            LIMIT 1].BillingProfile__r.PaymentMethod__c ;
+
+        } catch(Exception e){
+
+            System.debug('QR_InstallmentPlans Exception--> ' + e.getMessage());
+        
+        }
+
+        return paymentMethod;
 
     }
 }

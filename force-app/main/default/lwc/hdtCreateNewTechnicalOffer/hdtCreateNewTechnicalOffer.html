@@ -1,4 +1,5 @@
 <template>
+
     <template if:true={showWelcom} >
         <c-hdt-technical-offer-selection
             tiles={selectionObj}
@@ -25,14 +26,19 @@
         <c-hdt-offer-configurator
             productid={productid}
             technicalofferid={technicalOfferId}
+            new-tech-offer-obj={newTechOfferObj}
+            tech-off-id-to-clone={techOffIdToClone}
             rate-obj={rateObj}
             ongoback={closeModal}
         ></c-hdt-offer-configurator>
     </template>
 
-<!--
-rate-template={rateTemplate}
-rate-name={rateName}
--->
+    <template if:true={showEditForm} >
+        <c-hdt-technical-offer-edit-form
+            product-id={productid}
+            onclosemodal={closeModal}
+            onnewoffercreated={newTechOfferCreated}
+        ></c-hdt-technical-offer-edit-form>
+    </template>
 
 </template>

@@ -18,10 +18,10 @@ global with sharing class ConnectorEntityController {
 			activity.wrts_prcgvr__Status__c = 'In Progress';
 			activity.CallStartTime__c = DateTime.now();
 			activity.ConnectionID__c = (String) message.get('ConnectionID');
+			activity.Place__c = (String) message.get('Place');
 			activity.BPCode__c = (String) attachdata.get('ivr_CODICE_CLIENTE');
-			activity.IwsDemand__c = (String) attachdata.get('esigenza_iws');
-			activity.Place__c = (String) attachdata.get('place');
-			activity.CallCenterNumber__c = (String) message.get('NUMERO_VERDE'); // NEEDS TESTING
+			activity.IwsDemand__c = (String) attachdata.get('ESIGENZA_IWS');
+			activity.CallCenterNumber__c = (String) attachdata.get('NUMERO_VERDE');
 
 			handleCrmChangeFlag(message, activity);
 
