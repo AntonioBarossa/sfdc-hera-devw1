@@ -4,7 +4,8 @@ public inherited sharing class HDT_QR_Reimbursement {
 
         return [SELECT Id,
         IssueDate__c,
-        Residue__c
+        Residue__c,
+        DocumentResidue__c
         FROM DocumentSelected__c
         WHERE Case__c = :recordId
         WITH SECURITY_ENFORCED];
