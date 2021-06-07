@@ -27,9 +27,17 @@ public with sharing class HDT_UTL_FormatTextScriptInvocable {
     @InvocableMethod
     public static List<String> formatScript(List<HDT_WRP_FlowInput> inputs){
         List<String> formattedScript=new List<String>();
-        formattedScript.add(new HDT_UTL_FormatTextScript()
+        formattedScript.add(new HDT_UTL_FormatRichText()//HDT_UTL_FormatTextScript()
                                 .formatText(inputs[0].textScript, inputs[0].recordId)
                             );
         return formattedScript;
+    }
+
+    private class HDT_UTL_FormatRichText extends HDT_UTL_FormatTextScript{
+        public HDT_UTL_FormatRichText(){
+            this.regEx= '\\{\\{([\\xa0\\s]?)+[A-Za-z0-9_.]+([\\xa0\\s]?)+\\}\\}';//xa0 matches nbsp; 
+            this.leftIncapsulatingData= '{{';
+            this.rightIncapsulatingData= '}}';
+        }
     }
 }
