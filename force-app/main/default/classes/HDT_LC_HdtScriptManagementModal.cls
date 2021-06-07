@@ -18,7 +18,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
-        return new HDT_LC_HdtScriptManagementModal().getScriptText2(processName, recordId);
+        return new HDT_LC_HdtScriptManagementModal().getScriptTextRich(processName, recordId);
     }
 
     public class HDT_WRP_ScriptOutput{
@@ -26,7 +26,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         @AuraEnabled public string sectionText;
     }
 
-    private List<HDT_WRP_ScriptOutput> getScriptText2(String processName, String recordId){
+    private List<HDT_WRP_ScriptOutput> getScriptTextRich(String processName, String recordId){
         ScriptConfig__c process= [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
