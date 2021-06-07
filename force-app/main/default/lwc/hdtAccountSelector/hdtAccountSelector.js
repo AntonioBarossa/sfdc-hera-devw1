@@ -2,7 +2,7 @@ import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import init from '@salesforce/apex/HDT_LC_AccountSelectorController.init';
-import getLeadsAndContacts from '@salesforce/apex/HDT_LC_AccountSelectorController.getLeadsAndContacts';
+import search from '@salesforce/apex/HDT_LC_AccountSelectorController.search';
 import handleLead from '@salesforce/apex/HDT_LC_AccountSelectorController.handleLead';
 import handleAccount from '@salesforce/apex/HDT_LC_AccountSelectorController.handleAccount';
 import updateActivity from '@salesforce/apex/HDT_LC_AccountSelectorController.updateActivity';
@@ -25,19 +25,22 @@ export default class HdtAccountSelector extends LightningElement {
 		return this.contactId && this.accountId || this.leadId;
 	}
 	get showContactSearchPanel() {
-		return !this.contactId && !this.leadId;
+		return !this.contactId && !this.leadId && !this.accounts;
 	}
 	get leadsFound() {
 		return this.leads;
 	}
+	get accountsFound() {
+		return this.accounts;
+	}
 	get contactsFound() {
 		return this.contacts;
 	}
-	get showAccountSearchPanel() {
-		return this.contactId && !this.accountId && !this.leadId;
+	get searchResults() {
+		return this.leads || this.accounts || this.contacts;
 	}
-	get accountsFound() {
-		return this.accounts;
+	get showAccountSearchPanel() {
+		return !this.accountId && this.accounts;
 	}
 
 	connectedCallback() {
@@ -55,6 +58,7 @@ export default class HdtAccountSelector extends LightningElement {
 			if(res.preFilter) {
 				this.template.querySelector(`[data-id="search_bar_anagrafica"]`).value = res.preFilter;
 			}
+			this.refreshPage();
 		})
 		.catch(error => {
 			// WIP
@@ -69,11 +73,13 @@ export default class HdtAccountSelector extends LightningElement {
 			if(this.showContactSearchPanel) {
 				var queryString = event.target.value;
 				if(queryString) {
-					getLeadsAndContacts({queryString: queryString})
+					search({queryString: queryString})
 					.then(result => {
 						var resObj = JSON.parse(result);
+						console.log('### ' + result);
 						this.leads = resObj.leads;
 						this.contacts = resObj.contacts;
+						this.accounts = resObj.accounts;
 					})
 					.catch(error => {
 						// WIP
@@ -87,54 +93,56 @@ export default class HdtAccountSelector extends LightningElement {
 
 	handleClick(event) {
 		var selectedRecordId = event.currentTarget.dataset.id;
-		if(this.showContactSearchPanel) {
-			switch(event.currentTarget.dataset.sobjtype) {
-				case 'Contact' :
-					this.contactId = selectedRecordId;
-					handleAccount({contactId: this.contactId, activityId: this.recordId})
-					.then(result => {
-						if(result.length == 1) {
-							this.accountId = result[0].Id;
-							this.changesCommitted = true;
-							this.refreshPage();
-							this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
-						}
-						this.accounts = result;
-					})
-					.catch(error => {
-						// WIP
-						console.error(error);
-						this.showGenericErrorToast();
-					});
-					break;
-				case 'Lead' :
-					this.leadId = selectedRecordId;
-					handleLead({leadId: this.leadId, activityId: this.recordId})
-					.then(result => {
+		switch(event.currentTarget.dataset.sobjtype) {
+			case 'Account' :
+				this.accountId = event.currentTarget.dataset.id;
+				if(!this.contactId) {
+					this.contactId = this.contacts[0] ? this.contacts[0].Id : null;
+				}
+				updateActivity({activityId: this.recordId, contactId: this.contactId, accountId: this.accountId})
+				.then(result => {
+					this.changesCommitted = true;
+					this.refreshPage();
+					this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
+				})
+				.catch(error => {
+					// WIP
+					console.error(error);
+					this.showGenericErrorToast();
+				});
+			break;
+			case 'Contact' :
+				this.contactId = selectedRecordId;
+				handleAccount({contactId: this.contactId, activityId: this.recordId})
+				.then(result => {
+					if(result.length == 1) {
+						this.accountId = result[0].Id;
 						this.changesCommitted = true;
 						this.refreshPage();
-						this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
-					})
-					.catch(error => {
-						// WIP
-						console.error(error);
-						this.showGenericErrorToast();
-					});
-					break;
-			}
-		} else if(this.showAccountSearchPanel) {
-			this.accountId = event.currentTarget.dataset.id;
-			updateActivity({activityId: this.recordId, contactId: this.contactId, accountId: this.accountId})
-			.then(result => {
-				this.changesCommitted = true;
-				this.refreshPage();
-				this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
-			})
-			.catch(error => {
-				// WIP
-				console.error(error);
-				this.showGenericErrorToast();
-			});
+						this.showToast('success', 'Account Trovato', 'L\'account è stato automaticamente associato all\'activity corrente.');
+					}
+					this.accounts = result;
+				})
+				.catch(error => {
+					// WIP
+					console.error(error);
+					this.showGenericErrorToast();
+				});
+			break;
+			case 'Lead' :
+				this.leadId = selectedRecordId;
+				handleLead({leadId: this.leadId, activityId: this.recordId})
+				.then(result => {
+					this.changesCommitted = true;
+					this.refreshPage();
+					this.showToast('success', 'Successo', 'L\'activity è stata aggiornata.');
+				})
+				.catch(error => {
+					// WIP
+					console.error(error);
+					this.showGenericErrorToast();
+				});
+			break;
 		}
 	}
 

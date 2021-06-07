@@ -35,11 +35,11 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
 
         String oldStatus = oldProduct.Status__c;
         String newStatus = newProduct.Status__c;
-        String inDevelopment = 'In sviluppo';
-        String confirmed = 'Confermata';
-        String sold = 'Vendibile';
-        String canceled = 'Annullata';
-        String expired = 'Scaduta';
+        String inDevelopment = Label.HDT_InDevelopment;//'In sviluppo';
+        String confirmed = Label.HDT_Confirmed;//'Confermata';
+        String sold = Label.HDT_Sold;//'Vendibile';
+        String canceled = Label.HDT_Canceled;//'Annullata';
+        String expired = Label.HDT_Expired;//'Scaduta';
 
         statusResponse = new HDT_WRP_ProductStObjProcess.HDT_WRP_StatusResponse();
         statusResponse.success = false;
@@ -113,8 +113,13 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
             }
 
             if(newStatus.equalsIgnoreCase(sold)){
-                statusResponse.success = true;
-                statusResponse.message = 'NoCheckingRequired';
+                if(System.isBatch()){
+                    statusResponse.success = true;
+                    statusResponse.message = 'NoCheckingRequired';
+                } else {
+                    statusResponse.success = false;
+                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                }
                 return statusResponse;
             }
 
@@ -152,8 +157,13 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
             }
 
             if(newStatus.equalsIgnoreCase(expired)){
-                statusResponse.success = true;
-                statusResponse.message = 'NoCheckingRequired';
+                if(System.isBatch()){
+                    statusResponse.success = true;
+                    statusResponse.message = 'NoCheckingRequired';
+                } else {
+                    statusResponse.success = false;
+                    statusResponse.message = 'Non puoi effettuare questo passaggio manualmente';
+                }
                 return statusResponse;
             }
             

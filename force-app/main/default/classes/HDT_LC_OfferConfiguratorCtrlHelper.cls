@@ -33,6 +33,10 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
                 List<Info1GroupList__c> infoOneGroupList;
                 infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate);
                 
+                if(infoOneGroupList.size() == 0){
+                    return infoOneGroupList;
+                }
+
                 List<String> tariffList = new List<String>();
                 for(Info1GroupList__c infoGroup : infoOneGroupList){
                     tariffList.add('\'' + infoGroup.DetTariffa__c + '\'');
@@ -462,19 +466,20 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         System.debug('>>> body obj > ' + body);
 
         HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl;
-        //responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
-        responseCtrl = new HDT_WS_MulesoftCaller.HDT_WRP_Response();
-        responseCtrl.success = true;
+        responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+        //responseCtrl = new HDT_WS_MulesoftCaller.HDT_WRP_Response();
+        //responseCtrl.success = true;
 
         System.debug('>>> responseCtrl > ' + String.valueOf(responseCtrl));
 
         if(!responseCtrl.success){
+            updateProductAfterSap(technicalOfferId, responseCtrl.message, 'ko');
             mulesoftResponse.success = false;
             mulesoftResponse.message = responseCtrl.message;
             return mulesoftResponse;
         }
 
-        updateProductAfterSap(technicalOfferId, '');
+        updateProductAfterSap(technicalOfferId, 'NewSApcode', 'ok');
 
         mulesoftResponse.success = true;
         mulesoftResponse.message = 'Offerta inviata a SAP correttamente';
@@ -489,14 +494,11 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
         httpObj.headersMap = new Map<String, String>();
 
-        //if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
-            httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/CreateNewOffer';
-            httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
-            httpObj.httpMethod = 'POST';
-            httpObj.headersMap.put('Content-Type', 'application/json');
-        //} else {
-        //    httpObj = null;
-        //}
+        //httpObj.endPoint = 'https://monted-dev-ed.my.salesforce.com/services/apexrest/CreateNewOffer';
+        //httpObj.headersMap.put('Authorization', 'Bearer ' + Label.MockSessionId);
+        httpObj.endPoint = 'callout:CpqCommercialOffers';
+        httpObj.httpMethod = 'POST';
+        httpObj.headersMap.put('Content-Type', 'application/json');
 
         return httpObj;
     }
@@ -507,47 +509,48 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         try{
             obj.header = new HDT_WRP_TechnicalOffer.HDT_WRP_Header();
-            obj.header.offerta = techOff.Product__r.ProductCode;
+            obj.header.codiceOfferta = techOff.Product__r.ProductCode;
             obj.header.profilo = techOff.Version__c;
-            obj.header.rateCategory = techOff.RateCategory__r.Name;
-            obj.header.descrizioneOff = techOff.Product__r.DescriptionSAP__c;
-            obj.header.descrizioneProf = techOff.Product__r.DescriptionSAP__c;
+            obj.header.categoriaTariffa = techOff.RateCategory__r.Name;
+            obj.header.descrizioneOfferta = techOff.Product__r.DescriptionSAP__c;
+            obj.header.descrizioneProfilo = techOff.Product__r.DescriptionSAP__c;
             obj.header.mercato = techOff.Market__c;
             obj.header.tipoProcesso = techOff.ProcessType__c;
-            obj.header.offertaPlacet = techOff.PlacetOffer__c;
+            obj.header.isOffertaPLACET = convertYesNoFromString(techOff.PlacetOffer__c);
             obj.header.prodotto = techOff.ServiceProduct__c;
-            obj.header.zttContr = techOff.ContractId__c;
-            obj.header.ab = String.valueOf(techOff.StartDate__c);
-            obj.header.bis = String.valueOf(techOff.EndDate__c);
-            obj.header.passoSn = techOff.StepAllowed__c;
-            obj.header.verlaEng = techOff.NumberTimeExtension__c;
-            obj.header.verper = techOff.UnitTimeExtension__c;
-            obj.header.disdettaSn = techOff.CancellationAllowed__c;
-            obj.header.kfrist = techOff.NumberDaysMonthsYears__c;
-            obj.header.kuenper = techOff.UnitTerminationTime__c;
-            obj.header.recessoSn = techOff.RecessAdmitted__c;
-            obj.header.trece = techOff.NumberOfTimeUnits__c;
-            obj.header.trper = techOff.UnitOfTimeMeasurement__c;
-            obj.header.modProfilo = (techOff.AdmittingProfileModification__c) ? 'X' : '';
-            obj.header.modifica = (techOff.OfferToBeModified__c) ? 'X' : '';
+            obj.header.idContratto = techOff.ContractId__c;
+            obj.header.dataInizioValidita = String.valueOf(techOff.StartDate__c);//aaaa-mm-gg
+            obj.header.dataFineValidita = String.valueOf(techOff.EndDate__c);//aaaa-mm-gg
+            obj.header.isPassoAmmessoSN = convertYesNoFromString(techOff.StepAllowed__c);
+            obj.header.numeroUnitaTempoProroga = techOff.NumberTimeExtension__c;
+            obj.header.unitaTempoProroga = techOff.UnitTimeExtension__c;
+            obj.header.isDisdettaAmmessa = convertYesNoFromString(techOff.CancellationAllowed__c);
+            obj.header.numeroUnitaTempoDisdetta = techOff.NumberDaysMonthsYears__c;
+            obj.header.unitaTempoDisdetta = techOff.UnitTerminationTime__c;
+            obj.header.isRecessoAmmesso = convertYesNoFromString(techOff.RecessAdmitted__c);
+            obj.header.numeroUnitaTempoRecesso = techOff.NumberOfTimeUnits__c;
+            obj.header.unitaTempoRecesso = techOff.UnitOfTimeMeasurement__c;
+            obj.header.isModificabile = techOff.AdmittingProfileModification__c;
+            obj.header.isOffertaDaModificare = techOff.OfferToBeModified__c;
 
-            obj.header.positionList = new List<HDT_WRP_TechnicalOffer.HDT_WRP_Position>();
+            obj.header.input = new List<HDT_WRP_TechnicalOffer.HDT_WRP_Position>();
 
             HDT_WRP_TechnicalOffer.HDT_WRP_Position position;
             for(TechnicalOfferItem__c item : techOff.RigheOffertaTecnica__r){
                 position = new HDT_WRP_TechnicalOffer.HDT_WRP_Position();
-                
+
                 position.operando = item.Operand__c;
-                position.gestibile = (item.G__C) ? 'X' : null;
-                position.modificabile = (item.M__C) ? 'X' : null;
+                position.isGestibile = item.G__C;
+                position.isModificabile = item.M__C;
                 position.statoOperando = item.S__c;
                 position.tariffa = item.FareTypeValue__c;
-                position.gruppoInfo = item.InfoGroupValue__c;
+                position.gruppoInformativoTariffa = item.InfoGroupValue__c;
                 position.prezzo = item.PriceCodeValue__c;
                 position.sconto = item.DiscountCodeValue__c;
                 position.valore = item.NumericValue__c;
                 position.stringa = item.StringValue__c;
-                obj.header.positionList.add(position);
+
+                obj.header.input.add(position);
             }
 
             obj.success = true;
@@ -561,13 +564,23 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         return obj;
     }
 
-    public static Boolean updateProductAfterSap(String technicalOfferId, String bodyResponse){
+    public static Boolean updateProductAfterSap(String technicalOfferId, String bodyResponse, String status){
         List<TechnicalOffer__c> tecOffList;
         tecOffList = HDT_QR_TechnicalOffer.getOfferById(tecOffList, technicalOfferId);
 
-        tecOffList[0].OfferCode__c = 'newOfferSapCode';
-        tecOffList[0].SapCode__c = 'sapCode_001';
-        tecOffList[0].Status__c = 'Status OK';
+        switch on status {
+            when 'draft' {
+                tecOffList[0].Status__c = 'Draft';
+            }
+            when 'ok' {
+                tecOffList[0].Status__c = 'Status OK';
+                tecOffList[0].SapCode__c = bodyResponse;
+            }
+            when 'ko' {
+                tecOffList[0].Status__c = 'Status KO';
+                tecOffList[0].Message__c = bodyResponse;
+            }
+        }
 
         SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -578,6 +591,17 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
         return true;
 
+    }
+
+    private static Boolean convertYesNoFromString(String stringField){
+        if(!String.isEmpty(stringField)){
+            if(stringField.equalsIgnoreCase('Si') || stringField.equalsIgnoreCase('S')){
+                return true;
+            } else if(stringField.equalsIgnoreCase('No') || stringField.equalsIgnoreCase('N')){
+                return false;
+            }
+        }
+        return false;
     }
 
 }

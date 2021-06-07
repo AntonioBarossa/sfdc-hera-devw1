@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>51.0</apiVersion>
     <assignments>
         <name>set_activity_start_date</name>
         <label>Imposta Data Inizio Attività</label>
@@ -9,10 +10,15 @@
             <assignToReference>$Record.ActivityStartTime__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$Record.CreatedDate</elementReference>
+                <elementReference>now</elementReference>
             </value>
         </assignmentItems>
     </assignments>
+    <formulas>
+        <name>now</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
     <interviewLabel>Activity - {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Activity - Popola Data Inizio Attività</label>
     <processMetadataValues>

@@ -13,7 +13,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	@AuraEnabled
 	public static String init(String recordId) {
 		try {
-			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, Lead__c, BPCode__c, ClientNumber__c, FiscalCode__c, VATNumber__c, Type__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId WITH SECURITY_ENFORCED];
+			wrts_prcgvr__Activity__c activity = [SELECT Id, Account__c, Contact__c, Lead__c, BPCode__c, ClientNumber__c, FiscalCode__c, VATNumber__c, Type__c, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Id =: recordId WITH SECURITY_ENFORCED];
 			
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
 			result.isCall = activity.Type__c.contains('Chiamata');
@@ -21,21 +21,33 @@ public with sharing class HDT_LC_AccountSelectorController {
 			result.contactId = activity.Contact__c;
 			result.leadId = activity.Lead__c;
 
-			if(String.isNotBlank(activity.BPCode__c)) {
-				result.preFilter = activity.BPCode__c;
-			} else if(String.isNotBlank(activity.FiscalCode__c)) {
-				result.preFilter = activity.FiscalCode__c;
-			} else if(String.isNotBlank(activity.VATNumber__c)) {
-				result.preFilter = activity.VATNumber__c;
-			} else if(String.isNotBlank(activity.ClientNumber__c)) {
-				result.preFilter = activity.ClientNumber__c;
-			}
+			if(activity.wrts_prcgvr__Status__c != 'Completed') {
+				if(String.isNotBlank(activity.BPCode__c)) {
+					result.preFilter = activity.BPCode__c;
+				} else if(String.isNotBlank(activity.FiscalCode__c)) {
+					result.preFilter = activity.FiscalCode__c;
+				} else if(String.isNotBlank(activity.VATNumber__c)) {
+					result.preFilter = activity.VATNumber__c;
+				} else if(String.isNotBlank(activity.ClientNumber__c)) {
+					result.preFilter = activity.ClientNumber__c;
+				}
 
-			if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
-				result.contacts = getContacts(result.preFilter);
-				result.leads = getLeads(result.preFilter);
-			} else if(String.isBlank(activity.Account__c)) {
-				result.accounts = handleAccount(activity.Contact__c, activity.Id);
+				if(String.isBlank(activity.Contact__c) && String.isBlank(activity.Lead__c) && String.isNotBlank(result.preFilter)) {
+					result.contacts = getContacts(result.preFilter);
+					result.leads = getLeads(result.preFilter);
+					if(result.contacts.size() == 1 && result.leads.isEmpty()) {
+						String contactId = result.contacts.get(0).Id;
+						result.contactId = contactId;
+						result.accounts = handleAccount(contactId, activity.Id);
+						if(result.accounts.size() == 1) result.accountId = result.accounts.get(0).Id;
+					} else if(result.contacts.isEmpty() && result.leads.size() == 1) {
+						String leadId = result.leads.get(0).Id;
+						handleLead(leadId, activity.Id);
+						result.leadId = leadId;
+					}
+				} else if(String.isBlank(activity.Account__c)) {
+					result.accounts = handleAccount(activity.Contact__c, activity.Id);
+				}
 			}
 
 			return JSON.serialize(result);
@@ -45,16 +57,31 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	@AuraEnabled
-	public static String getLeadsAndContacts(String queryString) {
+	public static String search(String queryString) {
 		try {
-			queryString = '%' + queryString + '%';
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
-			result.leads = getLeads(queryString);
-			result.contacts = getContacts(queryString);
+			if(queryString.startsWith('100') && queryString.isNumeric()) {
+				// return handleBPCodeSearch(queryString);
+				queryString = queryString + '%';
+				result.accounts = getAccountByBPCode(queryString);
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+			} else {
+				queryString = '%' + queryString + '%';
+				result.leads = getLeads(queryString);
+				result.contacts = getContacts(queryString);
+			}
 			return JSON.serialize(result);
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}
+	}
+
+	private static List<Account> getAccountByBpCode(String bpCode) {
+		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
+	}
+
+	private static List<Contact> getContactTitolare(String accountId) {
+		return [SELECT Id, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId AND Roles = 'Titolare' AND isActive = true) WITH SECURITY_ENFORCED];
 	}
 
 	@AuraEnabled

@@ -86,27 +86,28 @@ public inherited sharing class HDT_QR_TechnicalOffer {
 
     public static List<RateTemplate__c> getRateList(String queryTerm) {
 
-        String myQuery = 'SELECT Id, Name, ContractTemplate__c';
-        myQuery += ' FROM RateTemplate__c';
+        String myQuery = '';
+        myQuery += 'SELECT Id, Name, ContractTemplate__c, ServiceProduct__c ';
+        myQuery += 'FROM RateTemplate__c ';
+        myQuery += 'WHERE Visibile__c = true';
 
         if(!String.isEmpty(queryTerm)){
-            myQuery += ' WHERE Name LIKE \'%' + queryTerm + '%\'';
+            myQuery += ' AND Name LIKE \'%' + queryTerm + '%\'';
         }
 
         myQuery += ' WITH SECURITY_ENFORCED';
 
-        SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOfferItem__c');
- 
+        SObjectType objtype = Schema.getGlobalDescribe().get('RateTemplate__c');
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
  
-        List<RateTemplate__c> lookUpList;
+        List<RateTemplate__c> rateTempList;
         if(objRes.isAccessible()){
-            lookUpList = database.query(myQuery);
+            rateTempList = database.query(myQuery);
         } else {
-            lookUpList = new List<RateTemplate__c>();
+            rateTempList = new List<RateTemplate__c>();
         }
 
-        return lookUpList;
+        return rateTempList;
     }
 
     public static List<RateTemplate__c> getRateByName(List<RateTemplate__c> rateList, String rateName){

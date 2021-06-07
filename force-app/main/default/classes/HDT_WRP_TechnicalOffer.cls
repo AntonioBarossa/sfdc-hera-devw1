@@ -92,39 +92,39 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
     }
 
     public class HDT_WRP_Header {
-        public String offerta;
+        public String codiceOfferta;
         public String profilo;
-        public String rateCategory;
-        public String descrizioneOff;
-        public String descrizioneProf;
+        public String categoriaTariffa;
+        public String descrizioneOfferta;
+        public String descrizioneProfilo;
         public String mercato;
         public String tipoProcesso;
-        public String offertaPlacet;
+        public Boolean isOffertaPLACET;
         public String prodotto;
-        public String zttContr;
-        public String ab;
-        public String bis;
-        public String passoSn;
-        public String verlaEng;
-        public String verper;
-        public String disdettaSn;
-        public String kfrist;
-        public String kuenper;
-        public String recessoSn;
-        public String trece;
-        public String trper;
-        public String modProfilo;
-        public String modifica;
-        public List<HDT_WRP_Position> positionList;
+        public String idContratto;
+        public String dataInizioValidita;
+        public String dataFineValidita;
+        public Boolean isPassoAmmessoSN;
+        public String numeroUnitaTempoProroga;
+        public String unitaTempoProroga;
+        public Boolean isDisdettaAmmessa;
+        public String numeroUnitaTempoDisdetta;
+        public String unitaTempoDisdetta;
+        public Boolean isRecessoAmmesso;
+        public String numeroUnitaTempoRecesso;
+        public String unitaTempoRecesso;
+        public Boolean isModificabile;
+        public Boolean isOffertaDaModificare;
+        public List<HDT_WRP_Position> input;
     }
 
     public class HDT_WRP_Position {
         public String operando;
-        public String gestibile;
-        public String modificabile;
+        public Boolean isGestibile;
+        public Boolean isModificabile;
         public String statoOperando;
         public String tariffa;
-        public String gruppoInfo;
+        public String gruppoInformativoTariffa;
         public String prezzo;
         public String sconto;
         public String valore;
