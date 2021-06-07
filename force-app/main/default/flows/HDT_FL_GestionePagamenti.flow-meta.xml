@@ -949,7 +949,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>3911</locationX>
+        <locationX>3909</locationX>
         <locationY>326</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_0_0_0_0</targetReference>
@@ -1599,6 +1599,14 @@
         </rules>
     </decisions>
     <description>Flow per la gestione dei pagamenti</description>
+    <formulas>
+        <name>genericRecordSelectionFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!Get_Input_Case.Type}) = &quot;Richiesta Domiciliazione&quot;,
+       &quot;BillingProfile_RicDom&quot;,
+       &quot;BillingProfile&quot;
+   )</expression>
+    </formulas>
     <formulas>
         <description>Formula per calcolare l&apos;ID Ente per il QR Code Paperless: si tratta della PIVA della Società Tesoriera (Hera SpA oppure MMS), ricavata in base al company owner dell&apos;Account.</description>
         <name>IdEnteFormula</name>
@@ -3393,7 +3401,7 @@
             <inputParameters>
                 <name>selectionType</name>
                 <value>
-                    <stringValue>BillingProfile_RicDom</stringValue>
+                    <elementReference>genericRecordSelectionFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
