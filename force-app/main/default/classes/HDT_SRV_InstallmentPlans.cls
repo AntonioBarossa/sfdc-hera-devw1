@@ -53,7 +53,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         currentCase.CAWithOrWithoutSEPA__c = (paymentMethod != null && paymentMethod != '' && paymentMethod == 'RID');
 
         //SetExpirationDate at CreatedDate+20
-        currentCase.ExpirationDate__c = Date.valueOf(currentCase.CreatedDate) + 20;
+        DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
+        System.debug('SRV_InstallmentPlans created date -> ' + createdCase);
+        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 20;
+        System.debug('SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         HDT_UTL_DatabaseService.updateSObject(currentCase);
 
