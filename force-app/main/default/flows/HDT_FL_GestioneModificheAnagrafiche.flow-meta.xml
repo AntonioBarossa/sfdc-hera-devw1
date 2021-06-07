@@ -730,6 +730,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>BillingCityCode__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingCityCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>BillingCity__c</field>
             <value>
                 <elementReference>Query_Case.Account.BillingCity</elementReference>
@@ -806,8 +812,8 @@
     <recordUpdates>
         <name>Predefault_Dati_Fiscali_No_Validation</name>
         <label>Predefault Dati Fiscali No Validation</label>
-        <locationX>1664</locationX>
-        <locationY>1165</locationY>
+        <locationX>1688</locationX>
+        <locationY>1167</locationY>
         <connector>
             <targetReference>Set_Sottoprocesso_as_Tipo_Processo</targetReference>
         </connector>
@@ -819,6 +825,60 @@
                 <elementReference>InputCase</elementReference>
             </value>
         </filters>
+        <inputAssignments>
+            <field>AlternativeAddress__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingAddressFormula__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCityCode__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingCityCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCity__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingCountry__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingCountry</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingPostalCode__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingPostalCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingProvince__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingState</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreetName__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingStreetName__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreetNumberExtension__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingStreetNumberExtension__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>BillingStreetNumber__c</field>
+            <value>
+                <elementReference>Query_Case.Account.BillingStreetNumber__c</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <field>CustomerMarking__c</field>
             <value>
