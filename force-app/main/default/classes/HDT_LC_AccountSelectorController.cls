@@ -77,11 +77,11 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	private static List<Account> getAccountByBPCode(String bpCode) {
-		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode];
+		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
 	}
 
 	private static List<Contact> getContactTitolare(String accountId) {
-		return [SELECT Id, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId AND Roles = 'Titolare' AND isActive = true)];
+		return [SELECT Id, Name, Phone, MobilePhone, Email, FiscalCode__c, VATNumber__c FROM Contact WHERE Id IN (SELECT ContactId FROM AccountContactRelation WHERE AccountId = :accountId AND Roles = 'Titolare' AND isActive = true) WITH SECURITY_ENFORCED];
 	}
 
 	@AuraEnabled
