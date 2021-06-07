@@ -14,7 +14,10 @@
 public with sharing virtual class HDT_UTL_FormatTextScript {
     
     protected String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
+    protected String leftIncapsulatingData= '<<{';
+    protected String rightIncapsulatingData= '}>>';
 
+    private Boolean isFirstSection=true;
 
     public String formatText(String textScript, String recordId){//standard method, call when you haven't already queried the record
         return formatText( textScript,  recordId,  null);
@@ -133,7 +136,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
          
         while(matcher.find()){
             String preFormatData = matcher.group(0);
-            preFormatData= preFormatData.removeEnd('}>>').removeStart('<<{');
+            preFormatData= preFormatData.removeEnd(rightIncapsulatingData).removeStart(leftIncapsulatingData);
             bindedFields.add(preFormatData.trim().toLowerCase());
         }
         system.debug(bindedFields);
@@ -158,7 +161,7 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
     }
 
     @TestVisible
-    private static String getGlobalTagValues(List<String> relationshipNames){
+    private String getGlobalTagValues(List<String> relationshipNames){
         //edit this method to add global tags
         String tagName=relationshipNames[1];
 
@@ -168,6 +171,11 @@ public with sharing virtual class HDT_UTL_FormatTextScript {
                 tagValue=Date.Today().format();
             }
             when 'section__d'{
+                if(isFirstSection){
+                    isFirstSection=false;
+                    return relationshipNames[2].replace('_', ' ')+'\n';
+
+                }
                 return '\n\n'+relationshipNames[2].replace('_', ' ')+'\n';
             }
             when else{
