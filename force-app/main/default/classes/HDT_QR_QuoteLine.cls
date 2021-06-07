@@ -200,6 +200,21 @@ public inherited sharing class HDT_QR_QuoteLine {
         ];
     }
 
+    public List<SBQQ__QuoteLine__c> getRecordsForContractOrderRefVas(String quoteId){
+
+        return [
+            SELECT
+            Id,
+            Name,
+            BillingProfile__c,
+            SBQQ__Quote__c
+            FROM SBQQ__QuoteLine__c
+            WHERE SBQQ__Quote__c = :quoteId
+            AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @description Get records related to SBQQ__Quote__c.Vendita__c and filtered by Modalit_di_pagamento__c not null
