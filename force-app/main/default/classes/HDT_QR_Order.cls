@@ -171,6 +171,18 @@ public inherited sharing class HDT_QR_Order {
         ];
     }
 
+    public List<Order> getOrderByIdForSalesCallout(String id){
+        return [
+            SELECT 
+            Id,
+            Phase__c,
+            PrecheckResultSII__c
+            FROM Order 
+            WHERE Id = :id
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 07/01/2020
