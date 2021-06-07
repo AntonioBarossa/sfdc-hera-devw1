@@ -76,7 +76,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 		}
 	}
 
-	private static List<Account> getAccountByBPCode(String bpCode) {
+	private static List<Account> getAccountByBpCode(String bpCode) {
 		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode WITH SECURITY_ENFORCED];
 	}
 
