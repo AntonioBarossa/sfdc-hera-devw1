@@ -240,6 +240,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CustomerType__c</picklist>
+        <values>
+            <fullName>Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Persona Fisica</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Gender__c</picklist>
         <values>
             <fullName>Femmina</fullName>

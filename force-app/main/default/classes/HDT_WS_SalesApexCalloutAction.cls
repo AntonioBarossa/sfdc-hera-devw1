@@ -98,6 +98,19 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 //ord.Phase__c = fieldValueResponse.get('FASE');
                                 ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
                                 ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
+
+                                switch on fieldValueResponse.get('FASE') {
+                                    when 'Esito OK da SII' {
+
+                                        HDT_QR_Order orderQr = new HDT_QR_Order();
+                                        Order ordRetrieved = orderQr.getOrderByIdForSalesCallout(ord.id)[0];
+
+                                        if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
+                                            ord.PrecheckResultSII__c = 'OK';
+                                        }
+                                    }
+                                }
+
                                 System.debug('********AFTER UPDATE');
                             }
                         }
