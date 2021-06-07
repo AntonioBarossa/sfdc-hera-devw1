@@ -157,6 +157,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 bp.InvoicingCountry__c = currentCase.InvoicingCountry__c;
                 bp.InvoicingStreetToponym__c = currentCase.InvoicingStreetToponym__c;
                 bp.InvoicingProvince__c = currentCase.InvoicingProvince__c;
+                bp.ReminderFlag__c = currentCase.ReminderFlag__c;
+                bp.ReminderCertifiedEmailAddress__c = currentCase.ReminderCertifiedEmailAddress__c;
                 objToUpdate = bp;
             }
             when else {
@@ -217,6 +219,18 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             HDT_UTL_DatabaseService.insertSObject(activity);
         
         }
+
+    }
+
+    public void changePaymentMethod(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        BillingProfile__c billingProfile = new BillingProfile__c();
+
+        billingProfile.Id = currentCase.BillingProfile__c;
+        billingProfile.PaymentMethod__c = 'RID';
+
+        HDT_UTL_DatabaseService.updateSObject(billingProfile);
 
     }
 

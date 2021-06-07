@@ -81,42 +81,55 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     public void handleResponse(String recordId, String process, HttpResponse response){
 
         Case caseToUpdate = new Case();
+        String phase; 
 
         caseToUpdate.Id = recordId;
 
         if(response != null){
 
-            switch on response.getStatusCode(){
+            HDT_WRP_MinWrapper minWrapper = (HDT_WRP_MinWrapper) JSON.deserialize(response.getBody(), HDT_WRP_MinWrapper.class);
 
-                when 200, 201{
+            switch on minWrapper.status{
+
+                when 'success'{
 
                     HDT_WRP_SuccessResponse successResponse = 
                         (HDT_WRP_SuccessResponse) JSON.deserialize(response.getBody(), HDT_WRP_SuccessResponse.class);
 
-                    System.debug('WS_ReminderBlock successResponse--> ' + successResponse);
-                    if(process == 'Comunicazione Pagamento'
-                    || process == 'Piano Rateizzazione'
-                    || process == 'Paperless'){
-                        caseToUpdate.Phase__c = 'Inviata a SAP';
+                    System.debug('WS_Payments successResponse--> ' + successResponse);
+
+                    phase = handleSuccessResponse(successResponse, recordId, process);
+
+                    if(phase != null){
+
+                        caseToUpdate.Phase__c = phase;
+
                     }
 
-                }
-                when else{
+                    // if(process == 'Comunicazione Pagamento'
+                    // || process == 'Piano Rateizzazione'
+                    // || process == 'Paperless'){
+                    //     caseToUpdate.Phase__c = 'Inviata a SAP';
+                    // }
+                    
+                }   
+                when else{ 
 
                     HDT_WRP_ErrorResponse errorResponse = 
                         (HDT_WRP_ErrorResponse) JSON.deserialize(response.getBody(), HDT_WRP_ErrorResponse.class);
 
-                    System.debug('WS_ReminderBlock errorResponse--> ' + errorResponse);
+                    System.debug('WS_Payments errorResponse--> ' + errorResponse);
                     if(process == 'Comunicazione Pagamento'
                     || process == 'Piano Rateizzazione'
                     || process == 'Paperless'){
-                        caseToUpdate.Phase__c = 'Non Inviata a SAP';
+                        caseToUpdate.Phase__c = 'Esito KO da SAP';
                     }
-                    if(caseToUpdate.Description != null){
-                        caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
-                    }else{
-                        caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
-                    }
+                    createActivity(recordId, errorResponse.errorDetails[0].message, 'Esito KO da SAP');
+                    // if(caseToUpdate.Description != null){
+                    //     caseToUpdate.Description += '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    // }else{
+                    //     caseToUpdate.Description  = '[' + System.Now().format() + ']: ' + errorResponse.errorDetails[0].message +'\n';
+                    // }
 
                 }
 
@@ -124,12 +137,71 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
         } else {
 
-            caseToUpdate.Phase__c = 'Non Inviata a SAP';
+            caseToUpdate.Phase__c = 'Esito KO da SAP';
+            createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
 
         updateFuture(JSON.serialize(caseToUpdate));
 
+    }
+
+    public String handleSuccessResponse(HDT_WRP_SuccessResponse response, String recordId, String process){
+
+        String phase = null;
+
+        phase = handlePhaseChange(response, recordId, process, 
+            process ==   'Piano Rateizzazione' 
+                ? 'Pratica avviata' //successCondition
+            : process == 'Comunicazione Pagamento'
+                ? 'Pratica avviata' //successCondition
+            : process == 'Paperless' 
+                ? 'Pratica avviata' //successCondition
+            : null);
+
+        return phase;
+
+    }
+
+    private String handlePhaseChange(HDT_WRP_SuccessResponse response, String recordId, String process,String condition){
+        
+        String phase = null;
+        String successPhase = 'Esito OK da SAP';
+        String failedPhase = 'Esito KO da SAP';
+
+        if(condition != null){
+
+            if(response.data.tipoAttivita.containsIgnoreCase(condition)){
+
+                phase = successPhase;
+
+            } else {
+
+                phase = failedPhase;
+                createActivity(recordId, response.data.note, 'Esito KO da SAP');
+
+            }
+
+        }
+
+        return phase;
+
+    }
+
+    private static void createActivity(String recordId, String description, String type){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ type +'\'';
+        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
+        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(listRecord.size()>0){
+            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Case__c = recordId;
+            activity.CausalError__c = description;
+            activity.wrts_prcgvr__Description__c = description;
+            Boolean insertAct = HDT_UTL_DatabaseService.insertSObject(activity);
+        }
     }
 
     @Future
@@ -142,7 +214,6 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
     }
 
 
-
     public class HDT_UTL_WrapperInput{
 
         public Boolean isParent;
@@ -152,11 +223,28 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
 
     }
 
+    public class HDT_WRP_MinWrapper{
+
+        public String status;
+        public String correlationId;
+        public String timestamp;
+
+    }
+
     public class HDT_WRP_SuccessResponse{
 
         public String status;
         public String correlationId;
         public String timestamp;
+        public HDT_WRP_Data data;
+
+    }
+
+    public class HDT_WRP_Data{
+
+        public string rdsRdo;
+        public string tipoAttivita;
+        public string note;
 
     }
 

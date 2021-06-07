@@ -1793,6 +1793,16 @@
                     <name>DocumentCheckDisplay</name>
                     <fieldText>&lt;p&gt;Sono passati più di 20 giorni dalla data emissione della bolletta. &lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.documentCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>CheckDocumentPicklist</name>
@@ -1801,6 +1811,16 @@
                     <dataType>String</dataType>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.documentCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -1817,6 +1837,16 @@
                     <name>AccountBalanceCheckDisplay</name>
                     <fieldText>&lt;p&gt;Il cliente ha delle bollette scadute.&lt;/p&gt;&lt;p&gt;Vuoi ugualmente mandare avanti la richiesta di bonifico?&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.accountBalanceCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <fields>
                     <name>CheckAccountBalancePicklist</name>
@@ -1825,6 +1855,16 @@
                     <dataType>String</dataType>
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>true</isRequired>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>Check_Rimborso.accountBalanceCheck</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <booleanValue>true</booleanValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
