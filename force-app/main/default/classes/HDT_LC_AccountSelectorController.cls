@@ -62,6 +62,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 			HDT_UTL_Struct result = new HDT_UTL_Struct();
 			if(queryString.startsWith('100') && queryString.isNumeric()) {
 				// return handleBPCodeSearch(queryString);
+				queryString = queryString + '%';
 				result.accounts = getAccountByBPCode(queryString);
 				result.contacts = getContactTitolare(result.accounts.get(0).Id);
 			} else {
@@ -76,7 +77,7 @@ public with sharing class HDT_LC_AccountSelectorController {
 	}
 
 	private static List<Account> getAccountByBPCode(String bpCode) {
-		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c = :bpCode];
+		return [SELECT Id, Name, FiscalCode__c, VATNumber__c, BillingAddressFormula__c FROM Account WHERE CustomerCode__c LIKE :bpCode];
 	}
 
 	private static List<Contact> getContactTitolare(String accountId) {
