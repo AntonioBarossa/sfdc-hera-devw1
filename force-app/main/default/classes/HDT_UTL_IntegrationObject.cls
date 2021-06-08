@@ -1,10 +1,10 @@
 public class HDT_UTL_IntegrationObject{
 
 	public static Map<String,String> generateQueryString(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject jsonStructure, String recordId){
-		String queryQ = 'SELECT ' + jsonStructure.fields;
-		String fromQ = ' FROM '+ jsonStructure.objectName;
+		String queryString = 'SELECT ' + jsonStructure.fields;
+		String fromString = ' FROM '+ jsonStructure.objectName;
 		String controllingField = jsonStructure.controllingField;
-		String whereQ = ' WHERE ' + controllingFieldId + ' =\''+ recordId + '\'';
+		String whereString = ' WHERE ' + controllingField + ' =\''+ recordId + '\'';
 
 		String fieldLookup = '';
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationLookupObject singleLookupObject : jsonStructure.lookupObject){
@@ -13,7 +13,7 @@ public class HDT_UTL_IntegrationObject{
 				fieldLookup += ',' + singleLookupObject.relation + '.' + singleField.trim();
 			} 
 		}
-		queryQ += fieldLookup;
+		queryString += fieldLookup;
 		List<String> relatedQueryList = new List<String>();
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationRelatedObject singleRelatedObject : jsonStructure.relatedObject){
 			String queryR = ',(SELECT ' + singleRelatedObject.fields;
@@ -21,9 +21,9 @@ public class HDT_UTL_IntegrationObject{
 			relatedQueryList.add(queryR+fromR);
 		}
 		String relatedQueryString = String.join(relatedQueryList, ',');
-		queryQ  = queryQ + relatedQueryString + fromQ + whereQ; 
-		system.debug('query ' + queryQ);
-		return new Map<String,String>{'queryString' => queryQ, 'parentObject' => jsonStructure.objectName};
+		queryString  = queryString + relatedQueryString + fromString + whereString; 
+		system.debug('query ' + queryString);
+		return new Map<String,String>{'queryString' => queryString, 'parentObject' => jsonStructure.objectName};
 	}
 	
 	public static HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject getIntegrationObjectConfiguration(String objectName, String fields, String conditions, String jsonField){

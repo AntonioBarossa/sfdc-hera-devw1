@@ -36,84 +36,85 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
     public static HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult generateJsonObject(List<DocumentalPayloadAdministration__c> docPayloadAdminList){
 
         Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  =: 'DocumentalPayloadAdministration' LIMIT 1].Id;
-        Map<String, List<DocumentalPayloadAdministration__c>> context1Map = new Map<String, List<DocumentalPayloadAdministration__c>>();
-        Map<String, List<DocumentalPayloadAdministration__c>> context2Map = new Map<String, List<DocumentalPayloadAdministration__c>>();
-        Map<String, List<DocumentalPayloadAdministration__c>> context3Map = new Map<String, List<DocumentalPayloadAdministration__c>>();
-        Map<String, List<DocumentalPayloadAdministration__c>> context4Map = new Map<String, List<DocumentalPayloadAdministration__c>>();
+        Map<String, List<DocumentalPayloadAdministration__c>> contextOneMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
+        Map<String, List<DocumentalPayloadAdministration__c>> contextTwoMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
+        Map<String, List<DocumentalPayloadAdministration__c>> contextThreeMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
+        Map<String, List<DocumentalPayloadAdministration__c>> contextFourMap = new Map<String, List<DocumentalPayloadAdministration__c>>();
 
         for(DocumentalPayloadAdministration__c dpa : docPayloadAdminList){
 
             if(dpa.Context1__c){
-                if(context1Map.containsKey(dpa.Type__c)){
-                    context1Map.get(dpa.Type__c).add(dpa);
+                if(contextOneMap.containsKey(dpa.Type__c)){
+                    contextOneMap.get(dpa.Type__c).add(dpa);
                 } else {
-                    context1Map.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+                    contextOneMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
                 }
             }
 
             if(dpa.Context2__c){
-                if(context2Map.containsKey(dpa.Type__c)){
-                    context2Map.get(dpa.Type__c).add(dpa);
+                if(contextTwoMap.containsKey(dpa.Type__c)){
+                    contextTwoMap.get(dpa.Type__c).add(dpa);
                 } else {
-                    context2Map.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+                    contextTwoMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
                 }              
             }
 
             if(dpa.Context3__c){
-                if(context3Map.containsKey(dpa.Type__c)){
-                    context3Map.get(dpa.Type__c).add(dpa);
+                if(contextThreeMap.containsKey(dpa.Type__c)){
+                    contextThreeMap.get(dpa.Type__c).add(dpa);
                 } else {
-                    context3Map.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+                    contextThreeMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
                 }                 
             }
 
             if(dpa.Context4__c){
-                if(context4Map.containsKey(dpa.Type__c)){
-                    context4Map.get(dpa.Type__c).add(dpa);
+                if(contextFourMap.containsKey(dpa.Type__c)){
+                    contextFourMap.get(dpa.Type__c).add(dpa);
                 } else {
-                    context4Map.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
+                    contextFourMap.put(dpa.Type__c, new List<DocumentalPayloadAdministration__c>{dpa});
                 }              
             }
 
         }
 
         List<Document> docList = new List<Document>();
-        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc1Structure;
-        doc1Structure = convertMapToStructure(context1Map, doc1Structure);
-        Document doc1 = generateDocumentObject(doc1Structure, 'Context1', folderId);
-        docList.add(doc1);
-        doc1Structure = null;
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docOneStructure;
+        docOneStructure = convertMapToStructure(contextOneMap, docOneStructure);
+        Document docOne = generateDocumentObject(docOneStructure, 'Context1', folderId);
+        docList.add(docOne);
+        docOneStructure = null;
 
-        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc2Structure;
-        doc2Structure = convertMapToStructure(context2Map, doc2Structure);
-        Document doc2 = generateDocumentObject(doc2Structure, 'Context2', folderId);
-        docList.add(doc2);
-        doc2Structure = null;
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docTwoStructure;
+        docTwoStructure = convertMapToStructure(contextTwoMap, docTwoStructure);
+        Document docTwo = generateDocumentObject(docTwoStructure, 'Context2', folderId);
+        docList.add(docTwo);
+        docTwoStructure = null;
 
-        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc3Structure;
-        doc3Structure = convertMapToStructure(context3Map, doc3Structure);
-        Document doc3 = generateDocumentObject(doc3Structure, 'Context3', folderId);
-        docList.add(doc3);
-        doc3Structure = null;
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docThreeStructure;
+        docThreeStructure = convertMapToStructure(contextThreeMap, docThreeStructure);
+        Document docThree = generateDocumentObject(docThreeStructure, 'Context3', folderId);
+        docList.add(docThree);
+        docThreeStructure = null;
 
-        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc4Structure;
-        doc4Structure = convertMapToStructure(context4Map, doc4Structure);
-        Document doc4 = generateDocumentObject(doc4Structure, 'Context4', folderId);
-        docList.add(doc4);
-        doc4Structure = null;
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docFourStructure;
+        docFourStructure = convertMapToStructure(contextFourMap, docFourStructure);
+        Document docFour = generateDocumentObject(docFourStructure, 'Context4', folderId);
+        docList.add(docFour);
+        docFourStructure = null;
 
         Savepoint sp = Database.setSavepoint();
         List<Document> docToDelete = HDT_QR_DocumentalConfiguration.getDocument();
 
         if(docToDelete.size() > 0){
-            delete docToDelete;
+            HDT_UTL_DatabaseService.deleteSObject(docToDelete);
         }
 
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult databaseResult;
         databaseResult = databaseInsert(docList, databaseResult);
 
         if(!databaseResult.success){
-            Database.rollback(sp);
+            if(Document.SObjectType.getDescribe().isAccessible())
+                Database.rollback(sp);
         }
 
         return databaseResult;
@@ -186,36 +187,37 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
         databaseResult = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DatabaseResult();
         databaseResult.docIdList = new List<Id>();
         databaseResult.errorData = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError>();
+        if (Document.SObjectType.getDescribe().isAccessible() && Document.SObjectType.getDescribe().isCreateable()) {
+            List<Database.SaveResult> insertResults = Database.insert(docList, false);
+            for(Integer n=0; n<insertResults.size(); n++){
+                Database.SaveResult sr = insertResults[n];
 
-        List<Database.SaveResult> insertResults = Database.insert(docList, false);
-
-        for(Integer n=0; n<insertResults.size(); n++){
-            Database.SaveResult sr = insertResults[n];
-
-            if (!sr.isSuccess()) {
-                // Operation failed
-                String errorString = '';
-                HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError lineError = new HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError();
-                for(Database.Error err : sr.getErrors()) {
-                    lineError.docName = docList[n].Name;
-                    lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                if (!sr.isSuccess()) {
+                    // Operation failed
+                    String errorString = '';
+                    HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError lineError = new HDT_WRP_DocumentalConfiguration.HDT_WRP_LineError();
+                    for(Database.Error err : sr.getErrors()) {
+                        lineError.docName = docList[n].Name;
+                        lineError.errorMessage = ' [' + err.getStatusCode() + ': ' + err.getMessage() + ' on field: ' + err.getFields() + ']';
+                    }
+                    databaseResult.errorData.add(lineError);
+                } else {
+                    databaseResult.docIdList.add(sr.getId());
                 }
-                databaseResult.errorData.add(lineError);
-            } else {
-                databaseResult.docIdList.add(sr.getId());
             }
+    
+            if(databaseResult.errorData.size()>0){
+                databaseResult.success = false;
+                databaseResult.message = '>> Error during database insert';
+                databaseResult.dataError = true;
+                return databaseResult;
+            }
+        
+            databaseResult.success = true;
+            databaseResult.message = '>> No error during script';
         }
-   
-        if(databaseResult.errorData.size()>0){
-            databaseResult.success = false;
-            databaseResult.message = '>> Error during database insert';
-            databaseResult.dataError = true;
-            return databaseResult;
-        }
-     
-        databaseResult.success = true;
-        databaseResult.message = '>> No error during script';
         return databaseResult;
     }
+        
 
 }
