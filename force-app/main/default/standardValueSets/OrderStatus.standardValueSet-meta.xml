@@ -32,4 +32,10 @@
         <label>Annullato</label>
         <groupingString>Draft</groupingString>
     </standardValue>
+    <standardValue>
+        <fullName>Completed</fullName>
+        <default>false</default>
+        <label>Completato</label>
+        <groupingString>Activated</groupingString>
+    </standardValue>
 </StandardValueSet>
