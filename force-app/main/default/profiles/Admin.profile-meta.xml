@@ -30007,11 +30007,11 @@
         <recordType>Case.HDT_RT_ReclamiScrittiRichiesteInfo</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_RichiestaParere</layout>
         <recordType>Case.HDT_RT_RichiestaParere</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Case Layout</layout>
+        <layout>Case-HDT_SospensioneRiattivazione</layout>
         <recordType>Case.HDT_RT_SospensioneRiattivazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -30139,7 +30139,7 @@
         <recordType>Case.HDT_RT_VerificheEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_VerificheGas</layout>
+        <layout>Case-HDT_VariazioniGas</layout>
         <recordType>Case.HDT_RT_VariazioniGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
