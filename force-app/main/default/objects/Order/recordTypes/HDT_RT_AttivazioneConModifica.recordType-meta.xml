@@ -2435,6 +2435,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Draft</fullName>
             <default>false</default>
         </values>
