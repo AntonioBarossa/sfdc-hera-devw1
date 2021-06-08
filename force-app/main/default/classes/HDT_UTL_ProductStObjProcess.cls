@@ -364,7 +364,7 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
         }
 
         List<SBQQ__ProductOption__c> productOptionList;
-        productOptionList = getProductOption(productOptionList, product2IdList, new List<String>{'Confermata', 'Vendibile'});//
+        productOptionList = getProductOption(productOptionList, product2IdList, Label.HDT_InDevelopment);//
 
         for(SBQQ__ProductOption__c prodOpt : productOptionList){
             if(productOptionMap.containsKey(prodOpt.SBQQ__ConfiguredSKU__c)){
@@ -376,13 +376,13 @@ public inherited sharing class HDT_UTL_ProductStObjProcess {
         return productOptionMap;
     }
 
-    private static List<SBQQ__ProductOption__c> getProductOption(List<SBQQ__ProductOption__c> productOptionList, Set<Id> product2IdList, List<String> status){
+    private static List<SBQQ__ProductOption__c> getProductOption(List<SBQQ__ProductOption__c> productOptionList, Set<Id> product2IdList, String status){
         productOptionList = new List<SBQQ__ProductOption__c>();
         productOptionList = [
             SELECT Id, SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.Status__c
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :product2IdList
-            AND SBQQ__OptionalSKU__r.Status__c NOT IN :status
+            AND SBQQ__OptionalSKU__r.Status__c = :status
             WITH SECURITY_ENFORCED
         ];
         return productOptionList;
