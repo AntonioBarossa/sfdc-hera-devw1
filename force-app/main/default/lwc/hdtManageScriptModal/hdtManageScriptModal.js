@@ -41,7 +41,7 @@ export default class HdtManageScriptModal extends LightningElement {
         if(!this.scriptProcessName){
             this.scriptProcessName='Mini Vocal Order';
             this.buttonLabel='OTP';
-            this.recordId='a3g1j000000XPX7AAO';
+            this.recordId='a3g1j000000XPXMAA4';
         }
     }
 

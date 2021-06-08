@@ -19,7 +19,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
-        return new HDT_LC_HdtScriptManagementModal().getScriptTextLoop(processName, recordId);
+        return new HDT_LC_HdtScriptManagementModal().getScriptTextPages(processName, recordId);
     }
 
     public class HDT_WRP_ScriptOutput{
@@ -27,18 +27,33 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         @AuraEnabled public string sectionText;
     }
 
-    private List<HDT_WRP_ScriptOutput> getScriptTextLoop(String processName, String recordId){
-        ScriptConfig__c process = [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
+    private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
+        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
 
-        String childRelation = 'ChildSections'+'__r';
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
-
+        system.debug('fields to query '+allFieldsToQuery);
         String textToFormat='';
         SObject record = getSobject(recordId, allFieldsToQuery);//this get the generic Sobj
-
+        system.debug('id '+recordId);
         List<HDT_WRP_ScriptOutput> listSectionWrappers = new List<HDT_WRP_ScriptOutput>();
 
         for(ScriptConfig__c section : process.ChildSections__r){
+            if(section.isChildLoopEvaluated__C){
+                //here the check is run for each child of the context object
+                //for each object visible, a section copy is generated
+                system.debug(record);
+                system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
+                for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
+                    HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
+                    sectionWrapper.sectionLabel=section.SectionLabel__c;
+                    sectionWrapper.sectionText=formatText(section.textScript__c, recordId, child);
+                    listSectionWrappers.add(sectionWrapper);
+                }
+                continue;
+
+            }
+
+
             if(checkVisibility(section.checkVisibility__c, record)){//We check if the single record section should be visible or not
                 HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
                 sectionWrapper.sectionLabel=section.SectionLabel__c;
@@ -50,16 +65,6 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
     }
 
 
-    protected override String getFieldValue(String fieldPath, SObject relation){
-        List<String> relationshipNames = fieldPath.split('\\.');
-        //SObject relation=scriptRecordFull;
-        String fieldValue;
-        if(relationshipNames[0]=='child'){
-
-        }
-    }
-
-
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled(cacheable=true)
     public static String getScriptSections(String processName, String recordId){
@@ -68,7 +73,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
 
 
     private String getScriptText(String processName, String recordId){
-        ScriptConfig__c process= [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
+        ScriptConfig__c process= [select Name,  (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
 
@@ -92,22 +97,46 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
     private List<String> getAllFieldsToQuery(ScriptConfig__c process){
         //getting all fields to be queried from starting object, both for data binding and also for removing sections
         String textToFormat='';
+
+        String childScriptTextToFormat='';//used to store child relationship fields
+
         system.debug(process.ChildSections__r.size());
         
         List<String> conditions = new List<String>();
+        List<String> conditionsForChilds = new List<String>();
+
         for(ScriptConfig__c section : process.ChildSections__r){
+            if(section.isChildLoopEvaluated__C){
+                childScriptTextToFormat+=section.textScript__c;
+                if(String.isNotBlank(section.checkVisibility__c)){
+                    conditionsForChilds.add(section.checkVisibility__c);
+                }
+                continue;
+            }
             if(String.isNotBlank(section.checkVisibility__c)){
                 conditions.add(section.checkVisibility__c);
             }
-            String sectionLabel = '<<{ globalTag.section__d.'+section.SectionLabel__c.replace(' ', '_')+ ' }>>';
-            //globalTag.section__d.label tell CB to bind the label of the section in bold tags
-            textToFormat +=sectionLabel+section.textScript__c;//String with all sections (even those to be eliminated)
-            
+            textToFormat +=section.textScript__c;//String with all sections (even those to be eliminated)
         }
+
+        
 
         List<String> allFieldsToQuery = getDataBinded(textToFormat);//get fields name of binding variables
         allFieldsToQuery.addAll(getListConditionFields(conditions));//get fields name of variables in condition statements
+        String nestedSoql = buildNestedQuery(childScriptTextToFormat, process.ChildRelationName__c, conditionsForChilds);
+        if(STRING.isNotBlank(nestedSoql)){
+            allFieldsToQuery.add(nestedSoql);
+        }
         return allFieldsToQuery;
+    }
+
+    private String buildNestedQuery(String textToExtractFields, String childRelation, List<String> conditionsForChilds){
+        List<String> allFieldsToQuery = getDataBinded(textToExtractFields);
+        allFieldsToQuery.addAll(getListConditionFields(conditionsForChilds));
+        String selectStatement = makeSelectStatement(allFieldsToQuery);
+
+        return STRING.isNotBlank(selectStatement)?
+            '( '+selectStatement+' FROM '+childRelation+'__r )' : '';
     }
 
 
