@@ -222,6 +222,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(method.equalsIgnoreCase('esito_finale')){
             String noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
+            String fatturaSap = reqWrp.requestMap.get('FATTURA');
             String currentDescription = recordCase.Description != null?recordCase.Description:'';
             String newDescription = '';
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
@@ -236,6 +237,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             if(odv != null && odv != ''){
                 newDescription =  nowDateFormat + ': ' + odv + '\n' + newDescription;
+            }
+            if(fatturaSap != null && fatturaSap != ''){
+                newDescription = nowDateFormat + ': ' + fatturaSap + '\n';
             }
             if(String.isNotBlank(newDescription)){
                 currentCase.Description = newDescription + '\n' + currentDescription;
