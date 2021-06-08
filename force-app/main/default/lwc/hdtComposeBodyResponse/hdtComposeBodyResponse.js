@@ -1,10 +1,12 @@
 import { LightningElement, api, wire, track } from 'lwc';
 import buildResponse from '@salesforce/apex/HDT_LC_ComposeBodyResponse.buildResponse';
 import updateResponse from '@salesforce/apex/HDT_LC_ComposeBodyResponse.updateResponse';
+import stripHtml from '@salesforce/apex/HDT_LC_ComposeBodyResponse.stripHtml';
 import { FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { updateRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import QUARTO_LIVELLO from '@salesforce/schema/Case.FourthLevelComplaintClassification__c';
 import ARGOMENTO from '@salesforce/schema/ResponseTemplate__c.Topic__c'
@@ -28,6 +30,7 @@ export default class HdtProva extends LightningElement {
 
     @api recordId;
     @api nextLabel;
+    @api outputText;
 
     @api availableActions = [];
     
@@ -66,7 +69,7 @@ export default class HdtProva extends LightningElement {
 
     delay = 500;
 
-    headerString = 'Classificazione 4° Livello: ';
+    headerString = '';
 
     @wire(getRecord, { recordId: '$recordId', fields: fields })
     wiredCase({error, data}){
@@ -74,7 +77,7 @@ export default class HdtProva extends LightningElement {
 
             this.quartoLivello = getFieldValue(data, QUARTO_LIVELLO);
 
-            this.headerString += this.quartoLivello;
+            this.headerString = 'Classificazione 4° Livello: ' + this.quartoLivello;
 
             console.log(this.quartoLivello);
 
@@ -345,19 +348,39 @@ export default class HdtProva extends LightningElement {
 
         console.log('Submit Success');
 
-        if(this.availableActions.find(action => action === 'NEXT')){
+        var str = this.template.querySelector('lightning-input-field').value;
 
-            const navigateNextEvent = new FlowNavigationNextEvent();
+        console.log('#html string -> '+str);
 
-            this.dispatchEvent(navigateNextEvent);
+        stripHtml({inputHtml: str})
+            .then(result => {
 
-        } else {
+                this.outputText = result;
 
-            const navigateFinish = new FlowNavigationFinishEvent();
+                console.log('#plain text -> '+this.outputText);
+    
+                if(this.availableActions.find(action => action === 'NEXT')){
 
-            this.dispatchEvent(navigateFinish);
+                    const navigateNextEvent = new FlowNavigationNextEvent();
 
-        }
+                    this.dispatchEvent(navigateNextEvent);
+
+                } else {
+
+                    const navigateFinish = new FlowNavigationFinishEvent();
+
+                    this.dispatchEvent(navigateFinish);
+
+                 }
+            }
+            ).catch(error => {
+
+                this.ShowToastMessage('Errore', 'Elaborazione del testo fallita', 'error');
+
+            });
+
+        // this.outputText = $(str).text();
+
     }
 
 
@@ -373,6 +396,19 @@ export default class HdtProva extends LightningElement {
         document.addEventListener("copy", listener);
         document.execCommand("copy");
         document.removeEventListener("copy", listener);
+
+        this.ShowToastMessage('Testo Copiato', '', 'info');
+
+      }
+
+      ShowToastMessage(title, message, variant){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: title,
+                message: message,
+                variant: variant,
+            }),
+        );
       }
     
 }
