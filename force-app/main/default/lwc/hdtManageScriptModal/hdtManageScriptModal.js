@@ -18,29 +18,12 @@ export default class HdtManageScriptModal extends LightningElement {
 
     @api scriptProcessName;//button Label or Process
     @api recordId;//record starting Object
+    @api buttonLabel;
 
     openModal;
 
     htmlScriptList;
     scriptIndex;
-
-/* 
-
-    @wire(getHTMLScript, {processName : '$scriptProcessName', recordId : '$recordId'})
-    setRichText({error, data}){
-        if (data) {
-            console.log("data recived")
-            this.htmlScriptList=data;
-            if(!this.scriptIndex){
-                this.scriptIndex=0;
-            }
-        } else if (error) {
-            console.log(error)
-            this.showGenericErrorToast()
-        }
-    }  cannot be cached, must call imperatively
-    
-    */
     
     showGenericErrorToast() {
 		this.showToast('error', 'Errore', 'Si è verificato un errore. Ricaricare la pagina e riprovare. Se il problema persiste contattare il supporto tecnico.');
@@ -57,6 +40,7 @@ export default class HdtManageScriptModal extends LightningElement {
     connectedCallback(){
         if(!this.scriptProcessName){
             this.scriptProcessName='Mini Vocal Order';
+            this.buttonLabel='OTP';
             this.recordId='a3g1j000000XPX7AAO';
         }
     }
@@ -72,12 +56,12 @@ export default class HdtManageScriptModal extends LightningElement {
         }
     }
 
-    get indexNotZero(){
-        return this.scriptIndex>0;
+    get indexZero(){//check if first page
+        return this.scriptIndex==0;
     }
 
-    get indexNotLast(){
-        return this.htmlScriptList.length > (this.scriptIndex+1);
+    get indexLast(){//check if last page
+        return this.htmlScriptList.length == (this.scriptIndex+1);
     }
 
     prevSection(){
@@ -109,10 +93,15 @@ export default class HdtManageScriptModal extends LightningElement {
     
 
     async showModal(){
-        this.htmlScriptList=  await getHTMLScript({processName : this.scriptProcessName, recordId : this.recordId});
-        console.log(this.htmlScriptList);
-        this.scriptIndex=0;
-        this.openModal=true;
+        try{
+            this.htmlScriptList=  await getHTMLScript({processName : this.scriptProcessName, recordId : this.recordId});
+            console.log(this.htmlScriptList);
+            this.scriptIndex=0;
+            this.openModal=true;
+        }catch(e){
+            console.log(e.message);
+            this.showGenericErrorToast();
+        }
     }
 
     closeModal(){
