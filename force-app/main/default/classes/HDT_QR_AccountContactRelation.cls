@@ -136,6 +136,33 @@ public inherited sharing class HDT_QR_AccountContactRelation {
 
     }
 
+    public AccountContactRelation getActiveAdministratorRelation(String accountId) {
+    
+        List<AccountContactRelation> relations = [
+            SELECT
+            Id,
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE Roles INCLUDES ('Amministratore condominio')
+            AND IsActive = True
+            AND AccountId = :accountId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (relations.size() > 1) {
+            System.debug('ATTENZIONE: Account associato contemporaneamente a più amministratori di condominio: ' + accountId);
+        }
+
+        if (relations.size() > 0) {
+            return relations[0];
+        }
+
+        return null;
+
+    }
+
     public List<AccountContactRelation> getSolContactRelations(String accountId) {
     
         return [
