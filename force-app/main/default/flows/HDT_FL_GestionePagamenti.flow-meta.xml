@@ -2699,21 +2699,9 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>accountId</name>
-                <value>
-                    <elementReference>Get_Input_Case.Account.Id</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>Get_Input_Case.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
