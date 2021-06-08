@@ -202,7 +202,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     }
                 ) 
             }
-                        else if(element=='SAPImplantCode__c')
+            else if(element=='SAPImplantCode__c')
             {
 
                 fieldsDataObject.push(
@@ -287,6 +287,18 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             fieldname: element,
                             required : mapFieldReq.get(element),
                             value:this.servicePointRetrievedData[element],
+                            disabled: true
+                        }
+                    ) 
+                }
+                else if(this.recordtype.label === 'Punto Elettrico' && element === 'Resident__c'){
+                    console.log('entra in resident');
+                    this.allSubmitedFields.Resident__c = true;
+                    fieldsDataObject.push(
+                        {
+                            fieldname: element,
+                            required : mapFieldReq.get(element),
+                            value:true,
                             disabled: true
                         }
                     ) 
