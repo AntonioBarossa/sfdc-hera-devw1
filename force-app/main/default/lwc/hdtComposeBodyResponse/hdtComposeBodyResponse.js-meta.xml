@@ -18,6 +18,7 @@
             
             <property name="recordId" type="String" label="Record Id" description="Id of the record to edit" role="inputOnly"/>
             <property name="nextLabel" type="String" label="Next Label" description="Label of Next Button" role="inputOnly"/>
+            <property name="outputText" type="String" label="Risposta Reclamo" description="Plain text risposta reclamo" role="outputOnly"/>
             
         </targetConfig>
         

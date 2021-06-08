@@ -95,4 +95,17 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         //Check RequestOption__c (Opzione di Distribuzione) END
     }
 
+    // @START Alessio Murru Credit Check 07.06.21   
+    @AuraEnabled
+    public static Order retrieveOrderCreditCheck(String idOrder){
+        try {
+            return [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, CreditCheckDescription__c
+                    FROM Order 
+                    WHERE Id = :idOrder
+                    WITH SECURITY_ENFORCED];
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+    // @END Alessio Murru Credit Check 07.06.21   
 }

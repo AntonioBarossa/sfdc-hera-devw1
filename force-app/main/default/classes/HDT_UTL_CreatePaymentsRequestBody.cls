@@ -193,6 +193,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         String objectName = 'wrts_prcgvr__ActivityTemplate__c';
         List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
         wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(description.length() > 255){
+            description = description.substring(0, 254);
+        }
         if(listRecord.size()>0){
             template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
