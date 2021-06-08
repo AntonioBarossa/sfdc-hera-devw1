@@ -103,7 +103,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
      
 }
 
-    @Future
     private static void updateFuture(String inputString){
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);
