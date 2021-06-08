@@ -1,10 +1,11 @@
+
 /**
  * @author alessandro.picchiri@eng.it
  * @date 24/05/2021 
 */
-global class HDT_VFC_chiusuraForzataCreditCheck implements Database.Batchable<sObject>{
+global class HDT_VFC_ForzaturaChiusuraCreditCheck implements Database.Batchable<sObject>{
     global final String QUERY;
-    global HDT_VFC_chiusuraForzataCreditCheck(String q){
+    global HDT_VFC_ForzaturaChiusuraCreditCheck(String q){
         QUERY=q;
     }
 
