@@ -27,6 +27,14 @@
             <property name="outcome" type="String" label="outcome" description="outcome" role="outputOnly"/>
             
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
+
+            <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>
+           
+            <property name="accountId" type="String" label="Account Id" description="Account Id" role="inputOnly"/>
+
+            <property name="source" type="String" label="Source" description="Source" role="inputOnly"/>
+
+            
             
         </targetConfig>
         

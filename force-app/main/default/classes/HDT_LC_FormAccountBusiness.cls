@@ -102,7 +102,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 System.debug('contact to be updated ');
 
                 Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
-                Contact newCon = new Contact(AccountId= acct.Id,LastName= dataAccount.get('lastName'),FirstName= dataAccount.get('firstName') ,Birthdate= birthdate,FiscalCode__c= dataAccount.get('personFiscalCode') ,Email= dataAccount.get('contactEmail'),Fax= dataAccount.get('contactFax') ,MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'), MobilePhone= dataAccount.get('mobilePhone') ,PhonePrefix__c= dataAccount.get('phonePrefix'), Phone= dataAccount.get('contactPhoneNumber'));
+                Contact newCon = new Contact(AccountId= acct.Id,LastName= dataAccount.get('lastName'),FirstName= dataAccount.get('firstName'),Birthcity__c= dataAccount.get('birthplace') ,Birthdate= birthdate,Gender__c= dataAccount.get('gender'),FiscalCode__c= dataAccount.get('personFiscalCode') ,Email= dataAccount.get('contactEmail'),Fax= dataAccount.get('contactFax') ,MobilePhonePrefix__c= dataAccount.get('mobilePhonePrefix'), MobilePhone= dataAccount.get('mobilePhone') ,PhonePrefix__c= dataAccount.get('phonePrefix'), Phone= dataAccount.get('contactPhoneNumber'));
                 contactSrv.checkCreateAccess(newCon);
                 contactSrv.createRecord(newCon);
                 List<AccountContactRelation> listAccCon2 = accoContRelQr.getAccountContactRelation(acct.Id, newCon.Id, 'Id');

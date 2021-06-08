@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order$Agency__c</field>
+    </columns>
+    <description>AS IS 3.b</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>Order$CreatedDate</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>AS IS 3.b-Analisi flusso teles. (spediz)</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_OrdersWiWoActivities__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Order$ActivatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

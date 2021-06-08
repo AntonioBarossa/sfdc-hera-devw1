@@ -55,7 +55,7 @@ public with sharing class HDT_QR_InstallmentPlans {
         ApplicationInterests__c,
         SuspensionInThePastTwelveMonths__c,
         CreatedDate,
-        FirstExpirationDate__c
+        ExpirationDate__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

@@ -4,9 +4,9 @@
     <description>Indica la potenza disponible dall&apos;impianto</description>
     <externalId>false</externalId>
     <label>Potenza Disponible</label>
-    <precision>18</precision>
+    <precision>17</precision>
     <required>false</required>
-    <scale>2</scale>
+    <scale>1</scale>
     <trackHistory>false</trackHistory>
     <type>Number</type>
     <unique>false</unique>

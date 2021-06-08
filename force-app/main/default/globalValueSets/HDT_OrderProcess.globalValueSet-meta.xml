@@ -115,6 +115,26 @@
         <default>false</default>
         <label>Aggiunta Sconti o Bonus VAS Gas</label>
     </customValue>
+    <customValue>
+        <fullName>VAS</fullName>
+        <default>false</default>
+        <label>VAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Temporanea - Nuova Attivazione</fullName>
+        <default>false</default>
+        <label>Temporanea - Nuova Attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Proroga Temporanea</fullName>
+        <default>false</default>
+        <label>Proroga Temporanea</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Uso Tecnico</fullName>
+        <default>false</default>
+        <label>Cambio Uso Tecnico</label>
+    </customValue>
     <description>Lista Processi.</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>

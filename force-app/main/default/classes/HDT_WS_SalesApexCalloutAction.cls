@@ -33,7 +33,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         //FINE SVILUPPI EVERIS
         // Aggiungere if basato su Method e parte static nell header struttura ad oggetto
         
-        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
+        if('SwitchInEECreaRich'.equalsIgnoreCase(method) || 'SwitchInGasCreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusEECreaRich'.equalsIgnoreCase(method) || 'AggScontiBonusGGCreaRich'.equalsIgnoreCase(method) || 'SubentroEECreaRich'.equalsIgnoreCase(method) || 'AttivazioneEECreaRich'.equalsIgnoreCase(method) || 'PrecheckEECreaRich'.equalsIgnoreCase(method) || 'SubentroGasCreaRich'.equalsIgnoreCase(method) || 'AttivazioneInDeliberaCreaRich'.equalsIgnoreCase(method) || 'AttivazioneFuoriDeliberaCreaRich'.equalsIgnoreCase(method) || 'PrecheckGasCreaRich'.equalsIgnoreCase(method) || /*Everis: Aggiunto metodo Voltura*/ 'Voltura'.equalsIgnoreCase(method)) {
             //////////// Recupero endpoint in base a contesto di oggetto
             wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration endpointUtils = ( wrts_prcgvr.Interfaces_1_0.IEndpointRulesIntegration)  wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
             String endpoint = endpointUtils.getEndpoint(obj);
@@ -98,6 +98,19 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                 //ord.Phase__c = fieldValueResponse.get('FASE');
                                 ord.TecnicalPhase__c = fieldValueResponse.get('FASE');
                                 ord.HerokuPracticeCode__c = fieldValueResponse.get('requestId');
+
+                                switch on fieldValueResponse.get('FASE') {
+                                    when 'Esito OK da SII' {
+
+                                        HDT_QR_Order orderQr = new HDT_QR_Order();
+                                        Order ordRetrieved = orderQr.getOrderByIdForSalesCallout(ord.id)[0];
+
+                                        if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
+                                            ord.PrecheckResultSII__c = 'OK';
+                                        }
+                                    }
+                                }
+
                                 System.debug('********AFTER UPDATE');
                             }
                         }

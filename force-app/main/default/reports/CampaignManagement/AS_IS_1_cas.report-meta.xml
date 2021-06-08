@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Order$SalesCompany__c</field>
+    </columns>
+    <columns>
+        <field>Order$Channel__c</field>
+    </columns>
+    <columns>
+        <field>Order$ClientCategoryFormula__c</field>
+    </columns>
+    <description>AS IS 1</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <field>Order$SignedDate__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>AS IS 1-Analisi Quality Call</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_OrdersWiActivities__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Order$ActivatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

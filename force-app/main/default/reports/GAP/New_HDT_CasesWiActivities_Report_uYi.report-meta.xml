@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <columns>
+        <field>Case.Activities__r$Name</field>
+    </columns>
+    <description>GAP8.a</description>
+    <filter>
+        <criteriaItems>
+            <column>Case$Cluster__c</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Disattivazioni,Fatturazione,Notifiche,Preventivi,Verifiche,Voltura,Reclami,Morosità</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$Type</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Prescrizione Fatture,Ricostruzione Consumi,Sospensione Fornitura,Interruzione Fornitura,Risoluzione No Punto Sospeso,Riattivazione Fornitura,Gestione Disalimentabilità,Verifica Dati al DL,Comportamento Venditori HC</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case$Phase__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>A-N° Pratiche non amm. per distr. di rif</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_CasesWiActivities__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Case$CreatedDate</dateColumn>
+        <interval>INTERVAL_LASTTHISMONTH</interval>
+    </timeFrameFilter>
+</Report>

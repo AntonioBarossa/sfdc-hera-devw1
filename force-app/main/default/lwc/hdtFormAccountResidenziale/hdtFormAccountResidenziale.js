@@ -298,8 +298,9 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                 messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
             }
         }
+        console.log('LENGTH:'+ this.fiscalcode + '-:' + this.fiscalCode.value.length);
         if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
-            if(this.fiscalCode.value.length == 16){
+            if(this.fiscalCode.value.length != 16){
                 isValidated=false;
                 messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
             }
@@ -419,7 +420,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
                         "fiscalCode": this.fiscalCode.value.replace(/ /g,""),
                         "phoneNumber": phoneNumber.value,
                         "mobilePhone" : mobilePhone.value,
-                        "name": lastName.value+' '+firstName.value,
+                        "name": firstName.value+' '+lastName.value,
                         "email": email.value,
                         "birthplace": this.birthPlace,
                         "recordTypeId" : this.RecordTypeId,

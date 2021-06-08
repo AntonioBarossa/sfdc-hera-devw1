@@ -8,7 +8,13 @@ import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 
 import RETROACTIVE_DATE from '@salesforce/schema/Order.RetroactiveDate__c';
 //FINE SVILUPPI EVERIS
+
+// @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+import callServiceCreditCheck from '@salesforce/apex/HDT_WS_CreditCheck.callService';
+import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
+
 export default class hdtChildOrderProcessDetails extends LightningElement {
+
     @api order;
     title = '';
     isVisible = false;
@@ -349,40 +355,47 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         return result;
     }
 
-    applyCreditCheckLogic(fieldName){
+    
+    // @Picchiri Qui vengono popolati i campi di Credit Check    
+    applyCreditCheckLogic(fieldName){    
+        
+        console.log('applyCreditCheckLogic order----->' + JSON.parse(JSON.stringify(this.order)));
         if(this.order.RecordType.DeveloperName !== undefined ){
             switch (this.order.RecordType.DeveloperName) {
                 case 'HDT_RT_Subentro':
                     if (fieldName === 'IncomingCreditCheckResult__c') {
-                        return 'OK';
+                        return '';
                     }
                     else if (fieldName === 'OutgoingCreditCheckResult__c') {
-                        return 'OK';
+                        return '';
                     }
                     break;
                 case 'HDT_RT_Attivazione':
                     if (fieldName === 'IncomingCreditCheckResult__c') {
-                        return 'OK';
+                        return '';
                     }
                     break;
                 case 'HDT_RT_AttivazioneConModifica':
                     if (fieldName === 'IncomingCreditCheckResult__c') {
-                        return 'OK';
+                        return '';
                     }
                     break;
-                case 'HDT_RT_SwitchIn':
-                    if (fieldName === 'IncomingCreditCheckResult__c') {
-                        return 'OK';
+                case 'HDT_RT_SwitchIn': 
+                    if (fieldName === 'IncomingCreditCheckResult__c') {                        
+                        return '';
                     }
+                    if (fieldName === 'CreditCheckDescription__c') {                        
+                        return '';
+                    }                    
                     break;
                 case 'HDT_RT_VAS':
                     if (fieldName === 'IncomingCreditCheckResult__c') {
-                        return 'OK';
+                        return '';
                     }
                     break;
                 case 'HDT_RT_Voltura':
                     if (fieldName === 'IncomingCreditCheckResult__c') {
-                        return 'OK';
+                        return '';
                     }
                     break;
                 default:
@@ -538,12 +551,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.isReading = currentSectionName === 'reading';
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
 
-        if(currentSectionName === 'creditCheck'){
-            this.sectionDataToSubmit['IncomingCreditCheckResult__c'] = this.applyCreditCheckLogic('IncomingCreditCheckResult__c');
-            this.sectionDataToSubmit['OutgoingCreditCheckResult__c'] = this.applyCreditCheckLogic('OutgoingCreditCheckResult__c');
-            this.sectionDataToSubmit['CreditCheckDescription__c'] = this.template.querySelector("[data-id='CreditCheckDescription__c']").value;
+        // [START -- 07/06/2021 alessio.murru@webresults.it - credit check 2021]
+        // if(currentSectionName === 'creditCheck'){
+        //     this.sectionDataToSubmit['IncomingCreditCheckResult__c'] = this.applyCreditCheckLogic('IncomingCreditCheckResult__c');
+        //     this.sectionDataToSubmit['OutgoingCreditCheckResult__c'] = this.applyCreditCheckLogic('OutgoingCreditCheckResult__c');
+        //     this.sectionDataToSubmit['CreditCheckDescription__c'] = this.template.querySelector("[data-id='CreditCheckDescription__c']").value;
 
-        }
+        // }
+        // [END -- 07/06/2021 alessio.murru@webresults.it - credit check 2021]
 
         if(currentSectionName === 'indirizzodiAttivazione'){
             this.handleWrapAddressObjectAttivazione();
@@ -830,6 +845,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     }
 
+
     handleFields(){
 
     //INIZIO SVILUPPI EVERIS
@@ -1069,7 +1085,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
-                        'value': '',
+                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
                         'processVisibility': ''
                     }
                 ]
@@ -1402,7 +1418,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     {
@@ -1429,7 +1445,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'typeVisibility': this.typeVisibility('both'),
                         'required': false,
                         'disabled': true,
-                        'value': '',
+                        'value': this.applyCreditCheckLogic('CreditCheckDescription__c'),
                         'processVisibility': ''
                     }
                 ]
@@ -2746,7 +2762,97 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     }
 
+    getRequest(){
+        return{
+            sistema: "eEnergy",//da definire campo SF con business
+            caso:"Transazionale",//da definire campo SF con business
+            crmEntity:"Order",//da definire campo SF con business
+            crmId:this.order.OrderNumber,
+            userId: this.order.CreatedById,
+            activationUser:"AccountCommercialePRM",//da definire campo SF con business
+            account:this.order.AccountId,
+            jobTitle:this.order.Channel__c,
+            internalCustomerId:this.order.Account.CustomerCode__c,
+            companyName:this.order.SalesCompany__c,//verificare che non sia vuoto
+            externalCustomerId:this.order.Account.FiscalCode__c,
+            secondaryCustomerId:this.order.Account.FiscalCode__c,
+            bpClass:this.order.Account.CustomerMarking__c,
+            bpCategory:this.order.Account.Category__c,
+            bpType:this.order.Account.Type,
+            customerType:"CT0",//da definire campo SF con business
+            address:this.order.ServicePoint__r.SupplyStreetName__c,
+            municipality:this.order.ServicePoint__r.SupplyCity__c,
+            district:this.order.ServicePoint__r.SupplyProvince__c,
+            postCode:this.order.ServicePoint__r.SupplyPostalCode__c,
+            operation:this.order.ProcessType__c,
+            companyGroup:"Hera S.p.A.",//da definire campo SF con business
+            market:this.order.Market__c,
+            offerType:this.order.Catalog__c,
+            details:[{
+                totalConsumption:'1.0',//da definire campo SF con business
+                commodity:this.order.ServicePoint__r.CommoditySector__c,
+                annualConsumption:this.order.ServicePoint__r.AnnualConsumption__c
+            }]		
+        }
+    }
+
     connectedCallback(){
+
+
+        console.log('connectedCallback rder ---> ');
+        console.log(JSON.parse(JSON.stringify(this.order)));
+
+        // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
+        var wrp = this.getRequest();// { userId:"CARLA.GASPARINI",sistema:"eEnergy",secondaryCustomerId:"02191860135",postCode:"40128",operation:"Switch In",offerType:"Offerte a progetto",municipality:"BOLOGNA",market:"Libero",jobTitle:"Protocollo",internalCustomerId:"1007052510",externalCustomerId:"02191860135",district:"BO",details:[{totalConsumption:"1.0",commodity:"GAS",annualConsumption:"2000"}],customerType:"CT0",crmId:"TEST_ACP2",crmEntity:"Creazione RDS contrattuale",companyName:"INTEGRATION TEST",companyGroup:"Hera S.p.A.",caso:"Transazionale",bpType:"Organizzazione",bpClass:"Azienda",bpCategory:"Aziende SME",address:"VIA DELLE FONTI|47|3/ A-B|",activationUser:"AccountCommercialePRM",account:"AccountCommercialePRM" };
+        this.loading = true;
+        callServiceCreditCheck({wrpVals:JSON.stringify(wrp)})
+        .then(result => {
+            // this.contacts = result;
+            // this.error = undefined;
+            console.log('result callServiceCreditCheck ---> : ' + JSON.parse(JSON.stringify(result)));
+            // console.log(JSON.parse(JSON.strigify(this.fields)));
+            let self = this;
+            setTimeout(function(){
+                console.log('test handle fields');
+
+                retrieveOrderCreditCheck({idOrder: self.order.Id})
+                .then(result=>{
+                    console.log(JSON.parse(JSON.stringify(result)));
+                    for(var i = 0; i < self.fields.length; i++){
+                        console.log(self.fields[i].name)
+                        if(self.fields[i].name == 'creditCheck'){
+                            let creditCheckData = self.fields[i].data
+                            for(let j = 0;  j < creditCheckData.length; j++){
+                                if(creditCheckData[j].apiname == 'IncomingCreditCheckResult__c'){
+                                    creditCheckData[j].value = result['IncomingCreditCheckResult__c']
+                                }
+                                else if(creditCheckData[j].apiname == 'OutgoingCreditCheckResult__c'){
+                                    creditCheckData[j].value = result['OutgoingCreditCheckResult__c'];
+                                }
+                                else if (creditCheckData[j].apiname == 'CreditCheckDescription__c'){
+                                    creditCheckData[j].value = result['CreditCheckDescription__c'];
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    self.loading = false
+                })
+                .catch(error=>{console.log(error)})
+            }, 3000)
+        })
+        .catch(error => {
+            console.log('error callServiceCreditCheck ---> : ' + JSON.parse(JSON.stringify(error)));
+            // this.error = error;
+            // this.contacts = undefined;
+            new ShowToastEvent({
+                title: 'Errore',
+                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                variant: 'error',
+            });
+            this.loading = false
+        })
+
         //EVERIS
         console.log('Details Callback Start');
         //EVERIS
@@ -2763,7 +2869,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
         this.handleFields();
 
-        this.applyCreditCheckLogic();
+        this.applyCreditCheckLogic(); 
 
         this.availableStepsFirst = this.fields.filter(section => section.processVisibility === true);
 

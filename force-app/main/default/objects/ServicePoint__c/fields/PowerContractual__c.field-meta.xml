@@ -4,7 +4,7 @@
     <description>Potenza Richiesta dal cliente (Richiesta / Impegnata)</description>
     <externalId>false</externalId>
     <label>Potenza Contrattuale</label>
-    <precision>18</precision>
+    <precision>16</precision>
     <required>false</required>
     <scale>0</scale>
     <trackTrending>false</trackTrending>

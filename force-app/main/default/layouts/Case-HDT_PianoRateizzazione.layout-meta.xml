@@ -69,7 +69,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>FirstExpirationDate__c</field>
+                <field>ExpirationDate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

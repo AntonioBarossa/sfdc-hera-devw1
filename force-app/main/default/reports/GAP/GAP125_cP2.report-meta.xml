@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>Case$CaseNumber</field>
+    </columns>
+    <description>GAP125</description>
+    <filter>
+        <criteriaItems>
+            <column>Case$Parent.Type</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Reclamo Scritto/Rich. Info</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>Case$Type</column>
+            <columnToColumn>false</columnToColumn>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Verifica Dati al DL</value>
+        </criteriaItems>
+    </filter>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>Case$Subprocess__c</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Richiesta parere per Richieste parere DL</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>HDT_Cases__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>Case$YearManufactureMeter__c</dateColumn>
+        <interval>INTERVAL_LASTTHISMONTH</interval>
+    </timeFrameFilter>
+</Report>
