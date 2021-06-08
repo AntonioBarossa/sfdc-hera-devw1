@@ -31,30 +31,38 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             }
             when 'infoGroup' {
                 List<Info1GroupList__c> infoOneGroupList;
+                List<Info2GroupList__c> infoTwoGroupList;
+                List<String> tariffList = new List<String>();
+                String searchValueSoql = '';
+
                 infoOneGroupList = HDT_QR_TechnicalOffer.getTariffDetails(infoOneGroupList, rate);
                 
                 if(infoOneGroupList.size() == 0){
                     return infoOneGroupList;
                 }
 
-                List<String> tariffList = new List<String>();
                 for(Info1GroupList__c infoGroup : infoOneGroupList){
-                    tariffList.add('\'' + infoGroup.DetTariffa__c + '\'');
+                    tariffList.add(infoGroup.DetTariffa__c);
                 }
 
-                if(!String.isEmpty(whereCond)){
-                    whereCond += ' AND ';
+                //if(!String.isEmpty(whereCond)){
+                //    whereCond += ' AND ';
+                //} else {
+                //    whereCond = ' WHERE ';
+                //}
+
+                //whereCond += 'DetRate__c IN ' + tariffList;
+
+                if(!String.isEmpty(searchByField) && !String.isEmpty(searchValue)){
+                    searchValueSoql = '%' + searchValue +'%';
+                    infoTwoGroupList = HDT_QR_TechnicalOffer.getInfo2GroupListFiltered(infoTwoGroupList, tariffList, searchValueSoql);
                 } else {
-                    whereCond = ' WHERE ';
+                    infoTwoGroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(infoTwoGroupList, tariffList);
                 }
 
-                whereCond += 'DetRate__c IN ' + tariffList;
-
-                //List<Info2GroupList__c> info2GroupList;
-                //info2GroupList = HDT_QR_TechnicalOffer.getInfo2GroupList(info2GroupList, tariffList);
-                //return info2GroupList;
-                allValues = HDT_QR_TechnicalOffer.getInfo2GroupList(allValues, whereCond);
-                return allValues;
+                return infoTwoGroupList;
+                //allValues = HDT_QR_TechnicalOffer.getInfo2GroupList(allValues, whereCond);
+                //return allValues;
             }
         }
 
