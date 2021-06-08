@@ -8,7 +8,7 @@
         <div class="slds-col slds-size_1-of-8 slds-grow-none">
         </div>
         <div class="slds-col slds-size_1-of-3">
-            <lightning-combobox name="progress" label="Modalità di invio documentazione" value={sendMode}
+            <lightning-combobox name="modalitaInvio" label="Modalità di invio documentazione" value={sendMode}
                 placeholder="Seleziona una Modalità" options={modalitaInvio} onchange={handleChange}
                 disabled={enableEdit} data-id="modalitaSpedizione" required></lightning-combobox>
             <lightning-input type="tel" disabled={enableEdit} required={phoneRequired} label="Cellulare" data-id="telefono" name="phone3" value={phone} pattern="[0-9]{10}">

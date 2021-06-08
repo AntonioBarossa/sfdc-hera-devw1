@@ -12,7 +12,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
     @track source;
     //Phone: Required. Pass the Phone number
     @track phone;
-    //Phone: Required. Pass the Email.
+    //Email: Required. Pass the Email.
     @track email;
     //Address: Required. This variable is a complex type Name - Value. Pass all the fields that compose an Address and the Complete Address.
     @track address;
@@ -285,9 +285,11 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         try{
             var formParams = {
                 sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
+                signMode : this.template.querySelector("lightning-input[data-id=modalitaInvio]").value,
                 telefono : this.template.querySelector("lightning-input[data-id=telefono]").value,      
                 email : this.template.querySelector("lightning-input[data-id=email]").value,      
-                address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value
+                address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
+                mode : 'Preview'
             };
             previewDocumentFile({
                 recordId: this.recordId,
