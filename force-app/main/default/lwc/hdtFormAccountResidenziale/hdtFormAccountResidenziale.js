@@ -23,6 +23,12 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     @track mobilePhonePrefixValue;
     @track mobilePhonePrefixOptions;
     @track fiscalCode;
+    @api customerMarkingOptions = [];
+    @api categoryOptions = [];
+    @api customerData = [];
+    @api categoryData = [];
+    @api markingValue;
+    @api categoryValue;
     currentObjectApiName = 'Account';
     settlementRegion;
     settlementDistrict;
@@ -63,10 +69,18 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CUSTOM_MARKING })
-    customerMarkingOptions;
+    customerGetMarkingOptions({error, data}) {
+        if (data){
+            this.customerData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: CATEGORY })
-    categoryOptions;
+    categoryGetOptions({error, data}) {
+        if (data){
+            this.categoryData = data;
+        }
+    };
 
     @wire(getPicklistValues, {recordTypeId: '$RecordTypeId' ,fieldApiName: GENDER })
     genderOptions;
@@ -84,7 +98,17 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
         { label: 'Titolare', value: 'Titolare' },
         { label: 'Familiare', value: 'Familiare' }
     ];
-
+    handleCompanyOwnerChange(event) {
+        let key = this.customerData.controllerValues[event.target.value];
+        this.customerMarkingOptions = this.customerData.values.filter(opt => opt.validFor.includes(key));
+        this.markingValue = '';
+        this.categoryValue = '';
+    }
+    handleCustomerChange(event) {
+        let key = this.categoryData.controllerValues[event.target.value];
+        this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
+        this.categoryValue = '';
+    }
     closeModal() {
         this.showModal = false;
         window.history.back();
