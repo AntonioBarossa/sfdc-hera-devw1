@@ -29,7 +29,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
 
                 for(SObject s: objs){
                     objectApiName=String.valueOf(s.getSObjectType());
-                    if(objectApiName=='Account' || objectApiName=='Lead' || objectApiName=='Campaign'){
+                    if(objectApiName=='Account' || objectApiName=='Lead' /*|| objectApiName=='Campaign'*/){
                         if(s.get('CompanyOwner__c') == null){
                             s.addError('Company Owner must be completed!');
                         }
@@ -122,7 +122,7 @@ public inherited sharing class HDT_UTL_CompanyOwner {
                 }
             }
         }else{
-            objs[0].addError('Role is empty');
+            //objs[0].addError('Your UserRole is empty');
         }
        
     }
