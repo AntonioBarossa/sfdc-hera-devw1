@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>X_DEPOSIT_REQ__c</fullName>
+    <description>X_DEPOSIT_REQ</description>
+    <externalDeveloperName>X_DEPOSIT_REQ</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Deposito originario</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>7</scale>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>IsTranscode__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Method__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">getOpzione</value>
     </values>
     <values>
         <field>Precision__c</field>

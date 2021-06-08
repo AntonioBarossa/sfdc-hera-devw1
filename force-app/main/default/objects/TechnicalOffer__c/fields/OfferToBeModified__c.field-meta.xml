@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OfferToBeModified__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Campo di configurazione che indica l&apos;offerta è da modificare.</description>
+    <externalId>false</externalId>
+    <label>Offerta da modificare</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -31,10 +31,8 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
         system.debug('HDT_LC_TargetObjectCreateForm confirmServicePoint START');
         system.debug('ServicePoint : ' + servicePoint);
         system.debug('isSap = ' +  sap);
-
         if(sap == false){
             system.debug('entra in updateRecord');
-
             serviceSp.updateRecord(servicePoint);
         }else{
             system.debug('entra in createRecord');

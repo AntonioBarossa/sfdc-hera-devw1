@@ -85,15 +85,20 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                     });
                 }
                 
-                if(this.recordId != null){
-                    updateRecord({fields: { Id: this.recordId }}).then(() => {
-                       console.log('Record Refreshato');
-                       console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
-                       this.variablesLoaded = true;
-                    }).catch(error => {
-                        console.log('Error Refreshing record');
-                        this.error = true;
-                    });
+                if(this.processType.localeCompare('Richiesta Parere') === 0
+                    || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
+                    this.variablesLoaded = true;
+                }else{
+                    if(this.recordId != null){
+                        updateRecord({fields: { Id: this.recordId }}).then(() => {
+                        console.log('Record Refreshato');
+                        console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
+                        this.variablesLoaded = true;
+                        }).catch(error => {
+                            console.log('Error Refreshing record');
+                            this.error = true;
+                        });
+                    }
                 }
             } else if (error) {
                 this.error = true;
@@ -205,16 +210,24 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.handleGoNext();
     }
     handleOnLoad(event){
+        if(this.recordId != null){
         var record = event.detail.records;
         var fields = record[this.recordId].fields;
         console.log('Edit Form Loaded ' + fields);
+        }
     }
 
     handleError(event){
-        console.log('Error Loading');
+        console.log('Error Loading: ' + JSON.stringify(event.detail));
+        let message = '';
         let obj = event.detail.output.fieldErrors;
- 
-        let message = obj[Object.keys(obj)[0]][0].message;
+        if (Object.keys(obj).length > 0) {
+            message = obj[Object.keys(obj)[0]][0].message;
+        } else {
+            // Errore da validation rules con error location "top of the page"
+            message = event.detail.detail;
+        }
+
         console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
@@ -224,15 +237,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }),
         );
     }
+
     handleDraft(event){
         console.log('draft handle');
         if(event.target.name === 'draft'){
 
             this.saveInDraft = true;
+            this.cancelCase  = false;
 
         } else if(event.target.name === 'cancel'){
 
             this.cancelCase = true;
+            this.saveInDraft = false;
 
         }
 
@@ -270,7 +286,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
 
     handleSubmit(event){
-        if(this.recordId != null){
+        if(this.recordId != null 
+            || this.processType.localeCompare('Richiesta Parere') === 0
+            || this.processType.localeCompare('Richiesta Parere Esercizio Diritti Privacy') === 0){
             event.preventDefault();       // stop the form from submitting
             this.saveInDraft = false;
             this.cancelCase = false;

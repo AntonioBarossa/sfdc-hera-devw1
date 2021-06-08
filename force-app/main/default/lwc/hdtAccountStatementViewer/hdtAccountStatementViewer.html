@@ -74,23 +74,7 @@
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </div>
 
-
-    <div if:true={showError} class="slds-text-align_center">
-        <lightning-card>
-            <lightning-icon icon-name="utility:wifi"
-                alternative-text="Warning!"
-                title="Warning"
-                size="large"
-            ></lightning-icon>
-
-        <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
-            <p>{showErrorMessage}</p>
-        </div>
-
-        </lightning-card>
-    </div>
-
-    <div if:false={showError} class="slds-grid slds-wrap">
+    <div class="slds-grid slds-wrap">
 
         <!-- Section 1: menu button, pagination and page index -->
         <div class="slds-col slds-size_1-of-1">
@@ -218,7 +202,7 @@
         </div>
 
         <!-- Section 2: data of first level -->
-        <div id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll" >
+        <div if:false={showError} id="tableViewInnerDiv" class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small tableFixHead scrolltop tableScroll" >
             <table class="slds-table" >
                 <thead>
                     <tr>
@@ -318,6 +302,21 @@
                     </template>
                 </tbody>
             </table>
+        </div>
+
+        <div if:true={showError} class="slds-col slds-size_1-of-1 slds-m-bottom_medium slds-m-top_xx-small slds-text-align_center">
+            <lightning-card>
+                <lightning-icon icon-name="utility:wifi"
+                    alternative-text="Warning!"
+                    title="Warning"
+                    size="large"
+                ></lightning-icon>
+    
+            <div class="slds-box slds-box_x-small slds-m-top_x-large slds-text-heading_medium">
+                <p>{showErrorMessage}</p>
+            </div>
+    
+            </lightning-card>
         </div>
 
         <!-- Section 3: data of sevond level -->

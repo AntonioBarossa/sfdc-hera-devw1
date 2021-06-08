@@ -12,8 +12,7 @@
     </duplicateRuleMatchRules>
     <isActive>true</isActive>
     <masterLabel>Account Duplicated</masterLabel>
-    <operationsOnInsert>Report</operationsOnInsert>
     <operationsOnUpdate>Alert</operationsOnUpdate>
-    <securityOption>EnforceSharingRules</securityOption>
+    <securityOption>BypassSharingRules</securityOption>
     <sortOrder>2</sortOrder>
 </DuplicateRule>

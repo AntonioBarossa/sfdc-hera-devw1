@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DelayDayGas__c</fullName>
     <externalId>false</externalId>
-    <formula>SBQQ__ConfiguredSKU__r.DelayDayGas__c</formula>
+    <formula>SBQQ__OptionalSKU__r.DelayDayGas__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Delay gas (gg)</label>
     <precision>18</precision>

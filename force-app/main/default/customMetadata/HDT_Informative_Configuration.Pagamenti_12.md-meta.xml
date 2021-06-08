@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>EC1Level__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>ExpiredList__c</field>

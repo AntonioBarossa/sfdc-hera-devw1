@@ -110,6 +110,21 @@ export default class HdtGeneralInfo extends LightningElement {
     }
 
     handleNext(){
+
+        if(this.template.querySelector("[data-id='SalesContact__c']") !== null 
+            && (this.template.querySelector("[data-id='SalesContact__c']").value === ''
+                || this.template.querySelector("[data-id='SalesContact__c']").value === null)) {
+            this.loading = false;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Popolare il campo Contatto Vendita',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+
         this.updateSaleRecord(this.dataToSubmit);
         this.toggle();
     }

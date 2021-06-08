@@ -1,8 +1,9 @@
 public inherited sharing class HDT_UTL_PostSalesManager{
 
-    HDT_QR_Contract contractQr = new HDT_QR_Contract();
-    HDT_QR_Case caseQr = new HDT_QR_Case();
-
+    private HDT_QR_Contract contractQr = new HDT_QR_Contract();
+    private HDT_QR_Case caseQr = new HDT_QR_Case();
+    private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
+    private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
     public void changeCaseValue(Sobject inputCase){
 
@@ -63,7 +64,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         if(parentCase.Type == 'Variazione indirizzo di fornitura'){
 
             if(currentCase.Phase__c == 'KO definitivo'
-            || [SELECT COUNT() FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherDesc__c =: parentCase.DistributorName__c] > 0){
+            || postsalesQr.checkLocalDispatcher(parentCase.DistributorName__c) > 0){
                 
                 parentCase.Phase__c = 'Elaborazione Manuale';
             } else {
@@ -86,7 +87,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         Case currentCase = (Case) inputCase;
-        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.VatNumber__c);
+        System.debug('Gestione dati VariazioneAnagraficaCliente da case:' + currentCase.Id);
         SObject objToUpdate = null;
 
         switch on currentCase.SubProcess__c {
@@ -98,7 +99,6 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 acc.Name = String.isBlank(currentCase.FirstName__c) ? currentCase.LastName__c : currentCase.FirstName__c + ' ' + currentCase.LastName__c;
                 acc.FiscalCode__c = currentCase.FiscalCode__c;
                 acc.VatNumber__c = currentCase.VatNumber__c;
-                acc.CustomerMarking__c = currentCase.CustomerMarking__c;
                 acc.BillingCity = currentCase.BillingCity__c;
                 acc.BillingCityCode__c = currentCase.BillingCityCode__c;
                 acc.BillingCountry = currentCase.BillingCountry__c;
@@ -131,6 +131,11 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 c.CertifiedEmail__c = currentCase.CertifiedEmail__c;
                 c.Fax = currentCase.Fax__c;
                 objToUpdate = c;
+
+                Account acc = new Account();
+                acc.Id = currentCase.AccountId;
+                acc.CustomerMarking__c = currentCase.CustomerMarking__c;
+                HDT_UTL_DatabaseService.updateSObject(acc);
             }
             when 'Modifica Dati di Recapito' {
                 BillingProfile__c bp = new BillingProfile__c();
@@ -156,6 +161,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 bp.InvoicingCountry__c = currentCase.InvoicingCountry__c;
                 bp.InvoicingStreetToponym__c = currentCase.InvoicingStreetToponym__c;
                 bp.InvoicingProvince__c = currentCase.InvoicingProvince__c;
+                bp.ReminderFlag__c = currentCase.ReminderFlag__c;
+                bp.ReminderCertifiedEmailAddress__c = currentCase.ReminderCertifiedEmailAddress__c;
                 objToUpdate = bp;
             }
             when else {
@@ -181,8 +188,54 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         System.debug('Innesco Allineamento Anagrafica alla chiusura del Case Fiscale: ' + inputCase.Id);
-        List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
-        System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+
+        try {
+            List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONI_FISCALE);
+            System.debug('# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
+        } catch (Exception ex) {
+            System.debug('# Errore creazione Case di Allineamento Anagrafica: ' + ex.getMessage());
+        }
+    }
+
+    public void evaluateEffectiveDate(SObject inputOrder){
+
+        Order currentOrder = (Order) inputOrder;
+
+        if(currentOrder.EffectiveDate__c != null && System.today() > currentOrder.EffectiveDate__c){
+
+            currentOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+
+        }
+
+    }
+
+    public void sbloccoVoltura(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+
+        if(currentCase.VulturePracticeReference__c != null){
+
+            wrts_prcgvr__ActivityTemplate__c template = postsalesQr.getActivityTemplate('Sblocco Voltura');
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Order__c = currentCase.VulturePracticeReference__c;
+            activity.wrts_prcgvr__Description__c = template.wrts_prcgvr__Subject__c;
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        
+        }
+
+    }
+
+    public void changePaymentMethod(SObject inputCase){
+
+        Case currentCase = (Case) inputCase;
+        BillingProfile__c billingProfile = new BillingProfile__c();
+
+        billingProfile.Id = currentCase.BillingProfile__c;
+        billingProfile.PaymentMethod__c = 'RID';
+
+        HDT_UTL_DatabaseService.updateSObject(billingProfile);
+
     }
 
 

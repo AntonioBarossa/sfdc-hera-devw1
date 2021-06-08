@@ -13,6 +13,14 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CreatorGroup__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Station__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>BillingProfile__c</field>
             </layoutItems>
             <layoutItems>
@@ -218,8 +226,8 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>DocumentNumber__c</fields>
         <fields>Amount__c</fields>
+        <fields>DocumentResidue__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>

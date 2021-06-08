@@ -9,9 +9,12 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
     showWelcom = false;
     showSearchOffer = false;
     showCreateOffer = false;
+    showEditForm = false;
     //rateTemplate;
     //rateName;
     rateObj;
+    newTechOfferObj;
+    techOffIdToClone;
     @track technicalOfferId;
 
     @track rtObj = {
@@ -25,7 +28,7 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         hasRecords: false,
         records: []
     };
-
+    productCodeIsAlreadyPresent = false;
 
     connectedCallback(){
         console.log('#### productid on lwc -> ' + this.productid);
@@ -92,6 +95,11 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
                     this.selectionObj.hasRecords = false;
                 }
 
+                this.productCodeIsAlreadyPresent = result.data.productCodeIsAlreadyPresent;
+                console.log('>>>>>> productCodeIsAlreadyPresent > ' + this.productCodeIsAlreadyPresent);
+                console.log('>>>>>> techOffIdToClone: ' + result.data.techOffIdToClone);
+                this.techOffIdToClone = result.data.techOffIdToClone;
+
                 this.showWelcom = true;
 
                //if(result.data.tecnicalOfferId != null && result.data.tecnicalOfferId != '' && result.data.tecnicalOfferId != undefined){
@@ -139,7 +147,13 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
         //this.rateTemplate = event.detail.rateTemplate;
         //this.rateName = event.detail.rateName;
         this.showWelcom = false;
-        this.showCreateOffer = true;
+
+        if(this.productCodeIsAlreadyPresent){
+            this.showCreateOffer = true;
+        } else {
+            this.showEditForm = true;
+        }
+        
     }
 
     search(event){
@@ -185,8 +199,22 @@ export default class HdtCreateNewTechnicalOffer extends NavigationMixin(Lightnin
 
     }
 
-    handleSelection(event){
+    handleSelection(){
         console.log('###');
+    }
+
+    openEditForm(){
+        this.showWelcom = false;
+        this.showSearchOffer = false;
+        this.showCreateOffer = false;
+        this.showEditForm = true;
+    }
+
+    newTechOfferCreated(event){
+        console.log('>>> newOfferCreated > ' + event.detail.newTechOfferObj);
+        this.showEditForm = false;
+        this.newTechOfferObj = event.detail.newTechOfferObj;
+        this.showCreateOffer = true;
     }
 
 }

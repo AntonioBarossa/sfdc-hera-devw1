@@ -50,7 +50,7 @@
                                     <div class="slds-text-heading_small slds-m-top_small">Fatturazione elettronica</div>
                                     <div class="slds-grid slds-wrap slds-m-top_small">
                                         <template for:each={fatturazioneElettronicaFields} for:item="fatturazioneElettronicaField">
-                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} data-name={fatturazioneElettronicaField} key={fatturazioneElettronicaField} data-id={fatturazioneElettronicaField} field-name={fatturazioneElettronicaField} variant="label-stacked"></lightning-input-field>
+                                            <lightning-input-field class="slds-size_1-of-3 fieldsData" onchange={handleCollectFieldsData} required={fatturazioneElettronicaField.required} data-name={fatturazioneElettronicaField.fieldName} key={fatturazioneElettronicaField.fieldName} data-id={fatturazioneElettronicaField.fieldName} field-name={fatturazioneElettronicaField.fieldName} variant="label-stacked"></lightning-input-field>
                                         </template>
                                     </div>
                                 </template>

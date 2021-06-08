@@ -76,12 +76,12 @@ export default class HdtTechnicalOfferSelection extends LightningElement {
     selectRate(event){
         console.log('### selectRate ###');
         var dataset = event.currentTarget.dataset;
-        this.dispatchCustomEvent(dataset.id, dataset.name, dataset.temp);
+        this.dispatchCustomEvent(dataset.id, dataset.name, dataset.temp, dataset.servProduct);
     }
 
-    dispatchCustomEvent(selectedRateId, selectedRateName, selectedRateTemplate){
+    dispatchCustomEvent(selectedRateId, selectedRateName, selectedRateTemplate, selectedServProduct){
         const customEvent = new CustomEvent(this.eventName, {
-            detail:  {rateId: selectedRateId, rateName: selectedRateName, rateTemplate: selectedRateTemplate}
+            detail:  {rateId: selectedRateId, rateName: selectedRateName, rateTemplate: selectedRateTemplate, servProduct: selectedServProduct}
         });
         // Dispatches the event.
         this.dispatchEvent(customEvent);

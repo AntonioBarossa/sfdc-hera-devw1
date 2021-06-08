@@ -1,9 +1,8 @@
 import { LightningElement,track,api,wire } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
-import { updateRecord } from 'lightning/uiRecordApi';
+import { updateRecord,getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
 import ID_FIELD from '@salesforce/schema/Case.Id';
 // INDIRIZZO DI SPEDIZIONE
 import InvoicingPostalCode from '@salesforce/schema/Case.InvoicingPostalCode__c';
@@ -134,6 +133,10 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
     getAddressValue(){
         return this.address;
     }
+
+    connectedCallback(){
+        //getRecordNotifyChange([{recordId: this.recordId}]);
+    }
     
     handleChangeAddress(event){
         this.isModalOpen = true;
@@ -141,7 +144,11 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
     handleCloseModal(event){
         var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log(JSON.stringify(addressWrapper));
-        if((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != ""){
+        if(((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != "") || 
+            (addressWrapper.Via != null && addressWrapper.Via != "" && 
+            addressWrapper.CAP != null && addressWrapper.CAP != "" &&
+            addressWrapper.Civico != null && addressWrapper.Civico != "")
+        ){
             console.log('New Address');
             this.handleNewAddress();
             this.isModalOpen = false;
@@ -157,7 +164,6 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 }),
             );
         }
-        
     }
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
@@ -176,21 +182,34 @@ export default class HdtGenericAddressChooserFlow extends LightningElement {
                 console.log(JSON.stringify(this.caseRecord.fields));
                 var inputParams;
                 console.log(this.addressType + ' ' + this.accountId );
+                
                 if(this.addressType.localeCompare('ServicePoint') == 0){  // Indirizzo di fornitura
+                    console.log('here');
+                    console.log(this.caseRecord.fields.SupplyCountry__c.value);
+                    console.log(this.caseRecord.fields.SupplyProvince__c.value);
+                    console.log(this.caseRecord.fields.SupplyStreetName__c.value);
+                    console.log(this.caseRecord.fields.SupplyPostalCode__c.value);
+                    console.log(this.caseRecord.fields.SupplyCity__c.value);
+                    console.log(this.caseRecord.fields.SupplyStreetNumber__c.value);
+                    console.log(this.caseRecord.fields.SupplyCityCode__c.value);
+                    console.log(this.caseRecord.fields.SupplyStreetNumberExtension__c.value);
+                    console.log(this.caseRecord.fields.SupplyStreetCode__c.value);
+                    console.log(this.caseRecord.fields.SupplyIsAddressVerified__c.value);
                     inputParams = {
-                        Stato : this.caseRecord.fields.SupplyCountry__c.value,
-                        Provincia : this.caseRecord.fields.SupplyProvince__c.value,
-                        Via  : this.caseRecord.fields.SupplyStreetName__c.value,
-                        CAP : this.caseRecord.fields.SupplyPostalCode__c.value,
-                        Comune  : this.caseRecord.fields.SupplyCity__c.value,
-                        Civico  : this.caseRecord.fields.SupplyStreetNumber.value,
-                        CodiceComuneSAP  : this.caseRecord.fields.SupplyCityCode__c.value,
-                        EstensCivico : this.caseRecord.fields.SupplyStreetNumberExtension__c.value,
-                        CodiceViaStradarioSAP  : this.caseRecord.fields.SupplyStreetCode__c.value,
+                        Stato : this.caseRecord.fields.SupplyCountry__c.value, //ok
+                        Provincia : this.caseRecord.fields.SupplyProvince__c.value, //ok
+                        Via  : this.caseRecord.fields.SupplyStreetName__c.value, //ok 
+                        CAP : this.caseRecord.fields.SupplyPostalCode__c.value, //ok
+                        Comune  : this.caseRecord.fields.SupplyCity__c.value, //ok 
+                        Civico  : this.caseRecord.fields.SupplyStreetNumber__c.value, //ok
+                        CodiceComuneSAP  : this.caseRecord.fields.SupplyCityCode__c.value, //ok 
+                        EstensCivico : this.caseRecord.fields.SupplyStreetNumberExtension__c.value, //ok
+                        CodiceViaStradarioSAP  : this.caseRecord.fields.SupplyStreetCode__c.value, //ok 
                         FlagForzato  : false,
-                        FlagVerificato  : this.caseRecord.fields.SupplyIsAddressVerified__c.value
+                        FlagVerificato  : this.caseRecord.fields.SupplyIsAddressVerified__c.value //ok
                     }
-                    this.address = this.caseRecord.fields.AddressFormula__c.value;
+                    this.address = this.caseRecord.fields.AddressFormula__c.value; //ok
+                    console.log('all inputs succeded');
                 }else if(this.addressType.localeCompare('BillingProfile') == 0){ // Indirizzo di spedizione
                     inputParams = {
                         Stato : this.caseRecord.fields.InvoicingCountry__c.value,

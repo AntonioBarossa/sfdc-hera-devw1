@@ -25,9 +25,9 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
         console.log('this.selectedBillingProfile: ', JSON.parse(JSON.stringify(this.selectedBillingProfile)));
 
         let paymentMethodRaw = this.selectedBillingProfile.PaymentMethod__c;
-        let paymentMethodToSend = paymentMethodRaw.includes("Bollettino") ? 'Bollettino' : this.selectedBillingProfile.PaymentMethod__c;
+        let paymentMethodToSend = this.selectedBillingProfile.PaymentMethod__c;
 
-        getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: paymentMethodToSend}).then(data =>{
+        getQuoteLineBundle({saleId: this.sale.Id, paymentMethod: paymentMethodToSend, sendingBillMode: this.selectedBillingProfile.BillSendingMethod__c}).then(data =>{
             this.loading = false;
             
             if(data.listPodPdr.length == 0 && data.listVas.length == 0){

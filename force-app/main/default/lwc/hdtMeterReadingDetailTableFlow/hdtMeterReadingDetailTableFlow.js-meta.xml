@@ -26,6 +26,10 @@
             
             <property name="totalReadingValue" type="Integer" label="Valore Letture Selezionate" description="Valore Totale delle Letture selezionate" role="outputOnly"/>
 
+            <property name="selectedReadingsConcatenated" type="String" label="Concatenazione Letture Selezionate" description="Concatenazione Letture selezionate" role="outputOnly"/>
+
+            <property name="selectedReadingValues" type="String" label="Valore Letture Selezionate" description="Elenco delle Letture selezionate" role="outputOnly"/>
+
             <property name="cancelCase" type="Boolean" label="cancelCase" description="if true case has to be cancelled" role="outputOnly"/>
             
         </targetConfig>

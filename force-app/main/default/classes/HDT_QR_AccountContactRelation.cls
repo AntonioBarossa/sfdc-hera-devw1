@@ -5,7 +5,7 @@
 * @history Keltin Mesonjesi – 25/02/2021 – Created class
 */
 public inherited sharing class HDT_QR_AccountContactRelation {
-    
+     
     public List<AccountContactRelation> getAccountContactRelation(Id accountId, Id contactId, String fields){
         String query= 'Select '+fields+ ' FROM AccountContactRelation WHERE AccountId = :accountId And ContactId = :contactId';
         List<AccountContactRelation> listAccCon= Database.query(query);
@@ -61,6 +61,7 @@ public inherited sharing class HDT_QR_AccountContactRelation {
     
         return [
             SELECT 
+            AccountId,
             ContactId, 
             Roles
             FROM AccountContactRelation 
@@ -69,6 +70,56 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             WITH SECURITY_ENFORCED
         ];
 
+    }
+
+    public List<AccountContactRelation> getPrimaryContactRelations(Set<Id> ids) {
+    
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId IN :ids
+            AND Roles  = 'Titolare'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public List<AccountContactRelation> getPrimaryRelationsByContacts(Set<Id> contactIds) {
+
+        return [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE ContactId IN :contactIds
+            AND Roles  = 'Titolare'
+            WITH SECURITY_ENFORCED
+        ];
+
+    }
+
+    public AccountContactRelation getPrimaryContactRelation(Id accountId) {
+    
+        List<AccountContactRelation> relations = [
+            SELECT 
+            AccountId,
+            ContactId, 
+            Roles
+            FROM AccountContactRelation 
+            WHERE AccountId = :accountId
+            AND Roles  = 'Titolare'
+            WITH SECURITY_ENFORCED
+        ];
+
+        if (relations.size() > 0) {
+            return relations[0];
+        }
+
+        return null;
     }
 
     public List<AccountContactRelation> getAdministratorRelations() {
@@ -83,6 +134,22 @@ public inherited sharing class HDT_QR_AccountContactRelation {
             WITH SECURITY_ENFORCED
         ];
 
+    }
+
+    public List<AccountContactRelation> getSolContactRelations(String accountId) {
+    
+        return [
+            SELECT
+            Id,
+            AccountId,
+            ContactId,
+            Roles
+            FROM AccountContactRelation
+            WHERE
+            AccountId = :accountId
+            AND IsManagerSOL__c = True
+            WITH SECURITY_ENFORCED
+        ];
     }
 
     // FINE SVILUPPI EVERIS

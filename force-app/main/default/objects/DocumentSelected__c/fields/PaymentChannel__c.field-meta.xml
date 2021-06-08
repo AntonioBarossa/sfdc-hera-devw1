@@ -3,9 +3,52 @@
     <fullName>PaymentChannel__c</fullName>
     <externalId>false</externalId>
     <label>Canale Di Pagamento</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ATM</fullName>
+                <default>false</default>
+                <label>ATM</label>
+            </value>
+            <value>
+                <fullName>Banca BONIFICO</fullName>
+                <default>false</default>
+                <label>Banca BONIFICO</label>
+            </value>
+            <value>
+                <fullName>Banca SPORTELLO</fullName>
+                <default>false</default>
+                <label>Banca SPORTELLO</label>
+            </value>
+            <value>
+                <fullName>Carta di credito online</fullName>
+                <default>false</default>
+                <label>Carta di credito online</label>
+            </value>
+            <value>
+                <fullName>Cassa COOP</fullName>
+                <default>false</default>
+                <label>Cassa COOP</label>
+            </value>
+            <value>
+                <fullName>POS Sportello</fullName>
+                <default>false</default>
+                <label>POS Sportello</label>
+            </value>
+            <value>
+                <fullName>Posta</fullName>
+                <default>false</default>
+                <label>Posta</label>
+            </value>
+            <value>
+                <fullName>Ricevitoria</fullName>
+                <default>false</default>
+                <label>Ricevitoria</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

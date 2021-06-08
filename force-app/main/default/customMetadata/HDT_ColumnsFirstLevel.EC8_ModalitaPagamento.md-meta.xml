@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ColumnOrder__c</field>
-        <value xsi:type="xsd:double">6.0</value>
+        <value xsi:type="xsd:double">20.0</value>
     </values>
     <values>
         <field>FieldName__c</field>
@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>IsVisible__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>ShowTotAmountHere__c</field>

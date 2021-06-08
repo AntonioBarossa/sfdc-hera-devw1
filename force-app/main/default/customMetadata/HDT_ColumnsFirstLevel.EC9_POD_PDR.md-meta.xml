@@ -4,11 +4,11 @@
     <protected>false</protected>
     <values>
         <field>ColumnOrder__c</field>
-        <value xsi:type="xsd:double">13.0</value>
+        <value xsi:type="xsd:double">15.0</value>
     </values>
     <values>
         <field>FieldName__c</field>
-        <value xsi:type="xsd:string">POD_PDR</value>
+        <value xsi:type="xsd:string">podPdr</value>
     </values>
     <values>
         <field>FieldType__c</field>

@@ -13,6 +13,13 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api diffFields;
     loading = false;
     isDialogVisible = false;
+
+    get cancellationOptions() {
+        return [
+            { label: 'Pratica errata', value: 'Pratica errata' },
+            { label: 'Annullamento da cliente', value: 'Annullamento da cliente' }
+        ];
+    }
     
     get disabledSave(){
         //INIZIO SVILUPPI EVERIS
@@ -48,10 +55,21 @@ export default class hdtChildOrderProcessActions extends LightningElement {
 
         }).catch(error => {
             this.loading = false;
-            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
-                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                message: errorMessage,
                 variant: 'error',
                 mode: 'sticky'
             });

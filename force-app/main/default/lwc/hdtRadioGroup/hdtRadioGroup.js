@@ -1,8 +1,20 @@
-import { LightningElement, api} from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 
 export default class HdtRadioGroup extends LightningElement {
-    @api options;
+    
+    @track options = [];
     @api rowId;
+    @api mValue;
+
+    connectedCallback(){
+        if(this.mValue){
+            this.options.push({label: 'M', value: 'm', checked: '1'});
+            this.options.push({label: 'V', value: 'v', checked: ''});
+        } else {
+            this.options.push({label: 'M', value: 'm', checked: ''});
+            this.options.push({label: 'V', value: 'v', checked: '1'});
+        }
+    }
 
     handleSelected(event) {
         //window.console.log('selected value ===> '+event.target.value + ' on row -> ' + this.rowId);

@@ -4,6 +4,15 @@
     <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <label>Punto Fornitura</label>
+    <lookupFilter>
+        <active>true</active>
+        <filterItems>
+            <field>$Source.Opportunity__c</field>
+            <operation>equals</operation>
+            <valueField>SaleServiceItem__c.Opportunity__c</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+    </lookupFilter>
     <referenceTo>SaleServiceItem__c</referenceTo>
     <relationshipLabel>Product Options</relationshipLabel>
     <relationshipName>Product_Options</relationshipName>

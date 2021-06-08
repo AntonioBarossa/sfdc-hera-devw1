@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <formula>BillingStreetName__c &amp;&apos;, &apos;&amp; BillingStreetNumber__c &amp;&apos;, &apos;&amp; BillingStreetNumberExtension__c &amp;&apos;, &apos;&amp; BillingCity &amp;&apos;, &apos;&amp; BillingState &amp;&apos;, &apos;&amp; BillingPostalCode &amp;&apos;, &apos;&amp; BillingCountry</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>ndirizzo Residenza/Sede Legale</label>
+    <label>Indirizzo Residenza/Sede Legale</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <type>Text</type>

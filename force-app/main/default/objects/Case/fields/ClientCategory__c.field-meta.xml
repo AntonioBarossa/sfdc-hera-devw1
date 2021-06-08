@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ClientCategory__c</fullName>
     <externalId>false</externalId>
-    <formula>&quot;&quot;</formula>
+    <formula>TEXT(Account.Category__c)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Categoria Cliente</label>
     <required>false</required>

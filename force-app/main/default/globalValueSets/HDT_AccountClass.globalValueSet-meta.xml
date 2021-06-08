@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Privati</fullName>
+        <default>false</default>
+        <label>Privati</label>
+    </customValue>
+    <customValue>
+        <fullName>Small Business</fullName>
+        <default>false</default>
+        <label>Small Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Grandi Clienti</fullName>
+        <default>false</default>
+        <label>Grandi Clienti</label>
+    </customValue>
+    <customValue>
+        <fullName>Enti</fullName>
+        <default>false</default>
+        <label>Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>Condomini</fullName>
+        <default>false</default>
+        <label>Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Società del Gruppo</fullName>
+        <default>false</default>
+        <label>Società del Gruppo</label>
+    </customValue>
+    <customValue>
+        <fullName>Salvaguardia HC</fullName>
+        <default>false</default>
+        <label>Salvaguardia HC</label>
+    </customValue>
+    <customValue>
+        <fullName>Enti Salvaguardia</fullName>
+        <default>false</default>
+        <label>Enti Salvaguardia</label>
+    </customValue>
+    <customValue>
+        <fullName>Aziende TOP</fullName>
+        <default>false</default>
+        <label>Aziende TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>Piccoli Condomini</fullName>
+        <default>false</default>
+        <label>Piccoli Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>Societa Vendita Terze</fullName>
+        <default>false</default>
+        <label>Societa Vendita Terze</label>
+    </customValue>
+    <customValue>
+        <fullName>Default gas</fullName>
+        <default>false</default>
+        <label>Default gas</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSIP</fullName>
+        <default>false</default>
+        <label>CONSIP</label>
+    </customValue>
+    <customValue>
+        <fullName>Comuni Territorio</fullName>
+        <default>false</default>
+        <label>Comuni Territorio</label>
+    </customValue>
+    <customValue>
+        <fullName>Mercato Tutelato Famiglia</fullName>
+        <default>false</default>
+        <label>Mercato Tutelato Famiglia</label>
+    </customValue>
+    <customValue>
+        <fullName>Mercato Tutelato Azienda</fullName>
+        <default>false</default>
+        <label>Mercato Tutelato Azienda</label>
+    </customValue>
+    <customValue>
+        <fullName>FUI domestico</fullName>
+        <default>false</default>
+        <label>FUI domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>FUI non domestico</fullName>
+        <default>false</default>
+        <label>FUI non domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller - Gruppo</fullName>
+        <default>false</default>
+        <label>Reseller - Gruppo</label>
+    </customValue>
+    <customValue>
+        <fullName>Reseller - Extra Gruppo</fullName>
+        <default>false</default>
+        <label>Reseller - Extra Gruppo</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Famiglie</fullName>
+        <default>false</default>
+        <label>EstEn - Famiglie</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Aziende Soho</fullName>
+        <default>false</default>
+        <label>EstEn - Aziende Soho</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Aziende SME</fullName>
+        <default>false</default>
+        <label>EstEn - Aziende SME</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Enti</fullName>
+        <default>false</default>
+        <label>EstEn - Enti</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Grandi Condomini</fullName>
+        <default>false</default>
+        <label>EstEn - Grandi Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Intercompany</fullName>
+        <default>false</default>
+        <label>EstEn - Intercompany</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Aziende TOP</fullName>
+        <default>false</default>
+        <label>EstEn - Aziende TOP</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Piccoli Condomini</fullName>
+        <default>false</default>
+        <label>EstEn - Piccoli Condomini</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Societa Vendita Terze</fullName>
+        <default>false</default>
+        <label>EstEn - Societa Vendita Terze</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Comuni Territorio</fullName>
+        <default>false</default>
+        <label>EstEn - Comuni Territorio</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Tutela Simile Famiglie</fullName>
+        <default>false</default>
+        <label>EstEn - Tutela Simile Famiglie</label>
+    </customValue>
+    <customValue>
+        <fullName>EstEn - Tutela Simile Aziende</fullName>
+        <default>false</default>
+        <label>EstEn - Tutela Simile Aziende</label>
+    </customValue>
+    <masterLabel>Classe Conto</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

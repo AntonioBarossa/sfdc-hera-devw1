@@ -27,6 +27,8 @@
         <property name="selectionType" type="String" label="selectionType" description="selectionType" role="inputOnly" required="true"/>
             
         <property name="results" type="String" label="results" description="results" role="outputOnly"/>
+
+        <property name="cancelCase" type="Boolean" label="cancellation" description="Cancel Case" role="outputOnly" />
             
         </targetConfig>
         

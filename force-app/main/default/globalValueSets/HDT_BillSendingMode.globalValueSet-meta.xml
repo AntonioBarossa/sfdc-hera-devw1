@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
-        <fullName>Email</fullName>
+        <fullName>Bolletta per e-mail</fullName>
         <default>false</default>
-        <label>Email</label>
+        <label>Bolletta per e-mail</label>
     </customValue>
     <customValue>
-        <fullName>Posta</fullName>
+        <fullName>Bolletta per e-mail + Carta</fullName>
         <default>false</default>
-        <label>Posta</label>
+        <label>Bolletta per e-mail + Carta</label>
+    </customValue>
+    <customValue>
+        <fullName>Cartaceo</fullName>
+        <default>false</default>
+        <label>Cartaceo</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione PA</fullName>
+        <default>false</default>
+        <label>Fatturazione PA</label>
+    </customValue>
+    <customValue>
+        <fullName>Invio tramite PEC</fullName>
+        <default>false</default>
+        <label>Invio tramite PEC</label>
     </customValue>
     <description>Email, Posta</description>
     <masterLabel>Modalita Invio Bolletta (CPQ)</masterLabel>
