@@ -118,97 +118,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Category__c</picklist>
-        <values>
-            <fullName>Accedi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende SME</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende Soho</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Aziende TOP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Banca centrale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comuni Territorio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Default gas</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Enti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FUI domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FUI non domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Grandi Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intercompany</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NRI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Personale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Piccoli Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reseller - Extra Gruppo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reseller - Gruppo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Salvaguardia Aziende</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Salvaguardia Enti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Societa Vendita Terze</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VIP</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>CompanyOwner__c</picklist>
         <values>
             <fullName>AAA-EBT</fullName>
@@ -265,7 +174,102 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+     <picklistValues>
+        <picklist>Category__c</picklist>
+        <values>
+            <fullName>Accedi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende SME</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende Soho</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aziende TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Banca centrale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comuni Territorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Default gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Famiglie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Grandi Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Intercompany</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NRI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Personale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piccoli Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller - Extra Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller - Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia Aziende</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia Enti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Societa Vendita Terze</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VIP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
         <picklist>CustomerMarking__c</picklist>
         <values>
             <fullName>AAS Associazione</fullName>
@@ -284,19 +288,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>AAS Parti comuni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AAS Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ACEL-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ACEL-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -304,15 +296,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ANTENORE ENERGY-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Amga-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Amga-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -328,15 +312,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BE POWER-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>BENACO-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BENACO-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -344,39 +320,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>BLU RANTON-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>CMV E e I - Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CMV E e I - Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Condominio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D2 - Ditta individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D3 - Azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D5 - Condominio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D6 - Associazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>D7 - BP Doppio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -388,15 +336,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ENERGETICA-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ENERGIA SOCIALE-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ENERGIA SOCIALE-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -404,15 +344,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ENERGIECHIARE-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ENERGYGAS ITA - Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ENERGYGAS ITA - Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -420,15 +352,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ENERGYPOLIS-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>ERMES-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ERMES-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -436,15 +360,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ETRURIA-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Enegan-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Enegan-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -452,15 +368,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>EstEnergy-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>FUTURA TR-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FUTURA TR-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -468,15 +376,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>FUTURENERGY-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>GENESI-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GENESI-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -484,15 +384,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>GRAN SASSO-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>GREEN EN-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GREEN EN-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -500,15 +392,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ITALIANGAS-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>LIRENAS-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LIRENAS-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -516,7 +400,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>LUCEEG IT SERV-Persona fisica</fullName>
+            <fullName>MIWA ENERGIA-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MIWA ENERGIA-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -536,19 +424,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMS Parti comuni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>MOODS-Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>MOODS-Persona fisica</fullName>
+            <fullName>NEWENRGGEL-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NEWENRGGEL-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -556,15 +440,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>NOIENERGIA-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>NWGENERGIA-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NWGENERGIA-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -572,7 +448,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>OMNIA EN-Persona fisica</fullName>
+            <fullName>ONE POWER-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ONE POWER-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -580,19 +460,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>ONOVA-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>PIUENERGIA SPA-Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>PIUENERGIA SPA-Persona fisica</fullName>
+            <fullName>S4 ENERGIA-Altro</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Parti comuni</fullName>
+            <fullName>S4 ENERGIA-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SGR-Persona fisica</fullName>
             <default>false</default>
         </values>
         <values>
@@ -600,15 +484,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>TOP ENERGY-Persona fisica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>UNION-Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UNION-Persona fisica</fullName>
             <default>false</default>
         </values>
     </picklistValues>
