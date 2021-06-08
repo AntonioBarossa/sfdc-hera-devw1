@@ -154,6 +154,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Attribute Value</label>
     <nameField>
         <displayFormat>AV-{0000000}</displayFormat>

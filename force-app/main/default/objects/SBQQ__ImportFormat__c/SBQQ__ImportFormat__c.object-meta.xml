@@ -154,6 +154,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Import Format</label>
     <nameField>
         <displayFormat>IF-{000}</displayFormat>

@@ -153,6 +153,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Subscription Consumption Schedule</label>
     <nameField>
         <label>Subscription Consumption Schedule Name</label>

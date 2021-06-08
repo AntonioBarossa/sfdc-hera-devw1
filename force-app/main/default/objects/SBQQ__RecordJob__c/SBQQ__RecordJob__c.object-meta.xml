@@ -155,6 +155,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>Record Job</label>
     <nameField>
         <displayFormat>JOB{00000000}</displayFormat>

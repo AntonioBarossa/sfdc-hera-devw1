@@ -155,6 +155,7 @@
     <enableSearch>false</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <label>Custom Action Condition</label>
     <nameField>
         <label>Custom Action Condition Name</label>
