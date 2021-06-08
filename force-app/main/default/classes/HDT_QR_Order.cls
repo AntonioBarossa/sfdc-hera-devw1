@@ -172,8 +172,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.SupplyStreetName__c, // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
 		    ServicePoint__r.SupplyCity__c,       // @Picchiri Calcolo della date Switch in 31/05/21 
 		    ServicePoint__r.SupplyProvince__c,   // @Picchiri Calcolo della date Switch in 31/05/21 
-		    ServicePoint__r.SupplyPostalCode__c, // @Picchiri Calcolo della date Switch in 31/05/21 
-            ProcessType__c,                      // @Picchiri Calcolo della date Switch in 31/05/21 
+		    ServicePoint__r.SupplyPostalCode__c, // @Picchiri Calcolo della date Switch in 31/05/21             
             CommercialProduct__c,                // @Picchiri Calcolo della date Switch in 31/05/21 
             AnnualConsumption__c,                 // @Picchiri Calcolo della date Switch in 31/05/21 
             Catalog__c,                               // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
