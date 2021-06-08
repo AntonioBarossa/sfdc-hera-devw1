@@ -16,9 +16,9 @@ public class HDT_UTL_IntegrationObject{
 		queryString += fieldLookup;
 		List<String> relatedQueryList = new List<String>();
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationRelatedObject singleRelatedObject : jsonStructure.relatedObject){
-			String queryR = ',(SELECT ' + singleRelatedObject.fields;
-			String fromR = ' FROM '+ singleRelatedObject.relation + ')';
-			relatedQueryList.add(queryR+fromR);
+			String queryRelString = ',(SELECT ' + singleRelatedObject.fields;
+			String fromRelString = ' FROM '+ singleRelatedObject.relation + ')';
+			relatedQueryList.add(queryRelString+fromRelString);
 		}
 		String relatedQueryString = String.join(relatedQueryList, ',');
 		queryString  = queryString + relatedQueryString + fromString + whereString; 

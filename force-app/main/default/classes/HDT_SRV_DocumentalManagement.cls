@@ -23,7 +23,7 @@ public class HDT_SRV_DocumentalManagement{
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
-		body = composeJSON(recordId, driverPayloadListMap);
+		body = composeJson(recordId, driverPayloadListMap);
 		System.debug('Body ' + body);
 		//HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		//HDT_WS_DocumentalIntegration service = new HDT_WS_DocumentalIntegration();
@@ -85,7 +85,7 @@ public class HDT_SRV_DocumentalManagement{
 			System.debug('Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	private static String composeJSON(String recordId, List<Map<String,Object>> driverPayloadListMap){
+	private static String composeJson(String recordId, List<Map<String,Object>> driverPayloadListMap){
 		HDT_WRP_DocumentalRequest documentalRequest = new HDT_WRP_DocumentalRequest();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage sPackage = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalPackage();
 		HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest sPackageRequest = new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDeliverPackageRequest();
