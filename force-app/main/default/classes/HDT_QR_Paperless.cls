@@ -17,6 +17,7 @@ public inherited sharing class HDT_QR_Paperless {
 
         return [SELECT Id,
         Amount__c,
+        DocumentResidue__c,
         DocumentNumber__c,
         ExpirationDate__c,
         Position1__c,
