@@ -27,7 +27,7 @@
         <groupingString>Activated</groupingString>
     </standardValue>
     <standardValue>
-        <fullName>Completato</fullName>
+        <fullName>Completed</fullName>
         <default>false</default>
         <label>Completato</label>
         <groupingString>Activated</groupingString>
