@@ -11,7 +11,7 @@
 
 public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
-    String childRelationship;
+    String childRecordIdentifier='orderNumber';//Add an Header Identifier to childs sections
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled
@@ -28,7 +28,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
     }
 
     private List<HDT_WRP_ScriptOutput> getScriptTextPages(String processName, String recordId){
-        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
+        ScriptConfig__c process = [select Name, contextObject__c, ChildRelationName__c, (Select textScript__c, SectionLabel__c, checkVisibility__c, isChildLoopEvaluated__C from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' WITH SECURITY_ENFORCED LIMIT 1 ];
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
         system.debug('fields to query '+allFieldsToQuery);
@@ -44,10 +44,14 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
                 system.debug(record);
                 system.debug(record.getSobjects(process.ChildRelationName__c+'__r'));
                 for(Sobject child : record.getSobjects(process.ChildRelationName__c+'__r') ){
-                    HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
-                    sectionWrapper.sectionLabel=section.SectionLabel__c;
-                    sectionWrapper.sectionText=formatText(section.textScript__c, recordId, child);
-                    listSectionWrappers.add(sectionWrapper);
+                    if(checkVisibility(section.checkVisibility__c, child)){//We check if the single record section should be visible or not
+                        HDT_WRP_ScriptOutput sectionWrapper = new HDT_WRP_ScriptOutput();
+                        sectionWrapper.sectionLabel=
+                            section.SectionLabel__c +childRecordIdentifier+
+                                ' : '+String.valueOf(child.get(childRecordIdentifier));
+                        sectionWrapper.sectionText=formatText(section.textScript__c, recordId, child);
+                        listSectionWrappers.add(sectionWrapper);
+                    }
                 }
                 continue;
 
@@ -73,7 +77,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
 
 
     private String getScriptText(String processName, String recordId){
-        ScriptConfig__c process= [select Name,  (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
+        ScriptConfig__c process= [select Name,  (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' WITH SECURITY_ENFORCED LIMIT 1];
 
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
 
@@ -136,7 +140,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         String selectStatement = makeSelectStatement(allFieldsToQuery);
 
         return STRING.isNotBlank(selectStatement)?
-            '( '+selectStatement+' FROM '+childRelation+'__r )' : '';
+            '( '+selectStatement+', '+childRecordIdentifier+' FROM '+childRelation+'__r )' : '';//
     }
 
 

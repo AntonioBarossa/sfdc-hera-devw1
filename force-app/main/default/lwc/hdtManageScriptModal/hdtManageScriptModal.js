@@ -37,11 +37,11 @@ export default class HdtManageScriptModal extends LightningElement {
 		}));
 	}
     
-    connectedCallback(){
+    connectedCallback(){// stub parameters for test purpose
         if(!this.scriptProcessName){
             this.scriptProcessName='Mini Vocal Order';
             this.buttonLabel='OTP';
-            this.recordId='a3g1j000000XPXMAA4';
+            this.recordId='8011X000002SkvlQAC';
         }
     }
 
@@ -99,7 +99,7 @@ export default class HdtManageScriptModal extends LightningElement {
             this.scriptIndex=0;
             this.openModal=true;
         }catch(e){
-            console.log(e.message);
+            console.log(e.body.message);
             this.showGenericErrorToast();
         }
     }
