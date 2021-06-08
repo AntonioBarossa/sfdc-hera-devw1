@@ -169,11 +169,11 @@ public class HDT_SRV_DocumentalManagement{
 		for(HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection singleSection : configurations.sections){
 			String iterative = singleSection.iterative;
 			String recordType = singleSection.recordType;
-			String object1 =  singleSection.object1;
+			String objectOne =  singleSection.object1;
 			List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord> records = singleSection.records;
 
 			if(iterative == 'SI'){
-				countRecords = HDT_UTL_DocumentalManagement.getChildCount(object1, inputs);
+				countRecords = HDT_UTL_DocumentalManagement.getChildCount(objectOne, inputs);
 			}else{
 				countRecords = 1;
 			}
