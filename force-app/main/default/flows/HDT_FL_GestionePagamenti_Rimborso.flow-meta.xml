@@ -4,7 +4,7 @@
         <name>Check_Documenti</name>
         <label>Check Documenti</label>
         <locationX>182</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <actionName>HDT_UTL_CheckDocumentSelected</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -340,7 +340,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -384,7 +384,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.BankAccountSignatoryFirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -428,7 +428,7 @@
         <name>AssegnaValori_00_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -458,7 +458,7 @@
         <name>AssegnaValori_00_0_0_0_0</name>
         <label>AssegnaValori</label>
         <locationX>314</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -663,7 +663,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Quale_Beneficiario</targetReference>
+                <targetReference>Screen_Documentale_0_0_0</targetReference>
             </connector>
             <label>Assegno</label>
         </rules>
@@ -872,7 +872,7 @@
         <name>Fase_Da_Inviare</name>
         <label>Fase Da Inviare?</label>
         <locationX>182</locationX>
-        <locationY>1334</locationY>
+        <locationY>1454</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_00_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1031,7 +1031,7 @@
         <name>Quale_Beneficiario</name>
         <label>Quale Beneficiario?</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0</targetReference>
         </defaultConnector>
@@ -1332,7 +1332,7 @@
         <name>GetCodiceCausale_0</name>
         <label>GetCodiceCausale</label>
         <locationX>50</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValori_00_0_0_0</targetReference>
@@ -1458,7 +1458,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>50</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
         </connector>
@@ -1468,7 +1468,7 @@
         <name>Aggiorna_con_dati_Account_e_cambia_Fase_0_0_0_0_0_0</name>
         <label>Aggiorna con dati Account e cambia Fase Da Inviare</label>
         <locationX>314</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1519,7 +1519,7 @@
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
         <locationX>50</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1629,15 +1629,27 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>processType</name>
+                <name>quoteType</name>
                 <value>
-                    <elementReference>CaseInput.Type</elementReference>
+                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1668,15 +1680,78 @@
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
                 <name>nextVariant</name>
                 <value>
                     <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>processType</name>
+                <name>quoteType</name>
                 <value>
-                    <elementReference>CaseInput.Type</elementReference>
+                    <stringValue>Analitico</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_Documentale_0_0_0</name>
+        <label>Screen Documentale</label>
+        <locationX>182</locationX>
+        <locationY>878</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Quale_Beneficiario</targetReference>
+        </connector>
+        <fields>
+            <name>DisplayTextDocumentSignature_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!CaseInput.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtDocumentSignature_0_0_0</name>
+            <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>CaseInput.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>CaseInput.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>quoteType</name>
+                <value>
+                    <stringValue>Analitico</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

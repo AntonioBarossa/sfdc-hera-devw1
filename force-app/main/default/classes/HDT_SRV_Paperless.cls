@@ -41,7 +41,7 @@ public with sharing class HDT_SRV_Paperless {
                     'posizione1' => document.Position1__c,
                     'posizione2' => document.Position2__c,
                     'posizione3' => document.Position3__c,
-                    'importo' => document.Amount__c,
+                    'importo' => document.DocumentResidue__c,
                     'scadenza' => document.ExpirationDate__c
                 }
             );

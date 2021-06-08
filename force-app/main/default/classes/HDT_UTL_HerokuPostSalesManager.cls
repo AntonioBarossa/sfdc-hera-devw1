@@ -24,8 +24,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
-        System.debug('Case Phase --> '+currentCase.Phase__c);
-        if(currentCase.Phase__c == 'Da Inviare'){
+        System.debug('Case Phase --> '+currentCase.TecnicalPhase__c);
+        if(currentCase.TecnicalPhase__c == 'Da Inviare'){
             return mrrResponse;
         } else {
             return null;
@@ -140,7 +140,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             caseNew.Id = currentCase.Id;
-            caseNew.Phase__c = phase;
+            caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
                 caseNew.HerokuPracticeCode__c = herokuCode;
