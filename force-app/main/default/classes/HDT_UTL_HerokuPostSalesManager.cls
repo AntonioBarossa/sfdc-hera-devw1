@@ -24,8 +24,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String c = cl.FieldsJSON__c;
         HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse mrrResponse = 
             (HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse) JSON.deserialize(c,HDT_WRP_HerokuPostSalesProva.HDT_WRP_MultiResponse.class);
-        System.debug('Case Phase --> '+currentCase.Phase__c);
-        if(currentCase.Phase__c == 'Da Inviare'){
+        System.debug('Case Phase --> '+currentCase.TecnicalPhase__c);
+        if(currentCase.TecnicalPhase__c == 'Da Inviare'){
             return mrrResponse;
         } else {
             return null;
@@ -140,7 +140,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             System.debug('SRV_Class_HerokuPracticeCode--> '+herokuCode);
 
             caseNew.Id = currentCase.Id;
-            caseNew.Phase__c = phase;
+            caseNew.TecnicalPhase__c = phase;
             caseNew.Description = errorMessage;
             if(herokuCode != null && herokuCode != ''){
                 caseNew.HerokuPracticeCode__c = herokuCode;
@@ -201,7 +201,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentPhase.indexOf('Annullamento') > -1){
                         nextPhase = 'Annullamento - ' + nextPhase;
                     }
-                currentCase.Phase__c = nextPhase;
+                currentCase.TecnicalPhase__c = nextPhase;
             }
             if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
@@ -228,7 +228,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
                 //no action needed
             }else{
-                currentCase.Phase__c = nextPhase;
+                currentCase.TecnicalPhase__c = nextPhase;
                 handleEntityUpdate(reqWrp);
             }
 
@@ -246,7 +246,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
-                currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
+                currentCase.TecnicalPhase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
             }
             if(reqWrp.requestMap.get('MESSAGGIO') != null && reqWrp.requestMap.get('MESSAGGIO') != ''){
                 String description = recordCase.Description != null?recordCase.Description:'';
@@ -258,8 +258,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){
-            currentCase.Phase__c = 'Annullato';
+        if(currentCase.TecnicalPhase__c == 'Annullamento - Esito OK da DL/SII'){
+            currentCase.TecnicalPhase__c = 'Annullato';
             updateFuture(JSON.serialize(currentCase));
         }
         return caseUpdate;
@@ -338,7 +338,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                 }
                             }
                             currentCase.Status = 'In Lavorazione';
-                            currentCase.Phase__c = 'In Lavorazione SAP';
+                            currentCase.TecnicalPhase__c = 'In Lavorazione SAP';
                         }when 'Morosità'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
                         }when else{
