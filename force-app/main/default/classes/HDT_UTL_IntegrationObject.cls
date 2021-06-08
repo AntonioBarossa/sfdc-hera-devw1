@@ -3,7 +3,8 @@ public class HDT_UTL_IntegrationObject{
 	public static Map<String,String> generateQueryString(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationParentObject jsonStructure, String recordId){
 		String queryQ = 'SELECT ' + jsonStructure.fields;
 		String fromQ = ' FROM '+ jsonStructure.objectName;
-		String whereQ = ' WHERE Id =\''+ recordId + '\'';
+		String controllingField = jsonStructure.controllingField;
+		String whereQ = ' WHERE ' + controllingFieldId + ' =\''+ recordId + '\'';
 
 		String fieldLookup = '';
 		for(HDT_WRP_IntegrationObject.HDT_WRP_IntegrationLookupObject singleLookupObject : jsonStructure.lookupObject){

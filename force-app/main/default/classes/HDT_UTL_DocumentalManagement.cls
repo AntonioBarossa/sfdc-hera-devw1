@@ -190,33 +190,39 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			System.debug('Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentSendTracking ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 		}
 	}
-	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
 		Case caseObject = (Case) recordsList[0];
 		Account accountObject = (Account) caseObject.Account;
-		Contract contractObject = (Contract) caseObject.Contract__r;
+		Contact contactObject = (Contact) caseObject.Contact;
 		List<DocumentSelected__c> documentSelectedObjectList = (List<DocumentSelected__c> ) caseObject.documenti_selezionati__r;
 		List<sObject> listCase = new List<sObject>();
 		listCase.add(caseObject);
 		System.debug('listCase ' + listCase);
 		List<sObject> listAccount = new List<sObject>();
 		listAccount.add(accountObject);
-		List<sObject> listContract = new List<sObject>();
-		listContract.add(contractObject);
+		List<sObject> listContact = new List<sObject>();
+		listContact.add(contactObject);
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
-			'Case' => listCase, 'Account' => listAccount, 'Contract' => listContract, 'DocumentSelected__c' => documentSelectedObjectList
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
 		};
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		toReturn.add(mapStringObjectRecords);
 		return toReturn;
 
 	}
-	private static List<Map<String,List<sObject>>> getRecordObjectsListContext2(List<SObject> recordsList){
+	private static List<Map<String,List<sObject>>> getRecordObjectsListContext1(List<SObject> recordsList){
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>();
 		for(Order singleOrder : (List<Order>) recordsList){
 			mapStringObjectRecords = new Map<String,List<sObject>>();
 			
 			List<OrderItem> orderItemList = new List<OrderItem>();
+			List<OrderItem> orderItemVasList = new List<OrderItem>();
+			//USER
+			User seller = (User) singleOrder.SaleBy__r;
+			List<User> userList = new List<User>();
+			userList.add(seller);
+			mapStringObjectRecords.put('Seller' ,userList);
 			//ACCOUNT
 			Account account = (Account) singleOrder.Account;
 			List<Account> accountList = new List<Account>();
@@ -226,7 +232,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			Contact contact = (Contact) singleOrder.Contact__r;
 			List<Contact> contactList = new List<Contact>();
 			contactList.add(contact);
-			mapStringObjectRecords.put('Contact' ,contactList);
+			mapStringObjectRecords.put('PrimaryContact' ,contactList);
 			//PARENT ORDER
 			Order parentOrder = (Order) singleOrder.ParentOrder__r;
 			List<sObject> parentOrderList = new List<sObject>();
@@ -241,20 +247,22 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			mapStringObjectRecords.put('Account' ,accountList);
 			for(OrderItem singleOrderItem : (List<OrderItem>)  singleOrder.OrderItems){
 				orderItemList = new List<OrderItem>();
-				String family = '';//singleOrderItem.Family__c;
-				orderItemList.add(singleOrderItem);
+				String family = singleOrderItem.ProductFamily__c;
 				if(family == 'Offerta commerciale'){
+					orderItemList.add(singleOrderItem);
 					mapStringObjectRecords.put('ItemCommercialOffer' ,orderItemList);
 				}else if(family == 'VAS Prodotto' || family == 'VAS Servizio'){
+					orderItemList.add(singleOrderItem);
 					mapStringObjectRecords.put('ParentItemVAS' ,orderItemList);
 				}else if(family.equalsIgnoreCase('VAS Opzione servizio') || family.equalsIgnoreCase('VAS Opzione prodotto') || family.equalsIgnoreCase('VAS Fatturabili')){
-					mapStringObjectRecords.put('ItemVAS' ,orderItemList);
+					orderItemVasList.add(singleOrderItem);
+					mapStringObjectRecords.put('ItemVAS' ,orderItemVasList);
 				}else if(family.indexOf('Bonus') > -1){
+					orderItemList.add(singleOrderItem);
 					mapStringObjectRecords.put('ItemBonus' ,orderItemList);
-					 
 				}else if(family.indexOf('Promozione') > -1){
+					orderItemList.add(singleOrderItem);
 					mapStringObjectRecords.put('ItemPromotion' ,orderItemList);
-					 
 				}
 			}
 			toReturn.add(new Map<String,List<sObject>>(mapStringObjectRecords));
@@ -335,7 +343,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	public static String getValue(String objectString, String fieldString, Integer index,Map<String,List<sObject>> inputs,Map<String,Object> formParams){
         String retVal = '';
 		try {
-			if(inputs.get(objectString) != null && inputs.get(objectString).size()>0){
+			if(inputs.get(objectString) != null && inputs.get(objectString).size()>0 && inputs.get(objectString)[0] != null){
 				if(inputs.get(objectString)[index].get(fieldString) != null){
 					retVal = String.valueOf(inputs.get(objectString)[index].get(fieldString));
 				}
@@ -343,31 +351,35 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				retVal = String.valueOf(formParams.get(fieldString));
 			}
 		} catch (Exception ex) {
-			System.debug(ex.getMessage() + ' at Line:' + ex.getLineNumber());
+			System.debug(objectString + ' ' + fieldString +' '+ index+ ' '+ ex.getMessage() + ' at Line:' + ex.getLineNumber());
 		}
         return retVal;
     }
 	public static String getValueFromObject(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord, Integer index,Map<String,Object> formParams){
 		String result = '';
-		if(singleRecord.object1 != null && singleRecord.object1 != ''){
+		if(singleRecord.object1 != null && singleRecord.object1 != '' && singleRecord.field1 != null){
             result = getValue(singleRecord.object1,singleRecord.field1,index,inputs,formParams);
 		}
 
-		if(result == '' && singleRecord.object2 != null && singleRecord.object2 != ''){
+		if(result == '' && singleRecord.object2 != null && singleRecord.object2 != '' && singleRecord.field2 != null){
 			result = getValue(singleRecord.object2,singleRecord.field2,index,inputs,formParams);
 		}
 
-		if(result == '' && singleRecord.object3 != null && singleRecord.object3 != ''){
+		if(result == '' && singleRecord.object3 != null && singleRecord.object3 != '' && singleRecord.field3 != null){
             result = getValue(singleRecord.object3,singleRecord.field3,index,inputs,formParams);
 		}
-		if(result == '' && singleRecord.object4 != null && singleRecord.object4 != ''){
+		if(result == '' && singleRecord.object4 != null && singleRecord.object4 != '' && singleRecord.field4 != null){
             result = getValue(singleRecord.object4,singleRecord.field4,index,inputs,formParams);
 		}
 
 		if(result != null && result != ''){
 			if(singleRecord.isData != null && singleRecord.isData == 'Y' ){
-				Date dateObj = Date.valueOf(result);
-				result = transformDate(dateObj);
+				try {
+					Date dateObj = Date.valueOf(result);
+					result = transformDate(dateObj);
+				} catch (Exception ex) {
+					System.debug('Attenzione! Rimuovere flag is data nella sezione' + singleRecord.recordType);
+				}
 			}else if(singleRecord.manageAmount != null && singleRecord.manageAmount == 'Y'){
 				result = manageAmountDot(result);
 			}
@@ -405,9 +417,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String resultToReturn = '';
 		String jolly = '';
 		Integer i = 0;
-		System.debug('expression ' + expression);
+		//System.debug('expression ' + expression);
         expressionArray = expression.split('\\|');
-		System.debug('expressionArray ' + expressionArray);
+		//System.debug('expressionArray ' + expressionArray);
 		try{
 			if(expressionArray.size()>0){
 				while(i<expressionArray.size()){
@@ -479,6 +491,9 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						break;
 					}
 					if(result2 != 'ELSE'){
+						if(result2.equalsIgnoreCase('noValue')){
+							resultToReturn = '';
+						}
 						resultToReturn = result2;
 						break;
 					}
@@ -489,16 +504,16 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}
 			}
 		}catch(Exception ex){
-			System.debug(ex.getMessage() + ' ' + ex.getLineNumber());
+			System.debug('for expressione '+expression + ' ' + ex.getMessage() + ' ' + ex.getLineNumber());
 		}
         return resultToReturn;
 	}
 	public static String getDocumentalContext(String context){
 		switch on context {
-			when 'Case' {
+			when 'Order' {
 				return 'Context1';
 			}
-			when 'Order' {
+			when 'Case' {
 				return 'Context2';
 			}
 			when 'EC' {

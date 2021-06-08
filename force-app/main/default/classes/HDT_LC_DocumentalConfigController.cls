@@ -80,25 +80,25 @@ public inherited sharing class HDT_LC_DocumentalConfigController {
         List<Document> docList = new List<Document>();
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc1Structure;
         doc1Structure = convertMapToStructure(context1Map, doc1Structure);
-        Document doc1 = generateDocumentObject(doc1Structure, 'Context 1', folderId);
+        Document doc1 = generateDocumentObject(doc1Structure, 'Context1', folderId);
         docList.add(doc1);
         doc1Structure = null;
 
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc2Structure;
         doc2Structure = convertMapToStructure(context2Map, doc2Structure);
-        Document doc2 = generateDocumentObject(doc2Structure, 'Context 2', folderId);
+        Document doc2 = generateDocumentObject(doc2Structure, 'Context2', folderId);
         docList.add(doc2);
         doc2Structure = null;
 
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc3Structure;
         doc3Structure = convertMapToStructure(context3Map, doc3Structure);
-        Document doc3 = generateDocumentObject(doc3Structure, 'Context 3', folderId);
+        Document doc3 = generateDocumentObject(doc3Structure, 'Context3', folderId);
         docList.add(doc3);
         doc3Structure = null;
 
         HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure doc4Structure;
         doc4Structure = convertMapToStructure(context4Map, doc4Structure);
-        Document doc4 = generateDocumentObject(doc4Structure, 'Context 4', folderId);
+        Document doc4 = generateDocumentObject(doc4Structure, 'Context4', folderId);
         docList.add(doc4);
         doc4Structure = null;
 

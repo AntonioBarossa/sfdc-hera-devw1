@@ -16,15 +16,15 @@ public class HDT_SRV_DocumentalManagement{
 		List<Map<String,List<sObject>>> recordObjectsListMap = HDT_UTL_DocumentalManagement.getRecordObjectsList(recordList,documentalContext);
 		formParamsMap.put('Contesto',context);
 		for(Integer i=0; i < recordObjectsListMap.size(); i++){
-			driver = generateDriver(recordObjectsListMap[i], payloadStructure,formParamsMap);
+			driver = generateDriver(recordObjectsListMap[i], driverStructure,formParamsMap);
 			payload = generatePayload(recordObjectsListMap[i], payloadStructure,formParamsMap);
-			//System.debug(payload);
+			System.debug('Paylod ' + payload);
 			driverPayloadMap.put('driver', driver);
 			driverPayloadMap.put('payload', payload);
 			driverPayloadListMap.add(new Map<String,Object>(driverPayloadMap));
 		}
 		body = composeJSON(recordId, driverPayloadListMap);
-		//System.debug(body);
+		System.debug('Body ' + body);
 		//HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		//HDT_WS_DocumentalIntegration service = new HDT_WS_DocumentalIntegration();
 		//documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
@@ -147,6 +147,7 @@ public class HDT_SRV_DocumentalManagement{
 				}else{
 					value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
 				}
+				//System.debug('Value for ' + payloadField + ' is : ' + value);
 				driver.name = payloadField;
 				driver.value = value;
 				driverList.add(new HDT_WRP_DocumentalRequest.HDT_WRP_DocumentalDriver(driver));
@@ -222,6 +223,7 @@ public class HDT_SRV_DocumentalManagement{
 					payloadArray.add(fineRiga);
 					payload += String.join(payloadArray, div);
 					value = '';
+					recordNull=true;
 				}
 			}	
 		}
