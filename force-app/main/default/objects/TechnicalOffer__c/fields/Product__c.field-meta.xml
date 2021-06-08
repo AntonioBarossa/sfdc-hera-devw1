@@ -6,7 +6,7 @@
     <externalId>false</externalId>
     <label>Prodotto</label>
     <lookupFilter>
-        <active>true</active>
+        <active>false</active>
         <filterItems>
             <field>Product2.CategoryFamily__c</field>
             <operation>equals</operation>
