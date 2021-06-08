@@ -10,9 +10,9 @@ public class HDT_WS_CreditCheck {
     @AuraEnabled
     public static HDT_WS_CreditCheckResponse callService(String wrpVals){
         
-            system.debug('HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: wrpVals ----> ' + json.deserialize(wrpVals, inputWrapper.class));
+            system.debug('HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: wrpVals ----> ' + json.deserialize(wrpVals, HDT_VFC_InputWrapper.class));
             
-            HDT_WS_CreditCheckRequest req = new HDT_WS_CreditCheckRequest((inputWrapper)json.deserialize(wrpVals, inputWrapper.class));
+            HDT_WS_CreditCheckRequest req = new HDT_WS_CreditCheckRequest((HDT_VFC_InputWrapper)json.deserialize(wrpVals, HDT_VFC_InputWrapper.class));
             
             system.debug('HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: req ----> ');
             system.debug(JSON.serializepretty(req));
@@ -21,40 +21,40 @@ public class HDT_WS_CreditCheck {
             
             system.debug('HDT_WS_CreditCheck - HDT_WS_CreditCheckResponse - callService: res ----> ' + JSON.serialize(res));
             
-            return res;           
+            return res;                    
             
     }
 
-    public class inputWrapper {
+    public class HDT_VFC_InputWrapper {
 
-        Public String sistema;             // per ora inserire i valodi di default eEnergy  - DA DEFINIRE
-        Public String caso;                //                                               - DA DEFINIRE  / NON OBBLIGATORI
-        Public String crmEntity;           // Order.Name ??                                 - DA DEFINIRE
-        Public String crmId;               // Id dell'ordine        
-        Public String userId;              // CreateById dell'Ordine                        - DA DEFINIRE
-        Public String activationUser;      // CreateById dell'Ordine                        - DA DEFINIRE
-        Public String account;             // Account__c presente nell'order
-        Public String jobTitle;            // Channel
-        Public String internalCustomerId;  // Account__r.CustomerCode__c
-        Public String companyName;         // SalesCompany__c
-        Public String externalCustomerId;  // Account__r.FiscalCode__c      
-        Public String secondaryCustomerId; // Account__r.VATNumber__c       
-        Public String bpClass;             // Account__r.CustomerMarking__c
-        Public String bpCategory;          // Account__r.Category__c
-        Public String bpType;              // Account__r.Type__c                            - DA DEFINIRE
-        Public String customerType;        //                                               - DA DEFINIRE 
-        Public String address;             // ServicePoint__r.SupplyStreetName__c
-        Public String municipality;        // ServicePoint__r.SupplyCity__c
-        Public String district;            // ServicePoint__r.SupplyProvince__c
-        Public String postCode;            // ServicePoint__r.SupplyPostalCode__c 
-        Public String operation;           // ProcessType__c
-        Public String companyGroup;        // Inserire il default Hera S.p.A.               - DA DEFINIRE  
-        Public String market;              // Market__c
-        Public String offerType;           // CommercialProduct__c o Catalog__c
-        Public List<inputWrapperDetail> details;    
+        Public String sistema;             
+        Public String caso;                
+        Public String crmEntity;           
+        Public String crmId;               
+        Public String userId;              
+        Public String activationUser;      
+        Public String account;             
+        Public String jobTitle;            
+        Public String internalCustomerId;  
+        Public String companyName;         
+        Public String externalCustomerId;  
+        Public String secondaryCustomerId; 
+        Public String bpClass;             
+        Public String bpCategory;          
+        Public String bpType;              
+        Public String customerType;        
+        Public String address;             
+        Public String municipality;        
+        Public String district;            
+        Public String postCode;            
+        Public String operation;           
+        Public String companyGroup;        
+        Public String market;              
+        Public String offerType;           
+        Public List<HDT_VFC_InputWrapperDetail> details;    
     }
 
-    public class inputWrapperDetail {        
+    public class HDT_VFC_InputWrapperDetail {        
         Public String annualConsumption;
         Public String commodity;
         Public String totalConsumption;

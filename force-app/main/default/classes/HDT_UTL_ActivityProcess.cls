@@ -12,7 +12,7 @@ public with sharing class HDT_UTL_ActivityProcess {
         // 3.1.2 Invio richiesta e ricezione risposta 
         // Alla ricezione di un esito KO, verrà creata su Salesforce un Activities
 
-        List<wrts_prcgvr__Activity__c> list_activity = new List<wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> listActivity = new List<wrts_prcgvr__Activity__c>();
         Id rtOldCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_KoPrecedeteCliente' limit 1].id;
         Id rtNewCustomer = [SELECT Id FROM RecordType WHERE DeveloperName = 'HDT_RT_CreditCheckKO' limit 1].id;
 
@@ -38,12 +38,12 @@ public with sharing class HDT_UTL_ActivityProcess {
                 activity.Status__c = 'Creata';                
                 activity.Note__c = order.CommentForDL__c;
 
-                list_activity.add(activity);
+                listActivity.add(activity);
             }
 
         }
 
-        insert list_activity;
+        insert listActivity;
     
     }
 }

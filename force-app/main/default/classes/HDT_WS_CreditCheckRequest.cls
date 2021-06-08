@@ -29,10 +29,10 @@ public class HDT_WS_CreditCheckRequest  extends HDT_WS_Request {
     @AuraEnabled Public String companyGroup;
     @AuraEnabled Public String market;
     @AuraEnabled Public String offerType;    
-    @AuraEnabled Public List<HDT_WS_CreditCheck.inputWrapperDetail> details;
+    @AuraEnabled Public List<HDT_WS_CreditCheck.HDT_VFC_InputWrapperDetail> details;
     
     
-    public HDT_WS_CreditCheckRequest(HDT_WS_CreditCheck.inputWrapper wrpVals){
+    public HDT_WS_CreditCheckRequest(HDT_WS_CreditCheck.HDT_VFC_InputWrapper wrpVals){
 
         system.debug('HDT_WS_CreditCheckRequest - HDT_WS_CreditCheckRequest: wrpVals ----> ' + JSON.serialize(wrpVals));   
 
