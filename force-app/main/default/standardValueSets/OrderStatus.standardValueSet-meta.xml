@@ -26,4 +26,10 @@
         <label>Annullato</label>
         <groupingString>Activated</groupingString>
     </standardValue>
+    <standardValue>
+        <fullName>Completato</fullName>
+        <default>false</default>
+        <label>Completato</label>
+        <groupingString>Activated</groupingString>
+    </standardValue>
 </StandardValueSet>
