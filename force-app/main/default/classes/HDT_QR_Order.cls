@@ -164,7 +164,19 @@ public inherited sharing class HDT_QR_Order {
             Market__c,                       // @Picchiri Calcolo della date Switch in 26/05/21
             MarketOrigin__c,                 // @Picchiri Calcolo della date Switch in 27/05/21
             VoltageLevel__c,                 // @Picchiri Calcolo della date Switch in 27/05/21 
-            SupplyType__c                    // @Picchiri Calcolo della date Switch in 27/05/21 
+            SupplyType__c,                   // @Picchiri Calcolo della date Switch in 27/05/21 
+            CreatedById,                     // @Picchiri Calcolo della date Switch in 31/05/21 
+            Account.CustomerCode__c,         // @Picchiri Calcolo della date Switch in 31/05/21             
+            Account.CustomerMarking__c,      // @Picchiri Calcolo della date Switch in 31/05/21             
+            Account.Type,                    // @Picchiri Calcolo della date Switch in 31/05/21 
+            ServicePoint__r.SupplyStreetName__c, // @Picchiri Calcolo della date Switch in 31/05/21 ERRORE
+		    ServicePoint__r.SupplyCity__c,       // @Picchiri Calcolo della date Switch in 31/05/21 
+		    ServicePoint__r.SupplyProvince__c,   // @Picchiri Calcolo della date Switch in 31/05/21 
+		    ServicePoint__r.SupplyPostalCode__c, // @Picchiri Calcolo della date Switch in 31/05/21             
+            CommercialProduct__c,                // @Picchiri Calcolo della date Switch in 31/05/21 
+            AnnualConsumption__c,                 // @Picchiri Calcolo della date Switch in 31/05/21 
+            Catalog__c,                               // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
+            ServicePoint__r.AnnualConsumption__c     // [ 07/06/2021 alessio.murru@webresults.it - credit check ]
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

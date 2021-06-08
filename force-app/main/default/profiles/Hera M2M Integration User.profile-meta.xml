@@ -4754,6 +4754,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.FlyingRequest__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.FourthLevelComplaintClassification__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -5634,17 +5639,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.ServicePointType__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.ServicePoint__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.ServicePointCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ServicePointType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.ShipmentAddressAssign__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SiebelAttributeData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SiebelMainInfo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6345,6 +6365,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.birthCity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.BusinessNameWeb__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11078,6 +11103,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Commodity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Order.CommodityFormula__c</field>
         <readable>true</readable>
@@ -11350,6 +11380,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.FacilitationExcise__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.FlyingRequest__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12165,6 +12200,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.ShippingStreetToponym__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelAttributeData__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SiebelMainInfo__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28227,8 +28272,20 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_CCheckNew</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_HCPoint</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_HCPoint</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_CCheckOld</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_KoPrecedeteCliente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_Protocollo</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_RegisterActivity</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_Sportello</layout>
