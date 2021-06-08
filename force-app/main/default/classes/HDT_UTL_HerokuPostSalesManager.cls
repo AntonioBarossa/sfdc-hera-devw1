@@ -201,7 +201,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentPhase.indexOf('Annullamento') > -1){
                         nextPhase = 'Annullamento - ' + nextPhase;
                     }
-                currentCase.TecnicalPhase__c = nextPhase;
+                currentCase.Phase__c = nextPhase;
             }
             if(reqWrp.requestMap.get('COD_PRAT_DISTR') != null && reqWrp.requestMap.get('COD_PRAT_DISTR') != ''){
                 currentCase.DistributorPracticeCode__c = reqWrp.requestMap.get('COD_PRAT_DISTR');
@@ -227,7 +227,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             if(currentPhase.indexOf('KO') > -1 && nextPhase.equalsIgnoreCase('Completata')){
                 //no action needed
             }else{
-                currentCase.TecnicalPhase__c = nextPhase;
+                currentCase.Phase__c = nextPhase;
                 handleEntityUpdate(reqWrp);
             }
 
@@ -242,7 +242,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             if(reqWrp.requestMap.get('TIPO_ATTIVITA') != null && reqWrp.requestMap.get('TIPO_ATTIVITA') != ''){
-                currentCase.TecnicalPhase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
+                currentCase.Phase__c = reqWrp.requestMap.get('TIPO_ATTIVITA'); 
             }
             if(reqWrp.requestMap.get('MESSAGGIO') != null && reqWrp.requestMap.get('MESSAGGIO') != ''){
                 String description = recordCase.Description != null?recordCase.Description:'';
@@ -254,8 +254,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-        if(currentCase.TecnicalPhase__c == 'Annullamento - Esito OK da DL/SII'){
-            currentCase.TecnicalPhase__c = 'Annullato';
+        if(currentCase.Phase__c == 'Annullamento - Esito OK da DL/SII'){
+            currentCase.Phase__c = 'Annullato';
             updateFuture(JSON.serialize(currentCase));
         }
         return caseUpdate;
@@ -334,7 +334,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                                 }
                             }
                             currentCase.Status = 'In Lavorazione';
-                            currentCase.TecnicalPhase__c = 'In Lavorazione SAP';
+                            currentCase.Phase__c = 'In Lavorazione SAP';
                         }when 'Morosità'{
                             currentCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Morosita').getRecordTypeId();
                         }when else{
