@@ -1,24 +1,24 @@
 public with sharing class HDT_LC_DocumentalPhaseHistory {
     @AuraEnabled
     public static List<SObject> getDocumentalPhaseHistory(String recordId, String objectApiName){
-        String fromQ = '';
-        String whereQ = '';
-        String fieldsQ = 'Id, OldValue, NewValue, CreatedDate';
-        String orderQ = 'CreatedDate Desc';
+        String fromString = '';
+        String whereString = '';
+        String fieldsString = 'Id, OldValue, NewValue, CreatedDate';
+        String orderString = 'CreatedDate Desc';
         String queryString = 'SELECT ';
         switch on objectApiName {
             when 'Case' {
-                whereQ = 'CaseId = \''+recordId +'\'';
-                fromQ = 'CaseHistory';
+                whereString = 'CaseId = \''+recordId +'\'';
+                fromString = 'CaseHistory';
             }
             when else {
-                whereQ = 'OrderId = \''+recordId +'\'';
-                fromQ = 'OrderHistory';
+                whereString = 'OrderId = \''+recordId +'\'';
+                fromString = 'OrderHistory';
             }
         }
-        whereQ += ' AND Field =\'DocumentalPhase__c\'';
-        queryString += fieldsQ + ' FROM ' + fromQ + ' WHERE ' + whereQ + ' ORDER BY ' + orderQ;
+        whereString += ' AND Field =\'DocumentalPhase__c\'';
+        queryString += fieldsString + ' FROM ' + fromString + ' WHERE ' + whereString + ' ORDER BY ' + orderString;
         System.debug('query ' + queryString);
-        return HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
+        return HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
     }
 }

@@ -138,26 +138,26 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	}
 
 	public static sObject getProcessRecord(Id requestId, String context){
-		String fieldQ = '';
-		String fromQ = '';
-		String whereQ = 'Id = \''+requestId + '\'';
+		String fieldString = '';
+		String fromString = '';
+		String whereString = 'Id = \''+requestId + '\'';
 		String queryString = 'SELECT ';
 		switch on context {
 			when 'Order' {
-				fieldQ = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c';
-				fromQ = 'Order';
+				fieldString = 'Id, AccountId,DocSendingMethod__c,Email__c,SignMode__c,DocumentalPhase__c';
+				fromString = 'Order';
 			}
 			when 'Case'{
-				fieldQ = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c';
-				fromQ = 'Case';
+				fieldString = 'Id, AccountId,SendMode__c ,Email__c,SignMode__c,DocumentalPhase__c';
+				fromString = 'Case';
 			}
 			when else {
-				fieldQ = 'Id, AccountId,SendMode__c ,Email__c';
-				fromQ = 'Account';
+				fieldString = 'Id, AccountId,SendMode__c ,Email__c';
+				fromString = 'Account';
 			}
 		}
-		queryString += fieldQ + ' FROM ' + fromQ + ' WHERE ' + whereQ;
-		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
+		queryString += fieldString + ' FROM ' + fromString + ' WHERE ' + whereString;
+		List<sObject> toReturnList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromString);
 		return toReturnList[0];
 	}
 	public static void createDocumentSendTracking(String message, Id requestId, String envelopeId,sObject processRecord){
@@ -388,18 +388,18 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 	}
 	
 	public static String getConcatValueFromObject(Map<String,List<sObject>> inputs,HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord singleRecord){
-		String result1 = '';
-		String result2 = '';
+		String resultOne = '';
+		String resultTwo = '';
 		if(singleRecord.object1 != null && singleRecord.object1 != ''){
-			result1 = getValue(singleRecord.object1,singleRecord.field1,0,inputs,null);
+			resultOne = getValue(singleRecord.object1,singleRecord.field1,0,inputs,null);
 		}
-		if(result1 != null && result1 != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
-			result2 += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
+		if(resultOne != null && resultOne != '' && singleRecord.object2 != null && singleRecord.object2 != ''){
+			resultTwo += getValue(singleRecord.object2,singleRecord.field2,0,inputs,null);
 		}
 		if(singleRecord.separetor == 'space')
-			return result1 + ' ' + result2;
+			return resultOne + ' ' + resultTwo;
 		else
-			return result1 + singleRecord.separetor + result2;
+			return resultOne + singleRecord.separetor + resultTwo;
 	}
 
 	public static String calculateExpression(Map<String,List<sObject>> inputs,String expression, Map<String,Object> formParams){
@@ -413,7 +413,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String operatore = '';
 		String condizione = '';
 		String result = '';
-		String result2 = '';
+		String resultTwo = '';
 		String resultToReturn = '';
 		String jolly = '';
 		Integer i = 0;
@@ -431,7 +431,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					operatore = expressionArray[i++];
 					condizione = expressionArray[i++];
 					result = expressionArray[i++];
-					result2 = expressionArray[i++];
+					resultTwo = expressionArray[i++];
 					
 					objectCondition = fieldArray[0];
 					fieldCondition = fieldArray[1];
@@ -446,8 +446,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						result = getValue(objectField1[0],objectField1[1],0,inputs,formParams);
 					}
 				
-					if(result2.indexOf('.')>-1){
-						objectField2 = result2.split('\\.');
+					if(resultTwo.indexOf('.')>-1){
+						objectField2 = resultTwo.split('\\.');
 						/*if(inputs.get(objectField2[0]) != null && inputs.get(objectField2[0]).size()>0){
 							if(inputs.get(objectField2[0])[0].get(objectField2[1]) != null){
 								result = String.valueOf(inputs.get(objectField2[0])[0].get(objectField2[1]));
@@ -490,11 +490,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					}else{
 						break;
 					}
-					if(result2 != 'ELSE'){
-						if(result2.equalsIgnoreCase('noValue')){
+					if(resultTwo != 'ELSE'){
+						if(resultTwo.equalsIgnoreCase('noValue')){
 							resultToReturn = '';
 						}
-						resultToReturn = result2;
+						resultToReturn = resultTwo;
 						break;
 					}
 				}

@@ -233,7 +233,7 @@ public class HDT_SRV_DocumentalManagement{
 	}
 
 	public static String getSignModeConfiguration(String processType, String source){
-        String configurationJSON = '';
+        String configurationJson = '';
 		try{
 			Map<String,String> sendMode = new Map<String,String>();
 			Map<String,String> signMode = new Map<String,String>();
@@ -265,11 +265,11 @@ public class HDT_SRV_DocumentalManagement{
 				}
 				signSendConfigurationList.add(new HDT_WRP_SignModeConfiguration(signSendConfiguration));
 			}
-			configurationJSON = JSON.serialize(signSendConfigurationList);
+			configurationJson = JSON.serialize(signSendConfigurationList);
 		}catch(Exception ex){
-            configurationJSON = ex.getMessage() + ' ' + ex.getLineNumber();
+            configurationJson = ex.getMessage() + ' ' + ex.getLineNumber();
         }
-        return configurationJSON;
+        return configurationJson;
     }
 
 	public class HDT_WRP_SignModeConfiguration{
