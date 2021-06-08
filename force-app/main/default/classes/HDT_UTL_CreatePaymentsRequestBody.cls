@@ -207,7 +207,6 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
         }
     }
 
-    @Future
     private static void updateFuture(String inputString){
 
         Case c = (Case) JSON.deserialize(inputString, Case.class);
