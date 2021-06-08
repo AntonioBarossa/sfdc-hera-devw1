@@ -23,109 +23,44 @@
                 <label>Product Family</label>
             </value>
             <value>
-                <fullName>Stato</fullName>
+                <fullName>Family</fullName>
                 <default>false</default>
-                <label>Stato</label>
+                <label>Family</label>
             </value>
             <value>
-                <fullName>Consumo Annuo VAS</fullName>
+                <fullName>Old__c</fullName>
                 <default>false</default>
-                <label>Consumo Annuo VAS</label>
+                <label>Old__c</label>
             </value>
             <value>
-                <fullName>Consumo Annuo</fullName>
+                <fullName>CategoryFamily__c</fullName>
                 <default>false</default>
-                <label>Consumo Annuo</label>
+                <label>CategoryFamily__c</label>
             </value>
             <value>
-                <fullName>Agenzia</fullName>
+                <fullName>ReferenceMarket__c</fullName>
                 <default>false</default>
-                <label>Agenzia</label>
+                <label>ReferenceMarket__c</label>
             </value>
             <value>
-                <fullName>Campagna</fullName>
+                <fullName>Version__c</fullName>
                 <default>false</default>
-                <label>Campagna</label>
+                <label>Version__c</label>
             </value>
             <value>
-                <fullName>Canale Cliente</fullName>
+                <fullName>Service__c</fullName>
                 <default>false</default>
-                <label>Canale Cliente</label>
+                <label>Service__c</label>
             </value>
             <value>
-                <fullName>Categoria Famiglia</fullName>
+                <fullName>TypeOffer__c</fullName>
                 <default>false</default>
-                <label>Categoria Famiglia</label>
+                <label>TypeOffer__c</label>
             </value>
             <value>
-                <fullName>Categoria Uso</fullName>
+                <fullName>DescrizioneSAP__c</fullName>
                 <default>false</default>
-                <label>Categoria Uso</label>
-            </value>
-            <value>
-                <fullName>Responsabile Company</fullName>
-                <default>false</default>
-                <label>Responsabile Company</label>
-            </value>
-            <value>
-                <fullName>Convenzione</fullName>
-                <default>false</default>
-                <label>Convenzione</label>
-            </value>
-            <value>
-                <fullName>Fascia eta cliente</fullName>
-                <default>false</default>
-                <label>Fascia eta cliente</label>
-            </value>
-            <value>
-                <fullName>Fascia consumo EE</fullName>
-                <default>false</default>
-                <label>Fascia consumo EE</label>
-            </value>
-            <value>
-                <fullName>Fascia consumo Gas</fullName>
-                <default>false</default>
-                <label>Fascia consumo Gas</label>
-            </value>
-            <value>
-                <fullName>Login</fullName>
-                <default>false</default>
-                <label>Login</label>
-            </value>
-            <value>
-                <fullName>Gruppo Login</fullName>
-                <default>false</default>
-                <label>Gruppo Login</label>
-            </value>
-            <value>
-                <fullName>Mercato Cliente</fullName>
-                <default>false</default>
-                <label>Mercato Cliente</label>
-            </value>
-            <value>
-                <fullName>Nuovo Cliente</fullName>
-                <default>false</default>
-                <label>Nuovo Cliente</label>
-            </value>
-            <value>
-                <fullName>Opzione Energia verde</fullName>
-                <default>false</default>
-                <label>Opzione Energia verde</label>
-            </value>
-            <value>
-                <fullName>Fascia potenza</fullName>
-                <default>false</default>
-                <label>Fascia potenza</label>
-            </value>
-            <value>
-                <fullName>Servizio</fullName>
-                <default>false</default>
-                <label>Servizio</label>
-            </value>
-            <value>
-                <fullName>Categoria Cliente</fullName>
-                <default>false</default>
-                <label>Categoria Cliente</label>
+                <label>DescrizioneSAP__c</label>
             </value>
         </valueSetDefinition>
     </valueSet>

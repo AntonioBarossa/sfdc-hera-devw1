@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AZ_ImportDatetime__c</fullName>
+    <description>AZ_ImportDatetime</description>
+    <externalDeveloperName>AZ_ImportDatetime</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data importazione Archivio</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customLabels>
+        <label>Errore</label>
+        <name>Error</name>
+    </customLabels>
+    <customLabels>
+        <label>Caricatore Massivo</label>
+        <name>MassiveLoader</name>
+    </customLabels>
+    <customLabels>
+        <label>Completa Import</label>
+        <name>MassiveLoaderCompleteImport</name>
+    </customLabels>
+    <customLabels>
+        <label>Quale azione si vuole effettuare?</label>
+        <name>MassiveLoaderDesiredAction</name>
+    </customLabels>
+    <customLabels>
+        <label>Export Template</label>
+        <name>MassiveLoaderExportTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label>Il formato del file caricato non è corretto. Possono essere caricati solo file con formato CSV.</label>
+        <name>MassiveLoaderExtentionError</name>
+    </customLabels>
+    <customLabels>
+        <label>Il file caricato non è conforme rispetto al processo selezionato.</label>
+        <name>MassiveLoaderFileCheckError</name>
+    </customLabels>
+    <customLabels>
+        <label>Download CSV</label>
+        <name>MassiveLoaderFileDownload</name>
+    </customLabels>
+    <customLabels>
+        <label>Il nome del file caricato non corrisponde al processo selezionato.</label>
+        <name>MassiveLoaderFileNameError</name>
+    </customLabels>
+    <customLabels>
+        <label>Il template selezionato non è stato trovato.</label>
+        <name>MassiveLoaderFileNotFound</name>
+    </customLabels>
+    <customLabels>
+        <label>Carica File</label>
+        <name>MassiveLoaderFileUpload</name>
+    </customLabels>
+    <customLabels>
+        <label>Vai al Record</label>
+        <name>MassiveLoaderGoToRecord</name>
+    </customLabels>
+    <customLabels>
+        <label>Import Processi</label>
+        <name>MassiveLoaderImportProcesses</name>
+    </customLabels>
+    <customLabels>
+        <label>Il caricamento è terminato con successo. ID:{0}</label>
+        <name>MassiveLoaderImportSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label>C&apos;è stato un errore di parsing nel file. Controllare il file e ricaricarlo.</label>
+        <name>MassiveLoaderParsingError</name>
+    </customLabels>
+    <customLabels>
+        <label>Selezionare una Tipologia</label>
+        <name>MassiveLoaderPicklistPlaceholder</name>
+    </customLabels>
+    <customLabels>
+        <label>Tipologia di richiesta</label>
+        <name>MassiveLoaderRequestType</name>
+    </customLabels>
+    <customLabels>
+        <label>Reset</label>
+        <name>MassiveLoaderReset</name>
+    </customLabels>
+    <customLabels>
+        <label>Successo</label>
+        <name>Success</name>
+    </customLabels>
+</Translations>

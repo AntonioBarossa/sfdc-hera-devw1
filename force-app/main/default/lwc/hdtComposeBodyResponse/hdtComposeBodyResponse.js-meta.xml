@@ -17,6 +17,7 @@
         <targetConfig targets="lightning__FlowScreen">
             
             <property name="recordId" type="String" label="Record Id" description="Id of the record to edit" role="inputOnly"/>
+            <property name="nextLabel" type="String" label="Next Label" description="Label of Next Button" role="inputOnly"/>
             
         </targetConfig>
         

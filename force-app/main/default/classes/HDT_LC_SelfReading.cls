@@ -127,6 +127,7 @@ public inherited sharing class HDT_LC_SelfReading {
             System.debug(ex.getMessage()); 
         }
 
+        System.debug('Response Verifica Ultima Lettura: ' + sapIntegration.responseBody);
         return sapIntegration.responseBody;
     }
 

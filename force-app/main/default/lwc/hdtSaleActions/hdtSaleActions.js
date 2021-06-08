@@ -12,6 +12,7 @@ export default class hdtSaleActions extends LightningElement {
     dialogTitle;
     dialogMessage;
     eventType;
+    isCancelConfirmationDialogVisible = false;
 
     get disabledSave(){
         let result = false;
@@ -70,9 +71,9 @@ export default class hdtSaleActions extends LightningElement {
         });
     }
 
-    cancelSaleCall(){
+    cancelSaleCall(cancellationReasonParam){
         this.loading = true;
-        cancel({sale: this.saleRecord}).then(data =>{
+        cancel({sale: this.saleRecord, cancellationReason: cancellationReasonParam}).then(data =>{
             this.loading = false;
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
@@ -120,10 +121,17 @@ export default class hdtSaleActions extends LightningElement {
     }
 
     handleCancel(){
-        this.eventType = 'cancelSale';
-        this.dialogTitle = 'Anulla ' + this.saleRecord.Name;
-        this.dialogMessage = 'Vuoi anullare ' + this.saleRecord.Name + ' ?';
-        this.isDialogVisible = true;
+        this.isCancelConfirmationDialogVisible = true;
+    }
+
+    handleCancelConfirmationDialogResponse(event){
+        if(event.detail.status == true){
+
+            this.cancelSaleCall(event.detail.choice);
+
+        } else {
+            this.isCancelConfirmationDialogVisible = false;
+        }
     }
 
     handleDialogResponse(event){
@@ -132,9 +140,6 @@ export default class hdtSaleActions extends LightningElement {
             switch (this.eventType) {
                 case 'saveSale':
                     this.saveSaleCall();
-                    break;
-                case 'cancelSale':
-                    this.cancelSaleCall();
                     break;
                 default:
                     break;

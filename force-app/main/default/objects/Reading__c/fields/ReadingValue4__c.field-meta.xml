@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ReadingValue4__c</fullName>
     <externalId>false</externalId>
-    <label>Lettura 4</label>
+    <label>Lettura F1</label>
     <precision>18</precision>
     <required>false</required>
     <scale>0</scale>

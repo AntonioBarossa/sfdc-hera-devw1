@@ -26,6 +26,13 @@
 
     <template if:false={showError} >
         <lightning-card  icon-name={iconName} title={tableTitle}>
+
+            <template if:true={showSocialBonusButton}>
+                <div class="slds-p-around_medium lgc-bg slds-p-left_small" slot="actions">
+                    <lightning-button label="Importo Bonus Sociale" onclick={openKnowledgeArticle}></lightning-button>
+                </div>
+            </template>
+
             <div class={height1} >
                 <lightning-datatable
                         key-field="id"

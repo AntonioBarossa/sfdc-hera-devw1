@@ -3,52 +3,30 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtEligibilityCriteriaParameters extends LightningElement {
 
-    /*@track fields = [
-       {row: '1', innerList: ['Agenzia', 'Marcatura Cliente']},
-       {row: '2', innerList: ['ATC Gas', 'Nuovo Cliente']},
-       {row: '3', innerList: ['Campagna', 'Opzione Energia Verde']},
-       {row: '4', innerList: ['Canale', 'Opzione Gas Verde']},
-       {row: '6', innerList: ['Codice Criterio', 'Provenienza']},
-       {row: '7', innerList: ['Company Owner', 'Raggruppamento di Login']},
-       {row: '8', innerList: ['Eta Cliente', 'Ruolo Profilo']},
-       {row: '9', innerList: ['Fascia', 'Tipo Apparecchiatura']},
-       {row: '10', innerList: ['Login', 'Tipo Cliente Categoria']}
-    ];*/
-
-    @track fieldsList = [
-        {
-          id: '1',
-          list: [
-            'Channel__c',
-            'Agency__c',
-            'Login__c',
-            'LoginGroup__c',
-            'ClientMarker__c',
-            'CategoryTypeClient__c',
-            'NewClient__c',
-            'CompanyOwner__c',
-            'ClientAge__c',
-            'Campaign__c'
-          ]
-        },
-        {
-          id: '2',
-          list: [
-            'EquipmenType__c',
-            'UseCategory__c',
-            'ConsumptionRangeEE__c',
-            'ConsumptionRangeGAS__c',
-            'PowerRange__c',
-            'OriginMarket__c',
-            'ResidentDeliveryAddress__c',
-            'PaymentMode__c',
-            'BillSendingMethod__c'
-          ]
-        }
-      ];
-
     @api productid;
     @api eligibilityId;
+
+    multiPicklistFields = [
+      {label: 'Tipo Cliente Categoria', fieldName: 'CategoryTypeClient__c', operator: 'CategoryTypeClientOperator__c'},
+      {label: 'Canale', fieldName: 'Channel__c', operator: 'ChannelOperator__c'},
+      {label: 'Mercato Provenienza', fieldName: 'OriginMarket__c', operator: 'OriginMarketOperator__c'},
+      {label: 'Marcatura Cliente', fieldName: 'ClientMarker__c', operator: 'ClientMarkerOperator__c'},
+      {label: 'Company Owner', fieldName: 'CompanyOwner__c', operator: 'CompanyOwnerOperator__c'}
+    ];
+
+    fieldsList = [
+      'EquipmenType__c',            'PromoCode__c',
+      'ResidentDeliveryAddress__c', 'NewClient__c',
+      'LoginGroup__c',              'Agency__c',
+      'UseCategory__c',             'CampaignName__c'
+    ];
+
+    complexFieldsList = [
+      {fieldName: 'ClientAge', fields: ['ClientAgeMin__c', 'ClientAgeMax__c']},
+      {fieldName: 'PowerRange', fields: ['PowerRangeMin__c', 'PowerRangeMax__c']},
+      {fieldName: 'ConsumptionRangeEE', fields: ['ConsumptionRangeEEmin__c', 'ConsumptionRangeEEmax__c']},
+      {fieldName: 'ConsumptionRangeGAS', fields: ['ConsumptionRangeGASmin__c', 'ConsumptionRangeGASmax__c']}
+    ];
 
     handleLoad(event){
         console.log('>>>> handleLoad ');
@@ -86,15 +64,57 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         criteriaObj[field.fieldName] = field.value;
       });
 
-      var jsonRecord = JSON.stringify(criteriaObj);
-      console.log(jsonRecord);
-      const saverecord = new CustomEvent("saverecord", {
-        detail: {record: jsonRecord}
-      });
+      if(this.eligibilityId != undefined){
+        criteriaObj.Id = this.eligibilityId;
+      }
 
-      // Dispatches the event.
-      this.dispatchEvent(saverecord);
-      //this.template.querySelector('lightning-record-edit-form').submit();
+      var checkResult = this.checkObjParameters(criteriaObj);
+
+      if(checkResult.error){
+        try{
+
+          const evt = new ShowToastEvent({
+              title: 'ATTENZIONE',
+              message: checkResult.message,
+              variant: 'warning'
+          });
+          this.dispatchEvent(evt);
+
+        } catch(e){
+          console.log('>>>>>>>>>>>>>>>> ERROR');
+          console.log(e);
+        }
+      } else {
+        var jsonRecord = JSON.stringify(criteriaObj);
+        console.log(jsonRecord);
+        const saverecord = new CustomEvent("saverecord", {
+          detail: {record: jsonRecord}
+        });
+  
+        // Dispatches the event.
+        this.dispatchEvent(saverecord);
+        //this.template.querySelector('lightning-record-edit-form').submit();
+      }
+    }
+
+    checkObjParameters(obj){
+      var checkResult = {};
+      
+      console.log('>>>>>>>>>> ' + obj.CategoryTypeClient__c);
+
+      if(obj.CategoryTypeClient__c != null){
+        var res = obj.CategoryTypeClient__c.split(";");
+        
+        if(res.length > 100){
+          checkResult.error = true;
+          checkResult.message = 'Non puoi selezionare più di 100 valori!';
+          return checkResult;
+        }
+      }
+
+      checkResult.error = false;
+      
+      return checkResult;
     }
 
 }

@@ -22,6 +22,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                     Date minusDate = todayDate.addYears(-5);
                     dbr.dataFine = convertDateFormat(String.valueOf(todayDate));
                     dbr.dataInizio = convertDateFormat(String.valueOf(minusDate));
+                    dbr.tipoTransazione = 'EC2';
+                    dbr.aggregazione = '03';
                 }
                 //Tasto Aggrega&Filtri 
                 when 'joinFilter' {
@@ -139,8 +141,10 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
 
             }
             //Note Var. IVA
-            when 'NVI' {
+            when 'EC3' {
                 dbr.aggregazione = '03';
+                //for bug fix
+                dbr.tipoEstrattoConto = 'NVI';
             }
             //Pagamenti e compensazioni
             when 'EC5' {
@@ -187,10 +191,12 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         List<HDT_TabConfiguration__mdt> endPointMdt;
         endPointMdt = HDT_QR_AccountStatement.getTabConfigurationMetaData(endPointMdt, tabCode);
 
-        if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
+        //if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c) && !String.isEmpty(endPointMdt[0].Authorization__c)){
+        if(endPointMdt.size()>0 && !String.isEmpty(endPointMdt[0].EndpointService__c)){
+            //httpObj.endPoint = endPointMdt[0].EndpointService__c;
+            //httpObj.headersMap.put('Authorization', endPointMdt[0].Authorization__c);
 
             httpObj.endPoint = endPointMdt[0].EndpointService__c;
-            httpObj.headersMap.put('Authorization', endPointMdt[0].Authorization__c);
 
             if(endPointMdt[0].UseMockService__c){
                 httpObj.endPoint = Label.MockEndPointAccountStatement;
@@ -210,27 +216,17 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
     public static AccountStatementFilter__c executeControllForSingleRecord(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj record, AccountStatementFilter__c serviceCatalog){
 
         serviceCatalog.Multiselect__c = false;
-
-        //- Se il campo Numero fattura del primo livello informativo è diverso da null, settare il campo IsInvoice__c a true; (solo nel caso della selezione di un solo record)
         serviceCatalog.IsInvoice__c = (String.isEmpty(record.numeroFattura)) ? false : true;
-
-        //- Se il campo Residuo del record selezionato al primo livello è < 0, settare il campo OnCredit__c a true; (solo nel caso della selezione di un solo record)
         serviceCatalog.OnCredit__c = (Decimal.valueOf(record.residuo)<0) ? true : false;
-
-        //- Settare il campo Vendor__c con il valore del campo Società del primo livello;
         serviceCatalog.Vendor__c = (String.isEmpty(record.societa)) ? '' : record.societa;
 
-        //- Se il campo Prescrivibile del 1 livello è uguale a X e il campo DEL_569 è null, settare il campo IsPrescribable__c a true;
-        if(!String.isEmpty(record.fatturaPrescrivibile) && record.fatturaPrescrivibile.equalsIgnoreCase('X') ){
+        if(!String.isEmpty(record.fatturaPrescrivibile) && record.fatturaPrescrivibile.equalsIgnoreCase('X') && String.isEmpty(record.DEL_569) ){
             serviceCatalog.IsPrescribable__c = true;
         } else {
             serviceCatalog.IsPrescribable__c = false;
         }
 
-        //- Se tutte le fatture selezionate presentano il campo RATEIZZATO = SI, settare il campo IsInstallment__c = true;
         serviceCatalog.IsInstallment__c = (!String.isEmpty(record.rateizzato) && record.rateizzato.equalsIgnoreCase('SI')) ? true : false;
-
-        //- Se le fatture selezionate hanno tutte lo stesso conto contrattuale, impostare a true il campo SameCA__c;
         serviceCatalog.SameCA__c = false;
 
         return serviceCatalog;
@@ -240,9 +236,15 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
     public static AccountStatementFilter__c executeControllForMultipleRecords(List<HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj> recordsList, AccountStatementFilter__c serviceCatalog){
         Set<String> isInstallmentSet = new Set<String>();
         Set<String> sameCaSet = new Set<String>();
+        Set<String> raiFeeSet = new Set<String>();
         Decimal tot = 0;
 
         for(HDT_WRP_AccountStatement.HDT_WRP_DeserializeObj obj : recordsList){
+
+            if(!String.isEmpty(obj.documentoPareggio) && obj.documentoPareggio.substring(0, 2).equalsIgnoreCase('27')){
+                raiFeeSet.add(obj.documentoPareggio);
+            }
+
             if(!String.isEmpty(obj.rateizzato)){
                 isInstallmentSet.add(obj.rateizzato);
             }
@@ -253,7 +255,6 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
             tot += Decimal.valueOf(obj.residuo);
         }
 
-        //- Se tutte le fatture selezionate presentano il campo RATEIZZATO = SI, settare il campo IsInstallment__c = true;
         switch on isInstallmentSet.size() {
             when 0 {
                 serviceCatalog.IsInstallment__c = false;
@@ -272,10 +273,9 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
         }
 
         serviceCatalog.OnCredit__c = (tot<0) ? true : false;
-
-        //Se le fatture selezionate hanno tutte lo stesso conto contrattuale, impostare a true il campo SameCA__c; 
         serviceCatalog.SameCA__c = (sameCaSet.size() > 1) ? false : true;
         serviceCatalog.Multiselect__c = true;
+        serviceCatalog.IsRaiFee__c = (serviceCatalog.Context__c.equalsIgnoreCase('EC2L') && raiFeeSet.size() > 0);
 
         return serviceCatalog;
     }

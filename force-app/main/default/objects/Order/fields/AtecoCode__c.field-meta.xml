@@ -3,7 +3,7 @@
     <fullName>AtecoCode__c</fullName>
     <description>combinazione alfanumerica che identifica una ATtività ECOnomica</description>
     <externalId>false</externalId>
-    <label>Codice Ateco</label>
+    <label>Cod ISTAT Ateco</label>
     <length>255</length>
     <required>false</required>
     <trackHistory>false</trackHistory>

@@ -10,10 +10,12 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
     @api accountdetails;
     @api filterString = '';
     @api tabCode;
+    @api accountId;
     @track columns;// = columns;
     @track selectedMenuItem;
     @track filterApplied = false;
     @track buttonList;
+    showButton = false;
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
     sortedBy;
@@ -52,12 +54,13 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         getSecondLevelColumns({tabValue: this.tabCode})
         .then(result => {
             console.log('# getSecondLevelColumns #');
+            console.log('# getSecondLevelColumns: ' + result.success + ' - ' + result.message);
 
             if(result.success){
 
-                console.log('# getSecondLevelColumns: ' + result.message);
-
                 this.columns = result.columnObj;//columns;
+                console.log('# buttonList: ' + result.buttonList.length);
+
                 this.buttonList = result.buttonList;
 
                 this.columns.forEach((i) => {
@@ -66,6 +69,8 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
                         this.fieldsToFilter.push({fieldName: i.fieldName, label: i.label});
                     }
                 });
+
+                this.showButton = true;
 
             } else {
                 this.showError = true;
@@ -237,7 +242,7 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
 
         this.openMainSpinner();
 
-        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: '', records: recordsString, level: '2'})
+        serviceCatalogBackendHandler({tabValue: this.tabCode, recordId: this.accountId, records: recordsString, level: '2'})
         .then(result => {
             console.log('# service Catalog BackenHandler #');
 
@@ -287,6 +292,26 @@ export default class HdtAccountStatementDetailViewer extends LightningElement {
         });
         // Dispatches the event.
         this.dispatchEvent(removeSpinner);
+    }
+
+    showSingleBill(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'success'
+            })
+        );
+    }
+
+    showRate(event){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title: 'Attenzione',
+                message: 'Servizio in sviluppo',
+                variant: 'success'
+            })
+        );
     }
 
 }

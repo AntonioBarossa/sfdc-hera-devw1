@@ -4,7 +4,7 @@
     <defaultValue>false</defaultValue>
     <description>usato per indicare se è presente(o meno) la presenza dell&apos;opzone Energia Verde per il dato record di di Product Option</description>
     <externalId>false</externalId>
-    <label>Green Gas Option</label>
+    <label>Opzione Gas Verde</label>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

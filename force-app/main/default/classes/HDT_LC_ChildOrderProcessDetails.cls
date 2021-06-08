@@ -26,33 +26,26 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         //INIZIO SVILUPPI EVERIS 
         Boolean isVolture,
         Boolean isRetroactive,
-        Boolean isReading){
+        Boolean isReading,
+        Date readingDate){
         //FINE SVILUPPI EVERIS
 
         System.debug('updateProcessStep: ' + order);
         System.debug('isVolture: '+isVolture);
 
-        if(isVolture == null){
-            isVolture = false;
-        }
-
         //INIZIO SVILUPPI EVERIS CHECK VOLTURA
-        if(isVolture){
+        if(isVolture != null && isVolture == true){
             //Commentato finche non viene creato campo a DM
-            /*if(order.NonRegMeter__c != null && order.NonRegMeter__c == true){
-
+            if(order.NotRegisteredMeterCase__c != null && order.NotRegisteredMeterCase__c == true){
                 if(caseQr.getChageNonRegMeterByOrder(order.Id).size() == 0){                
-
                     throw new AuraHandledException('Necessario completare un Case di \'Cambio Contatore Non Registrato\'');
                 
                 }
-
-            } else*/ if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
+            } else if(order.EffectiveDate__c != null && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
 
                 if(orderQr.getRoleNameByRoleId() != 'CEO'){
 
                     throw new AuraHandledException('Impossibile inserire una data inferiore a 3 gg lavorativi');
-
 
                 } else{
 
@@ -65,11 +58,54 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
                 order.Subprocess__c = 'Con Autolettura';
 
-            } 
+            }
+
+            if(readingDate != null && (isReading != null && isReading == true)){
+
+                order.ReadingCustomerDate__c = readingDate;
+
+            }
         }
         //FINE SVILUPPI EVERIS CHECK VOLTURA 
+
+        exeChecks(order);
 
         orderSrv.updateRecord(order);
     }
 
+    private static void exeChecks(Order order){
+        //Check RequestOption__c (Opzione di Distribuzione) START
+        if(order.ImplantType__c != null && order.PowerCommitted__c != null){
+            orderSrv.checkReadAccess('RequestOption__c');
+            Order oldOrder = orderQr.getRecordById(order.Id);
+
+            String calculatedRequestOption = HDT_UTL_OrderFieldsAlignment.calculateRequestedOption(oldOrder.ImplantType__c, oldOrder.PowerCommitted__c);
+
+            if (calculatedRequestOption != oldOrder.RequestOption__c) {
+                throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
+            }
+        } else if(order.RequestOption__c != null){
+            orderSrv.checkReadAccess('RequestOption__c');
+            Order oldOrder = orderQr.getRecordById(order.Id);
+
+            if (order.RequestOption__c != '' && oldOrder.RequestOption__c != null && order.RequestOption__c != oldOrder.RequestOption__c) {
+                throw new AuraHandledException('Il campo Opzione di Distribuzione e stato cambiato');
+            }
+        }
+        //Check RequestOption__c (Opzione di Distribuzione) END
+    }
+
+    // @START Alessio Murru Credit Check 07.06.21   
+    @AuraEnabled
+    public static Order retrieveOrderCreditCheck(String idOrder){
+        try {
+            return [SELECT Id, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c, CreditCheckDescription__c
+                    FROM Order 
+                    WHERE Id = :idOrder
+                    WITH SECURITY_ENFORCED];
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
+    // @END Alessio Murru Credit Check 07.06.21   
 }

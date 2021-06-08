@@ -6,9 +6,9 @@
         <label>GENERICI 10%-01</label>
     </customValue>
     <customValue>
-        <fullName>GENERICI 20%-02</fullName>
+        <fullName>GENERICI 22%-02</fullName>
         <default>false</default>
-        <label>GENERICI 20%-02</label>
+        <label>GENERICI 22%-02</label>
     </customValue>
     <customValue>
         <fullName>SOC. CONTROLLATE 10%-03</fullName>
@@ -16,9 +16,9 @@
         <label>SOC. CONTROLLATE 10%-03</label>
     </customValue>
     <customValue>
-        <fullName>SOC.CONTROLLATE 20%-04</fullName>
+        <fullName>SOC.CONTROLLATE 22%-04</fullName>
         <default>false</default>
-        <label>SOC.CONTROLLATE 20%-04</label>
+        <label>SOC.CONTROLLATE 22%-04</label>
     </customValue>
     <customValue>
         <fullName>SOC. COLLEGATE 10%-05</fullName>
@@ -26,9 +26,9 @@
         <label>SOC. COLLEGATE 10%-05</label>
     </customValue>
     <customValue>
-        <fullName>SOC. COLLEGATE 20%-06</fullName>
+        <fullName>SOC. COLLEGATE 22%-06</fullName>
         <default>false</default>
-        <label>SOC. COLLEGATE 20%-06</label>
+        <label>SOC. COLLEGATE 22%-06</label>
     </customValue>
     <customValue>
         <fullName>SOC. CONTROLLANTI 10%-07</fullName>
@@ -36,9 +36,9 @@
         <label>SOC. CONTROLLANTI 10%-07</label>
     </customValue>
     <customValue>
-        <fullName>SOC. CONTROLLANTI 20%-08</fullName>
+        <fullName>SOC. CONTROLLANTI 22%-08</fullName>
         <default>false</default>
-        <label>SOC. CONTROLLANTI 20%-08</label>
+        <label>SOC. CONTROLLANTI 22%-08</label>
     </customValue>
     <customValue>
         <fullName>SOCIETA&apos; DEL GRUPPO 10%-09</fullName>
@@ -46,9 +46,9 @@
         <label>SOCIETA&apos; DEL GRUPPO 10%-09</label>
     </customValue>
     <customValue>
-        <fullName>SOCIETA&apos; DEL GRUPPO 20%-10</fullName>
+        <fullName>SOCIETA&apos; DEL GRUPPO 22%-10</fullName>
         <default>false</default>
-        <label>SOCIETA&apos; DEL GRUPPO 20%-10</label>
+        <label>SOCIETA&apos; DEL GRUPPO 22%-10</label>
     </customValue>
     <customValue>
         <fullName>NON IMP. ART. 72-12</fullName>
@@ -66,9 +66,9 @@
         <label>SOC. PARTECIPATE 10%-14</label>
     </customValue>
     <customValue>
-        <fullName>SOC. PARTECIPATE 20%-16</fullName>
+        <fullName>SOC. PARTECIPATE 22%-16</fullName>
         <default>false</default>
-        <label>SOC. PARTECIPATE 20%-16</label>
+        <label>SOC. PARTECIPATE 22%-16</label>
     </customValue>
     <customValue>
         <fullName>LIVIGNO/CAMPIONE FUOR CAMPO-19</fullName>

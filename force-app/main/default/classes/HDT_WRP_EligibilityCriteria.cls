@@ -10,12 +10,14 @@ public inherited sharing class HDT_WRP_EligibilityCriteria {
     public class HDT_WRP_CityZipCode {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
+        @AuraEnabled public Boolean isEditable;
         @AuraEnabled public List<HDT_WRP_Region> regionList;
     }
 
 	public class HDT_WRP_Region {
 		@AuraEnabled public String regionName;
 		@AuraEnabled public String regionCode;
+        @AuraEnabled public Boolean eligibleForAllCities;
 		@AuraEnabled public List<HDT_WRP_Province> provinceList;
 	}
 
@@ -32,10 +34,16 @@ public inherited sharing class HDT_WRP_EligibilityCriteria {
         @AuraEnabled public String value;
     }
 
+    public class HDT_WRP_MunicipalityTreeObj {
+        @AuraEnabled public Boolean eligibleForAllCities;
+        @AuraEnabled public List<HDT_WRP_TreeObjItem> treeItemList;
+        @AuraEnabled public List<HDT_WRP_TreeObjItem> treeNotAvailableItemList;
+    }
+
     public class HDT_WRP_TreeObjItem {
-        @AuraEnabled public String  label;
-        @AuraEnabled public String  name;
-        @AuraEnabled public Boolean  expanded;
+        @AuraEnabled public String label;
+        @AuraEnabled public String name;
+        @AuraEnabled public Boolean expanded;
         @AuraEnabled public List<HDT_WRP_TreeObjItem> items;
     }
 

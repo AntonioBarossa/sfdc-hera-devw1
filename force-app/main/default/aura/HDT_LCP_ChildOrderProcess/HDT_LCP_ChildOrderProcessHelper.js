@@ -123,6 +123,8 @@
            
             });
 
+            $A.get('e.force:refreshView').fire();
+
             
             
             /*workspaceAPI.openSubtab({//Subtab({ NON SEMBRA ESSERE NECESSARIO APRIRE UN NUOVO TAB

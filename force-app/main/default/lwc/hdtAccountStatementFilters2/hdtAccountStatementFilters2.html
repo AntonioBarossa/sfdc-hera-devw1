@@ -12,7 +12,7 @@
                 <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
                 <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
                 </button>
-                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Filtri 2</h2>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Filtri</h2>
             </header>
 
             <!-- modal body start -->        
@@ -33,7 +33,7 @@
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj1.name} >
                                     {joinFilterObj.obj1.label}
                                 </label>
-                                <div class="slds-form-element__control slds-m-top_medium">
+                                <div class="slds-form-element__control">
                                     <c-hdt-custom-lookup   
                                         unique-key={contractItem.code}
                                         value-id={contractItem.selectedId}
@@ -56,7 +56,7 @@
                                 <label class="slds-form-element__label slds-m-left_medium" for={joinFilterObj.obj2.name} >
                                     {joinFilterObj.obj2.label}
                                 </label>
-                                <div class="slds-form-element__control slds-m-top_medium">
+                                <div class="slds-form-element__control">
                                     <c-hdt-custom-lookup   
                                         unique-key={billingItem.code}
                                         value-id={billingItem.selectedId}

@@ -4,7 +4,8 @@
         createRecordEvent.setParams({
             "entityApiName": "Lead",
             "defaultFieldValues": {
-       			 'Company' : 'Default' 
+       			 'Company' : 'Default' ,
+                'LeadSource' : 'Creazione manuale'    
     		}
         });
         createRecordEvent.fire();

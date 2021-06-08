@@ -17,8 +17,14 @@
                 <label>RID</label>
             </value>
             <value>
+                <fullName>Bollettino postale</fullName>
+                <default>false</default>
+                <label>Bollettino postale</label>
+            </value>
+            <value>
                 <fullName>Bollettino</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>Bollettino</label>
             </value>
         </valueSetDefinition>

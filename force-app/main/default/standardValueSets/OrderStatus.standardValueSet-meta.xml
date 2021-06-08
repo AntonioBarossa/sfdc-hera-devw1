@@ -20,4 +20,10 @@
         <label>Chiuso</label>
         <groupingString>Activated</groupingString>
     </standardValue>
+    <standardValue>
+        <fullName>Annullato</fullName>
+        <default>false</default>
+        <label>Annullato</label>
+        <groupingString>Activated</groupingString>
+    </standardValue>
 </StandardValueSet>

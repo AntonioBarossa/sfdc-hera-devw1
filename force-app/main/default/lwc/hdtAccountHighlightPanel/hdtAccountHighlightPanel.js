@@ -24,7 +24,7 @@ export default class HdtAccountHighlightPanel extends LightningElement {
         this.iconStatus = this.inactiveCampaignsIcon;
 
         getAllCampaigns({ id: this.recordId, objectName: this.objectApiName, category: this.campaignCategory, channel: this.campaignChannel }).then(data => {
-            if (data.length > 0) {
+            if (data != null && data.length > 0) {
                 this.allCampaigns = data;
                 //check for at least one active Inbound Campaign
                 this.activeCampaigns = data.filter((item) => {

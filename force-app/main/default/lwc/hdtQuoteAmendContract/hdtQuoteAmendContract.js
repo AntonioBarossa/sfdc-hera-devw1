@@ -14,7 +14,7 @@ export default class HdtQuoteAmendContract extends LightningElement {
         let link = '';
 
         if(this.isCommunity) {
-            console.log('amend - isCommunity');
+            link = '/HC/s/sfdcpage/%2Fapex%2Fsbqq__AmendContract?id=' + contractId;
         } else {
             link = '/apex/sbqq__AmendContract?id=' + contractId;
         }

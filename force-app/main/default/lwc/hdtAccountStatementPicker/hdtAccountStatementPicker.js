@@ -17,7 +17,7 @@ const columns = [
     },
     { label: 'Conto Contrattuale', fieldName: 'contoContrattuale'},
     { label: 'Numero Documento', fieldName: 'xblnr'},
-    { label: 'Numero Bollettino', fieldName: 'boll'},
+    { label: 'Numero Bollettino', fieldName: 'bollo'},
     { label: 'Totale Copertina', fieldName: 'totPagare' },
     { label: 'Tipo', fieldName: 'tipoDocDesc' },
     { label: 'Totale Documento', fieldName: 'totFattura'},
@@ -61,6 +61,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     @api caseId;
     @api processType;
     @api accountId;
+    @api billingProblems;
     @track documents;
     @track wiredDocumentsResult;
     @track showSpinner = true;
@@ -128,6 +129,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
     handleSelection(event){
         console.log('# from lookup: ' + event.detail.selectedId + ' - ' + event.detail.name + ' - ' + event.detail.code);
         this.contractAccount = event.detail.name
+        this.billingProfileId = event.detail.selectedId;
     }
     handleSubmit(){
         this.startDate = this.template.querySelector("lightning-input[data-id=fromDate]").value;
@@ -171,7 +173,7 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params.xblnr = numeroDocumento;
             }
             if(numeroBollettino){
-                params.bollo = numeroBollettino;
+                params.bollo = '*' + numeroBollettino;
             }
             console.log(JSON.stringify(params));
             getStatements
@@ -179,12 +181,14 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 params:JSON.stringify(params)
             }).then(data => {
                 console.log(JSON.parse(data));
-                console.log(data.length);
-                if(data && data.length>0){
+                //console.log(data.length);
+                if(data != null && data.length>0){
                     this.data = JSON.parse(data);
                     this.showTable = true;
+                    this.showSpinner=false;
                 }else{
                     this.showTable = false;
+                    this.showSpinner=false;
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Attenzione',
@@ -196,13 +200,15 @@ export default class HdtAccountStatementPicker extends LightningElement {
                 
             }).catch(err => {
                 this.showTable = false;
+                this.showSpinner=false;
                 console.log(err);
             });
             
         }catch(error){
             console.error(error);
+            this.showSpinner=false;
         }
-        this.showSpinner=false;
+        
     }
 
     formatDate(date) {
@@ -264,42 +270,77 @@ export default class HdtAccountStatementPicker extends LightningElement {
         this.showSpinner=false;
     }
     addDocument(row){
-        this.showSpinner=true;
-        if(row['rateizzato'] != null && row['rateizzato'] === 'X' ){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Non è possibile selezionare documenti rateizzati',
-                    variant: 'error',
-                    mode: 'sticky'
-                })
-            );
-            this.showSpinner=false;
-            return null;
-        }
-        if(row['tipoDoc'] != null && row['tipoDoc'] === 'RATEIZZAZIONI' && this.processType === 'Piano Rateizzazione'){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: 'Per questo processo non è possibile selezionare documenti di tipo RATEIZZAZIONE',
-                    variant: 'error',
-                    mode: 'sticky'
-                })
-            );
-            this.showSpinner=false;
-            return null;
-        }
-        if(row['xblnr'] != null && row['xblnr'] != ''){
-            var document = this.documents.find(function(post, index) {
-                if(post.DocumentNumber__c == row['xblnr'])
-                    return true;
-            });
-            if(document){
-                if(document['ExpirationDate__c'] === this.formatDateForInsert(row['bmEndDt'])){
+        try{
+            var alreadyExist = false;
+            this.showSpinner=true;
+            if(row['rateizzato'] != null && row['rateizzato'] === 'X' ){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Non è possibile selezionare documenti rateizzati',
+                        variant: 'error'
+                    })
+                );
+                this.showSpinner=false;
+                return null;
+            }
+            if(row['tipoDoc'] != null && row['tipoDoc'] === 'RATEIZZAZIONI' && this.processType === 'Piano Rateizzazione'){
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione',
+                        message: 'Per questo processo non è possibile selezionare documenti di tipo RATEIZZAZIONE',
+                        variant: 'error'
+                    })
+                );
+                this.showSpinner=false;
+                return null;
+            }
+            if(row['xblnr'] != null && row['xblnr'] != '' && this.documents){
+                /*var document = this.documents.find(function(post, index) {
+                    if(post.DocumentNumber__c == row['xblnr'])
+                        return true;
+                });*/
+                var documentList = this.documents.filter(function(item){
+                    return item.DocumentNumber__c == row['xblnr']});
+                console.log(documentList);
+                documentList.forEach(document => {
+                    if(document['ExpirationDate__c'] === this.formatDateForInsert(row['bmEndDt'])){
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Attenzione',
+                                message: 'Questo documento è stato già selezionato',
+                                variant: 'error',
+                            })
+                        );
+                        this.showSpinner=false;
+                        alreadyExist = true;
+                        return null;
+                    }
+                });
+                if(alreadyExist)
+                    return null;
+                /*if(document){
+                    if(document['ExpirationDate__c'] === this.formatDateForInsert(row['bmEndDt'])){
+                        this.dispatchEvent(
+                            new ShowToastEvent({
+                                title: 'Attenzione',
+                                message: 'Questo documento è stato già selezionato',
+                                variant: 'error',
+                            })
+                        );
+                        this.showSpinner=false;
+                        return null;
+                    }
+                }*/
+            }
+            if(this.documents){
+                var ca = this.documents[0].ContractualAccount__c;
+                var selectedCa = row.contoContrattuale;
+                if(this.processType === 'Piano Rateizzazione' && ca != selectedCa){
                     this.dispatchEvent(
                         new ShowToastEvent({
                             title: 'Attenzione',
-                            message: 'Questo documento è stato già selezionato',
+                            message: 'Per questo processo non è possibile selezionare Documenti afferenti a CA differenti.',
                             variant: 'error',
                         })
                     );
@@ -307,41 +348,78 @@ export default class HdtAccountStatementPicker extends LightningElement {
                     return null;
                 }
             }
-        }
-        console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
-        var fields = {
-            'DocumentNumber__c' : row.xblnr, 
-            'Bill__c' : row.boll, 
-            'Type__c' : row.tipoDocDesc,
-            'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
-            'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
-            'Amount__c' : row.totFattura,
-            //'Residue__c' : row.residuo,
-            'Extension__c' : row.sollecitato,
-            'PaymentMode__c' : row.payment,
-            'TvFeeResidual__c' : row.restituzioneCanoneRai,
-            'IssuingCompany__c' : row.socEmittenteDesc,
-            'ContractualAccount__c' : row.contoContrattuale,
-            'TotalCommunicationPayment__c' : row.totPagare,
-            'Case__c' : this.caseId,        
-        };
-        var objRecordInput = {'apiName' : 'DocumentSelected__c', fields};
-        createRecord(objRecordInput).then(response => {
-            this.dispatchEvent(
+            console.log(row['bmEndDt'] + ' ' + this.formatDateForInsert(row['bmEndDt']));
+            var fields = {
+                'Name' : row.xblnr,
+                'DocumentNumber__c' : row.xblnr, 
+                'Bill__c' : row.boll, 
+                'Type__c' : row.tipoDocDesc,
+                'IssueDate__c' : this.formatDateForInsert(row.bmItemDt),
+                'ExpirationDate__c' : this.formatDateForInsert(row.bmEndDt),
+                'Amount__c' : row.totFattura,
+                'DocumentResidue__c' : row.residuo,
+                'Extension__c' : row.sollecitato,
+                'PaymentMode__c' : row.payment,
+                'TvFeeResidual__c' : row.restituzioneCanoneRai,
+                'IssuingCompany__c' : row.socEmittenteDesc,
+                'ContractualAccount__c' : row.contoContrattuale,
+                'TotalCommunicationPayment__c' : row.totPagare,
+                'Case__c' : this.caseId,        
+            };
+            var objRecordInput = {'apiName' : 'DocumentSelected__c', fields};
+            createRecord(objRecordInput).then(response => {
+                this.showSpinner=false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Success',
+                        message: 'Documento selezionato con successo',
+                        variant: 'success'
+                    })
+                );
+                this.getDocuments();
+            }).catch(error => {
+                this.showSpinner=false;
                 new ShowToastEvent({
-                    title: 'Success',
-                    message: 'Documento selezionato con successo',
-                    variant: 'success'
+                    title: 'Errore',
+                    message: 'Non è possibile creare questo documento',
+                    variant: 'error'
+                })
+            });
+            
+        }catch(error){
+            console.error(error);
+        }
+    }
+
+    //Metodo per Variazioni
+    @api
+    checkBillingProblems(){
+
+        console.log('Check Started');
+        console.log('BillingProblem--> '+this.billingProblems);
+        console.log('Documents--> '+this.documents);
+
+        if(this.billingProblems && (this.documents === null || this.documents === undefined)){
+
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Errore',
+                message: 'Necessario selezionare almeno una fattura',
+                variant: 'error'
                 })
             );
-            this.getDocuments();
-        }).catch(error => {
-            new ShowToastEvent({
-                title: 'Errore',
-                message: 'Non è possibile creare questo documento',
-                variant: 'error'
-            })
-        });
-        this.showSpinner=false;
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
     }
+
+    @api
+    getBillingProfileId(){
+        return this.billingProfileId;
+    }
+
 }

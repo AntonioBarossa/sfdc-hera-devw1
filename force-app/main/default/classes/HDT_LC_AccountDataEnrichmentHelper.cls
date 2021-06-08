@@ -65,29 +65,18 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
         // Create callout request
         HttpRequest req = new HttpRequest();
         req.setMethod('POST');
+        req.setEndpoint(enrichmentbMetadataList[0].Credential__c);
         
-        if(enrichmentbMetadataList[0].UseMock__c){
-/*             req.setEndpoint('https://monted-dev-ed.my.salesforce.com/services/apexrest/' + type);
-            req.setHeader('Authorization', 'Bearer ' + Label.MockSessionId);
-            switch on type {
-                when 'cmor' {
-                    httpBody = '{"bp": "1001475349"}';
-                }
-                when 'raiFee' {
-                    httpBody = '{"bp": "1001635149"}';
-                }
-                when 'socialBonus' {
-                    httpBody = '{"bp": "1001803014"}';
-                }
-            } */
-        } else {
-            req.setEndpoint(enrichmentbMetadataList[0].Credential__c);
-            req.setHeader('Authorization', enrichmentbMetadataList[0].Authorization__c);
-        }
+        //if(!enrichmentbMetadataList[0].Credential__c.containsIgnoreCase('callout:') && !String.isEmpty(enrichmentbMetadataList[0].Authorization__c)){
+        //    req.setHeader('Authorization', enrichmentbMetadataList[0].Authorization__c);
+        //}
 
         req.setHeader('Content-Type', 'application/json');
         req.setbody(httpBody);
         req.setTimeout(120000);
+
+        System.debug('>>> ' + String.valueOf(req));
+
         // Add callout request to continuation
         con.addHttpRequest(req);
         // Return the continuation

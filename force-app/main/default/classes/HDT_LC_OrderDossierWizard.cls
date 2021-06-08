@@ -96,22 +96,48 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     }
                     orderItemSrv.checkReadAccess('OrderId,BillingProfile__c');
                     List<OrderItem> orderItemsListWithBillingProfile = orderItemQr.getRecordsWithBillingProfile(listOrdersId);
+                    Boolean isDuplicated = false;
                     for (OrderItem orderItem : orderItemsListWithBillingProfile) {
                         if (ordersToUpdateMap.get(orderItem.OrderId) != null) {
                             Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
                             orderToUpdate.BillingProfile__c = orderItem.BillingProfile__c != null ? orderItem.BillingProfile__c : null;
-                            ordersToUpdate.add(orderToUpdate);
+                            
+                            for (Order ord : ordersToUpdate) {
+                                if (ord.Id == orderToUpdate.Id) {
+                                    isDuplicated = true;
+                                    break;
+                                }
+                            }
+    
+                            if (!isDuplicated) {
+                                ordersToUpdate.add(orderToUpdate);
+                            }
+    
+                            isDuplicated = false;
                         }
                     }
 
                     List<OrderItem> orderItemsAmend = orderItemQr.getRecordsWithAmend(listOrdersId);
                     system.debug('ordersToUpdate before: ' + ordersToUpdate);
                     system.debug('orderItemsAmend: ' + orderItemsAmend);
+                    
                     for (OrderItem orderItem : orderItemsAmend) {
                         Order orderToUpdate = ordersToUpdateMap.get(orderItem.OrderId);
                         system.debug('orderToUpdate: ' + orderToUpdate);
                         system.debug('ordersToUpdate after: ' + ordersToUpdate);
-                        ordersToUpdate.add(orderToUpdate);
+
+                        for (Order ord : ordersToUpdate) {
+                            if (ord.Id == orderToUpdate.Id) {
+                                isDuplicated = true;
+                                break;
+                            }
+                        }
+
+                        if (!isDuplicated) {
+                            ordersToUpdate.add(orderToUpdate);
+                        }
+
+                        isDuplicated = false;
                     }
 
 

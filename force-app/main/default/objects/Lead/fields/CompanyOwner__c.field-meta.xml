@@ -3,9 +3,10 @@
     <fullName>CompanyOwner__c</fullName>
     <description>Identifica la company di appartenenza</description>
     <externalId>false</externalId>
-    <label>Company Owner</label>
+    <label>Silos</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

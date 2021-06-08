@@ -79,7 +79,8 @@ public with sharing class HDT_QR_InformativeManager {
                     SalesCompany__c,
                     ContractId,
                     Subprocess__c,
-                    Cluster__c
+                    Cluster__c,
+                    ProcessType__c
                     FROM Order
                     WHERE Id = :recordId
                     WITH SECURITY_ENFORCED
@@ -127,7 +128,7 @@ public with sharing class HDT_QR_InformativeManager {
                     Contract__c*/
                     FROM Contract
                     WHERE ServicePoint__c =: recordId
-                    AND Status = 'Active'
+                    AND Status IN ('Active','Activated')
                     WITH SECURITY_ENFORCED
                     LIMIT 1];
                 }

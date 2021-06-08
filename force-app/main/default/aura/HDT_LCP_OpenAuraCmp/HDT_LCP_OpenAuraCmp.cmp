@@ -20,6 +20,8 @@
     <!--aggiunto per capire il context-->
     <aura:attribute name="context" type="String" />
 
+    <!--Attributi per inneschi da altri case-->
+    <aura:attribute name="parentRecordId" type="String"/>
 
     <lightning:workspaceAPI aura:id="workspace" />
     <aura:handler name="init" value="{!this}" action="{!c.openTabWithSubtab}" />

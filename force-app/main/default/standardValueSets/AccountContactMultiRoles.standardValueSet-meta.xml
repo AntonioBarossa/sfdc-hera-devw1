@@ -47,6 +47,36 @@
         <label>Other</label>
     </standardValue>
     <standardValue>
+        <fullName>Titolare</fullName>
+        <default>false</default>
+        <label>Titolare</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Legale rappresentante</fullName>
+        <default>false</default>
+        <label>Legale rappresentante</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Amministratore condominio</fullName>
+        <default>false</default>
+        <label>Amministratore condominio</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Familiare</fullName>
+        <default>false</default>
+        <label>Familiare</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dipendente azienda/collaboratore</fullName>
+        <default>false</default>
+        <label>Dipendente azienda/collaboratore</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Contatto secondario</fullName>
+        <default>false</default>
+        <label>Contatto secondario</label>
+    </standardValue>
+    <standardValue>
         <fullName>Referente SOL-APP</fullName>
         <default>false</default>
         <label>Referente SOL-APP</label>

@@ -4,9 +4,11 @@
     <description>la company owner legata al dato record di product option</description>
     <externalId>false</externalId>
     <label>Company Owner</label>
-    <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_CompanyOwner</valueSetName>
+    </valueSet>
 </CustomField>

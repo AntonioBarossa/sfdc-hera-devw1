@@ -159,7 +159,7 @@ public inherited sharing class HDT_LC_EditQuote {
     private static void assocBillingProfileContract(String contractId, String quoteId){
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
         List<Contract> contract = contractQr.getRecordById(contractId);
-        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByQuoteFilteredPaymentMethodNotNull(quoteId);
+        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsForContractOrderRefVas(quoteId);
 
         system.debug('HDT_LC_EditQuote - contract: ' + contract);
         system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
@@ -178,7 +178,7 @@ public inherited sharing class HDT_LC_EditQuote {
     private static void assocBillingProfileOrder(String orderId, String quoteId){
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,BillingProfile__c,Status');
         Order order = orderQr.getRecordById(orderId);
-        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsByQuoteFilteredPaymentMethodNotNull(quoteId);
+        List<SBQQ__QuoteLine__c> quoteLine = quoteLineQr.getRecordsForContractOrderRefVas(quoteId);
 
         system.debug('HDT_LC_EditQuote - order: ' + order);
         system.debug('HDT_LC_EditQuote - quoteLine: ' + quoteLine);
@@ -196,11 +196,39 @@ public inherited sharing class HDT_LC_EditQuote {
     
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-    * @description Associate ServicePoint to QuoteLines of type "POD"
+    * @description Manually Associate ServicePoint to QuoteLines of type "POD"
+    * @param String quoteId - SBQQ__Quote__c
+    */
+    private static void manualAssocPodToQuoteLine(String quoteId) {
+
+        List<SBQQ__QuoteLine__c> linkedQuoteLines = quoteLineQr.getLinkedQuoteLines(quoteId);
+
+        system.debug('manualAssocPodToQuoteLine - linkedQuoteLines: ' + linkedQuoteLines);
+
+        if(!linkedQuoteLines.isEmpty()) {
+            List<SBQQ__QuoteLine__c> quoteLinesToUpdate = new List<SBQQ__QuoteLine__c>();
+
+            for (SBQQ__QuoteLine__c ql : linkedQuoteLines) {
+                quoteLinesToUpdate.add(new SBQQ__QuoteLine__c(
+                    Id = ql.Id,
+                    ServicePoint__c = ql.ServicePointLinkItem__r.ServicePoint__c
+                ));
+            }
+
+            system.debug('manualAssocPodToQuoteLine - quoteLinesToUpdate: ' + quoteLinesToUpdate);
+
+            quoteLineSrv.updateRecords(quoteLinesToUpdate);
+        }
+
+    }
+    
+    /**
+    * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+    * @description Automatically Associate ServicePoint to QuoteLines of type "POD"
     * @param String saleId – Sale__c.Id
     * @param String quoteId - SBQQ__Quote__c
     */
-    private static void assocPodToQuoteLine(String saleId, String quoteId){
+    private static void autoAssocPodToQuoteLine(String saleId, String quoteId){
        
         //get all quoteLine pods
         quoteLineSrv.checkReadAccess('Name,SBQQ__Product__r.Name,SBQQ__Quote__r.Name,SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,ServicePoint__c');
@@ -310,7 +338,8 @@ public inherited sharing class HDT_LC_EditQuote {
         }
 
         if (!quote.IsVAS__c) {
-            assocPodToQuoteLine(saleId,quoteId);
+            manualAssocPodToQuoteLine(quoteId);
+            autoAssocPodToQuoteLine(saleId,quoteId);
         }
 
         if (quote.AmendmentAllowed__c) {

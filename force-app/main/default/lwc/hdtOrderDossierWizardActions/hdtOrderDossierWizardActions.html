@@ -7,11 +7,11 @@
             <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="medium"></lightning-spinner>
             <ul class="slds-button-group-list slds-float_right">
                 <li>
-                    <lightning-button onclick={handleCancel} icon-name="utility:cancel_file_request" variant="destructive" label="Annulla" title="Cancel action"></lightning-button>
+                    <lightning-button onclick={handleCancel} icon-name="utility:cancel_file_request" variant="brand" label="Annulla" title="Cancel action"></lightning-button>
                 </li>
                 <li>
                     <!--EVERIS: Bottone riportato in brand come richiesto BSN-->
-                    <lightning-button onclick={handleSave} disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
+                    <lightning-button onclick={handleSave} class="slds-m-left_x-small" disabled={isSaveButtonDisabled} icon-name="utility:save" variant="brand" label="Stampa" title="Save action"></lightning-button>
                 </li>
             </ul>
             <c-hdt-confirmation-dialog-dropdown

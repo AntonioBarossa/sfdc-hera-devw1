@@ -178,6 +178,23 @@ public inherited sharing class HDT_LC_ConfigureProduct {
         checkServicePointAssocs(sale);
     }
 
+    private static void updateQuotesOnNext(String saleId){
+        List<SBQQ__Quote__c> quotes = quoteQr.getActiveRecords(saleId);
+        List<SBQQ__Quote__c> quotesToUpdate = new List<SBQQ__Quote__c>();
+
+        for (SBQQ__Quote__c q : quotes) {
+            quotesToUpdate.add(
+                new SBQQ__Quote__c(
+                    Id = q.Id,
+                    SBQQ__SubscriptionTerm__c = 1200,
+                    SBQQ__StartDate__c = System.today()
+                )
+            );
+        }
+
+        quoteSrv.updateRecords(quotesToUpdate);
+    }
+
     // Create an amendment context
     private with sharing class HDT_WRP_AmendmentContext {
         public Boolean returnOnlyQuoteId;
@@ -204,12 +221,23 @@ public inherited sharing class HDT_LC_ConfigureProduct {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
-     * @description Update Sale
+     * @description Update Sale on previous (modifica)
      * @param Sale__c sale
      */
     @AuraEnabled
-    public static void updateSale(Sale__c sale){
+    public static void updateSalePrevious(Sale__c sale){
+        saleSrv.updateRecord(sale);
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Update Sale on next (avanti)
+     * @param Sale__c sale
+     */
+    @AuraEnabled
+    public static void updateSaleNext(Sale__c sale){
         performChecks(sale);
+        updateQuotesOnNext(sale.Id);
         saleSrv.updateRecord(sale);
     }
 }

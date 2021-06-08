@@ -1,0 +1,126 @@
+<template>
+
+    <lightning-card  variant="Narrow"  title={labels.massiveLoader} icon-name="standard:file" style="bottom: 0;">
+
+        <div class="slds-p-around_small" style="height: 100vh;">
+
+            <b style="text-align: center;">{labels.massiveLoaderDesiredAction}</b>
+
+            <div class="slds-m-top_x-small">
+
+                <div class="slds-tabs_default hdt_massive_loader_tab">
+            
+                    <ul class="slds-tabs_default__nav" role="tablist">
+                        <li class="slds-tabs_default__item slds-is-active" title="Export Template" role="presentation" data-id="exportTab">
+                        <a class="slds-tabs_default__link" href="#" role="tab" tabindex="0" aria-selected="false" aria-controls="tab-default-1" id="exportTab" onclick={handleChangeTab}>{labels.massiveLoaderExportTemplate}</a>
+                        </li>
+                        <li class="slds-tabs_default__item" title="Import Processi" role="presentation" data-id="importTab">
+                        <a class="slds-tabs_default__link" href="#" role="tab" tabindex="-1" aria-selected="true" aria-controls="tab-default-2" id="importTab" onclick={handleChangeTab}>{labels.massiveLoaderImportProcesses}</a>
+                        </li>          
+                    </ul>
+
+                    <div class="slds-m-top_medium slds-align_absolute-center">
+
+                        <div data-id="exportTab-content" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+                            
+                            <lightning-combobox
+                                name="requesTypeExport"
+                                label={labels.massiveLoaderRequestType}
+                                value={exportTypeValue}
+                                placeholder={labels.massiveLoaderPicklistPlaceholder}
+                                options={processTypeOptions}
+                                onchange={handleTypeChangeExport} >
+                            </lightning-combobox>
+
+                            <a 
+                                href={exportCSV} 
+                                target='_blank' 
+                                download={exportFileName}
+                                data-id="downloadCSV">
+                            </a>
+
+                            <div class="slds-p-top_medium">
+
+                                <lightning-button 
+                                    variant="brand" 
+                                    label={labels.massiveLoaderFileDownload} 
+                                    title={labels.massiveLoaderFileDownload}
+                                    onclick={handleCSVDownload} 
+                                    disabled={downloadDisabled}>
+                                </lightning-button>
+
+                            </div>
+
+                        </div>
+
+                        <div data-id="importTab-content" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">
+
+                            <lightning-combobox
+                                name="requesTypeImport"
+                                label={labels.massiveLoaderRequestType}
+                                value={importTypeValue}
+                                placeholder={labels.massiveLoaderPicklistPlaceholder}
+                                options={processTypeOptions}
+                                onchange={handleTypeChangeImport} >
+                            </lightning-combobox>
+
+                            <div class="slds-p-top_medium">
+
+                                <lightning-file-upload
+                                        label={labels.massiveLoaderFileUpload}
+                                        name="fileUploader"
+                                        accept={importFileFormat}
+                                        record-id={massiveLoaderRecordId}
+                                        onuploadfinished={handleUploadFinished}
+                                        disabled={fileUploadDisabled}>
+                                </lightning-file-upload>
+
+                            </div>
+
+                            <div class="slds-p-top_medium">
+
+                                <lightning-button
+                                    label={labels.massiveLoaderReset}
+                                    title={labels.massiveLoaderReset}
+                                    onclick={handleReset}
+                                    class="slds-m-right_x-small">
+                                </lightning-button>
+
+                                <lightning-button 
+                                    variant="brand"
+                                    label={labels.massiveLoaderCompleteImport}
+                                    title={labels.massiveLoaderCompleteImport}
+                                    onclick={handleCSVConfirm}
+                                    disabled={importDisabled}>
+                                </lightning-button>
+
+                            </div>
+
+                            <template if:false={navigateDisabled}>
+
+                                <div class="slds-p-top_medium">
+                                
+                                    <lightning-button 
+                                        variant="brand"
+                                        label={labels.massiveLoaderGoToRecord}
+                                        title={labels.massiveLoaderGoToRecord}
+                                        onclick={handleGoToRecord}>
+                                    </lightning-button>
+    
+                                </div>
+
+                            </template>
+
+                        </div>
+
+                    </div>                    
+        
+                </div>
+
+            </div>
+
+        </div>
+
+    </lightning-card>    
+
+</template>

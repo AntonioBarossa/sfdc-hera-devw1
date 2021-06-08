@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ButtonCode__c</field>
-        <value xsi:type="xsd:string">visualbolletta</value>
+        <value xsi:type="xsd:string">showSingleBill</value>
     </values>
     <values>
         <field>ButtonLevel__c</field>

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ReadingUnit1__c</fullName>
     <externalId>false</externalId>
-    <label>Unità di Misura 1</label>
+    <label>Unità di Misura F1</label>
     <length>3</length>
     <required>false</required>
     <trackTrending>false</trackTrending>

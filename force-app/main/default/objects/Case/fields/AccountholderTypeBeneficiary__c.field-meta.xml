@@ -42,17 +42,20 @@
         <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
             <valueName>Pagatore Alternativo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
             <valueName>Rappresentante Legale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Variazione Domiciliazione</controllingFieldValue>
             <controllingFieldValue>Rimborso</controllingFieldValue>
             <controllingFieldValue>Richiesta Domiciliazione</controllingFieldValue>
+            <controllingFieldValue>Attivazione Click&amp;Pay</controllingFieldValue>
             <valueName>Stesso Sottoscrittore</valueName>
         </valueSettings>
         <valueSettings>

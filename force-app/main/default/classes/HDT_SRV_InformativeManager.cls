@@ -67,7 +67,12 @@ public with sharing class HDT_SRV_InformativeManager implements HDT_UTL_Combobox
 
         }
         List<HDT_Informative_Configuration__mdt> topic = HDT_QR_InformativeManager.getInfoByTopicCluster((String) paramsMap.get('topic'),(String) paramsMap.get('cluster'),context);
-        return JSON.serialize(convertToListMap(topic,'InformationDetail__c'));
+        List<Map<String,String>> listMapInfo = convertToListMap(topic,'InformationDetail__c');
+        Map<String,String> mapInfo = new Map<String,String>();
+        mapInfo.put('label','Info non Censita');
+        mapInfo.put('value','Info non Censita');
+        listMapInfo.add(mapInfo);
+        return JSON.serialize(listMapInfo);
     }
    
     private List<Map<String,String>> convertToListMap(List<SObject> records,String field){

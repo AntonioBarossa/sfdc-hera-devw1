@@ -2,7 +2,8 @@ import { LightningElement, track,wire,api} from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 import getListOptions from '@salesforce/apex/HDT_UTL_CaseCancellation.getListCanellationReasonLwc';
 import { getRecord } from 'lightning/uiRecordApi';
-const FIELDS = ['Case.ProcessCancellationReason__c'];
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+const FIELDS = ['Case.CancellationReason__c'];
 export default class HdtInputFieldComboboxCanellation extends LightningElement {
     @api defaultValue;
     @api variant;

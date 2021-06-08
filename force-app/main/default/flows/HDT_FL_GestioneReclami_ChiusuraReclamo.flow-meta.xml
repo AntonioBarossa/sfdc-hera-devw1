@@ -177,6 +177,11 @@
         <picklistField>CustomerRequestAccomplished__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <formulas>
+        <name>ClosureProcessType</name>
+        <dataType>String</dataType>
+        <expression>IF(TEXT({!GetInputCase.Phase__c})=&quot;Risposta Inviata&quot;,&quot;Reclami Chiusura&quot;,&quot;Reclami Chiusura Rettifica&quot;)</expression>
+    </formulas>
     <interviewLabel>GestioneReclami_ChiusuraCase {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Chiusura/Sospensione Reclamo</label>
     <processMetadataValues>
@@ -308,6 +313,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -342,7 +348,7 @@
             <inputParameters>
                 <name>nextVariant</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -351,6 +357,7 @@
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -438,7 +445,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <stringValue>Reclami Chiusura</stringValue>
+                    <elementReference>ClosureProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -462,7 +469,7 @@
             <inputParameters>
                 <name>variantSaveButton</name>
                 <value>
-                    <stringValue>success</stringValue>
+                    <stringValue>brand</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -471,6 +478,7 @@
                     <elementReference>GetInputCase.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>

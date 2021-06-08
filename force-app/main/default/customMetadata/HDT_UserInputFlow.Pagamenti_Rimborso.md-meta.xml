@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;ReadOnly&quot;:true,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;RefundMethod__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;AccountholderTypeBeneficiary__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;BeneficiaryAccount__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
     </values>
     <values>

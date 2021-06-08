@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RentProcessRule</fullName>
+    <columns>NAME</columns>
+    <columns>Category__c</columns>
+    <columns>TypeInstallmentPlan__c</columns>
+    <columns>ApplicationInterests__c</columns>
+    <columns>InstallmentPlanReason__c</columns>
+    <columns>CAWithOrWithoutSEPA__c</columns>
+    <columns>ExistingInstallmentPlanUnpaidFrom__c</columns>
+    <columns>ExistingInstallmentPlanUnpaidTo__c</columns>
+    <columns>SuspensionInPastTwelveMonths__c</columns>
+    <columns>AmountToPayInInstallmentsFrom__c</columns>
+    <columns>AmountToPayInInstallmentsTo__c</columns>
+    <columns>Deposit__c</columns>
+    <columns>DepositAmount__c</columns>
+    <columns>DepositPaymentMode__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>Regole Piano Rata</label>
+</ListView>

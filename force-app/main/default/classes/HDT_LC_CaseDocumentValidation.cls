@@ -11,13 +11,19 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
     }
     
     @AuraEnabled
-    public static void saveValidation(String caseId, Boolean allValidated){
+    public static void saveValidation(String caseId, String subprocess, Boolean allValidated){
         Case currentCase = new Case();
+        String phase;
 
         currentCase.Id = caseId;
 
         if(allValidated){
-            currentCase.Phase__c = 'Da Inviare';
+            if(subprocess == 'Accise - Energia Elettrica'){
+                phase = 'Elaborazione Manuale';
+            } else {
+                phase = 'Da Inviare';
+            }
+            currentCase.Phase__c = phase;
             currentCase.CompletedDocumentationDate__c = System.today();
         } else {
 
@@ -25,7 +31,7 @@ public inherited sharing class HDT_LC_CaseDocumentValidation {
 
         }
 
-        caseSrv.updateRecord(currentCase);
+        HDT_UTL_DatabaseService.updateSObject(currentCase);
 
     }
 }

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>UserCompany__c</fullName>
+    <description>Campo chiesto dal BSN, verrà valorizzato da OIG in fase di Provisioninig</description>
+    <externalId>false</externalId>
+    <label>Società Utenza</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>ACEGASAPSAMGA SPA</fullName>
+                <default>false</default>
+                <label>ACEGASAPSAMGA SPA</label>
+            </value>
+            <value>
+                <fullName>HERA TRADING SRL</fullName>
+                <default>false</default>
+                <label>HERA TRADING SRL</label>
+            </value>
+            <value>
+                <fullName>ASCOPIAVE ENERGIE SPA</fullName>
+                <default>false</default>
+                <label>ASCOPIAVE ENERGIE SPA</label>
+            </value>
+            <value>
+                <fullName>ARESGAS</fullName>
+                <default>false</default>
+                <label>ARESGAS</label>
+            </value>
+            <value>
+                <fullName>ALIPLAST IBERIA</fullName>
+                <default>false</default>
+                <label>ALIPLAST IBERIA</label>
+            </value>
+            <value>
+                <fullName>HERA COMM SPA</fullName>
+                <default>false</default>
+                <label>HERA COMM SPA</label>
+            </value>
+            <value>
+                <fullName>ALIPLAST FRANCE</fullName>
+                <default>false</default>
+                <label>ALIPLAST FRANCE</label>
+            </value>
+            <value>
+                <fullName>BLUE META</fullName>
+                <default>false</default>
+                <label>BLUE META</label>
+            </value>
+            <value>
+                <fullName>HERAMBIENTE SPA</fullName>
+                <default>false</default>
+                <label>HERAMBIENTE SPA</label>
+            </value>
+            <value>
+                <fullName>HERAMBIENTE SERVIZI INDUSTRIALI SRL</fullName>
+                <default>false</default>
+                <label>HERAMBIENTE SERVIZI INDUSTRIALI SRL</label>
+            </value>
+            <value>
+                <fullName>HESTAMBIENTE SRL</fullName>
+                <default>false</default>
+                <label>HESTAMBIENTE SRL</label>
+            </value>
+            <value>
+                <fullName>HERA COMM SRL</fullName>
+                <default>false</default>
+                <label>HERA COMM SRL</label>
+            </value>
+            <value>
+                <fullName>ALIPLAST SPA</fullName>
+                <default>false</default>
+                <label>ALIPLAST SPA</label>
+            </value>
+            <value>
+                <fullName>BLUE META SPA</fullName>
+                <default>false</default>
+                <label>BLUE META SPA</label>
+            </value>
+            <value>
+                <fullName>FRULLO ENERGIA AMBIENTE SRL</fullName>
+                <default>false</default>
+                <label>FRULLO ENERGIA AMBIENTE SRL</label>
+            </value>
+            <value>
+                <fullName>HERA COMM MARCHE SRL</fullName>
+                <default>false</default>
+                <label>HERA COMM MARCHE SRL</label>
+            </value>
+            <value>
+                <fullName>ASA SPA</fullName>
+                <default>false</default>
+                <label>ASA SPA</label>
+            </value>
+            <value>
+                <fullName>ETRA ENERGIA SRL</fullName>
+                <default>false</default>
+                <label>ETRA ENERGIA SRL</label>
+            </value>
+            <value>
+                <fullName>INRETE</fullName>
+                <default>false</default>
+                <label>INRETE</label>
+            </value>
+            <value>
+                <fullName>HERA SPA</fullName>
+                <default>false</default>
+                <label>HERA SPA</label>
+            </value>
+            <value>
+                <fullName>INRETE DISTRIBUZIONE ENERGIA SPA</fullName>
+                <default>false</default>
+                <label>INRETE DISTRIBUZIONE ENERGIA SPA</label>
+            </value>
+            <value>
+                <fullName>HERATECH SRL</fullName>
+                <default>false</default>
+                <label>HERATECH SRL</label>
+            </value>
+            <value>
+                <fullName>ASCOTRADE SPA</fullName>
+                <default>false</default>
+                <label>ASCOTRADE SPA</label>
+            </value>
+            <value>
+                <fullName>ALIMPET SRL</fullName>
+                <default>false</default>
+                <label>ALIMPET SRL</label>
+            </value>
+            <value>
+                <fullName>ORACLE ITALIA SRL</fullName>
+                <default>false</default>
+                <label>ORACLE ITALIA SRL</label>
+            </value>
+            <value>
+                <fullName>ACANTHO SPA</fullName>
+                <default>false</default>
+                <label>ACANTHO SPA</label>
+            </value>
+            <value>
+                <fullName>HERA LUCE SRL</fullName>
+                <default>false</default>
+                <label>HERA LUCE SRL</label>
+            </value>
+            <value>
+                <fullName>ALIPLST POLSKA</fullName>
+                <default>false</default>
+                <label>ALIPLST POLSKA</label>
+            </value>
+            <value>
+                <fullName>BLU RANTON</fullName>
+                <default>false</default>
+                <label>BLU RANTON</label>
+            </value>
+            <value>
+                <fullName>SINERGIE SPA</fullName>
+                <default>false</default>
+                <label>SINERGIE SPA</label>
+            </value>
+            <value>
+                <fullName>MARCHE MULTISERVIZI SPA</fullName>
+                <default>false</default>
+                <label>MARCHE MULTISERVIZI SPA</label>
+            </value>
+            <value>
+                <fullName>Hera Comm NordEst S.r.l</fullName>
+                <default>false</default>
+                <label>Hera Comm NordEst S.r.l</label>
+            </value>
+            <value>
+                <fullName>UNIFLOTTE SRL</fullName>
+                <default>false</default>
+                <label>UNIFLOTTE SRL</label>
+            </value>
+            <value>
+                <fullName>HERA SERVIZI ENERGIA SRL</fullName>
+                <default>false</default>
+                <label>HERA SERVIZI ENERGIA SRL</label>
+            </value>
+            <value>
+                <fullName>ACEGASAPSAMGA SERVIZI ENERGETICI S.p.A.</fullName>
+                <default>false</default>
+                <label>ACEGASAPSAMGA SERVIZI ENERGETICI S.p.A.</label>
+            </value>
+            <value>
+                <fullName>ESTENERGY SPA</fullName>
+                <default>false</default>
+                <label>ESTENERGY SPA</label>
+            </value>
+            <value>
+                <fullName>MARCHE MULTISERVIZI FALCONARA SRL</fullName>
+                <default>false</default>
+                <label>MARCHE MULTISERVIZI FALCONARA SRL</label>
+            </value>
+            <value>
+                <fullName>AMGAS BLU SRL</fullName>
+                <default>false</default>
+                <label>AMGAS BLU SRL</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

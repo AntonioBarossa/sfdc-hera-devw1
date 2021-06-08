@@ -2,7 +2,8 @@ import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getQuotes from '@salesforce/apex/HDT_LC_ConfigureProduct.getQuotes';
 import cancelQuote from '@salesforce/apex/HDT_LC_ConfigureProduct.cancelQuote';
-import updateSale from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSale';
+import updateSaleNext from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSaleNext';
+import updateSalePrevious from '@salesforce/apex/HDT_LC_ConfigureProduct.updateSalePrevious';
 import amendContract from '@salesforce/apex/HDT_LC_ConfigureProduct.amendContract';
 
 export default class hdtConfigureProduct extends LightningElement {
@@ -69,15 +70,13 @@ export default class hdtConfigureProduct extends LightningElement {
     }
 
     @api
-    getQuotesData(){
+    getQuotesData(isCancelActionCheck = false){
         this.loaded = false;
         getQuotes({saleId: this.saleRecord.Id}).then(data =>{
             this.loaded = true;
 
             let quotesArray = [];
             let count = 0;
-
-            console.log('getQuotesData: ', JSON.parse(JSON.stringify(data)));
 
             data.forEach(el => {
                 quotesArray.push({
@@ -94,6 +93,12 @@ export default class hdtConfigureProduct extends LightningElement {
             });
 
             this.quotesData = quotesArray;
+
+            if (isCancelActionCheck) {
+                if (this.quotesData.length === 0) {
+                    this.updateSaleRecordPrevious({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep - 1});
+                }
+            }
 
         }).catch(error => {
             this.loaded = true;
@@ -171,7 +176,7 @@ export default class hdtConfigureProduct extends LightningElement {
                 }).then(data =>{
                 this.loaded = true;
     
-                this.getQuotesData();
+                this.getQuotesData(true);
                 const toastSuccessMessage = new ShowToastEvent({
                     title: 'Successo',
                     message: 'Quote eliminata con successo',
@@ -200,9 +205,27 @@ export default class hdtConfigureProduct extends LightningElement {
         this.getQuotesData();
     }
 
-    updateSaleRecord(saleData){
+    updateSaleRecordNext(saleData){
         this.loaded = false;
-        updateSale({sale: saleData}).then(data =>{
+        updateSaleNext({sale: saleData}).then(data =>{
+            this.loaded = true;
+            this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
+        }).catch(error => {
+            this.loaded = true;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+    }
+
+    updateSaleRecordPrevious(saleData){
+        this.loaded = false;
+        updateSalePrevious({sale: saleData}).then(data =>{
             this.loaded = true;
             this.dispatchEvent(new CustomEvent('saleupdate', { bubbles: true }));
         }).catch(error => {
@@ -219,10 +242,10 @@ export default class hdtConfigureProduct extends LightningElement {
     }
 
     handleNext(){
-        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});
+        this.updateSaleRecordNext({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});
     }
 
     handleEdit(){
-        this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep});
+        this.updateSaleRecordPrevious({Id: this.saleRecord.Id, CurrentStep__c: this.currentStep});
     }
 }

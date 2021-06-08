@@ -11,6 +11,8 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
     private static HDT_SRV_SaleServiceItem saleServiceItemSrv = new HDT_SRV_SaleServiceItem();
     private static HDT_SRV_SaleServiceItem itemsService = new HDT_SRV_SaleServiceItem();
     private static HDT_SRV_Opportunity opportunityService = new HDT_SRV_Opportunity();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -47,8 +49,32 @@ public inherited sharing class HDT_LC_SaleServiceItemsTiles {
      * @param String opportunityId
      */
     @AuraEnabled
-    public static void deleteTile(String opportunityId){
-        opportunityService.deleteRecord(opportunityId);
+    public static void deleteTile(String opportunityId, String cancellationReason){
+
+        Opportunity opp = opportunityQuery.getRecordById(opportunityId);
+
+        SBQQ__Quote__c quoteToUpdate = new SBQQ__Quote__c(
+            Id = opp.SBQQ__PrimaryQuote__c,
+            CancellationReason__c = cancellationReason
+        );
+
+        switch on cancellationReason {
+            when  'Errata operativita'{
+                quoteToUpdate.SBQQ__Status__c = 'Cancelled';
+            }
+            when 'Volonta cliente'{
+                quoteToUpdate.SBQQ__Status__c = 'Rejected';
+            }
+        }
+
+        Opportunity oppToUpdate = new Opportunity(
+            Id = opportunityId,
+            StageName = 'Closed Lost'
+        );
+        
+        quoteSrv.updateRecord(quoteToUpdate);
+        opportunityService.updateRecord(oppToUpdate);
+
     }
 
 }

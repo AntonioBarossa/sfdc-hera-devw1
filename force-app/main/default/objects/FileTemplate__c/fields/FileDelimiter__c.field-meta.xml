@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FileDelimiter__c</fullName>
+    <description>Delimiter for the csv file.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Typically &apos;,&apos; or &apos;;&apos;</inlineHelpText>
+    <label>File Delimiter</label>
+    <length>1</length>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

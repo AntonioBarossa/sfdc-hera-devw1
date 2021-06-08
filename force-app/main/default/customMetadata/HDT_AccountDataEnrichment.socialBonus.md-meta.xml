@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Authorization__c</field>
-        <value xsi:type="xsd:string">Basic NDhmZTUxNjVhNDBjNDlhYTliZjRiM2Q5YmNhMjU1MmY6YTc0YjUwZGJhYWMwNDIxNWJmYmY4OWEyZWUzMTVhODA=</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ColumnData__c</field>
@@ -14,7 +14,7 @@
     &quot;iconName&quot;: &quot;standard:customer_lifecycle_analytics&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Descrizione Tipo Compensazione&quot;,
+        &quot;label&quot;: &quot;Descrizione Compensazione&quot;,
         &quot;fieldName&quot;: &quot;tipoCompDescr&quot;
       },
       {
@@ -64,7 +64,7 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-enrichment/social-compensations</value>
+        <value xsi:type="xsd:string">callout:SocialBonus</value>
     </values>
     <values>
         <field>UseMock__c</field>

@@ -50,7 +50,7 @@
     </entryCriteria>
     <finalApprovalActions>
         <action>
-            <name>Passa_a_Approvato_OK</name>
+            <name>Passa_a_Attesa_Modulo_Firmato</name>
             <type>FieldUpdate</type>
         </action>
     </finalApprovalActions>

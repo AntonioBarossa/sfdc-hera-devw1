@@ -18,11 +18,23 @@ table
 }
 
 .firstcol{
-    width: 20%;
+    width: 15%;
 }
 
 .alertcol{
+    width: 3%;
+}
+
+.checkboxCol{
+    width: 4%;
+}
+
+.pillCol{
     width: 5%;
+}
+
+.lastCol{
+    width: 10%;
 }
 
 .savingdata::after {

@@ -451,6 +451,11 @@
         <label>Info PAP</label>
     </customValue>
     <customValue>
+        <fullName>Info non censita</fullName>
+        <default>false</default>
+        <label>Info non censita</label>
+    </customValue>
+    <customValue>
         <fullName>Orari stazione ecologica/segnalazioni</fullName>
         <default>false</default>
         <label>Orari stazione ecologica/segnalazioni</label>

@@ -3,7 +3,7 @@
     <fullName>DurationDayGas__c</fullName>
     <externalId>false</externalId>
     <label>Durata Gas (gg)</label>
-    <precision>18</precision>
+    <precision>5</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>

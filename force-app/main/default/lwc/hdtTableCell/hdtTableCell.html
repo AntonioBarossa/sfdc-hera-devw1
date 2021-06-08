@@ -1,6 +1,6 @@
 <template>
 
-    <template if:false={showCurrency} >
+    <template if:true={showField} >
         {outputvalue}
     </template>
 
@@ -11,6 +11,16 @@
             currency-code="EUR"
             currency-display-as="symbol"
         ></lightning-formatted-number>
+    </template>
+
+    <template if:true={showIcon} >
+        <lightning-icon
+            icon-name="utility:record"
+            alternative-text="Utility image"
+            title="Image"
+            size="x-small"
+            class={iconClass}
+        ></lightning-icon>
     </template>
 
 </template>

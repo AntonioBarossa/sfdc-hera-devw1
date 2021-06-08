@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>StepValues</label>
+    <protected>false</protected>
+    <values>
+        <field>PicklistValues__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;label&quot;: &quot;HE01 - Sollecito Semplice&quot;,
+    &quot;value&quot;: &quot;HE01&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE02 - Messa in mora&quot;,
+    &quot;value&quot;: &quot;HE02&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE03 - Phone Collection 1&quot;,
+    &quot;value&quot;: &quot;HE03&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE04 - Volantinaggio&quot;,
+    &quot;value&quot;: &quot;HE04&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE05 - Phone Collection 2&quot;,
+    &quot;value&quot;: &quot;HE05&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE06 - Estratto conto ai servizi sociali&quot;,
+    &quot;value&quot;: &quot;HE06&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE07 - Proposta di disconnessione&quot;,
+    &quot;value&quot;: &quot;HE07&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE08 - Phone Collection 3&quot;,
+    &quot;value&quot;: &quot;HE08&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE09 - Lettera preavviso interruzione&quot;,
+    &quot;value&quot;: &quot;HE09&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE10 - Interruzione fornitura&quot;,
+    &quot;value&quot;: &quot;HE10&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE11 - Lettera preavviso risoluzione contr. non interromp&quot;,
+    &quot;value&quot;: &quot;HE11&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE12 - Lettera preavviso risoluzione contr. non disalimen&quot;,
+    &quot;value&quot;: &quot;HE12&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE13 - Cessazione amministrativa non interrompibili&quot;,
+    &quot;value&quot;: &quot;HE13&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE14 - Cessazione amministrativa non disalimentabili&quot;,
+    &quot;value&quot;: &quot;HE14&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE15 - Affido a Clever&quot;,
+    &quot;value&quot;: &quot;HE15&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE16 - Affido pre-legale&quot;,
+    &quot;value&quot;: &quot;HE16&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE17 - Affido legale&quot;,
+    &quot;value&quot;: &quot;HE17&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE18 - Cessazione amministrativa punti sospesi&quot;,
+    &quot;value&quot;: &quot;HE18&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE19 - Gestione fatturazione elettronica&quot;,
+    &quot;value&quot;: &quot;HE19&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE20 - Invio sollecito ad amministratore&quot;,
+    &quot;value&quot;: &quot;HE20&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE21 - Gestione Enti e PA&quot;,
+    &quot;value&quot;: &quot;HE21&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE22 - Gestione in capo alla società di riferimento&quot;,
+    &quot;value&quot;: &quot;HE22&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE23 - Phone Collection 1 e Messa in Mora&quot;,
+    &quot;value&quot;: &quot;HE23&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE24 - Gestione Manuale del credito&quot;,
+    &quot;value&quot;: &quot;HE24&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE25 - Lista clienti per anticipo gestione&quot;,
+    &quot;value&quot;: &quot;HE25&quot;
+  },
+  {
+    &quot;label&quot;: &quot;HE89 - Phone Collection 3 e Lettera di interruzione&quot;,
+    &quot;value&quot;: &quot;HE89&quot;
+  }
+]</value>
+    </values>
+</CustomMetadata>

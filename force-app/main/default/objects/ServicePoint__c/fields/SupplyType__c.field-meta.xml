@@ -13,7 +13,32 @@ D-Altri usi</description>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <controllingField>CommoditySector__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_SupplyType</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Energia Elettrica</controllingFieldValue>
+            <valueName>Non Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>A-Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>B-Condominio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>C-Aziende di pubblica utilita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gas</controllingFieldValue>
+            <valueName>D-Altri usi</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

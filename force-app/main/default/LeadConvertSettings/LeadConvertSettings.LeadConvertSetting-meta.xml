@@ -4,16 +4,28 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
-            <inputField>InterestArea__c</inputField>
-            <outputField>InterestArea__c</outputField>
+            <inputField>Category__c</inputField>
+            <outputField>Category__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>StreetNumber__c</inputField>
+            <outputField>BillingStreetNumber__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>FiscalCode__c</inputField>
             <outputField>FiscalCode__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>CompanyOwner__c</inputField>
-            <outputField>CompanyOwner__c</outputField>
+            <inputField>CityCode__c</inputField>
+            <outputField>BillingCityCode__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>StreetCode__c</inputField>
+            <outputField>BillingStreetCode__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>StreetNumberExtension__c</inputField>
+            <outputField>BillingStreetNumberExtension__c</outputField>
         </mappingFields>
         <mappingFields>
             <inputField>CustomerMarking__c</inputField>
@@ -24,12 +36,24 @@
             <outputField>ContactReason__c</outputField>
         </mappingFields>
         <mappingFields>
+            <inputField>VATNumber__c</inputField>
+            <outputField>VATNumber__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>InterestProduct__c</inputField>
             <outputField>InterestProduct__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>Gender__c</inputField>
-            <outputField>Gender__c</outputField>
+            <inputField>Region__c</inputField>
+            <outputField>BillingRegion__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>CompanyOwner__c</inputField>
+            <outputField>CompanyOwner__c</outputField>
+        </mappingFields>
+        <mappingFields>
+            <inputField>StreetName__c</inputField>
+            <outputField>BillingStreetName__c</outputField>
         </mappingFields>
         <outputObject>Account</outputObject>
     </objectMapping>
@@ -40,8 +64,8 @@
             <outputField>FiscalCode__c</outputField>
         </mappingFields>
         <mappingFields>
-            <inputField>CompanyOwner__c</inputField>
-            <outputField>CompanyOwner__c</outputField>
+            <inputField>DegreeOfStudies__c</inputField>
+            <outputField>DegreeOfStudies__c</outputField>
         </mappingFields>
         <outputObject>Contact</outputObject>
     </objectMapping>

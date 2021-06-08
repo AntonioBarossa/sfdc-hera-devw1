@@ -62,6 +62,24 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         return totalReadingValue;
     }
 
+    @api
+    getSelectedReadingsConcatenated() {
+        var readingsString = '';
+        var selectedRows = this.template.querySelector('lightning-datatable').getSelectedRows();
+        selectedRows.forEach(row => {
+            readingsString += row.tipoNumeratore + ': ' + row.posizioniPrecedentiLaVirgola + '\n';
+        });
+
+        return readingsString;
+    }
+
+    @api
+    getSelectedReadingsList() {
+
+        return this.template.querySelector('lightning-datatable').getSelectedRows();
+
+    }
+
     /*@api meterReadingBackendCall(contractNumber){
         console.log('>>>> contractNumber  > ' + contractNumber);
         this.loadData = false;

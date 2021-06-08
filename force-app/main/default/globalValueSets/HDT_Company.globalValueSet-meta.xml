@@ -46,9 +46,9 @@
         <label>Reseller</label>
     </customValue>
     <customValue>
-        <fullName>HC+HCM+HCNE</fullName>
+        <fullName>HC+HCM+EENE</fullName>
         <default>false</default>
-        <label>HC+HCM+HCNE</label>
+        <label>HC+HCM+EENE</label>
     </customValue>
     <description>Identifica la società di appartenenza</description>
     <masterLabel>Company</masterLabel>

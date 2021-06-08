@@ -1,4 +1,5 @@
 import { LightningElement, track, api } from 'lwc';
+import getPicklistValue from '@salesforce/apex/HDT_LC_AccountStatementController.getPicklistValue';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 const filterObject = {};
@@ -56,8 +57,35 @@ export default class HdtAccountStatementFilters extends LightningElement {
                 //
         }
 
-        this.serviceValues = [{label: 'Energia elettrica', value: '13'}, {label: 'Gas', value: '10'}];
-        this.stepValues = [{label: 'Step1', value: 'Step1'}, {label: 'Step2', value: 'Step2'}];
+        this.getFieldValues('stepValues', 'StepValues');
+        this.getFieldValues('serviceValues', 'ServiceValues');
+    }
+
+    getFieldValues(field, fieldDevName){
+
+        console.log('# getPicklistValue #');
+
+        getPicklistValue({tabCode: '', fieldName: fieldDevName})
+        .then(result => {
+            
+            if(result){
+                console.log(result);
+                this[field] = JSON.parse(result);
+            } else {
+                this.closeModal();
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione: Problema nel recupero dei valori picklist',
+                        message: result.message,
+                        variant: 'warning'
+                    })
+                );
+            }
+        })
+        .catch(error => {
+            console.log('# Error: ' + error);
+        });
+
     }
 
     setFilterParam(event){

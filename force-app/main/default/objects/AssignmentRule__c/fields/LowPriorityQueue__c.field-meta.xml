@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LowPriorityQueue__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Coda di destinazione per le activity matchate aventi priorità bassa</description>
+    <externalId>false</externalId>
+    <label>Coda Priorità Bassa</label>
+    <referenceTo>Queue__c</referenceTo>
+    <relationshipLabel>Regole di Assegnazione (Coda Priorità Bassa)</relationshipLabel>
+    <relationshipName>Regole_di_Assegnazione2</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Taxes__c</field>
-        <value xsi:type="xsd:string">G_104 - Riduzione Usi Industiali</value>
+        <value xsi:type="xsd:string">Imposta usi industriali (Cod. G_I04)</value>
     </values>
     <values>
         <field>UseCategory__c</field>

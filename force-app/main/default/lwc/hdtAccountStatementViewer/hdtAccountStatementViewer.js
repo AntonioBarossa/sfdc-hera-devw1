@@ -364,7 +364,16 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
     }
 
     serviceCatalogHandler(){
-        console.log('# serviceCatalogHandler #');
+        this.serviceCatalogBackendHandler('serviceCatalogHandler', null);
+    }
+
+    runFlowFromAura(event){
+        console.log('>>> PARAMETERS: ' + event.currentTarget.dataset.parameters);
+        this.serviceCatalogBackendHandler('runFlowFromAura', event.currentTarget.dataset.parameters);
+    }
+
+    serviceCatalogBackendHandler(serviceOperation, parameters){
+        console.log('# serviceCatalogBackendHandler #');
 
         if(idlist.length > 0){
             this.showOperationModal = true;
@@ -381,7 +390,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
             //});
 
             var recordsString = JSON.stringify(selectedRecord);
-            this.serviceCatalogBackendOperation(recordsString);
+            this.serviceCatalogBackendOperation(recordsString, serviceOperation, parameters);
 
         } else {
             this.dispatchEvent(
@@ -395,7 +404,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
  
     }
 
-    serviceCatalogBackendOperation(recordsString){
+    serviceCatalogBackendOperation(recordsString, serviceOperation, parameters){
         console.log('# serviceCatalogBackendOperation #');
 
         this.openMainSpinner();
@@ -406,7 +415,11 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             if(result.success){
                 console.log('>>> result > ' + result.serviceCatalogId);
-                this.serviceCatalogEvent('serviceCatalogId');
+                if(serviceOperation==='serviceCatalogHandler'){
+                    this.serviceCatalogEvent(result.serviceCatalogId);
+                } else if(serviceOperation==='runFlowFromAura'){
+                    this.runFlowFromAuraEvent(result.serviceCatalogId, parameters);
+                }
             } else {
                 console.log('>>> result > ' + result.message);
                 this.dispatchEvent(
@@ -430,10 +443,20 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     }
 
-    serviceCatalogEvent(serviceCatalogId){
-        const serviceCatalog = new CustomEvent("servicecatalog", {
+    runFlowFromAuraEvent(serviceCatalogId, parameters){
+        console.log('>>> runFlowFromAura');
+        const serviceCatalog = new CustomEvent("openauracmp", {
             //serviceCatalogId
-            detail: this.recordid
+            detail: {parameters: parameters, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'runFlowFromAura'}
+        });
+        // Dispatches the event.
+        this.dispatchEvent(serviceCatalog);
+    }
+
+    serviceCatalogEvent(serviceCatalogId){
+        const serviceCatalog = new CustomEvent("openauracmp", {
+            //serviceCatalogId
+            detail: {parameters: this.tabCode, accId: this.recordid, catalogId: serviceCatalogId, auraFlow: 'serviceCatalogHandler'}
         });
         // Dispatches the event.
         this.dispatchEvent(serviceCatalog);
@@ -636,17 +659,17 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
                 console.log('>>> success: ' + result.success);
 
                 if(result.success){
-                    var obj = JSON.parse(result.data);
+                   var obj = JSON.parse(result.data);
 
-                    console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
+                   console.log('>>> REQUEST TYPE -> ' + this.techObj.requestType);
 
-                    if(this.techObj.requestType==='viewResult'){
-                        // viewResult logic goes here
-                        this.viewResultMulesoftResponse(obj);
-                    } else {
-                        // other requestType logic goes here
-                        this.handleMulesoftResponse(obj);
-                    }
+                   if(this.techObj.requestType==='viewResult'){
+                       // viewResult logic goes here
+                       this.viewResultMulesoftResponse(obj);
+                   } else {
+                       // other requestType logic goes here
+                       this.handleMulesoftResponse(obj);
+                   }
 
                 } else {
                     this.showError = true;
@@ -708,10 +731,23 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
     viewResultMulesoftResponse(obj){
         console.log('>>> viewResult Mulesoft Response');
-        this.viewResultData.id = obj.data[0].codiceEsito;
-        this.viewResultData.resultDate = obj.data[0].dataEsisto;
-        this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
-        this.showViewResult = true;
+        console.log('>>>> viewResult obj > ' + JSON.stringify(obj.data));
+
+        if(obj.data.length > 0){
+            this.viewResultData.id = obj.data[0].codiceEsito;
+            this.viewResultData.resultDate = obj.data[0].dataEsisto;
+            this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
+            this.showViewResult = true;
+        } else {
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione',
+                    message: 'Nessun risultato per questa fattura',
+                    variant: 'warning'
+                }),
+            );
+        }
+
         this.closeMainSpinner();
     }
 
@@ -1052,18 +1088,39 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
             var currentObj = this.columns.filter(c => { return c.fieldName == sortField });
 
-            if(currentObj[0].detail.type == 'number'){
-                if(asc){
-                    this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
-                } else {
-                    this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
-                }     
-            } else {
-                if(asc){
-                    this[listToConsider].sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
-                } else {
-                    this[listToConsider].sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
-                }     
+            switch (currentObj[0].detail.type) {
+                case 'text':
+                    if(asc){
+                        this[listToConsider].sort((a, b) => (a[sortField] > b[sortField]) ? 1 : -1);
+                    } else {
+                        this[listToConsider].sort((a, b) => (a[sortField] < b[sortField]) ? 1 : -1);
+                    }
+                    break;
+                case 'date':
+
+                    this[listToConsider].sort(function(a, b) {
+
+                        var dateSplitted = b[sortField].split('/');
+                        var data = dateSplitted[1] + '/' + dateSplitted[0] + '/' + dateSplitted[2];
+                        
+                        var dateSplitted2 = a[sortField].split('/');
+                        var data2 = dateSplitted2[1] + '/' + dateSplitted2[0] + '/' + dateSplitted2[2];
+
+                        if(asc){
+                            return (new Date(data) < new Date(data2)) ? 1 : -1;
+                        } else {
+                            return (new Date(data) > new Date(data2)) ? 1 : -1;
+                        }
+
+                    });
+
+                    break;
+                case 'number':
+                    if(asc){
+                        this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) > parseFloat(b[sortField])) ? 1 : -1);
+                    } else {
+                        this[listToConsider].sort((a, b) => (parseFloat(a[sortField]) < parseFloat(b[sortField])) ? 1 : -1);
+                    }
             }
 
             this.onFirst();

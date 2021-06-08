@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <fieldManageability>DeveloperControlled</fieldManageability>
     <label>Second Level API Name</label>
-    <length>25</length>
+    <length>255</length>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>

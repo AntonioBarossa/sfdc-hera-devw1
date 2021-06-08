@@ -12,6 +12,9 @@ public inherited sharing class HDT_LC_SaleVas {
     private static HDT_SRV_Contract contractSrv = new HDT_SRV_Contract();
     private static HDT_SRV_Opportunity opportunitySrv = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteSrv = new HDT_SRV_Quote();
+    private static HDT_QR_Quote quoteQr = new HDT_QR_Quote();
+    private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
+    private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -48,7 +51,7 @@ public inherited sharing class HDT_LC_SaleVas {
     @AuraEnabled
     public static List<Order> getOrdersList(String accountId){
         //Orders with status "Draft" or "In Lavorazione"
-        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status');
+        orderSrv.checkReadAccess('Name,AccountId,OrderNumber,Status,ServicePoint__c,ServicePoint__r.ServicePointCode__c,SupplyAddress__c');
         return orderQr.getRecordsForVasSelection(accountId);
     }
 
@@ -67,6 +70,52 @@ public inherited sharing class HDT_LC_SaleVas {
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Get map with lists of active contracts and orders
+     * @param String accountId
+     * @return Map<String,List<SObject>>
+     */
+    @AuraEnabled
+    public static Map<String,List<SObject>> getContractsAndOrdersMap(String accountId){
+
+        Map<String,List<SObject>> mapOfLists = new Map<String,List<SObject>>();
+        
+        List<Contract> contractsList = new List<Contract>();
+        contractsList = getContractsList(accountId);
+        mapOfLists.put('contractsList', contractsList);
+
+        List<Order> ordersList = new List<Order>();
+        ordersList = getOrdersList(accountId);
+        mapOfLists.put('ordersList', ordersList);
+
+        return mapOfLists;
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
+     * @description Check for duplicated contract/order reference in current sale
+     * @param String saleId
+     * @param String objectId (OrderReference__c/ContractReference__c)
+     * @param String type (contract or order)
+     */
+    private static Boolean isDuplicated(String saleId, String objectId, String type) {
+        Boolean result = false;
+
+        List<SBQQ__Quote__c> resultsList = new List<SBQQ__Quote__c>();
+
+        switch on type {
+            when 'contract' {
+                resultsList = quoteQr.getQuotesBySaleAndContractReference(saleId, objectId);
+            }
+            when 'order' {
+                resultsList = quoteQr.getQuotesBySaleAndOrderReference(saleId, objectId);
+            }
+        }
+
+        return !resultsList.isEmpty();
+    }
+
+    /**
+     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Handles confirm action for 'Ordini in corso'
      * @param Order order
      * @param String supplyCity
@@ -75,6 +124,10 @@ public inherited sharing class HDT_LC_SaleVas {
         
         if (order.Id == null) {
             throw new AuraHandledException('Devi scegliere un ordine!');
+        }
+
+        if (isDuplicated(sale.Id, order.Id, 'order')) {
+            throw new AuraHandledException('La quote con il riferimento di questo ordine esiste già!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -100,7 +153,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SupplyCity__c = null, //to do (other logic to get SupplyCity)
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
-            IsVAS__c = true
+            IsVAS__c = true,
+            SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -118,6 +172,10 @@ public inherited sharing class HDT_LC_SaleVas {
         
         if (contract.Id == null) {
             throw new AuraHandledException('Devi scegliere un contrato!');
+        }
+
+        if (isDuplicated(sale.Id, contract.Id, 'contract')) {
+            throw new AuraHandledException('La quote con il riferimento di questo contrato esiste già!');
         }
 
         Opportunity newOpportunity = opportunitySrv.createRecord(new Opportunity(
@@ -143,7 +201,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SalesCompany__c = sale.SalesCompany__c,
             Campaign__c = sale.Campaign__c,
             SupplyCity__c = null, //to do (other logic to get supplyCity)
-            IsVAS__c = true
+            IsVAS__c = true,
+            SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
@@ -184,11 +243,42 @@ public inherited sharing class HDT_LC_SaleVas {
             CampaignCode__c = sale.CampaignCode__c,
             CreatedBy__c = sale.CreatedBy__c,
             SalesCompany__c = sale.SalesCompany__c,
-            IsVAS__c = true
+            IsVAS__c = true,
+            SBQQ__PricebookId__c = getPricebookId('VAS Standalone')
         ));
 
         newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
 
         opportunitySrv.updateRecord(newOpportunity);
+    }
+
+    private static String getPricebookId(String pricebookName) {
+        List<Pricebook2> pricebook = HDT_QR_PriceBook.getRecordByName(pricebookName);
+
+        String result = '';
+
+        if(!pricebook.isEmpty()) {
+            result = pricebook[0].Id;
+        } else {
+            result = null;
+        }
+
+        return result;
+    }
+
+    private static String checkCommodityContract(String contractId) {
+
+        List<Contract> contracts = contractQr.getRecordById(contractId);
+
+        return contracts[0].ServicePoint__r.RecordType.DeveloperName;
+
+    }
+
+    private static String checkCommodityOrder(String orderId) {
+
+        Order order = orderQr.getRecordById(orderId);
+
+        return order.ServicePoint__r.RecordType.DeveloperName;
+
     }
 }
