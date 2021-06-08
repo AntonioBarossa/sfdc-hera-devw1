@@ -13,9 +13,10 @@
 
 public with sharing virtual class HDT_UTL_FormatTextScript {
     
-    protected String regEx= '<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
-    protected String leftIncapsulatingData= '<<{';
-    protected String rightIncapsulatingData= '}>>';
+    protected String regEx= '\\{\\{([\\xa0\\s]?)+[A-Za-z0-9_.]+([\\xa0\\s]?)+\\}\\}';
+    //'<<\\{([\\s]?)+[A-Za-z0-9_.]+([\\s]?)+\\}>>';
+    protected String leftIncapsulatingData= '{{';
+    protected String rightIncapsulatingData= '}}';
 
     private Boolean isFirstSection=true;
 
