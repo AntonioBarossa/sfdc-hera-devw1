@@ -187,7 +187,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String fromq = 'Case';
         String queryString;
         fieldq = 'Id,Account.CustomerCode__c,CaseNumber,Account.VatNumber__c';
-        fieldq += ',IsVATGroupJoined__c,VATGroup__c';
+        fieldq += ',IsVATGroupJoined__c,VATGroupStartDate__c,VATGroupEndDate__c,VATGroup__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -199,8 +199,11 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         requestBody.account.partitaIva = (String) acc.get('VatNumber__c');
-        requestBody.account.gruppoIva.adesione = String.valueOf(caseRecord.get('IsVATGroupJoined__c'));
+        Boolean isJoined = (Boolean) caseRecord.get('IsVATGroupJoined__c');
+        requestBody.account.gruppoIva.adesione = isJoined ? '1' : '';
         requestBody.account.gruppoIva.partitaIva = (String) caseRecord.get('VATGroup__c');
+        requestBody.account.gruppoIva.dataInizio = getFormattedDate((Date) caseRecord.get('VATGroupStartDate__c'));
+        requestBody.account.gruppoIva.dataFine = getFormattedDate((Date) caseRecord.get('VATGroupEndDate__c'));
 
         System.debug('requestBody ' + requestBody);
         inputParams.requestBody = JSON.serialize(requestBody);
@@ -359,11 +362,18 @@ public with sharing class HDT_SRV_BpCaVariation {
         }
     }
 
-    // Restituisce Today nel formato richiesto da mulesoft (es. 20210511)
+    // Restituisce Today nel formato richiesto da mulesoft/SAP (es. 20210511)
     private static String getFormattedToday() {
         Datetime today = Datetime.now();
         String formattedToday = today.format('yMMdd');
         return formattedToday;
+    }
+
+    // Restituisce la data nel formato richiesto da mulesoft/SAP (es. 20210511)
+    private static String getFormattedDate(Date dateToFormat) {
+        Datetime dt = dateToFormat;
+        String formattedDate = dt.format('yMMdd');
+        return formattedDate;
     }
 
     // Restituisce la nazione nel formato richiesto da SAP (IT)

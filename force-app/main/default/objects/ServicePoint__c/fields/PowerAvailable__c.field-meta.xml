@@ -4,7 +4,7 @@
     <description>Potenza disponibile dal Contatore</description>
     <externalId>false</externalId>
     <label>Potenza Disponibile</label>
-    <precision>18</precision>
+    <precision>17</precision>
     <required>false</required>
     <scale>1</scale>
     <trackTrending>false</trackTrending>

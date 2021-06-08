@@ -154,6 +154,12 @@ export default class HdtModalDataTable extends LightningElement {
                 if(result){
                     console.log('# success #');
                     this.data = result;
+
+                    if(result.length === 0){
+                        this.error.show = true;
+                        this.error.message = 'Non è stato trovato nessun valore';                        
+                    }
+
                     //var obj = JSON.parse(result);
                     //this.data = obj[this.fieldName];
                     //console.log(this.data);

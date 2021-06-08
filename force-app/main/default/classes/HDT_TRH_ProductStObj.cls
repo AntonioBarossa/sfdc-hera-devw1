@@ -2,12 +2,12 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
     public override void beforeInsert(){
 
-        if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_Product2')){
+        if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
             return;
         }
 
         for(Product2 p : (Product2[])Trigger.New){
-            p.Status__c = 'In Sviluppo';
+            p.Status__c = Label.HDT_InDevelopment;
             p.StartDate__c = null;
             p.EndDate__c = null;
         }
@@ -15,7 +15,7 @@ public inherited sharing class HDT_TRH_ProductStObj extends HDT_TRH_TriggerHandl
 
     public override void beforeUpdate(){
         
-        if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_Product2')){
+        if(HDT_UTL_ProductStObjProcess.skipTrigger('HDT_ProductStObj')){
             return;
         }
 

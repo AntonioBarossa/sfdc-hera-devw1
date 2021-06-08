@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ServiceProduct__c</fullName>
-    <description>Campo di configurazione che indica il prodotto di servizio.</description>
     <externalId>false</externalId>
     <label>Prodotto di servizio</label>
     <required>false</required>
@@ -25,6 +24,31 @@
                 <fullName>GAS_BUSINESS</fullName>
                 <default>false</default>
                 <label>GAS_BUSINESS</label>
+            </value>
+            <value>
+                <fullName>ELE_DOMES</fullName>
+                <default>false</default>
+                <label>ELE_DOMES</label>
+            </value>
+            <value>
+                <fullName>ELE_ND_30KW</fullName>
+                <default>false</default>
+                <label>ELE_ND_30KW</label>
+            </value>
+            <value>
+                <fullName>ELE_ND_POTMASS</fullName>
+                <default>false</default>
+                <label>ELE_ND_POTMASS</label>
+            </value>
+            <value>
+                <fullName>GAS_DIFFUSI</fullName>
+                <default>false</default>
+                <label>GAS_DIFFUSI</label>
+            </value>
+            <value>
+                <fullName>GAS_MULTISITO</fullName>
+                <default>false</default>
+                <label>GAS_MULTISITO</label>
             </value>
         </valueSetDefinition>
     </valueSet>

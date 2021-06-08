@@ -1561,6 +1561,21 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CustomerType__c</picklist>
+        <values>
+            <fullName>Gruppo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Organizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Persona Fisica</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Deliberation__c</picklist>
         <values>
             <fullName>Fuori delibera</fullName>
@@ -1663,6 +1678,17 @@
         </values>
         <values>
             <fullName>XML PA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EnergyService__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

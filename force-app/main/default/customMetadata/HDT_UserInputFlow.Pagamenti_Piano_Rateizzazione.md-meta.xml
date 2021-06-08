@@ -7,10 +7,9 @@
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:false,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;SendMode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;ApplicationInterests__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;TypeInstallmentPlan__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Reason__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;CAWithOrWithoutSEPA__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;InstallmentNumberRequired__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;Deposit__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;DepositPaymentMode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DepositAmount__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DepositExpirationDate__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;FirstExpirationDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;CutomerAssisted__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;PaymentType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;RefundableEscape__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;WorkStatus__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
+{&quot;FieldName&quot;:&quot;DepositPaymentMode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DepositAmount__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;DepositExpirationDate__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;ExpirationDate__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;CutomerAssisted__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;PaymentType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;RefundableEscape__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;WorkStatus__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
@@ -19,7 +18,7 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;CAWithOrWithoutSEPA__c&quot;,&quot;Required&quot;: false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;ClientCategory__c&quot;,&quot;Required&quot;: false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;AmountToPayInInstallments__c&quot;,&quot;Required&quot;:false ,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;ExistingInstallmentsPlanNumber__c&quot;,&quot;Required&quot;: false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;SuspensionInThePastTwelveMonths__c&quot;,&quot;Required&quot;: false,&quot;Column&quot;:2}]</value>
+{&quot;FieldName&quot;:&quot;AmountToPayInInstallments__c&quot;,&quot;Required&quot;:false ,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;ExistingInstallmentsPlanNumber__c&quot;,&quot;Required&quot;: false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;SuspensionInThePastTwelveMonths__c&quot;,&quot;Required&quot;: false,&quot;Column&quot;:1}]</value>
     </values>
     <values>
         <field>ValidateClass__c</field>

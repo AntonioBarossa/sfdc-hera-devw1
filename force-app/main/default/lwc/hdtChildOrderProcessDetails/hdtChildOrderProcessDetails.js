@@ -1402,7 +1402,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.ProcessType__c !== 'Switch in Ripristinatorio')
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VAS',
                 data: [
                     {
