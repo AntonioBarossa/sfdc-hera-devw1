@@ -11,6 +11,7 @@
 
 public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_FormatTextScript {
 
+    String childRelationship;
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled
@@ -18,7 +19,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         //test method to show each section in a flow-like modal
         //MUST BE NON-CACHEABLE because it's inputs may not change but content can still change
         //for vocal order, you start from order father but some sections must be looped for each child order
-        return new HDT_LC_HdtScriptManagementModal().getScriptTextRich(processName, recordId);
+        return new HDT_LC_HdtScriptManagementModal().getScriptTextLoop(processName, recordId);
     }
 
     public class HDT_WRP_ScriptOutput{
@@ -26,9 +27,10 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         @AuraEnabled public string sectionText;
     }
 
-    private List<HDT_WRP_ScriptOutput> getScriptTextRich(String processName, String recordId){
-        ScriptConfig__c process= [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
+    private List<HDT_WRP_ScriptOutput> getScriptTextLoop(String processName, String recordId){
+        ScriptConfig__c process = [select Name, (Select textScript__c, SectionLabel__c, checkVisibility__c from ChildSections__r order by SectionOrder__c asc) from ScriptConfig__c where Name=:processName AND RecordType.DeveloperName='HDT_RT_Processo' LIMIT 1];
 
+        String childRelation = 'ChildSections'+'__r';
         List<String> allFieldsToQuery = getAllFieldsToQuery(process);//full list of fields to query
 
         String textToFormat='';
@@ -46,6 +48,17 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
         }
         return listSectionWrappers;
     }
+
+
+    protected override String getFieldValue(String fieldPath, SObject relation){
+        List<String> relationshipNames = fieldPath.split('\\.');
+        //SObject relation=scriptRecordFull;
+        String fieldValue;
+        if(relationshipNames[0]=='child'){
+
+        }
+    }
+
 
     //CB Gestione Script, this method passes to LWC a rich text populated with sections and dinamic data
     @AuraEnabled(cacheable=true)
@@ -89,6 +102,7 @@ public without sharing class HDT_LC_HdtScriptManagementModal extends HDT_UTL_For
             String sectionLabel = '<<{ globalTag.section__d.'+section.SectionLabel__c.replace(' ', '_')+ ' }>>';
             //globalTag.section__d.label tell CB to bind the label of the section in bold tags
             textToFormat +=sectionLabel+section.textScript__c;//String with all sections (even those to be eliminated)
+            
         }
 
         List<String> allFieldsToQuery = getDataBinded(textToFormat);//get fields name of binding variables
