@@ -67,12 +67,12 @@
                 <behavior>Readonly</behavior>
                 <field>ApplicationInterests__c</field>
             </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ExpirationDate__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>TypeInstallmentPlan__c</field>
@@ -112,14 +112,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SuspensionInThePastTwelveMonths__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>RefundableEscape__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>WorkStatus__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
