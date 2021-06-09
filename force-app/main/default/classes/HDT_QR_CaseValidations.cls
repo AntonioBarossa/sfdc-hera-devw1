@@ -10,6 +10,7 @@ public inherited sharing class HDT_QR_CaseValidations {
         ServicePoint__r.ServicePointCode__c,
         OpinionRequest__c,
         AttachmentManagement__c,
+        AmountToPayInInstallments__c,
         BillingProfile__c,
         AccountId,
         ContactId

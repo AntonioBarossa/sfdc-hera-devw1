@@ -138,9 +138,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     : null;
                 String clientCategory = getFieldValue(fields, 'ClientCategory__c');
                 String reason = getFieldValue(fields, 'Reason__c');
-                Double amountInstall = getFieldValue(fields, 'AmountToPayInInstallments__c') != null 
-                    ? Double.valueOf(getFieldValue(fields, 'AmountToPayInInstallments__c'))
-                    : null;
+                Double amountInstall = currentCase.AmountToPayInInstallments__c;
                 Date expDate = getFieldValue(fields, 'DepositExpirationDate__c') == null 
                     ? System.today() + 365
                     : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
