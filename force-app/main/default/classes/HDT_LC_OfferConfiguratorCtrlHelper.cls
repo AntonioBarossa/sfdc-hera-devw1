@@ -82,38 +82,53 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
         Id tecOffId;
         Boolean isUpsert = !String.isEmpty(technicalofferid);
 
-        if(!isUpsert){
+        // if(!isUpsert){ //
 
-            tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
-            tecOff.Status__c = 'Draft';
-            
-            try{
-                SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
-                Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-            
-                if(objRes.isCreateable()){
-                    insert tecOff;
-                    tecOffId = tecOff.Id;
-                } else {
-                    saveResponse.success = false;
-                    saveResponse.message = '# ERROR: you don\'t have permission on this obj';
-                    saveResponse.dataError = false;
-                    return saveResponse;                
-                }
+        //     tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
+        //     tecOff.Status__c = 'Draft';
+        //     
+        //     try{ //
 
-            } catch (Exception e){
+        //     } catch{
+        //         
+        //     }
+        //     
+        // } else {
+        //     tecOffId = technicalofferid;
+        // }
+
+
+        tecOff = generateTechnicalOfferRecord(tecOff, productId, rate, techOffObj, idToClone);
+        tecOff.Status__c = 'Draft';
+
+        if(isUpsert){
+            tecOff.Id = technicalofferid;
+        }
+
+        try{
+            SObjectType objtype = Schema.getGlobalDescribe().get('TechnicalOffer__c');
+            Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+        
+            if(objRes.isCreateable()){
+                upsert tecOff;
+                tecOffId = tecOff.Id;
+            } else {
                 saveResponse.success = false;
-                saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-                saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
-                HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
-                lineError.rowId = '0';
-                lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
-                saveResponse.errorData.add(lineError);
+                saveResponse.message = '# ERROR: you don\'t have permission on this obj';
                 saveResponse.dataError = false;
-                return saveResponse;
+                return saveResponse;                
             }
-        } else {
-            tecOffId = technicalofferid;
+
+        } catch (Exception e){
+            saveResponse.success = false;
+            saveResponse.message = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.errorData = new List<HDT_WRP_TechnicalOffer.HDT_WRP_LineError>();
+            HDT_WRP_TechnicalOffer.HDT_WRP_LineError lineError = new HDT_WRP_TechnicalOffer.HDT_WRP_LineError();
+            lineError.rowId = '0';
+            lineError.errorMessage = '# ERROR: ' + e.getMessage() + '; at line [' + String.valueOf(e.getLineNumber()) + ']';
+            saveResponse.errorData.add(lineError);
+            saveResponse.dataError = false;
+            return saveResponse;
         }
 
         List<HDT_WRP_TechnicalOffer.HDT_WRP_MatrixSingleRow> offerList;
