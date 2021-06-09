@@ -143,6 +143,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     ? System.today() + 365
                     : Date.valueOf(getFieldValue(fields, 'DepositExpirationDate__c'));
                 String typeInstallmentPlans = getFieldValue(fields, 'TypeInstallmentPlan__c	');
+                String sendPaperlessMode = getFieldValue(fields, 'SendPaperlessCodeMode__c');
 
                 if(deposit && (depositPaymentMode == null || depositPaymentMode == '' || depositAmount == null)){
 
@@ -180,6 +181,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
                     }
+
+                }else if(depositPaymentMode == 'Paperless' && (sendPaperlessMode == null || sendPaperlessMode == '')){
+
+                    result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Valorizza Modalita invio Codice Paperless'));
 
                 } else {
 
