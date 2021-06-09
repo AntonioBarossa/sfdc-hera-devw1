@@ -238,7 +238,8 @@ global inherited sharing class HDT_UTL_SearchPlug implements SBQQ.ProductSearchP
             System.debug('>>> FILTER - STEP 2 > FILTER ONLY Municipalities...');
 
             List<EligibleMunicipality__c> eligibleMunicipality;
-            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, familyList, String.valueOf(quote.SupplyCity__c));
+            String supplyCity = String.valueOf(quote.SupplyCity__c);
+            eligibleMunicipality = HDT_QR_SearchPlug.findEligibleMunicipality(idToFilterByMunicipalities, familyList, supplyCity.replaceFirst('^0+', ''));
 
             for(EligibleMunicipality__c e : eligibleMunicipality){
                 idList.add(e.EligibilityCriteria__r.Product__c);

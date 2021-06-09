@@ -1,12 +1,10 @@
-import { LightningElement, api} from 'lwc';
+import { LightningElement, api, track} from 'lwc';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 
 export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     @api productId;
     @api rateObj;
-    technicalOfferId = '';
-    techOffId;
     fieldsList = [
         'Market__c',
         'ProcessType__c',
@@ -18,9 +16,9 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         'ContractId__c',
         'NumberTimeExtension__c',
         'UnitTimeExtension__c',
-        'CancellationAllowed__c',
         'NumberDaysMonthsYears__c',
         'UnitTerminationTime__c',
+        'CancellationAllowed__c',
         'RecessAdmitted__c',
         'NumberOfTimeUnits__c',
         'UnitOfTimeMeasurement__c',
@@ -28,20 +26,21 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         'OfferToBeModified__c'
     ];
 
+    @api mode;
+    @api technicalOfferId;
+    hidden = 'slds-show';
+
+    @api handleValueChange() {
+        console.log('>>> handleValueChange');
+        if(this.hidden === 'slds-show'){
+            this.hidden='slds-hide';
+        } else {
+            this.hidden = 'slds-show';
+        }
+    }
+
     connectedCallback(){
-        
-        if(this.rateObj.rateName!=null && this.rateObj.rateName != undefined){
-            console.log('>>> rate: ' + this.rateObj.rateName);
-        }
-
-        if(this.rateObj.rateTemplate!=null && this.rateObj.rateTemplate != undefined){
-            console.log('>>> template: ' + this.rateObj.rateTemplate);
-        }
-
-        if(this.rateObj.servProduct!=null && this.rateObj.servProduct != undefined){
-            console.log('>>> servProduct: ' + this.rateObj.servProduct);
-        }
-
+        console.log('>>> connectedCallback HdtTechnicalOfferEditForm');
     }
 
     handleLoad(event){
@@ -50,12 +49,6 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     handleSuccess(event) {
         console.log('>>>> handleSuccess ' + event.detail.id);
-
-        const newOffer = new CustomEvent('newoffercreated', {
-            detail: {newTechOfferId: event.detail.id}
-        });
-        // Fire the custom event
-        this.dispatchEvent(newOffer);
     }
 
     handleError(event){
@@ -66,35 +59,19 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
     handleSubmit(event){
         console.log('>>>> handleSubmit ');
+        event.preventDefault();
     }
 
     saveAction(){
         console.log('>>>> saveAction ');
         var techOffObj = {};
-        //const fields = this.template.querySelectorAll('lightning-input-field');
-        //this.template.querySelector('lightning-record-edit-form').submit(fields);
+
         this.template.querySelectorAll('lightning-input-field').forEach((field) => {
+            console.log('>>> ' + field.fieldName + ' - ' + field.value);
             techOffObj[field.fieldName] = field.value;
         });
 
-        if(this.rateObj.servProduct!=null && this.rateObj.servProduct != undefined){
-            techOffObj.ServiceProduct__c = this.rateObj.servProduct;
-        }
-
-        var respCheck = this.checkValue(techOffObj);
-        console.log('#### ' + respCheck.success);
-
-        if(!respCheck.success){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione',
-                    message: respCheck.message,
-                    variant: 'warning'
-                })
-            );
-            return;
-        }
-
+        this.hidden = 'slds-hide';
 
         const newOffer = new CustomEvent('newoffercreated', {
             detail: {newTechOfferObj: JSON.stringify(techOffObj)}
@@ -105,7 +82,15 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
     }
 
     closeModal(event){
-        const closemodal = new CustomEvent('closemodal', {
+        var closeMode = '';
+
+        if(this.mode === 'edit'){
+            closeMode = 'closeedit';
+        } else if(this.mode === 'insert'){
+            closeMode = 'closemodal';
+        }
+
+        const closemodal = new CustomEvent(closeMode, {
             detail: ''
         });
         // Fire the custom event
