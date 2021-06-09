@@ -147,14 +147,26 @@ public inherited sharing class HDT_QR_CampaignMember {
         ];
     }
 
+    public List<CampaignMember> getUnassignedCampaignMembersSlice(String campaignId, Integer amount){
+        return [
+            SELECT 
+            Id
+            FROM CampaignMember 
+            WHERE CampaignId = :campaignId 
+            AND Agency__c = NULL
+            WITH SECURITY_ENFORCED
+            LIMIT :amount
+        ];
+    }
+
     public List<Account> getAccountsforCampaignMembers(){
         return [
             SELECT 
             Id,
             Name
             FROM Account
+            WHERE RecordType.DeveloperName = 'HDT_RT_Partner'
             WITH SECURITY_ENFORCED
-            LIMIT 10
         ];
     }
     public CampaignMember getAccountAndCampaign(String campaignMemberId) {
