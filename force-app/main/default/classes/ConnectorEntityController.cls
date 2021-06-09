@@ -61,7 +61,7 @@ global with sharing class ConnectorEntityController {
 
 			result.put('activityId', activity.Id);
 			result.put('accountId', activity.Account__c);
-			result.put('contactId', activity.Id);
+			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
 		} catch (Exception e) {
 			return 'ERROR: ' + e.getMessage();
