@@ -2768,7 +2768,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             typeOfCommodity = 'ENERGIAELETTRICA';
         }
         if(typeOfCommodity == 'Gas'){
-            typeOfCommodity = 'GAS';
+            typeOfCommodity = 'GAS'; 
         }
         let data = {
             sistema: "eEnergy",                                                 //da definire campo SF con business

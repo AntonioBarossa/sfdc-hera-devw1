@@ -126,7 +126,7 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
         }
 
         System.debug('orderToAnnullamento ----> ' + orderToAnnullamento);
-        update orderToAnnullamento;
+        update orderToAnnullamento; 
     
     }
 }
